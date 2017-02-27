@@ -1,0 +1,42 @@
+{
+  "name": "drproject/concept",
+  "description": "document repository",
+  "minimum-stability": "stable",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Ryan Collins",
+      "email": "ryan@ohmgeek.co.uk"
+    },
+    {
+      "name": "Mohammad Bilal",
+      "email": "mbc000@live.com"
+    },
+    {
+      "name": "Fatema Alkhanaizi",
+      "email": "fatema.alkhanaizi@durham.ac.uk"
+    },
+    {
+      "name": "Ben Hemsworth",
+      "email": "ben.j.hemsworth@durham.ac.uk"
+    },
+    {
+      "name": "Stephen Church",
+      "email": "stephen.church@durham.ac.uk"
+    },
+    {
+      "name": "Cameron Shepherd",
+      "email": "cameron.m.shepherd@durham.ac.uk"
+    }
+  ],
+  "require": {
+    "twig/twig": "1.27.*",
+    "klein/klein": "^2.1"
+  },
+  "autoload": {
+	"psr-4": {
+		"Wastetopia\\Model\\": "model/",
+		"Wastetopia\\Controller\\": "controller/"
+	}
+  }
+}
