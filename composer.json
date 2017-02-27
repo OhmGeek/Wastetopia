@@ -36,7 +36,8 @@
   "autoload": {
 	"psr-4": {
 		"Wastetopia\\Model\\": "model/",
-		"Wastetopia\\Controller\\": "controller/"
+		"Wastetopia\\Controller\\": "controller/",
+		"Wastetopia\\Tests\\": "tests/"
 	}
   }
 }
