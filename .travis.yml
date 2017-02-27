@@ -12,11 +12,6 @@ php:
 before_script:
   - composer self-update
   - composer install --prefer-source --no-interaction --dev
-  
- script:
-  - phpunit tests/
 
-# Commands you want to run that will verify your build.
-notifications:
-    on_success: never
-    on_failure: always
+script:
+ - phpunit tests/
