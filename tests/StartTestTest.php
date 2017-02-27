@@ -9,6 +9,7 @@
 
 class StartTestTest extends PHPUnit_Framework_TestCase
 {
+    /** @test */
     public function firstTest()
     {
         $this->assertEquals(true,true);
