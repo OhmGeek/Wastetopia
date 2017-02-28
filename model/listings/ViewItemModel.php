@@ -26,7 +26,7 @@ class ViewItemModel
         $statement = $this->db->prepare("
             SELECT *
             FROM `Image` 
-            JOIN `ItemImage` ON `ItemImage`.`FK_Image_ImageID` = `Item`.`ItemID`
+            JOIN `ItemImage` ON `ItemImage`.`FK_Image_ImageID` = `Image`.`ImageID`
             JOIN `Listing` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
             WHERE `Listing`.`ListingID` = :listingID;
         ");
