@@ -1,5 +1,7 @@
 <?php
 
+namespace Wastetopia\Model;
+
 class UserCookieWriter {
     private $TIME_OFFSET = 60000;
     public function __construct() {
