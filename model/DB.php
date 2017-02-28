@@ -1,4 +1,5 @@
 <?php
+namespace Wastetopia\Model;
 
 use PDO;
 

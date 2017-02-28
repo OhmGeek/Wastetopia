@@ -1,4 +1,5 @@
 <?php
+namespace  Wastetopia\Model;
 
 class UserCookieReader {
     public function __construct() {
