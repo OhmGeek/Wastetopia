@@ -6,6 +6,10 @@
  * Date: 28/02/17
  * Time: 15:10
  */
+
+namespace Wastetopia\Config;
+use Wastetopia\Config\AbstractConfig;
+
 class LocalConfig extends AbstractConfig
 {
 
