@@ -2,6 +2,8 @@
 
 namespace Wastetopia\Controller;
 
+use Twig_Environment;
+use Twig_Loader_Filesystem;
 use Wastetopia\Controller\TokenManager;
 use Wastetopia\Controller\Authenticator;
 
@@ -10,7 +12,7 @@ class Login_Controller {
         //todo dest parameter with default value
         // this is the static index page (allowing the user to login)
         $loader  = new Twig_Loader_Filesystem(__DIR__.'/../../view/login');
-	$twig = new Twig_Environment($loader);
+	    $twig = new Twig_Environment($loader);
         $template = $twig->loadTemplate('login_form.html');
 
         // if logged in, don't bother
@@ -25,7 +27,7 @@ class Login_Controller {
     public static function login($username, $password, $dest) {
         //todo dest parameter with default value
         // Post destination of the form (params are entered in index.php)
-        $outcome = TokenController::login($_POST['username'], $_POST['password']);
+        $outcome = TokenManager::login($username, $password);
         $outcome = json_decode($outcome,true);
         if($outcome['status'] === 'verified') {
             // login success
@@ -36,11 +38,11 @@ class Login_Controller {
                 exit();
             }
             //forward home
-            header('Location: community.dur.ac.uk/cs.seg4/Wastetopia/Wastetopia/');
+            return "GO HOME!";
         }
         else {
             // incorrect details
-
+            return "INCORRECT DETAILS";
 
         }
     }
