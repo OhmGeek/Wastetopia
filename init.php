@@ -1,4 +1,10 @@
 <?php
+
+include_once(__DIR__ . '/vendor/autoload.php');
+
+use Wastetopia\Config\LocalConfig;
+use Wastetopia\Config\ProductionConfig;
+
 /**
  * This sets up a server
  * Created by PhpStorm.
