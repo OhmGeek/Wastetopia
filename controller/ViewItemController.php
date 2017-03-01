@@ -9,19 +9,23 @@
 namespace Wastetopia\Controller;
 
 
-use Wastetopia\Model\Listing;
+use Wastetopia\Model\ViewItemModel;
 
-class ViewListingController
+class ViewItemController
 {
     public function __construct()
     {
 
     }
 
+    /**
+     * @param $listingID
+     * @return string
+     */
     public function getListingPage($listingID) {
         // query the model for the item data.
-        $model = new Listing();
-        $details = $model->getDetails($listingID);
+        $model = new ViewItemModel();
+        $details = $model->getAllInOneQuery($listingID);
         // process it
         return json_encode($details, true);
         // output it on the screen
