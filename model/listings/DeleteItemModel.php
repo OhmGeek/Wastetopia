@@ -32,6 +32,24 @@ class DeleteItemModel
         $statement->execute();
     }
 
+    /**
+     * Deletes tag by its ID
+     * @param $tagID
+     */
+    function deleteTag($tagID)
+    {
+        $statement = $this->db->prepare("
+            DELETE 
+            FROM `ItemTag` 
+            JOIN `Tag` ON `Tag`.`TagID` = `ItemTag`.`FK_Tag_TagID`
+            WHERE `Tag`.`TagID` = :tagID;
+        ");
+
+        $statement->bindValue(":tagID", $tagID, PDO::PARAM_INT);
+
+        $statement->execute();
+    }
+
 
     /**
      * Deletes a whole listing given its ID

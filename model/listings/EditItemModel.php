@@ -162,39 +162,25 @@ class EditItemModel
     }
 
     //UNSURE WHAT THESE FUNCTIONS WILL DO (IF ANYTHING)
-
-    /**
-     * Changes the name and description of a given tag
-     * @param $listingID
-     * @param $categoryID
-     * @param $categoryName
-     * @param $description
-     */
-    function editTags($listingID, $categoryID, $categoryName, $description){
-        $statement = $this->db->prepare("
-            UPDATE `Tag`
-            JOIN `ItemTag` ON `ItemTag`.`FK_Tag_TagID` = `Tag`.`TagID`
-            JOIN `Item` ON `Item`.`ItemID` = `ItemTag`.`FK_Item_ItemID`
-            JOIN `Listing` ON `Item`.`ItemID` = `Listing`.`FK_Item_ItemID`
-            SET `Tag`.`Name` = :name, `Tag`.description = :description
-            WHERE`ListingID` = :listingID
-            AND `Tag`.`Category_ID` = :categoryID;
-         ");
-
-        $statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);
-        $statement->bindValue(":categoryID", $categoryID, PDO::PARAM_INT);
-        $statement->bindValue(":name", $categoryName, PDO::PARAM_STR);
-        $statement->bindValue(":description", $description, PDO::PARAM_STR);
-        $statement->execute();
-    }
-
-    //Not needed as will just delete images and upload new ones?
-    /**
-     * Currently does nothing
-     */
-    function editImages(){
-
-    }
+//
+//    /**
+//     * Changes the name and description of a given tag
+//     * @param $listingID
+//     * @param $categoryID
+//     * @param $categoryName
+//     * @param $description
+//     */
+//    function editTags($listingID, $categoryID, $categoryName, $description){
+//
+//    }
+//
+//    //Not needed as will just delete images and upload new ones?
+//    /**
+//     * Currently does nothing
+//     */
+//    function editImages(){
+//
+//    }
 
 
 

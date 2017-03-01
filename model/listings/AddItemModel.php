@@ -50,6 +50,19 @@ class AddItemModel
     }
 
 
+
+    function getAllTagOptions(){
+        $statement = $this->db->prepare("
+            SELECT * 
+            FROM `Tag`
+            ORDER_BY `Tag`.`FK_Category_CategoryID`
+         ");
+
+
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     /*QUERIES TO INSERT INTO INDIVIDUAL TABLES*/
 
 
@@ -77,26 +90,26 @@ class AddItemModel
     }
 
 
-    /**
-     * Adds a tag to the Tag table
-     * @param $name
-     * @param $categoryID
-     * @param $description
-     * @return int (the ID of the tag)
-     */
-    function addToTagTable($name, $categoryID, $description)
-    {
-        $statement = $this->db->prepare("
-            INSERT INTO `Tag` (`Name`, `Category_ID` `Description`)
-            VALUES (:name, :categoryID, :description)
-         ");
-
-        $statement->bindValue(":name", $name, PDO::PARAM_STR);
-        $statement->bindValue(":categoryID", $categoryID, PDO::PARAM_INT);
-        $statement->bindValue(":description", $description, PDO::PARAM_STR);
-        $statement->execute();
-        return $this->getLastInsertID();
-    }
+//    /**
+//     * Adds a tag to the Tag table
+//     * @param $name
+//     * @param $categoryID
+//     * @param $description
+//     * @return int (the ID of the tag)
+//     */
+//    function addToTagTable($name, $categoryID, $description)
+//    {
+//        $statement = $this->db->prepare("
+//            INSERT INTO `Tag` (`Name`, `Category_ID` `Description`)
+//            VALUES (:name, :categoryID, :description)
+//         ");
+//
+//        $statement->bindValue(":name", $name, PDO::PARAM_STR);
+//        $statement->bindValue(":categoryID", $categoryID, PDO::PARAM_INT);
+//        $statement->bindValue(":description", $description, PDO::PARAM_STR);
+//        $statement->execute();
+//        return $this->getLastInsertID();
+//    }
 
 
     /**
@@ -229,17 +242,18 @@ class AddItemModel
     /**
      * Calls functions to add the item to the database and all the tags and then links the tags to the item
      * @param $itemID
-     * @param $tags (Array of tag arrays in the form ["name"=>name, "categoryID"=>categoryID, "description"=>description])
+     * @param $tags (Array of tag arrays in the form ["tagID"=>tagID])
      */
     function addAllTags($itemID, $tags)
     {
         //$itemID = $this->addToItemTable($itemName, $itemDescription, $useByDate); //Add the item
 
         foreach ($tags as $tag) {
-            $tagName = $tag["name"];
-            $tagCategoryId = $tag["categoryID"];
-            $tagDescription = $tag["description"];
-            $tagID = $this->addToTagTable($tagName, $tagCategoryId, $tagDescription); //Add the tag
+//            $tagName = $tag["name"];
+//            $tagCategoryId = $tag["categoryID"];
+//            $tagDescription = $tag["description"];
+            //$tagID = $this->addToTagTable($tagName, $tagCategoryId, $tagDescription); //Add the tag
+            $tagID = $tag["tagID"];
             $this->addToItemTagTable($itemID, $tagID); //Link tag to item
         }
     }
@@ -295,5 +309,6 @@ class AddItemModel
         //Add the whole listing
         $this->addToListingTable($locationID, $itemID, $quantity);
     }
+
 
 }
