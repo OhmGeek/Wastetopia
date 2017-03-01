@@ -27,6 +27,14 @@ $klein->respond("GET", "/register", function() {
    return "Registering page";
 });
 
+$klein->respond("GET", "/get-env", function() {
+   $envStr = "DB Host: " . $_ENV['DB_HOST'] . "\n";
+    $envStr .= "DB_NAME " . $_ENV['DB_NAME'] . "\n";
+    $envStr .= "DB_USER " . $_ENV['DB_USER'] . "\n";
+    $envStr .= "DB_PASS " . $_ENV['DB_PASS'] . "\n";
+    echo "Printing stuff now \n";
+    return $envStr;
+});
 $klein->with('/items', function () use ($klein) {
 
     $klein->respond('GET', '/?', function ($request, $response) {
