@@ -42,6 +42,37 @@ $klein->with('/items', function () use ($klein) {
 
 });
 
+$klein->onHttpError(function ($code, $router) {
+    switch ($code) {
+        case 404:
+            $router->response()->body(
+                'Y U so lost?!'
+            );
+            break;
+        case 405:
+            $router->response()->body(
+                'You can\'t do that!'
+            );
+            break;
+        default:
+            $router->response()->body(
+                'Oh no, a bad error happened that caused a '. $code
+            );
+    }
+});
+
+// Using range behaviors via if/else
+$klein->onHttpError(function ($code, $router) {
+    if ($code >= 400 && $code < 500) {
+        $router->response()->body(
+            'Oh no, a bad error happened that caused a '. $code
+        );
+    } elseif ($code >= 500 && $code <= 599) {
+        error_log('uhhh, something bad happened');
+    }
+});
+
+
 $klein->dispatch();
 
 
