@@ -45,7 +45,9 @@ $klein->with('/items', function () use ($klein) {
     $klein->respond('GET', '/[:id]', function ($request, $response) {
         // Show a single user
         $itemID = $request->id;
-        return "Show Item " . $itemID;
+        $controller = new \Wastetopia\Controller\ViewListingController();
+        return $controller->getListingPage($itemID);
+
     });
 
 });
