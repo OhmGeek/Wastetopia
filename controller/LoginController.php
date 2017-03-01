@@ -20,7 +20,7 @@ class Login_Controller {
             return $template->render(array());
         }
         else {
-            header('Location: community.dur.ac.uk/cs.seg4/Wastetopia/Wastetopia/');
+            header('Location: ' . $_ENV['ROOT_BASE']);
         }
     }
 

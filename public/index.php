@@ -50,6 +50,8 @@ $klein->with('/items', function () use ($klein) {
 
 });
 
+
+
 $klein->onHttpError(function ($code, $router) {
     switch ($code) {
         case 404:
