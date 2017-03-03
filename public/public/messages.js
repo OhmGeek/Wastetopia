@@ -78,7 +78,7 @@ setInterval(function(){
 function loadUsers(){
     var peopleList = $("#people-list");
     newPeopleList = null; //HTML from UserController
-    peopleList.html(newPeopleList);
+    peopleList.replaceWith(newPeopleList); //Replace current div with new list
 }
 
 function loadMessages(){
@@ -90,7 +90,7 @@ function loadMessages(){
         var conversationID = details[1]; //Get conversation ID
 
         var messageDisplay = $("#message-location");
-        messageDisplay.html("HTML FROM MessageController.php for this conversationID");
+        messageDisplay.replaceWith("HTML FROM MessageController.php for this conversationID");
     }
 }
 
