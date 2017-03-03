@@ -33,7 +33,7 @@ class ProfilePageModel
      * Gets all detail from the User table for this user
      * @return mixed
      */
-    function retrieveUserDetails(){
+    function getUserDetails(){
         $userID = $this->getUserID();
 
         $statement = $this->$db->prepare("
@@ -52,9 +52,10 @@ class ProfilePageModel
 
     /**
      * Gets all the listings the current user has put up
+     * Can then use getStateOfListingTransactions() to check if the state of the transactions for those listings
      * @return mixed
      */
-    function retriveUserListings()
+    function getUserListings()
     {
         $userID = $this->getUserID();
 
@@ -75,6 +76,32 @@ class ProfilePageModel
 
 
     /**
+     * Gets all the listings the current user is involved in transactions with (where they are the receiver)
+     * Can then use getStateOfListingTransactions() to check if the transaction should go in History or Currently Watching
+     * @return mixed
+     */
+    function getUserReceivingListings()
+    {
+        $userID = $this->getUserID();
+
+        $statement = $this->$db->prepare("
+            SELECT *
+            FROM `Listing`
+            JOIN `Listing Transaction` ON `Listing`.`ListingID` = `Listing Transaction`.`FK_Listing_ListingID`
+            JOIN `Transaction` ON `Transaction`.`TransacionID` = `Listing Transaction`.`FK_Transaction_TransactionID`
+            JOIN `User` ON `User`.`UserID` = `Transaction`.`FK_User_UserID`
+            WHERE `User`.`UserID` = :userID
+        ");
+
+        $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
+
+        $statement->execute();
+
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
+    /**
      * Gets all information about transactions for this listing
      * Each transaction will have a time stamp and a success flag
      * @param $listingID
@@ -82,8 +109,6 @@ class ProfilePageModel
      */
     function getStateOfListingTransactions($listingID)
     {
-        $userID = $this->getUserID();
-
         $statement = $this->$db->prepare("
             SELECT `Transaction`.`FK_User_UserID`, `Transaction`.`Time_Of_Transaction`
                     `Listing Transaction`.`Quantity`, `Listing Transaction`.`Success`
@@ -99,4 +124,52 @@ class ProfilePageModel
 
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    
+    /**
+     * Gets all the listings the current user is watching
+     * Can then use getStateOfListingTransactions() to check if the transaction should go in History or Currently Watching
+     * @return mixed (listingID and WatchID)
+     */
+    function getWatchedListings()
+    {
+        $userID = $this->getUserID();
+
+        $statement = $this->$db->prepare("
+            SELECT `Listing`.`ListingID`, `Watch`.`WatchID`
+            FROM `Listing`
+            JOIN `Watch` ON `Listing`.`ListingID` = `Watch`.`FK_Listing_ListingID`
+            JOIN `User` ON `User`.`UserID` = `Watch`.`FK_User_UserID`
+            WHERE `User`.`UserID` = :userID
+        ");
+
+        $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
+
+        $statement->execute();
+
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
+    /**
+     * Deletes a listing from user's watch list
+     * @param $watchID
+     */
+    function deleteWatchListing($watchID)
+    {
+        $userID = $this->getUserID();
+
+        $statement = $this->$db->prepare("
+            DELETE
+            FROM `Watch`
+            WHERE `Watch`.`WatchID` = :watchID
+        ");
+
+        $statement->bindValue(":watchID", $watchID, PDO::PARAM_INT);
+
+        $statement->execute();
+
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+    }
+
 }
