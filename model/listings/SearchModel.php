@@ -25,6 +25,7 @@ class SearchModel
     }
 
 
+    //SEARCH FUNCTIONS HERE: ALL MUST RETURN LISTING ID's
     /**
      * Searches by name, returns all the listing IDs of items matching $name
      * @param $name
@@ -78,6 +79,9 @@ class SearchModel
 //    }
 //
 
+
+
+    //DISPLAY FUNCTIONS HERE: RETURNS DETAILS NEEDED FOR DISPLAY GIVEN THE LISTING IDs
     /**
      * Returns the details needed for display on the search page given the listing ID
      *

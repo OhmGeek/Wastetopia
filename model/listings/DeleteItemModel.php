@@ -32,6 +32,7 @@ class DeleteItemModel
         $statement->execute();
     }
 
+
     /**
      * Deletes tag by its ID
      * @param $tagID

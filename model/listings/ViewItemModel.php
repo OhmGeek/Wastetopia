@@ -17,6 +17,7 @@ class ViewItemModel
         $this->db = DB::getDB();
     }
 
+
     /**
      * Returns all details about images associated with the item in this listing
      * @param $listingID
@@ -38,6 +39,7 @@ class ViewItemModel
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
+
     /**
      * Returns all details about tags associated with the item in this listing
      * @param $listingID
@@ -58,6 +60,7 @@ class ViewItemModel
 
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
+
 
     /**
      * Returns all general details about an item (location, barcode, item details and listing details)
@@ -83,7 +86,6 @@ class ViewItemModel
 
 
     /**
-     * /**
      * Returns all details, images and tags relating to a given listing
      * @param $listingID
      * @return array (in the form (["images"]=>images, ["tags"]=>tags, ["details"]=>generalDetails)

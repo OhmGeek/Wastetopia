@@ -13,6 +13,7 @@ class EditItemModel
         $this->db = DB::getDB();
     }
 
+
     /**
      * Changes the name of the Item in the given listing
      * @param $listingID
@@ -30,6 +31,7 @@ class EditItemModel
         $statement->bindValue(":name", $name, PDO::PARAM_STR);
         $statement->execute();
     }
+
 
     /**
      * Changes the description of the Item in the given listing
@@ -50,6 +52,7 @@ class EditItemModel
         $statement->execute();
     }
 
+
     /**
      * Changes the Use-by-date of the Item in the given listing
      * @param $listingID
@@ -69,6 +72,7 @@ class EditItemModel
         $statement->execute();
     }
 
+
     /**
      * Changes the quantity of the Items in the given listing
      * @param $listingID
@@ -86,6 +90,7 @@ class EditItemModel
         $statement->bindValue(":quantity", $quantity, PDO::PARAM_INT);
         $statement->execute();
     }
+
 
     /**
      * Changes the bacode number of the item in the given listing
@@ -106,6 +111,7 @@ class EditItemModel
         $statement->execute();
     }
 
+
     /**
      * Changes the barcode type of the item in the given listing
      * @param $listingID
@@ -125,6 +131,7 @@ class EditItemModel
         $statement->execute();
     }
 
+
     /**
      * Changes the location name of the given listing
      * @param $listingID
@@ -142,6 +149,7 @@ class EditItemModel
         $statement->bindValue(":locationName", $locationName, PDO::PARAM_STR);
         $statement->execute();
     }
+
 
     /**
      * Changes the post code location of the given listing

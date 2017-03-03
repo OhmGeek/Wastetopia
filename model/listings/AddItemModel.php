@@ -50,7 +50,10 @@ class AddItemModel
     }
 
 
-
+    /**
+     * Gets all the select options user can choose for tags
+     * @return mixed
+     */
     function getAllTagOptions(){
         $statement = $this->db->prepare("
             SELECT * 
@@ -62,6 +65,8 @@ class AddItemModel
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
+
+
 
     /*QUERIES TO INSERT INTO INDIVIDUAL TABLES*/
 
@@ -240,13 +245,12 @@ class AddItemModel
 
 
     /**
-     * Calls functions to add the item to the database and all the tags and then links the tags to the item
+     * Calls functions to add all the tags and then link the tags to the item
      * @param $itemID
      * @param $tags (Array of tag arrays in the form ["tagID"=>tagID])
      */
     function addAllTags($itemID, $tags)
     {
-        //$itemID = $this->addToItemTable($itemName, $itemDescription, $useByDate); //Add the item
 
         foreach ($tags as $tag) {
 //            $tagName = $tag["name"];
@@ -277,7 +281,7 @@ class AddItemModel
 
 
     /**
-     * This function calls all the other linking functions and is the only one needed by the user
+     * Calls all the other linking functions and is the only one needed by the user
      * @param $item (Associative array in the form ["itemName"=>name, "itemDescription"=>description, "useByDate"=>date, "quantity"=>quantity])
      * @param $tags (Array of tag arrays in the form ["name"=>name, "categoryID"=>categoryID, "description"=>description])
      * @param $images (Array of image arrays in the form ["fileType"=>fileType, "url"=>url, "isDefault"=>isDefault])
