@@ -27,6 +27,7 @@ class RegistrationModel
         return $statement->fetchColumn();
     }
 
+
     /**
      * Checks whether the given email address is already in the database
      * @param $email
@@ -49,24 +50,26 @@ class RegistrationModel
 
 
     /**
-     * Adds the basic details for a user
+     * Adds the basic details for a user (name, email, passwordHash, salt)
      * @param $forename
      * @param $surname
      * @param $email
      * @param $password
      * @return The ID of the user added
      */
-    function addMainUserDetails($forename, $surname, $email, $password)
+    function addMainUserDetails($forename, $surname, $email, $passwordHash, $salt)
     {
         //Need to calculate password hash with salt
         $statement = $this->db->prepare("
             INSERT INTO `User` (`Forename`, `Surname`, `Email_Address` `Password_Hash`, `Salt`)
-            VALUES ($forename, $surname, $email ???????); 
+            VALUES (:forename, :surname, :email, :passwordHash, :salt); 
         ");
 
         $statement->bindValue(":forename", $forename, PDO::PARAM_STR);
         $statement->bindValue(":surname", $surname, PDO::PARAM_STR);
         $statement->bindValue(":email", $email, PDO::PARAM_STR);
+        $statement->bindValue(":passwordHash", $passwordHash, PDO::PARAM_STR);
+        $statement->bindValue(":salt", $salt, PDO::PARAM_STR);
 
         $statement->execute();
 
