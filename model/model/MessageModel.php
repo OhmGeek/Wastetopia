@@ -4,7 +4,7 @@ class MessageModel
 {
 	function __construct()
 	{
-		
+		$this->db = DB::getDB():
 	}
 	
 	function getCurrentUser(){
@@ -20,9 +20,8 @@ class MessageModel
      */
     function getMessagesFromConversation($conversationID)
 	{
-		$db = DB::getDB();
 
-		$statement = $db->prepare("SELECT Message.Content, Message.Time User.UserID, User.Forename, User.Surname
+		$statement = $this->db->prepare("SELECT Message.Content, Message.Time User.UserID, User.Forename, User.Surname
 								FROM Message, User, Conversation, Listing
 								WHERE Message.FK_Conversation_ConversationID = :conversationID
 								AND Conversation.ConversationID = :conversationID2
@@ -49,13 +48,12 @@ class MessageModel
      * @param $conversationID
      * @return bool (True if successful)
      */
-    function setMessagesAsRead($conversationID){
-		
-		$db = DB::getDB();
-		
+    function setMessagesAsRead($conversationID)
+    {
+
 		$currentUser = 6; //GET FROM COOKIES
 
-		$statement = $db->prepare("UPDATE Message, Listing, Conversation
+		$statement = $this->db->prepare("UPDATE Message, Listing, Conversation
 								SET Message.`Read` = 1
 								WHERE Message.FK_Conversation_ConversationID = :conversationID
 								AND Message.FK_Conversation_ConversationID = Conversation.ConversationID
@@ -80,14 +78,13 @@ class MessageModel
      * @param $giverOrReceiver
      * @return mixed
      */
-    function sendMessage($conversationID, $message, $giverOrReceiver){
-		
-		$db = DB::getDB();
-		
+    function sendMessage($conversationID, $message, $giverOrReceiver)
+    {
+
 		$currentUser = getCurrentUser();
 		$currentUser = 6; //COOKIES NOT WORKING
 		 
-		$statement = $db->prepare("INSERT INTO Message (FK_Conversation_ConversationID, Content, Giver_Or_Receiver)
+		$statement = $this->db->prepare("INSERT INTO Message (FK_Conversation_ConversationID, Content, Giver_Or_Receiver)
 									VALUES (:conversationID, :content, :giverOrReceiver);");
 		 
 		$statement->bindValue(":conversationID", $conversationID, PDO::PARAM_INT);
@@ -105,12 +102,10 @@ class MessageModel
      * @return bool (True if current the user is the receiver)
      */
     function checkIfReceiver($conversationID)
-	{
-		$db = DB::getDB();
-		
+    {
 		$currentUser = 6; //USE COOKIES LATER
 		
-		$statement = $db->prepare("SELECT COUNT(*) AS `count` 
+		$statement = $this->db->prepare("SELECT COUNT(*) AS `count` 
 								FROM Conversation
 								WHERE ConversationID = :conversationID 
 								AND FK_User_ReceiverID = :userID;");

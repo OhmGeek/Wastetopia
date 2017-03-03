@@ -6,7 +6,7 @@ class UserModel
 {
 	function __construct()
 	{
-		
+	    $this->db = DB::getDB();
 	}
 	
 	function getCurrentUser(){
@@ -16,11 +16,10 @@ class UserModel
 	// Returns all conversations (with users) in which you are receiving an item with along with the number of unread messages you have from them
 	function getConversationsReceiving()
 	{
-		$db = DB::getDB();
-		
+
 		$currentUser = 6; //COOKIES AREN'T WORKING
 		
-		$statement = $db->prepare("SELECT UserID, Forename, Surname, Conversation.ConversationID, Listing.ListingID, Item.Name,
+		$statement = $this->db->prepare("SELECT UserID, Forename, Surname, Conversation.ConversationID, Listing.ListingID, Item.Name,
 									(
 										SELECT COUNT(*)
 										FROM Message
@@ -45,11 +44,10 @@ class UserModel
 	// Returns all conversations (with users) in which you are sending an item with along with the number of unread messages you have from them
     function getConversationsSending()
 	{
-		$db = DB::getDB();
-		
+
 		$currentUser = 6; //COOKIES AREN'T WORKING
 		
-		$statement = $db->prepare("SELECT UserID, Forename, Surname, Conversation.conversation_id, Listing.ListingID, Item.Name,
+		$statement = $this->db->prepare("SELECT UserID, Forename, Surname, Conversation.conversation_id, Listing.ListingID, Item.Name,
 									(
 										SELECT COUNT(*)
 										FROM Message
@@ -75,12 +73,11 @@ class UserModel
 
 	function createConversation($listingID)
 	{
-		
-		$db = DB::getDB();
+
 		
 		$currentUser = 6; //COOKIES DON'T WORK YET
 
-		$statement = $db->prepare("INSERT INTO Conversation (FK_User_ReceiverID, FK_Listing_ListingID)
+		$statement = $this->db->prepare("INSERT INTO Conversation (FK_User_ReceiverID, FK_Listing_ListingID)
 									VALUES (:userID, :listingID)");
 
 		$statement->bindValue(':userID', $currentUser, PDO::PARAM_INT);
@@ -94,11 +91,10 @@ class UserModel
     // Returns IDs of Conversations where I am the receiver and the listing is that specified
 	function getConversationFromListing($listingID)
 	{
-		$db = DB::getDB();
 		
 		$currentUser = 6; //GET FROM COOKIES
 		
-		$statement = $db->prepare("SELECT ConversationID 
+		$statement = $this->db->prepare("SELECT ConversationID 
 									FROM Conversation
 									WHERE FK_User_ReceiverID = :userID
 									AND FK_Listing_ListingID = :listingID;");
@@ -110,6 +106,23 @@ class UserModel
 		
 		return $result;
 	}
+
+
+	function deleteConversation($conversationID)
+    {
+
+        $currentUser = 6; //COOKIES DON'T WORK YET
+
+        $statement = $this->db->prepare("
+                DELETE FROM `Conversation`
+                WHERE `Conversation`.`ConversationID` = :conversationID
+        ");
+
+        $statement->bindValue(':conversationID', $conversationID, PDO::PARAM_INT);
+
+        $statement->execute();
+
+    }
 }
 	
 
