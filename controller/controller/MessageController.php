@@ -21,8 +21,13 @@ class MessageController
 	}
 
 	
-	// Sends back messages in a given converstion
-	function generatePage($conversationID)
+
+    /**
+     * Generates the HTML for the message display part of the page
+     * @param $conversationID
+     * @return mixed (HTML)
+     */
+    function generatePage($conversationID)
 	{
 		
 		// Get the messages
@@ -62,8 +67,13 @@ class MessageController
 	}
 
 
-	// Sends a message in the conversation
-	function sendMessage($conversationID, $message)
+    /**
+     * Sends a message in the conversation
+     * @param $conversationID
+     * @param $message
+     * @return mixed (Either HTML (option 2 in messages.js) or a boolean (option1 in messages.js))
+     */
+    function sendMessage($conversationID, $message)
 	{
 
 		$giverOrReceiver = checkIfReceiver($conversationID);
