@@ -7,9 +7,14 @@ class MessageController
 	
 	function __construct($conversationID)
 	{
+
+	    //Create MessageModel instance
+        $this->model = new MessageModel();
+
         //Load Twig environment
         $loader = new Twig_Loader_Filesystem('../view/');
         $this->twig = new Twig_Environment($loader);
+
 
         //Create HTML page
 		print($this->generatePage($conversationID));
@@ -19,13 +24,12 @@ class MessageController
 	// Sends back messages in a given converstion
 	function generatePage($conversationID)
 	{
-		$Model = new MessageModel();
 		
 		// Get the messages
-		$messageResults = $Model->getMessagesFromConversation($conversationID);
+		$messageResults = $this->model->getMessagesFromConversation($conversationID);
 	
 		// Set them as read
-		$confirm = $Model->setMessagesAsRead($conversationID);
+		$confirm = $this->model->setMessagesAsRead($conversationID);
 		
 		
 		//Do all the processing of variables here
@@ -61,11 +65,10 @@ class MessageController
 	// Sends a message in the conversation
 	function sendMessage($conversationID, $message)
 	{
-		$Model = new MessageModel();
-		
+
 		$giverOrReceiver = checkIfReceiver($conversationID);
 		
-		$result = $Model->sendMessage($conversationID, $message, $giverOrReceiver);
+		$result = $this->model->sendMessage($conversationID, $message, $giverOrReceiver);
 
 		//For option 2 in messages.js
         //$html = $this->generatePage($conversationID);

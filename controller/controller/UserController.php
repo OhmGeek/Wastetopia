@@ -7,6 +7,10 @@ class UserController
 	
 	function __construct()
 	{
+	    //Create UserModel instance
+        $this->model = new UserModel();
+
+	    //Create twig loader
         $loader = new Twig_Loader_Filesystem('../view/');
         $this->twig = new Twig_Environment($loader);
 
@@ -18,15 +22,13 @@ class UserController
 	// Used when user is selected
 	function generatePage()
 	{
-		$Model = new UserModel();
-		
-		$receivingResults = $Model->getConversationsReceiving();
-		$sendingResults = $Model->getConversationsSending();
+		$receivingResults = $this->model->getConversationsReceiving();
+		$sendingResults = $this->model->getConversationsSending();
 		
 		//Create arrays of conversation details from results
-		$receiving = $this->createconversationsArray($receivingResults);
+		$receiving = $this->createConversationArray($receivingResults);
 		
-		$sending = $this->createConversationsArray($sendingResults);
+		$sending = $this->createConversationArray($sendingResults);
 
 		//Create array for Twig file
 		$output = array(
@@ -69,12 +71,17 @@ class UserController
     //Used to create a new conversation
 	function createNewConversation($otherUser, $itemName)
 	{
-		$Model = new UserModel();
-		
-		$Model->createConversation($otherUser, $itemName);
+
+		$this->model->createConversation($otherUser, $itemName);
 		
 		return;
 	}
+
+	function deleteConversation($conversationID)
+    {
+
+	    $this->model->deleteConversation($conversationID);
+    }
 	
 }
 
