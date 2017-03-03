@@ -19,8 +19,12 @@ class UserController
 	}
 	
 	
-	// Used when user is selected
-	function generatePage()
+
+    /**
+     * Generates HTML for list of people/conversations
+     * @return mixed
+     */
+    function generatePage()
 	{
 		$receivingResults = $this->model->getConversationsReceiving();
 		$sendingResults = $this->model->getConversationsSending();
@@ -42,8 +46,13 @@ class UserController
 	}
 
 
-    //Used to extract data from Model results
-	function createConversationArray($conversations)
+
+    /**
+     * Constructs an array with the correct variables, given an array returned by a function from UserModel
+     * @param $conversations
+     * @return array
+     */
+    function createConversationArray($conversations)
     {
         $results = array();
         foreach($conversations as $row)
@@ -68,16 +77,25 @@ class UserController
     }
 
 
-    //Used to create a new conversation
-	function createNewConversation($otherUser, $itemName)
+
+    /**
+     * Creates a new conversation between users for a given Listing
+     * @param $listingID
+     */
+    function createNewConversation($listingID)
 	{
 
-		$this->model->createConversation($otherUser, $itemName);
+		$this->model->createConversation(listingID);
 		
 		return;
 	}
 
-	function deleteConversation($conversationID)
+
+    /**
+     * Deletes a given conversation and it's associated messages
+     * @param $conversationID
+     */
+    function deleteConversation($conversationID)
     {
 
 	    $this->model->deleteConversation($conversationID);
