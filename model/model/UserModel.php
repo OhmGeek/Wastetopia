@@ -37,11 +37,11 @@ class UserModel
 										AND Giver_Or_Receiver = 0
 										AND `Read` = 0
 									) AS `count`
-								FROM Message, Conversation, User, Listing, UserItem, Item
+								FROM Message, Conversation, User, Listing, Item
 								WHERE Conversation.FK_User_ReceiverID = :userID 
 								AND Listing.ListingID = Conversation.FK_Listing_ListingID
 								AND Listing.FK_User_UserID = User.UserID
-								AND Listing.FK_UserItem_UserItemID = UserItem.UserItemID AND UserItem.FK_Item_ItemID = Item.ItemID
+								AND Listing.FK_Item_ItemID = Item.ItemID
 								GROUP BY Conversation.ConversationID;");
 		
 		$statement->bindValue(':userID', $currentUser, PDO::PARAM_INT);
@@ -61,7 +61,7 @@ class UserModel
 
         $currentUser = $this->getUserID();
 		
-		$statement = $this->db->prepare("SELECT UserID, Forename, Surname, Conversation.conversation_id, Listing.ListingID, Item.Name,
+		$statement = $this->db->prepare("SELECT UserID, Forename, Surname, Conversation.ConversationID, Listing.ListingID, Item.Name,
 									(
 										SELECT COUNT(*)
 										FROM Message
@@ -69,12 +69,11 @@ class UserModel
 										AND Giver_Or_Receiver = 1
 										AND `Read` = 0
 									) AS `count`
-								FROM Message, Conversation, User, Listing, UserItem, Item
+								FROM Message, Conversation, User, Listing, Item
 								WHERE Conversation.FK_User_ReceiverID = User.UserID
 								AND Listing.ListingID = Conversation.FK_Listing_ListingID
 								AND Listing.FK_User_UserID = :userID
-								AND Listing.FK_UserItem_UserItemID = UserItem.UserItemID 
-								AND UserItem.FK_Item_ItemID = Item.ItemID
+								AND Listing.FK_Item_ItemID = Item.ItemID 
 								GROUP BY Conversation.ConversationID;");
 		
 		$statement->bindValue(':userID', $currentUser, PDO::PARAM_INT);
@@ -84,6 +83,29 @@ class UserModel
 		return $statement->fetchAll(PDO::FETCH_ASSOC);
 	}
 
+    /**
+     * Gets the conversation associated with a given listing (where the current user is the receiver)
+     * @param $listingID
+     * @return mixed (the conversationID of any conversations involving this user)
+     */
+    function getConversationsFromListing($listingID)
+    {
+
+        $currentUser = $this->getUserID();
+
+        $statement = $this->db->prepare("SELECT ConversationID 
+									FROM Conversation
+									WHERE FK_User_ReceiverID = :userID
+									AND FK_Listing_ListingID = :listingID;");
+
+        $statement->bindValue(":userID", $currentUser, PDO::PARAM_INT);
+        $statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);
+
+        $result = $statement->execute()->fetchColumn();
+
+        return $result;
+    }
+
 
     /**
      * Creates a conversation for a given listing
@@ -91,7 +113,6 @@ class UserModel
      */
     function createConversation($listingID)
 	{
-
 
         $currentUser = $this->getUserID();
 
@@ -103,30 +124,6 @@ class UserModel
 		
 		$statement->execute();
 		
-	}
-	
-
-    /**
-     * Gets the conversation associated with a given listing
-     * @param $listingID
-     * @return mixed (the conversationID if it exists)
-     */
-    function getConversationFromListing($listingID)
-	{
-
-        $currentUser = $this->getUserID();
-		
-		$statement = $this->db->prepare("SELECT ConversationID 
-									FROM Conversation
-									WHERE FK_User_ReceiverID = :userID
-									AND FK_Listing_ListingID = :listingID;");
-		
-		$statement->bindValue(":userID", $currentUser, PDO::PARAM_INT);
-		$statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);
-		
-		$result = $statement->execute()->fetchColumn();
-		
-		return $result;
 	}
 
 
