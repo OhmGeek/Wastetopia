@@ -6,11 +6,17 @@ class MessageModel
 	{
 		$this->db = DB::getDB():
 	}
-	
-	function getCurrentUser(){
-		return $_COOKIES["user_id"]; //WIll change when we decide how we're storing this
-	}
-	
+
+    /**
+     * Returns the ID of the user currently logged in
+     * @return string
+     */
+    private function getUserID()
+    {
+        $reader = new UserCookieReader();
+        return $reader->get_user_id();
+    }
+
 
 
     /**
@@ -51,7 +57,7 @@ class MessageModel
     function setMessagesAsRead($conversationID)
     {
 
-		$currentUser = 6; //GET FROM COOKIES
+		$currentUser = $this->getUserID();
 
 		$statement = $this->db->prepare("UPDATE Message, Listing, Conversation
 								SET Message.`Read` = 1
@@ -81,8 +87,7 @@ class MessageModel
     function sendMessage($conversationID, $message, $giverOrReceiver)
     {
 
-		$currentUser = getCurrentUser();
-		$currentUser = 6; //COOKIES NOT WORKING
+        $currentUser = $this->getUserID();
 		 
 		$statement = $this->db->prepare("INSERT INTO Message (FK_Conversation_ConversationID, Content, Giver_Or_Receiver)
 									VALUES (:conversationID, :content, :giverOrReceiver);");
@@ -103,7 +108,7 @@ class MessageModel
      */
     function checkIfReceiver($conversationID)
     {
-		$currentUser = 6; //USE COOKIES LATER
+        $currentUser = $this->getUserID();
 		
 		$statement = $this->db->prepare("SELECT COUNT(*) AS `count` 
 								FROM Conversation
