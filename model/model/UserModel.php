@@ -8,16 +8,26 @@ class UserModel
 	{
 	    $this->db = DB::getDB();
 	}
-	
-	function getCurrentUser(){
-		return $_COOKIES["user_id"]; //WIll change when we decide how we're storing this
-	}
-	
-	// Returns all conversations (with users) in which you are receiving an item with along with the number of unread messages you have from them
-	function getConversationsReceiving()
+
+    /**
+     * Returns the ID of the user currently logged in
+     * @return string
+     */
+    private function getUserID()
+    {
+        $reader = new UserCookieReader();
+        return $reader->get_user_id();
+    }
+
+
+    /**
+     * Gets all conversations (with users) in which you are receiving an item.
+     * @return mixed (Array of conversation details, including unread messages for notifications)
+     */
+    function getConversationsReceiving()
 	{
 
-		$currentUser = 6; //COOKIES AREN'T WORKING
+		$currentUser = $this->getUserID();
 		
 		$statement = $this->db->prepare("SELECT UserID, Forename, Surname, Conversation.ConversationID, Listing.ListingID, Item.Name,
 									(
@@ -41,11 +51,15 @@ class UserModel
 		return $statement->fetchAll(PDO::FETCH_ASSOC);
 	}
 	
-	// Returns all conversations (with users) in which you are sending an item with along with the number of unread messages you have from them
+
+    /**
+     * Gets all conversations in which you are sending an item
+     * @return mixed (Array of conversation details, including unread messages for notifications)
+     */
     function getConversationsSending()
 	{
 
-		$currentUser = 6; //COOKIES AREN'T WORKING
+        $currentUser = $this->getUserID();
 		
 		$statement = $this->db->prepare("SELECT UserID, Forename, Surname, Conversation.conversation_id, Listing.ListingID, Item.Name,
 									(
@@ -71,11 +85,15 @@ class UserModel
 	}
 
 
-	function createConversation($listingID)
+    /**
+     * Creates a conversation for a given listing
+     * @param $listingID
+     */
+    function createConversation($listingID)
 	{
 
-		
-		$currentUser = 6; //COOKIES DON'T WORK YET
+
+        $currentUser = $this->getUserID();
 
 		$statement = $this->db->prepare("INSERT INTO Conversation (FK_User_ReceiverID, FK_Listing_ListingID)
 									VALUES (:userID, :listingID)");
@@ -87,12 +105,16 @@ class UserModel
 		
 	}
 	
-	// Returns the conversation_id of the conversation for a given listing
-    // Returns IDs of Conversations where I am the receiver and the listing is that specified
-	function getConversationFromListing($listingID)
+
+    /**
+     * Gets the conversation associated with a given listing
+     * @param $listingID
+     * @return mixed (the conversationID if it exists)
+     */
+    function getConversationFromListing($listingID)
 	{
-		
-		$currentUser = 6; //GET FROM COOKIES
+
+        $currentUser = $this->getUserID();
 		
 		$statement = $this->db->prepare("SELECT ConversationID 
 									FROM Conversation
@@ -108,10 +130,14 @@ class UserModel
 	}
 
 
-	function deleteConversation($conversationID)
+    /**
+     * Deletes a conversation and its associated messages
+     * @param $conversationID
+     */
+    function deleteConversation($conversationID)
     {
 
-        $currentUser = 6; //COOKIES DON'T WORK YET
+        $currentUser = $this->getUserID();
 
         $statement = $this->db->prepare("
                 DELETE FROM `Conversation`
@@ -124,9 +150,5 @@ class UserModel
 
     }
 }
-	
-
-
-
 
 ?>
