@@ -1,5 +1,7 @@
 <?php
 
+include '../DB.php';
+
 class MessageModel
 {
 	function __construct()
