@@ -11,7 +11,7 @@ class MessageModel
      * Returns the ID of the user currently logged in
      * @return string
      */
-    private function getUserID()
+    function getUserID()
     {
         $reader = new UserCookieReader();
         return $reader->get_user_id();
@@ -48,7 +48,7 @@ class MessageModel
 
 
     /**
-     * Sets all messages in a conversation sent by $otherUser to read`
+     * Sets all messages in a conversation sent by otherUser to read` (NOT SURE IF THIS IS CORRECT)
      * @param $conversationID
      * @return bool (True if successful)
      */
