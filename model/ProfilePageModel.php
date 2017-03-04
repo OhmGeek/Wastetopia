@@ -60,7 +60,7 @@ class ProfilePageModel
         $userID = $this->getUserID();
 
         $statement = $this->$db->prepare("
-            SELECT * 
+            SELECT `Listing`.*
             FROM `Listing`
             JOIN `User` ON `User`.`UserID` = `Listing`.`FK_User_UserID`
             WHERE `User`.`UserID` = :userID
@@ -85,7 +85,7 @@ class ProfilePageModel
         $userID = $this->getUserID();
 
         $statement = $this->$db->prepare("
-            SELECT *
+            SELECT `Listing`.*
             FROM `Listing`
             JOIN `Listing Transaction` ON `Listing`.`ListingID` = `Listing Transaction`.`FK_Listing_ListingID`
             JOIN `Transaction` ON `Transaction`.`TransacionID` = `Listing Transaction`.`FK_Transaction_TransactionID`
@@ -103,15 +103,14 @@ class ProfilePageModel
 
     /**
      * Gets all information about transactions for this listing
-     * Each transaction will have a time stamp and a success flag
+     * Each transaction will have an ID and a success flag
      * @param $listingID
      * @return mixed
      */
-    function getStateOfListingTransactions($listingID)
+    function getStateOfListingTransaction($listingID)
     {
         $statement = $this->$db->prepare("
-            SELECT `Transaction`.`FK_User_UserID`, `Transaction`.`Time_Of_Transaction`
-                    `Listing Transaction`.`Quantity`, `Listing Transaction`.`Success`
+            SELECT `Transaction`.`TransactionID`, `Listing Transaction`.`Success`
             FROM `Transaction`
             JOIN `Listing Transaction` ON `Transaction`.`TransactionID` = `Listing Transaction`.`FK_Transaction_TransactionID`
             JOIN `Listing` ON `Listing`.`ListingID` = `Listing Transaction`.`FK_Listing_ListingID`
@@ -125,7 +124,7 @@ class ProfilePageModel
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    
+
     /**
      * Gets all the listings the current user is watching
      * Can then use getStateOfListingTransactions() to check if the transaction should go in History or Currently Watching
@@ -171,5 +170,6 @@ class ProfilePageModel
 
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
+
 
 }
