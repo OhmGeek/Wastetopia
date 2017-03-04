@@ -74,7 +74,7 @@ class UserController
         return $results;
     }
 
-    
+
     /**
      * Creates a new conversation between users for a given Listing
      * @param $listingID
