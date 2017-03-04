@@ -6,7 +6,7 @@
  * Time: 18:40
  */
 
-include '../control/MessageController.php';
+include '../../controller/controller/MessageController.php';
 
 $routeType = $_GET["type"];
 
