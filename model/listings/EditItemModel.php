@@ -169,6 +169,21 @@ class EditItemModel
         $statement->execute();
     }
 
+
+    function editDefaultImageFlag($imageID, $value)
+    {
+        $statement = $this->db->prepare("
+            UPDATE `ItemImage`
+            JOIN `Image` ON `ImageID` = `ItemImage`.`FK_Image_ImageID`
+            SET `ItemImage`.`Is_Default` = :value
+            WHERE `Image`.`ImageID` = :imageID;
+         ");
+
+        $statement->bindValue(":imageID", $imageID, PDO::PARAM_INT);
+        $statement->bindValue(":value", $value, PDO::PARAM_INT);
+        $statement->execute();
+    }
+
     //UNSURE WHAT THESE FUNCTIONS WILL DO (IF ANYTHING)
 //
 //    /**

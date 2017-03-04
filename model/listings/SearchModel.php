@@ -49,35 +49,6 @@ class SearchModel
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
-//    /**
-//     * Searches by name, returns all general details needed for card display on search page
-//     * @param $name (String name user searches for)
-//     * @return array (array of details - ID, quantity, image url, item name, item description, post_code, userID, user's name)
-//     */
-//    function getGeneralDetailsOfListingsByName($name){
-//        $statement = $this->db->prepare("
-//            SELECT `Listing`.`ListingID`, `Listing`.`Quantity`,
-//                    `Image`.`Image_URL`,
-//                    `Item`.`Name`, `Item`.`Description`,
-//                    `Location`.`Post_Code`,
-//                    `User`.`UserID`, `User`.`Forename`, `User`.`Surname`
-//            FROM `Listing`
-//            JOIN `User` ON `Listing`.`FK_User_UserID` = `User`.`UserID`
-//            JOIN `Location` ON `Listing`.`FK_Location_LocationID` = `Location`.`LocationID`
-//            JOIN `Item` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
-//            JOIN `ItemImage` ON `Item`.`ItemID` = `ItemImage`.`FK_Item_ItemID`
-//            JOIN `Image` ON `ItemImage`.`FK_Item_ItemID` = `Image`.`ImageID`
-//            WHERE `Item`.`Name` LIKE %:name%
-//            AND `Image`.`IsDefault` = 1;
-//        ");
-//
-//        $statement->bindValue(":name", $name, PDO::PARAM_INT);
-//
-//        $statement->execute();
-//
-//        return $statement->fetchAll(PDO::FETCH_ASSOC);
-//    }
-//
 
 
 
@@ -125,7 +96,7 @@ class SearchModel
             JOIN `Item` ON `ItemImage`.`FK_Item_ItemID` = `Item`.`ItemID`
             JOIN `Listing` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
             WHERE `Listing`.`ListingID` = :listingID
-            AND `Image`.`IsDefault` = 1;
+            AND `Image`.`Is_Default` = 1;
         ");
 
         $statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);

@@ -101,20 +101,4 @@ class ViewItemModel
     }
 
 
-//    function getAllInOneQuery($listingID){
-//        $statement = $this->db->prepare("
-//            SELECT *
-//            FROM `Listing`, `Location`, `Item`, `Barcode`
-//            WHERE `Barcode`.`FK_Item_ItemID` = `Item`.`ItemID`
-//            AND `Listing`.`FK_Location_LocationID` = `Location`.`LocationID`
-//            AND `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
-//            AND `Listing`.`ListingID` = :listingID;
-//        ");
-//
-//        $statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);
-//
-//        $statement->execute();
-//
-//        return $statement->fetchAll(PDO::FETCH_ASSOC);
-//    }
 }
