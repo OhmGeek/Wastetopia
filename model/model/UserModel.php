@@ -9,6 +9,7 @@ class UserModel
 	    $this->db = DB::getDB();
 	}
 
+
     /**
      * Returns the ID of the user currently logged in
      * @return string
@@ -82,6 +83,7 @@ class UserModel
 		
 		return $statement->fetchAll(PDO::FETCH_ASSOC);
 	}
+
 
     /**
      * Gets the conversation associated with a given listing (where the current user is the receiver)

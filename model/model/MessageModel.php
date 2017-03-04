@@ -18,7 +18,6 @@ class MessageModel
     }
 
 
-
     /**
      * Return all messages in the conversation betweeen you and another user
      * @param $conversationID
@@ -46,7 +45,6 @@ class MessageModel
 
 		return $statement->fetchAll(PDO::FETCH_ASSOC);
 	}
-
 
 
     /**
@@ -122,6 +120,85 @@ class MessageModel
 		
 		return $numberRows > 0;
 	}
+
+
+    /**
+     * Gets the name of the other person in the conversation and the name of the item being given away
+     * @param $conversationID
+     * @return mixed (UserId, name, itemName)
+     */
+    function getConversationDetails($conversationID)
+    {
+        $currentUser = $this->getUserID();
+
+        $statement = $this->db->prepare("
+                                SELECT UserID, Forename, Surname, Item.Name
+								FROM Conversation, User, Listing, Item
+								WHERE Listing.ListingID = Conversation.FK_Listing_ListingID
+								AND ((Conversation.FK_User_ReceiverID = User.UserID AND Listing.FK_User_UserID = :userID)
+								  OR (Conversation.FK_User_ReceiverID = :userID2 AND Listing.FK_User_UserID = User.UserID))
+								AND Listing.FK_Item_ItemID = Item.ItemID
+								AND Conversation.ConversationID = :conversationID;
+							");
+
+        $statement->bindValue(':userID', $currentUser, PDO::PARAM_INT);
+        $statement->bindValue(':userID2', $currentUser, PDO::PARAM_INT);
+        $statement->bindValue(':conversationID', $conversationID, PDO::PARAM_INT);
+
+        $statement->execute();
+
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
+    /**
+     * Gets general details needed for side-panel on messages page
+     * @param $conversationID
+     * @return mixed
+     */
+    function getListingDetails($conversationID)
+    {
+        $statement = $this->db->prepare("
+            SELECT `Item`.`Name` as ItemName, `Item`.`Use_By_Date`
+            `Location`.`Name` as LocationName, `Location`.Post_Code,
+            `Listing`.`ListingID`
+            FROM `Conversation`
+            JOIN `Listing` ON `Listing`.`ListingID` = `Conversation`.`FK_Listing_ListingID`
+            JOIN `Item` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
+            JOIN `Location` ON `Listing`.`FK_Location_LocationID` = `Location`.`LocationID`
+            WHERE `Conversation`.`ConversationID` = :conversationID
+        ");
+
+        $statement->bindValue(":conversationID", $conversationID, PDO::PARAM_INT);
+
+        $statement->execute();
+
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
+    /**
+     * Returns the default image for this listing (if there is one)
+     * @param $listingID
+     * @return mixed
+     */
+    function getDefaultImage($listingID){
+        $statement = $this->db->prepare("
+            SELECT `Image`.`Image_URL`, 
+            FROM `Image`
+            JOIN `ItemImage` ON `ItemImage`.`FK_Image_ImageID` = `Image`.`ImageID`
+            JOIN `Item` ON `ItemImage`.`FK_Item_ItemID` = `Item`.`ItemID`
+            JOIN `Listing` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
+            WHERE `Listing`.`ListingID` = :listingID
+            AND `Image`.`Is_Default` = 1;
+        ");
+
+        $statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);
+
+        $statement->execute();
+
+        return $statement->fetchColumn();
+    }
 
 }
 ?>
