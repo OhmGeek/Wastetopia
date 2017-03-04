@@ -1,12 +1,10 @@
-<div id="message-location">
-    {% for message in messages %}
-        <div class="{% if message.sender == 1 %}sender{% else %}reciever">
-            <div class="content">
-                {{message.content}}
-            </div>
-            <div class="time-stamp">
-                {{message.timeStamp}}
-            </div>
+{% for message in messages %}
+    <div class="{% if message.sender == 1 %}sender{% else %}reciever">
+        <div class="content">
+            {{message.content}}
         </div>
-    {% endfor %}
-</div>
+        <div class="time-stamp">
+            {{message.timeStamp}}
+        </div>
+    </div>
+{% endfor %}
