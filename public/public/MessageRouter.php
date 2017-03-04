@@ -6,17 +6,24 @@
  * Time: 18:40
  */
 
-include '../../controller/controller/MessageController.php';
+include '../control/MessageController.php';
 
 $routeType = $_GET["type"];
 
-//Polling for messages
-//Return HTML for messages in conversation
-if ($routeType == "poll"){
+
+if ($routeType == "view"){
+    //View the message page
+    $controller = new MessageController();
+    echo($controller->generatePage($conversationID));
+}
+elseif($routeType == "poll"){
+    //Polling for messages
+    //Return HTML for messages in conversation
     $conversationID = $_GET["conversationID"];
     $controller = new MessageController();
     echo($controller->generateMessageDisplay($conversationID));
 }elseif($routeType == "send"){
+    //Send a message
     $conversationID = $_GET["conversationID"];
     $message = $_GET["message"];
     $controller = new MessageController();
