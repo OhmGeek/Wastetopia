@@ -687,11 +687,8 @@
     padding: 10px;
 }
 
-.reciver {
+.reciever {
     padding: 10px;
-}
-
-.rec-message {
     width: 75%;
     margin-left: auto;
 }
@@ -703,7 +700,7 @@
     background-color: white;
 }
 
-.reciver .content {
+.reciever .content {
     background-color: #2658BC;
     color: white;
 }

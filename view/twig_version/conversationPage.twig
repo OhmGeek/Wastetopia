@@ -26,6 +26,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body style="height: 100vh;">
+
 	<nav class="navbar navbar-default navbar-fixed-top">
 		<div class="container-fluid">
 			<div class="navbar-header">
@@ -58,6 +59,7 @@
 			</div>
 		</div>
 	</nav>
+
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-xs-12 col-md-9 zero-padding page-height">
@@ -66,27 +68,19 @@
 						<div class="btn-group-sm centerAll">
 							<button type="button" id="goBack" class="btn btn-default btn-fab btn-nav"><i class="material-icons">arrow_back</i></button>
 							<div class="centerAll user">
-								<img src="flowery.jpg" class="user-image"/>
-								<div class="user-name">Mark Smith</div>
+								<img src="{{senderImage}}" class="user-image"/>
+								<div class="user-name">{{senderName}}</div>
 							</div>
 							<button type="button" id="viewItem" class="btn btn-default btn-fab"><i class="material-icons">restaurant</i></button>
 						</div>
 					</div>
 					<div id="message-location">
-						<div class="sender">
+						<div class="{% if currentUser == 0 %}sender{% else %}reciever">
 							<div class="content">
-								Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce viverra placerat suscipit. Fusce egestas mattis orci sed posuere. Integer sed velit ac elit interdum tempor. Ut nec tellus non libero congue luctus id eget mi. Vestibulum ac tempor eros, non egestas odio. Mauris condimentum sapien at dolor molestie lacinia.
+								{{messageContent}}
 							</div>
 							<div class="time-stamp">
-								2:00 pm
-							</div>
-						</div>
-						<div class="reciever">
-							<div class="content">
-								Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce viverra placerat suscipit. Fusce egestas mattis orci sed posuere. Integer sed velit ac elit interdum tempor. Ut nec tellus non libero congue luctus id eget mi. Vestibulum ac tempor eros, non egestas odio. Mauris condimentum sapien at dolor molestie lacinia.
-							</div>
-							<div class="time-stamp" align="right">
-								3:00 pm
+								{{timeStamp}}
 							</div>
 						</div>
 					</div>
@@ -113,26 +107,17 @@
 			<div class="col-md-3 zero-padding page-height">
 				<div class="item-frame">
 					<div class="default-pic">
-						<img src="flowery.jpg" class="item-pic">
+						<img src="{{defaultImage}}" class="item-pic">
 					</div>
 					<div class="basic-info">
 						<div class="item-name">
-							Sweet Potatoes
+							{{itemName}}
 						</div>
 						<div class="description">
-							<span class="info">Type: </span>fruit
+							<span class="info">Expiry date: </span> {{expiryDate}}
 						</div>
 						<div class="description">
-							<span class="info">State: </span>fresh, unused
-						</div>
-						<div class="description">
-							<span class="info">Quantity: </span>1 
-						</div>
-						<div class="description">
-							<span class="info">Expiry date: </span>25/11/2019
-						</div>
-						<div class="description">
-							<span class="info">Pick up location: </span>London, UK
+							<span class="info">Pick up location: </span> {{location}}
 						</div>
 					</div>
 					<div class="goToView">
@@ -142,6 +127,5 @@
 			</div>
 		</div>
 	</div>
-	
 </body>
 </html>
