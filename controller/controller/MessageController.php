@@ -1,6 +1,6 @@
 <?php
 
-include '../model/model/MessageModel.php';
+include '../../model/model/MessageModel.php';
 
 class MessageController
 {
