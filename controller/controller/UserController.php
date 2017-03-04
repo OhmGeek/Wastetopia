@@ -18,7 +18,6 @@ class UserController
 		print($this->generatePage());
 	}
 	
-	
 
     /**
      * Generates HTML for list of people/conversations
@@ -44,7 +43,6 @@ class UserController
 		$template = $this->twig->loadTemplate('user.twig');
 		return $template->render($output);
 	}
-
 
 
     /**
@@ -76,8 +74,7 @@ class UserController
         return $results;
     }
 
-
-
+    
     /**
      * Creates a new conversation between users for a given Listing
      * @param $listingID

@@ -17,17 +17,47 @@ class MessageController
 
 
         //Create HTML page
-		print($this->generatePage($conversationID));
+		//print($this->generatePage($conversationID));
 	}
 
-	
 
     /**
-     * Generates the HTML for the message display part of the page
+     * Generates (and prints) HTML for messaging page with initial conversation loaded
+     * @param $conversationID
+     */
+    function generatePage($conversationID)
+    {
+        //HTML For message box display
+        $messageList = $this->generateMessageDisplay($conversationID);
+
+        //HTML for listing view
+        $listingPanel = $this->generateItemViewPanel($conversationID);
+
+        //Get details of conversation (names)
+        $details = $this->model->getConversationDetails($conversationID);
+        $userName = $details["Forename"]." ".$details["Surname"];
+        $itemName = $details["name"];
+        $conversationName = $userName." - ".$itemName;
+
+
+
+        $output = array("conversationName"=>$conversationName,
+            "conversationID" =>$conversationID,  //Needed so page can poll for new messages with the ID
+            "message-list"=>$messageList,
+            "listingPanel"=>$listingPanel);
+
+        //Load template and print result
+        $template = $this->twig->loadTemplate('MAIN TWIG VIEW HERE');
+        print($template->render($output));
+    }
+
+
+    /**
+     * Generates the HTML for the message box part of the page (Use this function to update the messages on the page)
      * @param $conversationID
      * @return mixed (HTML)
      */
-    function generatePage($conversationID)
+    function generateMessageDisplay($conversationID)
 	{
 		
 		// Get the messages
@@ -36,7 +66,7 @@ class MessageController
 		// Set them as read
 		$confirm = $this->model->setMessagesAsRead($conversationID);
 		
-		
+
 		//Do all the processing of variables here
 		$messages = array();
 		
@@ -53,18 +83,41 @@ class MessageController
 			
 			array_push($messages, $message);
 		}
-		
+
 		$output = array("messages" => $messages);
-	
-		$loader = new Twig_Loader_Filesystem('../view/');
-		$twig = new Twig_Environment($loader);
+
 		
-		$template = $twig->loadTemplate('message.twig');
+		$template = $this->twig->loadTemplate('MESSAGE_BOX_TWIG');
 
 		//print_r(json_encode($output));
 		return $template->render($output);
 		
 	}
+
+
+    /**
+     * Generates HTML for listing view side panel on messaging page
+     * @param $conversationID
+     * @return mixed
+     */
+    function generateItemViewPanel($conversationID)
+    {
+        $generalDetails = $this->model->getListingDetails($conversationID);
+        $listing = $generalDetails[0]; //ListingID, ItemName, Use_By_Date, LocationName, Post_Code
+        $listingID = $listing["ListingID"];
+        $defaultImage = $this->model->getDefaultImage($listingID);
+
+        //Generate array of details
+        $output = array();
+
+
+
+        $template = $this->twig->loadTemplate('PANEL_TWIG');
+
+        //print_r(json_encode($output));
+        return $template->render($output);
+
+    }
 
 
     /**
