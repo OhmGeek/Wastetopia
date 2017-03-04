@@ -5,7 +5,7 @@ include '../model/MessageModel.php';
 class MessageController
 {
 	
-	function __construct($conversationID)
+	function __construct()
 	{
 
 	    //Create MessageModel instance
@@ -15,9 +15,6 @@ class MessageController
         $loader = new Twig_Loader_Filesystem('../view/');
         $this->twig = new Twig_Environment($loader);
 
-
-        //Create HTML page
-		//print($this->generatePage($conversationID));
 	}
 
 
@@ -28,31 +25,34 @@ class MessageController
     function generatePage($conversationID)
     {
         //HTML For message box display
-        $messageList = $this->generateMessageDisplay($conversationID);
+        $messageDisplayHTML = $this->generateMessageDisplay($conversationID);
 
-        //HTML for listing view
+        //Array of details for listing view
         $listingPanel = $this->generateItemViewPanel($conversationID);
 
         //Get details of conversation (names)
         $details = $this->model->getConversationDetails($conversationID);
         $userName = $details["Forename"]." ".$details["Surname"];
         //$itemName = $details["name"];
-        $conversationName = $userName;//." - ".$itemName;
+        $userID = $details["UserID"]; //ID of other user in conversation
+        $senderImage = $this->model->getUserImage($userID); //Profile picture of other user
+        $senderName = $userName;//." - ".$itemName;
 
 
-        $output = array("conversationName"=>$conversationName,
+        $output = array("senderName"=>$senderName,
+            "senderImage"=>$senderImage,
             "conversationID" =>$conversationID,  //Needed so page can poll for new messages with the ID
-            "message-list"=>$messageList,
+            "messages"=>$messageDisplayHTML,
             "listingPanel"=>$listingPanel);
 
         //Load template and print result
-        $template = $this->twig->loadTemplate('MAIN TWIG VIEW HERE');
+        $template = $this->twig->loadTemplate('MessagePag.twig');
         print($template->render($output));
     }
 
 
     /**
-     * Generates the HTML for the message box part of the page (Use this function to update the messages on the page)
+     * Generates the HTML for the messages in the message box (Use this function to update the messages on the page)
      * @param $conversationID
      * @return mixed (HTML)
      */
@@ -78,16 +78,16 @@ class MessageController
 			
 			$message = array();
 			$message['content'] = $messageContent;
-			$message['sent'] = ($messageSenderID == $currentUser); //1 if user sent the message
-            $message['time'] = $messageContent["time"]; //Time stamp
+			$message['sender'] = ($messageSenderID == $currentUser); //1 if user sent the message
+            $message['timeStamp'] = $messageContent["time"]; //Time stamp
 			
 			array_push($messages, $message);
 		}
 
 		$output = array("messages" => $messages);
 
-		
-		$template = $this->twig->loadTemplate('MESSAGE_BOX_TWIG');
+		//MessageDisplay.twig
+		$template = $this->twig->loadTemplate('MessageDisplay.twig');
 
 		//print_r(json_encode($output));
 		return $template->render($output);
@@ -96,7 +96,7 @@ class MessageController
 
 
     /**
-     * Generates HTML for listing view side panel on messaging page
+     * Generates the output array for listing view side panel (for use in twig file)
      * @param $conversationID
      * @return mixed
      */
@@ -106,18 +106,18 @@ class MessageController
         $listing = $generalDetails[0]; //ListingID, ItemName, Use_By_Date, LocationName, Post_Code
         $listingID = $listing["ListingID"];
         $defaultImage = $this->model->getDefaultImage($listingID);
-
+        $itemName = $listing["ItemName"];
+        $expiryDate = $listing["Use_By_Date"];
+        $locationName = $listing["LocationName"];
+        $postCode = $listing["Post_Code"];
 
         //Generate array of details
-        $output = array();
+        $output = array("defaultImage" => $defaultImage,
+                        "itemName" => $itemName,
+                        "expiryDate"=> $expiryDate,
+                        "location" => $locationName.", ".$postCode);
 
-
-
-        $template = $this->twig->loadTemplate('PANEL_TWIG');
-
-        //print_r(json_encode($output));
-        return $template->render($output);
-
+        return $output;
     }
 
 
