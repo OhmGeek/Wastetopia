@@ -36,9 +36,8 @@ class MessageController
         //Get details of conversation (names)
         $details = $this->model->getConversationDetails($conversationID);
         $userName = $details["Forename"]." ".$details["Surname"];
-        $itemName = $details["name"];
-        $conversationName = $userName." - ".$itemName;
-
+        //$itemName = $details["name"];
+        $conversationName = $userName;//." - ".$itemName;
 
 
         $output = array("conversationName"=>$conversationName,
@@ -59,15 +58,16 @@ class MessageController
      */
     function generateMessageDisplay($conversationID)
 	{
-		
-		// Get the messages
-		$messageResults = $this->model->getMessagesFromConversation($conversationID);
-	
+
+	    $currentUser = $this->model->getUserID();
+
 		// Set them as read
 		$confirm = $this->model->setMessagesAsRead($conversationID);
-		
 
-		//Do all the processing of variables here
+        // Get the messages
+        $messageResults = $this->model->getMessagesFromConversation($conversationID);
+
+        //Do all the processing of variables here
 		$messages = array();
 		
 		foreach($messageResults as $row)
@@ -78,8 +78,8 @@ class MessageController
 			
 			$message = array();
 			$message['content'] = $messageContent;
-			$message['fromID'] = $messageSenderID;
-			$message['fromName'] = $messageSenderName;
+			$message['sent'] = ($messageSenderID == $currentUser); //1 if user sent the message
+            $message['time'] = $messageContent["time"]; //Time stamp
 			
 			array_push($messages, $message);
 		}
@@ -106,6 +106,7 @@ class MessageController
         $listing = $generalDetails[0]; //ListingID, ItemName, Use_By_Date, LocationName, Post_Code
         $listingID = $listing["ListingID"];
         $defaultImage = $this->model->getDefaultImage($listingID);
+
 
         //Generate array of details
         $output = array();
