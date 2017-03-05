@@ -4,7 +4,7 @@
             <div class="content">
                 {{message.content}}
             </div>
-            <div class="time-stamp">
+            <div class="time-stamp" align="{% if message.sender == 1 %}left{% else %}right">
                 {{message.timeStamp}}
             </div>
         </div>

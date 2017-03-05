@@ -862,11 +862,19 @@
     font-size: 30px;
 }
 
-.badge{
+.conversation .badge {
     margin-right: 5px;
     padding: 5px 10px;
     font-size: 16px;
     background-color: white;
     color: #2658BC;
     border-radius: 10px;
+}
+
+.noMessage {
+    padding: 10px;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
 }

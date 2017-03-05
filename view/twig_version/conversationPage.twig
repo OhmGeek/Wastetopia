@@ -80,7 +80,7 @@
 							<div class="content">
 								{{messageContent}}
 							</div>
-							<div class="time-stamp">
+							<div class="time-stamp" {% if message.sender != 1 %}align="right">
 								{{timeStamp}}
 							</div>
 						</div>
@@ -105,7 +105,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-md-3 zero-padding page-height">
+			<div class="col-xs-12 col-md-3 zero-padding page-height">
 				<div class="item-frame">
 					<div class="default-pic">
 						<img src="{{defaultImage}}" class="item-pic">
