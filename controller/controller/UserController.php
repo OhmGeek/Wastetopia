@@ -1,6 +1,10 @@
 <?php
 
-include '../model/UserModel.php';
+include '../../model/model/UserModel.php';
+include '../../vendor/autoload.php';
+use Twig_Loader_Filesystem;
+use Twig_Environment;
+
 
 class UserController
 {
@@ -63,11 +67,10 @@ class UserController
             $unread = $row['count']; //Not sure whether to send back the actual number or a boolean or css style attribute
 
             $conversation = array();
-            $conversation['otherUserId'] = $otherUser;
             $conversation['conversationID'] = $conversationID;
             $conversation['name'] = $firstName." ".$lastName;
             $conversation['itemName'] = $itemName;
-            $conversation['notification'] = $unread;//????? Undecided
+            $conversation['notification'] = $unread;//number of unread messages
 
             array_push($results, $conversation);
         }
