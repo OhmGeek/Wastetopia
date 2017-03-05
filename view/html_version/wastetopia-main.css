@@ -547,10 +547,27 @@
 
 .img-checkbox {
     position: absolute;
-    top: 10px;
-    left: 15px;
+    top: 7px;
+    left: 11px;
     padding: 0;
     margin: 0;
+}
+
+.checkbox .checkbox-material .check,
+label.checkbox-inline .checkbox-material .check {
+    background-color: white;
+    border-color: #31353D;
+}
+
+.checkbox input[type=checkbox]:checked + .checkbox-material .check,
+label.checkbox-inline input[type=checkbox]:checked + .checkbox-material .check {
+  color: white;
+  background-color: #31353D;
+  border-color: #31353D;
+}
+.checkbox input[type=checkbox]:checked + .checkbox-material .check:before,
+label.checkbox-inline input[type=checkbox]:checked + .checkbox-material .check:before {
+  color: white;
 }
 
 .img-box {
