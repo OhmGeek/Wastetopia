@@ -856,10 +856,15 @@
     margin-right: 0;
     background-color: transparent;
     border: none;
+    padding: 0;
 }
 
 .conversation .btn-nav i {
     font-size: 30px;
+}
+
+.conversation #chatBtn {
+    text-decoration: none;
 }
 
 .conversation .badge {
