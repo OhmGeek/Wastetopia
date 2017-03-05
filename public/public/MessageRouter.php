@@ -7,6 +7,7 @@
  */
 
 include '../../controller/controller/MessageController.php';
+include '../../controller/controller/UserController.php';
 
 $routeType = $_GET["type"];
 
@@ -15,6 +16,9 @@ if ($routeType == "view"){
     //View the message page
     $controller = new MessageController();
     echo($controller->generatePage($conversationID));
+}elseif ($routeType = "pollUsers"){
+    //Poll for new conversations/notifications
+    $controller = new UserController.php;
 }
 elseif($routeType == "poll"){
     //Polling for messages
