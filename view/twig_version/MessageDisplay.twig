@@ -1,10 +1,10 @@
 {% for message in messages %}
-    <div class="{% if message.sender == 1 %}sender{% else %}reciever">
-        <div class="content">
-            {{message.content}}
-        </div>
-        <div class="time-stamp">
-            {{message.timeStamp}}
-        </div>
+<div class="{% if message.sender != 1 %}sender{% else %}reciever{% endif %}">
+    <div class="content">
+        {{message.content}}
     </div>
+    <div class="time-stamp" align="{% if message.sender != 1 %}left{% else %}right{% endif %}">
+        {{message.timeStamp}}
+    </div>
+</div>
 {% endfor %}
