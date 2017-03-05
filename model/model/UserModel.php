@@ -2,6 +2,8 @@
 
 // Get users who you have a current conversation with
 
+include 'DB.php';
+
 class UserModel
 {
 	function __construct()
