@@ -780,3 +780,93 @@
 .goToView{
     padding: 20px 0;
 }
+
+/* conversation listing page */
+/* general style */
+.title {
+    padding: 80px 20px 10px 20px;
+    background-color: transparent;
+    font-size: 30px;
+    color: #1C1D21;
+    font-weight: bold;
+}
+
+.nav-tabs > li.active,
+.nav-tabs > li.active:hover,
+.nav-tabs > li.active:focus{
+    background-color: #2658BC;  
+} 
+
+.nav-tabs > li.active > a,
+.nav-tabs > li.active > a:hover,
+.nav-tabs > li.active > a:focus{
+    color: white !important; 
+} 
+
+.nav-tabs > li,
+.nav-tabs > li:hover,
+.nav-tabs > li:focus{
+    background-color: white;  
+} 
+
+.nav-tabs > li > a,
+.nav-tabs > li > a:hover,
+.nav-tabs > li > a:focus{
+    color: black !important; 
+} 
+
+.tab-content {
+    flex:1;
+    background-color: #2658BC;
+    padding-top: 2px; 
+    overflow: scroll;
+}
+
+/* list style */
+.conversation-list .user-image{
+    height: 60px;
+    width: 60px;
+    overflow: hidden;
+    border-radius: 50%;
+    border: 2px solid white;
+}
+
+.conversation {
+    padding: 10px;
+    border-bottom: 2px solid #2658BC;
+    background-color: rgba(0,0,0,0.3);
+}
+
+.conv-user {
+    margin-left: 10px;
+    margin-right: auto;
+}
+
+.conv-user .user-name {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.conv-user .item {
+    font-weight: bold;
+}
+
+.conversation .btn-nav {
+    margin-left: 10px;
+    margin-right: 0;
+    background-color: transparent;
+    border: none;
+}
+
+.conversation .btn-nav i {
+    font-size: 30px;
+}
+
+.badge{
+    margin-right: 5px;
+    padding: 5px 10px;
+    font-size: 16px;
+    background-color: white;
+    color: #2658BC;
+    border-radius: 10px;
+}
