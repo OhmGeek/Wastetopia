@@ -57,7 +57,7 @@ class SearchModel
             SELECT `Listing`.`ListingID`
             FROM `Listing`
             JOIN `Location` ON `Listing`.`FK_Location_LocationID` = `Location`.`LocationID`
-            WHERE `Location`.`Post_Code` = :postCode;
+            WHERE `Location`.`Post_Code` = ":postCode";
         ");
 
         $statement->bindValue(":postCode", $postCode, PDO::PARAM_INT);
