@@ -37,8 +37,6 @@ class SearchModel
             FROM `Listing`
             JOIN `Location` ON `Listing`.`FK_Location_LocationID` = `Location`.`LocationID`
             JOIN `Item` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
-            JOIN `ItemImage` ON `Item`.`ItemID` = `ItemImage`.`FK_Item_ItemID`
-            JOIN `Image` ON `ItemImage`.`FK_Item_ItemID` = `Image`.`ImageID`
             WHERE `Item`.`Name` LIKE %:name%;
         ");
 
@@ -62,7 +60,6 @@ class SearchModel
     function getCardDetails($listingID){
         $statement = $this->db->prepare("
             SELECT `Listing`.`ListingID`, `Listing`.`Quantity`, 
-                    `Image`.`Image_URL`, 
                     `Item`.`Name`, `Item`.`Description`, 
                     `Location`.`Post_Code`
                     `User`.`UserID`, `User`.`Forename`, `User`.`Surname`
@@ -70,8 +67,6 @@ class SearchModel
             JOIN `User` ON `Listing`.`FK_User_UserID` = `User`.`UserID`
             JOIN `Location` ON `Listing`.`FK_Location_LocationID` = `Location`.`LocationID`
             JOIN `Item` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
-            JOIN `ItemImage` ON `Item`.`ItemID` = `ItemImage`.`FK_Item_ItemID`
-            JOIN `Image` ON `ItemImage`.`FK_Item_ItemID` = `Image`.`ImageID`
             WHERE `Listing`.`ListingID` = :listingID;
         ");
 
