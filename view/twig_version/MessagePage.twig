@@ -17,13 +17,16 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
     <!-- Bootstrap Material Design -->
-    <link href="bootstrap-material-design-master/dist/css/bootstrap-material-design.css" rel="stylesheet">
-    <link href="bootstrap-material-design-master/dist/css/ripples.min.css" rel="stylesheet">
+    <link href="../../public/bootstrap-material-design-master/dist/css/bootstrap-material-design.css" rel="stylesheet">
+    <link href="../../public/bootstrap-material-design-master/dist/css/ripples.min.css" rel="stylesheet">
     <link href="http://fezvrasta.github.io/snackbarjs/dist/snackbar.min.css" rel="stylesheet">
 
     <!-- Wastopia Custom CSS -->
-    <link rel="stylesheet" href="wastetopia-main.css"/>
+    <link rel="stylesheet" href="../../public/wastetopia-main.css"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--Custom JS-->
+    <script src = "../../public/public/MessagePage.js"></script>
 </head>
 <body style="height: 100vh;">
 
@@ -33,7 +36,7 @@
             <div class="coversation-frame">
                 <div id="conversation-header">
                     <div class="btn-group-sm centerAll">
-                        <button type="button" id="goBack" class="btn btn-default btn-fab btn-nav"><i class="material-icons">arrow_back</i></button>
+                        <button type="button" id="goBack" class="btn btn-default btn-fab btn-nav" onclick = "window.history.back();"><i class="material-icons">arrow_back</i></button>
                         <div class="centerAll user">
                             <img src="{{senderImage}}" class="user-image"/>
                             <div class="user-name">{{senderName}}</div>
@@ -45,7 +48,7 @@
 
                 <!-- HTML from MessageController.generateMessageDisplay($conversationID)-->
                 <div id="message-location">
-                    {{messages}}
+                    {{messages|raw}}
                 </div>
 
                 <!--Form with textarea and send button-->
@@ -59,7 +62,7 @@
                                             <textarea id="message" rows="3" name="message"></textarea>
                                         </div>
                                         <div class="col-xs-2 btn-div zero-padding">
-                                            <button type="submit" id="sendBtn" class="btn btn-raised btn-default btn-send-message">Send</button>
+                                            <button type = "button" id="sendBtn" class="btn btn-raised btn-default btn-send-message">Send</button>
                                         </div>
                                     </div>
                                 </div>
@@ -71,7 +74,7 @@
         </div>
 
         <!--Item view side panel-->
-        <div class="col-xs-12 col-md-3 zero-padding page-height">
+        <div class="col-md-3 zero-padding page-height">
             <div class="item-frame">
                 <div class="default-pic">
                     <img src="{{listingPanel.defaultImage}}" class="item-pic">
