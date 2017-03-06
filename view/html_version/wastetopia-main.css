@@ -504,7 +504,6 @@
 }
 
 .item-details-section {
-    height: 600px;
     background-color: white;
     padding: 10px;
     margin: 0;
@@ -568,6 +567,21 @@ label.checkbox-inline input[type=checkbox]:checked + .checkbox-material .check {
 .checkbox input[type=checkbox]:checked + .checkbox-material .check:before,
 label.checkbox-inline input[type=checkbox]:checked + .checkbox-material .check:before {
   color: white;
+}
+
+.select2-container--default.select2-container--focus .select2-selection--multiple {
+    border-top: none !important;
+    border-right: none !important;
+    border-left: none !important;
+    border-bottom: 1px solid red !important;
+}
+
+.select2-container--default .select2-selection--multiple {
+    border-top: none !important;
+    border-right: none !important;
+    border-left: none !important;
+    border-bottom: 1px solid black !important;
+    border-radius: 0 !important;
 }
 
 .img-box {
