@@ -1,9 +1,7 @@
 <?php
 
-namespace Wastetopia\Controller;
-use MessageModel;
-use Twig_Environment;
-use Twig_Loader_Filesystem;
+include '../../vendor/autoload.php';
+include '../../model/model/MessageModel.php';
 
 
 class MessageController
@@ -16,7 +14,7 @@ class MessageController
         $this->model = new MessageModel();
 
         //Load Twig environment
-        $loader = new Twig_Loader_Filesystem('../view/');
+        $loader = new Twig_Loader_Filesystem('../../view/twig_version/');
         $this->twig = new Twig_Environment($loader);
 
 	}
@@ -28,20 +26,21 @@ class MessageController
      */
     function generatePage($conversationID)
     {
+
         //HTML For message box display
         $messageDisplayHTML = $this->generateMessageDisplay($conversationID);
-
+	
         //Array of details for listing view
         $listingPanel = $this->generateItemViewPanel($conversationID);
 
         //Get details of conversation (names)
         $details = $this->model->getConversationDetails($conversationID);
+	$details = $details[0];
         $userName = $details["Forename"]." ".$details["Surname"];
-        //$itemName = $details["name"];
         $userID = $details["UserID"]; //ID of other user in conversation
         $senderImage = $this->model->getUserImage($userID); //Profile picture of other user
         $senderName = $userName;//." - ".$itemName;
-
+	
 
         $output = array("senderName"=>$senderName,
             "senderImage"=>$senderImage,
@@ -50,7 +49,7 @@ class MessageController
             "listingPanel"=>$listingPanel);
 
         //Load template and print result
-        $template = $this->twig->loadTemplate('MessagePag.twig');
+        $template = $this->twig->loadTemplate('MessagePage.twig');
         print($template->render($output));
     }
 
@@ -71,24 +70,30 @@ class MessageController
         // Get the messages
         $messageResults = $this->model->getMessagesFromConversation($conversationID);
 
+	
         //Do all the processing of variables here
 		$messages = array();
 		
 		foreach($messageResults as $row)
 		{
-			$messageContent = $row['content'];
+			$messageContent = $row['Content'];
 			$messageSenderID = $row['UserID'];
 			$messageSenderName = $row['Forename']." ".$row['Surname'];
-			
+			$messageTimeStamp = $row["Time"];
+
 			$message = array();
 			$message['content'] = $messageContent;
-			$message['sender'] = ($messageSenderID == $currentUser); //1 if user sent the message
-            $message['timeStamp'] = $messageContent["time"]; //Time stamp
+			
+
+			$message['sender'] = ($messageSenderID == $currentUser); //1 if current user sent the message
+            		$message['timeStamp'] = $messageTimeStamp;
+			
 			
 			array_push($messages, $message);
 		}
 
 		$output = array("messages" => $messages);
+
 
 		//MessageDisplay.twig
 		$template = $this->twig->loadTemplate('MessageDisplay.twig');
@@ -107,11 +112,13 @@ class MessageController
     function generateItemViewPanel($conversationID)
     {
         $generalDetails = $this->model->getListingDetails($conversationID);
+	
         $listing = $generalDetails[0]; //ListingID, ItemName, Use_By_Date, LocationName, Post_Code
         $listingID = $listing["ListingID"];
+
         $defaultImage = $this->model->getDefaultImage($listingID);
         $itemName = $listing["ItemName"];
-        $expiryDate = $listing["Use_By_Date"];
+        $expiryDate = $listing["Use_By"];
         $locationName = $listing["LocationName"];
         $postCode = $listing["Post_Code"];
 
@@ -133,11 +140,11 @@ class MessageController
      */
     function sendMessage($conversationID, $message)
 	{
-
+		
 		$giverOrReceiver = $this->model->checkIfReceiver($conversationID);
 		
 		$result = $this->model->sendMessage($conversationID, $message, $giverOrReceiver);
-
+		
 		//For option 2 in messages.js
         //$html = $this->generatePage($conversationID);
 		

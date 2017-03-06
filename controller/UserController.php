@@ -1,9 +1,6 @@
 <?php
-namespace Wastetopia\Controller;
-use Twig_Loader_Filesystem;
-use Twig_Environment;
-use Wastetopia\Model\UserModel;
 
+include '../../model/model/UserModel.php';
 
 class UserController
 {
@@ -14,11 +11,9 @@ class UserController
         $this->model = new UserModel();
 
 	    //Create twig loader
-        $loader = new Twig_Loader_Filesystem('../view/');
+        $loader = new Twig_Loader_Filesystem('../../view/twig_version/');
         $this->twig = new Twig_Environment($loader);
 
-        //Create HTML page
-		print($this->generatePage());
 	}
 	
 
@@ -28,24 +23,56 @@ class UserController
      */
     function generatePage()
 	{
-		$receivingResults = $this->model->getConversationsReceiving();
-		$sendingResults = $this->model->getConversationsSending();
 		
-		//Create arrays of conversation details from results
-		$receiving = $this->createConversationArray($receivingResults);
-		
-		$sending = $this->createConversationArray($sendingResults);
+		$receivingTabHTML = $this->generateReceivingTabHTML();
+		$sendingTabHTML = $this->generateSendingTabHTML();
 
 		//Create array for Twig file
 		$output = array(
-				"receiving" => $receiving,
-				"sending" => $sending
+				"receivingList" => $receivingTabHTML,
+				"givingList" => $sendingTabHTML
 			);
 
 		//Load template and print result
-		$template = $this->twig->loadTemplate('user.twig');
-		return $template->render($output);
+		$template = $this->twig->loadTemplate('MessagesListPage.twig');
+		print($template->render($output));
 	}
+
+
+    /**
+     * Generates HTML for receiving tab
+     * @return mixed
+     */
+    function generateReceivingTabHTML()
+    {
+        $receivingResults = $this->model->getConversationsReceiving();
+		
+	//Create arrays of conversation details from results
+	$receiving = $this->createConversationArray($receivingResults);
+
+	$template = $this->twig->loadTemplate('MessagesTabsDisplay.twig');
+	
+	return $template->render(array("conversationList"=>$receiving, "giving" => 0));
+		
+    }
+
+
+    /**
+     * Generates HTML for sending tab
+     * @return mixed
+     */
+    function generateSendingTabHTML()
+    {
+	$sendingResults = $this->model->getConversationsSending();
+		
+	//Create arrays of conversation details from results
+	$sending = $this->createConversationArray($sendingResults);
+
+
+	$template = $this->twig->loadTemplate('MessagesTabsDisplay.twig');
+		
+	return $template->render(array("conversationList"=>$sending, "giving" => 1));
+    }
 
 
     /**
@@ -59,17 +86,19 @@ class UserController
         foreach($conversations as $row)
         {
             $otherUser = $row['UserID'];
+	    $userImage = $this->model->getUserImage($otherUser);
             $firstName = $row['Forename'];
             $lastName = $row['Surname'];
-            $conversationID = $row['conversation_id'];
+            $conversationID = $row['ConversationID'];
             $itemName = $row['Name'];
-            $unread = $row['count']; //Not sure whether to send back the actual number or a boolean or css style attribute
+            $unread = $row['count']; 
 
             $conversation = array();
+	    $conversation["userImage"] = $userImage;
             $conversation['conversationID'] = $conversationID;
-            $conversation['name'] = $firstName." ".$lastName;
-            $conversation['itemName'] = $itemName;
-            $conversation['notification'] = $unread;//number of unread messages
+            $conversation['userName'] = $firstName." ".$lastName;
+            $conversation['item'] = $itemName;
+            $conversation['notifications'] = $unread;
 
             array_push($results, $conversation);
         }
