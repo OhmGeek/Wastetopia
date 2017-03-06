@@ -39,7 +39,9 @@ class ViewItemModel
 
         $statement->execute();
 
-        return $statement->fetchAll(PDO::FETCH_ASSOC);
+        $output = $statement->fetchAll(PDO::FETCH_ASSOC);
+        echo json_encode($output,true);
+        return $output;
     }
 
     /**
@@ -60,7 +62,9 @@ class ViewItemModel
 
         $statement->execute();
 
-        return $statement->fetchAll(PDO::FETCH_ASSOC);
+        $output = $statement->fetchAll(PDO::FETCH_ASSOC);
+        echo json_encode($output,true);
+        return $output;
     }
 
     /**
@@ -82,7 +86,9 @@ class ViewItemModel
 
         $statement->execute();
 
-        return $statement->fetchAll(PDO::FETCH_ASSOC);
+        $output = $statement->fetchAll(PDO::FETCH_ASSOC);
+        echo json_encode($output,true);
+        return $output;
     }
 
 
@@ -117,6 +123,8 @@ class ViewItemModel
 
         $statement->execute();
 
-        return $statement->fetchAll(PDO::FETCH_ASSOC);
+        $output = $statement->fetchAll(PDO::FETCH_ASSOC);
+        echo json_encode($output,true);
+        return $output;
     }
 }

@@ -23,7 +23,7 @@ class ProductionConfig extends AbstractConfig
             'TOKEN_AFTERSALT' => 'EndSalt11!!!1',
 
             'COOKIE_IDENTIFIER' => 'gpwastetopiadata',
-
+            // no root slash for all of these because that will break stuff.
             'ROOT_JS' => '',
             'ROOT_CSS' => '',
             'ROOT_IMG' => '',

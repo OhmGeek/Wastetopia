@@ -1,16 +1,23 @@
 <?php
 
 use Klein\Klein;
+use Wastetopia\Controller\AddItemController;
 use Wastetopia\Controller\Login_Controller;
 
 require_once '../vendor/autoload.php';
 
-$base  = dirname($_SERVER['PHP_SELF']);
-
-// Update request when we have a subdirectory
-if(ltrim($base, '/')){
-    $_SERVER['REQUEST_URI'] = substr($_SERVER['REQUEST_URI'], strlen($base));
+function loadConfigFromArray($details) {
+    foreach ($details as $key => $val) {
+        $_ENV[$key] = $val;
+    }
 }
+$base  = dirname($_SERVER['PHP_SELF']);
+$config = new \Wastetopia\Config\LocalConfig();
+loadConfigFromArray($config->getConfiguration());
+//// Update request when we have a subdirectory
+//if(ltrim($base, '/')){
+//    $_SERVER['REQUEST_URI'] = substr($_SERVER['REQUEST_URI'], strlen($base));
+//}
 
 // Dispatch as always
 $klein = new Klein();
@@ -40,6 +47,11 @@ $klein->with('/items', function () use ($klein) {
     $klein->respond('GET', '/?', function ($request, $response) {
         // Generic Items Page
         return "Main Item Page";
+    });
+
+    $klein->respond('GET', '/add', function($request, $response) {
+        $control = new AddItemController();
+        return $control->renderAddPage();
     });
 
     $klein->respond('GET', '/[:id]', function ($request, $response) {
