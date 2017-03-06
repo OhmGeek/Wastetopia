@@ -35,7 +35,6 @@ class SearchModel
         $statement = $this->db->prepare("
             SELECT `Listing`.`ListingID`
             FROM `Listing`
-            JOIN `Location` ON `Listing`.`FK_Location_LocationID` = `Location`.`LocationID`
             JOIN `Item` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
             WHERE `Item`.`Name` LIKE "%:name%";
         ");
@@ -47,7 +46,26 @@ class SearchModel
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    
+    /**
+    * Searches for exact post code matches
+    * @param $postCode
+    * @return mixed (array of listingIDs)
+    */
+    function getListingIDsFromPostCode($postCode){
+        $statement = $this->db->prepare("
+            SELECT `Listing`.`ListingID`
+            FROM `Listing`
+            JOIN `Location` ON `Listing`.`FK_Location_LocationID` = `Location`.`LocationID`
+            WHERE `Location`.`Post_Code` = :postCode;
+        ");
 
+        $statement->bindValue(":postCode", $postCode, PDO::PARAM_INT);
+
+        $statement->execute();
+
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+    }
 
 
     //DISPLAY FUNCTIONS HERE: RETURNS DETAILS NEEDED FOR DISPLAY GIVEN THE LISTING IDs
