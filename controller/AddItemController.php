@@ -10,6 +10,7 @@ namespace Wastetopia\Controller;
 
 use Twig_Loader_Filesystem;
 use Twig_Environment;
+use Wastetopia\Model\AddItemModel;
 
 class AddItemController
 {
@@ -17,6 +18,7 @@ class AddItemController
     {
         $loader  = new Twig_Loader_Filesystem(__DIR__.'/../view/');
         $this->twig = new Twig_Environment($loader);
+        $this->model = new AddItemModel();
     }
 
     public function renderAddPage() {
@@ -26,6 +28,10 @@ class AddItemController
         return $template->render(array()); // this is the data
     }
 
+    public function addItem($details) {
+        $this->model->mainAddItemFunction($details['items'], $details['tags'],
+            $details['images'], $details['barcode'],$details['location']);
 
+    }
 
 }

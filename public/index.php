@@ -42,17 +42,20 @@ $klein->respond("GET", "/get-env", function() {
     echo "Printing stuff now \n";
     return $envStr;
 });
+
 $klein->with('/items', function () use ($klein) {
+
+    $klein->respond('GET', '/add', function($request, $response) {
+        $control = new AddItemController();
+        return $control->renderAddPage();
+    });
+
 
     $klein->respond('GET', '/?', function ($request, $response) {
         // Generic Items Page
         return "Main Item Page";
     });
 
-    $klein->respond('GET', '/add', function($request, $response) {
-        $control = new AddItemController();
-        return $control->renderAddPage();
-    });
 
     $klein->respond('GET', '/[:id]', function ($request, $response) {
         // Show a single user
@@ -62,6 +65,13 @@ $klein->with('/items', function () use ($klein) {
 
     });
 
+});
+$klein->respond('POST', '/api/items/add', function ($request, $response, $service, $app) {
+    // Take in a JSON of things needed to add items
+    // make a post request to add this item, and return whether it was successful or not (TODO return success from DB).
+    $details = json_decode($request->details, true);
+    $control = new AddItemController();
+    $control->addItem($details);
 });
 
 
