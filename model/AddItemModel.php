@@ -1,18 +1,5 @@
-
 <?php
 
-/**
- * Created by PhpStorm.
- * User: Stephen
- * Date: 27/02/2017
- * Time: 14:52
- */
-
-
-/*TODO:
-    - set functions to private
-    - link to UserCookieReader
-*/
 namespace Wastetopia\Model;
 use PDO;
 

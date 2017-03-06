@@ -38,7 +38,7 @@ class SearchModel
             SELECT `Listing`.`ListingID`
             FROM `Listing`
             JOIN `Item` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
-            WHERE `Item`.`Name` LIKE "%:name%";
+            WHERE `Item`.`Name` LIKE '%:name%';
         ");
 
         $statement->bindValue(":name", $name, PDO::PARAM_INT);
@@ -59,7 +59,7 @@ class SearchModel
             SELECT `Listing`.`ListingID`
             FROM `Listing`
             JOIN `Location` ON `Listing`.`FK_Location_LocationID` = `Location`.`LocationID`
-            WHERE `Location`.`Post_Code` = ":postCode";
+            WHERE `Location`.`Post_Code` = ':postCode';
         ");
 
         $statement->bindValue(":postCode", $postCode, PDO::PARAM_INT);

@@ -25,7 +25,7 @@ class ViewItemController
     public function getListingPage($listingID) {
         // query the model for the item data.
         $model = new ViewItemModel();
-        $details = $model->getAllInOneQuery($listingID);
+        $details = $model->getAll($listingID);
         // process it
         return json_encode($details, true);
         // output it on the screen
