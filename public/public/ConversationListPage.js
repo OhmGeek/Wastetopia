@@ -5,8 +5,8 @@ $(document).ready(function(){
 });
 
 //Takes user to MessagePage for this conversation
-//This will just be a link on the page
-// $(document).on('click', '#people-list a', function(){
+//Will just be a link on the page
+// $(document).on('click', '#chatBtn', function(){
 //     var id = $(this).attr("id");
 //     var details = id.split("-");
 //     var conversationID = details[1]; //ADDED TO MAKE IT EASIER (need to add it to TWIG file)
@@ -15,6 +15,16 @@ $(document).ready(function(){
 //
 // });
 
+$(document).on('click', #deleteBtn, function(){
+  var url = "MessageRouter.php";
+  
+  var conversationID = $(this).val();
+  var data = {type: "deleteConversation", conversationID: conversationID}
+  $.get(url, data, function(response){
+      loadUsers();
+  });
+}
+
 //Polling to update People-list (in case of new conversations/messages)
 setInterval(function(){
     loadUsers();
@@ -22,11 +32,14 @@ setInterval(function(){
 
 
 function loadUsers(){
-    var peopleList = $("#people-list");
-    var url = "MessageRouter.php?routeType=pollUsers";
+    var givingTab = $("#giving-tab");
+    var receivingTab = $("#receiving-tab");
 
-    //Replace list with new HTML
-    peopleList.load(url);
+    var givingURL = "MessageRouter.php?type=pollGiving";
+    var receivingURL = "MessageRouter.php?type=pollReceiving";
+
+    givingTab.load(givingURL);
+    receivingTab.load(receivingURL); 
 }
 
 

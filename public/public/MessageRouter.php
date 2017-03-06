@@ -11,14 +11,11 @@ include '../../controller/controller/UserController.php';
 
 $routeType = $_GET["type"];
 
-
 if ($routeType == "view"){
     //View the message page
+    $conversationID = $_GET["conversationID"];
     $controller = new MessageController();
     echo($controller->generatePage($conversationID));
-}elseif ($routeType = "pollUsers"){
-    //Poll for new conversations/notifications
-    $controller = new UserController.php;
 }
 elseif($routeType == "poll"){
     //Polling for messages
@@ -27,11 +24,24 @@ elseif($routeType == "poll"){
     $controller = new MessageController();
     echo($controller->generateMessageDisplay($conversationID));
 }elseif($routeType == "send"){
-    //Send a message
+   echo("SENDING MESSAGE");
     $conversationID = $_GET["conversationID"];
     $message = $_GET["message"];
     $controller = new MessageController();
     $controller->sendMessage($conversationID, $message);
+}elseif($routeType == "conversationListing"){
+    $controller = new UserController();
+    $controller->generatePage();
+}elseif($routeType == "pollGiving"){
+    $controller = new UserController();
+    echo ($controller->generateGivingTabHTML);
+}elseif($routeType == "pollReceiving"){
+    $controller = new UserController();
+    echo ($controller->generateReceivingTabHTML);
+}elseif($routeType == "deleteConversation"){
+    $controller = new UserController();
+    $conversationID = $_GET["ConversationID"];
+    $controller->deleteConversation($conversationID);
 }
 
 
