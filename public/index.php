@@ -3,6 +3,7 @@
 use Klein\Klein;
 use Wastetopia\Controller\AddItemController;
 use Wastetopia\Controller\Login_Controller;
+use Wastetopia\Controller\ViewItemController;
 
 require_once '../vendor/autoload.php';
 
@@ -60,12 +61,15 @@ $klein->with('/items', function () use ($klein) {
     $klein->respond('GET', '/[:id]', function ($request, $response) {
         // Show a single user
         $itemID = $request->id;
-        $controller = new \Wastetopia\Controller\ViewItemController();
+        $controller = new ViewItemController();
         return $controller->getListingPage($itemID);
 
     });
 
 });
+
+// NOW DEAL WITH API STUFF
+// This just returns JSON versions of the views, useful for javascript/testing.
 $klein->respond('POST', '/api/items/add', function ($request, $response, $service, $app) {
     // todo validate each field server side (and return false if not with an error message
     // Take in a JSON of things needed to add items
@@ -75,6 +79,11 @@ $klein->respond('POST', '/api/items/add', function ($request, $response, $servic
     $control->addItem($details);
 });
 
+$klein->respond('GET', 'api/items/view/[:id]', function($request, $response) {
+    $itemID = $request->id;
+    $controller = new ViewItemController();
+    return $controller->getListingDetailsAsJSON($itemID);
+});
 
 
 $klein->onHttpError(function ($code, $router) {
