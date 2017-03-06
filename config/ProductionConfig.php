@@ -24,10 +24,10 @@ class ProductionConfig extends AbstractConfig
 
             'COOKIE_IDENTIFIER' => 'gpwastetopiadata',
 
-            'ROOT_JS' => '',
-            'ROOT_CSS' => '',
-            'ROOT_IMG' => '',
-            'ROOT_BASE' => ''
+            'ROOT_JS' => 'http://wastetopia.herokuapp.com/js',
+            'ROOT_CSS' => 'http://wastetopia.herokuapp.com/css',
+            'ROOT_IMG' => 'http://wastetopia.herokuapp.com/img',
+            'ROOT_BASE' => 'http://wastetopia.herokuapp.com'
         );
     }
 }
