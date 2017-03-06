@@ -2,7 +2,7 @@
 <html>
 	<head>
 	  <meta charset="utf-8">
-	  <title>Main Page | Wastetopia</title>
+	  <title>{% block title %}{% endblock %}</title>
 	  <!-- Material Design fonts -->
 	  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
 	  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -15,12 +15,12 @@
 	  <!-- Latest compiled JavaScript -->
 	  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 	  <!-- Bootstrap Material Design -->
-	  <link href="{{ROOT_BASE}}/bootstrap-material-design-master/dist/css/bootstrap-material-design.css" rel="stylesheet">
-	  <link href="{{ROOT_BASE}}/bootstrap-material-design-master/dist/css/ripples.min.css" rel="stylesheet">
+	  <link href="{{config.ROOT_BASE}}/bootstrap-material-design-master/dist/css/bootstrap-material-design.css" rel="stylesheet">
+	  <link href="{{config.ROOT_BASE}}/bootstrap-material-design-master/dist/css/ripples.min.css" rel="stylesheet">
 	  <link href="http://fezvrasta.github.io/snackbarjs/dist/snackbar.min.css" rel="stylesheet">
 
 	  <!-- Wastopia Custom CSS -->
-	  <link rel="stylesheet" href="{{ROOT_CSS}}/wastetopia-main.css"/>
+	  <link rel="stylesheet" href="{{config.ROOT_CSS}}/wastetopia-main.css"/>
 
 	  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	</head>
@@ -35,26 +35,20 @@
 
 
 
-        <script src="{{ROOT_BASE}}/bootstrap-material-design-master/dist/js/ripples.min.js"></script>
-        <script src="{{ROOT_BASE}}/bootstrap-material-design-master/dist/js/material.min.js"></script>
+        <script src="{{config.ROOT_BASE}}/bootstrap-material-design-master/dist/js/ripples.min.js"></script>
+        <script src="{{config.ROOT_BASE}}/bootstrap-material-design-master/dist/js/material.min.js"></script>
 
         <!-- script for having equal height rows -->
-        <script src="{{ROOT_BASE}}/plugins/jquery-match-height/jquery.matchHeight.js" type="text/javascript"></script>
-
-        <!-- script for fancy multiple selects -->
-        <script type="text/javascript">
-          $(".js-example-basic-multiple").select2();
-        </script>
+        <script src="{{config.ROOT_BASE}}/plugins/jquery-match-height/jquery.matchHeight.js" type="text/javascript"></script>
 
         <script>
           $(function () {
             $.material.init();
-            $('.upload-pic').matchHeight();
           });
         </script>
         <!-- Wastopia Custom JS-->
         {% for jsfile in jslist %}
-            <script src="{{ROOT_JS}}/{{jsfile}}"></script>
+            <script src="{{config.ROOT_JS}}/{{jsfile}}"></script>
         {% endfor %}
 	</body>
 </html>
