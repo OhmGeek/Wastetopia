@@ -1,8 +1,6 @@
 <?php
 
-namespace Wastetopia\Model;
-use PDO;
-use Wastetopia\Model\DB;
+include 'DB.php';
 
 class MessageModel
 {
@@ -17,8 +15,9 @@ class MessageModel
      */
     function getUserID()
     {
-        $reader = new UserCookieReader();
-        return $reader->get_user_id();
+//        $reader = new UserCookieReader();
+//        return $reader->get_user_id();
+        return 20; //Hardcoded for now
     }
 
 
@@ -30,7 +29,7 @@ class MessageModel
     function getMessagesFromConversation($conversationID)
 	{
 
-		$statement = $this->db->prepare("SELECT Message.Content, Message.Time User.UserID, User.Forename, User.Surname
+		$statement = $this->db->prepare("SELECT Message.Content, Message.Time, User.UserID, User.Forename, User.Surname
 								FROM Message, User, Conversation, Listing
 								WHERE Message.FK_Conversation_ConversationID = :conversationID
 								AND Conversation.ConversationID = :conversationID2
@@ -40,7 +39,7 @@ class MessageModel
 										AND Conversation.FK_Listing_ListingID = Listing.ListingID
 										AND Listing.FK_User_UserID = User.UserID))
 								GROUP BY Message.MessageID
-								ORDER BY time ASC;");
+								ORDER BY Time ASC;");
 								
 		$statement->bindValue(':conversationID',$conversationID, PDO::PARAM_INT);							
 		$statement->bindValue(':conversationID2',$conversationID, PDO::PARAM_INT);							
@@ -52,7 +51,7 @@ class MessageModel
 
 
     /**
-     * Sets all messages in a conversation sent by otherUser to read` (NOT SURE IF THIS IS CORRECT)
+     * Sets all messages in a conversation sent by otherUser to read`
      * @param $conversationID
      * @return bool (True if successful)
      */
@@ -120,9 +119,9 @@ class MessageModel
 		$statement->bindValue(':conversationID', $conversationID, PDO::PARAM_INT);		
 		$statement->bindValue(':userID', $currentUser, PDO::PARAM_INT);	
 			
-		$numberRows = count($statement->execute()->fetchColumn());
+		$statement->execute();
 		
-		return $numberRows > 0;
+		return $statement->fetchColumn();
 	}
 
 
@@ -136,7 +135,7 @@ class MessageModel
         $currentUser = $this->getUserID();
 
         $statement = $this->db->prepare("
-                                SELECT UserID, Forename, Surname, Item.Name
+                                SELECT UserID, Forename, Surname, Item.Description
 								FROM Conversation, User, Listing, Item
 								WHERE Listing.ListingID = Conversation.FK_Listing_ListingID
 								AND ((Conversation.FK_User_ReceiverID = User.UserID AND Listing.FK_User_UserID = :userID)
@@ -156,6 +155,27 @@ class MessageModel
 
 
     /**
+     * Gets the profile picture of the given user (Possibly will be moved to another model)
+     * @param $userID
+     * @return URL
+     */
+    function getUserImage($userID)
+    {
+        $statement = $this->db->prepare("
+                                SELECT Picture_URL
+                                FROM `User`
+                                WHERE `User`.`UserID` = :userID
+							");
+
+        $statement->bindValue(':userID', $userID, PDO::PARAM_INT);
+
+        $statement->execute();
+
+        return $statement->fetchColumn();
+    }
+
+
+    /**
      * Gets general details needed for side-panel on messages page
      * @param $conversationID
      * @return mixed
@@ -163,14 +183,14 @@ class MessageModel
     function getListingDetails($conversationID)
     {
         $statement = $this->db->prepare("
-            SELECT `Item`.`Name` as ItemName, `Item`.`Use_By_Date`
-            `Location`.`Name` as LocationName, `Location`.Post_Code,
+            SELECT `Item`.`Name` as ItemName, `Item`.`Use_By`,
+            `Location`.`Name` as LocationName, `Location`.`Post_Code`,
             `Listing`.`ListingID`
             FROM `Conversation`
             JOIN `Listing` ON `Listing`.`ListingID` = `Conversation`.`FK_Listing_ListingID`
             JOIN `Item` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
             JOIN `Location` ON `Listing`.`FK_Location_LocationID` = `Location`.`LocationID`
-            WHERE `Conversation`.`ConversationID` = :conversationID
+            WHERE `Conversation`.`ConversationID` = :conversationID;
         ");
 
         $statement->bindValue(":conversationID", $conversationID, PDO::PARAM_INT);
@@ -188,13 +208,13 @@ class MessageModel
      */
     function getDefaultImage($listingID){
         $statement = $this->db->prepare("
-            SELECT `Image`.`Image_URL`, 
-            FROM `Image`
-            JOIN `ItemImage` ON `ItemImage`.`FK_Image_ImageID` = `Image`.`ImageID`
-            JOIN `Item` ON `ItemImage`.`FK_Item_ItemID` = `Item`.`ItemID`
-            JOIN `Listing` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
-            WHERE `Listing`.`ListingID` = :listingID
-            AND `Image`.`Is_Default` = 1;
+            SELECT `Image`.`Image_URL`
+FROM `Image`
+JOIN `ItemImage` ON `ItemImage`.`FK_Image_ImageID` = `Image`. `ImageID`
+JOIN `Item` ON `ItemImage`.`FK_Item_ItemID` = `Item`.`ItemID`
+JOIN `Listing` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
+WHERE `Listing`.`ListingID` = :listingID
+AND `ItemImage`.`Is_Default` = 1;
         ");
 
         $statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);

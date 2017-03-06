@@ -1,9 +1,6 @@
 <?php
 
 // Get users who you have a current conversation with
-namespace Wastetopia\Model;
-use PDO;
-use Wastetopia\Model\DB;
 
 class UserModel
 {
@@ -19,8 +16,9 @@ class UserModel
      */
     private function getUserID()
     {
-        $reader = new UserCookieReader();
-        return $reader->get_user_id();
+        //$reader = new UserCookieReader();
+        //return $reader->get_user_id();
+	return 20; //Hardcoded for now
     }
 
 
@@ -32,7 +30,7 @@ class UserModel
 	{
 
 		$currentUser = $this->getUserID();
-
+		
 		$statement = $this->db->prepare("SELECT UserID, Forename, Surname, Conversation.ConversationID, Listing.ListingID, Item.Name,
 									(
 										SELECT COUNT(*)
@@ -47,14 +45,14 @@ class UserModel
 								AND Listing.FK_User_UserID = User.UserID
 								AND Listing.FK_Item_ItemID = Item.ItemID
 								GROUP BY Conversation.ConversationID;");
-
+		
 		$statement->bindValue(':userID', $currentUser, PDO::PARAM_INT);
-
+		
 		$statement->execute();
-
+		
 		return $statement->fetchAll(PDO::FETCH_ASSOC);
 	}
-
+	
 
     /**
      * Gets all conversations in which you are sending an item
@@ -64,7 +62,7 @@ class UserModel
 	{
 
         $currentUser = $this->getUserID();
-
+		
 		$statement = $this->db->prepare("SELECT UserID, Forename, Surname, Conversation.ConversationID, Listing.ListingID, Item.Name,
 									(
 										SELECT COUNT(*)
@@ -79,11 +77,11 @@ class UserModel
 								AND Listing.FK_User_UserID = :userID
 								AND Listing.FK_Item_ItemID = Item.ItemID 
 								GROUP BY Conversation.ConversationID;");
-
+		
 		$statement->bindValue(':userID', $currentUser, PDO::PARAM_INT);
-
+		
 		$statement->execute();
-
+		
 		return $statement->fetchAll(PDO::FETCH_ASSOC);
 	}
 
@@ -126,9 +124,9 @@ class UserModel
 
 		$statement->bindValue(':userID', $currentUser, PDO::PARAM_INT);
 		$statement->bindValue(':listingID', $listingID, PDO::PARAM_INT);
-
+		
 		$statement->execute();
-
+		
 	}
 
 
@@ -150,6 +148,27 @@ class UserModel
 
         $statement->execute();
 
+    }
+
+
+    /**
+     * Gets the profile picture of the given user (Possibly will be moved to another model)
+     * @param $userID
+     * @return URL
+     */
+    function getUserImage($userID)
+    {
+        $statement = $this->db->prepare("
+                                SELECT Picture_URL
+                                FROM `User`
+                                WHERE `User`.`UserID` = :userID
+							");
+
+        $statement->bindValue(':userID', $userID, PDO::PARAM_INT);
+
+        $statement->execute();
+
+        return $statement->fetchColumn();
     }
 }
 
