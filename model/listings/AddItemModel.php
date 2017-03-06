@@ -58,7 +58,7 @@ class AddItemModel
         $statement = $this->db->prepare("
             SELECT * 
             FROM `Tag`
-            ORDER_BY `Tag`.`FK_Category_CategoryID`
+            ORDER BY `Tag`.`FK_Category_Category_ID`
          ");
 
 
@@ -83,7 +83,6 @@ class AddItemModel
         $statement = $this->db->prepare("
             INSERT INTO `Item` (Name, Description, Use_By)
             VALUES (:name, :description, :useByDate);
-            
          ");
 
         $statement->bindValue(":name", $name, PDO::PARAM_STR);
