@@ -8,12 +8,14 @@
  */
 namespace Wastetopia\Model;
 
+
 class EditItemModel
 {
     function __construct()
     {
         $this->db = DB::getDB();
     }
+
 
     /**
      * Changes the name of the Item in the given listing
@@ -32,6 +34,7 @@ class EditItemModel
         $statement->bindValue(":name", $name, PDO::PARAM_STR);
         $statement->execute();
     }
+
 
     /**
      * Changes the description of the Item in the given listing
@@ -52,6 +55,7 @@ class EditItemModel
         $statement->execute();
     }
 
+
     /**
      * Changes the Use-by-date of the Item in the given listing
      * @param $listingID
@@ -71,6 +75,7 @@ class EditItemModel
         $statement->execute();
     }
 
+
     /**
      * Changes the quantity of the Items in the given listing
      * @param $listingID
@@ -88,6 +93,7 @@ class EditItemModel
         $statement->bindValue(":quantity", $quantity, PDO::PARAM_INT);
         $statement->execute();
     }
+
 
     /**
      * Changes the bacode number of the item in the given listing
@@ -108,6 +114,7 @@ class EditItemModel
         $statement->execute();
     }
 
+
     /**
      * Changes the barcode type of the item in the given listing
      * @param $listingID
@@ -127,6 +134,7 @@ class EditItemModel
         $statement->execute();
     }
 
+
     /**
      * Changes the location name of the given listing
      * @param $listingID
@@ -144,6 +152,7 @@ class EditItemModel
         $statement->bindValue(":locationName", $locationName, PDO::PARAM_STR);
         $statement->execute();
     }
+
 
     /**
      * Changes the post code location of the given listing
@@ -163,40 +172,41 @@ class EditItemModel
         $statement->execute();
     }
 
-    //UNSURE WHAT THESE FUNCTIONS WILL DO (IF ANYTHING)
 
-    /**
-     * Changes the name and description of a given tag
-     * @param $listingID
-     * @param $categoryID
-     * @param $categoryName
-     * @param $description
-     */
-    function editTags($listingID, $categoryID, $categoryName, $description){
+    function editDefaultImageFlag($imageID, $value)
+    {
         $statement = $this->db->prepare("
-            UPDATE `Tag`
-            JOIN `ItemTag` ON `ItemTag`.`FK_Tag_TagID` = `Tag`.`TagID`
-            JOIN `Item` ON `Item`.`ItemID` = `ItemTag`.`FK_Item_ItemID`
-            JOIN `Listing` ON `Item`.`ItemID` = `Listing`.`FK_Item_ItemID`
-            SET `Tag`.`Name` = :name, `Tag`.description = :description
-            WHERE`ListingID` = :listingID
-            AND `Tag`.`Category_ID` = :categoryID;
+            UPDATE `ItemImage`
+            JOIN `Image` ON `ImageID` = `ItemImage`.`FK_Image_ImageID`
+            SET `ItemImage`.`Is_Default` = :value
+            WHERE `Image`.`ImageID` = :imageID;
          ");
 
-        $statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);
-        $statement->bindValue(":categoryID", $categoryID, PDO::PARAM_INT);
-        $statement->bindValue(":name", $categoryName, PDO::PARAM_STR);
-        $statement->bindValue(":description", $description, PDO::PARAM_STR);
+        $statement->bindValue(":imageID", $imageID, PDO::PARAM_INT);
+        $statement->bindValue(":value", $value, PDO::PARAM_INT);
         $statement->execute();
     }
 
-    //Not needed as will just delete images and upload new ones?
-    /**
-     * Currently does nothing
-     */
-    function editImages(){
-
-    }
+    //UNSURE WHAT THESE FUNCTIONS WILL DO (IF ANYTHING)
+//
+//    /**
+//     * Changes the name and description of a given tag
+//     * @param $listingID
+//     * @param $categoryID
+//     * @param $categoryName
+//     * @param $description
+//     */
+//    function editTags($listingID, $categoryID, $categoryName, $description){
+//
+//    }
+//
+//    //Not needed as will just delete images and upload new ones?
+//    /**
+//     * Currently does nothing
+//     */
+//    function editImages(){
+//
+//    }
 
 
 

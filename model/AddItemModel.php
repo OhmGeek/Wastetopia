@@ -1,3 +1,4 @@
+
 <?php
 
 /**
@@ -14,6 +15,7 @@
 */
 namespace Wastetopia\Model;
 use PDO;
+
 
 class AddItemModel
 {
@@ -50,6 +52,24 @@ class AddItemModel
     }
 
 
+    /**
+     * Gets all the select options user can choose for tags
+     * @return mixed
+     */
+    function getAllTagOptions(){
+        $statement = $this->db->prepare("
+            SELECT * 
+            FROM `Tag`
+            ORDER BY `Tag`.`FK_Category_Category_ID`
+         ");
+
+
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
+
     /*QUERIES TO INSERT INTO INDIVIDUAL TABLES*/
 
 
@@ -65,7 +85,6 @@ class AddItemModel
         $statement = $this->db->prepare("
             INSERT INTO `Item` (Name, Description, Use_By)
             VALUES (:name, :description, :useByDate);
-            
          ");
 
         $statement->bindValue(":name", $name, PDO::PARAM_STR);
@@ -77,26 +96,26 @@ class AddItemModel
     }
 
 
-    /**
-     * Adds a tag to the Tag table
-     * @param $name
-     * @param $categoryID
-     * @param $description
-     * @return int (the ID of the tag)
-     */
-    function addToTagTable($name, $categoryID, $description)
-    {
-        $statement = $this->db->prepare("
-            INSERT INTO `Tag` (`Name`, `Category_ID` `Description`)
-            VALUES (:name, :categoryID, :description)
-         ");
-
-        $statement->bindValue(":name", $name, PDO::PARAM_STR);
-        $statement->bindValue(":categoryID", $categoryID, PDO::PARAM_INT);
-        $statement->bindValue(":description", $description, PDO::PARAM_STR);
-        $statement->execute();
-        return $this->getLastInsertID();
-    }
+//    /**
+//     * Adds a tag to the Tag table
+//     * @param $name
+//     * @param $categoryID
+//     * @param $description
+//     * @return int (the ID of the tag)
+//     */
+//    function addToTagTable($name, $categoryID, $description)
+//    {
+//        $statement = $this->db->prepare("
+//            INSERT INTO `Tag` (`Name`, `Category_ID` `Description`)
+//            VALUES (:name, :categoryID, :description)
+//         ");
+//
+//        $statement->bindValue(":name", $name, PDO::PARAM_STR);
+//        $statement->bindValue(":categoryID", $categoryID, PDO::PARAM_INT);
+//        $statement->bindValue(":description", $description, PDO::PARAM_STR);
+//        $statement->execute();
+//        return $this->getLastInsertID();
+//    }
 
 
     /**
@@ -227,19 +246,19 @@ class AddItemModel
 
 
     /**
-     * Calls functions to add the item to the database and all the tags and then links the tags to the item
+     * Calls functions to add all the tags and then link the tags to the item
      * @param $itemID
-     * @param $tags (Array of tag arrays in the form ["name"=>name, "categoryID"=>categoryID, "description"=>description])
+     * @param $tags (Array of tag arrays in the form ["tagID"=>tagID])
      */
     function addAllTags($itemID, $tags)
     {
-        //$itemID = $this->addToItemTable($itemName, $itemDescription, $useByDate); //Add the item
 
         foreach ($tags as $tag) {
-            $tagName = $tag["name"];
-            $tagCategoryId = $tag["categoryID"];
-            $tagDescription = $tag["description"];
-            $tagID = $this->addToTagTable($tagName, $tagCategoryId, $tagDescription); //Add the tag
+//            $tagName = $tag["name"];
+//            $tagCategoryId = $tag["categoryID"];
+//            $tagDescription = $tag["description"];
+            //$tagID = $this->addToTagTable($tagName, $tagCategoryId, $tagDescription); //Add the tag
+            $tagID = $tag["tagID"];
             $this->addToItemTagTable($itemID, $tagID); //Link tag to item
         }
     }
@@ -263,7 +282,7 @@ class AddItemModel
 
 
     /**
-     * This function calls all the other linking functions and is the only one needed by the user
+     * Calls all the other linking functions and is the only one needed by the user
      * @param $item (Associative array in the form ["itemName"=>name, "itemDescription"=>description, "useByDate"=>date, "quantity"=>quantity])
      * @param $tags (Array of tag arrays in the form ["name"=>name, "categoryID"=>categoryID, "description"=>description])
      * @param $images (Array of image arrays in the form ["fileType"=>fileType, "url"=>url, "isDefault"=>isDefault])
@@ -296,4 +315,6 @@ class AddItemModel
         $this->addToListingTable($locationID, $itemID, $quantity);
     }
 
+
 }
+
