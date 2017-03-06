@@ -573,14 +573,14 @@ label.checkbox-inline input[type=checkbox]:checked + .checkbox-material .check:b
     border-top: none !important;
     border-right: none !important;
     border-left: none !important;
-    border-bottom: 1px solid red !important;
+    border-bottom: 2px solid #31353D !important;
 }
 
 .select2-container--default .select2-selection--multiple {
     border-top: none !important;
     border-right: none !important;
     border-left: none !important;
-    border-bottom: 1px solid black !important;
+    border-bottom: 1px solid #D2D2D2 !important;
     border-radius: 0 !important;
 }
 
