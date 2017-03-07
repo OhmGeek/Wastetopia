@@ -1,6 +1,11 @@
 <?php
 
-include 'DB.php';
+
+namespace Wastetopia\Model;
+use PDO;
+use Wastetopia\Model\DB;
+
+
 
 class MessageModel
 {
@@ -15,6 +20,7 @@ class MessageModel
      */
     function getUserID()
     {
+
 //        $reader = new UserCookieReader();
 //        return $reader->get_user_id();
         return 20; //Hardcoded for now
@@ -28,6 +34,7 @@ class MessageModel
      */
     function getMessagesFromConversation($conversationID)
 	{
+
 
 		$statement = $this->db->prepare("SELECT Message.Content, Message.Time, User.UserID, User.Forename, User.Surname
 								FROM Message, User, Conversation, Listing
@@ -118,7 +125,7 @@ class MessageModel
 								
 		$statement->bindValue(':conversationID', $conversationID, PDO::PARAM_INT);		
 		$statement->bindValue(':userID', $currentUser, PDO::PARAM_INT);	
-			
+
 		$statement->execute();
 		
 		return $statement->fetchColumn();
@@ -135,7 +142,7 @@ class MessageModel
         $currentUser = $this->getUserID();
 
         $statement = $this->db->prepare("
-                                SELECT UserID, Forename, Surname, Item.Description
+                                SELECT UserID, Forename, Surname, Item.Name
 								FROM Conversation, User, Listing, Item
 								WHERE Listing.ListingID = Conversation.FK_Listing_ListingID
 								AND ((Conversation.FK_User_ReceiverID = User.UserID AND Listing.FK_User_UserID = :userID)
@@ -183,6 +190,7 @@ class MessageModel
     function getListingDetails($conversationID)
     {
         $statement = $this->db->prepare("
+
             SELECT `Item`.`Name` as ItemName, `Item`.`Use_By`,
             `Location`.`Name` as LocationName, `Location`.`Post_Code`,
             `Listing`.`ListingID`
@@ -225,4 +233,6 @@ AND `ItemImage`.`Is_Default` = 1;
     }
 
 }
+
 ?>
+
