@@ -21,7 +21,7 @@
 					<button type="button" id="deleteBtn" value = "{{conversation.conversationID}}" class="btn-nav">
 						<i class="material-icons">delete</i>
 					</button>
-					<a type="button" id="chatBtn" class="btn-nav" href="../../public/public/MessageRouter.php?type=view&conversationID={{conversation.conversationID}}" >
+					<a type="button" id="chatBtn" class="btn-nav" href="../public/MessageRouter.php?type=view&conversationID={{conversation.conversationID}}" >
 						{% if conversation.notifications == 0 %}<i class="material-icons">arrow_forward</i>{% else %}<span class="badge">{{conversation.notifications}}</span>{% endif %}
 					</a>
 				</div>
