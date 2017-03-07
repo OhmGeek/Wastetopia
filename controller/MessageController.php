@@ -1,8 +1,9 @@
 <?php
 
-include '../../vendor/autoload.php';
-include '../../model/model/MessageModel.php';
-
+namespace Wastetopia\Controller;
+use Wastetopia\Model\MessageModel;
+use Twig_Loader_Filesystem;
+use Twig_Environment;
 
 class MessageController
 {
@@ -14,7 +15,7 @@ class MessageController
         $this->model = new MessageModel();
 
         //Load Twig environment
-        $loader = new Twig_Loader_Filesystem('../../view/twig_version/');
+        $loader = new Twig_Loader_Filesystem('../view/twig_version/');
         $this->twig = new Twig_Environment($loader);
 
 	}
@@ -70,7 +71,7 @@ class MessageController
         // Get the messages
         $messageResults = $this->model->getMessagesFromConversation($conversationID);
 
-	
+
         //Do all the processing of variables here
 		$messages = array();
 		
