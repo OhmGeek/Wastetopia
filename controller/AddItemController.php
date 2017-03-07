@@ -16,16 +16,15 @@ class AddItemController
 {
     public function __construct()
     {
-        $loader  = new Twig_Loader_Filesystem(__DIR__.'/../view/');
-        $this->twig = new Twig_Environment($loader);
         $this->model = new AddItemModel();
     }
 
     public function renderAddPage() {
 
-        # this renders the page :D
-        $template = $this->twig->loadTemplate('add_item.html');
-        return $template->render(array()); // this is the data
+        $loader  = new Twig_Loader_Filesystem(__DIR__.'/../view/');
+        $twig = new Twig_Environment($loader);
+        $template = $twig->loadTemplate('items/edit_items.twig');
+        return $template->render(array()); // todo add required details here.
     }
 
     public function addItem($details) {

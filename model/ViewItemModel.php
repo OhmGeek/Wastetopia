@@ -29,7 +29,7 @@ class ViewItemModel
      */
     function getImages($listingID){
         $statement = $this->db->prepare("
-            SELECT *
+            SELECT `Image`.`ImageID`, `Image`.`Image_URL`
             FROM `Image` 
             JOIN `ItemImage` ON `ItemImage`.`FK_Image_ImageID` = `Image`.`ImageID`
             JOIN `Item` ON `ItemImage`.`FK_Item_ItemID` = `Item`.`ItemID`
@@ -74,12 +74,13 @@ class ViewItemModel
      * @return mixed
      */
     function getDetails($listingID){
+        //todo also get the location details from this
         $statement = $this->db->prepare("
-            SELECT * 
-            FROM `Listing`
-            JOIN `Location` ON `Listing`.`FK_Location_LocationID` = `Location`.`LocationID`
-            JOIN `Item` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
-            JOIN `Barcode` ON `Barcode`.`FK_Item_ItemID` = `Item`.`ItemID`
+            SELECT `Use_By`, `ListingID`, `Quantity`, `Time_Of_Creation`
+            FROM `Image` 
+            JOIN `ItemImage` ON `ItemImage`.`FK_Image_ImageID` = `Image`.`ImageID`
+            JOIN `Item` ON `ItemImage`.`FK_Item_ItemID` = `Item`.`ItemID`
+            JOIN `Listing` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
             WHERE `Listing`.`ListingID` = :listingID;
         ");
 
@@ -87,7 +88,9 @@ class ViewItemModel
 
         $statement->execute();
 
-        return $statement->fetchAll(PDO::FETCH_ASSOC);
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        return $results;
     }
 
     

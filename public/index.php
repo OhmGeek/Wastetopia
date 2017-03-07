@@ -15,7 +15,7 @@ function loadConfigFromArray($details) {
 $base  = dirname($_SERVER['PHP_SELF']);
 $config = new \Wastetopia\Config\LocalConfig();
 loadConfigFromArray($config->getConfiguration());
-//// Update request when we have a subdirectory
+// Update request when we have a subdirectory
 //if(ltrim($base, '/')){
 //    $_SERVER['REQUEST_URI'] = substr($_SERVER['REQUEST_URI'], strlen($base));
 //}
@@ -79,7 +79,7 @@ $klein->respond('POST', '/api/items/add', function ($request, $response, $servic
     $control->addItem($details);
 });
 
-$klein->respond('GET', 'api/items/view/[:id]', function($request, $response) {
+$klein->respond('GET', '/api/items/view/[:id]', function($request, $response) {
     $itemID = $request->id;
     $controller = new ViewItemController();
     return $controller->getListingDetailsAsJSON($itemID);

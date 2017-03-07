@@ -9,6 +9,8 @@
 namespace Wastetopia\Controller;
 
 
+use Twig_Environment;
+use Twig_Loader_Filesystem;
 use Wastetopia\Model\ViewItemModel;
 
 class ViewItemController
@@ -28,9 +30,12 @@ class ViewItemController
         // query the model for the item data.
         $model = new ViewItemModel();
         $details = $model->getAll($listingID);
-        // process it
-        //todo return twig
-        return json_encode($details, true);
+
+        $loader  = new Twig_Loader_Filesystem(__DIR__.'/../view/');
+        $twig = new Twig_Environment($loader);
+        $template = $twig->loadTemplate('items/view_item.twig');
+
+        return $template->render($details);
     }
 
     public function getListingDetailsAsJSON($listingID) {
