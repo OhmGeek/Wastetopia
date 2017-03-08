@@ -20,8 +20,6 @@ class ViewItemModel
     {
         $this->db = DB::getDB();
     }
-
-
     /**
      * Returns all details about images associated with the item in this listing
      * @param $listingID
@@ -36,15 +34,10 @@ class ViewItemModel
             JOIN `Listing` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
             WHERE `Listing`.`ListingID` = :listingID;
         ");
-
         $statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);
-
         $statement->execute();
-
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
-
-
     /**
      * Returns all details about tags associated with the item in this listing
      * @param $listingID
@@ -59,15 +52,10 @@ class ViewItemModel
             JOIN `Listing` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
             WHERE `Listing`.`ListingID` = :listingID;
         ");
-
         $statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);
-
         $statement->execute();
-
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
-
-
     /**
      * Returns all general details about an item (location, item details and listing details)
      * @param $listingID
@@ -83,22 +71,17 @@ class ViewItemModel
             JOIN `Listing` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
             WHERE `Listing`.`ListingID` = :listingID;
         ");
-
         $statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);
-
         $statement->execute();
-
         $results = $statement->fetchAll(PDO::FETCH_ASSOC);
-
         return $results;
     }
 
-    
     /**
-    * Returns the barcode of an item (if it exists)
-    * @param $listingID
-    * @return int (barcode)
-    */
+     * Returns the barcode of an item (if it exists)
+     * @param $listingID
+     * @return int (barcode)
+     */
     function getBarcode($listingID){
         $statement = $this->db->prepare("
             SELECT * 
@@ -107,15 +90,12 @@ class ViewItemModel
             JOIN `Listing` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
             WHERE `Listing`.`ListingID` = :listingID;
         ");
-
         $statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);
-
         $statement->execute();
-
         return $statement->fetchColumn();
     }
-    
-    
+
+
     /**
      * Returns all details, images and tags relating to a given listing
      * @param $listingID
@@ -126,13 +106,12 @@ class ViewItemModel
         $tags = $this->getTags($listingID);
         $generalDetails = $this->getDetails($listingID);
         $barcode = $this->getBarcode($listingID);
-        
-        return (array("images"=>$images,
-                        "tags"=>$tags,
-                        "details"=>$generalDetails,
-                        "barcode"=>$barcode));
-    }
 
+        return (array("images"=>$images,
+            "tags"=>$tags,
+            "details"=>$generalDetails,
+            "barcode"=>$barcode));
+    }
 
 }
 
