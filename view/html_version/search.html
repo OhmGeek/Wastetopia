@@ -61,13 +61,87 @@
   <!-- Create the search results window -->
   <div id="main-content">
     <div id="sidebar">
-      <form method="post">
-        <fieldset>
-          <input type="checkbox" name="animal" value="Cat"> Cats <br>
-          <input type="checkbox" name="animal" value="Dog"> Dogs <br>
-          <input type="checkbox" name="animal" value="Bird"> Birds<br>
-        </fieldset>
-      </form>
+      <ul id="filter-list" role="tablist" aria-multiselectable="true">
+        <li role="tab">
+          <div class="filter-category" id="type-category">
+            Type
+            <a role="button" data-toggle="collapse" data-parent="#filter-list" href="#type-options" aria-expanded="true" aria-controls="type-options"><i class="material-icons"></i></a>
+          </div>
+          <ul class="filter-options collapse in" id="type-options" role="tabpanel" aria-labelledby="type-category">
+            <li>
+              <div class="form-group zero-padding">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"> Fruit
+                  </label>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="form-group zero-padding">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"> Vegetable
+                  </label>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </li>
+        <li role="tab">
+          <div class="filter-category" id="dietary-category">
+            Dietary Requirement
+            <a role="button" data-toggle="collapse" data-parent="#filter-list" href="#dietary-options" aria-expanded="true" aria-controls="dietary-options"><i class="material-icons"></i></a>
+          </div>
+          <ul class="filter-options collapse in" id="dietary-options" role="tabpanel" aria-labelledby="dietary-category">
+            <li>
+              <div class="form-group zero-padding">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"> Vegan
+                  </label>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="form-group zero-padding">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"> Gluten Free
+                  </label>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="form-group zero-padding">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"> Gluten Free
+                  </label>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="form-group zero-padding">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"> Gluten Free
+                  </label>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="form-group zero-padding">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox"> Gluten Free
+                  </label>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </li>
+      </ul>
     </div>
     <div id="main">
       <button id="filter-btn">Click me</button>
@@ -230,15 +304,19 @@
     </div>
   </div>
 
+  <!-- to have the fancy effects of material design bootstrap -->  
+  <script src="bootstrap-material-design-master/dist/js/ripples.min.js"></script>
+  <script src="bootstrap-material-design-master/dist/js/material.min.js"></script>
+
   <script>
-    $(function(){
+    $(function () {
+      $.material.init();
       $("#filter-btn").click(function(e){
         e.preventDefault();
         $("#main-content").toggleClass("toggled");
-      })
-
-    })
+      });
+    });
   </script>
-  
+
 </body>
 </html>

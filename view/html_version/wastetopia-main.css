@@ -132,6 +132,57 @@
 	padding-left: 1px;
 }
 
+/* sidebar options styles */
+#filter-list {
+    width: 100%;
+    padding: 0;
+}
+
+#filter-list > li {
+    width: 100%;
+    padding: 0px;
+    border-bottom: 1px solid darkgrey;
+}
+
+.filter-category {
+    font-size: 16px;
+    font-weight: bolder;
+    color: white;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.filter-category > a.collapsed > i.material-icons:before
+{
+    content:'expand_more';
+    color: white;
+}
+
+.filter-category > a > i.material-icons:before
+{
+    content:'expand_less';
+    color: white;
+}
+
+.filter-options {
+    width: 100%;
+    padding: 0;
+    overflow-y: scroll;
+    max-height: 150px;
+    background-color: white;
+}
+
+.filter-options > li {
+    width: 100%;
+    padding: 0 10px;
+}
+
+.filter-options label {
+    color: black !important;
+}
+
 /* items view styles */
 .itemView {
     position: relative;
@@ -948,4 +999,56 @@ label.checkbox-inline input[type=checkbox]:checked + .checkbox-material .check:b
     color: white;
     font-weight: bold;
     font-size: 16px;
+}
+
+/* item card view designs */
+/* using bootstrap thumbnail */
+.user-image {
+    height: 50px;
+    width: 50px;
+    overflow: hidden;
+    border-radius: 50%;
+    border: 1px solid lightgrey;
+}
+
+.user-details {
+    margin-left: 10px;
+    margin-right: auto;
+}
+
+.user-name {
+    font-size: 16px;
+    font-weight: bolder;
+}
+
+.popularity {
+    font-size: 16px;
+    color: grey;
+    font-weight: bolder;
+    display: inline-flex;
+    align-items: center;
+    margin: 2px 0;
+}
+
+.popularity i {
+    align-self: flex-start;
+    font-size: 20px;
+    color: grey;
+}
+
+.added-date{
+    font-size: 12px;
+    color: grey;
+}
+
+.road-distance {
+    align-self: flex-start;
+    color: grey;
+    display: flex;
+    align-items: center;
+}
+
+.road-distance i {
+    font-size: 18px;
+    color: lightgrey;
 }
