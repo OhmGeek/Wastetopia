@@ -1,0 +1,1025 @@
+<!doctype html>
+<html class="export" lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width">
+  <meta name="description" content="filter &amp; sort magical layouts">
+
+  <title>Isotope &#xB7; Options</title>
+
+    <!-- Isotope does not require any CSS files -->
+    <link rel="stylesheet" href="css/isotope-docs.css?3" media="screen">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:site" content="@metafizzyco">
+  <meta name="twitter:url" content="http://isotope.metafizzy.co/.html">
+  <meta name="twitter:title" content="Isotope Options">
+  <meta name="twitter:description" content="filter &amp; sort magical layouts">
+
+</head>
+<body class="page--options">
+
+  <div class="nav">
+    <h1 class="nav__title"><a href=".">Isotope</a></h1>
+  
+    <ol class="site-nav">
+      <li class="site-nav__item site-nav__item--filtering">
+        <a class="site-nav__item__link" href="filtering.html">Filtering</a></li>
+      <li class="site-nav__item site-nav__item--sorting">
+        <a class="site-nav__item__link" href="sorting.html">Sorting</a></li>
+      <li class="site-nav__item site-nav__item--layout ">
+        <a class="site-nav__item__link" href="layout.html">Layout</a>
+      </li>
+      <li class="site-nav__item site-nav__item--layout-modes sub-nav-parent">
+        <a class="site-nav__item__link" href="layout-modes.html">Layout modes</a>
+        <ul class="sub-nav">
+            <li class="sub-nav__item sub-nav__item--masonry">
+              <a class="sub-nav__item__link" href="layout-modes/masonry.html">masonry</a></li>
+            <li class="sub-nav__item sub-nav__item--fitrows">
+              <a class="sub-nav__item__link" href="layout-modes/fitrows.html">fitRows</a></li>
+            <li class="sub-nav__item sub-nav__item--vertical">
+              <a class="sub-nav__item__link" href="layout-modes/vertical.html">vertical</a></li>
+            <li class="sub-nav__item sub-nav__item--packery">
+              <a class="sub-nav__item__link" href="layout-modes/packery.html">packery</a></li>
+            <li class="sub-nav__item sub-nav__item--cellsbyrow">
+              <a class="sub-nav__item__link" href="layout-modes/cellsbyrow.html">cellsByRow</a></li>
+            <li class="sub-nav__item sub-nav__item--masonryhorizontal">
+              <a class="sub-nav__item__link" href="layout-modes/masonryhorizontal.html">masonryHorizontal</a></li>
+            <li class="sub-nav__item sub-nav__item--fitcolumns">
+              <a class="sub-nav__item__link" href="layout-modes/fitcolumns.html">fitColumns</a></li>
+            <li class="sub-nav__item sub-nav__item--cellsbycolumn">
+              <a class="sub-nav__item__link" href="layout-modes/cellsbycolumn.html">cellsByColumn</a></li>
+            <li class="sub-nav__item sub-nav__item--horiz">
+              <a class="sub-nav__item__link" href="layout-modes/horiz.html">horiz</a></li>
+        </ul>
+      </li>
+      <li class="site-nav__item site-nav__item--options">
+        <a class="site-nav__item__link" href="options.html">Options</a></li>
+      <li class="site-nav__item site-nav__item--methods">
+        <a class="site-nav__item__link" href="methods.html">Methods</a></li>
+      <li class="site-nav__item site-nav__item--events">
+        <a class="site-nav__item__link" href="events.html">Events</a></li>
+      <li class="site-nav__item site-nav__item--extras">
+        <a class="site-nav__item__link" href="extras.html">Extras</a></li>
+      <li class="site-nav__item site-nav__item--license">
+        <a class="site-nav__item__link" href="license.html">License</a></li>
+      <li class="site-nav__item site-nav__item--faq">
+        <a class="site-nav__item__link" href="faq.html">FAQ</a></li>
+    </ol>
+  
+    <ul class="page-nav" data-js="page-nav">
+<li class="page-nav__item page-nav__item--h2"><a href="#recommended">Recommended</a></li>
+<li class="page-nav__item page-nav__item--h3"><a href="#itemselector">itemSelector</a></li>
+<li class="page-nav__item page-nav__item--h2"><a href="#layout">Layout</a></li>
+<li class="page-nav__item page-nav__item--h3"><a href="#layoutmode">layoutMode</a></li>
+<li class="page-nav__item page-nav__item--h3"><a href="#percentposition">percentPosition</a></li>
+<li class="page-nav__item page-nav__item--h3"><a href="#element-sizing">Element sizing</a></li>
+<li class="page-nav__item page-nav__item--h3"><a href="#stamp">stamp</a></li>
+<li class="page-nav__item page-nav__item--h3"><a href="#originleft">originLeft</a></li>
+<li class="page-nav__item page-nav__item--h3"><a href="#origintop">originTop</a></li>
+<li class="page-nav__item page-nav__item--h2"><a href="#filtering">Filtering</a></li>
+<li class="page-nav__item page-nav__item--h3"><a href="#filter">filter</a></li>
+<li class="page-nav__item page-nav__item--h2"><a href="#sorting">Sorting</a></li>
+<li class="page-nav__item page-nav__item--h3"><a href="#getsortdata">getSortData</a></li>
+<li class="page-nav__item page-nav__item--h3"><a href="#sortby">sortBy</a></li>
+<li class="page-nav__item page-nav__item--h3"><a href="#sortascending">sortAscending</a></li>
+<li class="page-nav__item page-nav__item--h2"><a href="#transitions">Transitions</a></li>
+<li class="page-nav__item page-nav__item--h3"><a href="#stagger">stagger</a></li>
+<li class="page-nav__item page-nav__item--h3"><a href="#transitionduration">transitionDuration</a></li>
+<li class="page-nav__item page-nav__item--h3"><a href="#hiddenstyle-visiblestyle">hiddenStyle &amp; visibleStyle</a></li>
+<li class="page-nav__item page-nav__item--h2"><a href="#setup">Setup</a></li>
+<li class="page-nav__item page-nav__item--h3"><a href="#containerstyle">containerStyle</a></li>
+<li class="page-nav__item page-nav__item--h3"><a href="#resize">resize</a></li>
+<li class="page-nav__item page-nav__item--h3"><a href="#initlayout">initLayout</a></li>
+</ul>
+  </div>
+
+
+  <div id="content" class="main">
+    <div class="container">
+        <h1>Options</h1>
+
+
+<p>All options are optional, but <a href="#itemselector"><code>itemSelector</code></a> is recommended. <a href="layout-modes.html#layout-mode-options">Layout modes have their own separate options</a>.</p>
+
+<pre><code class="js"><span class="comment">// with jQuery</span>
+<span class="keyword">var</span> <span class="jquery_var">$grid</span> = $(<span class="string">&apos;.grid&apos;</span>).isotope({
+  <span class="attr">itemSelector</span>: <span class="string">&apos;.grid-item&apos;</span>,
+  <span class="attr">getSortData</span>: {
+    <span class="attr">name</span>: <span class="string">&apos;.name&apos;</span>,
+    <span class="attr">category</span>: <span class="string">&apos;[data-category]&apos;</span>
+  },
+  <span class="comment">// layout mode options</span>
+  masonry: {
+    <span class="attr">columnWidth</span>: <span class="number">200</span>
+  }
+});
+</code></pre>
+<pre><code class="js"><span class="comment">// with vanilla JS</span>
+<span class="keyword">var</span> <span class="isotope_var">iso</span> = <span class="keyword">new</span> <span class="isotope_keyword">Isotope</span>( <span class="string">&apos;.grid&apos;</span>, {
+  <span class="attr">itemSelector</span>: <span class="string">&apos;.grid-item&apos;</span>,
+  <span class="attr">getSortData</span>: {
+    <span class="attr">name</span>: <span class="string">&apos;.name&apos;</span>,
+    <span class="attr">category</span>: <span class="string">&apos;[data-category]&apos;</span>
+  },
+  <span class="attr">masonry</span>: {
+    <span class="attr">columnWidth</span>: <span class="number">200</span>
+  }
+});
+
+</code></pre>
+<pre><code class="html"><span class="comment">&lt;!-- in HTML --&gt;</span>
+<span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;grid&quot;</span> <span class="attr">data-isotope</span>=<span class="string">&apos;{ &quot;itemSelector&quot;: &quot;.grid-item&quot;, &quot;getSortData&quot;: { &quot;name&quot;: &quot;.name&quot;, &quot;category&quot;: &quot;[data-category]&quot; }, &quot;masonry&quot;: { &quot;columnWidth&quot;: 200 } }&apos;</span>&gt;</span>
+</code></pre>
+
+<h2 id="recommended">Recommended</h2>
+
+<h3 id="itemselector">itemSelector</h3>
+
+<p>Specifies which child elements will be used as item elements in the layout.</p>
+
+<p>We recommend always setting <code>itemSelector</code>. <code>itemSelector</code> is useful to exclude <a href="#element-sizing">sizing elements</a> or other elements that are not part of the layout.</p>
+
+<div class="duo example">
+  <div class="duo__cell example__code">
+<pre><code class="js">itemSelector: <span class="string">&apos;.grid-item&apos;</span>
+</code></pre>
+
+<pre><code class="html"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;grid&quot;</span>&gt;</span>
+  <span class="comment">&lt;!-- do not use banner in Isotope layout --&gt;</span>
+  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;static-banner&quot;</span>&gt;</span>Static banner<span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;grid-item&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;grid-item&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+  ...
+<span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+</code></pre>
+  </div>
+  <div class="duo__cell example__demo">
+    <div class="grid grid--has-banner" data-isotope="{ &quot;itemSelector&quot;: &quot;.grid-item&quot;, &quot;masonry&quot;: { &quot;columnWidth&quot;: 50 }}">
+      <div class="static-banner">Static banner</div>
+      <div class="grid-item"></div>
+      <div class="grid-item grid-item--width2"></div>
+      <div class="grid-item"></div>
+      <div class="grid-item grid-item--height2"></div>
+      <div class="grid-item grid-item--width2 grid-item--height2"></div>
+      <div class="grid-item"></div>
+      <div class="grid-item"></div>
+      <div class="grid-item grid-item--height2"></div>
+      <div class="grid-item grid-item--width2"></div>
+      <div class="grid-item"></div>
+      <div class="grid-item grid-item--height2"></div>
+      <div class="grid-item"></div>
+      <div class="grid-item grid-item--width2"></div>
+      <div class="grid-item"></div>
+      <div class="grid-item grid-item--height2"></div>
+      <div class="grid-item"></div>
+      <div class="grid-item"></div>
+    </div>
+    <p class="edit-demo">
+        <a href="http://codepen.io/desandro/pen/yNOdxr">Edit this demo on CodePen</a>
+    </p>
+  </div>
+</div>
+
+
+<h2 id="layout">Layout</h2>
+
+<h3 id="layoutmode">layoutMode</h3>
+
+<p>Sets the layout mode used to position items. Default is
+  <code><span class="comment">layoutMode: &apos;masonry&apos;</span></code>
+  See <a href="layout-modes.html">Layout modes</a>.</p>
+
+
+<h3 id="percentposition">percentPosition</h3>
+
+<p>Sets item positions in percent values, rather than pixel values. <code>percentPosition: <span class="literal">true</span></code> works well with percent-width items, as items will not transition their position on resize.</p>
+
+<div class="duo example">
+  <div class="duo__cell example__code">
+<pre><code class="js">$(<span class="string">&apos;.grid&apos;</span>).isotope({
+  <span class="attr">percentPosition</span>: <span class="literal">true</span>,
+  <span class="attr">itemSelector</span>: <span class="string">&apos;.grid-item&apos;</span>,
+  <span class="attr">masonry</span>: {
+    <span class="attr">columnWidth</span>: <span class="string">&apos;.grid-sizer&apos;</span>
+  }
+})
+</code></pre>
+
+<pre><code class="css"><span class="comment">/* fluid 5 columns */</span>
+<span class="selector-class">.grid-sizer</span>,
+<span class="selector-class">.grid-item</span> { <span class="attribute">width</span>: <span class="number">20%</span>; }
+</code></pre>
+  </div>
+  <div class="duo__cell example__demo">
+    <div class="grid grid--fluid-5-col" data-isotope="{ &quot;masonry&quot;: { &quot;columnWidth&quot;: &quot;.grid-sizer&quot; }, &quot;itemSelector&quot;: &quot;.grid-item&quot;, &quot;percentPosition&quot;: true }">
+      <div class="grid-sizer"></div>
+      <div class="grid-item"></div>
+      <div class="grid-item grid-item--width2"></div>
+      <div class="grid-item"></div>
+      <div class="grid-item grid-item--height2"></div>
+      <div class="grid-item grid-item--width2 grid-item--height2"></div>
+      <div class="grid-item"></div>
+      <div class="grid-item"></div>
+      <div class="grid-item grid-item--height2"></div>
+      <div class="grid-item grid-item--width2"></div>
+      <div class="grid-item"></div>
+      <div class="grid-item grid-item--width2"></div>
+      <div class="grid-item"></div>
+    </div>
+    <p class="edit-demo">
+        <a href="http://codepen.io/desandro/pen/mIkhq">Edit this demo on CodePen</a>
+    </p>
+  </div>
+</div>
+
+
+<h3 id="element-sizing">Element sizing</h3>
+
+<p>Sizing options like <a href="layout-modes/masonry.html#columnwidth"><code>masonry: columnWidth</code></a>, <a href="layout-modes/masonry.html#gutter"><code>masonry: gutter</code></a>, and <a href="layout-modes/packery.html#columnwidth"><code>packery: columnWidth</code></a> can be set with an element. The size of the element is then used as the value of the option.</p>
+
+<div class="duo example">
+  <div class="duo__cell example__code">
+<pre><code class="html"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;grid&quot;</span>&gt;</span>
+  <span class="comment">&lt;!-- width of .grid-sizer used for columnWidth --&gt;</span>
+  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;grid-sizer&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;grid-item&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;grid-item grid-item--width2&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+  ...
+<span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+</code></pre>
+
+<pre><code class="css"><span class="comment">/* fluid 5 columns */</span>
+<span class="selector-class">.grid-sizer</span>,
+<span class="selector-class">.grid-item</span> { <span class="attribute">width</span>: <span class="number">20%</span>; }
+<span class="comment">/* 2 columns */</span>
+<span class="selector-class">.grid-item--width2</span> { <span class="attribute">width</span>: <span class="number">40%</span>; }
+</code></pre>
+
+<pre><code class="js">$(<span class="string">&apos;.grid&apos;</span>).isotope({
+  <span class="comment">// set itemSelector so .grid-sizer is not used in layout</span>
+  itemSelector: <span class="string">&apos;.grid-item&apos;</span>,
+  <span class="attr">percentPosition</span>: <span class="literal">true</span>,
+  <span class="attr">masonry</span>: {
+    <span class="comment">// set to the element</span>
+    columnWidth: <span class="string">&apos;.grid-sizer&apos;</span>
+  }
+})
+</code></pre>
+  </div>
+  <div class="duo__cell examle__demo">
+    <div class="grid grid--fluid-5-col" data-isotope="{ &quot;masonry&quot;: { &quot;columnWidth&quot;: &quot;.grid-sizer&quot; }, &quot;itemSelector&quot;: &quot;.grid-item&quot;, &quot;percentPosition&quot;: true }">
+      <div class="grid-sizer"></div>
+      <div class="grid-item"></div>
+      <div class="grid-item grid-item--width2"></div>
+      <div class="grid-item"></div>
+      <div class="grid-item grid-item--height2"></div>
+      <div class="grid-item grid-item--width2 grid-item--height2"></div>
+      <div class="grid-item"></div>
+      <div class="grid-item"></div>
+      <div class="grid-item grid-item--height2"></div>
+      <div class="grid-item grid-item--width2"></div>
+      <div class="grid-item"></div>
+      <div class="grid-item grid-item--width2"></div>
+      <div class="grid-item"></div>
+    </div>
+
+    <p class="edit-demo">
+        <a href="http://codepen.io/desandro/pen/mIkhq">Edit this demo on CodePen</a>
+    </p>
+  </div>
+</div>
+
+<p>The option can be set to a Selector <i>String</i> or an <i>Element</i>.</p>
+
+<pre><code class="js"><span class="comment">// set to a selector string</span>
+<span class="comment">// first matching element within container element will be used</span>
+masonry: {
+  <span class="attr">columnWidth</span>: <span class="string">&apos;.grid-sizer&apos;</span>
+}
+
+<span class="comment">// set to an element</span>
+masonry: {
+  <span class="attr">columnWidth</span>: <span class="jquery_var">$grid</span>.find(<span class="string">&apos;.grid-sizer&apos;</span>)[<span class="number">0</span>]
+}
+</code></pre>
+
+<p>Element sizing options allow you to control the sizing of the Isotope layout within your CSS. This is useful for responsive layouts and media queries.</p>
+
+<pre><code class="css"><span class="comment">/* 3 columns by default */</span>
+<span class="selector-class">.grid-sizer</span> { <span class="attribute">width</span>: <span class="number">33.333%</span>; }
+
+@<span class="keyword">media</span> screen and (min-width: <span class="number">768px</span>) {
+  <span class="comment">/* 5 columns for larger screens */</span>
+  <span class="selector-class">.grid-sizer</span> { <span class="attribute">width</span>: <span class="number">20%</span>; }
+}
+</code></pre>
+
+
+<h3 id="stamp">stamp</h3>
+
+<p>Specifies which elements are <em>stamped</em> within the layout. Isotope will layout items around stamped elements.</p>
+
+<p>The <a href="layout-modes/masonry.html">masonry</a>, <a href="layout-modes/packery.html">packery</a>, and <a href="layout-modes/masonryhorizontal.html">masonryHorizontal</a> layout modes support stamping.</p>
+
+<p>The <code>stamp</code> option stamps elements only when the Isotope instance is first initialized. You can stamp additional elements afterwards with the <a href="methods.html#stamp"><code>stamp</code> method</a>.</p>
+
+<div class="duo example">
+  <div class="duo__cell example__code">
+<pre><code class="html"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;grid&quot;</span>&gt;</span>
+  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;stamp stamp1&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;stamp stamp2&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;grid-item&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;grid-item&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+  ....
+<span class="tag">&lt;/<span class="name">div</span>&gt;</span>
+</code></pre>
+
+<pre><code class="js"><span class="comment">// specify itemSelector so stamps do get laid out</span>
+itemSelector: <span class="string">&apos;.grid-item&apos;</span>,
+<span class="comment">// stamp elements</span>
+stamp: <span class="string">&apos;.stamp&apos;</span>
+</code></pre>
+
+<pre><code class="css"><span class="comment">/* position stamp elements with CSS */</span>
+<span class="selector-class">.grid</span> {
+  <span class="attribute">position</span>: relative;
+}
+<span class="selector-class">.stamp</span> {
+  <span class="attribute">position</span>: absolute;
+  <span class="attribute">background</span>: orange;
+  <span class="attribute">border</span>: <span class="number">4px</span> dotted black;
+}
+<span class="selector-class">.stamp1</span> {
+  <span class="attribute">left</span>: <span class="number">30%</span>;
+  <span class="attribute">top</span>: <span class="number">10px</span>;
+  <span class="attribute">width</span>: <span class="number">20%</span>;
+  <span class="attribute">height</span>: <span class="number">100px</span>;
+}
+<span class="selector-class">.stamp2</span> {
+  <span class="attribute">right</span>: <span class="number">10%</span>;
+  <span class="attribute">top</span>: <span class="number">20px</span>;
+  <span class="attribute">width</span>: <span class="number">70%</span>;
+  <span class="attribute">height</span>: <span class="number">30px</span>;
+}
+</code></pre>
+  </div>
+  <div class="duo__cell example__demo">
+    <div class="grid grid--has-stamp" data-isotope="{ &quot;itemSelector&quot;: &quot;.grid-item&quot;, &quot;stamp&quot;: &quot;.stamp&quot;, &quot;masonry&quot;: { &quot;columnWidth&quot;: 50 } }">
+      <div class="stamp stamp--stamp-option-stamp1"></div>
+      <div class="stamp stamp--stamp-option-stamp2"></div>
+      <div class="grid-item"></div>
+      <div class="grid-item grid-item--width2"></div>
+      <div class="grid-item"></div>
+      <div class="grid-item grid-item--height2"></div>
+      <div class="grid-item grid-item--width2 grid-item--height2"></div>
+      <div class="grid-item"></div>
+      <div class="grid-item"></div>
+      <div class="grid-item grid-item--height2"></div>
+      <div class="grid-item grid-item--width2"></div>
+      <div class="grid-item"></div>
+      <div class="grid-item grid-item--height2"></div>
+      <div class="grid-item"></div>
+      <div class="grid-item grid-item--width2"></div>
+      <div class="grid-item"></div>
+      <div class="grid-item grid-item--height2"></div>
+      <div class="grid-item"></div>
+      <div class="grid-item"></div>
+    </div>
+
+    <p class="edit-demo">
+        <a href="http://codepen.io/desandro/pen/jfhnx">Edit this demo on CodePen</a>
+    </p>
+  </div>
+</div>
+
+<p><code>stamp</code> can be set to a Selector <i>String</i>, <i>Element</i>, or an <i>Array</i>-like object of <i>Element</i>s.</p>
+
+<pre><code class="js"><span class="comment">// selector string</span>
+stamp: <span class="string">&apos;.stamp&apos;</span>
+
+<span class="comment">// single element</span>
+stamp: <span class="jquery_var">$grid</span>.find(<span class="string">&apos;.stamp&apos;</span>)[<span class="number">0</span>]
+
+<span class="comment">// multiple elements</span>
+stamp: <span class="jquery_var">$grid</span>.find(<span class="string">&apos;.stamp&apos;</span>)
+</code></pre>
+
+
+<h3 id="originleft">originLeft</h3>
+
+<p>Controls the horizontal flow of the layout. By default, item elements start positioning at the left, with <code><span class="comment">originLeft: true</span></code>. Set <code>originLeft: <span class="literal">false</span></code> for right-to-left layouts.</p>
+
+<p><code>originLeft</code> was previously <code>isOriginLeft</code> in Isotope v2. <code>isOriginLeft</code> will still work in Isotope v3.</p>
+
+<div class="duo example">
+  <div class="duo__cell example__code">
+<pre><code class="js">originLeft: <span class="literal">false</span>
+</code></pre>
+  </div>
+  <div class="duo__cell example__code">
+    <div class="grid grid--counting" data-isotope="{ &quot;originLeft&quot;: false, &quot;masonry&quot;: { &quot;columnWidth&quot;: 50 } }">
+      <div class="grid-item"></div>
+      <div class="grid-item grid-item--width2"></div>
+      <div class="grid-item"></div>
+      <div class="grid-item grid-item--height2"></div>
+      <div class="grid-item grid-item--width2 grid-item--height2"></div>
+      <div class="grid-item"></div>
+      <div class="grid-item"></div>
+      <div class="grid-item grid-item--height2"></div>
+      <div class="grid-item grid-item--width2"></div>
+      <div class="grid-item"></div>
+      <div class="grid-item grid-item--height2"></div>
+      <div class="grid-item"></div>
+      <div class="grid-item grid-item--width2"></div>
+      <div class="grid-item"></div>
+      <div class="grid-item grid-item--height2"></div>
+      <div class="grid-item"></div>
+      <div class="grid-item"></div>
+    </div>
+
+    <p class="edit-demo">
+        <a href="http://codepen.io/desandro/pen/gadFJ">Edit this demo on CodePen</a>
+    </p>
+  </div>
+</div>
+
+
+<h3 id="origintop">originTop</h3>
+
+<p>Controls the vertical flow of the layout. By default, item elements start positioning at the top. Set to <code><span class="literal">false</span></code> for bottom-up layouts. It&#x2019;s like Tetris!</p>
+
+<p><code>originTop</code> was previously <code>isOriginTop</code> in Isotope v2. <code>isOriginTop</code> will still work in Isotope v3.</p>
+
+<div class="duo example">
+  <div class="duo__cell example__code">
+<pre><code class="js">originTop: <span class="literal">false</span>
+</code></pre>
+  </div>
+  <div class="duo__cell example__demo">
+    <div class="grid grid--counting" data-isotope="{ &quot;originTop&quot;: false }">
+      <div class="grid-item"></div>
+      <div class="grid-item grid-item--width2"></div>
+      <div class="grid-item"></div>
+      <div class="grid-item grid-item--height2"></div>
+      <div class="grid-item grid-item--width2 grid-item--height2"></div>
+      <div class="grid-item"></div>
+      <div class="grid-item"></div>
+      <div class="grid-item grid-item--height2"></div>
+      <div class="grid-item grid-item--width2"></div>
+      <div class="grid-item"></div>
+      <div class="grid-item grid-item--height2"></div>
+      <div class="grid-item"></div>
+      <div class="grid-item grid-item--width2"></div>
+      <div class="grid-item"></div>
+      <div class="grid-item grid-item--height2"></div>
+      <div class="grid-item"></div>
+      <div class="grid-item"></div>
+    </div>
+    <p class="edit-demo">
+        <a href="http://codepen.io/desandro/pen/kxFJH">Edit this demo on CodePen</a>
+    </p>
+  </div>
+</div>
+
+
+<h2 id="filtering">Filtering</h2>
+
+<h3 id="filter">filter</h3>
+
+<p>Shows items that match the filter and hides items that do not match. See <a href="filtering.html">Filtering</a>.</p>
+
+<p>If set to a string, that value is used as a <a href="filtering.html#selectors">selector</a>.</p>
+
+<pre><code class="js"><span class="jquery_var">$grid</span>.isotope({ <span class="attr">filter</span>: <span class="string">&apos;.selector&apos;</span> });
+</code></pre>
+
+<p>If <a href="filtering.html#functions"><code>filter</code> is set to a function</a>, that function checks each item and returns <code>true</code> or <code>false</code> if the item should be shown or hidden.</p>
+
+<pre><code class="js"><span class="jquery_var">$grid</span>.isotope({
+  <span class="comment">// filter element with numbers greater than 50</span>
+  filter: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+    <span class="comment">// _this_ is the item element. Get text of element&apos;s .number</span>
+    <span class="keyword">var</span> number = $(<span class="keyword">this</span>).find(<span class="string">&apos;.number&apos;</span>).text();
+    <span class="comment">// return true to show, false to hide</span>
+    <span class="keyword">return</span> <span class="built_in">parseInt</span>( number, <span class="number">10</span> ) &gt; <span class="number">50</span>;
+  }
+});
+</code></pre>
+
+
+<h2 id="sorting">Sorting</h2>
+
+
+<h3 id="getsortdata">getSortData</h3>
+
+<p>Isotope reads data from HTML with the <code>getSortData</code> option. See <a href="sorting.html#getsortdata">Sorting: <code>getSortData</code></a>.</p>
+
+<p><code>getSortData</code> is set with an object. The object&#x2019;s keys are keywords used to sort by. Object values are either a shortcut string or function to retrieve the data.</p>
+
+<pre><code class="js"><span class="keyword">var</span> <span class="jquery_var">$grid</span> = $(<span class="string">&apos;.grid&apos;</span>).isotope({
+  <span class="attr">getSortData</span>: {
+    <span class="attr">name</span>: <span class="string">&apos;.name&apos;</span>, <span class="comment">// text from querySelector</span>
+    category: <span class="string">&apos;[data-category]&apos;</span>, <span class="comment">// value of attribute</span>
+    weight: <span class="function"><span class="keyword">function</span>(<span class="params"> itemElem </span>) </span>{ <span class="comment">// function</span>
+      <span class="keyword">var</span> weight = $( itemElem ).find(<span class="string">&apos;.weight&apos;</span>).text();
+      <span class="keyword">return</span> <span class="built_in">parseFloat</span>( weight.replace( <span class="regexp">/[\(\)]/g</span>, <span class="string">&apos;&apos;</span>) );
+    }
+  }
+});
+</code></pre>
+
+
+<h3 id="sortby">sortBy</h3>
+
+<p>Sorts items according to which property of <code>getSortData</code>. See <a href="sorting.html#sortby">Sorting: <code>sortBy</code></a>. The value of <code>sortBy</code> needs to match a key name in <code>getSortData</code>.</p>
+
+<pre><code class="js"><span class="jquery_var">$grid</span>.isotope({
+  <span class="attr">getSortData</span>: {
+    <span class="attr">number</span>: <span class="string">&apos;.number parseInt&apos;</span>
+  },
+  <span class="attr">sortBy</span> : <span class="string">&apos;number&apos;</span>
+});
+</code></pre>
+
+
+<p>Two additional <code>sortBy</code> options are built in.</p>
+
+<pre><code class="js"><span class="jquery_var">$grid</span>.isotope({ <span class="attr">sortBy</span> : <span class="string">&apos;original-order&apos;</span> });
+<span class="comment">// original order of the item elements</span>
+
+<span class="jquery_var">$grid</span>.isotope({ <span class="attr">sortBy</span> : <span class="string">&apos;random&apos;</span> });
+<span class="comment">// random order</span>
+</code></pre>
+
+<p>To sort by multiple properties, you can set <code>sortBy</code> to an array of key names.</p>
+
+<pre><code class="js"><span class="comment">// sort by color, then number</span>
+sortBy: [ <span class="string">&apos;color&apos;</span>, <span class="string">&apos;number&apos;</span> ]
+</code></pre>
+
+
+<h3 id="sortascending">sortAscending</h3>
+
+<p>Sorts items ascendingly if <code>sortAscending: <span class="literal">true</span></code> &#x201C;A, B, C&#x2026;&#x201D;, &#x201C;1, 2, 3&#x2026;&#x201D;, or descendingly if <code>sortAscending: <span class="literal">false</span></code>, &#x201C;Z, Y, X&#x2026;&#x201D;, &#x201C;9, 8, 7&#x2026;&#x201D;.</p>
+
+<pre><code class="js"><span class="comment">// sort by number, highest number first</span>
+<span class="jquery_var">$grid</span>.isotope({
+  <span class="attr">sortBy</span>: <span class="string">&apos;number&apos;</span>,
+  <span class="attr">sortAscending</span>: <span class="literal">false</span>
+});
+</code></pre>
+
+
+<p>You can set ascending order for each <code>sortBy</code> value by setting <code>sortAscending</code> to an object.</p>
+
+<pre><code class="js">sortAscending: {
+  <span class="attr">name</span>: <span class="literal">true</span>, <span class="comment">// name ascendingly</span>
+  weight: <span class="literal">false</span>, <span class="comment">// weight descendingly</span>
+  category: <span class="literal">true</span>, <span class="comment">// category ascendingly</span>
+  number: <span class="literal">false</span> <span class="comment">// number descendingly</span>
+}
+</code></pre>
+
+
+
+<h2 id="transitions">Transitions</h2>
+
+
+<h3 id="stagger">stagger</h3>
+
+<p>Staggers item transitions, so items transition incrementally after one another. Set as a CSS time format, <code><span class="string">&apos;0.03s&apos;</span></code>, or as a number in milliseconds, <code><span class="number">30</span></code>.</p>
+
+<div class="duo example">
+  <div class="duo__cell example__code">
+<pre><code class="js">stagger: <span class="number">30</span>
+<span class="comment">// stagger item transitions 30ms after one another</span>
+</code></pre>
+  </div>
+  <div class="duo__cell example__demo" data-js="stagger">
+  
+    <div class="button-group js-radio-button-group">
+      <button class="button is-checked" data-filter="*">All</button>
+      <button class="button" data-filter=".grid-item--filter-block-red">Red</button>
+      <button class="button" data-filter=".grid-item--filter-block-blue">Blue</button>
+    </div>
+  
+    <div class="grid">
+      <div class="grid-item grid-item--filter-block-red"></div>
+      <div class="grid-item grid-item--filter-block-red"></div>
+      <div class="grid-item grid-item--filter-block-red"></div>
+      <div class="grid-item grid-item--filter-block-blue"></div>
+      <div class="grid-item grid-item--filter-block-red"></div>
+      <div class="grid-item grid-item--filter-block-blue"></div>
+      <div class="grid-item grid-item--filter-block-red"></div>
+      <div class="grid-item grid-item--filter-block-blue"></div>
+      <div class="grid-item grid-item--filter-block-red"></div>
+      <div class="grid-item grid-item--filter-block-red"></div>
+      <div class="grid-item grid-item--filter-block-red"></div>
+      <div class="grid-item grid-item--filter-block-blue"></div>
+      <div class="grid-item grid-item--filter-block-red"></div>
+      <div class="grid-item grid-item--filter-block-blue"></div>
+      <div class="grid-item grid-item--filter-block-red"></div>
+      <div class="grid-item grid-item--filter-block-red"></div>
+      <div class="grid-item grid-item--filter-block-red"></div>
+      <div class="grid-item grid-item--filter-block-blue"></div>
+      <div class="grid-item grid-item--filter-block-red"></div>
+      <div class="grid-item grid-item--filter-block-red"></div>
+      <div class="grid-item grid-item--filter-block-red"></div>
+      <div class="grid-item grid-item--filter-block-blue"></div>
+      <div class="grid-item grid-item--filter-block-red"></div>
+      <div class="grid-item grid-item--filter-block-blue"></div>
+      <div class="grid-item grid-item--filter-block-red"></div>
+      <div class="grid-item grid-item--filter-block-red"></div>
+      <div class="grid-item grid-item--filter-block-red"></div>
+    </div>
+    <p class="edit-demo">
+        <a href="http://codepen.io/desandro/pen/WwavbO">Edit this demo on CodePen</a>
+    </p>
+  </div>
+</div>
+
+
+<h3 id="transitionduration">transitionDuration</h3>
+
+<p>Duration of the transition when items change position or appearance, set in a CSS time format, or as a number in milliseconds. Default: <code><span class="comment">transitionDuration: &apos;0.4s&apos;</span></code></p>
+
+<pre><code class="js"><span class="comment">// fast transitions</span>
+transitionDuration: <span class="string">&apos;0.2s&apos;</span>
+
+<span class="comment">// slow transitions</span>
+transitionDuration: <span class="string">&apos;0.8s&apos;</span>
+
+<span class="comment">// no transitions</span>
+transitionDuration: <span class="number">0</span>
+
+<span class="comment">// 0.4s in milliseconds</span>
+transitionDuration: <span class="number">400</span>
+</code></pre>
+
+
+
+<h3 id="hiddenstyle-visiblestyle">hiddenStyle &amp; visibleStyle</h3>
+
+<p>The styles applied to hide and reveal items when filtering.</p>
+
+<pre><code class="js"><span class="comment">/* default
+hiddenStyle: {
+  opacity: 0,
+  transform: &apos;scale(0.001)&apos;
+},
+visibleStyle: {
+  opacity: 1,
+  transform: &apos;scale(1)&apos;
+}
+*/</span>
+</code></pre>
+
+<div class="duo example">
+  <div class="duo__cell example__code">
+<pre><code class="js"><span class="jquery_var">$grid</span>.isotope({
+  <span class="comment">// disable scale transform transition when hiding</span>
+  hiddenStyle: {
+    <span class="attr">opacity</span>: <span class="number">0</span>
+  },
+  <span class="attr">visibleStyle</span>: {
+    <span class="attr">opacity</span>: <span class="number">1</span>
+  }
+})
+</code></pre>
+  </div>
+
+  <div class="duo__cell example__demo" data-js="visible-hidden-style">
+  
+    <div class="button-group js-radio-button-group">
+      <button class="button is-checked" data-filter="*">All</button>
+      <button class="button" data-filter=".grid-item--filter-block-red">Red</button>
+      <button class="button" data-filter=".grid-item--filter-block-blue">Blue</button>
+    </div>
+  
+    <div class="grid grid--filter-blocks-large">
+      <div class="grid-item grid-item--filter-block-red"></div>
+      <div class="grid-item grid-item--filter-block-red"></div>
+      <div class="grid-item grid-item--filter-block-red"></div>
+      <div class="grid-item grid-item--filter-block-blue"></div>
+      <div class="grid-item grid-item--filter-block-red"></div>
+      <div class="grid-item grid-item--filter-block-blue"></div>
+      <div class="grid-item grid-item--filter-block-red"></div>
+      <div class="grid-item grid-item--filter-block-blue"></div>
+      <div class="grid-item grid-item--filter-block-red"></div>
+      <div class="grid-item grid-item--filter-block-red"></div>
+      <div class="grid-item grid-item--filter-block-blue"></div>
+      <div class="grid-item grid-item--filter-block-blue"></div>
+      <div class="grid-item grid-item--filter-block-red"></div>
+      <div class="grid-item grid-item--filter-block-blue"></div>
+      <div class="grid-item grid-item--filter-block-red"></div>
+      <div class="grid-item grid-item--filter-block-blue"></div>
+      <div class="grid-item grid-item--filter-block-red"></div>
+    </div>
+    <p class="edit-demo">
+        <a href="http://codepen.io/desandro/pen/lxzDA">Edit this demo on CodePen</a>
+    </p>
+  </div>
+</div>
+
+
+<h2 id="setup">Setup</h2>
+
+
+<h3 id="containerstyle">containerStyle</h3>
+
+<p>CSS styles that are applied to the container element. Def</p>
+
+<pre><code class="js"><span class="comment">// default</span>
+<span class="comment">// containerStyle: { position: &apos;relative&apos; }</span>
+
+<span class="comment">// disable any styles being set on container</span>
+<span class="comment">// useful if using absolute position on container</span>
+containerStyle: <span class="literal">null</span>
+</code></pre>
+
+
+
+<h3 id="resize">resize</h3>
+
+<p>Adjusts sizes and positions when window is resized. Enabled by default <code><span class="comment">resize: true</span></code>.</p>
+
+<p><code>resize</code> was previously <code>isResizeBound</code> in Isotope v2. <code>isResizeBound</code> will still work in Isotope v3.</p>
+
+<div class="duo example">
+  <div class="duo__cell example__code">
+<pre><code class="js">resize: <span class="literal">false</span>
+</code></pre>
+
+<pre><code class="css"><span class="comment">/* grid has fixed width */</span>
+<span class="selector-class">.grid</span> {
+  <span class="attribute">width</span>: <span class="number">304px</span>;
+}
+</code></pre>
+  </div>
+  <div class="duo__cell example__demo">
+    <div class="grid grid--fixed-width" data-isotope="{ &quot;resize&quot;: false, &quot;masonry&quot;: { &quot;columnWidth&quot;: 50 }}">
+      <div class="grid-item"></div>
+      <div class="grid-item grid-item--width2"></div>
+      <div class="grid-item"></div>
+      <div class="grid-item grid-item--height2"></div>
+      <div class="grid-item grid-item--width2 grid-item--height2"></div>
+      <div class="grid-item"></div>
+      <div class="grid-item"></div>
+      <div class="grid-item grid-item--height2"></div>
+      <div class="grid-item grid-item--width2"></div>
+      <div class="grid-item"></div>
+      <div class="grid-item grid-item--height2"></div>
+      <div class="grid-item"></div>
+      <div class="grid-item grid-item--width2"></div>
+      <div class="grid-item"></div>
+      <div class="grid-item grid-item--height2"></div>
+      <div class="grid-item"></div>
+      <div class="grid-item"></div>
+    </div>
+    <p class="edit-demo">
+        <a href="http://codepen.io/desandro/pen/LVNKab">Edit this demo on CodePen</a>
+    </p>
+  </div>
+</div>
+
+
+<h3 id="initlayout">initLayout</h3>
+
+<p>Enables layout on initialization.
+  Enabled by default <code><span class="comment">initLayout: true</span></code>.</p>
+
+<p>Set <code>initLayout: <span class="literal">false</span></code> to disable layout on initialization, so you can use <a href="methods.html">methods</a> or add <a href="events.html">events</a> before the initial layout.</p>
+
+<p><code>initLayout</code> was previously <code>isInitLayout</code> in Isotope v2. <code>isInitLayout</code> will still work in Isotope v3.</p>
+
+<pre><code class="js"><span class="keyword">var</span> <span class="jquery_var">$grid</span> = $(<span class="string">&apos;.grid&apos;</span>).isotope({
+  <span class="comment">// disable initial layout</span>
+  initLayout: <span class="literal">false</span>
+});
+<span class="comment">// bind event</span>
+<span class="jquery_var">$grid</span>.isotope( <span class="string">&apos;on&apos;</span>, <span class="string">&apos;arrangeComplete&apos;</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>{
+  <span class="built_in">console</span>.log(<span class="string">&apos;arrange is complete&apos;</span>);
+});
+<span class="comment">// manually trigger initial layout</span>
+<span class="jquery_var">$grid</span>.isotope();
+</code></pre>
+
+<p class="edit-demo">
+    <a href="http://codepen.io/desandro/pen/doXbZL">Edit this demo on CodePen</a>
+</p>
+
+    </div>
+  </div>
+
+  <footer class="site-footer">
+  
+    <div class="container">
+  
+      <p class="site-footer__copy">Metafizzy makes delightful UI libraries &amp; logos</p>
+  
+      <div class="showcase">
+      
+        <ul class="showcase-item-list">
+      
+            <li class="showcase-item">
+              <a class="showcase-item__link" href="http://flickity.metafizzy.co">
+                <div class="showcase-item__image">
+                    <svg class="flickity-illo" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 360 360" width="100" height="100">
+                      <path class="flickity-illo__color1" fill="#19F" d="M300 220L300 220c-11 0-20-9-20-20v-80c0-11 9-20 20-20h0V220z"/>
+                      <path class="flickity-illo__color1" fill="#19F" d="M340 220L340 220c-11 0-20-9-20-20v-80c0-11 9-20 20-20h0V220z"/>
+                      <path class="flickity-illo__color2" fill="#333" d="M320 290V180c0-18-10-35-27-43L240 110v180H320z"/>
+                      <path class="flickity-illo__color3" fill="white" d="M240 300H120c-11 0-20-9-20-20V40c0-11 9-20 20-20h120c11 0 20 9 20 20v240C260 291 251 300 240 300z"/>
+                      <path class="flickity-illo__color4" fill="#ED0" d="M230 260H130c-6 0-10-5-10-10V70c0-6 5-10 10-10h100c6 0 10 5 10 10v180 C240 256 236 260 230 260z"/>
+                      <path class="flickity-illo__color2" fill="#333" d="M260 200h60v81c0 32-26 59-59 59h0c-34 0-61-27-61-61V240h20 C242 240 260 222 260 200L260 200z"/>
+                      <path class="flickity-illo__color5" fill="#C25" d="M180 220h-60V100h60c6 0 10 5 10 10v100C190 216 186 220 180 220z"/>
+                      <path class="flickity-illo__color1" fill="#19F" d="M240 220h-20c-6 0-10-5-10-10V110c0-6 5-10 10-10h20V220z"/>
+                      <rect class="flickity-illo__color2" fill="#333" x="230" y="280" width="90" height="80"/>
+                      <circle class="flickity-illo__color4" fill="#ED0" cx="180" cy="280" r="10"/>
+                      <line class="flickity-illo__thumb" stroke="#333" stroke-width="60" stroke-linecap="round" x1="262" y1="290" x2="152" y2="240"/>
+                      <path class="flickity-illo__color4" fill="#ED0" d="M190 50h-20c-6 0-10-5-10-10v0c0-6 5-10 10-10h20c6 0 10 5 10 10v0C200 46 196 50 190 50z"/>
+                      <path class="flickity-illo__color5" fill="#C25" d="M80 220L80 220c-11 0-20-9-20-20v-80c0-11 9-20 20-20h0V220z"/>
+                      <path class="flickity-illo__color5" fill="#C25" d="M40 220L40 220c-11 0-20-9-20-20v-80c0-11 9-20 20-20h0V220z"/>
+                    </svg>
+                </div>
+                <div class="showcase-item__text">
+                  <h3 class="showcase-item__title">Flickity</h3>
+                  <p class="showcase-item__description">Touch, responsive, flickable carousels</p>
+                </div>
+              </a>
+            </li>
+      
+            <li class="showcase-item">
+              <a class="showcase-item__link" href="http://packery.metafizzy.co">
+                <div class="showcase-item__image">
+                    <svg class="packery-illo" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 700 700" width="100" height="100">
+                      <path class="packery-illo__item" fill="#C09" d="M172 180H48c-4 0-8-4-8-8V48c0-4 4-8 8-8h124c4 0 8 4 8 8v124C180 176 176 180 172 180z"/>
+                      <path class="packery-illo__item" fill="#C09" d="M172 340H48c-4 0-8-4-8-8V208c0-4 4-8 8-8h124c4 0 8 4 8 8v124C180 336 176 340 172 340z"/>
+                      <path class="packery-illo__item" fill="#C09" d="M492 660H368c-4 0-8-4-8-8V528c0-4 4-8 8-8h124c4 0 8 4 8 8v124C500 656 496 660 492 660z"/>
+                      <path class="packery-illo__item" fill="#C09" d="M652 660H528c-4 0-8-4-8-8V528c0-4 4-8 8-8h124c4 0 8 4 8 8v124C660 656 656 660 652 660z"/>
+                      <path class="packery-illo__item" fill="#C09" d="M652 500H368c-4 0-8-4-8-8V368c0-4 4-8 8-8h284c4 0 8 4 8 8v124C660 496 656 500 652 500z"/>
+                      <path class="packery-illo__item" fill="#C09" d="M332 660H48c-4 0-8-4-8-8V368c0-4 4-8 8-8h284c4 0 8 4 8 8v284C340 656 336 660 332 660z"/>
+                      <path class="packery-illo__item" fill="#C09" d="M652 340H528c-4 0-8-4-8-8V48c0-4 4-8 8-8h124c4 0 8 4 8 8v284C660 336 656 340 652 340z"/>
+                      <path class="packery-illo__draggie" fill="#EA0" d="M572 440H288c-4 0-8-4-8-8V148c0-4 4-8 8-8h284c4 0 8 4 8 8v284C580 436 576 440 572 440z"/>
+                      <g>
+                        <path class="packery-illo__hand" fill="white" d="M530 250c-11 0-20 9-20 20v-10c0-11-9-20-20-20s-20 9-20 20c0-11-9-20-20-20s-20 9-20 20c0-11-9-20-20-20
+                          s-20 9-20 20v20c-17 0-30 13-30 30c0 11 6 20 14 25l19 35c10 18 30 30 51 30h28
+                          c43 0 78-35 78-78V270C550 259 541 250 530 250z"/>
+                        <line class="packery-illo__hand-line" stroke="#EA0" fill="none" stroke-width="16" stroke-linecap="round" x1="430" y1="300" x2="430" y2="340"/>
+                        <line class="packery-illo__hand-line" stroke="#EA0" fill="none" stroke-width="16" stroke-linecap="round" x1="470" y1="300" x2="470" y2="340"/>
+                        <line class="packery-illo__hand-line" stroke="#EA0" fill="none" stroke-width="16" stroke-linecap="round" x1="510" y1="300" x2="510" y2="340"/>
+                      </g>
+                    </svg>
+                </div>
+                <div class="showcase-item__text">
+                  <h3 class="showcase-item__title">Packery</h3>
+                  <p class="showcase-item__description">Gapless, draggable grid layouts</p>
+                </div>
+              </a>
+            </li>
+      
+            <li class="showcase-item">
+              <a class="showcase-item__link" href="http://huebee.buzz">
+                <div class="showcase-item__image">
+                    <svg class="huebee-illo" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 200 200" width="100" height="100">
+                      <polygon class="huebee-illo__stripe4" fill="#19F" points="100,170 65,135 135,135 "/>
+                      <rect class="huebee-illo__stripe3" fill="#EA0" x="65" y="110" width="70" height="25"/>
+                      <rect class="huebee-illo__stripe2" fill="#E62" x="65" y="85" width="70" height="25"/>
+                      <polygon class="huebee-illo__stripe1" fill="#C25" points="135,85 65,85 65,70 80,55 120,55 135,70 "/>
+                      <path class="huebee-illo__line" stroke="#333" fill="none" stroke-width="15" d="M140 90c0-22-18-40-39-40C78 50 60 68 60 91V110c0 14 5 27 15 37
+                        l25 25l25-25c10-10 15-23 15-37V90z"/>
+                      <path class="huebee-illo__line" stroke="#333" fill="none" stroke-width="15" d="M60 74v50c0 11-9 21-21 21h0c-18 0-27-22-15-35L60 74z"/>
+                      <path class="huebee-illo__line" stroke="#333" fill="none" stroke-width="15" d="M140 74v50c0 11 9 21 21 21h0c18 0 27-22 15-35L140 74z"/>
+                      <line class="huebee-illo__line huebee-illo__antenna" stroke="#333" fill="none" stroke-width="15" stroke-linecap="round" x1="60" y1="30" x2="80" y2="50"/>
+                      <line class="huebee-illo__line huebee-illo__antenna" stroke="#333" fill="none" stroke-width="15" stroke-linecap="round" x1="140" y1="30" x2="120" y2="50"/>
+                    </svg>
+                </div>
+                <div class="showcase-item__text">
+                  <h3 class="showcase-item__title">Huebee</h3>
+                  <p class="showcase-item__description">One-click color picker</p>
+                </div>
+              </a>
+            </li>
+      
+            <li class="showcase-item">
+              <a class="showcase-item__link" href="http://logo.pizza">
+                <div class="showcase-item__image">
+                    <svg class="logo-pizza-illo" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 700 700" width="100" height="100">
+                      <path class="logo-pizza-illo__outline" fill="#C25" d="M513 91c-9-0-17 5-21 12l-80 160c-3 5-6 10-11 15l-47 47
+                        c-5 5-12-1-9-7l32-64c5-11-2-23-14-23h-0c-121 0-268 70-327 180
+                        C-9 497 35 609 196 609c138 0 279-85 327-180v0c5-11-2-23-14-23h-77c-13 0-19-15-10-24
+                        l81-81c5-5 11-8 18-8l0 0c13 0 19 15 10 24L494 354c-6 6-6 14 0 20c3 3 6 4 10 4
+                        c4 0 7-1 10-4l80-80h53c9 0 17-5 21-13C707 190 656 97 513 91z M334 281l-59 117
+                        c-2 5-7 8-13 8H97c-4 0-6-4-3-7c49-64 143-114 236-124C333 275 335 278 334 281z
+                         M70 441c2-4 6-7 10-7h168c4 0 7 4 5 8l-59 118c-2 4-6 6-11 6
+                        C106 565 38 521 70 441z M466 441c-49 64-143 114-236 124c-3 0-6-3-4-6l59-117
+                        c2-5 7-8 13-8h166C466 434 468 438 466 441z M446 318l-81 81c-5 5-11 8-18 8l0 0
+                        c-13 0-19-15-10-24l81-81c5-5 11-8 18-8l0 0C449 294 455 309 446 318z M447 258L506 139
+                        c2-4 6-7 11-6c101 7 140 60 114 126c-2 4-6 7-10 7H452C448 266 445 262 447 258z"/>
+                      <path class="logo-pizza-illo__slice" fill="#ED0" d="M334 281l-59 117c-2 5-7 8-13 8H97c-4 0-6-4-3-7
+                        c49-64 143-114 236-124C333 275 335 278 334 281z"/>
+                      <path class="logo-pizza-illo__slice" fill="#ED0" d="M70 441c2-4 6-7 10-7h168c4 0 7 4 5 8l-59 118c-2 4-6 6-11 6
+                        C106 565 38 521 70 441z"/>
+                      <path class="logo-pizza-illo__slice" fill="#ED0" d="M466 441c-49 64-143 114-236 124c-3 0-6-3-4-6l59-117
+                        c2-5 7-8 13-8h166C466 434 468 438 466 441z"/>
+                      <path class="logo-pizza-illo__slice" fill="#ED0" d="M447 258L506 139c2-4 6-7 11-6c101 7 140 60 114 126c-2 4-6 7-10 7H452
+                        C448 266 445 262 447 258z"/>
+                    </svg>
+                </div>
+                <div class="showcase-item__text">
+                  <h3 class="showcase-item__title">Logo Pizza</h3>
+                  <p class="showcase-item__description">Hot &amp; ready logos for sale</p>
+                </div>
+              </a>
+            </li>
+      
+        </ul> 
+      
+      </div>
+  
+      <p class="site-footer__copy">
+        <a href="https://twitter.com/metafizzyco">
+          <svg class="twitter-logo" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 512 512" width="30" height="30">
+            <path d="M512 97c-19 8-39 14-60 16 22-13 38-34 46-58-20 12-43 21-67 25-19-19-46-32-77-32-58 0-117 52-102 129-87-4-165-46-216-110-24 40-19 107 32 140-17 0-33-5-48-13v1c0 51 36 93 84 103-15 4-34 5-47 2 13 42 52 72 98 73-47 36-96 49-155 44 46 30 102 47 161 47 197 0 306-168 299-312 20-15 38-34 52-55z"/>
+          </svg>
+          Follow @metafizzyco on Twitter for Isotope updates
+        </a>
+      </p>
+  
+      <div class="metafizzy-brand">
+        <a class="metafizzy-brand__link" href="http://metafizzy.co">
+          <svg class="metafizzy-logo" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 780 1000" width="78" height="100">
+            <path class="metafizzy-logo__outline" fill="#333" d="M642 31c-49 0-85 29-102 51C528 55 490 2 415 2
+              c-76 0-134 59-137 135c-18 7-62 34-75 43c-20-10-42-16-65-16h0c-68 0-137 53-137 139
+              c0 78 67 133 128 135c11 19 26 42 44 69c1-1-74 46-74 46c-29 19-61 53-61 110
+              c0 75 62 128 129 128c24 0 48-7 68-20l16-10l-23 66C199 917 267 998 350 998
+              c54 0 104-35 122-87l7-20c19-2 37-8 55-18l92-57c25-16 45-39 54-68l46-131
+              c19-54 14-125 1-185c8-16 51-112 51-220C779 58 695 31 642 31z"/>
+            <clippath id="metafizzy-logo__body">
+              <path d="M566 164c-2-34 19-67 54-78c41-13 84 9 97 50c21 67 7 146-13 218
+                C688 310 631 222 566 164z M626 314C567 227 500 155 424 156c-14 0-25-13-25-27
+                c1-14 13-25 27-25c42 1 71 15 73 16l0 0C489 70 426 33 371 66c-36 22-50 65-36 103
+                c-37 11-108 52-132 75c-27-31-73-39-109-17c-41 25-53 78-29 118c20 32 58 47 93 39
+                c15 30 44 74 87 138l-119 74c-36 23-48 71-25 107c25 39 74 45 107 25
+                c23-14 61-38 61-38c-0-4-1-7-1-11c-2-14 7-27 21-30c14-2 27 7 30 21
+                c5 29 1 52-3 62c0 0-22 61-38 111c-18 55 24 103 72 103c30 0 62-17 74-52l60-174
+                c3-7 8-13 16-16c25-9 45-27 45-27c11-10 27-9 36 2c10 11 9 27-2 36
+                c-1 1-22 20-51 33l-29 84l0 0c3-1 5-3 8-4l92-57c15-9 27-24 33-41l46-131
+                C705 521 671 383 626 314z"/>
+            </clippath>
+            <g clip-path="url(#metafizzy-logo__body)">
+              <polygon class="metafizzy-logo__stripe4" fill="#19F" points="1016 544 278 1018 174 837 911 373"/>
+              <polygon class="metafizzy-logo__stripe3" fill="#EA0" points="822 435 174 843 85 695 822 232"/>
+              <polygon class="metafizzy-logo__stripe2" fill="#E62" points="822 238 85 701 74 469 717 65"/>
+              <polygon class="metafizzy-logo__stripe1" fill="#C25" points="717 70 -20 533 -20 299 612 -100"/>
+            </g>
+            <path class="metafizzy-logo__snout" fill="white" d="M474 373c-44 27-66 73-48 103c18 30 70 33 113 5
+              c48-31 66-73 48-103C570 347 519 345 474 373z"/>
+            <path class="metafizzy-logo__eyes-nose" fill="#333" d="M383 383c13 21-15 14-36 27s-28 41-40 20c-13-21-6-49 15-62
+              C343 355 370 362 383 383z M497 260c-21 13-28 41-15 62c13 21 19-7 40-20s49-6 36-27
+              S518 247 497 260z M467 416L467 416c4 6 11 10 18 9l22-2c6-1 12-4 15-9l12-19
+              c4-6 4-14 0-20v0c-6-9-18-12-27-7l-34 21C464 395 461 407 467 416z"/>
+          </svg>
+          <svg class="metafizzy-wordmark" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 1000 300" width="100" height="30">
+            <path fill="#333" d="M491 121c3-9 13-39 13-39h-25c-1 2-2 5-3 8c-23-31-63 7-72 41
+              c-4 10-12 25-23 25c-13 0 0-35 6-56c0 0 0-0 0-0c4-12 11-36 11-36s18 0 24 0
+              c25 0 51 5 71-13l-14-15c-10 8-18 8-27 8c-13 0-48 0-48 0l7-23h-25L380 44h-29L345 65h29
+              c-11 36-16 68-36 82c-14 10-38 17-53 7c19-8 51-21 51-45c0-13-8-29-28-29
+              c-39 0-57 40-57 60c0 25 24 40 49 40c21 0 39-7 54-19c10 25 41 18 54 2
+              c18 25 50 11 58-1c4 8 11 14 25 15l6-21C477 156 488 131 491 121z M301 102
+              c9 0 10 7 8 12c-4 12-20 20-33 26C274 135 285 102 301 102z M443 156c-9 3-14-2-15-11
+              c-3-19 25-60 42-33C464 139 454 152 443 156z M251 188l-15 19c-41-28-34-77-5-137
+              l-50 65l-23-0c-1-18-4-52-8-64C126 150 105 225 49 225c-40 0-75-44-16-95l13 17
+              c-33 28-19 57 2 57c46 0 62-87 87-169c0 0-1-1-1-1c-5 9-15 14-25 13
+              c-11-1-17-11-14-21c3-10 14-18 25-18c15 0 23 1 34 12c14 13 23 50 26 80l63-79l23-0
+              C243 104 211 166 251 188z M649 48c-2 6-11 18-25 18c-14 0-20-11-17-21c3-8 9-14 17-16
+              c-8-9-28-7-38 2c-10 9-14 26-22 52h65l-29 94h-25l22-73h-40c0 0-14 48-22 72
+              c-9 27-34 57-65 59l7-22c16-1 29-25 34-41c4-13 18-58 21-68c-6 0-13 0-19 0l6-21
+              c5 0 12 0 19 0c4-12 7-24 11-36C558 21 583 1 613 1C641 1 656 22 649 48z M727 82h-82
+              l-6 21h47l-62 56l-5 17c39 0 75 9 94-15l-16-14c-11 14-27 10-39 10l64-58L727 82z M998 70
+              c0 38-27 89-102 123C883 238 866 299 804 299c-22 0-41-12-41-36c0-27 23-38 36-46
+              c23-14 50-25 76-36c1-3 2-6 3-9c-16 6-38 3-48-12c-11 8-23 14-35 17
+              c-22 5-57-0-79-0l5-18l61-55h-46l6-21h82l-6 17l-64 58c11 0 22 0 33-1
+              c14-1 31-10 41-26c3-5 16-50 16-50l24 0c0 0-6 22-11 38c-4 13-8 35 8 35
+              c12 0 23-13 26-23c3-10 15-50 15-50l25 0l-26 85c72-42 76-101 64-114c-5 9-15 16-26 14
+              c-11-1-17-11-14-21c3-10 14-18 25-18C988 27 998 53 998 70z M867 206c-21 9-80 32-80 55
+              c0 20 27 18 36 13C846 264 859 241 867 206z"/>
+          </svg>
+        </a>
+      </div>
+  
+    </div>
+  
+  </footer>
+
+<!-- Looking for isotope.js? Use isotope.pkgd.min.js -->
+<!-- Isotope does NOT require jQuery. But it does make things easier -->
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script>window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')</script>
+
+  <script src="js/isotope-docs.min.js?3"></script>
+
+
+</body>
+</html>
