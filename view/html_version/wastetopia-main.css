@@ -492,20 +492,16 @@
     height: 28px;
     overflow-y: hidden;
     overflow-x: hidden;
-    position: relative;
+    display: flex;
+    justify-content: flex-start;
 }
 
 .iw-header .user{
-    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
     width: 100%;
     height: 100%;
-}
-
-.iw-header .user .user-img {
-    position: absolute;
-    width: 25%;
-    height: 20px;
-    display: inline-block;
 }
 
 .iw-header .user .user-img img {
@@ -515,13 +511,9 @@
     border: 1px solid white;
 }
 
-.iw-header .user-name{
+.iw-header .user-name {
     color: white;
-    font-size: 12px;
-    display: inline-block;
-    position: absolute;
-    top: 3px;
-    left: 22px;
+    font-size: 12px !important;
     font-weight: 600;
 }
 
