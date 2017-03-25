@@ -25,4 +25,8 @@ class CurrentConfig
         }
         // otherwise, we don't do anything.
     }
+
+    public static function getProperty($prop) {
+        return self::$currentConfig[$prop];
+    }
 }
