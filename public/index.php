@@ -24,7 +24,7 @@ $klein->respond("GET", "/", function() {
     return "HomePage";
 });
 
-$klein->respond("GET", "/testuser/[:user]", function() {
+$klein->respond("GET", "/testuser/[:user]", function($request, $response) {
     $t = \Wastetopia\Model\User::get_id_from_username($request->user);
     return $t;
 });
