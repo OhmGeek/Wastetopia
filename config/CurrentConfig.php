@@ -27,6 +27,9 @@ class CurrentConfig
     }
 
     public static function getProperty($prop) {
+        if(!self::$currentConfig) {
+            self::$currentConfig = (new ProductionConfig())->getConfiguration();
+        }
         return self::$currentConfig[$prop];
     }
 }
