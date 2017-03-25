@@ -18,7 +18,7 @@ function loadConfigFromArray($details) {
         $_ENV[$key] = $val;
     }
 }
-$mode = $argv[1];
+$mode = $_ENV['mode'];
 
 // default to using prod.
 if(!isset($mode)) {
