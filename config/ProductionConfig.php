@@ -19,7 +19,7 @@ class ProductionConfig extends AbstractConfig
         // return the configuration
         return array(
             'DB_HOST' => $comp_url['host'],
-            'DB_NAME' => substr($db_url,1),
+            'DB_NAME' => substr($comp_url['path'],1),
             'DB_USER' => $comp_url['user'],
             'DB_PASS' => $comp_url['pass'],
             'TOKEN_BEFORESALT' => 'Dr.Pr0jectWA5t0Pia',
