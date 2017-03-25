@@ -1,24 +1,25 @@
 <?php
 
+require_once '../vendor/autoload.php';
 use Klein\Klein;
 use Wastetopia\Controller\AddItemController;
 use Wastetopia\Controller\Login_Controller;
 use Wastetopia\Controller\ViewItemController;
+use Wastetopia\Config\CurrentConfig;
 
-require_once '../vendor/autoload.php';
 
-function loadConfigFromArray($details) {
-    foreach ($details as $key => $val) {
-        $_ENV[$key] = $val;
-    }
-}
+
+// check if we should use production? Otherwise, use community.
+$mode = $_ENV['MODE'];
+$config = new CurrentConfig();
+$config->loadConfig($mode);
+
 $base  = dirname($_SERVER['PHP_SELF']);
-$config = new \Wastetopia\Config\LocalConfig();
-loadConfigFromArray($config->getConfiguration());
+//
 // Update request when we have a subdirectory
-//if(ltrim($base, '/')){
-//    $_SERVER['REQUEST_URI'] = substr($_SERVER['REQUEST_URI'], strlen($base));
-//}
+if(ltrim($base, '/')){
+    $_SERVER['REQUEST_URI'] = substr($_SERVER['REQUEST_URI'], strlen($base));
+}
 
 // Dispatch as always
 $klein = new Klein();
@@ -26,6 +27,7 @@ $klein = new Klein();
 $klein->respond("GET", "/", function() {
     return "HomePage";
 });
+
 
 $klein->respond("GET", "/login", function() {
     return Login_Controller::index();

@@ -2,6 +2,7 @@
 namespace Wastetopia\Model;
 
 use PDO;
+use Wastetopia\Config\CurrentConfig;
 
 class DB {
     private static function initDefaultDB() {
@@ -9,16 +10,13 @@ class DB {
 	}
     public static function getDB()
 	{
-		if(!isset($_ENV['DB_HOST']) || !isset($_ENV['DB_NAME']) || !isset($_ENV['DB_USER']) || !isset($_ENV['DB_PASS'])) {
-			error_log("Error, no database details specified. Please run the init script.");
-		}
+	    $host = CurrentConfig::getProperty('DB_HOST');
+	    $name = CurrentConfig::getProperty('DB_NAME');
+	    $user = CurrentConfig::getProperty('DB_USER');
+	    $pass = CurrentConfig::getProperty('DB_PASS');
 
-        $conn = new PDO("mysql:host=" . $_ENV['DB_HOST'] . ";dbname=" . $_ENV['DB_NAME'],$_ENV['DB_USER'],$_ENV['DB_PASS']);
-        if(!$conn) {
-            error_log("Couldn't connect to DB");
-        }
-        return $conn;
-	}
+        return new PDO("mysql:host=" . $host . ";dbname=" . $name,$user,$pass);
+    }
 
 }
 
