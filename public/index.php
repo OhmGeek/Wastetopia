@@ -5,6 +5,8 @@ use Wastetopia\Controller\Login_Controller;
 
 require_once '../vendor/autoload.php';
 
+// check if we should use production? Otherwise, use community.
+$mode = $_ENV['MODE'];
 $base  = dirname($_SERVER['PHP_SELF']);
 
 // Update request when we have a subdirectory
