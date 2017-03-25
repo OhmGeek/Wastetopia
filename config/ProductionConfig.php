@@ -14,14 +14,14 @@ class ProductionConfig extends AbstractConfig
     public function getConfiguration()
     {
         // get the database url from the environment variables
-        $db_url = urldecode($_ENV['CLEARDB_DATABASE_URL']);
+        $db_url = parse_url($_ENV['CLEARDB_DATABASE_URL']);
 
         // return the configuration
         return array(
             'DB_HOST' => $db_url['host'],
             'DB_NAME' => substr($db_url,1),
-            'DB_USER' => $db_url['user'],
-            'DB_PASS' => $db_url['pass'],
+            'DB_USER' => $db_url['username'],
+            'DB_PASS' => $db_url['password'],
             'TOKEN_BEFORESALT' => 'Dr.Pr0jectWA5t0Pia',
             'TOKEN_AFTERSALT' => 'EndSalt11!!!1',
             'COOKIE_IDENTIFIER' => 'gpwastetopiadata',
