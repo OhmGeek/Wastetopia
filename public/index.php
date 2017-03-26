@@ -87,7 +87,7 @@ $klein->with('/messages', function () use ($klein) {
         return "";
     });
 
-    $klein->respond('GET', '/poll-messages', function ($request, $response) {
+    $klein->respond('GET', '/poll-messages/[:conversationID]', function ($request, $response) {
         $conversationID = $request->conversationID;
         $controller = new MessageController();
         return $controller->generateMessageDisplay($conversationID);

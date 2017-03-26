@@ -15,11 +15,11 @@ $(document).ready(function(){
 //
 // });
 
-$(document).on('click', #deleteBtn, function(){
-  var url = "MessageRouter.php";
+$(document).on('click', '#deleteBtn', function(){
+  var url = "messages/delete-conversation";
   
   var conversationID = $(this).val();
-  var data = {type: "deleteConversation", conversationID: conversationID}
+  var data = {conversationID: conversationID}
   $.get(url, data, function(response){
       loadUsers();
   });
@@ -35,8 +35,8 @@ function loadUsers(){
     var givingTab = $("#giving-tab");
     var receivingTab = $("#receiving-tab");
 
-    var givingURL = "MessageRouter.php?type=pollGiving";
-    var receivingURL = "MessageRouter.php?type=pollReceiving";
+    var givingURL = "messages/poll-sending";
+    var receivingURL = "messages/poll-receiving";
 
     givingTab.load(givingURL);
     receivingTab.load(receivingURL); 

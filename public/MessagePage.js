@@ -26,8 +26,8 @@ $(document).on('click', '#sendBtn', function(ev){
 
     //Option 2: Send the message to the database, and send back the html for the whole conversation
     //Send message
-    var url = 'MessageRouter.php';
-    var data = {type:"send", conversationID:conversationID, message:content};
+    var url = 'messages/send';
+    var data = {conversationID:conversationID, message:content};
     console.log(url);   
     console.log(data);
  $.get(url, data, function(response){
@@ -63,7 +63,7 @@ function loadMessages(){
     var messageDisplay = $("#message-location");
 
     //Replace its inner HTML with new messages
-    var url = 'MessageRouter.php?type=poll&conversationID=' + conversationID;
+    var url = 'messages/poll-messages/' + conversationID;
     messageDisplay.load(url);
 
 
