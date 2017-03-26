@@ -1,0 +1,32 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="javascript:void(0)">Wastetopia</a>
+		</div>
+		<div class="navbar-collapse collapse navbar-responsive-collapse">
+			<form class="navbar-form navbar-left">
+				<div class="form-group">
+					<input type="text" class="form-control col-sm-8" placeholder="Search">
+				</div>
+			</form>
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href="javascript:void(0)"><span class="glyphicon glyphicon-envelope"/></a></li>
+				<li><a href="javascript:void(0)"><span class="glyphicon glyphicon-shopping-cart"/></a></li>
+				<li class="dropdown">
+					<a href="#" data-target="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"/><span class="caret"/></a>
+					<ul class="dropdown-menu">
+					  <li><a href="{{config.ROOT_BASE}}">View Profile</a></li>
+					  <li><a href="{{config.ROOT_BASE}}">Order History</a></li>
+					  <li><a href="{{config.ROOT_BASE}}">Supplies</a></li>
+					  <li><a href="{{config.ROOT_BASE}}">Logout</a></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</div>
+</nav>

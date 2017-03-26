@@ -1,0 +1,89 @@
+<div class="well bs-component">
+      <form id="search" class="form-horizontal">
+          <div class="row">
+              <div class="col-xs-10 col-md-11">
+          <input class="form-control" type="text" placeholder="Search"></input>
+          </div>
+          <div class="col-xs-2 col-md-1">
+        <button type="submit" class="btn btn-default">
+            <span class="glyphicon glyphicon-search"/>
+        </button>
+          </div>
+            </div>
+      </form>
+</div>
+<div class="jumbotron">
+    <h1>Jumbotron</h1>
+
+    <p>This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+
+    <p><a class="btn btn-primary btn-lg">Learn more</a></p>
+</div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">Recommended</div>
+        <div class="panel-body">
+        <!-- Create the individual sections -->
+            <div>
+                <!-- todo: improve this to make scrollable thumbnails that look pretty -->
+                {% for element in recommendedList %}
+				<a href="{{element.href}}">
+                    <img src="{{element.picSource}}" width=150 height=150>
+                </a>  
+				{% endfor %}
+            </div>
+        </div>
+      </div>
+      
+      <!-- New Section -->
+            <div class="panel panel-default">
+        <div class="panel-heading">New</div>
+        <div class="panel-body">
+        <!-- Create the individual sections -->
+            <div>
+                <!-- todo: improve this to make scrollable thumbnails that look pretty -->
+                {% for element in newList %}
+				<a href="{{element.href}}">
+                    <img src="{{element.picSource}}" width=150 height=150>
+                </a>  
+                {% endfor %}
+            </div>
+        </div>
+      </div>
+      
+      <!-- Popular -->
+            <div class="panel panel-default">
+        <div class="panel-heading">Popular</div>
+        <div class="panel-body">
+        <!-- Create the individual sections -->
+            <div>
+                <!-- todo: improve this to make scrollable thumbnails that look pretty -->
+                {% for element in popularList %}
+				<a href="{{element.href}}">
+                    <img src="{{element.picSource}}" width=150 height=150>
+                </a>  
+                {% endfor %}
+            </div>
+        </div>
+      </div>
+      
+      <!-- Subscribers -->
+            <div class="panel panel-default">
+        <div class="panel-heading">Subscribers</div>
+        <div class="panel-body">
+        <!-- Create the individual sections -->
+            <div>
+                <!-- todo: improve this to make scrollable thumbnails that look pretty -->
+                {% for element in subscriberList %}
+				<a href="{{element.href}}">
+                    <img src="{{element.picSource}}" width=150 height=150>
+                </a>  
+                {% endfor %}
+            </div>
+        </div>
+      </div>
+      
+      <!-- Footer, because without one it looks slightly strange -->
+      <div class="panel-footer">
+        <div class="panel-body">Copyright Team 4, 2016.</div>
+      </div>
