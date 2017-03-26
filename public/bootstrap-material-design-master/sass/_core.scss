@@ -38,20 +38,20 @@ a, a:hover, a:focus {
   }
 }
 
-@import '_form';
-@import '_welljumbo';
-@import '_buttons';
-@import '_checkboxes';
-@import '_togglebutton';
-@import '_radios';
-@import '_inputs';
+@import 'form';
+@import 'welljumbo';
+@import 'buttons';
+@import 'checkboxes';
+@import 'togglebutton';
+@import 'radios';
+@import 'inputs';
 
 legend {
   border-bottom: 0;
 }
 
-@import '_lists';
-@import '_navbar';
+@import 'lists';
+@import 'navbar';
 
 .dropdown-menu {
   border: 0;
@@ -69,15 +69,15 @@ legend {
   }
 }
 
-@import '_alerts';
-@import '_progress';
-@import '_typography';
-@import '_tabs';
-@import '_popups';
-@import '_cards';
-@import '_dialogs';
-@import '_panels';
-@import '_dividers';
+@import 'alerts';
+@import 'progress';
+@import 'typography';
+@import 'tabs';
+@import 'popups';
+@import 'cards';
+@import 'dialogs';
+@import 'panels';
+@import 'dividers';
 
 // Prevent highlight on mobile
 * {
@@ -89,7 +89,7 @@ legend {
 }
 
 
-@import '_themes';
+@import 'themes';
 
 // External plugins
-@import '_plugins';
+@import 'plugins';
