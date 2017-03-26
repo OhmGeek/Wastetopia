@@ -63,7 +63,7 @@ function loadMessages(){
     var messageDisplay = $("#message-location");
 
     //Replace its inner HTML with new messages
-    var url = 'messages/poll-messages/' + conversationID;
+    var url = window.location.protocol + '//' + window.location.hostname + '/messages/poll-messages/' + conversationID;
     messageDisplay.load(url);
 
 
