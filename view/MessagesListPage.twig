@@ -1,50 +1,36 @@
-<!DOCTYPE html>
-<html style="height: 100%;margin: 0;">
-<head>
-	<meta charset="utf-8">
-	<title>Messaging - Conversation Page</title>
-	<base href="{{ BASE_URL }}">
-	<!-- Material Design fonts -->
-	<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
-	<link href="//fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+{% extends 'header.twig' %}
 
-	<!-- Bootstrap -->
-	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+{% block title %}
+	Conversations | Wastetopia
+{% endblock %}
 
-	<!-- jQuery library -->
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+{% block navbar %}
+	<style>
+		body {
+			height: 100%;
+			margin: 0;
+		}
+	</style>
+    {% include 'navbar.twig' %}
+{% endblock %}
 
-	<!-- Latest compiled JavaScript -->
-	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-
-	<!-- Bootstrap Material Design -->
-	<link href="bootstrap-material-design-master/dist/css/bootstrap-material-design.css" rel="stylesheet">
-	<link href="bootstrap-material-design-master/dist/css/ripples.min.css" rel="stylesheet">
-	<link href="//fezvrasta.github.io/snackbarjs/dist/snackbar.min.css" rel="stylesheet">
-
-	<!-- Wastopia Custom CSS -->
-	<link rel="stylesheet" href="css/wastetopia-main.css"/>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-	<!--Custom JS-->
-	<script src = "js/ConversationListPage.js"></script>
-</head>
-<body style="height: 100%;margin: 0; display: flex; flex-direction: column;">
+{% block content %}
 	<div class="title">
 		Messages
 	</div>
 
 	<ul class="nav nav-justified zero-padding nav-tabs">
 		<li class="active"><a data-toggle="tab" href="#giving-tab">Giving</a></li>
-		<li><a data-toggle="tab" href="#recieving-tab">Recieving</a></li>
+		<li><a data-toggle="tab" href="#recieving-tab">Receiving</a></li>
 	</ul>
 	<div class="tab-content">
 		<div id="giving-tab" class="tab-pane fade in active">
-			{{givingList|raw}}
+            {{givingList|raw}}
 		</div>
 		<div id="recieving-tab" class="tab-pane fade">
-			{{receivingList|raw}}
+            {{receivingList|raw}}
 		</div>
 	</div>
-</body>
-</html>
+{% endblock %}
+
+{% set jslist = ["ConversationListPage.js"] %}
