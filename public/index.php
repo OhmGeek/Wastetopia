@@ -112,12 +112,12 @@ $klein->with('/messages', function () use ($klein) {
         $controller->deleteConversation($conversationID);
         return "";
     });
-
-    $klein->respond('GET', '/poll-messages/[:conversationID]', function ($request, $response) {
-        $conversationID = $request->conversationID;
-        $controller = new MessageController();
-        return $controller->generateMessageDisplay($conversationID);
-    });
+//
+//    $klein->respond('GET', '/poll-messages/[:conversationID]', function ($request, $response) {
+//        $conversationID = $request->conversationID;
+//        $controller = new MessageController();
+//        return $controller->generateMessageDisplay($conversationID);
+//    });
 
     $klein->respond('GET', '/poll-sending', function ($request, $response) {
         $controller = new ConversationListController();

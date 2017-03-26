@@ -37,7 +37,6 @@ function loadUsers(){
 
     var givingURL = window.location.protocol + "//" + window.location.host + "/" + "messages/poll-sending";
     var receivingURL = window.location.protocol + "//" + window.location.host + "/" + "messages/poll-receiving";
-    console.log(receivingURL);
     givingTab.load(givingURL);
     receivingTab.load(receivingURL); 
 }
