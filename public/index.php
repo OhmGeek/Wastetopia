@@ -2,8 +2,13 @@
 
 use Klein\Klein;
 use Wastetopia\Controller\Login_Controller;
-
+use Wastetopia\Config\CurrentConfig;
 require_once '../vendor/autoload.php';
+
+// check if we should use production? Otherwise, use community.
+$mode = $_ENV['MODE'];
+$config = new CurrentConfig();
+$config->loadConfig($mode);
 
 $base  = dirname($_SERVER['PHP_SELF']);
 
@@ -18,6 +23,7 @@ $klein = new Klein();
 $klein->respond("GET", "/", function() {
     return "HomePage";
 });
+
 
 $klein->respond("GET", "/login", function() {
     return Login_Controller::index();
