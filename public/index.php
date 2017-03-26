@@ -3,6 +3,8 @@
 use Klein\Klein;
 use Wastetopia\Controller\Login_Controller;
 use Wastetopia\Config\CurrentConfig;
+use Wastetopia\Controller\LoginController;
+
 require_once '../vendor/autoload.php';
 
 // check if we should use production? Otherwise, use community.
@@ -26,7 +28,8 @@ $klein->respond("GET", "/", function() {
 
 
 $klein->respond("GET", "/login", function() {
-    return Login_Controller::index();
+    $controller = new LoginController();
+    return $controller->index();
 });
 
 $klein->respond("GET", "/register", function() {
