@@ -119,7 +119,7 @@
         </div>
         <div class="container-fluid">
           <div class="grid">
-            <!-- 2 col grid @ xs, 3 col grid @ sm, 4 col grid @ md -->
+            <!-- need this for mosonry layout to work properly with bootstrap grid system -->
             <div class="grid-sizer col-xs-12 col-sm-6 col-md-4"></div>
             <div class="grid-item col-xs-12 col-sm-6 col-md-4">
               <div class="grid-item-content">
@@ -160,6 +160,8 @@
         </div>
         <div class="container-fluid">
           <div class="grid">
+            <!-- need this for mosonry layout to work properly with bootstrap grid system -->
+            <div class="grid-sizer col-xs-12 col-sm-6 col-md-4"></div>
             <div class="grid-item col-xs-12 col-sm-6 col-md-4">
               <div class="thumbnail zero-padding">
                 <div class="caption">
@@ -198,6 +200,8 @@
         </div>
         <div class="container-fluid">
           <div class="grid">
+            <!-- need this for mosonry layout to work properly with bootstrap grid system -->
+            <div class="grid-sizer col-xs-12 col-sm-6 col-md-4"></div>
             <div class="grid-item col-xs-12 col-sm-6 col-md-4">
               <div class="thumbnail zero-padding">
                 <div class="caption">
@@ -306,6 +310,10 @@
       masonry: {
         columnWidth: '.grid-sizer'
       }
+    });
+
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+      $grid.isotope('layout');
     });
   });
   </script>
