@@ -39,6 +39,7 @@ elseif($routeType == "poll"){
 }elseif($routeType == "pollReceiving"){
     $controller = new ConversationListController();
     echo ($controller->generateReceivingTabHTML);
+
 }elseif($routeType == "deleteConversation"){
     $controller = new ConversationListController();
     $conversationID = $_GET["ConversationID"];

@@ -1,8 +1,11 @@
 <?php
 
 use Klein\Klein;
+use Wastetopia\Controller\ConversationListController;
 use Wastetopia\Controller\Login_Controller;
 use Wastetopia\Config\CurrentConfig;
+use Wastetopia\Controller\MessageController;
+
 require_once '../vendor/autoload.php';
 
 // check if we should use production? Otherwise, use community.
@@ -45,6 +48,48 @@ $klein->with('/items', function () use ($klein) {
         $itemID = $request->id;
         return "Show Item " . $itemID;
     });
+
+});
+
+$klein->with('/messaging', function () use ($klein) {
+
+    $klein->respond('GET', '/?', function ($request, $response) {
+        // Show all conversations
+        $controller = new ConversationListController();
+        return $controller->generatePage();
+    });
+
+    $klein->respond('GET', '/[:conversationID]', function ($request, $response) {
+        // view a specific conversation
+        $conversationID = $request->conversationID;
+        $controller = new MessageController();
+        return $controller->generatePage($conversationID);
+    });
+
+
+});
+
+$klein->with('/api', function () use ($klein) {
+
+    $klein->with('/messaging', function () use ($klein) {
+
+        $klein->respond('GET', '/send_message', function ($request, $response) {
+            $conversationID = $request->conversationID;
+            $message = $request->message;
+            $controller = new MessageController();
+            $controller->sendMessage($conversationID, $message);
+        });
+
+        $klein->respond('GET', '/[:id]', function ($request, $response) {
+            // view a specific conversation
+            $conversationID = $request->id;
+            $controller = new MessageController();
+            return $controller->generatePage($conversationID);
+        });
+
+
+    });
+
 
 });
 
