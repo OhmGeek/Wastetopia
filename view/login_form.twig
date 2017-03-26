@@ -15,10 +15,10 @@
 
         <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 no-padding">
             <div id="login">
-                <div class="container-fluid" method="post" action="login.php">
+                <div class="container-fluid">
                     <h1>{{title}}</h1>
                     <p>{{intro}}</p>
-                    <form class="form-horizontal">
+                    <form class="form-horizontal" method="post" action="{{ config.ROOT_BASE }}/api/verify-login">
                         <div class="form-group">
                             <label class="control-label">Username</label>
                             <input type="email" class="form-control" id="email" placeholder="user@example.com" name="email">

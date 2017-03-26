@@ -58,7 +58,23 @@ $klein->with('/items', function () use ($klein) {
     });
 
 });
+$klein->with('/api', function () use ($klein) {
 
+    $klein->respond('POST', '/verify-login', function ($request, $response) {
+        $controller = new LoginController();
+        $username = $request->email;
+        $password = $request->password;
+        $dest = $_ENV['ROOT_BASE'];
+        return $controller->login($username, $password, $dest, $response);
+    });
+
+    $klein->respond('GET', '/[:id]', function ($request, $response) {
+        // Show a single user
+        $itemID = $request->id;
+        return "Show Item " . $itemID;
+    });
+
+});
 
 
 $klein->onHttpError(function ($code, $router) {
