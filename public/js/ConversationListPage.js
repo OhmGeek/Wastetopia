@@ -35,8 +35,8 @@ function loadUsers(){
     var givingTab = $("#giving-tab");
     var receivingTab = $("#receiving-tab");
 
-    var givingURL = "../messages/poll-sending";
-    var receivingURL = "../messages/poll-receiving";
+    var givingURL = "poll-sending";
+    var receivingURL = "poll-receiving";
 
     givingTab.load(givingURL);
     receivingTab.load(receivingURL); 
