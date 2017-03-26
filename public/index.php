@@ -93,11 +93,15 @@ $klein->with('/messages', function () use ($klein) {
         return $controller->generateMessageDisplay($conversationID);
     });
 
-    $klein->respond('GET', '/poll-giving', function ($request, $response) {
+    $klein->respond('GET', '/poll-sending', function ($request, $response) {
         $controller = new ConversationListController();
-        return $controller->generateGivingTabHTML;
+        return $controller->generateSendingTabHTML();
     });
 
+    $klein->respond('GET', '/poll-receiving', function ($request, $response) {
+        $controller = new ConversationListController();
+        return $controller->generateReceivingTabHTML();
+    });
 });
 
 

@@ -51,7 +51,7 @@ class MessageController
 
         //Load template and print result
         $template = $this->twig->loadTemplate('MessagePage.twig');
-        print($template->render($output));
+        return $template->render($output);
     }
 
 
