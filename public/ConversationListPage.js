@@ -23,7 +23,7 @@ $(document).on('click', '#deleteBtn', function(){
   $.get(url, data, function(response){
       loadUsers();
   });
-}
+});
 
 //Polling to update People-list (in case of new conversations/messages)
 setInterval(function(){
