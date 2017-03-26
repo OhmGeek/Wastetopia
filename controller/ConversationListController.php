@@ -11,7 +11,7 @@ class ConversationListController
 	function __construct()
 	{
 	    //Create UserModel instance
-        $this->model = new UserModel();
+        $this->model = new ConversationListModel();
 
 	    //Create twig loader
         $loader = new Twig_Loader_Filesystem('../view/twig_version/');
@@ -38,7 +38,7 @@ class ConversationListController
 
 		//Load template and print result
 		$template = $this->twig->loadTemplate('MessagesListPage.twig');
-		print($template->render($output));
+		return $template->render($output);
 	}
 
 
@@ -50,12 +50,12 @@ class ConversationListController
     {
         $receivingResults = $this->model->getConversationsReceiving();
 		
-	//Create arrays of conversation details from results
-	$receiving = $this->createConversationArray($receivingResults);
+        //Create arrays of conversation details from results
+        $receiving = $this->createConversationArray($receivingResults);
 
-	$template = $this->twig->loadTemplate('MessagesTabsDisplay.twig');
-	
-	return $template->render(array("conversationList"=>$receiving, "giving" => 0));
+        $template = $this->twig->loadTemplate('MessagesTabsDisplay.twig');
+
+        return $template->render(array("conversationList"=>$receiving, "giving" => 0));
 		
     }
 
@@ -66,15 +66,15 @@ class ConversationListController
      */
     function generateSendingTabHTML()
     {
-	$sendingResults = $this->model->getConversationsSending();
-		
-	//Create arrays of conversation details from results
-	$sending = $this->createConversationArray($sendingResults);
+        $sendingResults = $this->model->getConversationsSending();
+
+        //Create arrays of conversation details from results
+        $sending = $this->createConversationArray($sendingResults);
 
 
-	$template = $this->twig->loadTemplate('MessagesTabsDisplay.twig');
-		
-	return $template->render(array("conversationList"=>$sending, "giving" => 1));
+        $template = $this->twig->loadTemplate('MessagesTabsDisplay.twig');
+
+        return $template->render(array("conversationList"=>$sending, "giving" => 1));
     }
 
 
