@@ -43,7 +43,9 @@ class MessageController
         $senderName = $userName;//." - ".$itemName;
 	
 
-        $output = array("senderName"=>$senderName,
+        $output = array(
+            "BASE_URL" => $_ENV['ROOT_BASE'],
+            "senderName"=>$senderName,
             "senderImage"=>$senderImage,
             "conversationID" =>$conversationID,  //Needed so page can poll for new messages with the ID
             "messages"=>$messageDisplayHTML,

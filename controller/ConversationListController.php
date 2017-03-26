@@ -32,6 +32,7 @@ class ConversationListController
 
 		//Create array for Twig file
 		$output = array(
+		        "BASE_URL" => $_ENV['ROOT_BASE'],
 				"receivingList" => $receivingTabHTML,
 				"givingList" => $sendingTabHTML
 			);
