@@ -57,7 +57,7 @@
       </div>
     </div>
   </nav>
-  <div class="page-height" style="padding-top:250px;">
+  <div class="page-height" style="padding-top:230px;">
     <div class="user-profile jumbotron">
       <div class="user-img"></div>
       <div class="user-details">
@@ -68,9 +68,9 @@
           <i class="material-icons">grade</i> 6.0
         </div>
       </div>
-      <div class="nav-btns">
-        <a href="#" class="btn btn-primary" role="button">Follow</a>
-        <a href="#" class="btn btn-default" role="button">Report</a>
+      <div>
+        <a href="#" class="btn btn-primary" style="margin-bottom:0;" role="button">Follow</a>
+        <a href="#" class="btn btn-default" style="margin-bottom:0;" role="button">Report</a>
       </div>
     </div>
     <div class="tab-content user-stats zero-padding" style="padding-top:10px; background-color:transparent;">
@@ -186,7 +186,7 @@
                   <div class="nav-btns">
                     <a href="#" class="btn btn-primary" role="button">View</a>
                     <a href="#" class="btn btn-default" role="button">Cancel</a>
-                    <a href="#" role="button" class="btn-watch"><i class="material-icons">visibility</i></a>
+                    <a href="#" role="button" class="btn-watch"><i class="material-icons">delete</i></a>
                   </div>
                 </div>
               </div>
@@ -313,7 +313,26 @@
     });
 
     $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-      $grid.isotope('layout');
+      console.log($(e.target).attr("href"));
+      var width = 150;
+      var height = 150;
+      var nameSize = 25;
+      var iconSize = 35;
+      var topPadding = 230;
+      if ($(e.target).attr("href") != '#home') {
+        width = 50;
+        height = 50;
+        nameSize = 16;
+        iconSize = 20;
+        topPadding = 130;
+        $grid.isotope('layout');
+      }
+      $('.user-profile .user-img').css('width',width);
+      $('.user-profile .user-img').css('height',height);
+      $('.user-profile .user-name').css('font-size',nameSize);
+      $('.user-profile .popularity i').css('font-size',iconSize);
+      $('.user-profile .popularity').css('font-size',iconSize);
+      $('.page-height').css('padding-top',topPadding);
     });
   });
   </script>
