@@ -116,7 +116,7 @@ class ConversationListController
     function createNewConversation($listingID)
 	{
 
-		$this->model->createConversation(listingID);
+		$this->model->createConversation($listingID);
 		
 		return;
 	}
