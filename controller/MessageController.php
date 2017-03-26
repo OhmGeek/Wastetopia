@@ -15,7 +15,7 @@ class MessageController
         $this->model = new MessageModel();
 
         //Load Twig environment
-        $loader = new Twig_Loader_Filesystem('../view/twig_version/');
+        $loader = new Twig_Loader_Filesystem('../view/');
         $this->twig = new Twig_Environment($loader);
 
 	}

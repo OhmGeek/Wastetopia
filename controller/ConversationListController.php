@@ -14,7 +14,7 @@ class ConversationListController
         $this->model = new ConversationListModel();
 
 	    //Create twig loader
-        $loader = new Twig_Loader_Filesystem('../view/twig_version/');
+        $loader = new Twig_Loader_Filesystem('../view/');
         $this->twig = new Twig_Environment($loader);
 
 	}
