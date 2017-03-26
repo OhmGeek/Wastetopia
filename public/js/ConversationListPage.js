@@ -16,7 +16,7 @@ $(document).ready(function(){
 // });
 
 $(document).on('click', '#deleteBtn', function(){
-  var url = "messages/delete-conversation";
+  var url = window.location.protocol + "//" + window.location.host + "/" + 'messages/delete-conversation';
   
   var conversationID = $(this).val();
   var data = {conversationID: conversationID}
@@ -35,8 +35,8 @@ function loadUsers(){
     var givingTab = $("#giving-tab");
     var receivingTab = $("#receiving-tab");
 
-    var givingURL = "messages/poll-sending";
-    var receivingURL = "messages/poll-receiving";
+    var givingURL = window.location.protocol + "//" + window.location.host + "/" + "messages/poll-sending";
+    var receivingURL = window.location.protocol + "//" + window.location.host + "/" + "messages/poll-receiving";
 
     givingTab.load(givingURL);
     receivingTab.load(receivingURL); 

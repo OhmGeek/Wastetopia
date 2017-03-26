@@ -26,7 +26,7 @@ $(document).on('click', '#sendBtn', function(ev){
 
     //Option 2: Send the message to the database, and send back the html for the whole conversation
     //Send message
-    var url = 'messages/send';
+    var url = window.location.protocol + "//" + window.location.host + "/" + 'messages/send';
     var data = {conversationID:conversationID, message:content};
     console.log(url);   
     console.log(data);
