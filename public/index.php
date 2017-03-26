@@ -27,9 +27,9 @@ $klein->respond("GET", "/", function() {
 });
 
 
-$klein->respond("GET", "/login", function() {
+$klein->respond("GET", "/login", function($request, $response) {
     $controller = new LoginController();
-    return $controller->index();
+    return $controller->index($response);
 });
 
 $klein->respond("GET", "/register", function() {
