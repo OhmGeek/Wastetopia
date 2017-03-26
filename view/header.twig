@@ -20,7 +20,7 @@
 	  <link href="http://fezvrasta.github.io/snackbarjs/dist/snackbar.min.css" rel="stylesheet">
 
 	  <!-- Wastopia Custom CSS -->
-	  <link rel="stylesheet" href="{{config.ROOT_CSS}}/wastetopia-main.css"/>
+	  <link rel="stylesheet" href="{{config.ROOT_BASE}}/css/wastetopia-main.css"/>
 
 	  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	</head>
@@ -48,7 +48,7 @@
         </script>
         <!-- Wastopia Custom JS-->
         {% for jsfile in jslist %}
-            <script src="{{config.ROOT_JS}}/{{jsfile}}"></script>
+            <script src="{{config.ROOT_BASE}}/js/{{jsfile}}"></script>
         {% endfor %}
 	</body>
 </html>
