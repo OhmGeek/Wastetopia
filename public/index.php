@@ -48,6 +48,20 @@ $klein->with('/items', function () use ($klein) {
 
 });
 
+$klein->with('/test', function () use ($klein) {
+
+    $klein->respond('GET', '/?', function ($request, $response) {
+        // File upload test
+
+    });
+
+    $klein->respond('GET', '/upload_file', function ($request, $response) {
+        // Show a single user
+        $m = new \Wastetopia\Model\AmazonS3();
+        $m->upload($request->files());
+    });
+
+});
 $klein->onHttpError(function ($code, $router) {
     switch ($code) {
         case 404:

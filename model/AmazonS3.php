@@ -36,12 +36,16 @@ class AmazonS3
         return $output;
     }
 
-    public function upload($file) {
+    public function upload($files) {
         // this uploads a specified image
         // returns the url of the S3 upload.
-        $randomKey = $this->randomString(self::LENGTH);
-        $upload = $this->s3->upload($this->bucket, $randomKey, fopen($_FILES['userfile']['tmp_name'], 'rb'), 'public-read');
-        return $upload->get('ObjectURL');
+        $urls = array();
+        foreach($files as $file) {
+            $randomKey = $this->randomString(self::LENGTH);
+            $upload = $this->s3->upload($this->bucket, $randomKey, fopen($file['tmp_name'], 'rb'), 'public-read');
+            array_push($urls, $upload->get('ObjectURL')); // add the url to the array
+        }
+        return $urls;
     }
 
     public function download($fileKey) {

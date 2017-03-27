@@ -1,0 +1,18 @@
+{% extends 'header.twig' %}
+
+{% block title %}
+    Example Image Upload
+{% endblock %}
+
+{% block navbar %}
+    {% include 'navbar.twig' %}
+{% endblock %}
+
+{% block content %}
+    <form action="/test/uploadimage" method="post">
+        <input type="file" id="uploaded_file" name="uploaded_file">
+        <button type="submit">Upload</button>
+    </form>
+{% endblock %}
+
+{% set jslist = ["name your","custom js","files here"] %}
