@@ -7,6 +7,7 @@
  */
 
 namespace Wastetopia\Model;
+use Aws\S3\Exception\S3Exception;
 use Aws\S3\S3Client;
 
 class AmazonS3
