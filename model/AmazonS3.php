@@ -11,8 +11,11 @@ use Aws\S3\S3Client;
 
 class AmazonS3
 {
+    const LENGTH = 20;
+
     public function __construct()
     {
+        $this->bucket = $_ENV['AWS_BUCKET'];
         $this->s3 = new S3Client(array(
             'version' => 'latest',
             'region' => 'eu-west-2',
@@ -23,16 +26,26 @@ class AmazonS3
         ));
     }
 
+    private function randomString($length) {
+        $output = "";
+        $chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        for($i = 0; $i < $length; $i++) {
+            $output = $output . substr($chars, rand(0, strlen($chars)),1);
+        }
+        return $output;
+    }
+
     public function upload($file) {
         // this uploads a specified image
         // returns the url of the S3 upload.
-        $upload = $this->s3->upload('bucket', 'key-random', fopen($_FILES['userfile']['tmp_name'], 'rb'), 'public-read');
+        $randomKey = $this->randomString(self::LENGTH);
+        $upload = $this->s3->upload($this->bucket, $randomKey, fopen($_FILES['userfile']['tmp_name'], 'rb'), 'public-read');
         return $upload->get('ObjectURL');
     }
 
     public function download($fileKey) {
         $result = $this->s3->getObject(array(
-            'Bucket' => 'bucket',
+            'Bucket' => $this->bucket,
             'key' => $fileKey
         ));
 
