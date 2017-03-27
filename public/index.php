@@ -4,6 +4,7 @@ use Klein\Klein;
 use Wastetopia\Controller\Login_Controller;
 use Wastetopia\Config\CurrentConfig;
 use Wastetopia\Controller\LoginController;
+use Wastetopia\Controller\SearchController;
 
 require_once '../vendor/autoload.php';
 
@@ -26,6 +27,10 @@ $klein->respond("GET", "/", function() {
     return "HomePage";
 });
 
+$klein->respond("GET", "/search/json", function() {
+   $search = new SearchController()
+   return $search->basicSearch();
+});
 
 $klein->respond("GET", "/login", function($request, $response) {
     $controller = new LoginController();

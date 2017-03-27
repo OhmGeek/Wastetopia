@@ -34,7 +34,7 @@ class SearchModel
             JOIN `Item` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
             WHERE `Item`.`Name` LIKE '%:name%';
         ");
-        $statement->bindValue(":name", $name, PDO::PARAM_INT);
+        $statement->bindValue(":name", $name, PDO::PARAM_STR);
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -51,7 +51,7 @@ class SearchModel
             JOIN `Location` ON `Listing`.`FK_Location_LocationID` = `Location`.`LocationID`
             WHERE `Location`.`Post_Code` = ':postCode';
         ");
-        $statement->bindValue(":postCode", $postCode, PDO::PARAM_INT);
+        $statement->bindValue(":postCode", $postCode, PDO::PARAM_STR);
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
