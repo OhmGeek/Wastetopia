@@ -2,7 +2,7 @@
 
 namespace Wastetopia\Controller;
 
-use Wastopia\Model\SearchModel
+use Wastopia\Model\SearchModel;
 
 class SearchController
 {
