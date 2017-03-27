@@ -1,7 +1,7 @@
 <?php
-use PDO;
-namespace Wastetopia\Model;
 
+namespace Wastetopia\Model;
+use \PDO;
 
 use Wastetopia\Config\CurrentConfig;
 
