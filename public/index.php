@@ -87,7 +87,7 @@ $klein->with('/test', function () use ($klein) {
         return $template->render(array());
     });
 
-    $klein->respond('GET', '/upload_files', function ($request, $response) {
+    $klein->respond('POST', '/upload_files', function ($request, $response) {
         // Show a single user
         $m = new \Wastetopia\Model\AmazonS3();
         $m->upload($request->files());
