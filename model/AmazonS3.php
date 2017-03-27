@@ -20,10 +20,6 @@ class AmazonS3
         $this->s3 = new S3Client(array(
             'version' => 'latest',
             'region' => $this->awsRegion,
-            'credentials' => array(
-                'key' => $_ENV['AWS_ACCESS_KEY_ID'],
-                'secret' => $_ENV['AWS_SECRET_ACCESS_KEY']
-            )
         ));
     }
 
