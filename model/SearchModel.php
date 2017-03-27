@@ -10,6 +10,8 @@
  * You must then call the function getCardDetails($listingID) with each of those IDs to get the details for display.
  * This allows the card display details to be changed in one function.
  */
+namespace Wastetopia\Model;
+
 class SearchModel
 {
     /**
