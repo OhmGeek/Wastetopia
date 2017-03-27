@@ -39,11 +39,11 @@ class AmazonS3
         try {
             $urls = array();
             foreach($files as $file) {
-                $randomKey = $this->randomString(self::LENGTH);
+                $randomKey = "test";
                 $upload = $this->s3->upload($this->bucket, $randomKey, fopen($file['tmp_name'], 'rb'), 'public-read');
                 array_push($urls, $upload->get('ObjectURL')); // add the url to the array
             }
-            return $urls;
+            return \GuzzleHttp\json_encode($urls);
         } catch (S3Exception $e) {
             return $e->getMessage() . "\n";
         }
