@@ -1,0 +1,149 @@
+{% extends 'header.twig' %}
+
+{% block title %}
+    {{username}}
+{% endblock %}
+
+{% block navbar %}
+    {% include 'navbar.twig' %}
+{% endblock %}
+
+{% block content %}
+      <!-- Create profile window -->
+
+  <!-- profile page header: image and username-->
+  <div class="panel panel-default" id="profileHead">
+    <div class="panel-body">
+      <div class="profileInfo">
+        <div class="userimage">
+          <img src="flowery.jpg">
+        </div>
+        <ul>
+          <li>{{username}}</li>
+          <li>{{popularity}}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- profile Info: order history, offers , .. etc-->
+  <div id="profileBody">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        Request History
+      </div>
+      <div class="panel-body">
+        <div id="requests" class="carousel slide" data-ride="carousel">
+
+          <!-- Wrapper for slides -->
+          <div class="carousel-inner" role="listbox">
+            <div class="item active">
+              <div class="row">
+                {% for requested in userRequestHistory %}
+                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+                  <div class="itemView">
+                    <div class="item-background">
+                      <img src="{{requested.image}}"/>
+                    </div>
+                    <div class="item-header black-top">
+                      <ul>
+                        <li class="item-name">{{requested.itemName}}</li>
+                        <li class="item-summary">{{requested.itemSummary}}</li>
+                      </ul>
+                    </div>
+                    <div class="item-nav-btn">
+                      <button type="button" class="item-btn item-btn-send">
+                        <span class="glyphicon glyphicon-send" aria-hidden="true"></span>
+                      </button>
+                      <button type="button" class="item-btn item-btn-view">
+                        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                      </button>
+                    </div>
+                    <div class="item-footer black-bottom">
+                      <div class="user-sign">
+                        <img src="BUS.jpg" class="user-image"/>
+                        <p class="user-name">{{requested.sellerUsername}}</p>
+                      </div>
+                      <div class="added-date">
+                        {{requested.dateAdded}}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+
+            <!-- Left and right controls -->
+            <a class="left carousel-control" href="#requests" role="button" data-slide="prev">
+              <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a class="right carousel-control" href="#requests" role="button" data-slide="next">
+              <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+              <span class="sr-only">Next</span>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Current Offers
+        </div>
+        <div class="panel-body">
+          <div id="offers" class="carousel slide" data-ride="carousel">
+
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner" role="listbox">
+              <div class="item active">
+                <div class="row">
+                  <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                    <img src="flowery.jpg" alt="Chania" style="width: 100%">
+                  </div>
+                  <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                    <img src="flowery.jpg" alt="Chania" style="width: 100%">
+                  </div>
+                  <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                    <img src="flowery.jpg" alt="Chania" style="width: 100%">
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="item">
+                <div class="row">
+                  <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                    <img src="flowery.jpg" alt="Chania" style="width: 100%">
+                  </div>
+                  <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                    <img src="flowery.jpg" alt="Chania" style="width: 100%">
+                  </div>
+                  <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                    <img src="flowery.jpg" alt="Chania" style="width: 100%">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Left and right controls -->
+            <a class="left carousel-control" href="#offers" role="button" data-slide="prev">
+              <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a class="right carousel-control" href="#offers" role="button" data-slide="next">
+              <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+              <span class="sr-only">Next</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+
+
+      <!-- Footer, because without one it looks slightly strange -->
+      <div class="panel-footer">
+        <div class="panel-body">Copyright Team 4, 2016.</div>
+      </div>
+{% endblock %}
+
+{% set jslist = ["name your","custom js","files here"] %}

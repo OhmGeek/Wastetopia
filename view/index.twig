@@ -1,4 +1,15 @@
-<div class="well bs-component">
+{% extends 'header.twig' %}
+
+{% block title %}
+    Your page title goes here! Please only put plain text here
+{% endblock %}
+
+{% block navbar %}
+    {% include 'navbar.twig' %}
+{% endblock %}
+
+{% block content %}
+    <div class="well bs-component">
       <form id="search" class="form-horizontal">
           <div class="row">
               <div class="col-xs-10 col-md-11">
@@ -27,10 +38,10 @@
             <div>
                 <!-- todo: improve this to make scrollable thumbnails that look pretty -->
                 {% for element in recommendedList %}
-				<a href="{{element.href}}">
+                <a href="{{element.href}}">
                     <img src="{{element.picSource}}" width=150 height=150>
                 </a>  
-				{% endfor %}
+                {% endfor %}
             </div>
         </div>
       </div>
@@ -43,7 +54,7 @@
             <div>
                 <!-- todo: improve this to make scrollable thumbnails that look pretty -->
                 {% for element in newList %}
-				<a href="{{element.href}}">
+                <a href="{{element.href}}">
                     <img src="{{element.picSource}}" width=150 height=150>
                 </a>  
                 {% endfor %}
@@ -59,7 +70,7 @@
             <div>
                 <!-- todo: improve this to make scrollable thumbnails that look pretty -->
                 {% for element in popularList %}
-				<a href="{{element.href}}">
+                <a href="{{element.href}}">
                     <img src="{{element.picSource}}" width=150 height=150>
                 </a>  
                 {% endfor %}
@@ -75,7 +86,7 @@
             <div>
                 <!-- todo: improve this to make scrollable thumbnails that look pretty -->
                 {% for element in subscriberList %}
-				<a href="{{element.href}}">
+                <a href="{{element.href}}">
                     <img src="{{element.picSource}}" width=150 height=150>
                 </a>  
                 {% endfor %}
@@ -87,3 +98,7 @@
       <div class="panel-footer">
         <div class="panel-body">Copyright Team 4, 2016.</div>
       </div>
+{% endblock %}
+
+{% set jslist = ["name your","custom js","files here"] %}
+
