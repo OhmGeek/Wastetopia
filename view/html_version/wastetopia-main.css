@@ -669,6 +669,7 @@ label.checkbox-inline input[type=checkbox]:checked + .checkbox-material .check:b
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
+  flex-wrap: wrap;
   position: absolute;
   top: 60px;
   z-index: 2;
