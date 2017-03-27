@@ -9,10 +9,10 @@
 {% endblock %}
 
 {% block content %}
-    <form action="/test/uploadimage" method="post">
+    <form action="/test/upload_files" method="post">
         <input type="file" id="uploaded_file" name="uploaded_file">
         <button type="submit">Upload</button>
     </form>
 {% endblock %}
 
-{% set jslist = ["name your","custom js","files here"] %}
+{% set jslist = [] %}

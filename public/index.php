@@ -52,10 +52,13 @@ $klein->with('/test', function () use ($klein) {
 
     $klein->respond('GET', '/?', function ($request, $response) {
         // File upload test
-
+        $loader  = new Twig_Loader_Filesystem(__DIR__.'/../view/');
+        $twig = new Twig_Environment($loader);
+        $template = $twig->loadTemplate('image_upload_example.twig');
+        return $template->render(array());
     });
 
-    $klein->respond('GET', '/upload_file', function ($request, $response) {
+    $klein->respond('POST', '/upload_files', function ($request, $response) {
         // Show a single user
         $m = new \Wastetopia\Model\AmazonS3();
         $m->upload($request->files());
