@@ -1,0 +1,70 @@
+{% extends 'header.twig' %}
+
+{% block title %}
+    Search
+{% endblock %}
+
+{% block navbar %}
+    {% include 'navbar.twig' %}
+{% endblock %}
+
+{% block content %}
+<!-- Create the search results window -->
+<div id="main-content">
+    <div id="sidebar">
+      <form method="post">
+        <fieldset>
+            {% for itemFilter in filters %}
+          <input type="checkbox" name="filter" value="{{itemFilter}}">{{itemFilter}}<br>
+          <input type="checkbox" name="filter" value="{{itemFilter}}">{{itemFilter}}<br>
+          <input type="checkbox" name="filter" value="{{itemFilter}}">{{itemFilter}}<br>
+        </fieldset>
+      </form>
+    </div>
+    <div id="main">
+      <button id="filter-btn">Click me</button>
+      <div class="grid-body">
+        <div class="row">
+
+            {% for item in itemList %}
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 no-padding">
+                <div class="itemView">
+                    <div class="item-background">
+                        <img src="{{itemImagePath}}"/>
+                    </div>
+                    <div class="item-header black-top">
+                        <ul>
+                            <li class="item-name">{{itemName}}</li>
+                            <li class="item-summary">{{itemSummary}}</li>
+                        </ul>
+                    </div>
+                    <div class="item-nav-btn">
+                        <button type="button" class="item-btn item-btn-send">
+                            <span class="glyphicon glyphicon-send" aria-hidden="true"></span>
+                            <p class="btn-text" >Request</p>
+                        </button>
+                        <button type="button" class="item-btn item-btn-view">
+                            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                            <p class="btn-text" >View</p>
+                        </button>
+                    </div>
+                    <div class="item-footer black-bottom">
+                        <div class="user-sign">
+                            <img src="{{userImage}}" class="user-image"/>
+                            <p class="user-name">{{username}}</p>
+                        </div>
+                        <div class="added-date">
+                            {{dateAdded}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+      </div>
+    </div>
+</div>
+{% endblock %}
+
+{% set jslist = ["name your","custom js","files here"] %}
