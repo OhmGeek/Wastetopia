@@ -12,6 +12,8 @@
  */
 namespace Wastetopia\Model;
 
+use Wastetopia\Model\DB;
+
 class SearchModel
 {
     /**
