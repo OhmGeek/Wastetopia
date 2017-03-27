@@ -86,11 +86,11 @@ class ProfilePageModel
 
         $statement = $this->$db->prepare("
             SELECT `Listing`.*
-            FROM `Listing`
-            JOIN `Listing Transaction` ON `Listing`.`ListingID` = `Listing Transaction`.`FK_Listing_ListingID`
-            JOIN `Transaction` ON `Transaction`.`TransacionID` = `Listing Transaction`.`FK_Transaction_TransactionID`
-            JOIN `User` ON `User`.`UserID` = `Transaction`.`FK_User_UserID`
-            WHERE `User`.`UserID` = :userID
+                FROM `Listing`
+                JOIN `ListingTransaction` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
+                JOIN `Transaction` ON `Transaction`.`TransactionID` = `ListingTransaction`.`FK_Transaction_TransactionID`
+                JOIN `User` ON `User`.`UserID` = `Transaction`.`FK_User_UserID`
+                WHERE `User`.`UserID` = 6;
         ");
 
         $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
@@ -102,18 +102,19 @@ class ProfilePageModel
 
 
     /**
-     * Gets all information about transactions for this listing
+     * Gets all information about transactions for this listing.
+     * If there are no results, this item has not been requested
      * Each transaction will have an ID and a success flag
      * @param $listingID
-     * @return mixed
+     * @return mixed 
      */
     function getStateOfListingTransaction($listingID)
     {
         $statement = $this->$db->prepare("
-            SELECT `Transaction`.`TransactionID`, `Listing Transaction`.`Success`
+            SELECT `Transaction`.`TransactionID`, `ListingTransaction`.`Success`
             FROM `Transaction`
-            JOIN `Listing Transaction` ON `Transaction`.`TransactionID` = `Listing Transaction`.`FK_Transaction_TransactionID`
-            JOIN `Listing` ON `Listing`.`ListingID` = `Listing Transaction`.`FK_Listing_ListingID`
+            JOIN `ListingTransaction` ON `Transaction`.`TransactionID` = `ListingTransaction`.`FK_Transaction_TransactionID`
+            JOIN `Listing` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
             WHERE `Listing`.`ListingID` = :listingID
         ");
 
@@ -124,6 +125,57 @@ class ProfilePageModel
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    /**
+     * Gets the total number of completed listings the user has given
+     * @return Ineteger
+     */
+    function getNumberOfCompletedGiving()
+    {
+        $userID = $this->getUserID();
+        
+        $statement = $this->$db->prepare("
+            SELECT COUNT(*) as `Count`
+            FROM `Listing`
+            JOIN `ListingTransaction` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
+            JOIN `Transaction` ON `Transaction`.`TransactionID` = `ListingTransaction`.`FK_Transaction_TransactionID`
+            JOIN `User` ON `User`.`UserID` = `Listing`.`FK_User_UserID`
+            WHERE `User`.`UserID` = :userID;
+            AND `ListingTransaction`.`Success` = 1;  
+        ");
+
+        $statement->bindValue(":userID", $userID, PDO::PARAM_STR);
+
+        $statement->execute();
+
+        return $statement->fetchColumn();
+    }
+    
+    
+    /**
+     * Gets the total number of completed listings the user has received
+     * @return Ineteger
+     */
+    function getNumberOfCompletedReceived()
+    {
+        $userID = $this->getUserID();
+        
+        $statement = $this->$db->prepare("
+            SELECT COUNT(*) as `Count`
+            FROM `Listing`
+            JOIN `ListingTransaction` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
+            JOIN `Transaction` ON `Transaction`.`TransactionID` = `ListingTransaction`.`FK_Transaction_TransactionID`
+            JOIN `User` ON `User`.`UserID` = `Transaction`.`FK_User_UserID`
+            WHERE `User`.`UserID` = :userID;
+            AND `ListingTransaction`.`Success` = 1;
+        ");
+
+        $statement->bindValue(":userID", $userID, PDO::PARAM_STR);
+
+        $statement->execute();
+
+        return $statement->fetchColumn();
+    }
+   
 
     /**
      * Gets all the listings the current user is watching
