@@ -18,7 +18,8 @@ class AmazonS3
         $this->bucket = $_ENV['AWS_BUCKET'];
         $this->awsRegion = $_ENV['AWS_REGION'];
         $this->s3 = new S3Client(array(
-            'version' => 'latest'
+            'version' => 'latest',
+            'region' => 'us-west-2'
         ));
     }
 
