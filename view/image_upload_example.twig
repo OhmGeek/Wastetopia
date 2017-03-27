@@ -13,7 +13,7 @@
             padding: 60px;
         }
     </style>
-    <form action="/test/upload_files" method="post">
+    <form action="/test/upload_files" method="post" enctype="multipart/form-data">
         <div class="form-group">
             <input class="form-control" type="file" id="uploaded_file" name="uploaded_file">
             <button class="btn btn-primary" type="submit">Upload</button>
