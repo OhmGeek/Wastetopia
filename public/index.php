@@ -36,6 +36,11 @@ $klein->respond("GET", "/register", function() {
    return "Registering page";
 });
 
+$klein->response("GET", "/profile", function(){
+    $controller = new ProfilePageController();
+    return $controller->generatePage();
+});
+
 $klein->respond("GET", "/get-env", function() {
    $envStr = "DB Host: " . $_ENV['DB_HOST'] . "\n";
     $envStr .= "DB_NAME " . $_ENV['DB_NAME'] . "\n";
