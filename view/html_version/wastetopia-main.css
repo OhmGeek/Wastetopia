@@ -759,6 +759,8 @@ a:link, a:hover, a:visited, a:active  {
 
 .request-options {
   margin: 10px 10px;
+  display: flex;
+  justify-content: center;
 }
 
 .thumbnail .trans-info .quantity,
