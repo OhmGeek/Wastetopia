@@ -4,6 +4,7 @@ use Klein\Klein;
 use Wastetopia\Controller\Login_Controller;
 use Wastetopia\Config\CurrentConfig;
 use Wastetopia\Controller\LoginController;
+use Wastetopia\Controller\ProfilePageController;
 
 require_once '../vendor/autoload.php';
 
