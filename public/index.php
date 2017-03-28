@@ -29,7 +29,6 @@ $klein->respond("GET", "/", function() {
 
 $klein->respond("GET", "/search/json/[:search]", function($request) {
    $search = new SearchController();
-   return $request->search;
    return $search->basicSearch($request->search);
 });
 

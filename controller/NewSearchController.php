@@ -20,7 +20,7 @@ class SearchController
 
         foreach ($listingIDs as $ID)
         {
-            $listingResults = $searchModel($ID);
+            $listingResults = $searchModel->getCardDetails($ID);
             $searchResultsForJSON[] = $listingResults;
         }
 
