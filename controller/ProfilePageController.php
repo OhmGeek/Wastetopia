@@ -57,6 +57,7 @@ class ProfilePageController
     function generateProfileSection(){
         //Get user details
         $userDetails = $this->model->getUserDetails();
+        print_r($userDetails);
         $userInformation = array();
         $userInformation["username"] = $userDetails["Forename"]." ".$userDetails["Surname"];
         $userInformation["email"] = $userDetails["Email_Address"];
