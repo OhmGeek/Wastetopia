@@ -41,6 +41,9 @@ class ProfilePageController
             "watchList" => $watchListDetails["watchList"]
         );
 
+        $template = $this->twig->loadTemplate('users/profile.twig');
+
+        return $template->render($output);
 
     }
 
@@ -71,6 +74,8 @@ class ProfilePageController
         // Should this be changed to not include completed listings?
         $sendingCount = count($userListingsSending);
 
+        // total number of transactions that have been made for user's listings
+        $sendingTransactionsCount = 0;
 
         $allListingsSending = array(); //Added for testing
 
@@ -85,6 +90,7 @@ class ProfilePageController
             //If no transactions, this listing will not be in the history page
             if (count($stateDetails) > 0){
                 foreach ($stateDetails as $transaction){
+                    $sendingTransactionsCount += 1;
                     $transactionID = $transaction["TransactionID"];
                     $completed = $transaction["Sucess"];
                     if ($completed){
@@ -95,9 +101,10 @@ class ProfilePageController
                         array_push($pendingSending, $listingID);   //Get display information later
                     }
                 }
-            }else{
-                array_push($noInterestSending, $listingID);            //Get display info later
             }
+//            else{
+//                array_push($noInterestSending, $listingID);            //Get display info later
+//            }
         }
 
 
@@ -132,6 +139,8 @@ class ProfilePageController
             }
         }
 
+        // DONE FOR TESTING
+        // WILL SPLIT INTO LISTINGS AND PENDING/COMPLETED TRANSACTIONS
         $offers = array();
         $requestsMade = array();
         foreach($allListingsSending as $listingID){
