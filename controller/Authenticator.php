@@ -16,7 +16,7 @@ class Authenticator {
         $user_id = $cookie->get_user_id();
 
         //verify
-        if(Token_Controller::verify($auth_token,$user_id)) {
+        if(TokenManager::verify($auth_token,$user_id)) {
             return true;
         }
         else {

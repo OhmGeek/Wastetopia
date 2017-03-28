@@ -1,0 +1,198 @@
+{% extends 'header.twig' %}
+
+{% block title %}
+    Your page title goes here! Please only put plain text here
+{% endblock %}
+
+{% block navbar %}
+    {% include 'navbar.twig' %}
+{% endblock %}
+
+{% block content %}
+    <div class="grid-body" style="padding-top: 60px;">
+    <div class="container-fluid">
+      <div class="row">
+        <form>
+          <legend></legend>
+          <legend></legend>
+          <fieldset>
+            <div class="col-sm-12 zero-padding">
+              <div class="item-imgs-section">
+                <div class="gridTitle">
+                  Upload item images here
+                </div>
+                <div class="container-fluid">
+                  <div class="row">
+                    {% for element in itemPics %}
+                        <div class="col-xs-4 col-sm-2 zero-padding">
+                        <div class="row-action-primary checkbox img-checkbox">
+                            <label><input type="checkbox"></label>
+                        </div>
+                        <div data-mh="my-group" class="upload-pic">
+                            <img src="{{element.picPath}}" alt="Chania">
+                        </div>
+                        </div>
+                    {% endfor %}
+                    
+                    <div class="col-xs-4 col-sm-2 zero-padding">
+                      <div class="form-group zero-padding">
+                        <div data-mh="my-group" class="upload-pic">
+                          <div class="img-box">
+                            <i class="material-icons">add</i>
+                          </div>
+                        </div>
+                        <input type="file" id="upload" multiple="">
+                      </div>
+                    </div>
+                  
+                  </div>
+                </div>
+                
+                <div class="options">
+                  <button type="button" id="deleteBtn" class="btn-delete">
+                    <i class="material-icons">delete</i>
+                  </button>
+                </div>
+                
+              </div>  
+            </div>
+            <div class="col-sm-12 zero-padding">
+              <div class="item-details-section">
+                <div class="container-fluid">
+                  <div class="row">
+                   <div class="form-group col-md-8">
+                    <label class="control-label" for="name">Name</label>
+                    <input type="text" class="form-control" id="name">
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label class="control-label" for="type">Type</label>
+                    <select id="type" class="form-control">
+                      <option>Fruit</option>
+                      <option>Vegetable</option>
+                      <option>Meat</option>
+                      <option>Dairy</option>
+                      <option>Seafood</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-xs-6 col-md-8">
+                    <label class="control-label" for="type">Type</label>
+                    <div>
+                      <div class="checkbox">
+                        <label class="col-xs-12 col-md-3">
+                          <input type="checkbox"> Vegetarian
+                        </label>
+                        <label class="col-xs-12 col-md-3">
+                          <input type="checkbox"> Vegan
+                        </label>
+                        <label class="col-xs-12 col-md-3">
+                          <input type="checkbox"> Halal
+                        </label>
+                        <label class="col-xs-12 col-md-3">
+                          <input type="checkbox"> Kosher
+                        </label>
+                        <label class="col-xs-12 col-md-3">
+                          <input type="checkbox"> Gluten-Free
+                        </label>
+                        <label class="col-xs-12 col-md-3">
+                          <input type="checkbox"> Dairy-Free
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group col-xs-6 col-md-4">
+                    <label class="control-label" for="other-req">other</label>
+                    <input type="text" class="form-control" id="other-req">
+                  </div>
+                  <div class="form-group col-xs-12 col-md-6">
+                    <label class="control-label" for="state">State</label>
+                    <select id="state" class="js-example-basic-multiple form-control" multiple="multiple" style="width: 100%;">
+                      <option value="AL">Alabama</option>
+                      <option value="WY">Wyoming</option>
+                    </select>
+                    <div class="form-group">
+                      <label class="control-label" for="other-state">other</label>
+                      <input type="text" class="form-control" id="other-state">
+                    </div>
+                  </div>
+                  <div class="form-group col-xs-12 col-md-6">
+                    <label class="control-label" for="content">May conatins</label>
+                    <select id="content" class="js-example-basic-multiple form-control" multiple="multiple" style="width: 100%;">
+                      <option value="AL">Alabama</option>
+                      <option value="WY">Wyoming</option>
+                    </select>
+                    <div class="form-group">
+                      <label class="control-label" for="other-content">other</label>
+                      <input type="text" class="form-control" id="other-content">
+                    </div>
+                  </div>
+                  <div class="form-group col-xs-12">
+                    <label class="control-label" for="date">Expiry date</label>
+                    <input type="text" class="form-control" id="date">
+                  </div>
+                  <div class="form-group col-xs-12">
+                    <label for="description" class="control-label">Enter Discription :</label>
+                    <div>
+                      <textarea class="form-control" rows="3" id="description"></textarea>
+                      <span class="help-block">Max 500 character.</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-6 zero-padding">
+           <div id="item-map-section"></div>
+           <script src="map.js"></script>
+
+           <script async defer
+           src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCrh2cKWRAFifeLIkznE2Iw4Oblqlmyyt0&callback=initMap">
+         </script>
+       </div>
+       <div class="col-xs-12 col-sm-6 zero-padding">
+        <div class="item-address-section">
+         <div class="form-group">
+          <label for="inputLocation" class="col-md-2 control-label">Adress</label>
+
+          <div class="col-md-10">
+            <input type="text" class="form-control" id="inputLocation1" placeholder="Location : eg.4 The Sidings">
+            <input type="text" class="form-control" id="inputLocation2" placeholder="PostCode : eg.dh1 1hs">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 zero-padding">
+      <div class="item-btns-section">
+        <div class="form-group zero-padding">
+          <div class="btns">
+            <button type="button" class="btn btn-default">Cancel</button>
+            <button type="submit" class="btn btn-primary">Save</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </fieldset>
+</form>
+</div>
+</div>
+</div>
+
+<!-- script for having equal height rows -->
+<script src="plugins/jquery-match-height/jquery.matchHeight.js" type="text/javascript"></script>
+<script>
+  $(function () {
+    $.material.init();
+    //equal height rows
+    $('.upload-pic').matchHeight();
+    //fancy select
+    $(".js-example-basic-multiple").select2();
+    //fancy datetime picker
+    $('#date').bootstrapMaterialDatePicker({ format : 'DD/MM/YYYY', weekStart : 0, time: false });
+  });
+</script>
+{% endblock %}
+
+{% set jslist = ["name your","custom js","files here"] %}
+
+
+

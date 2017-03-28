@@ -2,8 +2,15 @@
 
 use Klein\Klein;
 use Wastetopia\Controller\Login_Controller;
+use Wastetopia\Config\CurrentConfig;
+use Wastetopia\Controller\LoginController;
 
 require_once '../vendor/autoload.php';
+
+// check if we should use production? Otherwise, use community.
+$mode = $_ENV['MODE'];
+$config = new CurrentConfig();
+$config->loadConfig($mode);
 
 $base  = dirname($_SERVER['PHP_SELF']);
 
@@ -19,14 +26,24 @@ $klein->respond("GET", "/", function() {
     return "HomePage";
 });
 
-$klein->respond("GET", "/login", function() {
-    return Login_Controller::index();
+
+$klein->respond("GET", "/login", function($request, $response) {
+    $controller = new LoginController();
+    return $controller->index($response);
 });
 
 $klein->respond("GET", "/register", function() {
    return "Registering page";
 });
 
+$klein->respond("GET", "/get-env", function() {
+   $envStr = "DB Host: " . $_ENV['DB_HOST'] . "\n";
+    $envStr .= "DB_NAME " . $_ENV['DB_NAME'] . "\n";
+    $envStr .= "DB_USER " . $_ENV['DB_USER'] . "\n";
+    $envStr .= "DB_PASS " . $_ENV['DB_PASS'] . "\n";
+    echo "Printing stuff now \n";
+    return $envStr;
+});
 $klein->with('/items', function () use ($klein) {
 
     $klein->respond('GET', '/?', function ($request, $response) {
@@ -41,6 +58,24 @@ $klein->with('/items', function () use ($klein) {
     });
 
 });
+$klein->with('/api', function () use ($klein) {
+
+    $klein->respond('POST', '/verify-login', function ($request, $response) {
+        $controller = new LoginController();
+        $username = $request->email;
+        $password = $request->password;
+        $dest = $_ENV['ROOT_BASE'];
+        return $controller->login($username, $password, $dest, $response);
+    });
+
+    $klein->respond('GET', '/[:id]', function ($request, $response) {
+        // Show a single user
+        $itemID = $request->id;
+        return "Show Item " . $itemID;
+    });
+
+});
+
 
 $klein->onHttpError(function ($code, $router) {
     switch ($code) {
