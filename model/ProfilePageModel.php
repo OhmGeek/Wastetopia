@@ -5,6 +5,10 @@
  * Date: 03/03/2017
  * Time: 10:22
  */
+namespace Wastetopia\Model;
+use PDO;
+use Wastetopia\Model\DB;
+
 class ProfilePageModel
 {
     /**
