@@ -680,7 +680,6 @@ label.checkbox-inline input[type=checkbox]:checked + .checkbox-material .check:b
   width: 150px;
   height: 150px;
   overflow: hidden;
-  background-image: url("food1.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -730,6 +729,9 @@ a:link, a:hover, a:visited, a:active  {
   padding: 10px;
   font-size: 30px;
   font-weight: bolder;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 }
 
 .user-stats .title i {
@@ -739,6 +741,29 @@ a:link, a:hover, a:visited, a:active  {
 
 .thumbnail {
   margin-bottom: 15px;
+}
+
+.user-stats .title .btn-addOffer i {
+  font-size: 30px;
+  margin-right: 5px;
+}
+
+.user-stats .title .btn-addOffer {
+  font-size: 20px;
+  margin-left: auto;
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+  font-weight: normal;
+}
+
+.request-options {
+  margin: 10px 10px;
+}
+
+.thumbnail .trans-info .quantity,
+#offers .added-date {
+  font-weight: bolder;
 }
 
 /* Messaging */
@@ -1049,8 +1074,9 @@ a:link, a:hover, a:visited, a:active  {
     color: grey;
 }
 
-.added-date{
-    font-size: 12px;
+.added-date,
+ .thumbnail .trans-info{
+    font-size: 13px;
     color: grey;
     margin-top: 2px;
 }

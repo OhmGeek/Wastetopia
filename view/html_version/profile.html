@@ -59,7 +59,7 @@
   </nav>
   <div class="page-height" style="padding-top:230px;">
     <div class="user-profile jumbotron">
-      <div class="user-img"></div>
+      <div class="user-img" style="background-image: url(food1.jpg);"></div>
       <div class="user-details">
         <div class="user-name">
           Mark Smith
@@ -77,7 +77,18 @@
       <div id="home" class="tab-pane fade in active">
         <div class="container-fluid">
           <div class="row">
-            <a class="col-sm-4 col-xs-12" role="button" data-toggle="tab" href="#offers">
+            <a class="col-sm-3 col-xs-12" role="button" data-toggle="tab" href="#offers">
+              <div class="tile">
+                <div class="stat">
+                  <div class="count">179</div>
+                  <h4 class="zero-padding">Items available to offer</h4>
+                </div>
+                <div class="icon">
+                  <i class="material-icons">chevron_right</i>
+                </div>
+              </div>
+            </a>
+            <a class="col-sm-3 col-xs-12" role="button" data-toggle="tab" href="#transactions">
               <div class="tile">
                 <div class="stat">
                   <div class="count">179</div>
@@ -88,7 +99,7 @@
                 </div>
               </div>
             </a>
-            <a class="col-sm-4 col-xs-12" role="button" data-toggle="tab" href="#requests">
+            <a class="col-sm-3 col-xs-12" role="button" data-toggle="tab" href="#requests">
               <div class="tile">
                 <div class="stat">
                   <div class="count">179</div>
@@ -99,7 +110,7 @@
                 </div>
               </div>
             </a>
-            <a class="col-sm-4 col-xs-12" role="button" data-toggle="tab" href="#watchList">
+            <a class="col-sm-3 col-xs-12" role="button" data-toggle="tab" href="#watchList">
               <div class="tile">
                 <div class="stat">
                   <div class="count">179</div>
@@ -124,98 +135,96 @@
         </div>
       </div>
       <div id="offers" class="tab-pane fade">
-        <div class="title">
-          <a role="button" data-toggle="tab"  href="#home"><i class="material-icons">chevron_left</i></a>OFFERS
+        <div class="header">
+          <div class="title">
+            <a role="button" data-toggle="tab"  href="#home"><i class="material-icons">chevron_left</i></a>AVAILABLE OFFERS
+            <a role="button" class="btn-addOffer"><i class="material-icons">add_circle</i> new item</a>
+          </div>
         </div>
-        <div class="container-fluid">
-          <div class="grid">
-            <!-- need this for mosonry layout to work properly with bootstrap grid system -->
-            <div class="grid-sizer col-xs-12 col-sm-6 col-md-4"></div>
-            <div class="grid-item col-xs-12 col-sm-6 col-md-4">
-              <div class="grid-item-content">
-                <div class="thumbnail zero-padding">
-                  <img src="food2.jpg" style="border-color: lightgrey;" />
-                  <div class="caption">
-                    <h3>item name write here for offers</h3>
-                    <div class="nav-btns">
-                      <a href="#" class="btn btn-primary" role="button">View</a>
-                      <a href="#" class="btn btn-default" role="button">Edit</a>
-                      <a href="#" role="button" class="btn-watch"><i class="material-icons">delete</i></a>
+            <div class="container-fluid">
+              <div class="grid">
+                <!-- need this for mosonry layout to work properly with bootstrap grid system -->
+                <div class="grid-sizer col-xs-12 col-sm-6 col-md-4"></div>
+
+                <div class="grid-item col-xs-12 col-sm-6 col-md-4">
+                  <div class="grid-item-content">
+                    <div class="thumbnail zero-padding">
+                      <img src="food2.jpg" style="border-color: lightgrey;" />
+                      <div class="caption">
+                        <h3>item name write here for offers</h3>
+                        <div class="added-date">Added on 12 March 2018</div>
+                        <div class="nav-btns">
+                          <a href="#" class="btn btn-primary" role="button">View</a>
+                          <a href="#" class="btn btn-default" role="button">Edit</a>
+                          <a href="#" role="button" class="btn-watch"><i class="material-icons">delete</i></a>
+                        </div>
+                      </div>
+                    </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="transactions" class="tab-pane fade">
+        <div class="header">
+          <div class="title">
+            <a role="button" data-toggle="tab"  href="#home"><i class="material-icons">chevron_left</i></a>REQUESTED OFFERS
+          </div>
+          <ul class="nav nav-pills request-options">
+            <li class="active"><a href="#pending-transaction" data-toggle="tab" role="button">Pending</a></li>
+            <li><a href="#completed-transaction" data-toggle="tab" role="button">Completed</a></li>
+          </ul>
+        </div>
+        <div class="tab-content zero-padding" style="padding-top:10px; background-color:transparent;">
+          <div id="completed-transaction" class="tab-pane fade">
+            <div class="container-fluid">
+              <div class="grid">
+                <!-- need this for mosonry layout to work properly with bootstrap grid system -->
+                <div class="grid-sizer col-xs-12 col-sm-6 col-md-4"></div>
+
+                <div class="grid-item col-xs-12 col-sm-6 col-md-4">
+                  <div class="grid-item-content">
+                    <div class="thumbnail zero-padding">
+                      <div class="request-status complete">
+              					COMPLETED ON 12 MARCH 2018
+              				</div>
+                      <img src="food2.jpg" style="border-color: lightgrey;" />
+                      <div class="caption">
+                        <h3>item name write here for requested offer</h3>
+                        <div class="trans-info"><span class="quantity">Quantity: </span> 5</div>
+                        <div class="nav-btns">
+                          <a href="#" class="btn btn-primary" role="button">View</a>
+                          <a href="#" role="button" class="btn-watch"><i class="material-icons">delete</i></a>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="grid-item col-xs-12 col-sm-6 col-md-4">
-              <div class="grid-item-content">
-                <div class="thumbnail zero-padding">
-                  <img src="food1.jpg" style="border-color: lightgrey;" />
-                  <div class="caption">
-                    <h3>item name write here for offers</h3>
-                    <div class="nav-btns">
-                      <a href="#" class="btn btn-primary" role="button">View</a>
-                      <a href="#" class="btn btn-default" role="button">Edit</a>
-                      <a href="#" role="button" class="btn-watch"><i class="material-icons">delete</i></a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="grid-item col-xs-12 col-sm-6 col-md-4">
-              <div class="grid-item-content">
-                <div class="thumbnail zero-padding">
-                  <img src="food2.jpg" style="border-color: lightgrey;" />
-                  <div class="caption">
-                    <h3>item name write here for offers</h3>
-                    <div class="nav-btns">
-                      <a href="#" class="btn btn-primary" role="button">View</a>
-                      <a href="#" class="btn btn-default" role="button">Edit</a>
-                      <a href="#" role="button" class="btn-watch"><i class="material-icons">delete</i></a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="grid-item col-xs-12 col-sm-6 col-md-4">
-              <div class="grid-item-content">
-                <div class="thumbnail zero-padding">
-                  <img src="food.jpg" style="border-color: lightgrey;" />
-                  <div class="caption">
-                    <h3>item name write here for offers</h3>
-                    <div class="nav-btns">
-                      <a href="#" class="btn btn-primary" role="button">View</a>
-                      <a href="#" class="btn btn-default" role="button">Edit</a>
-                      <a href="#" role="button" class="btn-watch"><i class="material-icons">delete</i></a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="grid-item col-xs-12 col-sm-6 col-md-4">
-              <div class="grid-item-content">
-                <div class="thumbnail zero-padding">
-                  <img src="food1.jpg" style="border-color: lightgrey;" />
-                  <div class="caption">
-                    <h3>item name write here for offers</h3>
-                    <div class="nav-btns">
-                      <a href="#" class="btn btn-primary" role="button">View</a>
-                      <a href="#" class="btn btn-default" role="button">Edit</a>
-                      <a href="#" role="button" class="btn-watch"><i class="material-icons">delete</i></a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="grid-item col-xs-12 col-sm-6 col-md-4">
-              <div class="grid-item-content">
-                <div class="thumbnail zero-padding">
-                  <img src="food.jpg" style="border-color: lightgrey;" />
-                  <div class="caption">
-                    <h3>item name write here for offers</h3>
-                    <div class="nav-btns">
-                      <a href="#" class="btn btn-primary" role="button">View</a>
-                      <a href="#" class="btn btn-default" role="button">Edit</a>
-                      <a href="#" role="button" class="btn-watch"><i class="material-icons">delete</i></a>
+          </div>
+          <div id="pending-transaction" class="tab-pane fade in active">
+            <div class="container-fluid">
+              <div class="grid">
+                <!-- need this for mosonry layout to work properly with bootstrap grid system -->
+                <div class="grid-sizer col-xs-12 col-sm-6 col-md-4"></div>
+
+                <div class="grid-item col-xs-12 col-sm-6 col-md-4">
+                  <div class="grid-item-content">
+                    <div class="thumbnail zero-padding">
+                      <div class="request-status pending">
+              					PENDING SINCE 12 MARCH 2018
+              				</div>
+                      <img src="food2.jpg" style="border-color: lightgrey;" />
+                      <div class="caption">
+                        <h3>item name write here for offers</h3>
+                        <div class="trans-info"><span class="quantity">Quantity: </span>5</div>
+                        <div class="nav-btns">
+                          <a href="#" class="btn btn-primary" role="button">View</a>
+                          <a href="#" class="btn btn-default" role="button">Message</a>
+                          <a href="#" class="btn btn-default" role="button">Cancel</a>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -223,6 +232,7 @@
             </div>
           </div>
         </div>
+
       </div>
       <div id="requests" class="tab-pane fade">
         <div class="title">
