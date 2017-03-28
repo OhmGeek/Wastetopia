@@ -52,13 +52,4 @@ class AmazonS3
             error_log($e->getMessage() . "\n");
         }
     }
-
-    public function download($fileKey) {
-        $result = $this->s3->getObject(array(
-            'Bucket' => $this->bucket,
-            'key' => $fileKey
-        ));
-
-        return $result;
-    }
 }
