@@ -183,6 +183,8 @@ class ProfilePageController
             "offers" => $offers,
             "requestsMade" => $requestsMade
         );
+        
+        return $listingsInformation;
     }
 
 
@@ -222,5 +224,7 @@ class ProfilePageController
             "watchlistCount" => $count,
             "watchList" => $watchList
         );
+        
+        return $watchListDetails;
     }
 }
