@@ -49,7 +49,7 @@ class ProfilePageController
 
         $template = $this->twig->loadTemplate('users/profile.twig');
 
-        return $template->render($output);
+        //return $template->render($output);
 
     }
 
