@@ -57,7 +57,7 @@ class ProfilePageModel
     function getUserListings()
     {
         $userID = $this->getUserID();
-        $statement = $this->$db->prepare("
+        $statement = $this->db->prepare("
             SELECT `Listing`.*
             FROM `Listing`
             JOIN `User` ON `User`.`UserID` = `Listing`.`FK_User_UserID`
@@ -77,7 +77,7 @@ class ProfilePageModel
     function getUserReceivingListings()
     {
         $userID = $this->getUserID();
-        $statement = $this->$db->prepare("
+        $statement = $this->db->prepare("
             SELECT `Listing`.*
                 FROM `Listing`
                 JOIN `ListingTransaction` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
@@ -100,7 +100,7 @@ class ProfilePageModel
      */
     function getStateOfListingTransaction($listingID)
     {
-        $statement = $this->$db->prepare("
+        $statement = $this->db->prepare("
             SELECT `Transaction`.`TransactionID`, `ListingTransaction`.`Success`
             FROM `Transaction`
             JOIN `ListingTransaction` ON `Transaction`.`TransactionID` = `ListingTransaction`.`FK_Transaction_TransactionID`
@@ -118,7 +118,7 @@ class ProfilePageModel
      * @return mixed
      */
     function getDetailsFromTransactionID($transactionID){
-        $statement = $this->$db->prepare("
+        $statement = $this->db->prepare("
             SELECT `Transaction`.`FK_User_UserID`,
                     `User`.`Forename`, `User`.`Surname`,
                     `ListingTransaction`.`Quantity`,
@@ -143,7 +143,7 @@ class ProfilePageModel
     {
         $userID = $this->getUserID();
 
-        $statement = $this->$db->prepare("
+        $statement = $this->db->prepare("
             SELECT COUNT(*) as `Count`
             FROM `Listing`
             JOIN `ListingTransaction` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
@@ -166,7 +166,7 @@ class ProfilePageModel
     {
         $userID = $this->getUserID();
 
-        $statement = $this->$db->prepare("
+        $statement = $this->db->prepare("
             SELECT COUNT(*) as `Count`
             FROM `Listing`
             JOIN `ListingTransaction` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
@@ -189,7 +189,7 @@ class ProfilePageModel
     function getWatchedListings()
     {
         $userID = $this->getUserID();
-        $statement = $this->$db->prepare("
+        $statement = $this->db->prepare("
             SELECT `Listing`.`ListingID`, `Watch`.`WatchID`
             FROM `Listing`
             JOIN `Watch` ON `Listing`.`ListingID` = `Watch`.`FK_Listing_ListingID`
@@ -209,7 +209,7 @@ class ProfilePageModel
     function deleteWatchListing($watchID)
     {
         $userID = $this->getUserID();
-        $statement = $this->$db->prepare("
+        $statement = $this->db->prepare("
             DELETE
             FROM `Watch`
             WHERE `Watch`.`WatchID` = :watchID
@@ -227,7 +227,7 @@ class ProfilePageModel
     function addToWatchList($listingID)
     {
         $userID = $this->getUserID();
-        $statement = $this->$db->prepare("
+        $statement = $this->db->prepare("
             INSERT
             INTO `Watch`(`FK_User_UserID`, `FK_Listing_ListingID`)
             VALUES(:userID, :listingID)
