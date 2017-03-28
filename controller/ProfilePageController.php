@@ -5,6 +5,11 @@
  * Date: 03/03/2017
  * Time: 11:24
  */
+
+namespace Wastetopia\Controller;
+use Wastetopia\Model\ProfilePageModel;
+use Twig_Loader_Filesystem;
+use Twig_Environment;
 class ProfilePageController
 {
     /**
