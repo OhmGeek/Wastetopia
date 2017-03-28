@@ -152,12 +152,13 @@ class ProfilePageController
         print_r("Sending: ");
         print_r($allListingsSending);
         foreach($allListingsSending as $listingID){
-            print_r($listingID);
             $details = $this->model->getCardDetails($listingID);
+            print_r($details);
             $itemName = $details["Name"];
             $defaultImage = $this->model->getDefaultImage($listingID);
             $imageURL = $defaultImage["Image_URL"];
             $item = array("itemName" => $itemName, "imgURL" => $imageURL);
+            print_r($item);
             array_push($offers, $item);
         }
 
