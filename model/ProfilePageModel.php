@@ -13,22 +13,23 @@ class ProfilePageModel
 {
     /**
      * ProfilePageModel constructor.
+     * @param @userID ID of user whose profile you're trying to view
      */
-    public function __construct()
+    public function __construct($userID)
     {
         $this->db = DB::getDB();
+        $this->userID = $userID;
+        
     }
 
 
     /**
-     * Returns the ID of the user currently logged in
+     * Returns the ID of the user whose profile you're trying to view
      * @return int
      */
     private function getUserID()
     {
-       // $reader = new UserCookieReader();
-       // return $reader->get_user_id();
-        return 6;
+       return $this->userID;
     }
 
 
