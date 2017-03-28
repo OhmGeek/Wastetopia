@@ -37,10 +37,7 @@ class ProfilePageModel
      */
     function getUserDetails(){
         $userID = $this->getUserID();
-        $statement = $this->$db->prepare("
-            SELECT * 
-            FROM `User`
-            WHERE `UserID` = :userID
+        $statement = $this->$db->prepare("SELECT * FROM `User` WHERE `UserID` = :userID
         ");
         $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
         $statement->execute();
