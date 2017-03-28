@@ -27,9 +27,9 @@ $klein->respond("GET", "/", function() {
     return "HomePage";
 });
 
-$klein->respond("GET", "/search/json", function() {
+$klein->respond("GET", "/search/json/[:search]", function($request) {
    $search = new SearchController();
-   return $search->basicSearch();
+   return $search->basicSearch($request->search);
 });
 
 $klein->respond("GET", "/login", function($request, $response) {

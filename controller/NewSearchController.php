@@ -11,10 +11,8 @@ class SearchController
         /*decide search type*/
     }
 
-    public function basicSearch()
+    public function basicSearch($searchTerm)
     {
-        $searchTerm = $_GET['searchTerm'];
-
         $searchModel = new SearchModel();
         $listingIDs = $searchModel->getListingIDsFromName($searchTerm);
 
