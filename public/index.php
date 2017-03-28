@@ -50,7 +50,7 @@ $klein->respond("GET", "/get-env", function() {
 
 $klein->with("/profile", function() use ($klein) {
     
-    $klein->respond('GET', '/', function($request, $response){
+    $klein->respond('GET', '/?', function($request, $response){
         $controller = new ProfilePageController(1); //View own profile
         return $controller->generatePage();
     });
