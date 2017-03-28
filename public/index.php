@@ -4,13 +4,8 @@ use Klein\Klein;
 use Wastetopia\Controller\ConversationListController;
 use Wastetopia\Controller\Login_Controller;
 use Wastetopia\Config\CurrentConfig;
-<<<<<<< HEAD
-use Wastetopia\Controller\LoginController;
 use Wastetopia\Controller\ProfilePageController;
-
-=======
 use Wastetopia\Controller\MessageController;
->>>>>>> refs/remotes/origin/master
 require_once '../vendor/autoload.php';
 
 // check if we should use production? Otherwise, use community.
