@@ -38,8 +38,9 @@ $klein->respond("GET", "/register", function() {
 });
 
 $klein->response("GET", "/profile", function(){
-    $controller = new ProfilePageController();
-    return $controller->generatePage();
+    return "Profile page";
+   // $controller = new ProfilePageController();
+   // return $controller->generatePage();
 });
 
 $klein->respond("GET", "/get-env", function() {
