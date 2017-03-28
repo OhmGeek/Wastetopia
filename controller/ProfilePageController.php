@@ -14,11 +14,17 @@ class ProfilePageController
 {
     /**
      * ProfilePageController constructor.
-     * @param ID of user whose profile you wish to view
+     * @param $ownProfile (1 if current logged in user is viewing their own profile)
+     * @param $userID of user whose profile you wish to view (only set if $ownProfile is 0)
      */
-    public function __construct($userID)
+    public function __construct($ownProfile, $userID = -1)
     {
-        $this->model = new ProfilePageModel($userID); //Need to include
+        if ($ownProfile){
+            $this->userID = $this->getUserID();
+        }else{
+            $this->userID = $userID;
+        }
+        $this->model = new ProfilePageModel($this->userID); //Need to include
         //Load Twig environment
         $loader = new Twig_Loader_Filesystem('../view/');
         $this->twig = new Twig_Environment($loader);
