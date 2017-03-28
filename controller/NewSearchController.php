@@ -16,7 +16,7 @@ class SearchController
         $searchModel = new SearchModel();
         $listingIDs = $searchModel->getListingIDsFromName($searchTerm);
 
-        $searchResultsForJSON = [];
+        $searchResultsForJSON = $listingIDs;
 
         foreach ($listingIDs as $ID)
         {
