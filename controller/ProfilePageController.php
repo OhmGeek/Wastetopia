@@ -28,8 +28,7 @@ class ProfilePageController
         $listingsInformation = $this->generateListingsSection();
         $watchListDetails = $this->generateWatchListSection();
         
-        print_r($userInformation);
-        print_r("::::::::::::");
+  
         print_r($listingsInformation);
         print_r("::::::::::::");
         print_r($watchListDetails);
@@ -57,7 +56,7 @@ class ProfilePageController
     function generateProfileSection(){
         //Get user details
         $userDetails = $this->model->getUserDetails();
-        print_r($userDetails);
+   
         $userInformation = array();
         $userInformation["username"] = $userDetails["Forename"]." ".$userDetails["Surname"];
         $userInformation["email"] = $userDetails["Email_Address"];
