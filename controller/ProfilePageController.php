@@ -158,7 +158,7 @@ class ProfilePageController
             $itemName = $details["Name"];
             $defaultImage = $this->model->getDefaultImage($listingID);
             $imageURL = $defaultImage["Image_URL"];
-            $item = array("itemName" => $itemName, "imgURL" => $imageURL);
+            $item = array("listingID"=>$listingID, "itemName" => $itemName, "imgURL" => $imageURL);
             print_r($item);
             array_push($offers, $item);
         }
@@ -174,6 +174,7 @@ class ProfilePageController
             $imageURL = $defaultImage["Image_URL"];
 
             $item = array(
+                "listingID"=>$listingID,
                 "username" => $username,
                 "dateAdded" => $dateAdded,
                 "distanceToUser" => $distanceToUser,
@@ -220,6 +221,7 @@ class ProfilePageController
 
             $item = array(
                 "watchID" => $watchID,
+                "listingID" => $listingID,
                 "username" => $username,
                 "dateAdded" => $dateAdded,
                 "distanceToUser" => $distanceToUser,
