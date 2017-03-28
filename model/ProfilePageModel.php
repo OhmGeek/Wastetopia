@@ -112,6 +112,26 @@ class ProfilePageModel
     }
 
 
+    /* Gets the name of the user requesting the transaction, and the quantity involved
+     * @param $transactionID
+     * @return mixed
+     */
+    function getDetailsFromTransactionID($transactionID){
+        $statement = $this->$db->prepare("
+            SELECT `Transaction`.`FK_User_UserID`,
+                    `User`.`Forename`, `User`.`Surname`,
+                    `ListingTransaction`.`Quantity`
+            FROM `Transaction`
+            JOIN `User` ON `User`.`UserID` = `Transaction`.`FK_User_UserID`
+            JOIN `ListingTransaction` ON `Transaction`.`TransactionID` = `ListingTransaction`.`FK_Transaction_TransactionID`
+            WHERE `Transaction`.`TransactionID` = :transactionID
+        ");
+        $statement->bindValue(":transactionID", $transactionID, PDO::PARAM_INT);
+        $statement->execute();
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $results[0];
+    }
+
     /**
      * Gets the total number of completed listings the user has given
      * @return Ineteger
