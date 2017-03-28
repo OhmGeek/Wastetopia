@@ -149,7 +149,10 @@ class ProfilePageController
         // WILL SPLIT INTO LISTINGS AND PENDING/COMPLETED TRANSACTIONS
         $offers = array();
         $requestsMade = array();
+        print_r("Sending: ");
+        print_r($allListingsSending);
         foreach($allListingsSending as $listingID){
+            print_r($listingID);
             $details = $this->model->getCardDetails($listingID);
             $itemName = $details["Name"];
             $defaultImage = $this->model->getDefaultImage($listingID);
@@ -193,6 +196,9 @@ class ProfilePageController
         //Get IDs of listings user is watching
         $watchedListings = $this->model->getWatchedListings();
 
+        print_r("Watched listings:: ");
+        print_r($watchedListings);
+        
         $count = count($watchedListings);
 
         $watchList = array();
