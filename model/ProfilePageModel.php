@@ -45,7 +45,8 @@ class ProfilePageModel
         ");
         $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
         $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_ASSOC);
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $results[0];
     }
 
 
