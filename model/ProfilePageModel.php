@@ -260,8 +260,8 @@ class ProfilePageModel
         ");
         $statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);
         $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_ASSOC);
-        
+        $results =  $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $listingID;
        // return $results[0];
     }
 
