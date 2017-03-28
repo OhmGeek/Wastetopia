@@ -47,7 +47,7 @@ class AmazonS3
                 $url = $upload->get('ObjectURL');
                 array_push($urls, $url); // add the url to the array
             }
-            return json_encode($urls);
+            return $urls;
         } catch (S3Exception $e) {
             error_log($e->getMessage() . "\n");
         }
