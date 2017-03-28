@@ -27,6 +27,12 @@ class ProfilePageController
         $userInformation = $this->generateProfileSection();
         $listingsInformation = $this->generateListingsSection();
         $watchListDetails = $this->generateWatchListSection();
+        
+        print_r($userInformation);
+        print_r("::::::::::::");
+        print_r($listingsInformation);
+        print_r("::::::::::::");
+        print_r($watchListDetails);
 
         $output = array(
             "username" => $userInformation["username"],
@@ -92,7 +98,7 @@ class ProfilePageController
                 foreach ($stateDetails as $transaction){
                     $sendingTransactionsCount += 1;
                     $transactionID = $transaction["TransactionID"];
-                    $completed = $transaction["Sucess"];
+                    $completed = $transaction["Success"];
                     if ($completed){
                         // Need to figure out how to deal with these as transactions
                         array_push($completedSending, $listingID); //Get display information later
@@ -128,7 +134,7 @@ class ProfilePageController
             $stateDetails = $this->model->getStateOfListingTransaction($listingID); //Get details about the transactions
             foreach ($stateDetails as $transaction){
                 $transactionID = $transaction["TransactionID"];
-                $completed = $transaction["Sucess"];
+                $completed = $transaction["Success"];
                 if ($completed){
                     // Need to figure out how to deal with these as transactions
                     array_push($completedReceiving, $listingID); //Get display information later
