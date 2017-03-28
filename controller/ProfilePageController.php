@@ -151,6 +151,7 @@ class ProfilePageController
         $requestsMade = array();
         print_r("Sending: ");
         print_r($allListingsSending);
+        print_r($this->model->getCardDetails(10));
         foreach($allListingsSending as $listingID){
             $details = $this->model->getCardDetails($listingID);
             print_r($details);
