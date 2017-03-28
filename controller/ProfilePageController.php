@@ -14,14 +14,28 @@ class ProfilePageController
 {
     /**
      * ProfilePageController constructor.
+     * @param ID of user whose profile you wish to view
      */
-    public function __construct()
+    public function __construct($userID)
     {
-        $this->model = new ProfilePageModel(); //Need to include
+        $this->model = new ProfilePageModel($userID); //Need to include
         //Load Twig environment
         $loader = new Twig_Loader_Filesystem('../view/');
         $this->twig = new Twig_Environment($loader);
     }
+    
+    /**
+     * Returns the ID of the user who is currently logged in
+     * @return int
+     */
+    private function getUserID()
+    {
+       // $reader = new UserCookieReader();
+       // return $reader->get_user_id();
+        return 6;
+    }
+    
+    
     function generatePage()
     {
         $userInformation = $this->generateProfileSection();
