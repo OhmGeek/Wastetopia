@@ -37,7 +37,7 @@ $klein->respond("GET", "/register", function() {
    return "Registering page";
 });
 
-$klein->response("GET", "/profile", function(){
+$klein->respond("GET", "/profile", function(){
     return "Profile page";
    // $controller = new ProfilePageController();
    // return $controller->generatePage();
