@@ -1,0 +1,79 @@
+{% extends 'header.twig' %}
+
+{% block title %}
+    Your page title goes here! Please only put plain text here
+{% endblock %}
+
+{% block navbar %}
+    {% include 'navbar.twig' %}
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-12 col-md-9 zero-padding page-height">
+            <div class="coversation-frame">
+                <div id="conversation-header">
+                    <div class="btn-group-sm centerAll">
+                        <button type="button" id="goBack" class="btn btn-default btn-fab btn-nav"><i class="material-icons">arrow_back</i></button>
+                        <div class="centerAll user">
+                            <img src="{{senderImage}}" class="user-image"/>
+                            <div class="user-name">{{senderName}}</div>
+                            <div id="conversation-id" style="display: none;">{{ID}}</div>
+                        </div>
+                        <button type="button" id="viewItem" class="btn btn-default btn-fab"><i class="material-icons">restaurant</i></button>
+                    </div>
+                </div>
+
+                <!-- HTML from MessageController.generateMessageDisplay($conversationID)-->
+                {{message-display}}
+
+                <!--Form with textarea and send button-->
+                <div id="message-form">
+                    <form>
+                        <fieldset>
+                            <div class="form-group zero-padding">
+                                <div class="container-fluid">
+                                    <div class="row row-eq-height">
+                                        <div class="col-xs-10 message-div zero-padding">
+                                            <textarea id="message" rows="3" name="message"></textarea>
+                                        </div>
+                                        <div class="col-xs-2 btn-div zero-padding">
+                                            <button type="submit" id="sendBtn" class="btn btn-raised btn-default btn-send-message">Send</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!--Item view side panel-->
+        <div class="col-xs-12 col-md-3 zero-padding page-height">
+            <div class="item-frame">
+                <div class="default-pic">
+                    <img src="{{listingPanel.defaultImage}}" class="item-pic">
+                </div>
+                <div class="basic-info">
+                    <div class="item-name">
+                        {{listingPanel.itemName}}
+                    </div>
+                    <div class="description">
+                        <span class="info">Expiry date: </span> {{listingPanel.expiryDate}}
+                    </div>
+                    <div class="description">
+                        <span class="info">Pick up location: </span> {{listingPanel.location}}
+                    </div>
+                </div>
+                <div class="goToView">
+                    <button type="button" id="view" class="btn btn-raised btn-default btn-view">View</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% set jslist = ["name your","custom js","files here"] %}
