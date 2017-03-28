@@ -45,10 +45,9 @@ class AmazonS3
                 $randomKey = $this->randomString(self::LENGTH) . "." . $ext; // <random_filename>.<ext>
                 $upload = $this->s3->upload($this->bucket, $randomKey, fopen($file['tmp_name'], 'rb'), 'public-read');
                 $url = $upload->get('ObjectURL');
-                error_log($url);
                 array_push($urls, $url); // add the url to the array
             }
-            return \GuzzleHttp\json_encode($urls);
+            return json_encode($urls);
         } catch (S3Exception $e) {
             error_log($e->getMessage() . "\n");
         }
