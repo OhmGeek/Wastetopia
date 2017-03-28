@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Created by PhpStorm.
  * User: Stephen
@@ -8,7 +7,6 @@
  */
 class ProfilePageModel
 {
-
     /**
      * ProfilePageModel constructor.
      */
@@ -35,17 +33,13 @@ class ProfilePageModel
      */
     function getUserDetails(){
         $userID = $this->getUserID();
-
         $statement = $this->$db->prepare("
             SELECT * 
             FROM `User`
             WHERE `UserID` = :userID
         ");
-
         $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
-
         $statement->execute();
-
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
@@ -58,20 +52,15 @@ class ProfilePageModel
     function getUserListings()
     {
         $userID = $this->getUserID();
-
         $statement = $this->$db->prepare("
             SELECT `Listing`.*
             FROM `Listing`
             JOIN `User` ON `User`.`UserID` = `Listing`.`FK_User_UserID`
             WHERE `User`.`UserID` = :userID
         ");
-
         $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
-
         $statement->execute();
-
         return $statement->fetchAll(PDO::FETCH_ASSOC);
-
     }
 
 
@@ -83,7 +72,6 @@ class ProfilePageModel
     function getUserReceivingListings()
     {
         $userID = $this->getUserID();
-
         $statement = $this->$db->prepare("
             SELECT `Listing`.*
                 FROM `Listing`
@@ -92,11 +80,8 @@ class ProfilePageModel
                 JOIN `User` ON `User`.`UserID` = `Transaction`.`FK_User_UserID`
                 WHERE `User`.`UserID` = 6;
         ");
-
         $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
-
         $statement->execute();
-
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
@@ -106,7 +91,7 @@ class ProfilePageModel
      * If there are no results, this item has not been requested
      * Each transaction will have an ID and a success flag
      * @param $listingID
-     * @return mixed 
+     * @return mixed
      */
     function getStateOfListingTransaction($listingID)
     {
@@ -117,13 +102,11 @@ class ProfilePageModel
             JOIN `Listing` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
             WHERE `Listing`.`ListingID` = :listingID
         ");
-
         $statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);
-
         $statement->execute();
-
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
+
 
     /**
      * Gets the total number of completed listings the user has given
@@ -132,7 +115,7 @@ class ProfilePageModel
     function getNumberOfCompletedGiving()
     {
         $userID = $this->getUserID();
-        
+
         $statement = $this->$db->prepare("
             SELECT COUNT(*) as `Count`
             FROM `Listing`
@@ -142,15 +125,12 @@ class ProfilePageModel
             WHERE `User`.`UserID` = :userID;
             AND `ListingTransaction`.`Success` = 1;  
         ");
-
         $statement->bindValue(":userID", $userID, PDO::PARAM_STR);
-
         $statement->execute();
-
         return $statement->fetchColumn();
     }
-    
-    
+
+
     /**
      * Gets the total number of completed listings the user has received
      * @return Ineteger
@@ -158,7 +138,7 @@ class ProfilePageModel
     function getNumberOfCompletedReceived()
     {
         $userID = $this->getUserID();
-        
+
         $statement = $this->$db->prepare("
             SELECT COUNT(*) as `Count`
             FROM `Listing`
@@ -168,14 +148,11 @@ class ProfilePageModel
             WHERE `User`.`UserID` = :userID;
             AND `ListingTransaction`.`Success` = 1;
         ");
-
         $statement->bindValue(":userID", $userID, PDO::PARAM_STR);
-
         $statement->execute();
-
         return $statement->fetchColumn();
     }
-   
+
 
     /**
      * Gets all the listings the current user is watching
@@ -185,7 +162,6 @@ class ProfilePageModel
     function getWatchedListings()
     {
         $userID = $this->getUserID();
-
         $statement = $this->$db->prepare("
             SELECT `Listing`.`ListingID`, `Watch`.`WatchID`
             FROM `Listing`
@@ -193,11 +169,8 @@ class ProfilePageModel
             JOIN `User` ON `User`.`UserID` = `Watch`.`FK_User_UserID`
             WHERE `User`.`UserID` = :userID
         ");
-
         $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
-
         $statement->execute();
-
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
@@ -209,19 +182,80 @@ class ProfilePageModel
     function deleteWatchListing($watchID)
     {
         $userID = $this->getUserID();
-
         $statement = $this->$db->prepare("
             DELETE
             FROM `Watch`
             WHERE `Watch`.`WatchID` = :watchID
         ");
-
         $statement->bindValue(":watchID", $watchID, PDO::PARAM_INT);
-
         $statement->execute();
-
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
 
+    /**
+     * Adds a listing to a user's watch list
+     * @param $listingID
+     */
+    function addToWatchList($listingID)
+    {
+        $userID = $this->getUserID();
+        $statement = $this->$db->prepare("
+            INSERT
+            INTO `Watch`(`FK_User_UserID`, `FK_Listing_ListingID`)
+            VALUES(:userID, :listingID)
+        ");
+        $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
+        $statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);
+        $statement->execute();
+        return;
+    }
+
+
+    /**
+     * Returns the details needed for display on the profile page given the listing ID
+     *
+     * @param $listingID
+     * @return mixed
+     */
+    function getCardDetails($listingID){
+        $statement = $this->db->prepare("
+            SELECT `Listing`.`ListingID`, `Listing`.`Quantity`, `Listing`.`Time_Of_Creation`
+                    `Item`.`Name`, `Item`.`Description`, 
+                    `Location`.`Post_Code`
+                    `User`.`UserID`, `User`.`Forename`, `User`.`Surname`
+            FROM `Listing`
+            JOIN `User` ON `Listing`.`FK_User_UserID` = `User`.`UserID`
+            JOIN `Location` ON `Listing`.`FK_Location_LocationID` = `Location`.`LocationID`
+            JOIN `Item` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
+            WHERE `Listing`.`ListingID` = :listingID;
+        ");
+        $statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);
+        $statement->execute();
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        return $results[0];
+    }
+
+
+    /**
+     * Returns the default image for this listing (if there is one)
+     * @param $listingID
+     * @return mixed
+     */
+    function getDefaultImage($listingID){
+        $statement = $this->db->prepare("
+            SELECT `Image`.`Image_URL`, 
+            FROM `IMAGE`
+            JOIN `ItemImage` ON `ItemImage`.`FK_Image_ImageID` = `Image`.`ImageID`
+            JOIN `Item` ON `ItemImage`.`FK_Item_ItemID` = `Item`.`ItemID`
+            JOIN `Listing` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
+            WHERE `Listing`.`ListingID` = :listingID
+            AND `Image`.`Is_Default` = 1;
+        ");
+        $statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);
+        $statement->execute();
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $results[0];
+    }
 }
