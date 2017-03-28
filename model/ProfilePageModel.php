@@ -120,10 +120,12 @@ class ProfilePageModel
         $statement = $this->$db->prepare("
             SELECT `Transaction`.`FK_User_UserID`,
                     `User`.`Forename`, `User`.`Surname`,
-                    `ListingTransaction`.`Quantity`
+                    `ListingTransaction`.`Quantity`,
+                    `Listing`.`ListingID`
             FROM `Transaction`
             JOIN `User` ON `User`.`UserID` = `Transaction`.`FK_User_UserID`
             JOIN `ListingTransaction` ON `Transaction`.`TransactionID` = `ListingTransaction`.`FK_Transaction_TransactionID`
+            JOIN `Listing` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
             WHERE `Transaction`.`TransactionID` = :transactionID
         ");
         $statement->bindValue(":transactionID", $transactionID, PDO::PARAM_INT);
