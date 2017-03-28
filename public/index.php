@@ -37,9 +37,17 @@ $klein->respond("GET", "/register", function() {
    return "Registering page";
 });
 
-$klein->respond("GET", "/profile", function(){
-    $controller = new ProfilePageController();
-    return $controller->generatePage();
+$klein->with("/profile", function() use ($klein) {
+    
+    $klein->respond("GET", "/me" function($request, $response){
+        $controller = new ProfilePageController(1); //View own profile
+        return $controller->generatePage();
+    });
+    
+    $klein->respond("GET", "/[:userID]", function($request, $response){
+        $controller = new ProfilePageController(0, $request->userID); //View other user's profile
+        return $controller->generatePage();
+    });
 });
 
 $klein->respond("GET", "/get-env", function() {
