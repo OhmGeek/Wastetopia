@@ -37,18 +37,7 @@ $klein->respond("GET", "/register", function() {
    return "Registering page";
 });
 
-$klein->with("/profile", function() use ($klein) {
-    
-    $klein->respond("GET", "/me" function($request, $response){
-        $controller = new ProfilePageController(1); //View own profile
-        return $controller->generatePage();
-    });
-    
-    $klein->respond("GET", "/[:userID]", function($request, $response){
-        $controller = new ProfilePageController(0, $request->userID); //View other user's profile
-        return $controller->generatePage();
-    });
-});
+
 
 $klein->respond("GET", "/get-env", function() {
    $envStr = "DB Host: " . $_ENV['DB_HOST'] . "\n";
@@ -58,6 +47,21 @@ $klein->respond("GET", "/get-env", function() {
     echo "Printing stuff now \n";
     return $envStr;
 });
+
+$klein->with("/profile", function() use ($klein) {
+    
+    $klein->respond('GET', '/me', function($request, $response){
+        $controller = new ProfilePageController(1); //View own profile
+        return $controller->generatePage();
+    });
+    
+    $klein->respond('GET', '/[:userID]', function($request, $response){
+        $controller = new ProfilePageController(0, $request->userID); //View other user's profile
+        return $controller->generatePage();
+    });
+});
+
+
 $klein->with('/items', function () use ($klein) {
 
     $klein->respond('GET', '/?', function ($request, $response) {
