@@ -29,9 +29,8 @@ class ProfilePageController
         $watchListDetails = $this->generateWatchListSection();
         
   
-        print_r($listingsInformation);
-        print_r("::::::::::::");
-        print_r($watchListDetails);
+     
+       // print_r($watchListDetails);
 
         $output = array(
             "username" => $userInformation["username"],
