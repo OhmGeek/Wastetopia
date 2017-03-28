@@ -38,7 +38,7 @@ class ProfilePageModel
      */
     function getUserDetails(){
         $userID = $this->getUserID();
-        $statement = $this->$db->prepare("
+        $statement = $this->db->prepare("
         SELECT * 
         FROM `User` 
         WHERE `UserID` = :userID
