@@ -36,12 +36,14 @@ class AmazonS3
 
     public function upload($files) {
         // this uploads a specified image
+        // keeps the extension, but randomises the filename to avoid collisions
         // returns the url of the S3 upload.
         try {
             $urls = array();
             foreach($files as $file) {
                 error_log($file);
-                $randomKey = "test";
+                $ext = pathinfo($file['name'], PATHINFO_EXTENSION);
+                $randomKey = $this->randomString(self::LENGTH) . $ext;
                 $upload = $this->s3->upload($this->bucket, $randomKey, fopen($file['tmp_name'], 'rb'), 'public-read');
                 array_push($urls, $upload->get('ObjectURL')); // add the url to the array
             }
