@@ -262,7 +262,7 @@ class ProfilePageModel
         $statement->execute();
         $results = $statement->fetchAll(PDO::FETCH_ASSOC);
         
-        return $results;
+        return $results[0];
     }
 
 
