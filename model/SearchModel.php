@@ -13,6 +13,7 @@
 namespace Wastetopia\Model;
 
 use Wastetopia\Model\DB;
+use \PDO;
 
 class SearchModel
 {
