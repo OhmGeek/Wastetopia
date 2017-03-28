@@ -247,9 +247,9 @@ class ProfilePageModel
      */
     function getCardDetails($listingID){
         $statement = $this->db->prepare("
-            SELECT `Listing`.`ListingID`, `Listing`.`Quantity`, `Listing`.`Time_Of_Creation`
+            SELECT `Listing`.`ListingID`, `Listing`.`Quantity`, `Listing`.`Time_Of_Creation`,
                     `Item`.`Name`, `Item`.`Description`, 
-                    `Location`.`Post_Code`
+                    `Location`.`Post_Code`,
                     `User`.`UserID`, `User`.`Forename`, `User`.`Surname`
             FROM `Listing`
             JOIN `User` ON `Listing`.`FK_User_UserID` = `User`.`UserID`
