@@ -54,9 +54,6 @@ class ProfilePageModel
         $statement->execute();
         $results =  $statement->fetchAll(PDO::FETCH_ASSOC);
 
-        print_r("FROM MODEL:: ");
-        print_r($listingID);
-        print_r($results);
         return $results[0];
     }
 
