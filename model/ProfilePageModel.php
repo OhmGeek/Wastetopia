@@ -8,7 +8,6 @@
 namespace Wastetopia\Model;
 use PDO;
 use Wastetopia\Model\DB;
-
 class ProfilePageModel
 {
     /**
@@ -19,19 +18,16 @@ class ProfilePageModel
     {
         $this->db = DB::getDB();
         $this->userID = $userID;
-        
+
     }
-
-
     /**
      * Returns the ID of the user whose profile you're trying to view
      * @return int
      */
     private function getUserID()
     {
-       return $this->userID;
+        return $this->userID;
     }
-
     /**
      * Returns the details needed for display on the profile page given the listing ID
      *
@@ -41,7 +37,7 @@ class ProfilePageModel
     function getCardDetails($listingID){
         $statement = $this->db->prepare("
         SELECT `Listing`.`ListingID`, `Listing`.`Quantity`, `Listing`.`Time_Of_Creation`,
-                `Item`.`Name`, `Item`.`Description`, 
+                `Item`.`ItemID`, `Item`.`Name`, `Item`.`Description`, 
                 `Location`.`Post_Code`,
                 `User`.`UserID`, `User`.`Forename`, `User`.`Surname`
         FROM `Listing`
@@ -53,10 +49,8 @@ class ProfilePageModel
         $statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);
         $statement->execute();
         $results =  $statement->fetchAll(PDO::FETCH_ASSOC);
-
         return $results[0];
     }
-
     /**
      * Gets all detail from the User table for this user
      * @return mixed
@@ -72,6 +66,26 @@ class ProfilePageModel
         $statement->execute();
         $results = $statement->fetchAll(PDO::FETCH_ASSOC);
         return $results[0];
+    }
+
+    /**
+     * Gets the profile picture of the given user (Possibly will be moved to another model)
+     * @param $userID
+     * @return URL
+     */
+    function getUserImage($userImage)
+    {
+        $statement = $this->db->prepare("
+                                SELECT Picture_URL
+                                FROM `User`
+                                WHERE `User`.`UserID` = :userID
+							");
+
+        $statement->bindValue(':userID', $userID, PDO::PARAM_INT);
+
+        $statement->execute();
+
+        return $statement->fetchColumn();
     }
 
 
@@ -94,17 +108,16 @@ class ProfilePageModel
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
-
     /**
      * Gets all the listings the current user is involved in transactions with (where they are the receiver)
-     * Can then use getStateOfListingTransactions() to check if the transaction should go in History or Currently Watching
+     * Also gets the transactionID of those transactions
      * @return mixed
      */
     function getUserReceivingListings()
     {
         $userID = $this->getUserID();
         $statement = $this->db->prepare("
-            SELECT `Listing`.*
+            SELECT `Listing`.*, `Transaction`.*
                 FROM `Listing`
                 JOIN `ListingTransaction` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
                 JOIN `Transaction` ON `Transaction`.`TransactionID` = `ListingTransaction`.`FK_Transaction_TransactionID`
@@ -115,7 +128,6 @@ class ProfilePageModel
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
-
 
     /**
      * Gets all information about transactions for this listing.
@@ -145,9 +157,9 @@ class ProfilePageModel
      */
     function getDetailsFromTransactionID($transactionID){
         $statement = $this->db->prepare("
-            SELECT `Transaction`.`FK_User_UserID`,
+            SELECT `Transaction`.`FK_User_UserID` as `UserID`, `Transaction`.`Time_Of_Transaction`,
                     `User`.`Forename`, `User`.`Surname`,
-                    `ListingTransaction`.`Quantity`,
+                    `ListingTransaction`.`Quantity`, 
                     `Listing`.`ListingID`
             FROM `Transaction`
             JOIN `User` ON `User`.`UserID` = `Transaction`.`FK_User_UserID`
@@ -168,7 +180,6 @@ class ProfilePageModel
     function getNumberOfCompletedGiving()
     {
         $userID = $this->getUserID();
-
         $statement = $this->db->prepare("
             SELECT COUNT(*) as `Count`
             FROM `Listing`
@@ -183,7 +194,6 @@ class ProfilePageModel
         return $statement->fetchColumn();
     }
 
-
     /**
      * Gets the total number of completed listings the user has received
      * @return Ineteger
@@ -191,7 +201,6 @@ class ProfilePageModel
     function getNumberOfCompletedReceived()
     {
         $userID = $this->getUserID();
-
         $statement = $this->db->prepare("
             SELECT COUNT(*) as `Count`
             FROM `Listing`
@@ -205,7 +214,6 @@ class ProfilePageModel
         $statement->execute();
         return $statement->fetchColumn();
     }
-
 
     /**
      * Gets all the listings the current user is watching
@@ -227,7 +235,6 @@ class ProfilePageModel
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
-
     /**
      * Deletes a listing from user's watch list
      * @param $watchID
@@ -244,8 +251,6 @@ class ProfilePageModel
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
-
-
     /**
      * Adds a listing to a user's watch list
      * @param $listingID
@@ -263,7 +268,6 @@ class ProfilePageModel
         $statement->execute();
         return;
     }
-
 
     /**
      * Returns the default image for this listing (if there is one)
