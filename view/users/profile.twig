@@ -1,3 +1,20 @@
+{% extends 'header.twig' %}
+
+{% block title %}
+    Profile | Wastetopia
+{% endblock %}
+
+{% block navbar %}
+    <style>
+        body {
+            height: 100vh;
+        }
+    </style>
+
+    {% include 'navbar.twig' %}
+{% endblock %}
+
+{% block content %}
 <div class="page-height" style="padding-top:230px;">
     <div class="user-profile jumbotron">
         <div class="user-img" style="background-image: url({{ userimage }});"></div>
@@ -123,7 +140,7 @@
                                     </div>
                                 </div>
                             </div>
-                            {% endfor %}
+                            {% end for %}
                         </div>
                     </div>
                 </div>
@@ -171,7 +188,7 @@
                                     </div>
                                 </div>
                             </div>
-                            {% endfor %}
+                            {% end for %}
                         </div>
                     </div>
                 </div>
@@ -230,7 +247,7 @@
                                     </div>
                                 </div>
                             </div>
-                            {% endfor %}
+                            {% end for %}
                         </div>
                     </div>
                 </div>
@@ -286,7 +303,6 @@
                                     </div>
                                 </div>
                             </div>
-                           {% endfor %} 
                         </div>
                     </div>
                 </div>
@@ -340,10 +356,10 @@
         <div id="offers" class="tab-pane fade {% if isUser != 1 %}in active{% endif %}">
             <div class="header">
                 <div class="title">
-                    {% if isUser == 1 %}<a role="button" data-toggle="tab" href="#home"><i class="material-icons">chevron_left</i></a>{% endif %}
+                    {% if isUser == 1 %}<a role="button" data-toggle="tab" href="#home"><i class="material-icons">chevron_left</i></a>{% end if %}
                     AVAILABLE OFFERS
                     {% if isUser == 1 %}<a role="button" class="btn-addOffer" id="addOffer"><i class="material-icons">add_circle</i>
-                        new item</a>{% endif %}
+                        new item</a>{% end if %}
                 </div>
             </div>
             <div class="container-fluid">
@@ -378,14 +394,9 @@
         </div>
     </div>
 </div>
-
 <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.js"></script>
-<script src="profile.js"></script>
-<script src="bootstrap-material-design-master/dist/js/ripples.min.js"></script>
-<script src="bootstrap-material-design-master/dist/js/material.min.js"></script>
 
-<script>
-    $(function () {
-        $.material.init();
-    });
-</script>
+{%  endblock %}
+
+{%  setjslist = ["profile.js", "bootstrap-material-design-master/dist/js/ripples.min.js", "bootstrap-material-design-master/dist/js/material.min.js"] %}
+
