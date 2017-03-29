@@ -16,16 +16,15 @@ class SearchController
         $searchModel = new SearchModel();
         $listingIDs = $searchModel->getListingIDsFromName($searchTerm);
 
-        $searchResultsForJSON = ["test","test",$listingIDs, "like what?"];
+        $searchResultsForJSON = [];
 
-        foreach ($listingIDs as $ID)
+        foreach ($listingIDs as $item)
         {
-            $listingResults = $searchModel->getCardDetails($ID);
-            $searchResultsForJSON[] = $listingResults;
+            $listingResults = $searchModel->getCardDetails(intval($item['ListingID']));
+            array_push($searchResultsForJSON, $listingResults[0]);
         }
 
         return json_encode($searchResultsForJSON);
-
     }
 
     public function sampleSearch()

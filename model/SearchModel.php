@@ -35,9 +35,9 @@ class SearchModel
             SELECT `Listing`.`ListingID`
             FROM `Listing`
             JOIN `Item` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
-            WHERE `Item`.`Name` LIKE '%:name%';
+            WHERE `Item`.`Name` LIKE :name;
         ");
-        $statement->bindValue(":name", $name, PDO::PARAM_STR);
+        $statement->bindValue(":name", '%'.$name.'%', PDO::PARAM_STR);
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
