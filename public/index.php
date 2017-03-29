@@ -9,7 +9,7 @@ use Wastetopia\Controller\MessageController;
 require_once '../vendor/autoload.php';
 
 // check if we should use production? Otherwise, use community.
-$mode = "local";//$_ENV['MODE'];
+$mode = $_ENV['MODE'];
 $config = new CurrentConfig();
 $config->loadConfig($mode);
 
