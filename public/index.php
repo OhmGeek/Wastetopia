@@ -32,6 +32,11 @@ $klein->respond("GET", "/search/json/[:search]", function($request) {
    return $search->basicSearch($request->search);
 });
 
+$klein->respond("GET", "/search/sample", function() {
+   $search = new SearchController();
+   return $search->sampleSearch();
+});
+
 $klein->respond("GET", "/login", function($request, $response) {
     $controller = new LoginController();
     return $controller->index($response);
