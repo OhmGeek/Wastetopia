@@ -71,6 +71,8 @@ class ProfilePageController
             "watchList" => $watchListDetails["watchList"]
         );
         
+        print_r($output);
+        
         $template = $this->twig->loadTemplate('users/profile.twig');
         return $template->render($output);
     }
@@ -185,7 +187,7 @@ class ProfilePageController
             array_push($allUserListings, $item);
         }
         
-        print_r($allUserListings);
+        
 
         //NEXT TWO FOR LOOPS ARE ALMOST IDENTICAL, CHANGE NAMES IN TWIG SO THESE CAN BE MADE INTO ONE FUNCTION
 
