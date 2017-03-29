@@ -49,8 +49,11 @@ class ProfilePageController
         $listingsInformation = $this->generateListingsSection();
         $watchListDetails = $this->generateWatchListSection();
 
-
+        $isCurrentUser = ($this->userID == $this->getUserID() ? 1 : 0); // 1 if logged in user trying to view their own profile
+        
         $output = array(
+            "isUser" => $isCurrentUser,
+            
             "userimage" => $userInformation["userimage"],
             "username" => $userInformation["username"],
             "userscore" => $userInformation["userscore"],
