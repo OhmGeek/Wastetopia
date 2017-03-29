@@ -726,7 +726,7 @@ a:link, a:hover, a:visited, a:active  {
 }
 
 .user-stats .title {
-  padding: 10px;
+  padding: 0 10px;
   font-size: 30px;
   font-weight: bolder;
   display: flex;
@@ -741,6 +741,17 @@ a:link, a:hover, a:visited, a:active  {
 
 .thumbnail {
   margin-bottom: 15px;
+}
+
+.thumbnail .trans-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.user-stats .trans-info .user-image {
+  width: 20px;
+  height: 20px;
 }
 
 .user-stats .title .btn-addOffer i {
@@ -758,14 +769,21 @@ a:link, a:hover, a:visited, a:active  {
 }
 
 .request-options {
-  margin: 10px 10px;
+  margin-bottom: 5px;
   display: flex;
   justify-content: center;
 }
 
-.thumbnail .trans-info .quantity,
+.thumbnail .trans-info span,
 #offers .added-date {
   font-weight: bolder;
+  margin-right: 5px;
+}
+
+.thumbnail .trans-info .user ,
+.thumbnail .trans-info .request-by{
+  display: flex;
+  align-items: center;
 }
 
 /* Messaging */
@@ -1077,10 +1095,10 @@ a:link, a:hover, a:visited, a:active  {
 }
 
 .added-date,
- .thumbnail .trans-info{
+ .thumbnail .trans-info,
+ .thumbnail .trans-info .user-name {
     font-size: 13px;
     color: grey;
-    margin-top: 2px;
 }
 
 .road-distance {
