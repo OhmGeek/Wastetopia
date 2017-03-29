@@ -168,17 +168,12 @@ class ProfilePageController
         // WILL SPLIT INTO LISTINGS AND PENDING/COMPLETED TRANSACTIONS
         $offers = array();
         $requestsMade = array();
-        print_r("Sending: ");
-        print_r($allListingsSending);
-        print_r($this->model->getCardDetails(10));
         foreach($allListingsSending as $listingID){
             $details = $this->model->getCardDetails($listingID);
-            print_r($details);
             $itemName = $details["Name"];
             $defaultImage = $this->model->getDefaultImage($listingID);
             $imageURL = $defaultImage["Image_URL"];
             $item = array("listingID"=>$listingID, "itemName" => $itemName, "imgURL" => $imageURL);
-            print_r($item);
             array_push($offers, $item);
         }
 
