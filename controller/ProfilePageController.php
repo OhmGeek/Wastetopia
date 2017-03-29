@@ -184,6 +184,8 @@ class ProfilePageController
                 "imgURL" => $imageURL);
             array_push($allUserListings, $item);
         }
+        
+        print_r($allUserListings);
 
         //NEXT TWO FOR LOOPS ARE ALMOST IDENTICAL, CHANGE NAMES IN TWIG SO THESE CAN BE MADE INTO ONE FUNCTION
 
