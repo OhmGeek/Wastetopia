@@ -73,7 +73,7 @@ class ProfilePageModel
      * @param $userID
      * @return URL
      */
-    function getUserImage($userImage)
+    function getUserImage($userID)
     {
         $statement = $this->db->prepare("
                                 SELECT Picture_URL
