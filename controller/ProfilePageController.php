@@ -61,17 +61,17 @@ class ProfilePageController
             "userscore" => $userInformation["userscore"],
 
             "listingsCount" => $listingsInformation["listingsCount"],
-            "itemsOfferedCount" => $listingsInformation["sendingTransactionsCount"],
-            "requestsMadeCount" => $listingsInformation["receivingCount"],
-            "userListings" => $listingsInformation["allUserListings"],
+            "itemsOfferedCount" => $listingsInformation["itemsOfferedCount"],
+            "requestsMadeCount" => $listingsInformation["requestsMadeCount"],
+            
+            "userListings" => $listingsInformation["userListings"],
             "offers" => $listingsInformation["offers"],
             "requests" => $listingsInformation["requests"],
 
             "watchListCount" => $watchListDetails["watchListCount"],
             "watchList" => $watchListDetails["watchList"]
         );
-        
-        print_r($output);
+      
         
         $template = $this->twig->loadTemplate('users/profile.twig');
         return $template->render($output);
