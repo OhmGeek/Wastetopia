@@ -81,6 +81,7 @@ class SearchModel
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
+    
     /**
      * Returns the default image for this listing (if there is one)
      * @param $listingID
@@ -88,18 +89,20 @@ class SearchModel
      */
     function getDefaultImage($listingID){
         $statement = $this->db->prepare("
-            SELECT `Image`.`Image_URL`, 
-            FROM `IMAGE`
+            SELECT `Image`.`Image_URL` 
+            FROM `Image`
             JOIN `ItemImage` ON `ItemImage`.`FK_Image_ImageID` = `Image`.`ImageID`
             JOIN `Item` ON `ItemImage`.`FK_Item_ItemID` = `Item`.`ItemID`
             JOIN `Listing` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
             WHERE `Listing`.`ListingID` = :listingID
-            AND `Image`.`Is_Default` = 1;
+            AND `ItemImage`.`Is_Default` = 1;
         ");
         $statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);
         $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_ASSOC);
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $results[0];
     }
+    
     //FUNCTIONS TO DEAL WITH DISTANCE, MAY BE IN CONTROLLER
     //NEED TESTING
     /**
