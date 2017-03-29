@@ -178,8 +178,8 @@ class ProfilePageModel
             JOIN `ListingTransaction` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
             JOIN `Transaction` ON `Transaction`.`TransactionID` = `ListingTransaction`.`FK_Transaction_TransactionID`
             JOIN `User` ON `User`.`UserID` = `Listing`.`FK_User_UserID`
-            WHERE `User`.`UserID` = :userID;
-            AND `ListingTransaction`.`Success` = 1;  
+            WHERE `User`.`UserID` = :userID
+            AND `ListingTransaction`.`Success` = 1
         ");
         $statement->bindValue(":userID", $userID, PDO::PARAM_STR);
         $statement->execute();
@@ -201,8 +201,8 @@ class ProfilePageModel
             JOIN `ListingTransaction` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
             JOIN `Transaction` ON `Transaction`.`TransactionID` = `ListingTransaction`.`FK_Transaction_TransactionID`
             JOIN `User` ON `User`.`UserID` = `Transaction`.`FK_User_UserID`
-            WHERE `User`.`UserID` = :userID;
-            AND `ListingTransaction`.`Success` = 1;
+            WHERE `User`.`UserID` = :userID
+            AND `ListingTransaction`.`Success` = 1
         ");
         $statement->bindValue(":userID", $userID, PDO::PARAM_STR);
         $statement->execute();
