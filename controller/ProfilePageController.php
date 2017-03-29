@@ -46,6 +46,9 @@ class ProfilePageController
     function generatePage()
     {
         $userInformation = $this->generateProfileSection();
+        
+        print_r($userInformation);
+        
         $listingsInformation = $this->generateListingsSection();
         $watchListDetails = $this->generateWatchListSection();
 
