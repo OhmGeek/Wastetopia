@@ -52,6 +52,8 @@ class ProfilePageController
         $isCurrentUser = ($this->userID == $this->getUserID() ? 1 : 0); // 1 if logged in user trying to view their own profile
         
         $output = array(
+            "BASE_URL" => $_ENV['ROOT_BASE'],
+            
             "isUser" => $isCurrentUser,
             
             "userimage" => $userInformation["userimage"],
