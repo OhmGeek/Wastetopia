@@ -248,25 +248,21 @@ class ProfilePageModel
      * @return mixed
      */
     function getCardDetails($listingID){
-        try {
-            $statement = $this->db->prepare("
-            SELECT `Listing`.`ListingID`, `Listing`.`Quantity`, `Listing`.`Time_Of_Creation`,
-                    `Item`.`Name`, `Item`.`Description`, 
-                    `Location`.`Post_Code`,
-                    `User`.`UserID`, `User`.`Forename`, `User`.`Surname`
-            FROM `Listing`
-            JOIN `User` ON `Listing`.`FK_User_UserID` = `User`.`UserID`
-            JOIN `Location` ON `Listing`.`FK_Location_LocationID` = `Location`.`LocationID`
-            JOIN `Item` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
-            WHERE `Listing`.`ListingID` = :listingID;
-            ");
-            $statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);
-            $statement->execute();
-            $results =  $statement->fetchAll(PDO::FETCH_ASSOC);
-        }
-        catch (PDOException $e){
-            echo $e->getMessage();
-        }
+        $statement = $this->db->prepare("
+        SELECT `Listing`.`ListingID`, `Listing`.`Quantity`, `Listing`.`Time_Of_Creation`,
+                `Item`.`Name`, `Item`.`Description`, 
+                `Location`.`Post_Code`,
+                `User`.`UserID`, `User`.`Forename`, `User`.`Surname`
+        FROM `Listing`
+        JOIN `User` ON `Listing`.`FK_User_UserID` = `User`.`UserID`
+        JOIN `Location` ON `Listing`.`FK_Location_LocationID` = `Location`.`LocationID`
+        JOIN `Item` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
+        WHERE `Listing`.`ListingID` = :listingID;
+        ");
+        $statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);
+        $statement->execute();
+        $results =  $statement->fetchAll();
+
         print_r("FROM MODEL:: ");
         print_r($listingID);
         print_r($results);
