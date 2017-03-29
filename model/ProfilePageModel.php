@@ -112,7 +112,7 @@ class ProfilePageModel
                 JOIN `ListingTransaction` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
                 JOIN `Transaction` ON `Transaction`.`TransactionID` = `ListingTransaction`.`FK_Transaction_TransactionID`
                 JOIN `User` ON `User`.`UserID` = `Transaction`.`FK_User_UserID`
-                WHERE `User`.`UserID` = 6;
+                WHERE `User`.`UserID` = :userID;
         ");
         $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
         $statement->execute();
