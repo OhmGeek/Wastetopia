@@ -1,12 +1,14 @@
 <?php
 
+require_once '../vendor/autoload.php';
+
 use Klein\Klein;
 use Wastetopia\Controller\Login_Controller;
 use Wastetopia\Config\CurrentConfig;
 use Wastetopia\Controller\LoginController;
 use Wastetopia\Controller\SearchController;
 
-require_once '../vendor/autoload.php';
+
 
 // check if we should use production? Otherwise, use community.
 $mode = $_ENV['MODE'];
