@@ -48,7 +48,7 @@ class ProfilePageModel
         JOIN `User` ON `Listing`.`FK_User_UserID` = `User`.`UserID`
         JOIN `Location` ON `Listing`.`FK_Location_LocationID` = `Location`.`LocationID`
         JOIN `Item` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
-        WHERE `Listing`.`ListingID` = :listingID;
+        WHERE `Listing`.`ListingID` = :listingID
         ");
         $statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);
         $statement->execute();
