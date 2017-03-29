@@ -59,6 +59,16 @@ class SearchController
                     "date_added": "29/03/17",
                     "item_name": "Mojito",
                     "item_id": 303
+                  },
+                  {
+                    "lat": 54.767441,
+                    "long": -1.57204,
+                    "img": "donut.jpg",
+                    "username": "Stephan Church",
+                    "user_id": 103,
+                    "date_added": "29/03/17",
+                    "item_name": "Margharita",
+                    "item_id": 304
                   }]';
         return json_encode(trim($var, "\n"));
     }
