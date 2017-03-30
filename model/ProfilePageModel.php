@@ -157,7 +157,7 @@ class ProfilePageModel
      */
     function getDetailsFromTransactionID($transactionID){
         $statement = $this->db->prepare("
-            SELECT `Transaction`.`FK_User_UserID` as `UserID`, `Transaction`.`Time_Of_Transaction`,
+            SELECT `Transaction`.`FK_User_UserID` as `UserID`, `Transaction`.`Time_Of_Application`,
                     `User`.`Forename`, `User`.`Surname`,
                     `ListingTransaction`.`Quantity`, 
                     `Listing`.`ListingID`
