@@ -409,6 +409,7 @@ class ProfilePageController
     }
     
     function toggleWatchListListing($listingID){
+       $listingID = (int)$listingID; 
        if ($this->inWatchList($listingID)){
            $this->model->deleteFromWatchList($listingID);
        }else{
