@@ -46,7 +46,8 @@ $(function () {
 
   $grid.on('click', '#watch', function(){
      $listingID = $(this).closest('.thumbnail').attr("id");
-     $.post("/profile/toggle-watch-list/"+$listingID, function(response){
+    $useID = // User ID of user's page you're on
+     $.post("/profile/toggle-watch-list/"+$userID+"/"+$listingID, function(response){
        // Do something depending on if response is true or false?? (Currently always true)
        console.log("DONE");
        //remove($(this)); Don't remove the listing unless it was deleted and user is on their own page
