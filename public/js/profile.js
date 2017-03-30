@@ -48,7 +48,8 @@ $(function () {
      $listingID = $(this).closest('.thumbnail').attr("id");
      $.post("/profile/toggle-watch-list/"+$listingID, function(response){
        // Do something depending on if response is true or false?? (Currently always true)
-       remove($(this));
+       console.log("DONE");
+       //remove($(this)); Don't remove the listing unless it was deleted and user is on their own page
      });
   });
 });
