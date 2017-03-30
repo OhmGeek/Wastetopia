@@ -45,14 +45,14 @@ $(function () {
   };
 
   $grid.on('click', '#watch', function(){
-     $listingID = $(this).closest('.thumbnail').attr("id");
-    $useID = // User ID of user's page you're on
-     $.post("/profile/toggle-watch-list/"+$userID+"/"+$listingID, function(response){
+     var listingID = $(this).closest('.thumbnail').attr("id");
+     var isUser = // 1 if user is on their own page
+     $.post("/profile/toggle-watch-list/"+listingID, function(response){
        // Do something depending on if response is true or false?? (Currently always true)
        console.log("DONE");
-      console.log(response);
+       console.log(response);
       // 2 means deleted from own page
-      if (response == 2){
+      if (response == 1 && isUser){
         //remove($(this)); Don't remove the listing unless it was deleted and user is on their own page
       }
      });
