@@ -283,7 +283,7 @@ class ProfilePageModel
         $userID = $this->getUserID();
 	print_r("FROM MODEL");
 	    print_r($listingID);
-	    print_r($userID;
+	    print_r($userID);
         $statement = $this->db->prepare("
             INSERT
             INTO `Watch`(`FK_User_UserID`, `FK_Listing_ListingID`)
