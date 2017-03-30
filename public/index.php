@@ -3,11 +3,11 @@
 require_once '../vendor/autoload.php';
 use Klein\Klein;
 use Wastetopia\Controller\AddItemController;
+use Wastetopia\Controller\ConversationListController;
 use Wastetopia\Controller\Login_Controller;
 use Wastetopia\Controller\ViewItemController;
 use Wastetopia\Config\CurrentConfig;
-
-
+use Wastetopia\Controller\MessageController;
 
 // check if we should use production? Otherwise, use community.
 $mode = $_ENV['MODE'];
@@ -29,8 +29,9 @@ $klein->respond("GET", "/", function() {
 });
 
 
-$klein->respond("GET", "/login", function() {
-    return Login_Controller::index();
+$klein->respond("GET", "/login", function($request, $response) {
+    $controller = new LoginController();
+    return $controller->index($response);
 });
 
 $klein->respond("GET", "/register", function() {
@@ -70,48 +71,117 @@ $klein->with('/items', function () use ($klein) {
 
 });
 
+$klein->with('/api', function () use ($klein) {
+
+    $klein->respond('POST', '/verify-login', function ($request, $response) {
+        $controller = new LoginController();
+        $username = $request->email;
+        $password = $request->password;
+        $dest = $_ENV['ROOT_BASE'];
+        return $controller->login($username, $password, $dest, $response);
+    });
+
+    $klein->respond('GET', '/[:id]', function ($request, $response) {
+        // Show a single user
+        $itemID = $request->id;
+        return "Show Item " . $itemID;
+    });
+
 // NOW DEAL WITH API STUFF
 // This just returns JSON versions of the views, useful for javascript/testing.
-$klein->respond('POST', '/api/items/add', function ($request, $response, $service, $app) {
-    // todo validate each field server side (and return false if not with an error message
-    // Take in a JSON of things needed to add items
-    // make a post request to add this item, and return whether it was successful or not (TODO return success from DB).
-    $details = array(
-        "itemname" => $request->itemname,
-        "itemtype" => $request->itemType,
-        "item"
-    );
-    $control = new AddItemController();
-    $control->addItem($details);
+    $klein->respond('POST', '/items/add', function ($request, $response, $service, $app) {
+        // todo validate each field server side (and return false if not with an error message
+        // Take in a JSON of things needed to add items
+        // make a post request to add this item, and return whether it was successful or not (TODO return success from DB).
+        $details = array(
+            "itemname" => $request->itemname,
+            "itemtype" => $request->itemType,
+            "item"
+        );
+        $control = new AddItemController();
+        $control->addItem($details);
+    });
+
+    $klein->respond('GET', '/items/view/[:id]', function ($request, $response) {
+        $itemID = $request->id;
+        $controller = new ViewItemController();
+        return $controller->getListingDetailsAsJSON($itemID);
+    });
 });
 
-$klein->respond('GET', '/api/items/view/[:id]', function($request, $response) {
-    $itemID = $request->id;
-    $controller = new ViewItemController();
-    return $controller->getListingDetailsAsJSON($itemID);
-});
+// todo authenticate on messages. Must be logged in to view correct messages.
+    $klein->with('/messages', function () use ($klein) {
+
+        $klein->respond('GET', '/?', function ($request, $response) {
+            // Show all conversations
+            $controller = new ConversationListController();
+            return $controller->generatePage();
+        });
+
+        $klein->respond('GET', '/[:conversationID]', function ($request, $response) {
+            // view a specific conversation
+            $conversationID = $request->conversationID;
+            $controller = new MessageController();
+            return $controller->generatePage($conversationID);
+        });
+
+        // these are the API based messaging tasks
+        // todo: error/failure in response.
+        $klein->respond('POST', '/send', function ($request, $response) {
+            //send a message
+            //we need the conversationID and the message.
+            $conversationID = $request->conversationID;
+            $message = $request->message;
+
+            $controller = new MessageController();
+            $controller->sendMessage($conversationID, $message);
+            return "";
+        });
+
+        $klein->respond('POST', '/delete-conversation', function ($request, $response) {
+            $controller = new ConversationListController();
+            $conversationID = $request->conversationID;
+            $controller->deleteConversation($conversationID);
+            return "";
+        });
+
+        $klein->respond('GET', '/poll-sending', function ($request, $response) {
+            $controller = new ConversationListController();
+            return $controller->generateSendingTabHTML();
+        });
+
+        $klein->respond('GET', '/poll-receiving', function ($request, $response) {
+            $controller = new ConversationListController();
+            return $controller->generateReceivingTabHTML();
+        });
+        $klein->respond('GET', '/poll-messages/[:conversationID]', function ($request, $response) {
+            $conversationID = $request->conversationID;
+            $controller = new MessageController();
+            return $controller->generateMessageDisplay($conversationID);
+        });
+    });
 
 
-$klein->onHttpError(function ($code, $router) {
-    switch ($code) {
-        case 404:
-            $router->response()->body(
-                'Y U so lost?!'
-            );
-            break;
-        case 405:
-            $router->response()->body(
-                'You can\'t do that!'
-            );
-            break;
-        default:
-            $router->response()->body(
-                'Oh no, a bad error happened that caused a '. $code
-            );
-    }
-});
+    $klein->onHttpError(function ($code, $router) {
+        switch ($code) {
+            case 404:
+                $router->response()->body(
+                    'Y U so lost?!'
+                );
+                break;
+            case 405:
+                $router->response()->body(
+                    'You can\'t do that!'
+                );
+                break;
+            default:
+                $router->response()->body(
+                    'Oh no, a bad error happened that caused a ' . $code
+                );
+        }
+    });
 
+    $klein->dispatch();
 
-$klein->dispatch();
 
 

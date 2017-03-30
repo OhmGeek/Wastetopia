@@ -6,22 +6,22 @@
  * Date: 28/02/17
  * Time: 15:50
  */
-include_once(__DIR__ . '/../vendor/autoload.php');
+require_once(__DIR__ . '/../vendor/autoload.php');
 
-use Wastetopia\Config\ProductionConfig;
+
 use Wastetopia\Config\LocalConfig;
 
 class ConfigTest extends PHPUnit_Framework_TestCase
 {
-    /** @test */
-    public function testProduction()
-    {
-        $config = (new ProductionConfig())->getConfiguration();
-
-        $this->assertEquals($config['DB_USER'],"dcs8s04");
-        $this->assertEquals($config['DB_HOST'],"mysql.dur.ac.uk");
-        $this->assertEquals($config['DB_USER'],"dcs8s04");
-    }
+//    /** @test */
+//    public function testProduction()
+//    {
+//        $config = (new ProductionConfig())->getConfiguration();
+//
+//        $this->assertEquals($config['DB_USER'],"dcs8s04");
+//        $this->assertEquals($config['DB_HOST'],"mysql.dur.ac.uk");
+//        $this->assertEquals($config['DB_USER'],"dcs8s04");
+//    }
 
     /** @test */
     public function testLocal()

@@ -1,0 +1,390 @@
+{% extends 'header.twig' %}
+
+{% block title %}
+    {{username}}
+{% endblock %}
+
+{% block navbar %}
+    {% include 'navbar.twig' %}
+{% endblock %}
+
+{% block content %}
+     <div class="page-height" style="padding-top:230px;">
+    <div class="user-profile jumbotron">
+      <div class="user-img" style="background-image: url({{userimage}});"></div>
+      <div class="user-details">
+        <div class="user-name">
+          {{username}}
+        </div>
+        <div class="popularity">
+          <i class="material-icons">grade</i> {{userscore}}
+        </div>
+      </div>
+      <div>
+        <a href="#" class="btn btn-default" style="margin-bottom:0;" role="button">Report</a>
+      </div>
+    </div>
+    <div class="tab-content user-stats zero-padding" style="padding-top:10px; background-color:transparent;">
+      {% if isUser == 1%}
+      <div id="home" class="tab-pane fade in active">
+        <div class="container-fluid">
+          <div class="row">
+            <a class="col-sm-3 col-xs-12" role="button" data-toggle="tab" href="#offers">
+              <div class="tile">
+                <div class="stat">
+                  <div class="count">{{itemsAvailableCount}}</div>
+                  <h4 class="zero-padding">Items available to offer</h4>
+                </div>
+                <div class="icon">
+                  <i class="material-icons">chevron_right</i>
+                </div>
+              </div>
+            </a>
+            <a class="col-sm-3 col-xs-12" role="button" data-toggle="tab" href="#transactions">
+              <div class="tile">
+                <div class="stat">
+                  <div class="count">{{itemsOfferdCount}}</div>
+                  <h4 class="zero-padding">Items offered</h4>
+                </div>
+                <div class="icon">
+                  <i class="material-icons">chevron_right</i>
+                </div>
+              </div>
+            </a>
+            <a class="col-sm-3 col-xs-12" role="button" data-toggle="tab" href="#requests">
+              <div class="tile">
+                <div class="stat">
+                  <div class="count">{{requestsMadeCount}}</div>
+                  <h4 class="zero-padding">Requests Made</h4>
+                </div>
+                <div class="icon">
+                  <i class="material-icons">chevron_right</i>
+                </div>
+              </div>
+            </a>
+            <a class="col-sm-3 col-xs-12" role="button" data-toggle="tab" href="#watchList">
+              <div class="tile">
+                <div class="stat">
+                  <div class="count">{{watchlistCount}}</div>
+                  <h4 class="zero-padding">Items in WatchList</h4>
+                </div>
+                <div class="icon">
+                  <i class="material-icons">chevron_right</i>
+                </div>
+              </div>
+            </a>
+            <div class="col-sm-6 col-xs-12">
+              <div class="tile">
+                <!-- add graph here, you can refer to the profile folder it contains a template of examples -->
+              </div>
+            </div>
+            <div class="col-sm-6 col-xs-12">
+              <div class="tile">
+                <!-- add another graph here, you can refer to the profile folder it contains a template of examples -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="transactions" class="tab-pane fade">
+        <div class="header">
+          <div class="title">
+            <a role="button" data-toggle="tab"  href="#home"><i class="material-icons">chevron_left</i></a>REQUESTED OFFERS
+          </div>
+          <ul class="nav nav-pills request-options">
+            <li class="active"><a href="#pending-transaction" data-toggle="tab" role="button">Pending</a></li>
+            <li><a href="#completed-transaction" data-toggle="tab" role="button">Completed</a></li>
+          </ul>
+        </div>
+        <div class="tab-content zero-padding" style="padding-top:10px; background-color:transparent;">
+          <div id="completed-transaction" class="tab-pane fade">
+            <div class="container-fluid">
+              <div class="grid">
+                <!-- need this for mosonry layout to work properly with bootstrap grid system -->
+                <div class="grid-sizer col-xs-12 col-sm-6 col-md-4"></div>
+                {% for item in transactions.completed %}
+                <div class="grid-item col-xs-12 col-sm-6 col-md-4">
+                  <div class="grid-item-content">
+                    <div class="thumbnail zero-padding" id="{{item.transactionID}}">
+                      <div class="request-status complete">
+                        COMPLETED ON {{item.completedDate}}
+                      </div>
+                      <img src="{{item.imgURL}}" style="border-color: lightgrey;" />
+                      <div class="caption">
+                        <h3>{{item.itemName}}</h3>
+                        <div class="trans-info">
+                          <div class="request-by">
+                            <span>Requested by:</span>
+                            <div class="user">
+                              <img class="user-image" src="{{item.userImg}}"/>
+                              <a class="user-name" href="#{{item.userID}}">
+                                {{item.userName}}
+                              </a>
+                            </div>
+                          </div>
+                          <div><span>Quantity:</span>{{item.quantity}}</div>
+                        </div>
+                        <div class="nav-btns">
+                          <a href="#" class="btn btn-primary" role="button" id="{{item.ID}}">View</a>
+                          <a href="#" role="button" class="btn-watch" id="delete"><i class="material-icons">delete</i></a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {% end for %}
+              </div>
+            </div>
+          </div>
+          <div id="pending-transaction" class="tab-pane fade in active">
+            <div class="container-fluid">
+              <div class="grid">
+                <!-- need this for mosonry layout to work properly with bootstrap grid system -->
+                <div class="grid-sizer col-xs-12 col-sm-6 col-md-4"></div>
+                {% for item in transactions.pending %}
+                <div class="grid-item col-xs-12 col-sm-6 col-md-4">
+                  <div class="grid-item-content">
+                    <div class="thumbnail zero-padding" id="{{item.transactionID}}">
+                      <div class="request-status pending">
+                        PENDING SINCE {{item.startedDate}}
+                      </div>
+                      <img src="{{item.imgURL}}" style="border-color: lightgrey;" />
+                      <div class="caption">
+                        <h3>{{item.itemName}}</h3>
+                        <div class="trans-info">
+                          <div class="request-by">
+                            <span>Requested by: </span>
+                            <div class="user">
+                              <img class="user-image" src="{{item.userImg}}"/>
+                              <div class="user-name">{{item.userName}}</div>
+                            </div>
+                          </div>
+                          <div><span>Quantity: </span>{{item.quantity}}</div>
+                        </div>
+                        <div class="nav-btns">
+                          <a href="#" class="btn btn-primary" role="button" id="{{item.ID}}">View</a>
+                          <a href="#" class="btn btn-default" role="button" id="{{item.conversationID}}">Message</a>
+                          <div class="dropup btn-watch">
+                            <a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">
+                              <i class="material-icons">more_vert</i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-right">
+                              <li><a href="javascript:void(0)">Mark as Complete</a></li>
+                              <li><a href="javascript:void(0)">Cancel Offer</a></li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {% end for %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="requests" class="tab-pane fade">
+        <div class="header">
+          <div class="title">
+            <a role="button" data-toggle="tab"  href="#home"><i class="material-icons">chevron_left</i></a>REQUESTS
+          </div>
+          <ul class="nav nav-pills request-options">
+            <li class="active"><a href="#pending-request" data-toggle="tab" role="button">Pending</a></li>
+            <li><a href="#completed-request" data-toggle="tab" role="button">Completed</a></li>
+          </ul>
+        </div>
+        <div class="tab-content zero-padding" style="padding-top:10px; background-color:transparent;">
+          <div id="completed-request" class="tab-pane fade">
+            <div class="container-fluid">
+              <div class="grid">
+                <!-- need this for mosonry layout to work properly with bootstrap grid system -->
+                <div class="grid-sizer col-xs-12 col-sm-6 col-md-4"></div>
+                {% for item in requests.completed %}
+                <div class="grid-item col-xs-12 col-sm-6 col-md-4">
+                  <div class="thumbnail zero-padding" id="{{item.requestID}}">
+                    <div class="request-status complete">
+                      COMPLETED ON {{item.completedDate}}
+                    </div>
+                    <div class="caption">
+                      <div class="centerAll">
+                        <img src="{{item.userImg}}" class="user-image"/>
+                        <div class="user-details">
+                          <a class="user-name" href="#{{item.userID}}">
+                            {{item.userName}}
+                          </a>
+                          <div class="added-date">
+                            {{item.addedDate}}
+                          </div>
+                        </div>
+                        <div class="road-distance">
+                          <i class="material-icons">place</i> {{item.distance}}m
+                        </div>
+                      </div>
+                    </div>
+                    <img src="{{item.imgURL}}" style="border-color: lightgrey;" />
+                    <div class="caption">
+                      <h3>{{item.itemName}}</h3>
+                      <div class="trans-info">
+                        <div><span>Quantity:</span>{{item.quantity}}</div>
+                      </div>
+                      <div class="nav-btns">
+                        <a href="#" class="btn btn-primary" role="button" id="{{item.ID}}">View</a>
+                        <a href="#" role="button" class="btn-watch" id="delete"><i class="material-icons">delete</i></a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {% end for %}
+              </div>
+            </div>
+          </div>
+          <div id="pending-request" class="tab-pane fade in active">
+            <div class="container-fluid">
+              <div class="grid">
+                <!-- need this for mosonry layout to work properly with bootstrap grid system -->
+                <div class="grid-sizer col-xs-12 col-sm-6 col-md-4"></div>
+                {% for item in requests.pending %}
+                <div class="grid-item col-xs-12 col-sm-6 col-md-4">
+                  <div class="thumbnail zero-padding" id="{{item.requestID}}">
+                    <div class="request-status pending">
+                      PENDING SINCE {{item.startedDate}}
+                    </div>
+                    <div class="caption">
+                      <div class="centerAll">
+                        <img src="{{item.userImg}}" class="user-image"/>
+                        <div class="user-details">
+                          <a class="user-name" href="#{{item.userID}}">
+                            {{item.userName}}
+                          </a>
+                          <div class="added-date">
+                            {{item.addedDate}}
+                          </div>
+                        </div>
+                        <div class="road-distance">
+                          <i class="material-icons">place</i> {{item.distance}}m
+                        </div>
+                      </div>
+                    </div>
+                    <img src="{{item.imgURL}}" style="border-color: lightgrey;" />
+                    <div class="caption">
+                      <h3>{{item.itemName}}</h3>
+                      <div class="trans-info">
+                        <div><span>Quantity: </span> {{item.quantity}}</div>
+                      </div>
+                      <div class="nav-btns">
+                        <a href="#" class="btn btn-primary" role="button" id="{{item.ID}}">View</a>
+                        <a href="#" class="btn btn-default" role="button" id="{{item.conversationID}}">Message</a>
+                        <div class="dropup btn-watch">
+                          <a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="material-icons">more_vert</i>
+                          </a>
+                          <ul class="dropdown-menu dropdown-menu-right">
+                            <li><a href="javascript:void(0)">Mark as Complete</a></li>
+                            <li><a href="javascript:void(0)">Cancel Request</a></li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="watchList" class="tab-pane fade">
+        <div class="title">
+          <a role="button" data-toggle="tab"  href="#home"><i class="material-icons">chevron_left</i></a>WATCHLIST
+        </div>
+        <div class="container-fluid">
+          <div class="grid">
+            <!-- need this for mosonry layout to work properly with bootstrap grid system -->
+            <div class="grid-sizer col-xs-12 col-sm-6 col-md-4"></div>
+            {% for item in watchlist %}
+            <div class="grid-item col-xs-12 col-sm-6 col-md-4">
+              <div class="thumbnail zero-padding" id="{{listing.ID}}">
+                <div class="caption">
+                  <div class="centerAll">
+                    <img src="{{item.userImg}}" class="user-image"/>
+                    <div class="user-details">
+                      <a class="user-name" href="#{{item.userID}}">
+                        {{item.userName}}
+                      </a>
+                      <div class="added-date">
+                        {{item.addedDate}}
+                      </div>
+                    </div>
+                    <div class="road-distance">
+                      <i class="material-icons">place</i> {{item.distance}}m
+                    </div>
+                  </div>
+                </div>
+                <img src="{{item.imgURL}}" style="border-color: lightgrey;" />
+                <div class="caption">
+                  <h3>{{item.itemName}}</h3>
+                  <div class="nav-btns">
+                    <a href="#" class="btn btn-primary" role="button" id="{{item.ID}}">View</a>
+                    <a href="#" class="btn btn-default" role="button">Request</a>
+                    <a href="#" role="button" class="btn-watch watched" id="watch"><i class="material-icons">visibility</i></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+
+          </div>
+        </div>
+      </div>
+      {% endif %}
+      <div id="offers" class="tab-pane fade {% if isUser != 1%}in active{% endif %}">
+        <div class="header">
+          <div class="title">
+            {% if isUser == 1%}<a role="button" data-toggle="tab"  href="#home"><i class="material-icons">chevron_left</i></a>{% end if %}AVAILABLE OFFERS
+            {% if isUser == 1%}<a role="button" class="btn-addOffer" id="addOffer"><i class="material-icons">add_circle</i> new item</a>{% end if %}
+          </div>
+        </div>
+        <div class="container-fluid">
+          <div class="grid">
+            <!-- need this for mosonry layout to work properly with bootstrap grid system -->
+
+            <div class="grid-sizer col-xs-12 col-sm-6 col-md-4"></div>
+            {% for item in offers %}
+            <div class="grid-item col-xs-12 col-sm-6 col-md-4">
+              <div class="grid-item-content">
+                <div class="thumbnail zero-padding" id="{{item.listingID}}">
+                  <img src="{{item.imgURL}}" style="border-color: lightgrey;" />
+                  <div class="caption">
+                    <h3>{{item.itemName}}</h3>
+                    <div class="added-date">Added on {{item.addedDate}}</div>
+                    <div class="nav-btns">
+                      <a href="#" class="btn btn-primary" role="button" id="{{item.ID}}">View</a>
+                      <a href="#" class="btn btn-default" role="button" id="{{item.ID}}">Edit</a>
+                      <a href="#" role="button" class="btn-watch" id="delete"><i class="material-icons">delete</i></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.js"></script>
+  <script src="profile.js"></script>
+  <script src="bootstrap-material-design-master/dist/js/ripples.min.js"></script>
+  <script src="bootstrap-material-design-master/dist/js/material.min.js"></script>
+
+  <script>
+  $(function () {
+    $.material.init();
+  });
+  </script>
+
+{% endblock %}
+
+{% set jslist = ["name your","custom js","files here"] %}
