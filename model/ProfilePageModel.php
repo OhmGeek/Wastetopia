@@ -128,7 +128,28 @@ class ProfilePageModel
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
-
+	
+    
+    /*
+    * Gets the total number of pending offers made for user's items which they haven't seen yet (notification)
+    * @returns integer (total)
+    */
+    function getNumberOfUnseenPendingTransactions(){
+	$userID = $this->getUserID();
+        $statement = $this->db->prepare("
+            SELECT COUNT(*) AS `Count`
+	    FROM `ListingTransaction`
+	    JOIN `Listing` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
+	    WHERE `ListingTransaction`.`Success` = 0
+	    AND `ListingTransaction`.`Viewed` = 0
+	    AND `Listing`.`FK_User_UserID` = :userID
+        ");
+        $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
+        $statement->execute();
+        return $statement->fetchColumn();    
+    }
+	
+	
     /**
      * Gets all information about transactions for this listing.
      * If there are no results, this item has not been requested
