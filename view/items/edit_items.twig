@@ -12,7 +12,7 @@
 <div class="grid-body" style="padding-top: 60px;">
     <div class="container-fluid">
         <div class="row">
-            <form>
+            <form enctype="multipart/form-data" method="post" action="{{ config.ROOT_BASE }}/api/items/add">
                 <fieldset>
                     <div class="col-sm-12 zero-padding">
                         <div class="item-imgs-section">
@@ -62,11 +62,11 @@
                                 <div class="row">
                                     <div class="form-group col-md-8">
                                         <label class="control-label" for="name">Name</label>
-                                        <input type="text" class="form-control" id="name">
+                                        <input type="text" class="form-control" name="itemname" id="name">
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label class="control-label" for="type">Type</label>
-                                        <select id="type" class="form-control">
+                                        <select id="type" name="itemType" class="form-control">
                                             <option>Fruit</option>
                                             <option>Vegetable</option>
                                             <option>Meat</option>
@@ -176,14 +176,6 @@
         </div>
     </div>
 </div>
-
-
-
-<script src="bootstrap-material-design-master/dist/js/ripples.min.js"></script>
-<script src="bootstrap-material-design-master/dist/js/material.min.js"></script>
-
-<!-- script for having equal height rows -->
-<script src="plugins/jquery-match-height/jquery.matchHeight.js" type="text/javascript"></script>
 <script>
     $(function () {
         $.material.init();

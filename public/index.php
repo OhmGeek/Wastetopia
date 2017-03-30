@@ -76,7 +76,11 @@ $klein->respond('POST', '/api/items/add', function ($request, $response, $servic
     // todo validate each field server side (and return false if not with an error message
     // Take in a JSON of things needed to add items
     // make a post request to add this item, and return whether it was successful or not (TODO return success from DB).
-    $details = json_decode($request->details, true);
+    $details = array(
+        "itemname" => $request->itemname,
+        "itemtype" => $request->itemType,
+        "item"
+    );
     $control = new AddItemController();
     $control->addItem($details);
 });
