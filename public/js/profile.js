@@ -50,7 +50,11 @@ $(function () {
      $.post("/profile/toggle-watch-list/"+$userID+"/"+$listingID, function(response){
        // Do something depending on if response is true or false?? (Currently always true)
        console.log("DONE");
-       //remove($(this)); Don't remove the listing unless it was deleted and user is on their own page
+      console.log(response);
+      // 2 means deleted from own page
+      if (response == 2){
+        //remove($(this)); Don't remove the listing unless it was deleted and user is on their own page
+      }
      });
   });
 });
