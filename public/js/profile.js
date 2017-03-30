@@ -46,8 +46,9 @@ $(function () {
 
   $grid.on('click', '#watch', function(){
      $listingID = $(this).closest('.thumbnail').attr("id");
-     $.post("/toggle-watch-list/"+$listingID, function(response){
+     $.post("/profile/toggle-watch-list/"+$listingID, function(response){
        // Do something depending on if response is true or false?? (Currently always true)
+       remove($(this));
      });
   });
 });
