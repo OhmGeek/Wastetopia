@@ -396,7 +396,22 @@ class ProfilePageController
         return $watchListDetails;
     }
     
-    function addToWatchList($listingID){
-        $this->model->addToWatchList($listingID);
+    function inWatchList($listingID){
+        $watchedListings = $this->model->getWatchedListings();
+        $inWathcList = False; // Assume it isn't in the watch list
+        foreach($watchedListings as $listing){
+         if($listing["ListingID"] == $listingID){
+             $inWatchList = True;
+             break;
+        }
+        return $inWatchList;
+    }
+    
+    function toggleWatchListListing($listingID){
+       if ($this->inWatchList($listingID){
+           $this->model->deleteFromWatchList($listingID);
+       }else{
+           $this->model->addToWatchList($listingID);
+       }
     }
 }
