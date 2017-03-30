@@ -60,9 +60,9 @@ $klein->with("/profile", function() use ($klein) {
         return $controller->generatePage();
     });
     
-    $klein->respond('POST', '/add-to-watch-list/[:listingID]', function($request, $response){
+    $klein->respond('POST', '/toggle-watch-list/[:listingID]', function($request, $response){
        $controller = new ProfilePageController(1);
-       $controller->addToWatchList($request->listingID);
+       $controller->toggleWatchListing($request->listingID);
        return;
     });
 });
