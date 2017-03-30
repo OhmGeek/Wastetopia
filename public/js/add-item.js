@@ -1,19 +1,16 @@
 function imageUpload() {
     // go through and get the images
-    var formdata = $('#form-image').serialize();
-
-    $.ajax({
-        url: 'https://wastetopia-pr-17.herokuapp.com/api/items/addimage',
-        type: "POST",
-        data: formdata,
-        processData: false,
-        contentType: false,
-        success: function (res) {
-            var items = JSON.parse(res);
-            console.log(res); // log the response for debugging purposes
-            items.each(function(index, item) {
-               showUploadedItem(item.url, item.id);
+    $('input[type="file"]').ajaxfileupload({
+        action: 'https://wastetopia-pr-17.herokuapp.com/api/items/addimage',
+        valid_extensions : ['jpg','png', 'tif', 'gif'],
+        onComplete: function(response) {
+            var items = JSON.parse(response);
+            items.forEach(function(element) {
+                showUploadedItem(element.url, element.id);
             });
+        },
+        onCancel: function() {
+            console.log('no file selected');
         }
     });
 
