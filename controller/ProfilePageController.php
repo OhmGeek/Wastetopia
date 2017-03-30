@@ -217,7 +217,7 @@ class ProfilePageController
             $transactionDetails = $this->model->getDetailsFromTransactionID($transactionID);
             // Info specific to transaction
             $transactionQuantity = $transactionDetails["Quantity"];
-            $completedDate = $transactionDetails["Time_Of_Transaction"];
+            $completedDate = $transactionDetails["Time_Of_Application"];
             //In for about user involved in this transaction
             $requestingUserID = $transactionDetails["UserID"];
             $requestingUserName = $transactionDetails["Forename"] . " " . $transactionDetails["Surname"];
@@ -246,7 +246,7 @@ class ProfilePageController
             $transactionDetails = $this->model->getDetailsFromTransactionID($transactionID);
             // Info specific to transaction
             $transactionQuantity = $transactionDetails["Quantity"];
-            $startedDate = $transactionDetails["Time_Of_Transaction"];
+            $startedDate = $transactionDetails["Time_Of_Application"];
             //In for about user involved in this transaction
             $requestingUserID = $transactionDetails["UserID"];
             $requestingUserName = $transactionDetails["Forename"] . " " . $transactionDetails["Surname"];
@@ -276,7 +276,7 @@ class ProfilePageController
             $transactionDetails = $this->model->getDetailsFromTransactionID($transactionID);
             // Info specific to transaction
             $transactionQuantity = $transactionDetails["Quantity"];
-            $completedDate = $transactionDetails["Time_Of_Transaction"];
+            $completedDate = $transactionDetails["Time_Of_Application"];
             // Information about the item/listing involved
             $listingID = $transactionDetails["ListingID"];
             $listingDetails = $this->model->getCardDetails($listingID);
@@ -310,7 +310,7 @@ class ProfilePageController
             $transactionDetails = $this->model->getDetailsFromTransactionID($transactionID);
             // Info specific to transaction
             $transactionQuantity = $transactionDetails["Quantity"];
-            $startedDate = $transactionDetails["Time_Of_Transaction"];
+            $startedDate = $transactionDetails["Time_Of_Application"];
             // Information about the item/listing involved
             $listingID = $transactionDetails["ListingID"];
             $listingDetails = $this->model->getCardDetails($listingID);
