@@ -1,6 +1,6 @@
 function imageUpload() {
     // go through and get the images
-    $('input[type="file"]').ajaxfileupload({
+    $('input[type="file"]').AjaxFileUpload({
         action: 'https://wastetopia-pr-17.herokuapp.com/api/items/addimage',
         valid_extensions : ['jpg','png', 'tif', 'gif'],
         onComplete: function(response) {
@@ -8,9 +8,6 @@ function imageUpload() {
             items.forEach(function(element) {
                 showUploadedItem(element.url, element.id);
             });
-        },
-        onCancel: function() {
-            console.log('no file selected');
         }
     });
 
