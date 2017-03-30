@@ -65,6 +65,12 @@ $klein->with("/profile", function() use ($klein) {
        $controller->toggleWatchListing($request->listingID);
        return;
     });
+    
+    $klein->respond('POST', '/?/toggle-watch-list/[:listingID]', function($request, $response){
+       $controller = new ProfilePageController(1);
+       $controller->toggleWatchListing($request->listingID);
+       return;
+    });
 });
 
 
