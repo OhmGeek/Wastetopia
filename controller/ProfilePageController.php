@@ -395,4 +395,8 @@ class ProfilePageController
         );
         return $watchListDetails;
     }
+    
+    function addToWatchList($listingID){
+        $this->model->addToWatchList($listingID);
+    }
 }
