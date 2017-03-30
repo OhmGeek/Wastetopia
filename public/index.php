@@ -49,7 +49,7 @@ $klein->respond("GET", "/get-env", function() {
 
 $klein->with('/items', function () use ($klein) {
 
-    $klein->respond('GET', '/add', function($request, $response) {
+    $klein->respond('GET', '/add/?', function($request, $response) {
         $control = new AddItemController();
         return $control->renderAddPage();
     });
