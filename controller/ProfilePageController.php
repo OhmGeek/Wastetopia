@@ -70,7 +70,7 @@ class ProfilePageController
             "watchList" => $watchListDetails["watchList"]
         );
 
-
+        print_r($output);
         $template = $this->twig->loadTemplate('users/profile.twig');
         return $template->render($output);
     }
