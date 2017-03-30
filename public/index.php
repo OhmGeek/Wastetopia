@@ -59,6 +59,12 @@ $klein->with("/profile", function() use ($klein) {
         $controller = new ProfilePageController(0, $request->userID); //View other user's profile
         return $controller->generatePage();
     });
+    
+    $klein->respond('POST', '/add-to-watch-list/[:listingID]', function($request, $response){
+       $controller = new ProfilePageController(1);
+       $controller->addToWatchList($request->listingID);
+       return;
+    });
 });
 
 
