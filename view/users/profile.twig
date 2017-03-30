@@ -391,14 +391,14 @@ body {
                             <a href="#" class="btn btn-primary" role="button"
                             id="{{ item.listingID }}">View</a>
                             <a href="#" class="btn btn-default" role="button"
-                            id="{{ item.listingID }}">{% if isUser == 1 %} Edit {% else %} Request {% end if %}</a>
+                            id="{{ item.listingID }}">{% if isUser == 1 %} Edit {% else %} Request {% endif %}</a>
                             {% if isUser == 1 %}
                             <a href="#" role="button" class="btn-watch" id="delete"><i
                               class="material-icons">delete</i></a>
                             {% else %}
                             <a href="#" role="button" class="btn-watch" id="watch"><i
                               class="material-icons">visibility</i></a>
-                            {% end if %}
+                            {% endif %}
                             </div>
                           </div>
                         </div>
