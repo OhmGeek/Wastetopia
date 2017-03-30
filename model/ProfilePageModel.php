@@ -250,11 +250,8 @@ class ProfilePageModel
         ");
         $statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);
 	$statement->bindValu(":userID", $userID, PDO::PARAM_INT);
-	print_r($listingID);
-	print_r($userID);
-        $result = $statement->execute();
-	print_r($result);
-        return $result;
+        $statement->execute();
+        return True;
     }
     /**
      * Adds a listing to a user's watch list
