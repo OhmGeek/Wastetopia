@@ -239,17 +239,19 @@ class ProfilePageModel
      * Deletes a listing from user's watch list
      * @param $watchID
      */
-    function deleteWatchListing($watchID)
+    function deleteFromWatchList($listingID)
     {
         $userID = $this->getUserID();
         $statement = $this->db->prepare("
             DELETE
             FROM `Watch`
-            WHERE `Watch`.`WatchID` = :watchID
+            WHERE `Watch`.`FK_Listing_ListingID` = :listingID
+	    AND `Watch`.`FK_User_UserID` = :userID;
         ");
-        $statement->bindValue(":watchID", $watchID, PDO::PARAM_INT);
-        $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_ASSOC);
+        $statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);
+	$statement->bindValu(":userID", $userID, PDO::PARAM_INT);
+        $result = $statement->execute();
+        return $result;
     }
     /**
      * Adds a listing to a user's watch list
