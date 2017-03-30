@@ -249,7 +249,7 @@ class ProfilePageModel
 	    AND `Watch`.`FK_User_UserID` = :userID;
         ");
         $statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);
-	$statement->bindValu(":userID", $userID, PDO::PARAM_INT);
+	$statement->bindValue(":userID", $userID, PDO::PARAM_INT);
         $statement->execute();
         return True;
     }
