@@ -11,6 +11,7 @@ namespace Wastetopia\Controller;
 use Twig_Loader_Filesystem;
 use Twig_Environment;
 use Wastetopia\Model\AddItemModel;
+use Wastetopia\Model\AmazonS3;
 
 class AddItemController
 {
@@ -31,6 +32,23 @@ class AddItemController
         $this->model->mainAddItemFunction($details['items'], $details['tags'],
             $details['images'], $details['barcode'],$details['location']);
 
+    }
+
+    public function addItemImage($files) {
+        // this adds an item to S3 and to the DB, returning the Id and url
+        $s3 = new AmazonS3();
+        $urls = $s3->upload($files);
+        $uploadedImages = array();
+        foreach($urls as $url) {
+            $id = $this->model->addToImageTable('img', $url);
+            // now let's create an object inside
+            $image = array(
+                "id" => $id,
+                "url" => $url
+            );
+            array_push($uploadedImages,$image);
+        }
+        return json_encode($uploadedImages); //encode the image output as json.
     }
 
 }
