@@ -39,6 +39,7 @@ class AddItemController
         $s3 = new AmazonS3();
         $urls = $s3->upload($files);
         $uploadedImages = array();
+        error_log($urls);
         foreach($urls as $url) {
             $id = $this->model->addToImageTable('img', $url);
             // now let's create an object inside
@@ -50,6 +51,7 @@ class AddItemController
             error_log($url);
             array_push($uploadedImages,$image);
         }
+        error_log("Test");
         error_log($uploadedImages);
         return json_encode($uploadedImages); //encode the image output as json.
     }
