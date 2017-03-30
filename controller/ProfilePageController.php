@@ -63,7 +63,6 @@ class ProfilePageController
             "itemsOfferedCount" => $listingsInformation["itemsOfferedCount"],
             "requestsMadeCount" => $listingsInformation["requestsMadeCount"],
             "userListings" => $listingsInformation["userListings"],
-            "userEmptyListings" => $listingsInformation["userEmptyListings"],
             "offers" => $listingsInformation["offers"],
             "requests" => $listingsInformation["requests"],
 
@@ -282,6 +281,7 @@ class ProfilePageController
             $listingDetails = $this->model->getCardDetails($listingID);
             $itemName = $listingDetails["Name"];
             $timeOfCreation = $listingDetails["Time_Of_Creation"];
+            $postCode = $listingDetails["Post_Code"];
             $defaultImage = $this->model->getDefaultImage($listingID);
             $imageURL = $defaultImage["Image_URL"];
             // Owner's details
@@ -299,7 +299,8 @@ class ProfilePageController
                 "imgURL" => $imageURL,
                 "itemName" => $itemName,
                 "quantity" => $transactionQuantity,
-                "listingID" => $listingID
+                "listingID" => $listingID,
+                "postCode" => $postCode
             );
             array_push($completedRequests, $item);
         }
@@ -314,6 +315,7 @@ class ProfilePageController
             $listingDetails = $this->model->getCardDetails($listingID);
             $itemName = $listingDetails["Name"];
             $timeOfCreation = $listingDetails["Time_Of_Creation"];
+            $postCode = $listingDetails["Post_Code"];
             $defaultImage = $this->model->getDefaultImage($listingID);
             $imageURL = $defaultImage["Image_URL"];
             // Owner's details
@@ -332,10 +334,13 @@ class ProfilePageController
                 "itemName" => $itemName,
                 "quantity" => $transactionQuantity,
                 "listingID" => $listingID,
-                "conversationID" => "SAME AS LISTING ID?"
+                "conversationID" => "SAME AS LISTING ID?",
+                "postCode" => $postCode
             );
             array_push($pendingRequests, $item);
         }
+
+        $userListings = array("available" => $allAvailableListings, "outOfStock" => $allEmptyListings);
         $offers = array("completed" => $completedOffers, "pending" => $pendingOffers);
         $requests = array("completed" => $completedRequests, "pending" => $pendingRequests);
         $listingsInformation = array(
@@ -343,8 +348,7 @@ class ProfilePageController
             "emptyListingsCount" => $totalEmptyListings, // Total number of listings with quantity <= 0
             "itemsOfferedCount" => $sendingTransactionsCount, // Total of all transactions for your items (can be greater than listings count)
             "requestsMadeCount" => $receivingCount, // Total of all transactions you're in for other user's items
-            "userListings" => $allAvailableListings, // All your listings with quantity > 0
-            "userEmptyListings" => $allEmptyListings, // All your listings with quantity <= 0
+            "userListings" => $userListings, // All your listings
             "offers" => $offers, // Transactions for your items
             "requests" => $requests // Transactions for other user's items
         );
