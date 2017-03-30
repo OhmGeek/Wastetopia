@@ -4,6 +4,7 @@ function imageUpload() {
         action: 'https://wastetopia-pr-17.herokuapp.com/api/items/addimage',
         valid_extensions : ['jpg','png', 'tif', 'gif'],
         onComplete: function(response) {
+            console.log(response);
             var items = JSON.parse(response);
             items.forEach(function(element) {
                 showUploadedItem(element.url, element.id);
