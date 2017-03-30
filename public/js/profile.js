@@ -53,7 +53,7 @@ $(function () {
        console.log(response);
       // 2 means deleted from own page
       if (response == 1 && isUser){
-        remove(this); Don't remove the listing unless it was deleted and user is on their own page
+        remove(this); // Don't remove the listing unless it was deleted and user is on their own page
       }
      });
   });
