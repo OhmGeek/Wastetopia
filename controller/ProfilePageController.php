@@ -408,18 +408,14 @@ class ProfilePageController
         return $inWatchList;
     }
     
-    function toggleWatchListListing($userPageID, $listingID){
+    function toggleWatchListListing( $listingID){
        $listingID = (int)$listingID; 
        if ($this->inWatchList($listingID)){
            $this->model->deleteFromWatchList($listingID);
-           if ($userPageID === $this->getUserID()){
-               return 2; // Code for deleting from page (user is on their own page)
-           }else{
-               return 3; // Code for not deleting from page (just change colour)
-           }
+           return 1; // Code for deletion
        }else{
            $this->model->addToWatchList($listingID);
-           return 1; // Code for added to watch list
+           return 2; // Code for added to watch list
        }
     }
 }
