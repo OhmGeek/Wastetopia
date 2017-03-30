@@ -70,7 +70,7 @@ class ProfilePageController
             "watchList" => $watchListDetails["watchList"]
         );
 
-        print_r($output);
+       
         $template = $this->twig->loadTemplate('users/profile.twig');
         return $template->render($output);
     }
@@ -96,7 +96,7 @@ class ProfilePageController
     {
         //Get listings user has put up
         $userListingsSending = $this->model->getUserListings();
-        print_r($userListingsSending);
+       
         $pendingSending = array();    //Incomplete transactions (List of TransactionIDs)
         $completedSending = array();  //Complete transactions (List of TransactionIDs
         $availableListingsSending = array(); // List of all listingIDs user is giving away that have quantity
