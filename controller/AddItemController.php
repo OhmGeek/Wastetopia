@@ -46,8 +46,11 @@ class AddItemController
                 "id" => $id,
                 "url" => $url
             );
+            error_log($id);
+            error_log($url);
             array_push($uploadedImages,$image);
         }
+        error_log($uploadedImages);
         return json_encode($uploadedImages); //encode the image output as json.
     }
 
