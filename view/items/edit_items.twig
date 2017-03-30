@@ -12,7 +12,7 @@
 <div class="grid-body" style="padding-top: 60px;">
     <div class="container-fluid">
         <div class="row">
-            <form enctype="multipart/form-data" method="post" action="{{ config.ROOT_BASE }}/api/items/add">
+            <form id="form-image" enctype="multipart/form-data" method="post" action="{{ config.ROOT_BASE }}/api/items/add">
                 <fieldset>
                     <div class="col-sm-12 zero-padding">
                         <div class="item-imgs-section">
@@ -20,23 +20,7 @@
                                 Upload item images here
                             </div>
                             <div class="container-fluid">
-                                <div class="row">
-                                    <div class="col-xs-4 col-sm-2 zero-padding">
-                                        <div class="row-action-primary checkbox img-checkbox">
-                                            <label><input type="checkbox"></label>
-                                        </div>
-                                        <div data-mh="my-group" class="upload-pic">
-                                            <img src="food.jpg" alt="Chania">
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-4 col-sm-2 zero-padding">
-                                        <div class="row-action-primary checkbox img-checkbox">
-                                            <label><input type="checkbox"></label>
-                                        </div>
-                                        <div data-mh="my-group" class="upload-pic">
-                                            <img src="food1.jpg" alt="Chania">
-                                        </div>
-                                    </div>
+                                <div id="image-demo" class="row">
                                     <div class="col-xs-4 col-sm-2 zero-padding">
                                         <div class="form-group zero-padding">
                                             <div data-mh="my-group" class="upload-pic">
@@ -56,6 +40,10 @@
                             </div>
                         </div>
                     </div>
+                </fieldset>
+            </form>
+            <form>
+                <fieldset>
                     <div class="col-sm-12 zero-padding">
                         <div class="item-details-section">
                             <div class="container-fluid">
@@ -186,3 +174,5 @@
     });
 </script>
 {% endblock %}
+
+{% set jslist = ["add-item.js"] %}

@@ -101,6 +101,12 @@ $klein->with('/api', function () use ($klein) {
         $control = new AddItemController();
         $control->addItem($details);
     });
+    $klein->respond('POST', '/items/addimage', function($request,$response) {
+        $files = $request->files();
+        $controller = new AddItemController();
+        $jsonOut = $controller->addItemImage($files);
+        return $jsonOut; //this lists all image urls and their ids.
+    });
 
     $klein->respond('GET', '/items/view/[:id]', function ($request, $response) {
         $itemID = $request->id;

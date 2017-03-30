@@ -1,59 +1,39 @@
-/**
- * Created by ryan on 08/03/17.
- */
+function imageUpload() {
+    // go through and get the images
+    var formdata = $('#form-image').serialize();
 
-
-
-
-/*
- //Extract item information
- $itemName = $item["itemName"];
- $itemDescription = $item["itemDescription"];
- $useByDate = $item["useByDate"];
- $quantity = $item["quantity"];
- $itemID = $this->addToItemTable($itemName, $itemDescription, $useByDate); //Add the item
-
- $this->addAllTags($itemID, $tags); //Add the tags and link to item
- $this->addAllImages($itemID, $images); //Add the images and link to item
-
- //Extract location information
- $locationName = $location["locationName"];
- $postCode = $location["postCode"];
- $locationID = $this->addToLocationTable($locationName, $postCode); //Add the location to the database
-
- //Extract barcode information
- $barcodeNumber = $barcode["barcodeNumber"];
- $barcodeType = $barcode["barcodeType"];
- $this->addToBarcodeTable($itemID, $barcodeNumber, $barcodeType); //Add barcode and link to item
-
- //Add the whole listing
- $this->addToListingTable($locationID, $itemID, $quantity);
- */
-
-
-function serializeForm() {
-    // this basically goes through the document and gets all of the entered details
-    var details = {
-        'itemName': "Item",
-        'itemDescription': "description",
-        'useByDate': 'useBy',
-        'quantity': '1'
-
-    }
-
-
-
+    $.ajax({
+        url: 'https://wastetopia-pr-17.herokuapp.com/api/items/addimage',
+        type: "POST",
+        data: formdata,
+        processData: false,
+        contentType: false,
+        success: function (res) {
+            var items = JSON.parse(res);
+            items.forEach(function(item) {
+               showUploadedItem(items.url, items.id);
+            });
+        }
+    });
 
 }
 
-function addItem(url) {
-    var itemDetails = serializeForm();
+function showUploadedItem(url, id) {
+    var item = $('div').html = '<div>' +
+                                    '<div class="col-xs-4 col-sm-2 zero-padding">'+
+                                        '<div class="row-action-primary checkbox img-checkbox">'+
+                                            '<label><input type="checkbox"></label>'+
+                                        '</div>'+
+                                    '<div data-mh="my-group" class="upload-pic">'+
+                                        '<img src="' + url + '" data-imgid="' + id + '"</div>'+
+                                    '</div>'+
+                                '</div>';
 
-    $.post(url, itemDetails)
-        .done(function() {
-            //on success, display an alert saying YES
-        })
-        .fail(function() {
-            // on failure, display error message saying NO, with message
-        });
+    //now we add the item div to the page.
+    $('#image-demo').before(item);
 }
+
+
+$("#upload").change(function() {
+    imageUpload();
+});
