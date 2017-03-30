@@ -72,4 +72,27 @@ class SearchController
         return $var;
     }
 
+    /*Calculate the distance between point 1 and 2 using the Haversine formula*/
+    function haversineDistance($latLong1, $latLong2)
+    {
+        $RadLat1 = $latLong1['lat'] * (M_PI/180);
+        $RadLong1 = $latLong1['long'] * (M_PI/180);
+        $RadLat2 = $latLong2['lat'] * (M_PI/180);
+        $RadLong2 = $latLong2['long'] * (M_PI/180);
+
+        $radius = floatval('6371e3');  //Radius of the earth in meters
+        
+        $haversineDiffLat = $this->haversine($RadLat1 - $RadLat2);
+        $haversineDiffLong = $this->haversine($RadLong1 - $RadLong2);
+        $haversineLongCosLat = cos($RadLat1) * cos($RadLong2) * $haversineDiffLong;
+        $distance = 2*$radius*asin(sqrt($haversineDiffLat+$haversineLongCosLat));
+
+        return $distance; 
+    
+    }
+    function haversine($theta)
+    {
+        return (sin($theta/2)) ** 2;
+    }
+
 }
