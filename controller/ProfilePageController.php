@@ -400,9 +400,10 @@ class ProfilePageController
         $watchedListings = $this->model->getWatchedListings();
         $inWathcList = False; // Assume it isn't in the watch list
         foreach($watchedListings as $listing){
-         if($listing["ListingID"] == $listingID){
-             $inWatchList = True;
-             break;
+            if($listing["ListingID"] == $listingID){
+                $inWatchList = True;
+                break;
+            }
         }
         return $inWatchList;
     }
