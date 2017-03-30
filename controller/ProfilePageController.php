@@ -112,8 +112,7 @@ class ProfilePageController
         foreach ($userListingsSending as $listing) {
             $listingID = $listing["ListingID"];
             $listingQuantity = $listing["Quantity"]; // Will be 0 if listing has run out
-            //$active = $listing["active"]; // Will be 0 if user no longer wants to see it
-            $active = 1; // CHANGE WHEN DB IS UPDATED
+            $active = $listing["Active"]; // Will be 0 if user no longer wants to see it
             // Only process active listings
             if ($active) {
                 //Get details about the transactions involving this listing
