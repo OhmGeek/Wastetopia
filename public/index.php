@@ -24,7 +24,7 @@ if(ltrim($base, '/')){
 // Dispatch as always
 $klein = new Klein();
 
-$klein->respond("GET", "/", function() {
+$klein->respond("GET", "/?", function() {
     return "HomePage";
 });
 
@@ -55,19 +55,19 @@ $klein->with('/items', function () use ($klein) {
     });
 
 
-    $klein->respond('GET', '/?', function ($request, $response) {
-        // Generic Items Page
-        return "Main Item Page";
-    });
-
-
-    $klein->respond('GET', '/[:id]', function ($request, $response) {
-        // Show a single user
-        $itemID = $request->id;
-        $controller = new ViewItemController();
-        return $controller->getListingPage($itemID);
-
-    });
+//    $klein->respond('GET', '/?', function ($request, $response) {
+//        // Generic Items Page
+//        return "Main Item Page";
+//    });
+//
+//
+//    $klein->respond('GET', '/[:id]', function ($request, $response) {
+//        // Show a single user
+//        $itemID = $request->id;
+//        $controller = new ViewItemController();
+//        return $controller->getListingPage($itemID);
+//
+//    });
 
 });
 
