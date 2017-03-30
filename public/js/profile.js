@@ -32,16 +32,22 @@ $(function () {
   });
 
   $grid.on( 'click', '#delete', function() {
+    // get the id of the item would be removed
+    console.log($(this).closest('.thumbnail').attr("id"));
+    remove(this)
+  });
+
+  function remove(ele) {
     // remove clicked element (in a very skitchy way right now)
-    $grid.isotope( 'remove', $(this).parents())
+    $grid.isotope( 'remove', $(ele).closest('.grid-item'))
     // layout remaining item elements
     .isotope('layout');
-  });
-  
-  $(document).on('click', '#watch', function(){
+  };
+
+  $grid.on('click', '#watch', function(){
      $listingID = $(this).closest('.thumbnail').attr("id");
      $.post("/toggle-watch-list/"+$listingID, function(response){
        // Do something depending on if response is true or false?? (Currently always true)
-     });  
+     });
   });
 });
