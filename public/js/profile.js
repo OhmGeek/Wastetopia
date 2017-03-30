@@ -52,9 +52,10 @@ $(function () {
        console.log("DONE");
        console.log(response);
       // 2 means deleted from own page
-      if (response == 1 && isUser == 1){
-        console.log("Removing listing");
-        remove(this); // Don't remove the listing unless it was deleted and user is on their own page
+      if (response == 1){
+        // Set colour to pale (Deleted)
+      }else{
+        // Set colour to dark (Added)
       }
      });
   });
