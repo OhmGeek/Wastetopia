@@ -1121,6 +1121,7 @@ a:link, a:hover, a:visited, a:active  {
 
 .caption .nav-btns .btn-watch {
   margin-left: auto;
+  color: grey;
 }
 
 .watched {
