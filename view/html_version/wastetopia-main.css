@@ -31,7 +31,7 @@
     top: 0;
     bottom:0;
     position:fixed;
-    overflow-y:scroll;
+    overflow-y:auto;
     overflow-x:hidden;
 }
 
@@ -169,7 +169,7 @@
 .filter-options {
     width: 100%;
     padding: 0;
-    overflow-y: scroll;
+    overflow-y: auto;
     max-height: 155px;
     background-color: white;
 }
@@ -854,7 +854,7 @@ a:link, a:hover, a:visited, a:active  {
 }
 
 #message-location, .user-stats {
-    overflow-y: scroll;
+    overflow-y: auto;
     height: 100%;
 }
 
@@ -995,7 +995,7 @@ a:link, a:hover, a:visited, a:active  {
     flex:1;
     background-color: #2658BC;
     padding-top: 2px;
-    overflow: scroll;
+    overflow: auto;
 }
 
 /* list style */
@@ -1123,7 +1123,7 @@ a:link, a:hover, a:visited, a:active  {
   margin-left: auto;
 }
 
-.watched {
+.caption .nav-btns .watched {
   color: green;
 }
 
