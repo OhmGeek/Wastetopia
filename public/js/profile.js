@@ -54,8 +54,10 @@ $(function () {
       // 2 means deleted from own page
       if (response == 1){
         // Set colour to pale (Deleted)
+        $(this).removeClass("watched");
       }else{
         // Set colour to dark (Added)
+        $(this).addClass("watched");
       }
      });
   });
