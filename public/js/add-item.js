@@ -18,7 +18,6 @@ function showUploadedItem(url, id) {
 
 function imageUpload() {
     // go through and get the images
-    console.log("Attempting image upload");
     var formdata = new FormData($('#form-image')[0]);
     formdata.append('image', $('input[type=file]')[0].files[0]); // todo add all files
     $.ajax({
@@ -29,10 +28,7 @@ function imageUpload() {
         processData: false,
         contentType: false,
         success: function (res) {
-            console.log("success in upload");
-            console.log(res);
             var items = JSON.parse(res);
-            console.log(res);
             items.forEach(function(item) {
                 showUploadedItem(item.url, item.id);
             });
@@ -41,7 +37,7 @@ function imageUpload() {
 
 }
 
-$('#image-upload').change(function() {
+$('#form-image').change(function() {
     imageUpload();
-})
+});
 
