@@ -19,8 +19,7 @@ function showUploadedItem(url, id) {
 function imageUpload() {
     // go through and get the images
     console.log("Attempting image upload");
-    var formdata = $('#form-image').serialize();
-    console.log(formdata);
+    var formdata = new FormData($('#form-image')[0]);
     $.ajax({
         url: 'https://wastetopia-pr-17.herokuapp.com/api/items/addimage',
         type: "POST",
