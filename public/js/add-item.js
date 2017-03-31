@@ -31,8 +31,8 @@ function imageUpload() {
         success: function (res) {
             console.log("success in upload");
             var items = JSON.parse(res);
-            items.forEach(function(item) {
-                showUploadedItem(items.url, items.id);
+            items.forEach(function(index, item) {
+                showUploadedItem(item.url, item.id);
             });
         }
     });
