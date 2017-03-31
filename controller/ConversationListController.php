@@ -53,10 +53,11 @@ class ConversationListController
 		
         //Create arrays of conversation details from results
         $receiving = $this->createConversationArray($receivingResults);
-
+	$isEmpty = (count($receiving) == 0);
+	    
         $template = $this->twig->loadTemplate('messaging/MessagesTabsDisplay.twig');
 
-        return $template->render(array("conversationList"=>$receiving, "giving" => 0));
+        return $template->render(array("isEmpty" => $isEmpty, "conversationList"=>$receiving, "giving" => 0));
 		
     }
 
@@ -71,11 +72,11 @@ class ConversationListController
 
         //Create arrays of conversation details from results
         $sending = $this->createConversationArray($sendingResults);
-
-
+	$isEmpty = (count($sending) == 0);
+	    
         $template = $this->twig->loadTemplate('messaging/MessagesTabsDisplay.twig');
 
-        return $template->render(array("conversationList"=>$sending, "giving" => 1));
+        return $template->render(array("isEmpty" => $isEmpty, "conversationList"=>$sending, "giving" => 1));
     }
 
 
@@ -102,7 +103,7 @@ class ConversationListController
             $conversation['conversationID'] = $conversationID;
             $conversation['userName'] = $firstName." ".$lastName;
             $conversation['item'] = $itemName;
-            $conversation['notifications'] = $unread;
+            $conversation['numUnread'] = $unread;
 
             array_push($results, $conversation);
         }
