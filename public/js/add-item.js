@@ -20,6 +20,7 @@ function imageUpload() {
     // go through and get the images
     console.log("Attempting image upload");
     var formdata = new FormData($('#form-image')[0]);
+    formdata.append('image', $('input[type=file]')[0].files[0]); // todo add all files
     $.ajax({
         url: 'https://wastetopia-pr-17.herokuapp.com/api/items/addimage',
         type: "POST",
