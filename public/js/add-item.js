@@ -16,14 +16,27 @@ function showUploadedItem(url, id) {
 }
 
 
-$('#upload').AjaxFileUpload({
-    action: 'https://wastetopia-pr-17.herokuapp.com/api/items/addimage',
-    valid_extensions : ['jpg','png', 'tif', 'gif'],
-    onComplete: function(response) {
-        console.log(response);
-        var items = JSON.parse(response);
-        items.forEach(function(element) {
-            showUploadedItem(element.url, element.id);
-        });
-    }
-});
+function imageUpload() {
+    // go through and get the images
+    var formdata = $('#form-image').serialize();
+
+    $.ajax({
+        url: 'https://wastetopia-pr-17.herokuapp.com/api/items/addimage',
+        type: "POST",
+        data: formdata,
+        processData: false,
+        contentType: false,
+        success: function (res) {
+            var items = JSON.parse(res);
+            items.forEach(function(item) {
+                showUploadedItem(items.url, items.id);
+            });
+        }
+    });
+
+}
+
+$('#image-upload').change(function() {
+    imageUpload();
+})
+
