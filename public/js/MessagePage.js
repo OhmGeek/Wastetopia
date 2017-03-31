@@ -5,9 +5,7 @@ $(document).ready(function(){
 console.log("ready");
 //Set scroll bar to bottom
     $("#message-location").scrollTop($("#message-location")[0].scrollHeight);
-$(document).ajaxError(function(e, xhr, opt){
-    alert("Error requesting " + opt.url + ": " + xhr.status + " " + xhr.statusText);
-});
+
 });
 
 //Sends message when button is clicked
@@ -30,6 +28,7 @@ $(document).on('click', '#sendBtn', function(ev){
     var data = {conversationID:conversationID, message:content};
     console.log(url);   
     console.log(data);
+	
  $.get(url, data, function(response){
         //Don't care what the response is
         //Load message	
