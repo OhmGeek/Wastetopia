@@ -186,7 +186,7 @@ class SearchModel
       and returns results only within this area
       At the equator the width is roughly 77km, at London, 56km
       and at the UK Arctic Research Station, 30km*/
-    function getNearbyItems($userLat, $userLong, $distanceLimit = 0.76)
+    function getNearbyItems($userLat, $userLong, $search, $tags, $distanceLimit = 0.76)
     {
         $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
         $statement = $this->db->prepare("
@@ -195,10 +195,13 @@ class SearchModel
             JOIN `Item` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
             JOIN `Location` ON `Listing`.`FK_Location_LocationID` = `Location`.`LocationID` 
             WHERE ABS(`Location`.`Latitude` - :userLat) < :distanceLimit
-            AND ABS(`Location`.`Longitude` - :userLong) < :distanceLimit;
+            AND ABS(`Location`.`Longitude` - :userLong) < :distanceLimit
+            AND `Item`.`Name` LIKE :search;
         ");
         $statement->bindValue(":userLat", strval($userLat), PDO::PARAM_STR);
         $statement->bindValue(":userLong", strval($userLong), PDO::PARAM_STR);
+        $statement->bindValue(":search", strval('%'.$search.'%'), PDO::PARAM_STR);
+
         $statement->bindValue(":distanceLimit", strval($distanceLimit), PDO::PARAM_STR);
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_ASSOC);

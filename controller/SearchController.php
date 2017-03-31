@@ -41,7 +41,7 @@ class SearchController
     public function distanceSearch($lat, $long, $search, $tags)
     {
         $userLocation = array('lat' => $lat,'long' => $long);
-        $itemInformation = $this->searchModel->getNearbyItems($lat, $long); //Use default distance cap
+        $itemInformation = $this->searchModel->getNearbyItems($lat, $long, $search, $tags); //Use default distance cap
         foreach ($itemInformation as $key => $item)
         {
             $itemLocation = array('lat' => $item['Latitude'], 'long' => $item['Longitude']);
