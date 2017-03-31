@@ -51,13 +51,15 @@ $(function () {
        // Do something depending on if response is true or false?? (Currently always true)
        console.log("DONE");
        console.log(response);
-      // 2 means deleted from own page
+      // 1 means deleted, 2 means added
       if (response == 1){
         // Set colour to pale (Deleted)
         $(this).removeClass("watched");
+        console.log($(this));
       }else{
         // Set colour to dark (Added)
         $(this).addClass("watched");
+        console.log($(this));
       }
      });
   });
