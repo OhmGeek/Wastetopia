@@ -14,7 +14,7 @@ class ConversationListController
         $this->model = new ConversationListModel();
 
 	    //Create twig loader
-        $loader = new Twig_Loader_Filesystem('../view/messaging');
+        $loader = new Twig_Loader_Filesystem('../view/');
         $this->twig = new Twig_Environment($loader);
 
 	}
@@ -38,7 +38,7 @@ class ConversationListController
 			);
 
 		//Load template and print result
-		$template = $this->twig->loadTemplate('MessagesListPage.twig');
+		$template = $this->twig->loadTemplate('/messaging/MessagesListPage.twig');
 		return $template->render($output);
 	}
 
@@ -54,7 +54,7 @@ class ConversationListController
         //Create arrays of conversation details from results
         $receiving = $this->createConversationArray($receivingResults);
 
-        $template = $this->twig->loadTemplate('MessagesTabsDisplay.twig');
+        $template = $this->twig->loadTemplate('messaging/MessagesTabsDisplay.twig');
 
         return $template->render(array("conversationList"=>$receiving, "giving" => 0));
 		
@@ -73,7 +73,7 @@ class ConversationListController
         $sending = $this->createConversationArray($sendingResults);
 
 
-        $template = $this->twig->loadTemplate('MessagesTabsDisplay.twig');
+        $template = $this->twig->loadTemplate('messaging/MessagesTabsDisplay.twig');
 
         return $template->render(array("conversationList"=>$sending, "giving" => 1));
     }
