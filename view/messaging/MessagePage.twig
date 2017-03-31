@@ -26,7 +26,7 @@
                 </div>
 
                 <!-- HTML from MessageController.generateMessageDisplay($conversationID)-->
-                {{message-display}}
+                {{message-display|raw}}
 
                 <!--Form with textarea and send button-->
                 <div id="message-form">
@@ -76,4 +76,4 @@
 </div>
 {% endblock %}
 
-{% set jslist = ["name your","custom js","files here"] %}
+{% set jslist = ["MessagePage.js"] %}
