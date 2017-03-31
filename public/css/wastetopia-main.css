@@ -31,7 +31,7 @@
     top: 0;
     bottom:0;
     position:fixed;
-    overflow-y:scroll;
+    overflow-y:auto;
     overflow-x:hidden;
 }
 
@@ -169,7 +169,7 @@
 .filter-options {
     width: 100%;
     padding: 0;
-    overflow-y: scroll;
+    overflow-y: auto;
     max-height: 155px;
     background-color: white;
 }
@@ -496,7 +496,7 @@
     justify-content: flex-start;
 }
 
-.iw-header .user{
+.iw-container .iw-header .user{
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -504,20 +504,20 @@
     height: 100%;
 }
 
-.iw-header .user .user-img img {
+.iw-container .iw-header .user .user-img img {
     width: 18px;
     height: 18px;
     border-radius: 50%;
     border: 1px solid white;
 }
 
-.iw-header .user-name {
+.iw-container .iw-header .user-name {
     color: white;
     font-size: 12px !important;
     font-weight: 600;
 }
 
-.iw-header .user .is-offering{
+.iw-container .iw-header .user .is-offering{
     color: #7EA3DE;
     font-size: 12px;
     font-weight: 600;
@@ -854,7 +854,7 @@ a:link, a:hover, a:visited, a:active  {
 }
 
 #message-location, .user-stats {
-    overflow-y: scroll;
+    overflow-y: auto;
     height: 100%;
 }
 
@@ -995,7 +995,7 @@ a:link, a:hover, a:visited, a:active  {
     flex:1;
     background-color: #2658BC;
     padding-top: 2px;
-    overflow: scroll;
+    overflow: auto;
 }
 
 /* list style */
@@ -1123,7 +1123,7 @@ a:link, a:hover, a:visited, a:active  {
   margin-left: auto;
 }
 
-.watched {
+.caption .nav-btns .watched {
   color: green;
 }
 
