@@ -86,12 +86,6 @@ $klein->with('/messages', function () use ($klein) {
         return $controller->generatePage();
     });
 
-    $klein->respond('GET', '/[:conversationID]', function ($request, $response) {
-        // view a specific conversation
-        $conversationID = $request->conversationID;
-        $controller = new MessageController();
-        return $controller->generatePage($conversationID);
-    });
 
     // these are the API based messaging tasks
     // todo: error/failure in response.
@@ -126,6 +120,13 @@ $klein->with('/messages', function () use ($klein) {
         $conversationID = $request->conversationID;
         $controller = new MessageController();
         return $controller->generateMessageDisplay($conversationID);
+    });
+    
+    $klein->respond('GET', '/conversation/[:conversationID]', function ($request, $response) {
+        // view a specific conversation
+        $conversationID = $request->conversationID;
+        $controller = new MessageController();
+        return $controller->generatePage($conversationID);
     });
 });
 
