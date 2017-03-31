@@ -6,11 +6,11 @@ $(document).ready(function(){
 
 //Takes user to MessagePage for this conversation
 
- $(document).on('click', '.chatBtn', function(){
-   var conversationID = $(this).attr("id");
-   var url = window.location.protocol + "//" + window.location.host + "/" + 'messages/conversation/' + conversationID ;
-   window.location.href = url;
- });
+// $(document).on('click', '.chatBtn', function(){
+//   var conversationID = $(this).attr("id");
+//   var url = window.location.protocol + "//" + window.location.host + "/" + 'messages/conversation/' + conversationID ;
+//   window.location.href = url;
+// });
 
 $(document).on('click', '#deleteBtn', function(){
   var url = window.location.protocol + "//" + window.location.host + "/" + 'messages/delete-conversation';
