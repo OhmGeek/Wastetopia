@@ -30,8 +30,10 @@ function imageUpload() {
         contentType: false,
         success: function (res) {
             console.log("success in upload");
+            console.log(res);
             var items = JSON.parse(res);
-            items.forEach(function(index, item) {
+            console.log(res);
+            items.forEach(function(item) {
                 showUploadedItem(item.url, item.id);
             });
         }
