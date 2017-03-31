@@ -23,9 +23,9 @@ $(document).on('click', '#deleteBtn', function(){
 });
 
 //Polling to update People-list (in case of new conversations/messages)
-setInterval(function(){
-    loadUsers();
-}, 3000);
+//setInterval(function(){
+//    loadUsers();
+//}, 3000);
 
 
 function loadUsers(){
