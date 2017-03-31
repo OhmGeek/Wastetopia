@@ -99,7 +99,7 @@ class MessageController
 
 
 		//MessageDisplay.twig
-		$template = $this->twig->loadTemplate('/messages/MessageDisplay.twig');
+		$template = $this->twig->loadTemplate('/messaging/MessageDisplay.twig');
 
 		//print_r(json_encode($output));
 		return $template->render($output);
