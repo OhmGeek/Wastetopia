@@ -36,10 +36,11 @@ class AddItemController
 
     public function addItemImage($files) {
         // this adds an item to S3 and to the DB, returning the Id and url
+        error_log(json_encode($files));
         $s3 = new AmazonS3();
         $urls = $s3->upload($files);
         $uploadedImages = array();
-        error_log($urls);
+        error_log(json_encode($urls));
         foreach($urls as $url) {
             $id = $this->model->addToImageTable('img', $url);
             // now let's create an object inside

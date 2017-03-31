@@ -24,6 +24,7 @@ function imageUpload() {
         url: 'https://wastetopia-pr-17.herokuapp.com/api/items/addimage',
         type: "POST",
         data: formdata,
+        cache: false,
         processData: false,
         contentType: false,
         success: function (res) {
