@@ -47,6 +47,8 @@ $(function () {
   $grid.on('click', '#watch', function(){
      var listingID = $(this).closest('.thumbnail').attr("id");
      var isUser = parseInt($(this).closest('.user-stats').attr("id"));
+     var listing = $(this);
+    
      $.post("/profile/toggle-watch-list/"+listingID, function(response){
        // Do something depending on if response is true or false?? (Currently always true)
        console.log("DONE");
@@ -54,12 +56,12 @@ $(function () {
       // 1 means deleted, 2 means added
       if (response == 1){
         // Set colour to pale (Deleted)
-        $(this).removeClass("watched");
-        console.log($(this));
+        listing.removeClass("watched");
+        console.log(listing);
       }else{
         // Set colour to dark (Added)
-        $(this).addClass("watched");
-        console.log($(this));
+        listing.addClass("watched");
+        console.log(listing);
       }
      });
   });
