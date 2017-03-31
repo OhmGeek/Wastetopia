@@ -124,7 +124,9 @@ $klein->with('/messages', function () use ($klein) {
     
     $klein->respond('GET', '/conversation/[:conversationID]', function ($request, $response) {
         // view a specific conversation
+        console.log("Getting conversation");
         $conversationID = $request->conversationID;
+        console.log($conversationID);
         $controller = new MessageController();
         return $controller->generatePage($conversationID);
     });
