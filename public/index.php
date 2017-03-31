@@ -3,11 +3,11 @@
 require_once '../vendor/autoload.php';
 
 use Klein\Klein;
-use Wastetopia\Controller\Login_Controller;
 use Wastetopia\Config\CurrentConfig;
-use Wastetopia\Controller\LoginController;
+use Wastetopia\Controller\ConversationListController;
+use Wastetopia\Controller\Login_Controller;
 use Wastetopia\Controller\SearchController;
-
+use Wastetopia\Controller\MessageController;
 
 
 // check if we should use production? Otherwise, use community.
@@ -93,6 +93,59 @@ $klein->with('/api', function () use ($klein) {
         return "Show Item " . $itemID;
     });
 
+});
+
+
+// todo authenticate on messages. Must be logged in to view correct messages.
+$klein->with('/messages', function () use ($klein) {
+
+    $klein->respond('GET', '/?', function ($request, $response) {
+        // Show all conversations
+        $controller = new ConversationListController();
+        return $controller->generatePage();
+    });
+
+    $klein->respond('GET', '/[:conversationID]', function ($request, $response) {
+        // view a specific conversation
+        $conversationID = $request->conversationID;
+        $controller = new MessageController();
+        return $controller->generatePage($conversationID);
+    });
+
+    // these are the API based messaging tasks
+    // todo: error/failure in response.
+    $klein->respond('POST', '/send', function ($request, $response) {
+        //send a message
+        //we need the conversationID and the message.
+        $conversationID = $request->conversationID;
+        $message = $request->message;
+
+        $controller = new MessageController();
+        $controller->sendMessage($conversationID,$message);
+        return "";
+    });
+
+    $klein->respond('POST', '/delete-conversation', function ($request, $response) {
+        $controller = new ConversationListController();
+        $conversationID = $request->conversationID;
+        $controller->deleteConversation($conversationID);
+        return "";
+    });
+
+    $klein->respond('GET', '/poll-sending', function ($request, $response) {
+        $controller = new ConversationListController();
+        return $controller->generateSendingTabHTML();
+    });
+
+    $klein->respond('GET', '/poll-receiving', function ($request, $response) {
+        $controller = new ConversationListController();
+        return $controller->generateReceivingTabHTML();
+    });
+    $klein->respond('GET', '/poll-messages/[:conversationID]', function ($request, $response) {
+        $conversationID = $request->conversationID;
+        $controller = new MessageController();
+        return $controller->generateMessageDisplay($conversationID);
+    });
 });
 
 

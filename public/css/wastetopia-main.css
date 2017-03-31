@@ -128,8 +128,8 @@
 }
 
 .no-padding {
-    padding-right: 1px;
-    padding-left: 1px;
+	padding-right: 1px;
+	padding-left: 1px;
 }
 
 /* sidebar options styles */
@@ -431,7 +431,7 @@
 .item-FAQ li .faq-q{
     margin-left: -20px;
     margin-top: -20px;n
-width: 80px;
+    width: 80px;
     height: 80px;
     border: 3px solid #1C1D21;
     border-radius: 50%;
@@ -603,13 +603,13 @@ label.checkbox-inline .checkbox-material .check {
 
 .checkbox input[type=checkbox]:checked + .checkbox-material .check,
 label.checkbox-inline input[type=checkbox]:checked + .checkbox-material .check {
-    color: white;
-    background-color: #31353D;
-    border-color: #31353D;
+  color: white;
+  background-color: #31353D;
+  border-color: #31353D;
 }
 .checkbox input[type=checkbox]:checked + .checkbox-material .check:before,
 label.checkbox-inline input[type=checkbox]:checked + .checkbox-material .check:before {
-    color: white;
+  color: white;
 }
 
 .select2-container--default.select2-container--focus .select2-selection--multiple {
@@ -663,39 +663,39 @@ label.checkbox-inline input[type=checkbox]:checked + .checkbox-material .check:b
 
 /* profile page styles */
 .user-profile {
-    width: 100%;
-    background-color: white;
-    padding: 20px 0 20px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    position: absolute;
-    top: 60px;
-    z-index: 2;
+  width: 100%;
+  background-color: white;
+  padding: 10px 5px 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  position: absolute;
+  top: 60px;
+  z-index: 2;
 }
 
 .user-profile .user-img {
-    border-radius: 0;
-    width: 150px;
-    height: 150px;
-    overflow: hidden;
-    background-image: url("food1.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    border: 2px solid black;
+  border-radius: 0;
+  width: 150px;
+  height: 150px;
+  overflow: hidden;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  border: 2px solid black;
 }
 
 .user-profile .user-name{
-    font-size: 25px;
+  font-size: 25px;
 }
 
 .user-profile .popularity {
-    font-size: 35px;
+  font-size: 35px;
 }
 
 .user-profile .popularity i {
-    font-size: 35px;
+  font-size: 35px;
 }
 
 a:link, a:hover, a:visited, a:active  {
@@ -703,50 +703,96 @@ a:link, a:hover, a:visited, a:active  {
 }
 
 .tile {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    background-color: white;
-    text-decoration: none;
-    padding: 10px 5px 10px 10px;
-    border-radius: 5px;
-    margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background-color: white;
+  text-decoration: none;
+  padding: 10px 5px 10px 10px;
+  border-radius: 5px;
+  margin-bottom: 10px;
 }
 
 .stat .count {
-    font-size: 50px;
-    font-weight: bold;
-    color: grey;
+  font-size: 50px;
+  font-weight: bold;
+  color: grey;
 }
 
 .icon i {
-    font-size: 80px;
-    color: grey;
+  font-size: 80px;
+  color: grey;
 }
 
 .user-stats .title {
-    padding: 10px;
-    font-size: 30px;
-    font-weight: bolder;
+  padding: 0 10px;
+  font-size: 30px;
+  font-weight: bolder;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 }
 
 .user-stats .title i {
-    font-size: 55px;
-    font-weight: bold;
+  font-size: 55px;
+  font-weight: bold;
 }
 
 .thumbnail {
-    margin-bottom: 15px;
+  margin-bottom: 15px;
+}
+
+.thumbnail .trans-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.user-stats .trans-info .user-image {
+  width: 20px;
+  height: 20px;
+}
+
+.user-stats .title .btn-addOffer i {
+  font-size: 30px;
+  margin-right: 5px;
+}
+
+.user-stats .title .btn-addOffer {
+  font-size: 20px;
+  margin-left: auto;
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+  font-weight: normal;
+}
+
+.request-options {
+  margin-bottom: 5px;
+  display: flex;
+  justify-content: center;
+}
+
+.thumbnail .trans-info span,
+#offers .added-date {
+  font-weight: bolder;
+  margin-right: 5px;
+}
+
+.thumbnail .trans-info .user ,
+.thumbnail .trans-info .request-by{
+  display: flex;
+  align-items: center;
 }
 
 /* Messaging */
 /* Conversation page */
 .row .row-eq-height {
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
 }
 
 .coversation-frame{
@@ -1041,7 +1087,6 @@ a:link, a:hover, a:visited, a:active  {
     font-weight: bolder;
     display: flex;
     align-items: center;
-    margin: 2px 0;
 }
 
 .popularity i {
@@ -1049,10 +1094,11 @@ a:link, a:hover, a:visited, a:active  {
     color: grey;
 }
 
-.added-date{
-    font-size: 12px;
+.added-date,
+ .thumbnail .trans-info,
+ .thumbnail .trans-info .user-name {
+    font-size: 13px;
     color: grey;
-    margin-top: 2px;
 }
 
 .road-distance {
@@ -1074,25 +1120,25 @@ a:link, a:hover, a:visited, a:active  {
 }
 
 .caption .nav-btns .btn-watch {
-    margin-left: auto;
+  margin-left: auto;
 }
 
 .watched {
-    color: green;
+  color: green;
 }
 
 .request-status {
-    width: 100%;
-    text-align: center;
-    color: white;
-    padding: 5px 0;
-    font-weight: bolder;
+  width: 100%;
+  text-align: center;
+  color: white;
+  padding: 5px 0;
+  font-weight: bolder;
 }
 
 .complete {
-    background-color: green;
+  background-color: green;
 }
 
 .pending {
-    background-color: orange;
+  background-color: orange;
 }
