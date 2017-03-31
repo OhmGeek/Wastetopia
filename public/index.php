@@ -42,7 +42,6 @@ $klein->with('/search', function () use ($klein) {
     });
     $klein->respond('GET', '/json/[:lat]/[:long]/[:search]/[:tags]', function ($request, $response) {
         $search = new SearchController();
-        //var_dump($request);
         return $search->distanceSearch($request->lat, $request->long, $request->search, $request->tags);
     });
 });
