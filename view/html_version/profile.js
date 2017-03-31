@@ -33,7 +33,7 @@ $(function () {
 
   $grid.on( 'click', '#delete', function() {
     // get the id of the item would be removed
-    console.log($(this).closest('.thumbnail').attr("id"));
+    console.log($(this).closest('.user-stats').attr("id"));
     remove(this)
   });
 

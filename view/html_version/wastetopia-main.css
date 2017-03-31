@@ -496,7 +496,7 @@
     justify-content: flex-start;
 }
 
-.iw-header .user{
+.iw-container .iw-header .user{
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -504,20 +504,20 @@
     height: 100%;
 }
 
-.iw-header .user .user-img img {
+.iw-container .iw-header .user .user-img img {
     width: 18px;
     height: 18px;
     border-radius: 50%;
     border: 1px solid white;
 }
 
-.iw-header .user-name {
+.iw-container .iw-header .user-name {
     color: white;
     font-size: 12px !important;
     font-weight: 600;
 }
 
-.iw-header .user .is-offering{
+.iw-container .iw-header .user .is-offering{
     color: #7EA3DE;
     font-size: 12px;
     font-weight: 600;
