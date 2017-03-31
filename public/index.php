@@ -40,9 +40,9 @@ $klein->with('/search', function () use ($klein) {
         $search = new SearchController();
         return $search->sampleSearch();
     });
-    $klein->respond('GET', '/test', function ($request, $response) {
+    $klein->respond('GET', '/json/[:lat]/[:long]/[:search]/[:tags]', function ($request, $response) {
         $search = new SearchController();
-        return $search->distanceSearch(0.7,0.7,"hi","hi");
+        return $search->distanceSearch($request->lat, $request->long, $request->search, $request->tags);
     });
 });
 
