@@ -52,7 +52,7 @@ class MessageController
             "listingPanel"=>$listingPanel);
 
         //Load template and print result
-        $template = $this->twig->loadTemplate('/messages/MessagePage.twig');
+        $template = $this->twig->loadTemplate('/messaging/MessagePage.twig');
         return $template->render($output);
     }
 
