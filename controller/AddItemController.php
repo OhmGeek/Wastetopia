@@ -53,7 +53,7 @@ class AddItemController
             array_push($uploadedImages,$image);
         }
         error_log("Test");
-        error_log($uploadedImages);
+        error_log(json_encode($uploadedImages));
         return json_encode($uploadedImages); //encode the image output as json.
     }
 
