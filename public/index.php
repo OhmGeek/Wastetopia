@@ -29,14 +29,21 @@ $klein->respond("GET", "/", function() {
     return "HomePage";
 });
 
-$klein->respond("GET", "/search/json/[:search]", function($request) {
-   $search = new SearchController();
-   return $search->basicSearch($request->search);
-});
 
-$klein->respond("GET", "/search/sample", function() {
-   $search = new SearchController();
-   return $search->sampleSearch();
+$klein->with('/search', function () use ($klein) {
+
+    $klein->respond('GET', '/json/[:search]', function ($request, $response) {
+        $search = new SearchController();
+        return $search->basicSearch($request->search);
+    });
+    $klein->respond('GET', '/json/sample', function ($request, $response) {
+        $search = new SearchController();
+        return $search->sampleSearch();
+    });
+    $klein->respond('GET', '/test', function ($request, $response) {
+        $search = new SearchController();
+        return $search->distanceSearch(0.7,0.7,"hi","hi");
+    });
 });
 
 $klein->respond("GET", "/login", function($request, $response) {
@@ -56,8 +63,8 @@ $klein->respond("GET", "/get-env", function() {
     echo "Printing stuff now \n";
     return $envStr;
 });
-$klein->with('/items', function () use ($klein) {
 
+$klein->with('/items', function () use ($klein) {
     $klein->respond('GET', '/?', function ($request, $response) {
         // Generic Items Page
         return "Main Item Page";
@@ -70,8 +77,8 @@ $klein->with('/items', function () use ($klein) {
     });
 
 });
-$klein->with('/api', function () use ($klein) {
 
+$klein->with('/api', function () use ($klein) {
     $klein->respond('POST', '/verify-login', function ($request, $response) {
         $controller = new LoginController();
         $username = $request->email;

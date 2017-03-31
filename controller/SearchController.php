@@ -8,9 +8,20 @@ class SearchController
 {
     public function __construct()
     {
-        /*decide search type*/
+        $this->searchModel = new SearchModel();
     }
 
+
+    public function test()
+    {
+        $searchModel = new SearchModel();
+        $listingIDs = $searchModel->getNearbyItems(0, 0.7);
+
+        return $this->haversineDistance(array('lat' => 0, 'long' => 0), array('lat' => 5.804925, 'long' => 0.728986));
+
+
+        var_dump($listingIDs);
+    }
     public function basicSearch($searchTerm)
     {
         $searchModel = new SearchModel();
@@ -20,11 +31,37 @@ class SearchController
 
         foreach ($listingIDs as $item)
         {
-            $listingResults = $searchModel->getCardDetails(intval($item['ListingID']));
+            $listingResults = $this->searchModel->getCardDetails(intval($item['ListingID']));
             array_push($searchResultsForJSON, $listingResults[0]);
         }
 
         return json_encode($searchResultsForJSON);
+    }
+
+    public function distanceSearch($lat, $long, $search, $tags)
+    {
+        $userLocation = array('lat' => $lat,'long' => $long);
+        $itemInformation = $this->searchModel->getNearbyItems($lat, $long); //Use default distance cap
+        foreach ($itemInformation as $key => $item)
+        {
+            $itemLocation = array('lat' => $item['Latitude'], 'long' => $item['Longitude']);
+            $distance = $this->haversineDistance($userLocation, $itemLocation);
+            $itemInformation[$key]['distance'] = $distance;           
+        }
+
+        usort($itemInformation, function($a, $b)
+        {
+            if ($a['distance'] < $b['distance']) {return 1;}
+            elseif ($a['distance'] > $b['distance']) {return -1;}
+            else {return 0;}
+        });
+
+        $searchResults = [];
+        foreach ($itemInformation as $item) {
+            $result = $this->searchModel->getCardDetails($item["ListingID"]);
+            $searchResults[] = $result;
+        }
+        return json_encode($searchResults);
     }
 
     public function sampleSearch()
@@ -75,16 +112,16 @@ class SearchController
     /*Calculate the distance between point 1 and 2 using the Haversine formula*/
     function haversineDistance($latLong1, $latLong2)
     {
-        $RadLat1 = $latLong1['lat'] * (M_PI/180);
-        $RadLong1 = $latLong1['long'] * (M_PI/180);
-        $RadLat2 = $latLong2['lat'] * (M_PI/180);
-        $RadLong2 = $latLong2['long'] * (M_PI/180);
+        $radLat1 = $latLong1['lat'] * (M_PI/180);
+        $radLong1 = $latLong1['long'] * (M_PI/180);
+        $radLat2 = $latLong2['lat'] * (M_PI/180);
+        $radLong2 = $latLong2['long'] * (M_PI/180);
 
         $radius = floatval('6371e3');  //Radius of the earth in meters
         
-        $haversineDiffLat = $this->haversine($RadLat1 - $RadLat2);
-        $haversineDiffLong = $this->haversine($RadLong1 - $RadLong2);
-        $haversineLongCosLat = cos($RadLat1) * cos($RadLong2) * $haversineDiffLong;
+        $haversineDiffLat = $this->haversine($radLat1 - $radLat2);
+        $haversineDiffLong = $this->haversine($radLong1 - $radLong2);
+        $haversineLongCosLat = cos($radLat1) * cos($radLong2) * $haversineDiffLong;
         $distance = 2*$radius*asin(sqrt($haversineDiffLat+$haversineLongCosLat));
 
         return $distance; 
