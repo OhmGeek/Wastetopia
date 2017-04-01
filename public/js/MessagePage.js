@@ -51,9 +51,11 @@ $(function () {
   //Polling for messages in the current conversation
   setInterval(function(){
     loadMessages();
-    scrollToBottom();
   }, 3000);
 
+  setInterval(function(){
+    scrollToBottom();
+  }, 3000);
 
   //GOES ON MESSAGES PAGE
   function loadMessages(){
