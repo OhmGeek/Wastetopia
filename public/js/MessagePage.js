@@ -1,15 +1,19 @@
 /**
- * Created by Stephen on 04/03/2017.
- */
+* Created by Stephen on 04/03/2017.
+*/
 $(function () {
-console.log("ready");
-//Set scroll bar to bottom
+  console.log("ready");
+  //Set scroll bar to bottom
+
+  scrollToBottom();
+
+  function scrollToBottom(){
     var msgLocDiv = document.getElementById('message-location')
     msgLocDiv.scrollTop = msgLocDiv.scrollHeight - msgLocDiv.clientHeight;
-});
+  }
 
-//Sends message when button is clicked
-$(document).on('click', '#sendBtn', function(ev){
+  //Sends message when button is clicked
+  $(document).on('click', '#sendBtn', function(ev){
     ev.preventDefault();
     console.log("Sending message");
 
@@ -29,29 +33,29 @@ $(document).on('click', '#sendBtn', function(ev){
     console.log(url);
     console.log(data);
 
- $.get(url, data, function(response){
-        //Don't care what the response is
-        //Load message
-	console.log(response);
-	console.log("sent the message");
-        loadMessages();
+    $.get(url, data, function(response){
+      //Don't care what the response is
+      //Load message
+      console.log(response);
+      console.log("sent the message");
+      loadMessages();
 
-	//Set scroll bar to bottom
-    	$("#message-location").scrollTop($("#message-location")[0].scrollHeight);
+      //Set scroll bar to bottom
+      scrollToBottom();
 
     });
 
-});
+  });
 
 
-//Polling for messages in the current conversation
-setInterval(function(){
+  //Polling for messages in the current conversation
+  setInterval(function(){
     loadMessages();
-}, 3000);
+  }, 3000);
 
 
-//GOES ON MESSAGES PAGE
-function loadMessages(){
+  //GOES ON MESSAGES PAGE
+  function loadMessages(){
     console.log("Checking for new messages");
 
     //Extract conversation ID from the page
@@ -66,4 +70,5 @@ function loadMessages(){
     messageDisplay.load(url);
 
 
-}
+  }
+});
