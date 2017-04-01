@@ -63,8 +63,8 @@ $(function () {
     //Replace its inner HTML with new messages
     var url = window.location.protocol + '//' + window.location.host + '/messages/poll-messages/' + conversationID;
     messageDisplay.replaceWith(url, function(){
-      console.log("i was told to scroll to the bottom");
-      scrollToBottom();
+      //console.log("i was told to scroll to the bottom");
+      //scrollToBottom();
     });
   }
 });
