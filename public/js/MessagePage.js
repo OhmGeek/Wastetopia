@@ -65,6 +65,7 @@ $(function () {
     $.get(url, function(htmlResponse){
       console.log(htmlResponse);
       messageDisplay.replaceWith(htmlResponse);
+      scrollToBottom();
     });
   }
 });
