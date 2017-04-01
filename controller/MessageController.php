@@ -21,6 +21,11 @@ class MessageController
 	}
 
 
+    function generatePageFromListing($listingID){
+	$conversationID = $this->model->getConversationIDFromListing($listingID);
+	return $this->generatePage($conversationID);    
+    }
+
     /**
      * Generates (and prints) HTML for messaging page with initial conversation loaded
      * @param $conversationID
