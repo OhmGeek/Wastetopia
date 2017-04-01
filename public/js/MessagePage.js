@@ -40,9 +40,6 @@ $(function () {
       console.log("sent the message");
       loadMessages();
 
-      //Set scroll bar to bottom
-      scrollToBottom();
-
     });
 
   });
@@ -51,10 +48,6 @@ $(function () {
   //Polling for messages in the current conversation
   setInterval(function(){
     loadMessages();
-  }, 3000);
-
-  setInterval(function(){
-    scrollToBottom();
   }, 3000);
 
   //GOES ON MESSAGES PAGE
@@ -70,6 +63,8 @@ $(function () {
 
     //Replace its inner HTML with new messages
     var url = window.location.protocol + '//' + window.location.host + '/messages/poll-messages/' + conversationID;
-    messageDisplay.load(url);
+    messageDisplay.load(url, function(){
+      scrollToBottom();
+    });
   }
 });
