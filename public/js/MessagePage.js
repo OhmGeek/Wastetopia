@@ -51,6 +51,7 @@ $(function () {
   //Polling for messages in the current conversation
   setInterval(function(){
     loadMessages();
+    scrollToBottom();
   }, 3000);
 
 
@@ -68,7 +69,5 @@ $(function () {
     //Replace its inner HTML with new messages
     var url = window.location.protocol + '//' + window.location.host + '/messages/poll-messages/' + conversationID;
     messageDisplay.load(url);
-    
-    scrollToBottom();
   }
 });
