@@ -62,7 +62,7 @@ $(function () {
 
     //Replace its inner HTML with new messages
     var url = window.location.protocol + '//' + window.location.host + '/messages/poll-messages/' + conversationID;
-    messageDisplay.load(url.innerHTML, function(){
+    messageDisplay.load(url + ' #message-location', function(){
       console.log("i was told to scroll to the bottom");
       scrollToBottom();
     });
