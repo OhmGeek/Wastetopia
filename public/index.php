@@ -32,17 +32,16 @@ $klein->respond("GET", "/", function() {
 
 $klein->with('/search', function () use ($klein) {
 
-    $klein->respond('GET', '/json/[:search]', function ($request, $response) {
-        $search = new SearchController();
-        return $search->basicSearch($request->search);
-    });
-    $klein->respond('GET', '/json/sample', function ($request, $response) {
-        $search = new SearchController();
-        return $search->sampleSearch();
-    });
-    $klein->respond('GET', '/json/[:lat]/[:long]/[:search]/[:tags]', function ($request, $response) {
-        $search = new SearchController();
-        return $search->distanceSearch($request->lat, $request->long, $request->search, $request->tags);
+    $klein->respond('GET', '/[**:param]', function ($request, $response) {
+        $searchController = new SearchController();
+        $paramArr = explode("/", $request->param);
+        $lat = $paramArr[0];
+        $long = $paramArr[1];
+        $search = $paramArr[2];
+        $tags = $paramArr[3];
+
+        
+        return $searchController->distanceSearch($lat, $long, $search, $tags);
     });
 });
 

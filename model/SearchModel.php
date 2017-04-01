@@ -257,41 +257,4 @@ class SearchModel
 
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
-/*
-    function test($tagsArray)
-    {           
-
-        $queryString =  "SELECT `Listing`.`ListingID`
-                        FROM `Listing`
-                        JOIN `Item` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
-                        JOIN `Location` ON `Listing`.`FK_Location_LocationID` = `Location`.`LocationID` 
-                        WHERE ABS(`Location`.`Latitude` - :userLat) < :distanceLimit
-                        AND ABS(`Location`.`Longitude` - :userLong) < :distanceLimit
-                        AND `Item`.`Name` LIKE :search
-                        AND `Listing`.`ListingID` = ";
-
-        foreach ($tagsArray as $key => $tag)
-        {
-            $subQuery = "(SELECT `Listing`.`ListingID` 
-                         FROM `Listing`
-                         JOIN `Item` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
-                         JOIN `Itemtag` ON `Item`.`ItemID` = `Itemtag`.`FK_Item_ItemID`
-
-                         WHERE `FK_Tag_TagID` = :tag".$key;
-            if len($tagsArray) !== $key
-            {
-
-            }             
-            $queryString = $queryString.$subQuery;
-        }
-
-        foreach ($tagsArray as $key => $tag)
-        {
-            $queryString = $queryString. ")";
-        }
-        $queryString = $queryString.";";
-        
-        print ($queryString);
-    }
-*/
 }
