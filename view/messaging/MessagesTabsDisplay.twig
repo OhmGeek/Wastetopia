@@ -12,16 +12,16 @@
 					<img src="{{conversation.userImage}}" class="user-image"/>
 					<div class="conv-user">
 						<div class="user-name">
-							{{conversation.user}}
+							{{conversation.userName}}
 						</div>
 						<div>
-							{% if giving == 1 %}requesting{% else %}offering{% endif %}<span class="item">{{conversation.item}}</span>
+							{% if giving == 1 %}requesting {% else %}offering {% endif %}<span class="item">{{conversation.item}}</span>
 						</div>
 					</div>
 					<button type="button" id="deleteBtn" class="btn-nav">
 						<i class="material-icons">delete</i>
 					</button>
-					<a role="button" id="chatBtn" class="btn-nav" href="{{ID}}" >
+					<a role="button" id="{{conversation.conversationID}}" class="btn-nav chatBtn" href="/messages/conversation/{{conversation.conversationID}}" >
 						{% if conversation.numUnread == 0 %}<i class="material-icons">arrow_forward</i>{% else %}<span class="badge">{{conversation.numUnread}}</span>{% endif %}
 					</a>
 				</div>

@@ -52,7 +52,7 @@ class MessageController
             "listingPanel"=>$listingPanel);
 
         //Load template and print result
-        $template = $this->twig->loadTemplate('MessagePage.twig');
+        $template = $this->twig->loadTemplate('/messaging/MessagePage.twig');
         return $template->render($output);
     }
 
@@ -99,7 +99,7 @@ class MessageController
 
 
 		//MessageDisplay.twig
-		$template = $this->twig->loadTemplate('MessageDisplay.twig');
+		$template = $this->twig->loadTemplate('/messaging/MessageDisplay.twig');
 
 		//print_r(json_encode($output));
 		return $template->render($output);

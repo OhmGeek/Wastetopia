@@ -1,6 +1,6 @@
 <div id="message-location">
     {% for message in messages %}
-        <div class="{% if message.sender == 1 %}sender{% else %}reciever{% endif %}">
+        <div class="{% if message.sender == 1 %}sender{% else %}receiver{% endif %}">
             <div class="content">
                 {{message.content}}
             </div>
