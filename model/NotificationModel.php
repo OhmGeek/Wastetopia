@@ -45,7 +45,8 @@ class NotificationModel
         FROM `ListingTransaction` 
         JOIN `Listing` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
         JOIN `User` ON `User`.`UserID` = `Listing`.`FK_User_UserID`
-        WHERE `UserID` = :userID; 
+        WHERE `UserID` = :userID
+        AND `ListingTransaction`.`Viewed` = 0; 
         ");
 
         $statement->bindValue(":userID", $userID, PDO::PARAM_STR);
