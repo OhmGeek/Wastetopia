@@ -1,11 +1,11 @@
 /**
  * Created by Stephen on 04/03/2017.
  */
-$(document).ready(function(){
+$(function () {
 console.log("ready");
 //Set scroll bar to bottom
-    $("#message-location").scrollTop($("#message-location")[0].scrollHeight);
-
+    var msgLocDiv = document.getElementById('message-location')
+    msgLocDiv.scrollTop = msgLocDiv.scrollHeight - msgLocDiv.clientHeight;
 });
 
 //Sends message when button is clicked
@@ -26,19 +26,19 @@ $(document).on('click', '#sendBtn', function(ev){
     //Send message
     var url = window.location.protocol + "//" + window.location.host + "/" + 'messages/send';
     var data = {conversationID:conversationID, message:content};
-    console.log(url);   
+    console.log(url);
     console.log(data);
-	
+
  $.get(url, data, function(response){
         //Don't care what the response is
-        //Load message	
+        //Load message
 	console.log(response);
 	console.log("sent the message");
         loadMessages();
 
 	//Set scroll bar to bottom
     	$("#message-location").scrollTop($("#message-location")[0].scrollHeight);
-	
+
     });
 
 });
