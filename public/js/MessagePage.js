@@ -32,7 +32,7 @@ $(function () {
     console.log(url);
     console.log(data);
 
-    $.get(url, data, function(response){
+    $.post(url, data, function(response){
       //Don't care what the response is
       //Load message
       console.log(response);
