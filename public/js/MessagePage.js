@@ -62,8 +62,9 @@ $(function () {
 
     //Replace its inner HTML with new messages
     var url = window.location.protocol + '//' + window.location.host + '/messages/poll-messages/' + conversationID;
-    messageDisplay.get(url, function(htmlResponse){
+    $.get(url, function(htmlResponse){
       console.log(htmlResponse);
+      messageDisplay.replaceWith(htmlResponse);
     });
   }
 });
