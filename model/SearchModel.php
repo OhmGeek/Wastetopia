@@ -25,7 +25,7 @@ class SearchModel
         $this->db = DB::getDB();
     }
     //SEARCH FUNCTIONS HERE: ALL MUST RETURN LISTING ID's
-    /**
+    /*
      * Searches by name, returns all the listing IDs of items matching $name
      * @param $name
      * @return mixed
@@ -186,7 +186,7 @@ class SearchModel
       and returns results only within this area
       At the equator the width is roughly 77km, at London, 56km
       and at the UK Arctic Research Station, 30km*/
-    function getNearbyItems($userLat, $userLong, $search, $tags, $distanceLimit = 0.76)
+/*    function getNearbyItems($userLat, $userLong, $search, $tagsArray, $distanceLimit = 0.76)
     {
         $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
         $statement = $this->db->prepare("
@@ -205,5 +205,93 @@ class SearchModel
         $statement->bindValue(":distanceLimit", strval($distanceLimit), PDO::PARAM_STR);
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_ASSOC);
+    }*/
+
+    function getNearbyItems($userLat, $userLong, $search, $tagsArray, $distanceLimit = 0.76)
+    {
+        $tagCount = count($tagsArray);
+
+        $sql = "SELECT `Listing`.`ListingID`, `Location`.`Latitude`, `Location`.`Longitude`
+            FROM `Listing`
+            JOIN `Item` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
+            JOIN `Location` ON `Listing`.`FK_Location_LocationID` = `Location`.`LocationID` 
+            WHERE ABS(`Location`.`Latitude` - :userLat) < :distanceLimit
+            AND ABS(`Location`.`Longitude` - :userLong) < :distanceLimit
+            AND `Item`.`Name` LIKE :search
+            AND `Listing`.`ListingID` IN (SELECT `TagCount`.`ListingID`
+                                         FROM (SELECT `Listing`.`ListingID`, COUNT(DISTINCT `ItemTag`.`FK_Tag_TagID`) AS `Count`
+                                               FROM `Listing`
+                                               JOIN `Item` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
+                                               JOIN `ItemTag` ON `Item`.`ItemID` = `ItemTag`.`FK_Item_ItemID`
+                                               WHERE `ItemTag`.`FK_Tag_TagID` IN (";
+        foreach ($tagsArray as $key => $tag) 
+        {
+            if ($key == ($tagCount-1))
+            {
+                $sql .= ":tag".$key;
+            }
+            else
+            {
+                $sql .= ":tag".$key.",";
+            }
+            
+        }
+
+        $sql .= ")
+                 GROUP BY `Listing`.`ListingID`
+                     ) as `TagCount`
+                 WHERE `TagCount`.`Count` = :tagCount);";
+
+        $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+        $statement = $this->db->prepare($sql);
+        foreach ($tagsArray as $key => $tag)
+        {
+            $statement->bindValue(":tag".$key, $tag, PDO::PARAM_INT);
+        }
+        $statement->bindValue(":userLat", strval($userLat), PDO::PARAM_STR);
+        $statement->bindValue(":userLong", strval($userLong), PDO::PARAM_STR);
+        $statement->bindValue(":search", strval('%'.$search.'%'), PDO::PARAM_STR);
+        $statement->bindValue(":tagCount", strval($tagCount), PDO::PARAM_STR);
+        $statement->bindValue(":distanceLimit", strval($distanceLimit), PDO::PARAM_STR);
+        $statement->execute();
+
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
+/*
+    function test($tagsArray)
+    {           
+
+        $queryString =  "SELECT `Listing`.`ListingID`
+                        FROM `Listing`
+                        JOIN `Item` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
+                        JOIN `Location` ON `Listing`.`FK_Location_LocationID` = `Location`.`LocationID` 
+                        WHERE ABS(`Location`.`Latitude` - :userLat) < :distanceLimit
+                        AND ABS(`Location`.`Longitude` - :userLong) < :distanceLimit
+                        AND `Item`.`Name` LIKE :search
+                        AND `Listing`.`ListingID` = ";
+
+        foreach ($tagsArray as $key => $tag)
+        {
+            $subQuery = "(SELECT `Listing`.`ListingID` 
+                         FROM `Listing`
+                         JOIN `Item` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
+                         JOIN `Itemtag` ON `Item`.`ItemID` = `Itemtag`.`FK_Item_ItemID`
+
+                         WHERE `FK_Tag_TagID` = :tag".$key;
+            if len($tagsArray) !== $key
+            {
+
+            }             
+            $queryString = $queryString.$subQuery;
+        }
+
+        foreach ($tagsArray as $key => $tag)
+        {
+            $queryString = $queryString. ")";
+        }
+        $queryString = $queryString.";";
+        
+        print ($queryString);
+    }
+*/
 }
