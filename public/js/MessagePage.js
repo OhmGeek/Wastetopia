@@ -8,8 +8,7 @@ $(function () {
   scrollToBottom();
 
   function scrollToBottom(){
-    var msgLocDiv = document.getElementById('message-location')
-    msgLocDiv.scrollTop = msgLocDiv.scrollHeight - msgLocDiv.clientHeight;
+    $('#message-location').scrollTop($('#message-location')[0].scrollHeight);
   }
 
   //Sends message when button is clicked
@@ -64,7 +63,7 @@ $(function () {
     //Replace its inner HTML with new messages
     var url = window.location.protocol + '//' + window.location.host + '/messages/poll-messages/' + conversationID;
     messageDisplay.load(url, function(){
-      scrollToBottom();
+      $('#message-location').scrollTop($('#message-location')[0].scrollHeight);
     });
   }
 });
