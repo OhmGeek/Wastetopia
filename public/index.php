@@ -95,6 +95,8 @@ $klein->with('/messages', function () use ($klein) {
         $conversationID = $request->conversationID;
         $message = $request->message;
 
+        console.log($conversationID);
+        console.log($message);
         $controller = new MessageController();
         $controller->sendMessage($conversationID,$message);
         return "";
