@@ -5,6 +5,8 @@ use Wastetopia\Model\MessageModel;
 use Twig_Loader_Filesystem;
 use Twig_Environment;
 
+
+
 class MessageController
 {
 	
@@ -22,7 +24,17 @@ class MessageController
 
 
     function generatePageFromListing($listingID){
-	$conversationID = $this->model->getConversationIDFromListing($listingID);
+	$conversationIDs = $this->model->getConversationIDFromListing($listingID);
+	if (count($conversationsIDs) > 0){
+	    // Conversation already exists	
+	    $conversationID = $conversationIDs[0];
+	}else{
+	   // Create the conversation 	
+	   $conversationModel = new ConversationListModel();
+	   $conversationModel->createConversation($listingID);
+	   $conversationIDs = $this->model->getConversationIDFromListing($listingID);
+	   $conversationID = $conversationIDs[0];	
+	}
 	return $this->generatePage($conversationID);    
     }
 
