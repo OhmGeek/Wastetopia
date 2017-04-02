@@ -59,8 +59,8 @@ class ProfilePageController
             "userscore" => $userInformation["userscore"],
 			
 			
-			"given" => $userinformation["given"],
-			"received" => $userinformation["received"],
+			"given" => $userInformation["given"],
+			"received" => $userInformation["received"],
             
 			"listingsCount" => $listingsInformation["listingsCount"],
             "emptyListingsCount" => $listingsInformation["emptyListingsCount"],
@@ -88,8 +88,8 @@ class ProfilePageController
         $userInformation = array();
         $userInformation["username"] = $userDetails["Forename"] . " " . $userDetails["Surname"];
 		
-		$userInformation["given"] = "89";
-		$userInformation["received"] = "89";
+		$userInformation["given"] = $this->model->getNumberOfCompletedGiving();
+		$userInformation["received"] = $this->model->getNumberOfCompletedReceived();
 		
 //        $userInformation["email"] = $userDetails["Email_Address"];
         $userInformation["userscore"] = $userDetails["Mean_Rating_Percent"];
