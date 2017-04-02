@@ -8,6 +8,7 @@
 namespace Wastetopia\Model;
 use PDO;
 use Wastetopia\Model\DB;
+
 class ProfilePageModel
 {
     /**
