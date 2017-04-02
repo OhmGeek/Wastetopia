@@ -19,8 +19,6 @@ class ProfilePageModel
     {
         $this->db = DB::getDB();
         $this->userID = $userID;
-		$error_log("string thing here to prove the error_log function works correctly\n");
-
     }
     /**
      * Returns the ID of the user whose profile you're trying to view
