@@ -49,7 +49,7 @@ class MessageModel
 		$statement->execute();
 
 		$results = $statement->fetchAll(PDO::FETCH_ASSOC);    
-	        return $results[0];
+	        return $results;
 	   
     }
 	
