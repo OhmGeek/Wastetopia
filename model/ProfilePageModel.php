@@ -18,7 +18,8 @@ class ProfilePageModel
     {
         $this->db = DB::getDB();
         $this->userID = $userID;
-
+		error_log("Given: " . $this->getNumberOfCompletedGiving());
+		error_log("Received: " . $this->getNumberOfCompletedReceived());
     }
     /**
      * Returns the ID of the user whose profile you're trying to view
@@ -196,42 +197,131 @@ class ProfilePageModel
 
     /**
      * Gets the total number of completed listings the user has given
-     * @return Ineteger
+     * @return Integer
      */
-    function getNumberOfCompletedGiving()
+    function getNumberOfCompletedGiving($year = -1, $month = -1, $timespan = 1)
     {
         $userID = $this->getUserID();
-        $statement = $this->db->prepare("
-            SELECT COUNT(*) as `Count`
-            FROM `Listing`
-            JOIN `ListingTransaction` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
-            JOIN `Transaction` ON `Transaction`.`TransactionID` = `ListingTransaction`.`FK_Transaction_TransactionID`
-            JOIN `User` ON `User`.`UserID` = `Listing`.`FK_User_UserID`
-            WHERE `User`.`UserID` = :userID
-            AND `ListingTransaction`.`Success` = 1
-        ");
-        $statement->bindValue(":userID", $userID, PDO::PARAM_STR);
+		$end_year = $year;
+		$end_month = month;
+		if(count(func_num_args()) == 0){
+			$statement = $this->db->prepare("
+				SELECT COUNT(*) as `Count`
+				FROM `Listing`
+				JOIN `ListingTransaction` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
+				JOIN `Transaction` ON `Transaction`.`TransactionID` = `ListingTransaction`.`FK_Transaction_TransactionID`
+				JOIN `User` ON `User`.`UserID` = `Listing`.`FK_User_UserID`
+				WHERE `User`.`UserID` = :userID
+				AND `ListingTransaction`.`Success` = 1
+				AND Time_Of_Acceptance >= TO_DATE(':start_year-:start_month-01', 'yyyy-mm-dd')
+				AND Time_Of_Acceptance < TO_DATE(':end_year-:end_month-01', 'yyyy-mm-dd')
+			");
+		}
+		else if(count(func_num_args()) == 2 || count(func_num_args()) == 3){
+			$statement = $this->db->prepare("
+				SELECT COUNT(*) as `Count`
+				FROM `Listing`
+				JOIN `ListingTransaction` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
+				JOIN `Transaction` ON `Transaction`.`TransactionID` = `ListingTransaction`.`FK_Transaction_TransactionID`
+				JOIN `User` ON `User`.`UserID` = `Listing`.`FK_User_UserID`
+				WHERE `User`.`UserID` = :userID
+				AND `ListingTransaction`.`Success` = 1
+				AND Time_Of_Acceptance >= TO_DATE(':start_year-:start_month-01', 'yyyy-mm-dd')
+				AND Time_Of_Acceptance < TO_DATE(':end_year-:end_month-01', 'yyyy-mm-dd')
+			");
+			
+			if($month + $timespan >= 13){
+				while($timespan > 1){
+					if($end_month == 12){
+						$end_month = 1;
+						$end_year = $end_year + 1;
+						$timespan = $timespan - 1;
+					}
+					else{
+						$end_month = $end_month + 1;
+						$timespan = $timespan - 1;
+					}
+				}
+			}
+			else{
+				$end_month = $end_month + $timespan;
+			}
+			
+		}
+		else{
+			return false;
+		}
+			
+		$statement->bindValue(":userID", $userID, PDO::PARAM_STR);
+		$statement->bindValue(":start_year", $year, PDO::PARAM_INT);
+		$statement->bindValue(":start_month", $month, PDO::PARAM_INT);
+		$statement->bindValue(":end_year", $end_year, PDO::PARAM_INT);
+		$statement->bindValue(":end_month", $end_month, PDO::PARAM_INT);
         $statement->execute();
         return $statement->fetchColumn();
     }
 
     /**
      * Gets the total number of completed listings the user has received
-     * @return Ineteger
+	 * Optionally limit it to 
+     * @return Integer
      */
-    function getNumberOfCompletedReceived()
+    function getNumberOfCompletedReceived($year = -1, $month = -1, $timespan = 1)
     {
-        $userID = $this->getUserID();
-        $statement = $this->db->prepare("
-            SELECT COUNT(*) as `Count`
-            FROM `Listing`
-            JOIN `ListingTransaction` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
-            JOIN `Transaction` ON `Transaction`.`TransactionID` = `ListingTransaction`.`FK_Transaction_TransactionID`
-            JOIN `User` ON `User`.`UserID` = `Transaction`.`FK_User_UserID`
-            WHERE `User`.`UserID` = :userID
-            AND `ListingTransaction`.`Success` = 1
-        ");
-        $statement->bindValue(":userID", $userID, PDO::PARAM_STR);
+		$userID = $this->getUserID();
+		$end_year = $year;
+		$end_month = month;
+		if(count(func_num_args()) == 0){
+			$statement = $this->db->prepare("
+				SELECT COUNT(*) as `Count`
+				FROM `Listing`
+				JOIN `ListingTransaction` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
+				JOIN `Transaction` ON `Transaction`.`TransactionID` = `ListingTransaction`.`FK_Transaction_TransactionID`
+				WHERE `Transaction`.`FK_User_UserID` = :userID
+				AND `ListingTransaction`.`Success` = 1
+				AND Time_Of_Acceptance >= TO_DATE(':start_year-:start_month-01', 'yyyy-mm-dd')
+				AND Time_Of_Acceptance < TO_DATE(':end_year-:end_month-01', 'yyyy-mm-dd')
+			");
+		}
+		else if(count(func_num_args()) == 2 || count(func_num_args()) == 3){
+			$statement = $this->db->prepare("
+				SELECT COUNT(*) as `Count`
+				FROM `Listing`
+				JOIN `ListingTransaction` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
+				JOIN `Transaction` ON `Transaction`.`TransactionID` = `ListingTransaction`.`FK_Transaction_TransactionID`
+				WHERE `Transaction`.`FK_User_UserID` = :userID
+				AND `ListingTransaction`.`Success` = 1
+				AND Time_Of_Acceptance >= TO_DATE(':start_year-:start_month-01', 'yyyy-mm-dd')
+				AND Time_Of_Acceptance < TO_DATE(':end_year-:end_month-01', 'yyyy-mm-dd')
+			");
+			
+			if($month + $timespan >= 13){
+				while($timespan > 1){
+					if($end_month == 12){
+						$end_month = 1;
+						$end_year = $end_year + 1;
+						$timespan = $timespan - 1;
+					}
+					else{
+						$end_month = $end_month + 1;
+						$timespan = $timespan - 1;
+					}
+				}
+			}
+			else{
+				$end_month = $end_month + $timespan;
+			}
+			
+		}
+		else{
+			return false;
+		}
+			
+		$statement->bindValue(":userID", $userID, PDO::PARAM_STR);
+		$statement->bindValue(":start_year", $year, PDO::PARAM_INT);
+		$statement->bindValue(":start_month", $month, PDO::PARAM_INT);
+		$statement->bindValue(":end_year", $end_year, PDO::PARAM_INT);
+		$statement->bindValue(":end_month", $end_month, PDO::PARAM_INT);
         $statement->execute();
         return $statement->fetchColumn();
     }
@@ -313,3 +403,4 @@ class ProfilePageModel
         return $results[0];
     }
 }
+?>
