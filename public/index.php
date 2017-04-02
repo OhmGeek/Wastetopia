@@ -124,13 +124,13 @@ $klein->with('/messages', function () use ($klein) {
         return $controller->generateMessageDisplay($conversationID);
     });
     
-    $klein->respond('GET', '/conversation/[:conversationID]', function ($request, $response) {
+    $klein->respond('GET', '/conversation/[:listingID]', function ($request, $response) {
         // view a specific conversation
         console.log("Getting conversation");
-        $conversationID = $request->conversationID;
-        console.log($conversationID);
+        $listingID = $request->listingID;
+       
         $controller = new MessageController();
-        return $controller->generatePage($conversationID);
+        return $controller->generatePageFromListing($listingID);
     });
 });
 
