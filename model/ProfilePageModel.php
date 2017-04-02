@@ -18,6 +18,7 @@ class ProfilePageModel
     {
         $this->db = DB::getDB();
         $this->userID = $userID;
+		error_log("some string here now");
 		error_log("Given: " . $this->getNumberOfCompletedGiving());
 		error_log("Received: " . $this->getNumberOfCompletedReceived());
     }
@@ -213,8 +214,6 @@ class ProfilePageModel
 				JOIN `User` ON `User`.`UserID` = `Listing`.`FK_User_UserID`
 				WHERE `User`.`UserID` = :userID
 				AND `ListingTransaction`.`Success` = 1
-				AND Time_Of_Acceptance >= TO_DATE(':start_year-:start_month-01', 'yyyy-mm-dd')
-				AND Time_Of_Acceptance < TO_DATE(':end_year-:end_month-01', 'yyyy-mm-dd')
 			");
 		}
 		else if(count(func_num_args()) == 2 || count(func_num_args()) == 3){
@@ -279,8 +278,6 @@ class ProfilePageModel
 				JOIN `Transaction` ON `Transaction`.`TransactionID` = `ListingTransaction`.`FK_Transaction_TransactionID`
 				WHERE `Transaction`.`FK_User_UserID` = :userID
 				AND `ListingTransaction`.`Success` = 1
-				AND Time_Of_Acceptance >= TO_DATE(':start_year-:start_month-01', 'yyyy-mm-dd')
-				AND Time_Of_Acceptance < TO_DATE(':end_year-:end_month-01', 'yyyy-mm-dd')
 			");
 		}
 		else if(count(func_num_args()) == 2 || count(func_num_args()) == 3){
