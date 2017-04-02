@@ -19,8 +19,8 @@ class ProfilePageModel
         $this->db = DB::getDB();
         $this->userID = $userID;
 		error_log("some string here now");
-		error_log("Given: " . $this->getNumberOfCompletedGiving());
-		error_log("Received: " . $this->getNumberOfCompletedReceived());
+		#error_log("Given: " . $this->getNumberOfCompletedGiving());
+		#error_log("Received: " . $this->getNumberOfCompletedReceived());
     }
     /**
      * Returns the ID of the user whose profile you're trying to view
