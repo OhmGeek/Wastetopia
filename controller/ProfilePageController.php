@@ -88,8 +88,8 @@ class ProfilePageController
         $userInformation = array();
         $userInformation["username"] = $userDetails["Forename"] . " " . $userDetails["Surname"];
 		
-		$userInformation["given"] = 89;
-		$userInformation["received"] = 89;
+		$userInformation["given"] = "89";
+		$userInformation["received"] = "89";
 		
 //        $userInformation["email"] = $userDetails["Email_Address"];
         $userInformation["userscore"] = $userDetails["Mean_Rating_Percent"];
