@@ -201,6 +201,7 @@ class ProfilePageModel
      */
     function getNumberOfCompletedGiving($year = -1, $month = -1, $timespan = 1)
     {
+		return count(func_num_args());
         $userID = $this->getUserID();
 		$end_year = $year;
 		$end_month = month;
@@ -213,8 +214,6 @@ class ProfilePageModel
 				JOIN `User` ON `User`.`UserID` = `Listing`.`FK_User_UserID`
 				WHERE `User`.`UserID` = :userID
 				AND `ListingTransaction`.`Success` = 1
-				AND Time_Of_Acceptance >= TO_DATE(':start_year-:start_month-01', 'yyyy-mm-dd')
-				AND Time_Of_Acceptance < TO_DATE(':end_year-:end_month-01', 'yyyy-mm-dd')
 			");
 		}
 		else if(count(func_num_args()) == 2 || count(func_num_args()) == 3){
@@ -279,8 +278,6 @@ class ProfilePageModel
 				JOIN `Transaction` ON `Transaction`.`TransactionID` = `ListingTransaction`.`FK_Transaction_TransactionID`
 				WHERE `Transaction`.`FK_User_UserID` = :userID
 				AND `ListingTransaction`.`Success` = 1
-				AND Time_Of_Acceptance >= TO_DATE(':start_year-:start_month-01', 'yyyy-mm-dd')
-				AND Time_Of_Acceptance < TO_DATE(':end_year-:end_month-01', 'yyyy-mm-dd')
 			");
 		}
 		else if(count(func_num_args()) == 2 || count(func_num_args()) == 3){
