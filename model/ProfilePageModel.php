@@ -201,11 +201,10 @@ class ProfilePageModel
      */
     function getNumberOfCompletedGiving($year = -1, $month = -1, $timespan = 1)
     {
-		return count(func_num_args());
         $userID = $this->getUserID();
 		$end_year = $year;
 		$end_month = month;
-		if(count(func_num_args()) == 0){
+		if(count(func_num_args()) == 1){
 			$statement = $this->db->prepare("
 				SELECT COUNT(*) as `Count`
 				FROM `Listing`
@@ -216,7 +215,7 @@ class ProfilePageModel
 				AND `ListingTransaction`.`Success` = 1
 			");
 		}
-		else if(count(func_num_args()) == 2 || count(func_num_args()) == 3){
+		else if(count(func_num_args()) == 3 || count(func_num_args()) == 3){
 			$statement = $this->db->prepare("
 				SELECT COUNT(*) as `Count`
 				FROM `Listing`
@@ -270,7 +269,7 @@ class ProfilePageModel
 		$userID = $this->getUserID();
 		$end_year = $year;
 		$end_month = month;
-		if(count(func_num_args()) == 0){
+		if(count(func_num_args()) == 1){
 			$statement = $this->db->prepare("
 				SELECT COUNT(*) as `Count`
 				FROM `Listing`
@@ -280,7 +279,7 @@ class ProfilePageModel
 				AND `ListingTransaction`.`Success` = 1
 			");
 		}
-		else if(count(func_num_args()) == 2 || count(func_num_args()) == 3){
+		else if(count(func_num_args()) == 3 || count(func_num_args()) == 3){
 			$statement = $this->db->prepare("
 				SELECT COUNT(*) as `Count`
 				FROM `Listing`
