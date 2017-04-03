@@ -204,7 +204,7 @@ class ProfilePageModel
         $userID = $this->getUserID();
 		$end_year = $year;
 		$end_month = month;
-		if($year == -1 && $month == -1)){
+		if($year == -1 && $month == -1){
 			$statement = $this->db->prepare("
 				SELECT COUNT(*) as `Count`
 				FROM `Listing`
