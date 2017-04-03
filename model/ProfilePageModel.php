@@ -197,14 +197,14 @@ class ProfilePageModel
 
     /**
      * Gets the total number of completed listings the user has given
-     * @return Ineteger
+     * @return Integer
      */
     function getNumberOfCompletedGiving($year = -1, $month = -1, $timespan = 1)
     {
         $userID = $this->getUserID();
 		$end_year = $year;
 		$end_month = month;
-		if(count(func_num_args()) == 1){
+		if($year == -1 && $month == -1)){
 			$statement = $this->db->prepare("
 				SELECT COUNT(*) as `Count`
 				FROM `Listing`
@@ -214,8 +214,9 @@ class ProfilePageModel
 				WHERE `User`.`UserID` = :userID
 				AND `ListingTransaction`.`Success` = 1
 			");
+			$statement->bindValue(":userID", $userID, PDO::PARAM_STR);
 		}
-		else if(count(func_num_args()) == 3 || count(func_num_args()) == 3){
+		else if($year != -1 && $month != -1){
 			$statement = $this->db->prepare("
 				SELECT COUNT(*) as `Count`
 				FROM `Listing`
@@ -227,7 +228,11 @@ class ProfilePageModel
 				AND Time_Of_Acceptance >= TO_DATE(':start_year-:start_month-01', 'yyyy-mm-dd')
 				AND Time_Of_Acceptance < TO_DATE(':end_year-:end_month-01', 'yyyy-mm-dd')
 			");
-			
+			$statement->bindValue(":userID", $userID, PDO::PARAM_STR);
+			$statement->bindValue(":start_year", $year, PDO::PARAM_INT);
+			$statement->bindValue(":start_month", $month, PDO::PARAM_INT);
+			$statement->bindValue(":end_year", $end_year, PDO::PARAM_INT);
+			$statement->bindValue(":end_month", $end_month, PDO::PARAM_INT);
 			if($month + $timespan >= 13){
 				while($timespan > 1){
 					if($end_month == 12){
@@ -250,11 +255,6 @@ class ProfilePageModel
 			return false;
 		}
 			
-		$statement->bindValue(":userID", $userID, PDO::PARAM_STR);
-		$statement->bindValue(":start_year", $year, PDO::PARAM_INT);
-		$statement->bindValue(":start_month", $month, PDO::PARAM_INT);
-		$statement->bindValue(":end_year", $end_year, PDO::PARAM_INT);
-		$statement->bindValue(":end_month", $end_month, PDO::PARAM_INT);
         $statement->execute();
         return $statement->fetchColumn();
     }
@@ -269,7 +269,7 @@ class ProfilePageModel
 		$userID = $this->getUserID();
 		$end_year = $year;
 		$end_month = month;
-		if(count(func_num_args()) == 1){
+		if($year == -1 && $month == -1){
 			$statement = $this->db->prepare("
 				SELECT COUNT(*) as `Count`
 				FROM `Listing`
@@ -278,8 +278,9 @@ class ProfilePageModel
 				WHERE `Transaction`.`FK_User_UserID` = :userID
 				AND `ListingTransaction`.`Success` = 1
 			");
+			$statement->bindValue(":userID", $userID, PDO::PARAM_STR);
 		}
-		else if(count(func_num_args()) == 3 || count(func_num_args()) == 3){
+		else if($year != -1 && $month != -1){
 			$statement = $this->db->prepare("
 				SELECT COUNT(*) as `Count`
 				FROM `Listing`
@@ -290,7 +291,11 @@ class ProfilePageModel
 				AND Time_Of_Acceptance >= TO_DATE(':start_year-:start_month-01', 'yyyy-mm-dd')
 				AND Time_Of_Acceptance < TO_DATE(':end_year-:end_month-01', 'yyyy-mm-dd')
 			");
-			
+			$statement->bindValue(":userID", $userID, PDO::PARAM_STR);
+			$statement->bindValue(":start_year", $year, PDO::PARAM_INT);
+			$statement->bindValue(":start_month", $month, PDO::PARAM_INT);
+			$statement->bindValue(":end_year", $end_year, PDO::PARAM_INT);
+			$statement->bindValue(":end_month", $end_month, PDO::PARAM_INT);
 			if($month + $timespan >= 13){
 				while($timespan > 1){
 					if($end_month == 12){
@@ -313,11 +318,7 @@ class ProfilePageModel
 			return false;
 		}
 			
-		$statement->bindValue(":userID", $userID, PDO::PARAM_STR);
-		$statement->bindValue(":start_year", $year, PDO::PARAM_INT);
-		$statement->bindValue(":start_month", $month, PDO::PARAM_INT);
-		$statement->bindValue(":end_year", $end_year, PDO::PARAM_INT);
-		$statement->bindValue(":end_month", $end_month, PDO::PARAM_INT);
+		
         $statement->execute();
         return $statement->fetchColumn();
     }
