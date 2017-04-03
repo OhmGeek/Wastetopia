@@ -218,7 +218,7 @@ class ProfilePageModel
 				WHERE `User`.`UserID` = :userID
 				AND `ListingTransaction`.`Success` = 1;
 			");
-			$statement->bindValue(":userID", $userID, PDO::PARAM_STR);
+			$statement->bindValue(":userID", $userID, PDO::PARAM_INT);
 		}
 		else if($year != -1 && $month != -1){
 			error_log("GOT HERE INSTEAD!");
@@ -233,11 +233,11 @@ class ProfilePageModel
 				AND Time_Of_Acceptance >= ':start_year-:start_month-01 00:00:00'
 				AND Time_Of_Acceptance < ':end_year-:end_month-01 00:00:00';
 			");
-			$statement->bindValue(":userID", $userID, PDO::PARAM_STR);
-			$statement->bindValue(":start_year", $year, PDO::PARAM_INT);
-			$statement->bindValue(":start_month", $month, PDO::PARAM_INT);
-			$statement->bindValue(":end_year", $end_year, PDO::PARAM_INT);
-			$statement->bindValue(":end_month", $end_month, PDO::PARAM_INT);
+			$statement->bindValue(":userID", $userID, PDO::PARAM_INT);
+			$statement->bindValue(":start_year", $year, PDO::PARAM_STR);
+			$statement->bindValue(":start_month", $month, PDO::PARAM_STR);
+			$statement->bindValue(":end_year", $end_year, PDO::PARAM_STR);
+			$statement->bindValue(":end_month", $end_month, PDO::PARAM_STR);
 			if($month + $timespan >= 13){
 				error_log("GREATER THAN 13!");
 				while($timespan > 1){
@@ -289,7 +289,7 @@ class ProfilePageModel
 				WHERE `Transaction`.`FK_User_UserID` = :userID
 				AND `ListingTransaction`.`Success` = 1;
 			");
-			$statement->bindValue(":userID", $userID, PDO::PARAM_STR);
+			$statement->bindValue(":userID", $userID, PDO::PARAM_INT);
 		}
 		else if($year != -1 && $month != -1){
 			error_log("GOT HERE!");
@@ -303,11 +303,11 @@ class ProfilePageModel
 				AND Time_Of_Acceptance >= ':start_year-:start_month-01 00:00:00'
 				AND Time_Of_Acceptance < ':end_year-:end_month-01 00:00:00';
 			");
-			$statement->bindValue(":userID", $userID, PDO::PARAM_STR);
-			$statement->bindValue(":start_year", $year, PDO::PARAM_INT);
-			$statement->bindValue(":start_month", $month, PDO::PARAM_INT);
-			$statement->bindValue(":end_year", $end_year, PDO::PARAM_INT);
-			$statement->bindValue(":end_month", $end_month, PDO::PARAM_INT);
+			$statement->bindValue(":userID", $userID, PDO::PARAM_INT);
+			$statement->bindValue(":start_year", $year, PDO::PARAM_STR);
+			$statement->bindValue(":start_month", $month, PDO::PARAM_STR);
+			$statement->bindValue(":end_year", $end_year, PDO::PARAM_STR);
+			$statement->bindValue(":end_month", $end_month, PDO::PARAM_STR);
 			if($month + $timespan >= 13){
 				while($timespan > 1){
 					if($end_month == 12){
