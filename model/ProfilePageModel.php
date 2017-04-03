@@ -252,6 +252,7 @@ class ProfilePageModel
 			
 		}
 		else{
+			$error_log("Received failed");
 			return false;
 		}
 			
@@ -315,9 +316,9 @@ class ProfilePageModel
 			
 		}
 		else{
+			$error_log("Received failed");
 			return false;
 		}
-			
 		
         $statement->execute();
         return $statement->fetchColumn();
