@@ -42,7 +42,7 @@ class AnalysisModel
         $userID = $this->getUserID();
 
         $statement = $this->db->prepare("
-        SELECT `Tag`.`Name`, `Tag`.`TagID`, SUM(`Listing`.`Quantity`) as `Count`
+        SELECT `Tag`.`Name`, `Tag`.`TagID`, COUNT(*) as `Count`
                 FROM `Tag` 
                 JOIN `ItemTag` ON `ItemTag`. `FK_Tag_TagID` = `Tag`.`TagID`
                 JOIN `Item` ON `Item`.`ItemID` = `ItemTag`.`FK_Item_ItemID`
