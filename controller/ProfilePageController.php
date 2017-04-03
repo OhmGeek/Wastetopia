@@ -39,7 +39,7 @@ class ProfilePageController
     {
         // $reader = new UserCookieReader();
         // return $reader->get_user_id();
-        return 6;
+        return 10;
     }
 
     function generatePage()
@@ -57,8 +57,12 @@ class ProfilePageController
             "userimage" => $userInformation["userimage"],
             "username" => $userInformation["username"],
             "userscore" => $userInformation["userscore"],
-
-            "listingsCount" => $listingsInformation["listingsCount"],
+			
+			
+			"given" => $userInformation["given"],
+			"received" => $userInformation["received"],
+            
+			"listingsCount" => $listingsInformation["listingsCount"],
             "emptyListingsCount" => $listingsInformation["emptyListingsCount"],
             "itemsOfferedCount" => $listingsInformation["itemsOfferedCount"],
             "requestsMadeCount" => $listingsInformation["requestsMadeCount"],
@@ -83,6 +87,10 @@ class ProfilePageController
         $userImage = $this->model->getUserImage($this->userID);
         $userInformation = array();
         $userInformation["username"] = $userDetails["Forename"] . " " . $userDetails["Surname"];
+		
+		$userInformation["given"] = $this->model->getNumberOfCompletedGiving($year=2016, $month=11);
+		$userInformation["received"] = $this->model->getNumberOfCompletedReceived($year=2016, $month=11);
+		
 //        $userInformation["email"] = $userDetails["Email_Address"];
         $userInformation["userscore"] = $userDetails["Mean_Rating_Percent"];
         $userInformation["userimage"] = $userImage;

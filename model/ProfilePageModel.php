@@ -8,6 +8,7 @@
 namespace Wastetopia\Model;
 use PDO;
 use Wastetopia\Model\DB;
+
 class ProfilePageModel
 {
     /**
@@ -18,7 +19,7 @@ class ProfilePageModel
     {
         $this->db = DB::getDB();
         $this->userID = $userID;
-
+		echo ($this->getNumberOfCompletedGiving());
     }
     /**
      * Returns the ID of the user whose profile you're trying to view
