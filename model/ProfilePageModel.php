@@ -220,6 +220,7 @@ class ProfilePageModel
 			$statement->bindValue(":userID", $userID, PDO::PARAM_STR);
 		}
 		else if($year != -1 && $month != -1){
+			error_log("GOT HERE INSTEAD!");
 			$statement = $this->db->prepare("
 				SELECT COUNT(*) as `Count`
 				FROM `Listing`
@@ -287,6 +288,7 @@ class ProfilePageModel
 			$statement->bindValue(":userID", $userID, PDO::PARAM_STR);
 		}
 		else if($year != -1 && $month != -1){
+			error_log("GOT HERE!");
 			$statement = $this->db->prepare("
 				SELECT COUNT(*) as `Count`
 				FROM `Listing`
