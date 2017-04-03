@@ -208,6 +208,7 @@ class ProfilePageModel
 		$end_year = $year;
 		$end_month = $month;
 		if($year == -1 && $month == -1){
+			error_log("BOTH = -1");
 			$statement = $this->db->prepare("
 				SELECT COUNT(*) as `Count`
 				FROM `Listing`
@@ -215,7 +216,7 @@ class ProfilePageModel
 				JOIN `Transaction` ON `Transaction`.`TransactionID` = `ListingTransaction`.`FK_Transaction_TransactionID`
 				JOIN `User` ON `User`.`UserID` = `Listing`.`FK_User_UserID`
 				WHERE `User`.`UserID` = :userID
-				AND `ListingTransaction`.`Success` = 1
+				AND `ListingTransaction`.`Success` = 1;
 			");
 			$statement->bindValue(":userID", $userID, PDO::PARAM_STR);
 		}
@@ -238,6 +239,7 @@ class ProfilePageModel
 			$statement->bindValue(":end_year", $end_year, PDO::PARAM_INT);
 			$statement->bindValue(":end_month", $end_month, PDO::PARAM_INT);
 			if($month + $timespan >= 13){
+				error_log("GREATER THAN 13!");
 				while($timespan > 1){
 					if($end_month == 12){
 						$end_month = 1;
@@ -251,6 +253,7 @@ class ProfilePageModel
 				}
 			}
 			else{
+				error_log("NOT GREATER THAN 13");
 				$end_month = $end_month + $timespan;
 			}
 			
@@ -283,7 +286,7 @@ class ProfilePageModel
 				JOIN `ListingTransaction` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
 				JOIN `Transaction` ON `Transaction`.`TransactionID` = `ListingTransaction`.`FK_Transaction_TransactionID`
 				WHERE `Transaction`.`FK_User_UserID` = :userID
-				AND `ListingTransaction`.`Success` = 1
+				AND `ListingTransaction`.`Success` = 1;
 			");
 			$statement->bindValue(":userID", $userID, PDO::PARAM_STR);
 		}
