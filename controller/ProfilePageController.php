@@ -88,8 +88,8 @@ class ProfilePageController
         $userInformation = array();
         $userInformation["username"] = $userDetails["Forename"] . " " . $userDetails["Surname"];
 		
-		$userInformation["given"] = $this->model->getNumberOfCompletedGiving();
-		$userInformation["received"] = $this->model->getNumberOfCompletedReceived();
+		$userInformation["given"] = $this->model->getNumberOfCompletedGiving($year=2016, $month=11);
+		$userInformation["received"] = $this->model->getNumberOfCompletedReceived($year=2016, $month=11);
 		
 //        $userInformation["email"] = $userDetails["Email_Address"];
         $userInformation["userscore"] = $userDetails["Mean_Rating_Percent"];

@@ -197,6 +197,9 @@ class ProfilePageModel
 
     /**
      * Gets the total number of completed listings the user has given
+	 * @param $year The subject year
+	 * @param $month The subject month
+	 * @param $timespan How many months to evaluate, default 1
      * @return Integer
      */
     function getNumberOfCompletedGiving($year = -1, $month = -1, $timespan = 1)
@@ -262,7 +265,9 @@ class ProfilePageModel
 
     /**
      * Gets the total number of completed listings the user has received
-	 * Optionally limit it to 
+	 * @param $year The subject year
+	 * @param $month The subject month
+	 * @param $timespan How many months to evaluate, default 1
      * @return Integer
      */
     function getNumberOfCompletedReceived($year = -1, $month = -1, $timespan = 1)
