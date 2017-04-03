@@ -42,7 +42,7 @@ class AnalysisModel
         $userID = $this->getUserID();
 
         $statement = $this->db->prepare("
-        SELECT `Tag`.`Name`, `Tag`.`TagID`, COUNT(*) as `Count`
+        SELECT `Tag`.`Name`, `Tag`.`TagID`, SUM(`Listing`.`Quantity`) as `Count`
                 FROM `Tag` 
                 JOIN `ItemTag` ON `ItemTag`. `FK_Tag_TagID` = `Tag`.`TagID`
                 JOIN `Item` ON `Item`.`ItemID` = `ItemTag`.`FK_Item_ItemID`
@@ -51,7 +51,7 @@ class AnalysisModel
                 WHERE `User`.`UserID` = :userID
                 AND `Tag`.`FK_Category_Category_ID` = 1
                 GROUP BY `Tag`.`Name`
-                ORDER BY `Count`;");
+                ORDER BY `Count` DESC;");
 
         $statement->bindValue(":userID", $userID, PDO::PARAM_STR);
         $statement->execute();
@@ -68,7 +68,7 @@ class AnalysisModel
         $userID = $this->getUserID();
 
         $statement = $this->db->prepare("
-        SELECT `Tag`.`Name`,  `Tag`.`TagID`, COUNT(*) as Count
+        SELECT `Tag`.`Name`,  `Tag`.`TagID`, SUM(`ListingTransaction`.`Quantity`) as `Count`
                 FROM `Tag` 
                 JOIN `ItemTag` ON `ItemTag`. `FK_Tag_TagID` = `Tag`.`TagID`
                 JOIN `Item` ON `Item`.`ItemID` = `ItemTag`.`FK_Item_ItemID`
@@ -80,7 +80,7 @@ class AnalysisModel
                 AND `Tag`.`FK_Category_Category_ID` = 1
                 AND `ListingTransaction`.`Success` = 1
                 GROUP BY `Tag`.`Name`
-                ORDER BY `Count`;");
+                ORDER BY `Count` DESC;");
 
         $statement->bindValue(":userID", $userID, PDO::PARAM_STR);
         $statement->execute();
