@@ -208,7 +208,7 @@ class ProfilePageModel
 		$end_year = $year;
 		$end_month = $month;
 		if($year == -1 && $month == -1){
-			error_log("BOTH = -1");
+			error_log($end_year);
 			$statement = $this->db->prepare("
 				SELECT COUNT(*) as `Count`
 				FROM `Listing`
