@@ -276,6 +276,7 @@ class ProfilePageModel
      */
     function getNumberOfCompletedReceived($year = -1, $month = -1, $timespan = 1)
     {
+		error_log("FINISH HERE OR SOMETHING");
 		$userID = $this->getUserID();
 		$end_year = $year;
 		$end_month = $month;
