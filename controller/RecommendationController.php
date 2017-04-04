@@ -67,13 +67,14 @@ class RecommendationController {
       }
         
       $currentConfig = new CurrentConfig();
-      $config = $currentConfig->getAll();
-      print_r($config);  
+      $config = $currentConfig->getAll();  
         
       $output = array(
             "config" => $config,
             "recommendationList" => $recommendationList
       );
+        
+        print_r($output);
         $template = $this->twig->loadTemplate('/items/recommendations.twig');
       
         return $template->render($results); // Render with cardDetails for listings that match most frequent tags
