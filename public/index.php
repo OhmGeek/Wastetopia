@@ -72,20 +72,26 @@ $klein->respond("GET", "/get-env", function() {
 
 $klein->with("/profile", function() use ($klein) {
 
-    $klein->respond('GET', '/?', function($request, $response){
+   $klein->respond('GET', '/?', function($request, $response){
         $controller = new ProfilePageController(1); //View own profile
         return $controller->generatePage();
     });
-
-    $klein->respond('GET', '/[:userID]', function($request, $response){
+    
+    $klein->respond('GET', '/user/[:userID]', function($request, $response){
         $controller = new ProfilePageController(0, $request->userID); //View other user's profile
         return $controller->generatePage();
     });
-
+    
     $klein->respond('POST', '/toggle-watch-list/[:listingID]', function($request, $response){
        $controller = new ProfilePageController(1);
        $response = $controller->toggleWatchListListing($request->listingID);
        return $response;
+    });
+    
+    $klein->respond('GET', '/recommended', function($request, $response){
+        $controller = new RecommendationController();
+        $response = $controller->generateRecommendedSection();
+        return $response;
     });
 });
 
