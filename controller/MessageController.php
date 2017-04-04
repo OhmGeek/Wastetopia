@@ -5,14 +5,16 @@ use Wastetopia\Model\MessageModel;
 use Twig_Loader_Filesystem;
 use Twig_Environment;
 use Wastetopia\Config\CurrentConfig;
-
+use Wastetopia\Model\CardDetailsModel;
 
 class MessageController
 {
 	
 	function __construct()
 	{
-
+	// Card details model
+	$this->cardDetailsModel = new CardDetailsModel();
+		
 	    //Create MessageModel instance
         $this->model = new MessageModel();
 
@@ -56,7 +58,7 @@ class MessageController
 	$details = $details[0];
         $userName = $details["Forename"]." ".$details["Surname"];
         $userID = $details["UserID"]; //ID of other user in conversation
-        $senderImage = $this->model->getUserImage($userID); //Profile picture of other user
+        $senderImage = $this->cardDetailsModel->getUserImage($userID); //Profile picture of other user
         $senderName = $userName;//." - ".$itemName;
 	
 
@@ -139,7 +141,7 @@ class MessageController
         $listing = $generalDetails[0]; //ListingID, ItemName, Use_By_Date, LocationName, Post_Code
         $listingID = $listing["ListingID"];
 
-        $defaultImage = $this->model->getDefaultImage($listingID);
+        $defaultImage = $this->cardDetailsModel->getDefaultImage($listingID);
         $itemName = $listing["ItemName"];
         $expiryDate = $listing["Use_By"];
         $locationName = $listing["LocationName"];

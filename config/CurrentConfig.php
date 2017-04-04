@@ -13,30 +13,32 @@ class CurrentConfig
 {
     private static $currentConfig;
 
+    private static $configMode = "production";
+
     public function __construct()
     {
-        // load the local config as default
-        $currentConfig = (new LocalConfig())->getConfiguration();
+        if(self::$configMode === "production") {
+            self::$currentConfig = (new ProductionConfig())->getConfiguration();
+        }
+        elseif(self::$configMode === "local") {
+            self::$currentConfig = (new LocalConfig())->getConfiguration();
+        }
     }
 
     public function loadConfig($mode) {
         if($mode === "production") {
-            $currentConfig = (new ProductionConfig())->getConfiguration();
+            self::$currentConfig = (new ProductionConfig())->getConfiguration();
         }
-        // otherwise, we don't do anything.
+        elseif($mode === "local") {
+            self::$currentConfig = (new LocalConfig())->getConfiguration();
+        }
     }
 
     public static function getProperty($prop) {
-        if(!self::$currentConfig) {
-            self::$currentConfig = (new ProductionConfig())->getConfiguration();
-        }
         return self::$currentConfig[$prop];
     }
 
     public static function getAll() {
-        if(!self::$currentConfig) {
-            self::$currentConfig = (new ProductionConfig())->getConfiguration();
-        }
         return self::$currentConfig;
     }
 }

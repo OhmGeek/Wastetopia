@@ -1,14 +1,21 @@
 <?php
 
+require_once '../vendor/autoload.php';
+
 use Klein\Klein;
+use Wastetopia\Config\CurrentConfig;
 use Wastetopia\Controller\ConversationListController;
 use Wastetopia\Controller\Login_Controller;
-use Wastetopia\Config\CurrentConfig;
+use Wastetopia\Controller\SearchController;
 use Wastetopia\Controller\MessageController;
+<<<<<<< HEAD
 use Wastetopia\Controller\ProfilePageController;
 use Wastetopia\Controller\RecommendationController;
 
 require_once '../vendor/autoload.php';
+=======
+
+>>>>>>> refs/remotes/origin/Searching
 
 // check if we should use production? Otherwise, use community.
 $mode = $_ENV['MODE'];
@@ -30,6 +37,21 @@ $klein->respond("GET", "/", function() {
 });
 
 
+$klein->with('/search', function () use ($klein) {
+
+    $klein->respond('GET', '/[**:param]', function ($request, $response) {
+        $searchController = new SearchController();
+        $paramArr = explode("/", $request->param);
+        $lat = $paramArr[0];
+        $long = $paramArr[1];
+        $search = $paramArr[2];
+        $tagsArr = explode("+",$paramArr[3]);
+        $pageNumber = $paramArr[4];
+        $response->sendHeaders('Content-Type: application/jpg');
+        return $searchController->JSONSearch($lat, $long, $search, $tagsArr, $pageNumber);
+    });
+});
+
 $klein->respond("GET", "/login", function($request, $response) {
     $controller = new LoginController();
     return $controller->index($response);
@@ -47,9 +69,13 @@ $klein->respond("GET", "/get-env", function() {
     echo "Printing stuff now \n";
     return $envStr;
 });
+<<<<<<< HEAD
 
 $klein->with('/items', function () use ($klein) {
+=======
+>>>>>>> refs/remotes/origin/Searching
 
+$klein->with('/items', function () use ($klein) {
     $klein->respond('GET', '/?', function ($request, $response) {
         // Generic Items Page
         return "Main Item Page";
@@ -61,9 +87,13 @@ $klein->with('/items', function () use ($klein) {
         return "Show Item " . $itemID;
     });
 });
+<<<<<<< HEAD
 
 $klein->with('/api', function () use ($klein) {
+=======
+>>>>>>> refs/remotes/origin/Searching
 
+$klein->with('/api', function () use ($klein) {
     $klein->respond('POST', '/verify-login', function ($request, $response) {
         $controller = new LoginController();
         $username = $request->email;
