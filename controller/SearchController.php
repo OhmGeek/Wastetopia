@@ -48,7 +48,7 @@ class SearchController
         {
             $nameSearch = true;
         }
-        if(!empty($tagsArr))
+        if(!empty($tagsArr[0]))
         {
             $tagSearch = true;
         }

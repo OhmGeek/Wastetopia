@@ -40,7 +40,7 @@ $klein->with('/search', function () use ($klein) {
         $search = $paramArr[2];
         $tagsArr = explode("+",$paramArr[3]);
         $pageNumber = $paramArr[4];
-        
+        $response->sendHeaders('Content-Type: application/jpg');
         return $searchController->JSONSearch($lat, $long, $search, $tagsArr, $pageNumber);
     });
 });
