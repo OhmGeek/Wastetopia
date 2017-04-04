@@ -24,40 +24,6 @@ class SearchModel
     {
         $this->db = DB::getDB();
     }
-    //SEARCH FUNCTIONS HERE: ALL MUST RETURN LISTING ID's
-    /*
-     * Searches by name, returns all the listing IDs of items matching $name
-     * @param $name
-     * @return mixed
-     */
-    function getListingIDsFromName($name){
-        $statement = $this->db->prepare("
-            SELECT `Listing`.`ListingID`
-            FROM `Listing`
-            JOIN `Item` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
-            WHERE `Item`.`Name` LIKE :name;
-        ");
-        $statement->bindValue(":name", '%'.$name.'%', PDO::PARAM_STR);
-        $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-    /**
-     * Searches for exact post code matches
-     * @param $postCode
-     * @return mixed (array of listingIDs)
-     */
-    function getListingIDsFromPostCode($postCode){
-        $statement = $this->db->prepare("
-            SELECT `Listing`.`ListingID`
-            FROM `Listing`
-            JOIN `Location` ON `Listing`.`FK_Location_LocationID` = `Location`.`LocationID`
-            WHERE `Location`.`Post_Code` = ':postCode';
-        ");
-        $statement->bindValue(":postCode", $postCode, PDO::PARAM_STR);
-        $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_ASSOC);
-    }
     //DISPLAY FUNCTIONS HERE: RETURNS DETAILS NEEDED FOR DISPLAY GIVEN THE LISTING IDs
     /**
      * Returns the details needed for display on the search page given the listing ID
@@ -87,7 +53,7 @@ class SearchModel
      * @param $listingID
      * @return mixed
      */
-    function getDefaultImage($listingID){
+    function getItemImage($listingID){
         $statement = $this->db->prepare("
             SELECT `Image`.`Image_URL` 
             FROM `Image`
@@ -102,7 +68,138 @@ class SearchModel
         $results = $statement->fetchAll(PDO::FETCH_ASSOC);
         return $results[0]; 
     }
-    
+    /**
+     * Gets the profile picture of the given user (Possibly will be moved to another model)
+     * @param $userID
+     * @return URL
+     */
+    function getUserImage($userID)
+    {
+        $statement = $this->db->prepare("
+                                SELECT Picture_URL
+                                FROM `User`
+                                WHERE `User`.`UserID` = :userID
+                            ");
+        $statement->bindValue(':userID', $userID, PDO::PARAM_INT);
+        $statement->execute();
+        return $statement->fetchColumn();
+    }
+
+    /*Distance searches will return listings only within 0.76 degrees of search location
+      This draws a square of hight 77km and of variable width based on the latitude
+      and returns results only within this area
+      At the equator the width is roughly 77km, at London, 56km
+      and at the UK Arctic Research Station, 30km*/
+    function getSearchResults($userLat, $userLong, $search, $tagsArray, $distanceLimit = 0.76)
+    {
+
+        $sql = "SELECT `Listing`.`ListingID`, `Location`.`Latitude`, `Location`.`Longitude`
+            FROM `Listing`
+            JOIN `Item` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
+            JOIN `Location` ON `Listing`.`FK_Location_LocationID` = `Location`.`LocationID`
+            WHERE `Listing`.`Quantity` > 0
+            ";
+        if (($userLat !== false) && ($userLong !== false))
+        {
+            $sql .= "AND ABS(`Location`.`Latitude` - :userLat) < :distanceLimit
+                     AND ABS(`Location`.`Longitude` - :userLong) < :distanceLimit
+                     ";
+
+        }
+        if ($search !== false)
+        {
+            $sql .= "AND `Item`.`Name` LIKE :search
+            ";
+        }
+        if ($tagsArray !== false)
+        {
+            $tagCount = count($tagsArray);
+
+            $sql .= "AND `Listing`.`ListingID` IN (SELECT `TagCount`.`ListingID`
+                                 FROM (SELECT `Listing`.`ListingID`, COUNT(DISTINCT `ItemTag`.`FK_Tag_TagID`) AS `Count`
+                                       FROM `Listing`
+                                       JOIN `Item` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
+                                       JOIN `ItemTag` ON `Item`.`ItemID` = `ItemTag`.`FK_Item_ItemID`
+                                       WHERE `ItemTag`.`FK_Tag_TagID` IN (";
+
+            foreach ($tagsArray as $key => $tag) 
+            {
+                if ($key == ($tagCount-1))
+                {
+                    $sql .= ":tag".$key;
+                }
+                else
+                {
+                    $sql .= ":tag".$key.",";
+                }
+                
+            }
+
+            $sql .= ")
+                     GROUP BY `Listing`.`ListingID`
+                         ) as `TagCount`
+                     WHERE `TagCount`.`Count` = :tagCount)";
+        }                
+
+        $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+        $statement = $this->db->prepare($sql);
+        if ($tagsArray !== false)
+        {
+            foreach ($tagsArray as $key => $tag)
+            {
+                $statement->bindValue(":tag".$key, $tag, PDO::PARAM_INT);
+            }
+            $statement->bindValue(":tagCount", strval($tagCount), PDO::PARAM_STR);
+        }
+        if (($userLat !== false) && ($userLong !== false))
+        {
+            $statement->bindValue(":userLat", strval($userLat), PDO::PARAM_STR);
+            $statement->bindValue(":userLong", strval($userLong), PDO::PARAM_STR);
+            $statement->bindValue(":distanceLimit", strval($distanceLimit), PDO::PARAM_STR);
+        } 
+        if ($search !== false)
+        {
+            $statement->bindValue(":search", strval('%'.$search.'%'), PDO::PARAM_STR);
+        }
+        
+        $statement->execute();
+
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /*LOCATION FUNCTIONS USING GOOGLE API*/
+
+    /**
+     * Searches for exact post code matches
+     * @param $postCode
+     * @return mixed (array of listingIDs)
+     */
+    function getListingIDsFromPostCode($postCode){
+        $statement = $this->db->prepare("
+            SELECT `Listing`.`ListingID`
+            FROM `Listing`
+            JOIN `Location` ON `Listing`.`FK_Location_LocationID` = `Location`.`LocationID`
+            WHERE `Location`.`Post_Code` = ':postCode';
+        ");
+        $statement->bindValue(":postCode", $postCode, PDO::PARAM_STR);
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     //FUNCTIONS TO DEAL WITH DISTANCE, MAY BE IN CONTROLLER
     //NEED TESTING
     /**
@@ -180,107 +277,5 @@ class SearchModel
         $distance = $distance["distance"];
         $distance = $distance["value"];
         return $distance;
-    }
-    /*Distance searches will return listings only within 0.76 degrees of search location
-      This draws a square of hight 77km and of variable width based on the latitude
-      and returns results only within this area
-      At the equator the width is roughly 77km, at London, 56km
-      and at the UK Arctic Research Station, 30km*/
-    function getSearchResults($userLat, $userLong, $search, $tagsArray, $distanceLimit = 0.76)
-    {
-        $whereUsed = false;
-
-        $sql = "SELECT `Listing`.`ListingID`, `Location`.`Latitude`, `Location`.`Longitude`
-            FROM `Listing`
-            JOIN `Item` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
-            JOIN `Location` ON `Listing`.`FK_Location_LocationID` = `Location`.`LocationID`
-            ";
-        if (($userLat !== false) && ($userLong !== false))
-        {
-            $sql .= "WHERE ABS(`Location`.`Latitude` - :userLat) < :distanceLimit
-                     AND ABS(`Location`.`Longitude` - :userLong) < :distanceLimit
-                     ";
-            $whereUsed = true;
-        }
-        if ($search !== false)
-        {
-            if($whereUsed === false)
-            {
-                $sql .= "WHERE `Item`.`Name` LIKE :search
-                ";
-                $whereUsed = true;
-            }
-            else
-            {
-                $sql .= "AND `Item`.`Name` LIKE :search
-                ";
-            }
-            
-        }
-        if ($tagsArray !== false)
-        {
-            $tagCount = count($tagsArray);
-            if($whereUsed === false)
-            {
-                $sql .= "WHERE `Listing`.`ListingID` IN (SELECT `TagCount`.`ListingID`
-                                     FROM (SELECT `Listing`.`ListingID`, COUNT(DISTINCT `ItemTag`.`FK_Tag_TagID`) AS `Count`
-                                           FROM `Listing`
-                                           JOIN `Item` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
-                                           JOIN `ItemTag` ON `Item`.`ItemID` = `ItemTag`.`FK_Item_ItemID`
-                                           WHERE `ItemTag`.`FK_Tag_TagID` IN (";
-                $whereUsed = true;
-            }
-            else
-            {
-                $sql .= "AND `Listing`.`ListingID` IN (SELECT `TagCount`.`ListingID`
-                                     FROM (SELECT `Listing`.`ListingID`, COUNT(DISTINCT `ItemTag`.`FK_Tag_TagID`) AS `Count`
-                                           FROM `Listing`
-                                           JOIN `Item` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
-                                           JOIN `ItemTag` ON `Item`.`ItemID` = `ItemTag`.`FK_Item_ItemID`
-                                           WHERE `ItemTag`.`FK_Tag_TagID` IN (";
-            }
-            foreach ($tagsArray as $key => $tag) 
-            {
-                if ($key == ($tagCount-1))
-                {
-                    $sql .= ":tag".$key;
-                }
-                else
-                {
-                    $sql .= ":tag".$key.",";
-                }
-                
-            }
-
-            $sql .= ")
-                     GROUP BY `Listing`.`ListingID`
-                         ) as `TagCount`
-                     WHERE `TagCount`.`Count` = :tagCount)";
-        }                
-
-        $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
-        $statement = $this->db->prepare($sql);
-        if ($tagsArray !== false)
-        {
-            foreach ($tagsArray as $key => $tag)
-            {
-                $statement->bindValue(":tag".$key, $tag, PDO::PARAM_INT);
-            }
-            $statement->bindValue(":tagCount", strval($tagCount), PDO::PARAM_STR);
-        }
-        if (($userLat !== false) && ($userLong !== false))
-        {
-            $statement->bindValue(":userLat", strval($userLat), PDO::PARAM_STR);
-            $statement->bindValue(":userLong", strval($userLong), PDO::PARAM_STR);
-            $statement->bindValue(":distanceLimit", strval($distanceLimit), PDO::PARAM_STR);
-        } 
-        if ($search !== false)
-        {
-            $statement->bindValue(":search", strval('%'.$search.'%'), PDO::PARAM_STR);
-        }
-        
-        $statement->execute();
-
-        return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 }
