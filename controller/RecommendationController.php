@@ -51,7 +51,7 @@ class RecommendationController {
           $itemName = $listing["Name"];
           $quantity = $listing["Quantity"];
           
-          $item = array("
+          $item = array(
             "listingID" => $listingID,
             "userImg" => $userImage,
             "userID" => $userID,
@@ -61,7 +61,7 @@ class RecommendationController {
             "imgURL" => $imgURL,
             "itemName" => $itemName,
             "quantity" => $quantity
-          ");
+          );
           
           array_push($recommendationList, $item);
       }
@@ -69,10 +69,10 @@ class RecommendationController {
       $currentConfig = new CurrentConfig();
       $config = $currentConfig->getAll();
         
-      $output = array("
+      $output = array(
             "config" => $config,
             "recommendationList" => $recommendationList
-      ");
+      );
       $template = $this->twig->loadTemplate('/items/recommendations.twig');
       
       return $template->render($results); // Render with cardDetails for listings that match most frequent tags
