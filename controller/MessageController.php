@@ -4,13 +4,17 @@ namespace Wastetopia\Controller;
 use Wastetopia\Model\MessageModel;
 use Twig_Loader_Filesystem;
 use Twig_Environment;
+use Wastetopia\Config\CurrentConfig;
+use Wastetopia\Model\CardDetailsModel;
 
 class MessageController
 {
 	
 	function __construct()
 	{
-
+	// Card details model
+	$this->cardDetailsModel = new CardDetailsModel();
+		
 	    //Create MessageModel instance
         $this->model = new MessageModel();
 
@@ -20,6 +24,21 @@ class MessageController
 
 	}
 
+
+    function generatePageFromListing($listingID){
+	$conversationIDs = $this->model->getConversationIDFromListing($listingID);
+	if (count($conversationsIDs) > 0){
+	    // Conversation already exists	
+	    $conversationID = $conversationIDs[0];
+	}else{
+	   // Create the conversation 	
+	   $conversationModel = new ConversationListModel();
+	   $conversationModel->createConversation($listingID);
+	   $conversationIDs = $this->model->getConversationIDFromListing($listingID);
+	   $conversationID = $conversationIDs[0];	
+	}
+	return $this->generatePage($conversationID);    
+    }
 
     /**
      * Generates (and prints) HTML for messaging page with initial conversation loaded
@@ -39,12 +58,15 @@ class MessageController
 	$details = $details[0];
         $userName = $details["Forename"]." ".$details["Surname"];
         $userID = $details["UserID"]; //ID of other user in conversation
-        $senderImage = $this->model->getUserImage($userID); //Profile picture of other user
+        $senderImage = $this->cardDetailsModel->getUserImage($userID); //Profile picture of other user
         $senderName = $userName;//." - ".$itemName;
 	
 
+	$CurrentConfig = new CurrentConfig();
+	$CurrentConfig->loadConfig("production");    
+	$config = $CurrentConfig->getAll();    
         $output = array(
-            "BASE_URL" => $_ENV['ROOT_BASE'],
+            "config" => $config,
             "senderName"=>$senderName,
             "senderImage"=>$senderImage,
             "conversationID" =>$conversationID,  //Needed so page can poll for new messages with the ID
@@ -52,7 +74,7 @@ class MessageController
             "listingPanel"=>$listingPanel);
 
         //Load template and print result
-        $template = $this->twig->loadTemplate('MessagePage.twig');
+        $template = $this->twig->loadTemplate('/messaging/MessagePage.twig');
         return $template->render($output);
     }
 
@@ -99,7 +121,7 @@ class MessageController
 
 
 		//MessageDisplay.twig
-		$template = $this->twig->loadTemplate('MessageDisplay.twig');
+		$template = $this->twig->loadTemplate('/messaging/MessageDisplay.twig');
 
 		//print_r(json_encode($output));
 		return $template->render($output);
@@ -119,7 +141,7 @@ class MessageController
         $listing = $generalDetails[0]; //ListingID, ItemName, Use_By_Date, LocationName, Post_Code
         $listingID = $listing["ListingID"];
 
-        $defaultImage = $this->model->getDefaultImage($listingID);
+        $defaultImage = $this->cardDetailsModel->getDefaultImage($listingID);
         $itemName = $listing["ItemName"];
         $expiryDate = $listing["Use_By"];
         $locationName = $listing["LocationName"];

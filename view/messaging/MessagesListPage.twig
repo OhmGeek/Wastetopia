@@ -1,7 +1,7 @@
 {% extends 'header.twig' %}
 
 {% block title %}
-    Your page title goes here! Please only put plain text here
+    Messages | Wastetopia
 {% endblock %}
 
 {% block navbar %}
@@ -15,17 +15,17 @@
 
     <ul class="nav nav-justified zero-padding nav-tabs">
         <li class="active"><a data-toggle="tab" href="#giving-tab">Giving</a></li>
-        <li><a data-toggle="tab" href="#recieving-tab">Recieving</a></li>
+        <li><a data-toggle="tab" href="#receiving-tab">Receiving</a></li>
     </ul>
     <div class="tab-content">
         <div id="giving-tab" class="tab-pane fade in active">
             {{givingList|raw}}
         </div>
-        <div id="recieving-tab" class="tab-pane fade">
-            {{recievingList|raw}}
+        <div id="receiving-tab" class="tab-pane fade">
+            {{receivingList|raw}}
         </div>
     </div>
 {% endblock %}
 
-{% set jslist = ["name your","custom js","files here"] %}
+{% set jslist = ["ConversationListPage.js"] %}
 

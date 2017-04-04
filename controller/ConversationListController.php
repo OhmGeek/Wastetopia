@@ -4,12 +4,14 @@ namespace Wastetopia\Controller;
 use Wastetopia\Model\ConversationListModel;
 use Twig_Loader_Filesystem;
 use Twig_Environment;
+use Wastetopia\Config\CurrentConfig;
 
 class ConversationListController
 {
 	
 	function __construct()
-	{
+	{		
+		
 	    //Create UserModel instance
         $this->model = new ConversationListModel();
 
@@ -30,15 +32,21 @@ class ConversationListController
 		$receivingTabHTML = $this->generateReceivingTabHTML();
 		$sendingTabHTML = $this->generateSendingTabHTML();
 
+	    
+	    // Get config
+		$CurrentConfig = new CurrentConfig();
+	        $CurrentConfig->loadConfig("production");
+		$config = $CurrentConfig->getAll();
+	    
 		//Create array for Twig file
 		$output = array(
-		        "BASE_URL" => $_ENV['ROOT_BASE'],
+		        "config" => $config,
 				"receivingList" => $receivingTabHTML,
 				"givingList" => $sendingTabHTML
 			);
 
 		//Load template and print result
-		$template = $this->twig->loadTemplate('MessagesListPage.twig');
+		$template = $this->twig->loadTemplate('/messaging/MessagesListPage.twig');
 		return $template->render($output);
 	}
 
@@ -53,10 +61,11 @@ class ConversationListController
 		
         //Create arrays of conversation details from results
         $receiving = $this->createConversationArray($receivingResults);
+	$isEmpty = (count($receiving) == 0);
+	    
+        $template = $this->twig->loadTemplate('messaging/MessagesTabsDisplay.twig');
 
-        $template = $this->twig->loadTemplate('MessagesTabsDisplay.twig');
-
-        return $template->render(array("conversationList"=>$receiving, "giving" => 0));
+        return $template->render(array("isEmpty" => $isEmpty, "conversationList"=>$receiving, "giving" => 0));
 		
     }
 
@@ -71,11 +80,11 @@ class ConversationListController
 
         //Create arrays of conversation details from results
         $sending = $this->createConversationArray($sendingResults);
+	$isEmpty = (count($sending) == 0);
+	    
+        $template = $this->twig->loadTemplate('messaging/MessagesTabsDisplay.twig');
 
-
-        $template = $this->twig->loadTemplate('MessagesTabsDisplay.twig');
-
-        return $template->render(array("conversationList"=>$sending, "giving" => 1));
+        return $template->render(array("isEmpty" => $isEmpty, "conversationList"=>$sending, "giving" => 1));
     }
 
 
@@ -102,7 +111,7 @@ class ConversationListController
             $conversation['conversationID'] = $conversationID;
             $conversation['userName'] = $firstName." ".$lastName;
             $conversation['item'] = $itemName;
-            $conversation['notifications'] = $unread;
+            $conversation['numUnread'] = $unread;
 
             array_push($results, $conversation);
         }

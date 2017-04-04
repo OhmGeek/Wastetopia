@@ -25,6 +25,9 @@
     "TOKEN_AFTERSALT": {
       "required": true
     },
+    "CLEARDB_DATABASE_URL": {
+      "required": true
+    },
     "TOKEN_BEFORESALT": {
       "required": true
     }

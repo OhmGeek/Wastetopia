@@ -1,12 +1,19 @@
 <?php
 
+require_once '../vendor/autoload.php';
+
 use Klein\Klein;
+use Wastetopia\Config\CurrentConfig;
 use Wastetopia\Controller\ConversationListController;
 use Wastetopia\Controller\Login_Controller;
-use Wastetopia\Config\CurrentConfig;
 use Wastetopia\Controller\ProfilePageController;
+use Wastetopia\Controller\SearchController;
 use Wastetopia\Controller\MessageController;
-require_once '../vendor/autoload.php';
+use Wastetopia\Controller\ProfilePageController;
+use Wastetopia\Controller\RecommendationController;
+
+
+
 
 // check if we should use production? Otherwise, use community.
 $mode = $_ENV['MODE'];
@@ -27,6 +34,21 @@ $klein->respond("GET", "/", function() {
     return "HomePage";
 });
 
+
+$klein->with('/search', function () use ($klein) {
+
+    $klein->respond('GET', '/[**:param]', function ($request, $response) {
+        $searchController = new SearchController();
+        $paramArr = explode("/", $request->param);
+        $lat = $paramArr[0];
+        $long = $paramArr[1];
+        $search = $paramArr[2];
+        $tagsArr = explode("+",$paramArr[3]);
+        $pageNumber = $paramArr[4];
+        $response->sendHeaders('Content-Type: application/jpg');
+        return $searchController->JSONSearch($lat, $long, $search, $tagsArr, $pageNumber);
+    });
+});
 
 $klein->respond("GET", "/login", function($request, $response) {
     $controller = new LoginController();
@@ -49,17 +71,17 @@ $klein->respond("GET", "/get-env", function() {
 });
 
 $klein->with("/profile", function() use ($klein) {
-    
+
     $klein->respond('GET', '/?', function($request, $response){
         $controller = new ProfilePageController(1); //View own profile
         return $controller->generatePage();
     });
-    
+
     $klein->respond('GET', '/[:userID]', function($request, $response){
         $controller = new ProfilePageController(0, $request->userID); //View other user's profile
         return $controller->generatePage();
     });
-    
+
     $klein->respond('POST', '/toggle-watch-list/[:listingID]', function($request, $response){
        $controller = new ProfilePageController(1);
        $response = $controller->toggleWatchListListing($request->listingID);
@@ -70,6 +92,8 @@ $klein->with("/profile", function() use ($klein) {
 
 $klein->with('/items', function () use ($klein) {
 
+
+$klein->with('/items', function () use ($klein) {
     $klein->respond('GET', '/?', function ($request, $response) {
         // Generic Items Page
         return "Main Item Page";
@@ -80,10 +104,11 @@ $klein->with('/items', function () use ($klein) {
         $itemID = $request->id;
         return "Show Item " . $itemID;
     });
-
 });
-$klein->with('/api', function () use ($klein) {
 
+
+
+$klein->with('/api', function () use ($klein) {
     $klein->respond('POST', '/verify-login', function ($request, $response) {
         $controller = new LoginController();
         $username = $request->email;
@@ -100,6 +125,30 @@ $klein->with('/api', function () use ($klein) {
 
 });
 
+$klein->with("/profile", function() use ($klein) {
+
+    $klein->respond('GET', '/?', function($request, $response){
+        $controller = new ProfilePageController(1); //View own profile
+        return $controller->generatePage();
+    });
+
+    $klein->respond('GET', '/user/[:userID]', function($request, $response){
+        $controller = new ProfilePageController(0, $request->userID); //View other user's profile
+        return $controller->generatePage();
+    });
+
+    $klein->respond('POST', '/toggle-watch-list/[:listingID]', function($request, $response){
+       $controller = new ProfilePageController(1);
+       $response = $controller->toggleWatchListListing($request->listingID);
+       return $response;
+    });
+
+    $klein->respond('GET', '/recommended', function($request, $response){
+        $controller = new RecommendationController();
+        $response = $controller->generateRecommendedSection();
+        return $response;
+    });
+});
 
 // todo authenticate on messages. Must be logged in to view correct messages.
 $klein->with('/messages', function () use ($klein) {
@@ -110,12 +159,6 @@ $klein->with('/messages', function () use ($klein) {
         return $controller->generatePage();
     });
 
-    $klein->respond('GET', '/[:conversationID]', function ($request, $response) {
-        // view a specific conversation
-        $conversationID = $request->conversationID;
-        $controller = new MessageController();
-        return $controller->generatePage($conversationID);
-    });
 
     // these are the API based messaging tasks
     // todo: error/failure in response.
@@ -125,6 +168,8 @@ $klein->with('/messages', function () use ($klein) {
         $conversationID = $request->conversationID;
         $message = $request->message;
 
+        console.log($conversationID);
+        console.log($message);
         $controller = new MessageController();
         $controller->sendMessage($conversationID,$message);
         return "";
@@ -151,6 +196,15 @@ $klein->with('/messages', function () use ($klein) {
         $controller = new MessageController();
         return $controller->generateMessageDisplay($conversationID);
     });
+
+    $klein->respond('GET', '/conversation/[:listingID]', function ($request, $response) {
+        // view a specific conversation
+        console.log("Getting conversation");
+        $listingID = $request->listingID;
+
+        $controller = new MessageController();
+        return $controller->generatePageFromListing($listingID);
+    });
 });
 
 
@@ -175,5 +229,3 @@ $klein->onHttpError(function ($code, $router) {
 
 
 $klein->dispatch();
-
-
