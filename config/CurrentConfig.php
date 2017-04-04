@@ -32,4 +32,11 @@ class CurrentConfig
         }
         return self::$currentConfig[$prop];
     }
+
+    public static function getAll() {
+        if(!self::$currentConfig) {
+            self::$currentConfig = (new ProductionConfig())->getConfiguration();
+        }
+        return self::$currentConfig;
+    }
 }
