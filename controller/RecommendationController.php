@@ -2,7 +2,8 @@
 namespace Wastetopia\Controller;
 use Twig_Environment;
 use Twig_Loader_Filesystem;
-use Wastetopia\Model\AnalysisModel
+use Wastetopia\Model\AnalysisModel;
+use Wastetopia\Controller\SearchController;    
 
 class RecommendationController {
     
@@ -34,7 +35,9 @@ class RecommendationController {
       // Use search query using $tags to find listings that match these tags
       // Get user's lat/long 
       // get $results
-      
+      $searchController = new SearchController();
+      $results = $searchController->recommendationSearch($tags);
+        
       $template = $this->twig->loadTemplate('DOESN'T EXIST');
       
       return $template->render($results); // Render with cardDetails for listings that match most frequent tags
