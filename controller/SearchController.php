@@ -11,39 +11,51 @@ class SearchController
         $this->searchModel = new SearchModel();
     }
 
-
-    public function test()
+    public function search($lat, $long, $search, $tagsArr)
     {
-        $searchModel = new SearchModel();
-        $listingIDs = $searchModel->getNearbyItems(0, 0.7);
+        $distanceSearch  = false;
+        $nameSearch = false;
+        $tagSearch = false;
 
-        return $this->haversineDistance(array('lat' => 0, 'long' => 0), array('lat' => 5.804925, 'long' => 0.728986));
-
-
-        var_dump($listingIDs);
-    }
-    public function basicSearch($searchTerm)
-    {
-        $searchModel = new SearchModel();
-        $listingIDs = $searchModel->getListingIDsFromName($searchTerm);
-
-        $searchResultsForJSON = [];
-
-        foreach ($listingIDs as $item)
+        if(!empty($lat) && !empty($long))
         {
-            $listingResults = $this->searchModel->getCardDetails(intval($item['ListingID']));
-            array_push($searchResultsForJSON, $listingResults[0]);
+            $distanceSearch = true;
+        }
+        if (!empty($search))
+        {
+            $nameSearch = true;
+        }
+        if(!empty($tagsArr))
+        {
+            $tagSearch = true;
         }
 
-        return json_encode($searchResultsForJSON);
-    }
-
-    public function distanceSearch($lat, $long, $search, $tags)
-    {
+        if ($distanceSearch && $nameSearch && $tagSearch) {
+            $itemInformation = $this->searchModel->getSearchResults($lat, $long, $search, $tagsArr);  //Distance, Name and Tags
+        }
+        elseif ($distanceSearch && $nameSearch && !$tagSearch) {
+            $itemInformation = $this->searchModel->getSearchResults($lat, $long, $search, false);      //Distance and Name
+        }
+        elseif ($distanceSearch && !$nameSearch && $tagSearch) {
+            $itemInformation = $this->searchModel->getSearchResults($lat, $long, false, $tagsArr);     //Distance and Tags
+        }
+        elseif (!$distanceSearch && $nameSearch && $tagSearch) {
+            $itemInformation = $this->searchModel->getSearchResults(false, false, $search, $tagsArr);   //Name and Tags
+        }
+        elseif ($distanceSearch && !$nameSearch && !$tagSearch) {
+            $itemInformation = $this->searchModel->getSearchResults($lat, $long, false, false);         //Distance only
+        }
+        elseif (!$distanceSearch && $nameSearch && !$tagSearch) {
+            $itemInformation = $this->searchModel->getSearchResults(false, false, $search, false);       //Name only
+        }
+        elseif (!$distanceSearch && !$nameSearch && $tagSearch) {
+            $itemInformation = $this->searchModel->getSearchResults(false, false, false, $tagsArr);      //Tags only
+        }
+        else {
+            $itemInformation = $this->searchModel->getSearchResults(false, false, false, false);          //No filtering
+        }
+        
         $userLocation = array('lat' => $lat,'long' => $long);
-        $tagsArray = explode('+', $tags);
-
-        $itemInformation = $this->searchModel->getNearbyItems($lat, $long, $search, $tagsArray); //Use default distance cap
         foreach ($itemInformation as $key => $item)
         {
             $itemLocation = array('lat' => $item['Latitude'], 'long' => $item['Longitude']);

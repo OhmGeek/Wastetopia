@@ -207,52 +207,99 @@ class SearchModel
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }*/
 
-    function getNearbyItems($userLat, $userLong, $search, $tagsArray, $distanceLimit = 0.76)
+    function getSearchResults($userLat, $userLong, $search, $tagsArray, $distanceLimit = 0.76)
     {
-        $tagCount = count($tagsArray);
+        $whereUsed = false;
 
         $sql = "SELECT `Listing`.`ListingID`, `Location`.`Latitude`, `Location`.`Longitude`
             FROM `Listing`
             JOIN `Item` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
-            JOIN `Location` ON `Listing`.`FK_Location_LocationID` = `Location`.`LocationID` 
-            WHERE ABS(`Location`.`Latitude` - :userLat) < :distanceLimit
-            AND ABS(`Location`.`Longitude` - :userLong) < :distanceLimit
-            AND `Item`.`Name` LIKE :search
-            AND `Listing`.`ListingID` IN (SELECT `TagCount`.`ListingID`
-                                         FROM (SELECT `Listing`.`ListingID`, COUNT(DISTINCT `ItemTag`.`FK_Tag_TagID`) AS `Count`
-                                               FROM `Listing`
-                                               JOIN `Item` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
-                                               JOIN `ItemTag` ON `Item`.`ItemID` = `ItemTag`.`FK_Item_ItemID`
-                                               WHERE `ItemTag`.`FK_Tag_TagID` IN (";
-        foreach ($tagsArray as $key => $tag) 
+            JOIN `Location` ON `Listing`.`FK_Location_LocationID` = `Location`.`LocationID`
+            ";
+        if (($userLat !== false) && ($userLong !== false))
         {
-            if ($key == ($tagCount-1))
+            $sql .= "WHERE ABS(`Location`.`Latitude` - :userLat) < :distanceLimit
+                     AND ABS(`Location`.`Longitude` - :userLong) < :distanceLimit
+                     ";
+            $whereUsed = true;
+        }
+        if ($search !== false)
+        {
+            if($whereUsed === false)
             {
-                $sql .= ":tag".$key;
+                $sql .= "WHERE `Item`.`Name` LIKE :search
+                ";
+                $whereUsed = true;
             }
             else
             {
-                $sql .= ":tag".$key.",";
+                $sql .= "AND `Item`.`Name` LIKE :search
+                ";
             }
             
         }
+        if ($tagsArray !== false)
+        {
+            $tagCount = count($tagsArray);
+            if($whereUsed === false)
+            {
+                $sql .= "WHERE `Listing`.`ListingID` IN (SELECT `TagCount`.`ListingID`
+                                     FROM (SELECT `Listing`.`ListingID`, COUNT(DISTINCT `ItemTag`.`FK_Tag_TagID`) AS `Count`
+                                           FROM `Listing`
+                                           JOIN `Item` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
+                                           JOIN `ItemTag` ON `Item`.`ItemID` = `ItemTag`.`FK_Item_ItemID`
+                                           WHERE `ItemTag`.`FK_Tag_TagID` IN (";
+                $whereUsed = true;
+            }
+            else
+            {
+                $sql .= "AND `Listing`.`ListingID` IN (SELECT `TagCount`.`ListingID`
+                                     FROM (SELECT `Listing`.`ListingID`, COUNT(DISTINCT `ItemTag`.`FK_Tag_TagID`) AS `Count`
+                                           FROM `Listing`
+                                           JOIN `Item` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
+                                           JOIN `ItemTag` ON `Item`.`ItemID` = `ItemTag`.`FK_Item_ItemID`
+                                           WHERE `ItemTag`.`FK_Tag_TagID` IN (";
+            }
+            foreach ($tagsArray as $key => $tag) 
+            {
+                if ($key == ($tagCount-1))
+                {
+                    $sql .= ":tag".$key;
+                }
+                else
+                {
+                    $sql .= ":tag".$key.",";
+                }
+                
+            }
 
-        $sql .= ")
-                 GROUP BY `Listing`.`ListingID`
-                     ) as `TagCount`
-                 WHERE `TagCount`.`Count` = :tagCount);";
+            $sql .= ")
+                     GROUP BY `Listing`.`ListingID`
+                         ) as `TagCount`
+                     WHERE `TagCount`.`Count` = :tagCount)";
+        }                
 
         $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
         $statement = $this->db->prepare($sql);
-        foreach ($tagsArray as $key => $tag)
+        if ($tagsArray !== false)
         {
-            $statement->bindValue(":tag".$key, $tag, PDO::PARAM_INT);
+            foreach ($tagsArray as $key => $tag)
+            {
+                $statement->bindValue(":tag".$key, $tag, PDO::PARAM_INT);
+            }
+            $statement->bindValue(":tagCount", strval($tagCount), PDO::PARAM_STR);
         }
-        $statement->bindValue(":userLat", strval($userLat), PDO::PARAM_STR);
-        $statement->bindValue(":userLong", strval($userLong), PDO::PARAM_STR);
-        $statement->bindValue(":search", strval('%'.$search.'%'), PDO::PARAM_STR);
-        $statement->bindValue(":tagCount", strval($tagCount), PDO::PARAM_STR);
-        $statement->bindValue(":distanceLimit", strval($distanceLimit), PDO::PARAM_STR);
+        if (($userLat !== false) && ($userLong !== false))
+        {
+            $statement->bindValue(":userLat", strval($userLat), PDO::PARAM_STR);
+            $statement->bindValue(":userLong", strval($userLong), PDO::PARAM_STR);
+            $statement->bindValue(":distanceLimit", strval($distanceLimit), PDO::PARAM_STR);
+        } 
+        if ($search !== false)
+        {
+            $statement->bindValue(":search", strval('%'.$search.'%'), PDO::PARAM_STR);
+        }
+        
         $statement->execute();
 
         return $statement->fetchAll(PDO::FETCH_ASSOC);

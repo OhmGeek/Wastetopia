@@ -38,10 +38,9 @@ $klein->with('/search', function () use ($klein) {
         $lat = $paramArr[0];
         $long = $paramArr[1];
         $search = $paramArr[2];
-        $tags = $paramArr[3];
-
+        $tagsArr = explode("+",$paramArr[3]);
         
-        return $searchController->distanceSearch($lat, $long, $search, $tags);
+        return $searchController->search($lat, $long, $search, $tagsArr);
     });
 });
 
