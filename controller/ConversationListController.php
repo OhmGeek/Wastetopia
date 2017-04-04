@@ -4,12 +4,14 @@ namespace Wastetopia\Controller;
 use Wastetopia\Model\ConversationListModel;
 use Twig_Loader_Filesystem;
 use Twig_Environment;
+use Wastetopia\Config\CurrentConfig;
 
 class ConversationListController
 {
 	
 	function __construct()
-	{
+	{		
+		
 	    //Create UserModel instance
         $this->model = new ConversationListModel();
 
@@ -30,9 +32,14 @@ class ConversationListController
 		$receivingTabHTML = $this->generateReceivingTabHTML();
 		$sendingTabHTML = $this->generateSendingTabHTML();
 
+	    
+	    // Get config
+		$CurrentConfig = new CurrentConfig();
+		$config = $CurrentConfig->getAll();
+	    
 		//Create array for Twig file
 		$output = array(
-		        "BASE_URL" => $_ENV['ROOT_BASE'],
+		        "config" => $config,
 				"receivingList" => $receivingTabHTML,
 				"givingList" => $sendingTabHTML
 			);
