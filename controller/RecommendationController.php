@@ -47,6 +47,7 @@ class RecommendationController {
           $userName = $listing["Forename"]." ".$listing["Surname"];
           $addedDate = $listing["Time_Of_Creation"];
           $distance = "DON'T HAVE"; // May be able to add later
+          $postCode = $listing["Post_Code"];
           $imgURL = "NOPE";//$listing[""]; // Add later
           $itemName = $listing["Name"];
           $quantity = $listing["Quantity"];
@@ -57,7 +58,7 @@ class RecommendationController {
             "userID" => $userID,
             "userName" => $userName,
             "addedDate" => $addedDate,
-            "distance" => $distance,
+            "postCode" => $postCode,
             "imgURL" => $imgURL,
             "itemName" => $itemName,
             "quantity" => $quantity
