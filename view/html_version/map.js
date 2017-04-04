@@ -23,7 +23,10 @@ function initMap() {
                         '</div>' +
                         '<div class="iw-body caption">'+
                           '<div class="item-name">APPLES</div>'+
-                          '<div class="added-date">Added on 12 March 2018</div>'+
+                          '<div class="trans-info">'+
+                            '<div class="added-date">Added on 12 March 2018</div>'+
+                            '<div><span>Quantity:</span>5</div>'+
+                          '</div>'+
                           '<div class="nav-btns">'+
                             '<a href="#" class="btn btn-primary" role="button">View</a>'+
                             '<a class="btn btn-default" role="button">Request</a>'+
@@ -37,13 +40,13 @@ function initMap() {
   });
 
   var markerIcon = {
-    url: 'BUS.jpg',
+    url: 'icons/placePen.png',
     //The size image file.
-    scaledSize: new google.maps.Size(225, 120),
+    scaledSize: new google.maps.Size(30, 30),
     //The point on the image to measure the anchor from. 0, 0 is the top left.
     origin: new google.maps.Point(0, 0),
     //The x y coordinates of the anchor point on the marker. e.g. If your map marker was a drawing pin then the anchor would be the tip of the pin.
-    anchor: new google.maps.Point(189, 116)
+    anchor: new google.maps.Point(30, 15)
   };
 
   //Setting the shape to be used with the Glastonbury map marker.
