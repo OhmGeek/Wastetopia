@@ -13,12 +13,26 @@ class SearchController
 
     public function recommendationSearch($tagsArr)
     {
-        return $this->search("", "", "", $tagsArr);
+        $searchResults = $this->search("", "", "", $tagsArr);
+        return array_slice($searchResults, 0, 5);
     }
-    public function JSONSearch($lat, $long, $search, $tagsArr)
+    public function JSONSearch($lat, $long, $search, $tagsArr, $pageNumber)
     {
-        return json_encode($this->search($lat, $long, $search, $tagsArr));
+        $offset = 30*$pageNumber;
+        $limit = $offset + 30;
+        $searchResults = $this->search($lat, $long, $search, $tagsArr);
+
+        $pageResults = array_slice($searchResults, $offset, $limit);
+        return json_encode($pageResults);
     }
+
+    /*lat = Latitude
+      long = Longitude 
+      $search = Search term
+      $tagsArr = array of item tags */
+
+    /*Limit and Offset are implemented in the wrapper functions
+      As custom sorting is needed in the search controller it cannot be done in SQL*/
 
     private function search($lat, $long, $search, $tagsArr)
     {

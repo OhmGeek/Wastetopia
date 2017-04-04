@@ -39,8 +39,9 @@ $klein->with('/search', function () use ($klein) {
         $long = $paramArr[1];
         $search = $paramArr[2];
         $tagsArr = explode("+",$paramArr[3]);
+        $pageNumber = $paramArr[4];
         
-        return $searchController->JSONSearch($lat, $long, $search, $tagsArr);
+        return $searchController->JSONSearch($lat, $long, $search, $tagsArr, $pageNumber);
     });
 });
 
