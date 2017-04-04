@@ -74,7 +74,6 @@ class RecommendationController {
             "recommendationList" => $recommendationList
       );
         
-        print_r($output);
         $template = $this->twig->loadTemplate('/items/recommendations.twig');
       
         return $template->render($output); // Render with cardDetails for listings that match most frequent tags
