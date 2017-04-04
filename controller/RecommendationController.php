@@ -68,7 +68,7 @@ class RecommendationController {
         
       $currentConfig = new CurrentConfig();
       $config = $currentConfig->getAll();
-      console.log($config);  
+      print_r($config);  
         
       $output = array(
             "config" => $config,
