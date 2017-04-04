@@ -8,6 +8,7 @@
 namespace Wastetopia\Controller;
 use Wastetopia\Config\CurrentCongig;
 use Wastetopia\Model\ProfilePageModel;
+use Wastetopia\Model\CardDetailsModel;
 use Twig_Loader_Filesystem;
 use Twig_Environment;
 
@@ -25,7 +26,13 @@ class ProfilePageController
         } else {
             $this->userID = $userID;
         }
+	    
+	 // Card details model
+	 $this->cardDetailsModel = new CardDetailsModel();   
+	
+	// Profile page model
         $this->model = new ProfilePageModel($this->userID); //Need to include
+	    
         //Load Twig environment
         $loader = new Twig_Loader_Filesystem('../view/');
         $this->twig = new Twig_Environment($loader);
@@ -50,7 +57,6 @@ class ProfilePageController
         $isCurrentUser = ($this->userID == $this->getUserID() ? 1 : 0); // 1 if logged in user trying to view their own profile
 
         $CurrentConfig = new CurrentConfig();
-	    $CurrentConfig->loadConfig("production");    
 	    $config = $CurrentConfig->getAll();  
         $output = array(
             "config" => $config,
@@ -82,8 +88,8 @@ class ProfilePageController
     function generateProfileSection()
     {
         //Get user details
-        $userDetails = $this->model->getUserDetails();
-        $userImage = $this->model->getUserImage($this->userID);
+        $userDetails = $this->cardDetailsModel->getCurrentUserDetails();
+        $userImage = $this->cardDetailsmodel->getUserImage($this->userID);
         $userInformation = array();
         $userInformation["username"] = $userDetails["Forename"] . " " . $userDetails["Surname"];
 //        $userInformation["email"] = $userDetails["Email_Address"];
@@ -179,12 +185,12 @@ class ProfilePageController
 
         // Get information for all user's listings
         foreach ($availableListingsSending as $listingID) {
-            $details = $this->model->getCardDetails($listingID);
+            $details = $this->cardDetailsModel->getCardDetails($listingID);
 //            $itemID = $details["ItemID"];
             $itemName = $details["Name"];
             $timeOfCreation = $details["Time_Of_Creation"];
             $quantity = $details["Quantity"];
-            $defaultImage = $this->model->getDefaultImage($listingID);
+            $defaultImage = $this->cardDetailsModel->getDefaultImage($listingID);
             $imageURL = $defaultImage["Image_URL"];
             $item = array(
                 "listingID" => $listingID,
@@ -197,12 +203,12 @@ class ProfilePageController
 
         // Get information for all user's empty listings
         foreach ($emptyListingsSending as $listingID) {
-            $details = $this->model->getCardDetails($listingID);
+            $details = $this->cardDetailsModel->getCardDetails($listingID);
 //            $itemID = $details["ItemID"];
             $itemName = $details["Name"];
             $timeOfCreation = $details["Time_Of_Creation"];
             $quantity = $details["Quantity"];
-            $defaultImage = $this->model->getDefaultImage($listingID);
+            $defaultImage = $this->cardDetailsModel->getDefaultImage($listingID);
             $imageURL = $defaultImage["Image_URL"];
             $item = array(
                 "listingID" => $listingID,
@@ -223,12 +229,12 @@ class ProfilePageController
             //In for about user involved in this transaction
             $requestingUserID = $transactionDetails["UserID"];
             $requestingUserName = $transactionDetails["Forename"] . " " . $transactionDetails["Surname"];
-            $requestingUserImage = $this->model->getUserImage($requestingUserID);
+            $requestingUserImage = $this->cardDetailsModel->getUserImage($requestingUserID);
             // Information about the item/listing involved
             $listingID = $transactionDetails["ListingID"];
-            $listingDetails = $this->model->getCardDetails($listingID);
+            $listingDetails = $this->cardDetailsModel->getCardDetails($listingID);
             $itemName = $listingDetails["Name"];
-            $defaultImage = $this->model->getDefaultImage($listingID);
+            $defaultImage = $this->cardDetailsModel->getDefaultImage($listingID);
             $imageURL = $defaultImage["Image_URL"];
             $item = array(
                 "transactionID" => $transactionID,
@@ -252,12 +258,12 @@ class ProfilePageController
             //In for about user involved in this transaction
             $requestingUserID = $transactionDetails["UserID"];
             $requestingUserName = $transactionDetails["Forename"] . " " . $transactionDetails["Surname"];
-            $requestingUserImage = $this->model->getUserImage($requestingUserID);
+            $requestingUserImage = $this->cardDetailsModel->getUserImage($requestingUserID);
             // Information about the item/listing involved
             $listingID = $transactionDetails["ListingID"];
-            $listingDetails = $this->model->getCardDetails($listingID);
+            $listingDetails = $this->cardDetailsModel->getCardDetails($listingID);
             $itemName = $listingDetails["Name"];
-            $defaultImage = $this->model->getDefaultImage($listingID);
+            $defaultImage = $this->cardDetailsModel->getDefaultImage($listingID);
             $imageURL = $defaultImage["Image_URL"];
             $item = array(
                 "transactionID" => $transactionID,
@@ -281,16 +287,16 @@ class ProfilePageController
             $completedDate = $transactionDetails["Time_Of_Acceptance"];
             // Information about the item/listing involved
             $listingID = $transactionDetails["ListingID"];
-            $listingDetails = $this->model->getCardDetails($listingID);
+            $listingDetails = $this->cardDetailsModel->getCardDetails($listingID);
             $itemName = $listingDetails["Name"];
             $timeOfCreation = $listingDetails["Time_Of_Creation"];
             $postCode = $listingDetails["Post_Code"];
-            $defaultImage = $this->model->getDefaultImage($listingID);
+            $defaultImage = $this->cardDetailsModel->getDefaultImage($listingID);
             $imageURL = $defaultImage["Image_URL"];
             // Owner's details
             $offeringUserID = $listingDetails["UserID"];
             $offeringUserName = $listingDetails["Forename"] . " " . $listingDetails["Surname"];
-            $offeringUserImage = $this->model->getUserImage($offeringUserID);
+            $offeringUserImage = $this->cardDetailsModel->getUserImage($offeringUserID);
             $item = array(
                 "transactionID" => $transactionID,
                 "completedDate" => $completedDate,
@@ -315,16 +321,16 @@ class ProfilePageController
             $startedDate = $transactionDetails["Time_Of_Application"];
             // Information about the item/listing involved
             $listingID = $transactionDetails["ListingID"];
-            $listingDetails = $this->model->getCardDetails($listingID);
+            $listingDetails = $this->cardDetailsModel->getCardDetails($listingID);
             $itemName = $listingDetails["Name"];
             $timeOfCreation = $listingDetails["Time_Of_Creation"];
             $postCode = $listingDetails["Post_Code"];
-            $defaultImage = $this->model->getDefaultImage($listingID);
+            $defaultImage = $this->cardDetailsModel->getDefaultImage($listingID);
             $imageURL = $defaultImage["Image_URL"];
             // Owner's details
             $offeringUserID = $listingDetails["UserID"];
             $offeringUserName = $listingDetails["Forename"] . " " . $listingDetails["Surname"];
-            $offeringUserImage = $this->model->getUserImage($offeringUserID);
+            $offeringUserImage = $this->cardDetailsModel->getUserImage($offeringUserID);
             $item = array(
                 "transactionID" => $transactionID,
                 "startedDate" => $startedDate,
@@ -369,15 +375,15 @@ class ProfilePageController
             $watchID = $listing["WatchID"];
             $listingID = $listing["ListingID"];
             // Get details about the listing
-            $details = $this->model->getCardDetails($listingID);
+            $details = $this->cardDetailsModel->getCardDetails($listingID);
             $itemName = $details["Name"];
             $distance = -1; // Can't get this information
             $addedDate = $details["Time_Of_Creation"];
-            $defaultImage = $this->model->getDefaultImage($listingID);
+            $defaultImage = $this->cardDetailsModel->getDefaultImage($listingID);
             $imageURL = $defaultImage["Image_URL"];
             // Owner's details
             $userID = $details["UserID"];
-            $userImage = $this->model->getUserImage($userID);
+            $userImage = $this->cardDetailsModel->getUserImage($userID);
             $userName = $details["Forename"] . " " . $details["Surname"];
             $item = array(
                 "listingID" => $listingID,
