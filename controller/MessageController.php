@@ -61,6 +61,7 @@ class MessageController
 	
 
 	$CurrentConfig = new CurrentConfig();
+	$CurrentConfig->loadConfig("production");    
 	$config = $CurrentConfig->getAll();    
         $output = array(
             "config" => $config,
