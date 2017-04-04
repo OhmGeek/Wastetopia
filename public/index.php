@@ -9,7 +9,6 @@ use Wastetopia\Controller\Login_Controller;
 use Wastetopia\Controller\ProfilePageController;
 use Wastetopia\Controller\SearchController;
 use Wastetopia\Controller\MessageController;
-use Wastetopia\Controller\ProfilePageController;
 use Wastetopia\Controller\RecommendationController;
 
 
