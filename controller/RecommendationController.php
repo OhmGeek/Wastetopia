@@ -42,12 +42,12 @@ class RecommendationController {
       $recommendationList = array();  
       foreach($results as $listing){
           $listingID = $listing["ListingID"];
-          $userImage = $listing[""]; // Needs adding
+          $userImage = "NOPE"//$listing[""]; // Needs adding
           $userID = $listing["UserID"];
           $userName = $listing["Forename"]." ".$listing["Surname"];
           $addedDate = $listing["Time_Of_Creation"];
           $distance = "DON'T HAVE"; // May be able to add later
-          $imgURL = $listing[""]; // Add later
+          $imgURL = "NOPE"//$listing[""]; // Add later
           $itemName = $listing["Name"];
           $quantity = $listing["Quantity"];
           
@@ -73,7 +73,7 @@ class RecommendationController {
             "config" => $config,
             "recommendationList" => $recommendationList
       ");
-      $template = $this->twig->loadTemplate('DOESN'T EXIST');
+      $template = $this->twig->loadTemplate('/items/recommendations.twig');
       
       return $template->render($results); // Render with cardDetails for listings that match most frequent tags
       }
