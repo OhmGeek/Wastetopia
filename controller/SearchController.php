@@ -14,7 +14,7 @@ class SearchController
     public function recommendationSearch($tagsArr)
     {
         $searchResults = $this->search("", "", "", $tagsArr);
-        return array_slice($searchResults, 0, 5);
+        return array_slice($searchResults, 0, 4);
     }
     public function JSONSearch($lat, $long, $search, $tagsArr, $pageNumber)
     {
