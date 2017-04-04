@@ -35,6 +35,7 @@ class ConversationListController
 	    
 	    // Get config
 		$CurrentConfig = new CurrentConfig();
+	        $CurrentConfig->loadConfig("production");
 		$config = $CurrentConfig->getAll();
 	    
 		//Create array for Twig file
