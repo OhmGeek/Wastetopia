@@ -405,59 +405,6 @@
     font-weight: bold;
 }
 
-.item-FAQ {
-    background-color: #445878;
-    height: 350px;
-    font-weight: bolder;
-    font-size: 50px;
-    padding: 20px;
-    color: white;
-}
-
-.item-FAQ ul{
-    padding: 10px;
-    background-color: #D6D6DE;
-    border-radius: 5px;
-}
-
-.item-FAQ li{
-    color: white;
-    font-size: 16px;
-    line-height: 20px;
-    font-weight: normal;
-    display: block;
-}
-
-.item-FAQ li .faq-q{
-    margin-left: -20px;
-    margin-top: -20px;n
-    width: 80px;
-    height: 80px;
-    border: 3px solid #1C1D21;
-    border-radius: 50%;
-}
-
-.item-FAQ .tri{
-    width: 5%;
-    display: inline-block;
-}
-
-.item-FAQ li .question{
-    padding: 20px;
-    width: 75%;
-    color: white;
-    background-color: #1C1D21;
-    border-radius: 50px;
-}
-
-.item-FAQ li .faq-a{
-    border-color: #313579;
-}
-
-.item-FAQ li .answer{
-    color: #313579;
-}
-
 .zero-padding{
     padding: 0px;
     margin: 0px;
@@ -469,7 +416,7 @@
 
 .gm-style-iw {
     width: 300px !important;
-    height: 155px !important;
+    height: 255px !important;
     top: 15px !important;
     left: 0 !important;
     background-color: #fff;
@@ -479,7 +426,7 @@
 .iw-container {
     margin-bottom: 10px;
     width: 300px;
-    height: 155px;
+    height: 255px;
 }
 
 .iw-container .iw-header {
@@ -516,10 +463,6 @@
     padding: 10px;
     overflow-y: hidden;
     overflow-x: hidden;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
 }
 
 .iw-body .item-name {
@@ -527,13 +470,17 @@
   font-weight: bold;
   color: #7D8A2E;
   padding-bottom: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+}
+
+.iw-container .item-image{
+    height:100px;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
 }
 
 .iw-body .nav-btns {
-  align-self: flex-start;
   width: 100%;
 }
 
@@ -746,7 +693,7 @@ a:link, a:hover, a:visited, a:active  {
   margin-bottom: 15px;
 }
 
-.thumbnail .trans-info {
+.trans-info {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -777,8 +724,9 @@ a:link, a:hover, a:visited, a:active  {
   justify-content: center;
 }
 
-.thumbnail .trans-info span,
-#offers .added-date {
+.trans-info span,
+#offers .added-date,
+.iw-body .added-date {
   font-weight: bolder;
   margin-right: 5px;
 }
@@ -1098,7 +1046,7 @@ a:link, a:hover, a:visited, a:active  {
 }
 
 .added-date,
- .thumbnail .trans-info,
+.trans-info,
  .thumbnail .trans-info .user-name {
     font-size: 13px;
     color: grey;
