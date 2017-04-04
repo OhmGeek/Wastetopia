@@ -6,7 +6,7 @@
  * Time: 11:24
  */
 namespace Wastetopia\Controller;
-
+use Wastetopia\Config\CurrentCongig;
 use Wastetopia\Model\ProfilePageModel;
 use Twig_Loader_Filesystem;
 use Twig_Environment;
@@ -49,8 +49,11 @@ class ProfilePageController
         $watchListDetails = $this->generateWatchListSection();
         $isCurrentUser = ($this->userID == $this->getUserID() ? 1 : 0); // 1 if logged in user trying to view their own profile
 
+        $CurrentConfig = new CurrentConfig();
+	    $CurrentConfig->loadConfig("production");    
+	    $config = $CurrentConfig->getAll();  
         $output = array(
-            "BASE_URL" => $_ENV['ROOT_BASE'],
+            "config" => $config,
 
             "isUser" => $isCurrentUser,
 
