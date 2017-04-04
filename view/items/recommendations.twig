@@ -1,14 +1,3 @@
-{% extends 'header.twig' %}
-
-{% block title %}
-recommendations
-{% endblock %}
-
-{% block navbar %}
-{% include 'navbar.twig' %}
-{% endblock %}
-
-{% block content %}
 <div class="header title">
   ITEMS YOU MIGHT LIKE
 </div>
@@ -18,7 +7,7 @@ recommendations
     <div class="grid-sizer col-xs-12 col-sm-6 col-md-3"></div>
     {% for item in recommendationList %}
     <div class="grid-item col-xs-12 col-sm-6 col-md-3">
-      <div class="thumbnail zero-padding" id="{{listing.ID}}">
+      <div class="thumbnail zero-padding" id="{{item.listingID}}">
         <div class="caption">
           <div class="centerAll">
             <img src="{{item.userImg}}" class="user-image"/>
@@ -42,7 +31,7 @@ recommendations
             <div><span>Quantity: </span> {{ item.quantity }}</div>
           </div>
           <div class="nav-btns">
-            <a href="#" class="btn btn-primary" role="button" id="{{item.ID}}">View</a>
+            <a href="#" class="btn btn-primary" role="button" id="{{item.listingID}}">View</a>
             <a href="#" class="btn btn-default" role="button">Request</a>
             <a href="#" role="button" class="btn-watch watched" id="watch"><i class="material-icons">visibility</i></a>
           </div>
@@ -52,6 +41,4 @@ recommendations
     {% endfor %}
   </div>
 </div>
-{% endblock %}
 
-{%  set jslist = ["plugins/isotope/isotope.pkgd.min.js","recommendations.js"] %}
