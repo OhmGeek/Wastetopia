@@ -9,6 +9,7 @@ namespace Wastetopia\Controller;
 use Wastetopia\Config\CurrentCongig;
 use Wastetopia\Model\ProfilePageModel;
 use Wastetopia\Model\CardDetailsModel;
+use Wastetopia\Controller\RecommendationController;
 use Twig_Loader_Filesystem;
 use Twig_Environment;
 
@@ -56,6 +57,8 @@ class ProfilePageController
         $watchListDetails = $this->generateWatchListSection();
         $isCurrentUser = ($this->userID == $this->getUserID() ? 1 : 0); // 1 if logged in user trying to view their own profile
 
+	$recommendationHTML = $this->generateRecommendationHTML();
+	    
         $CurrentConfig = new CurrentConfig();
 	    $config = $CurrentConfig->getAll();  
         $output = array(
@@ -76,7 +79,9 @@ class ProfilePageController
             "requests" => $listingsInformation["requests"],
 
             "watchListCount" => $watchListDetails["watchListCount"],
-            "watchList" => $watchListDetails["watchList"]
+            "watchList" => $watchListDetails["watchList"],
+		
+	    "recommendationhtml" => $recommendationHTML
         );
 
        
@@ -404,6 +409,11 @@ class ProfilePageController
         return $watchListDetails;
     }
     
+	
+    function generateRecommendationHTML(){
+	$controller = new RecommendationController();
+	return $controller->generateRecommendationSection();
+    }
     function inWatchList($listingID){
         $watchedListings = $this->model->getWatchedListings();
         $inWathcList = False; // Assume it isn't in the watch list
