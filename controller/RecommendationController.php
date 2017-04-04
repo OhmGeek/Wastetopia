@@ -42,12 +42,12 @@ class RecommendationController {
       $recommendationList = array();  
       foreach($results as $listing){
           $listingID = $listing["ListingID"];
-          $userImage = "NOPE"//$listing[""]; // Needs adding
+          $userImage = "NOPE";//$listing[""]; // Needs adding
           $userID = $listing["UserID"];
           $userName = $listing["Forename"]." ".$listing["Surname"];
           $addedDate = $listing["Time_Of_Creation"];
           $distance = "DON'T HAVE"; // May be able to add later
-          $imgURL = "NOPE"//$listing[""]; // Add later
+          $imgURL = "NOPE";//$listing[""]; // Add later
           $itemName = $listing["Name"];
           $quantity = $listing["Quantity"];
           
