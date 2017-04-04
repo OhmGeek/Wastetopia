@@ -11,7 +11,16 @@ class SearchController
         $this->searchModel = new SearchModel();
     }
 
-    public function search($lat, $long, $search, $tagsArr)
+    public function recommendationSearch($tagsArr)
+    {
+        return $this->search("", "", "", $tagsArr);
+    }
+    public function JSONSearch($lat, $long, $search, $tagsArr)
+    {
+        return json_encode($this->search($lat, $long, $search, $tagsArr));
+    }
+
+    private function search($lat, $long, $search, $tagsArr)
     {
         $distanceSearch  = false;
         $nameSearch = false;
@@ -73,9 +82,9 @@ class SearchController
         $searchResults = [];
         foreach ($itemInformation as $item) {
             $result = $this->searchModel->getCardDetails($item["ListingID"]);
-            $searchResults[] = $result;
+            $searchResults[] = $result[0];
         }
-        return json_encode($searchResults);
+        return $searchResults;
     }
 
     public function sampleSearch()

@@ -40,7 +40,7 @@ $klein->with('/search', function () use ($klein) {
         $search = $paramArr[2];
         $tagsArr = explode("+",$paramArr[3]);
         
-        return $searchController->search($lat, $long, $search, $tagsArr);
+        return $searchController->JSONSearch($lat, $long, $search, $tagsArr);
     });
 });
 
