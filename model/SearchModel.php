@@ -100,7 +100,7 @@ class SearchModel
         $statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);
         $statement->execute();
         $results = $statement->fetchAll(PDO::FETCH_ASSOC);
-        return $results[0];
+        return $results[0]; 
     }
     
     //FUNCTIONS TO DEAL WITH DISTANCE, MAY BE IN CONTROLLER
@@ -181,32 +181,11 @@ class SearchModel
         $distance = $distance["value"];
         return $distance;
     }
-    /*Default will return listings only within 0.76 degrees of search location
+    /*Distance searches will return listings only within 0.76 degrees of search location
       This draws a square of hight 77km and of variable width based on the latitude
       and returns results only within this area
       At the equator the width is roughly 77km, at London, 56km
       and at the UK Arctic Research Station, 30km*/
-/*    function getNearbyItems($userLat, $userLong, $search, $tagsArray, $distanceLimit = 0.76)
-    {
-        $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
-        $statement = $this->db->prepare("
-            SELECT `Listing`.`ListingID`, `Location`.`Latitude`, `Location`.`Longitude`
-            FROM `Listing`
-            JOIN `Item` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
-            JOIN `Location` ON `Listing`.`FK_Location_LocationID` = `Location`.`LocationID` 
-            WHERE ABS(`Location`.`Latitude` - :userLat) < :distanceLimit
-            AND ABS(`Location`.`Longitude` - :userLong) < :distanceLimit
-            AND `Item`.`Name` LIKE :search;
-        ");
-        $statement->bindValue(":userLat", strval($userLat), PDO::PARAM_STR);
-        $statement->bindValue(":userLong", strval($userLong), PDO::PARAM_STR);
-        $statement->bindValue(":search", strval('%'.$search.'%'), PDO::PARAM_STR);
-
-        $statement->bindValue(":distanceLimit", strval($distanceLimit), PDO::PARAM_STR);
-        $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_ASSOC);
-    }*/
-
     function getSearchResults($userLat, $userLong, $search, $tagsArray, $distanceLimit = 0.76)
     {
         $whereUsed = false;

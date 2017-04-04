@@ -64,20 +64,24 @@ class SearchController
             $itemInformation = $this->searchModel->getSearchResults(false, false, false, false);          //No filtering
         }
         
-        $userLocation = array('lat' => $lat,'long' => $long);
-        foreach ($itemInformation as $key => $item)
+        if($distanceSearch)
         {
-            $itemLocation = array('lat' => $item['Latitude'], 'long' => $item['Longitude']);
-            $distance = $this->haversineDistance($userLocation, $itemLocation);
-            $itemInformation[$key]['distance'] = $distance;           
-        }
+            $userLocation = array('lat' => $lat,'long' => $long);
+            foreach ($itemInformation as $key => $item)
+            {
+                $itemLocation = array('lat' => $item['Latitude'], 'long' => $item['Longitude']);
+                $distance = $this->haversineDistance($userLocation, $itemLocation);
+                $itemInformation[$key]['distance'] = $distance;           
+            }
 
-        usort($itemInformation, function($a, $b)
-        {
-            if ($a['distance'] < $b['distance']) {return 1;}
-            elseif ($a['distance'] > $b['distance']) {return -1;}
-            else {return 0;}
-        });
+            usort($itemInformation, function($a, $b)
+            {
+                if ($a['distance'] < $b['distance']) {return 1;}
+                elseif ($a['distance'] > $b['distance']) {return -1;}
+                else {return 0;}
+            });
+        }
+        
 
         $searchResults = [];
         foreach ($itemInformation as $item) {
