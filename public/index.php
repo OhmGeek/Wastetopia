@@ -5,6 +5,9 @@ use Wastetopia\Controller\ConversationListController;
 use Wastetopia\Controller\Login_Controller;
 use Wastetopia\Config\CurrentConfig;
 use Wastetopia\Controller\MessageController;
+use Wastetopia\Controller\ProfilePageController;
+use Wastetopia\Controller\RecommendationController;
+
 require_once '../vendor/autoload.php';
 
 // check if we should use production? Otherwise, use community.
@@ -44,6 +47,7 @@ $klein->respond("GET", "/get-env", function() {
     echo "Printing stuff now \n";
     return $envStr;
 });
+
 $klein->with('/items', function () use ($klein) {
 
     $klein->respond('GET', '/?', function ($request, $response) {
@@ -56,8 +60,8 @@ $klein->with('/items', function () use ($klein) {
         $itemID = $request->id;
         return "Show Item " . $itemID;
     });
-
 });
+
 $klein->with('/api', function () use ($klein) {
 
     $klein->respond('POST', '/verify-login', function ($request, $response) {
@@ -76,6 +80,30 @@ $klein->with('/api', function () use ($klein) {
 
 });
 
+$klein->with("/profile", function() use ($klein) {
+    
+    $klein->respond('GET', '/?', function($request, $response){
+        $controller = new ProfilePageController(1); //View own profile
+        return $controller->generatePage();
+    });
+    
+    $klein->respond('GET', '/user/[:userID]', function($request, $response){
+        $controller = new ProfilePageController(0, $request->userID); //View other user's profile
+        return $controller->generatePage();
+    });
+    
+    $klein->respond('POST', '/toggle-watch-list/[:listingID]', function($request, $response){
+       $controller = new ProfilePageController(1);
+       $response = $controller->toggleWatchListListing($request->listingID);
+       return $response;
+    });
+    
+    $klein->respond('GET', '/recommended', function($request, $response){
+        $controller = new RecommendationController();
+        $response = $controller->generateRecommendedSection();
+        return $response;
+    });
+});
 
 // todo authenticate on messages. Must be logged in to view correct messages.
 $klein->with('/messages', function () use ($klein) {
