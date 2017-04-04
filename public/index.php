@@ -8,14 +8,11 @@ use Wastetopia\Controller\ConversationListController;
 use Wastetopia\Controller\Login_Controller;
 use Wastetopia\Controller\SearchController;
 use Wastetopia\Controller\MessageController;
-<<<<<<< HEAD
 use Wastetopia\Controller\ProfilePageController;
 use Wastetopia\Controller\RecommendationController;
 
-require_once '../vendor/autoload.php';
-=======
 
->>>>>>> refs/remotes/origin/Searching
+
 
 // check if we should use production? Otherwise, use community.
 $mode = $_ENV['MODE'];
@@ -69,11 +66,7 @@ $klein->respond("GET", "/get-env", function() {
     echo "Printing stuff now \n";
     return $envStr;
 });
-<<<<<<< HEAD
 
-$klein->with('/items', function () use ($klein) {
-=======
->>>>>>> refs/remotes/origin/Searching
 
 $klein->with('/items', function () use ($klein) {
     $klein->respond('GET', '/?', function ($request, $response) {
@@ -87,11 +80,8 @@ $klein->with('/items', function () use ($klein) {
         return "Show Item " . $itemID;
     });
 });
-<<<<<<< HEAD
 
-$klein->with('/api', function () use ($klein) {
-=======
->>>>>>> refs/remotes/origin/Searching
+
 
 $klein->with('/api', function () use ($klein) {
     $klein->respond('POST', '/verify-login', function ($request, $response) {
