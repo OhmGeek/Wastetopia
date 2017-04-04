@@ -4,6 +4,8 @@ namespace Wastetopia\Controller;
 use Wastetopia\Model\MessageModel;
 use Twig_Loader_Filesystem;
 use Twig_Environment;
+use Wastetopia\Config\CurrentConfig;
+
 
 class MessageController
 {
@@ -20,6 +22,21 @@ class MessageController
 
 	}
 
+
+    function generatePageFromListing($listingID){
+	$conversationIDs = $this->model->getConversationIDFromListing($listingID);
+	if (count($conversationsIDs) > 0){
+	    // Conversation already exists	
+	    $conversationID = $conversationIDs[0];
+	}else{
+	   // Create the conversation 	
+	   $conversationModel = new ConversationListModel();
+	   $conversationModel->createConversation($listingID);
+	   $conversationIDs = $this->model->getConversationIDFromListing($listingID);
+	   $conversationID = $conversationIDs[0];	
+	}
+	return $this->generatePage($conversationID);    
+    }
 
     /**
      * Generates (and prints) HTML for messaging page with initial conversation loaded
@@ -43,8 +60,11 @@ class MessageController
         $senderName = $userName;//." - ".$itemName;
 	
 
+	$CurrentConfig = new CurrentConfig();
+	$CurrentConfig->loadConfig("production");    
+	$config = $CurrentConfig->getAll();    
         $output = array(
-            "BASE_URL" => $_ENV['ROOT_BASE'],
+            "config" => $config,
             "senderName"=>$senderName,
             "senderImage"=>$senderImage,
             "conversationID" =>$conversationID,  //Needed so page can poll for new messages with the ID
