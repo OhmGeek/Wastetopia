@@ -464,12 +464,12 @@
 }
 
 #map {
-    height: 300px;
+    height: 400px;
 }
 
 .gm-style-iw {
-    width: 170px !important;
-    height: 150px !important;
+    width: 300px !important;
+    height: 155px !important;
     top: 15px !important;
     left: 0 !important;
     background-color: #fff;
@@ -478,60 +478,94 @@
 
 .iw-container {
     margin-bottom: 10px;
-    width: 170px;
-    height: 150px;
+    width: 300px;
+    height: 155px;
 }
 
 .iw-container .iw-header {
-    font-size: 14px;
-    padding: 4px;
-    background-color: rgb(68,88,120);
-    color: white;
+    font-size: 16px;
+    padding: 5px 10px;
     margin: 0;
+    background-color: #7D8A2E;
     width: 100%;
-    height: 28px;
-    overflow-y: hidden;
-    overflow-x: hidden;
     display: flex;
     justify-content: flex-start;
-}
-
-.iw-container .iw-header .user{
-    display: flex;
     align-items: center;
-    justify-content: flex-start;
-    width: 100%;
-    height: 100%;
 }
 
-.iw-container .iw-header .user .user-img img {
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    border: 1px solid white;
+.iw-container .iw-header img {
+  height: 25px;
+  width: 25px;
 }
 
-.iw-container .iw-header .user-name {
+.iw-container .iw-header .user-details {
+    margin-left: 5px;
+}
+
+.iw-container .iw-header .user-details .user-name {
+    margin: 0;
     color: white;
-    font-size: 12px !important;
-    font-weight: 600;
+    font-weight: bolder;
 }
 
-.iw-container .iw-header .user .is-offering{
-    color: #7EA3DE;
-    font-size: 12px;
-    font-weight: 600;
+.iw-container .iw-header .is-offering{
+    color: white;
 }
 
 .iw-container .iw-body {
-    height: 122px;
+    padding: 10px;
     overflow-y: hidden;
     overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
-.iw-container .iw-body img {
-    width: 100%;
-    height: 100%;
+.iw-body .item-name {
+  font-size: 20px;
+  font-weight: bold;
+  color: #7D8A2E;
+  padding-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.iw-body .nav-btns {
+  align-self: flex-start;
+  width: 100%;
+}
+
+.customMarker {
+    position:absolute;
+    cursor:pointer;
+    background:#424242;
+    width:100px;
+    height:100px;
+    /* -width/2 */
+    margin-left:-50px;
+    /* -height + arrow */
+    margin-top:-110px;
+    border-radius:10px;
+    padding:0px;
+}
+.customMarker:after {
+    content:"";
+    position: absolute;
+    bottom: -10px;
+    left: 40px;
+    border-width: 10px 10px 0;
+    border-style: solid;
+    border-color: #424242 transparent;
+    display: block;
+    width: 0;
+}
+.customMarker img {
+    width:90px;
+    height:90px;
+    margin:5px;
+    border-radius:10px;
 }
 
 /* item edit page */
