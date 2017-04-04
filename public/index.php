@@ -95,8 +95,6 @@ $klein->with("/profile", function() use ($klein) {
 });
 
 
-$klein->with('/items', function () use ($klein) {
-
 
 $klein->with('/items', function () use ($klein) {
     $klein->respond('GET', '/?', function ($request, $response) {
