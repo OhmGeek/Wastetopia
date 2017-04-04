@@ -58,7 +58,7 @@ $(function () {
       });
 
       var markerIcon = {
-        url: 'icons/placePen.png',
+        url: 'icons/placePin.png',
         //The size image file.
         scaledSize: new google.maps.Size(30, 30),
         //The point on the image to measure the anchor from. 0, 0 is the top left.
