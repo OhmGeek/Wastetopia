@@ -4,7 +4,7 @@ use Twig_Environment;
 use Twig_Loader_Filesystem;
 use Wastetopia\Model\AnalysisModel;
 use Wastetopia\Controller\SearchController;  
-use Wastetopia\Config\CurrentConfig
+use Wastetopia\Config\CurrentConfig;
 
 class RecommendationController {
     
