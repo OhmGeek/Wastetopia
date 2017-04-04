@@ -3,7 +3,8 @@ namespace Wastetopia\Controller;
 use Twig_Environment;
 use Twig_Loader_Filesystem;
 use Wastetopia\Model\AnalysisModel;
-use Wastetopia\Controller\SearchController;    
+use Wastetopia\Controller\SearchController;  
+use Wastetopia\Config\CurrentConfig
 
 class RecommendationController {
     
@@ -38,6 +39,40 @@ class RecommendationController {
       $searchController = new SearchController();
       $results = $searchController->recommendationSearch($tags);
         
+      $recommendationList = array();  
+      foreach($results as $listing){
+          $listingID = $listing["ListingID"];
+          $userImage = $listing[""]; // Needs adding
+          $userID = $listing["UserID"];
+          $userName = $listing["Forename"]." ".$listing["Surname"];
+          $addedDate = $listing["Time_Of_Creation"];
+          $distance = "DON'T HAVE"; // May be able to add later
+          $imgURL = $listing[""]; // Add later
+          $itemName = $listing["Name"];
+          $quantity = $listing["Quantity"];
+          
+          $item = array("
+            "listingID" => $listingID,
+            "userImg" => $userImage,
+            "userID" => $userID,
+            "userName" => $userName,
+            "addedDate" => $addedDate,
+            "distance" => $distance,
+            "imgURL" => $imgURL,
+            "itemName" => $itemName,
+            "quantity" => $quantity
+          ");
+          
+          array_push($recommendationList, $item);
+      }
+        
+      $currentConfig = new CurrentConfig();
+      $config = $currentConfig->getAll();
+        
+      $output = array("
+            "config" => $config,
+            "recommendationList" => $recommendationList
+      ");
       $template = $this->twig->loadTemplate('DOESN'T EXIST');
       
       return $template->render($results); // Render with cardDetails for listings that match most frequent tags
