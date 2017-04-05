@@ -104,4 +104,30 @@ class CardDetailsModel
         return $results[0];
     }
 
+    /**
+    * Returns 1 if given user has an ongoing request for the given listing
+    * @param $userID
+    * @param $listingID
+    * @return boolean
+    */
+    function isUserRequestingListing($userID, $listingID){
+	$statement = $this->db->prepare("
+		SELECT * 
+		FROM `ListingTransaction`
+		JOIN `Transaction` ON `Transaction`.`TransactionID` = `ListingTransaction`.`FK_TransactionID`
+		JOIN `Listing` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
+		JOIN `User` ON `User`.`UserID` = `Transaction`.`FK_User_UserID`
+		WHERE `ListingTransaction`.`Success` = 0
+		AND `Listing`.`ListingID` = :listingID
+		AND `User`.`UserID` = :userID
+	");
+	    
+	$statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);
+	$statement->bindValue(":userID", $userID, PDO::PARAM_INT);
+	    
+	$statement->execute();
+	$results = $statement->fetchAll(PDO::FETCH_ASSOC);
+	    
+	return (count($results) > 0);    
+    }
 }
