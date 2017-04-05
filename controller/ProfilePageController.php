@@ -6,7 +6,7 @@
  * Time: 11:24
  */
 namespace Wastetopia\Controller;
-use Wastetopia\Config\CurrentCongig;
+use Wastetopia\Config\CurrentConfig;
 use Wastetopia\Model\ProfilePageModel;
 use Wastetopia\Model\CardDetailsModel;
 use Wastetopia\Controller\RecommendationController;
