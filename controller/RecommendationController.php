@@ -5,11 +5,13 @@ use Twig_Loader_Filesystem;
 use Wastetopia\Model\AnalysisModel;
 use Wastetopia\Controller\SearchController;  
 use Wastetopia\Config\CurrentConfig;
+use Wastetopia\Model\CardDetailsModel;
 
 class RecommendationController {
     
     function __construct(){
       $this->model = new AnalysisModel();
+      $this->cardDetailsModel = new CardDetailsModel();  
       
       $loader = new Twig_Loader_Filesystem('../view/');
       $this->twig = new Twig_Environment($loader);
@@ -42,13 +44,13 @@ class RecommendationController {
       $recommendationList = array();  
       foreach($results as $listing){
           $listingID = $listing["ListingID"];
-          $userImage = "NOPE";//$listing[""]; // Needs adding
           $userID = $listing["UserID"];
+          $userImage = $this->cardDetailsModel->getUserImage($userID);//$listing[""]; // Needs adding
           $userName = $listing["Forename"]." ".$listing["Surname"];
           $addedDate = $listing["Time_Of_Creation"];
           $distance = "DON'T HAVE"; // May be able to add later
           $postCode = $listing["Post_Code"];
-          $imgURL = "NOPE";//$listing[""]; // Add later
+          $imgURL = $this->cardDetailsModel->getDefaultImage($listingID);//$listing[""]; // Add later
           $itemName = $listing["Name"];
           $quantity = $listing["Quantity"];
           
