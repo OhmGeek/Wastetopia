@@ -53,7 +53,6 @@ class ProfilePageController
     function generatePage()
     {
         $userInformation = $this->generateProfileSection();
-	print_r($userInformation);    
         $listingsInformation = $this->generateListingsSection();
         $watchListDetails = $this->generateWatchListSection();
         $isCurrentUser = ($this->userID == $this->getUserID() ? 1 : 0); // 1 if logged in user trying to view their own profile
