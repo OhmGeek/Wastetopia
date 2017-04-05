@@ -94,7 +94,7 @@ class ProfilePageController
     function generateProfileSection()
     {
         //Get user details
-        $userDetails = $this->cardDetailsModel->getCurrentUserDetails();
+        $userDetails = $this->cardDetailsModel->getUserDetails($this->userID);
         $userImage = $this->cardDetailsModel->getUserImage($this->userID);
         $userInformation = array();
         $userInformation["username"] = $userDetails["Forename"] . " " . $userDetails["Surname"];
