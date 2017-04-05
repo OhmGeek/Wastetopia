@@ -89,8 +89,7 @@ $klein->with("/profile", function() use ($klein) {
     
     $klein->respond('GET', '/recommended', function($request, $response){
         $controller = new RecommendationController();
-        $response = $controller->generateRecommendedSection();
-        return $response;
+        return $controller->generateRecommendedSection();
     });
 });
 
