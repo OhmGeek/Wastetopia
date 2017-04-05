@@ -30,8 +30,7 @@ class CardDetailsModel
      * Gets all detail from the User table for this user
      * @return mixed
      */
-    function getCurrentUserDetails(){
-        $userID = $this->getUserID();
+    function getUserDetails($userID){
         $statement = $this->db->prepare("
         SELECT * 
         FROM `User` 
