@@ -94,7 +94,7 @@ class ProfilePageController
     {
         //Get user details
         $userDetails = $this->cardDetailsModel->getCurrentUserDetails();
-        $userImage = $this->cardDetailsmodel->getUserImage($this->userID);
+        $userImage = $this->cardDetailsModel->getUserImage($this->userID);
         $userInformation = array();
         $userInformation["username"] = $userDetails["Forename"] . " " . $userDetails["Surname"];
 //        $userInformation["email"] = $userDetails["Email_Address"];
