@@ -10,12 +10,12 @@ namespace Wastetopia\Model;
 use Wastetopia\Model\DB;
 use PDO;
 
-class CardDisplayModel
+class CardDetailsModel
 {
 
 
     /**
-     * CardDisplayModel constructor.
+     * CardDetailsModel constructor.
      */
     public function __construct()
     {
