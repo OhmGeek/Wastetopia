@@ -412,7 +412,7 @@ class ProfilePageController
 	
     function generateRecommendationHTML(){
 	$controller = new RecommendationController();
-	return $controller->generateRecommendationSection();
+	return $controller->generateRecommendedSection();
     }
     function inWatchList($listingID){
         $watchedListings = $this->model->getWatchedListings();
