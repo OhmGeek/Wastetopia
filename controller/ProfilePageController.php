@@ -383,6 +383,7 @@ class ProfilePageController
             $details = $this->cardDetailsModel->getCardDetails($listingID);
             $itemName = $details["Name"];
             $distance = -1; // Can't get this information
+	    $postCode = $listing["Post_Code"];	
             $addedDate = $details["Time_Of_Creation"];
             $defaultImage = $this->cardDetailsModel->getDefaultImage($listingID);
             $imageURL = $defaultImage["Image_URL"];
@@ -397,6 +398,7 @@ class ProfilePageController
                 "userName" => $userName,
                 "addedDate" => $addedDate,
                 "distance" => $distance, //CAN'T GET THIS INFORMATION
+		"postCode" => $postCode,    
                 "imgURL" => $imageURL,
                 "itemName" => $itemName,
             );
