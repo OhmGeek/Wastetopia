@@ -44,7 +44,7 @@ $(function () {
     .isotope('layout');
   };
 
-  $grid.on('click', '#watch', function(){
+  $grid.on('click', '.btn-watch', function(){
      var listingID = $(this).closest('.thumbnail').attr("id");
      var isUser = parseInt($(this).closest('.user-stats').attr("id"));
      var listing = $(this);
