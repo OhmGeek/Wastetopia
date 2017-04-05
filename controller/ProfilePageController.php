@@ -215,6 +215,10 @@ class ProfilePageController
             $quantity = $details["Quantity"];
             $defaultImage = $this->cardDetailsModel->getDefaultImage($listingID);
             $imageURL = $defaultImage["Image_URL"];
+		
+	    // Figure out whether to display "Request" or "Cancel request" button	
+	    // $isRequesting = $this->cardDetailsModel->isUserRequestingListing($this->userID, $listingID); 
+		
             $item = array(
                 "listingID" => $listingID,
                 "itemName" => $itemName,
