@@ -5,13 +5,20 @@ $(function () {
   function initMap() {
     var searchTerm = 'apple'
 
-    var url = window.location.protocol + "//" + window.location.host + "/" + 'search/json/' + searchTerm
+    // var url = window.location.protocol + "//" + window.location.host + "/" + 'search/json/' + searchTerm
 
-    $.getJSON(url, function(data) {
+    var url = 'https://wastetopia-pr-25.herokuapp.com/search/JSON/' + searchTerm
+
+    $.getJSON(url, function(items) {
+      var positions = []
+      var itemsDict = []
+
+      console.log(items)
+
+      var geocoder = new google.maps.Geocoder();
 
       var map = new google.maps.Map(document.getElementById('map'), {
         zoom: 14,
-        center: positions[0],
         mapTypeId: 'hybrid'
       });
 
@@ -67,13 +74,14 @@ $(function () {
         anchor: new google.maps.Point(15, 30)
       };
 
-      for (var item in data.items) {
+      for (var item in items) {
+
         var contentString = '<div class="iw-container">'+
         '<div class="iw-header">'+
         '<img class="user-image" src="flowery.jpg"/>' +
         '<div class="user-details">'+
-        '<a class="user-name" href="#">'+
-        'Mark Smith' +
+        '<a class="user-name" href="#' + item.UserID + '">'+
+        item.Forename + ' ' + item.Surname  +
         '</a>'+
         '<span class="is-offering">'+
         ' is offering'+
@@ -81,29 +89,41 @@ $(function () {
         '</div>'+
         '</div>' +
         '<div class="item-image" style="background-image: url(food.jpg)"></div>'+
-        '<div class="iw-body caption">'+
-        '<div class="item-name">APPLES</div>'+
+        '<div class="iw-body caption"> id="' + item.ListingID + '"'+
+        '<div class="item-name">'+ item.Name +'</div>'+
         '<div class="trans-info">'+
-        '<div class="added-date">Added on 12 March 2018</div>'+
-        '<div><span>Quantity:</span>5</div>'+
+        '<div class="added-date">Added on '+ item.Time_Of_Creation +'</div>'+
+        '<div><span>Quantity:</span>' + item.Quantity + '</div>'+
         '</div>'+
         '<div class="nav-btns">'+
-        '<a href="#" class="btn btn-primary" role="button">View</a>'+
+        '<a href="#'+ item.ListingID + '" class="btn btn-primary" role="button">View</a>'+
         '<a class="btn btn-default" role="button">Request</a>'+
         '<a role="button" class="btn-watch" id="watch"><i class="material-icons">visibility</i></a>'+
         '</div>'+
         '</div>'+
         '</div>';
 
-        var marker = new google.maps.Marker({
-          position: positions[i],
-          map: map,
-          icon: markerIcon
+        var marker
+
+        geocoder.geocode( { 'address': item.Post_Code}, function(results, status) {
+          if (status == 'OK') {
+            map.setCenter(results[0].geometry.location);
+            marker = new google.maps.Marker({
+              map: map,
+              position: results[0].geometry.location,
+              icon: markerIcon
+            });
+          }
         });
+
+        marker.set("id",item.ListingID)
+
+        itemsDict[item.ListingID] = contentString
 
         google.maps.event.addListener(marker, 'click', (function(marker, i) {
           return function() {
-            infowindow.setContent(contentString);
+            var key = marker.get("id");
+            infowindow.setContent(itemsDict[key]);
             infowindow.open(map, marker);
           }
         })(marker, i));
