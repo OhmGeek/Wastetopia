@@ -3,12 +3,14 @@
 namespace Wastetopia\Controller;
 
 use Wastetopia\Model\SearchModel;
+use Wastetopia\Model\CardDetailsModel;
 
 class SearchController
 {
     public function __construct()
     {
         $this->searchModel = new SearchModel();
+        $this->CardDetailsModel = new CardDetailsModel();
     }
 
     public function recommendationSearch($tagsArr)
