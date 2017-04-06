@@ -416,7 +416,7 @@
 
 .gm-style-iw {
     width: 300px !important;
-    height: 155px !important;
+    height: 255px !important;
     top: 15px !important;
     left: 0 !important;
     background-color: #fff;
@@ -426,7 +426,7 @@
 .iw-container {
     margin-bottom: 10px;
     width: 300px;
-    height: 155px;
+    height: 255px;
 }
 
 .iw-container .iw-header {
@@ -470,6 +470,14 @@
   font-weight: bold;
   color: #7D8A2E;
   padding-bottom: 10px;
+}
+
+.iw-container .item-image{
+    height:100px;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
 }
 
 .iw-body .nav-btns {
@@ -1038,7 +1046,7 @@ a:link, a:hover, a:visited, a:active  {
 }
 
 .added-date,
- .thumbnail .trans-info,
+.trans-info,
  .thumbnail .trans-info .user-name {
     font-size: 13px;
     color: grey;
