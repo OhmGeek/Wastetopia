@@ -18,11 +18,8 @@ function initMap() {
     bounds = new google.maps.LatLngBounds();
     markerIcon = {
       url: 'icons/placePin.png',
-      //The size image file.
       scaledSize: new google.maps.Size(30, 30),
-      //The point on the image to measure the anchor from. 0, 0 is the top left.
       origin: new google.maps.Point(0, 0),
-      //The x y coordinates of the anchor point on the marker. e.g. If your map marker was a drawing pin then the anchor would be the tip of the pin.
       anchor: new google.maps.Point(15, 30)
     };
     geocoder = new google.maps.Geocoder();
@@ -123,20 +120,4 @@ function initMap() {
       });
       iw.open(map, marker);
     });
-  }
-
-  function createMarker(results) {
-    var marker = new google.maps.Marker({
-      icon: markerIcon,
-      map: map,
-      position: results[0].geometry.location,
-      title: title,
-      animation: google.maps.Animation.DROP,
-      address: address,
-      url: url
-    })
-    bounds.extend(marker.getPosition());
-    map.fitBounds(bounds);
-    infoWindow(marker, map, title, address, url);
-    return marker;
   }
