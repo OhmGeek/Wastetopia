@@ -67,6 +67,7 @@ function getSelectedDietaryReqs() {
 
     return requirementsList;
 }
+
 function getMayContainsDetails() {
     var mayContain = [];
     $('.may-contains-select option').forEach(function(elem) {
@@ -86,8 +87,10 @@ function getLocationOfItem() {
     }
 }
 function serializeItem() {
-    //todo: process expiry date (need more research into this)
+    //todo: process expiry date (need more research into this). Think it's just .val, but not fully sure.
     // todo: process item type properly.
+    // todo: check errors in images/date/location
+
     var item = {
         "name": $('#name').val(),
         "images": getImagesFromDOM(),
@@ -97,5 +100,7 @@ function serializeItem() {
         "expires": expiryDate,
         "description": $('description').val(),
         "location": getLocationOfItem()
-    }
+    };
+
+    return item;
 }

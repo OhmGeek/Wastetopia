@@ -259,10 +259,9 @@ class AddItemModel
     function addAllImages($itemID, $images)
     {
         foreach ($images as $image) {
-            $imageFileType = $image["fileType"];
             $imageURL = $image["url"];
             $isDefault = $image["isDefault"];
-            $imageID = $this->addToImageTable($imageFileType, $imageURL); //Add to image table
+            $imageID = $this->getImageIDFromURL($imageURL); //Add to image table
             $this->addToItemImageTable($imageID, $isDefault, $itemID); //Link image to item
         }
     }
@@ -279,10 +278,9 @@ class AddItemModel
     function mainAddItemFunction($item, $tags, $images, $barcode, $location)
     {
         //Extract item information
-        $itemName = $item["itemName"];
-        $itemDescription = $item["itemDescription"];
-        $useByDate = $item["useByDate"];
-        $quantity = $item["quantity"];
+        $itemName = $item["name"];
+        $itemDescription = $item["description"];
+        $useByDate = $item["useBy"];
         $itemID = $this->addToItemTable($itemName, $itemDescription, $useByDate); //Add the item
 
         $this->addAllTags($itemID, $tags); //Add the tags and link to item
@@ -300,6 +298,19 @@ class AddItemModel
 
         //Add the whole listing
         $this->addToListingTable($locationID, $itemID, $quantity);
+    }
+
+    private function getImageIDFromURL($imageURL)
+    {
+        $statement = $this->db->prepare("
+                            SELECT ImageID
+                            FROM Image
+                            WHERE Image_URL = :url");
+
+        $statement->bindValue(":url", $imageURL,PDO::PARAM_STR);
+        $statement->execute();
+        // return the ID, or nothing if none is found.
+        return $statement->fetchColumn(0);
     }
 
 
