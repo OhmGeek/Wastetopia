@@ -276,11 +276,12 @@ class ProfilePageModel
      */
     function getNumberOfCompletedReceived($year = -1, $month = -1, $timespan = 1)
     {
-		error_log("FINISH HERE OR SOMETHING");
+		#error_log("FINISH HERE OR SOMETHING");
 		$userID = $this->getUserID();
 		$end_year = $year;
 		$end_month = $month;
 		if($year == -1 && $month == -1){
+			return "$year = 1 and $month = 1";
 			$statement = $this->db->prepare("
 				SELECT COUNT(*) as `Count`
 				FROM `Listing`
@@ -292,6 +293,7 @@ class ProfilePageModel
 			$statement->bindValue(":userID", $userID, PDO::PARAM_INT);
 		}
 		else if($year > -1 && $month > -1){
+			return "Neither $year nor $month <= -1";
 			#error_log("GOT HERE!");
 			$statement = $this->db->prepare("
 				SELECT COUNT(*) as `Count`
@@ -327,6 +329,7 @@ class ProfilePageModel
 			
 		}
 		else{
+			return "Neither $year nor $month were equal to -1 and were not >= -1";
 			$error_log("Received failed");
 			return false;
 		}
