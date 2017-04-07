@@ -50,7 +50,21 @@ class ProfilePageController
         return 6;
     }
 
-    function generatePage()
+    function generatePage(){
+	$profileContentHTML = $this->generateProfileContentHTML();
+	
+	$CurrentConfig = new CurrentConfig();
+	$config = $CurrentConfig->getAll();      
+	$output =  array(
+		"config" => $config,
+		"profileContent" => $profileContentHTML
+	);
+	$template = $this->twig->loadTemplate("/users/profile.twig");
+	return $template->render($output);    
+    }
+	
+	
+    function generateProfileContentHTML()
     {
         $userInformation = $this->generateProfileSection();
         $listingsInformation = $this->generateListingsSection();
@@ -59,11 +73,8 @@ class ProfilePageController
 
 	$recommendationHTML = $this->generateRecommendationHTML();
 	    
-        $CurrentConfig = new CurrentConfig();
-	    $config = $CurrentConfig->getAll();  
+        
         $output = array(
-            "config" => $config,
-
             "isUser" => $isCurrentUser,
 
             "userimage" => $userInformation["userimage"],
@@ -85,7 +96,7 @@ class ProfilePageController
         );
 
        
-        $template = $this->twig->loadTemplate('users/profile.twig');
+        $template = $this->twig->loadTemplate('users/profileContent.twig');
         return $template->render($output);
     }
 
