@@ -81,6 +81,11 @@ $klein->with("/profile", function() use ($klein) {
         return $controller->generatePage();
     });
     
+    $klein->respond('GET', 'update/[:userID]', function($request, $response){
+       $controller = new ProfilePageController(0, $request->userID);
+       return $controller->generateProfileContentHTML(); 
+    });
+    
     $klein->respond('POST', '/toggle-watch-list/[:listingID]', function($request, $response){
        $controller = new ProfilePageController(1);
        $response = $controller->toggleWatchListListing($request->listingID);
