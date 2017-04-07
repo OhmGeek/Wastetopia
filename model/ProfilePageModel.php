@@ -335,9 +335,14 @@ class ProfilePageModel
 			$statement->bindValue(":end_year", $end_year);
 			$statement->bindValue(":end_month", $end_month);
 
-			$statement->execute();
-			$errors = $statement->errorInfo();
-			return "" . $errors[2] . ", " . $errors[1] . " ," . $errors[0];
+			try{
+				$statement->execute();
+				$errors = $statement->errorInfo();
+			}
+			catch(Exception $e){
+				return "" . $e->getMessage() . $errors[2] . ", " . $errors[1] . " ," . $errors[0];
+			}
+			
 			return "end_year = $end_year, end_month = $end_month, user_id = $userID, year = $year, month = $month and received = ". $statement->fetchColumn();
 			return $statement->fetchColumn();
 		}
