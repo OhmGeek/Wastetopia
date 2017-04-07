@@ -219,6 +219,8 @@ class ProfilePageModel
 				AND `ListingTransaction`.`Success` = 1;
 			");
 			$statement->bindValue(":userID", $userID, PDO::PARAM_INT);
+			$statement->execute();
+			return $statement->fetchColumn();
 		}
 		else if($year != -1 && $month != -1){
 			#error_log("GOT HERE INSTEAD!");
@@ -257,14 +259,15 @@ class ProfilePageModel
 			$statement->bindValue(":start_month", $month, PDO::PARAM_INT);
 			$statement->bindValue(":end_year", $end_year, PDO::PARAM_INT);
 			$statement->bindValue(":end_month", $end_month, PDO::PARAM_INT);
+			$statement->execute();
+			return $statement->fetchColumn();
 		}
 		else{
 			$error_log("Received failed");
 			return false;
 		}
 			
-        $statement->execute();
-        return $statement->fetchColumn();
+        
     }
 
     /**
@@ -329,7 +332,7 @@ class ProfilePageModel
 			$statement->bindValue(":end_year", $end_year, PDO::PARAM_INT);
 			$statement->bindValue(":end_month", $end_month, PDO::PARAM_INT);
 			$statement->execute();
-			return "end_year = $end_year, end_month = $end_month, user_id = $userID";
+			return "end_year = $end_year, end_month = $end_month, user_id = $userID, year = $year, month = $month";
 			return $statement->fetchColumn();
 		}
 		else{
