@@ -8,6 +8,8 @@ var geocoder;
 var map;
 var bounds;
 var markerIcon;
+var markers = [];
+var markerCluster;
 
 function initMap() {
   map = new google.maps.Map(
@@ -26,6 +28,8 @@ function initMap() {
       anchor: new google.maps.Point(15, 30)
     };
     geocoder = new google.maps.Geocoder();
+    markerCluster = new MarkerClusterer(map, markers,
+                {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'})
     $.getJSON(url, function(items){
       for (var i in items) {
         console.log(items[i])
@@ -51,6 +55,7 @@ function initMap() {
           position: results[0].geometry.location,
           animation: google.maps.Animation.DROP,
         })
+        markerCluster.addMarker(marker);
         infoWindow(marker, map, item);
         bounds.extend(marker.getPosition());
         map.fitBounds(bounds);
@@ -123,20 +128,4 @@ function initMap() {
       });
       iw.open(map, marker);
     });
-  }
-
-  function createMarker(results) {
-    var marker = new google.maps.Marker({
-      icon: markerIcon,
-      map: map,
-      position: results[0].geometry.location,
-      title: title,
-      animation: google.maps.Animation.DROP,
-      address: address,
-      url: url
-    })
-    bounds.extend(marker.getPosition());
-    map.fitBounds(bounds);
-    infoWindow(marker, map, title, address, url);
-    return marker;
   }
