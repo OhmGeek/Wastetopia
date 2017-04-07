@@ -208,7 +208,7 @@ class ProfilePageModel
 		$end_year = $year;
 		$end_month = $month;
 		if($year == -1 && $month == -1){
-			error_log($end_year);
+			#error_log($end_year);
 			$statement = $this->db->prepare("
 				SELECT COUNT(*) as `Count`
 				FROM `Listing`
@@ -221,7 +221,7 @@ class ProfilePageModel
 			$statement->bindValue(":userID", $userID, PDO::PARAM_INT);
 		}
 		else if($year != -1 && $month != -1){
-			error_log("GOT HERE INSTEAD!");
+			#error_log("GOT HERE INSTEAD!");
 			$statement = $this->db->prepare("
 				SELECT COUNT(*) as `Count`
 				FROM `Listing`
@@ -233,13 +233,9 @@ class ProfilePageModel
 				AND Time_Of_Acceptance >= ':start_year-:start_month-01 00:00:00'
 				AND Time_Of_Acceptance < ':end_year-:end_month-01 00:00:00';
 			");
-			$statement->bindValue(":userID", $userID, PDO::PARAM_INT);
-			$statement->bindValue(":start_year", $year, PDO::PARAM_INT);
-			$statement->bindValue(":start_month", $month, PDO::PARAM_INT);
-			$statement->bindValue(":end_year", $end_year, PDO::PARAM_INT);
-			$statement->bindValue(":end_month", $end_month, PDO::PARAM_INT);
+			
 			if($month + $timespan >= 13){
-				error_log("GREATER THAN 13!");
+				#error_log("GREATER THAN 13!");
 				while($timespan > 1){
 					if($end_month == 12){
 						$end_month = 1;
@@ -253,10 +249,14 @@ class ProfilePageModel
 				}
 			}
 			else{
-				error_log("NOT GREATER THAN 13");
+				#error_log("NOT GREATER THAN 13");
 				$end_month = $end_month + $timespan;
 			}
-			
+			$statement->bindValue(":userID", $userID, PDO::PARAM_INT);
+			$statement->bindValue(":start_year", $year, PDO::PARAM_INT);
+			$statement->bindValue(":start_month", $month, PDO::PARAM_INT);
+			$statement->bindValue(":end_year", $end_year, PDO::PARAM_INT);
+			$statement->bindValue(":end_month", $end_month, PDO::PARAM_INT);
 		}
 		else{
 			$error_log("Received failed");
@@ -306,11 +306,7 @@ class ProfilePageModel
 				AND Time_Of_Acceptance >= ':start_year-:start_month-01 00:00:00'
 				AND Time_Of_Acceptance < ':end_year-:end_month-01 00:00:00';
 			");
-			$statement->bindValue(":userID", $userID, PDO::PARAM_INT);
-			$statement->bindValue(":start_year", $year, PDO::PARAM_INT);
-			$statement->bindValue(":start_month", $month, PDO::PARAM_INT);
-			$statement->bindValue(":end_year", $end_year, PDO::PARAM_INT);
-			$statement->bindValue(":end_month", $end_month, PDO::PARAM_INT);
+			
 			if($month + $timespan >= 13){
 				while($timespan >= 1){
 					if($end_month == 12){
@@ -327,7 +323,13 @@ class ProfilePageModel
 			else{
 				$end_month = $end_month + $timespan;
 			}
+			$statement->bindValue(":userID", $userID, PDO::PARAM_INT);
+			$statement->bindValue(":start_year", $year, PDO::PARAM_INT);
+			$statement->bindValue(":start_month", $month, PDO::PARAM_INT);
+			$statement->bindValue(":end_year", $end_year, PDO::PARAM_INT);
+			$statement->bindValue(":end_month", $end_month, PDO::PARAM_INT);
 			$statement->execute();
+			return "end_year = $end_year, end_month = $end_month, user_id = $userID";
 			return $statement->fetchColumn();
 		}
 		else{
