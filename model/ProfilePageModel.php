@@ -255,10 +255,10 @@ class ProfilePageModel
 				$end_month = $end_month + $timespan;
 			}
 			$statement->bindValue(":userID", $userID, PDO::PARAM_INT);
-			$statement->bindValue(":start_year", $year, PDO::PARAM_INT);
-			$statement->bindValue(":start_month", $month, PDO::PARAM_INT);
-			$statement->bindValue(":end_year", $end_year, PDO::PARAM_INT);
-			$statement->bindValue(":end_month", $end_month, PDO::PARAM_INT);
+			$statement->bindValue(":start_year", $year, PDO::PARAM_STR);
+			$statement->bindValue(":start_month", $month, PDO::PARAM_STR);
+			$statement->bindValue(":end_year", $end_year, PDO::PARAM_STR);
+			$statement->bindValue(":end_month", $end_month, PDO::PARAM_STR);
 			$statement->execute();
 			return "end_year = $end_year, end_month = $end_month, user_id = $userID, year = $year, month = $month and given = ". $statement->fetchColumn();
 			return $statement->fetchColumn();
@@ -328,10 +328,10 @@ class ProfilePageModel
 				$end_month = $end_month + $timespan;
 			}
 			$statement->bindValue(":userID", $userID, PDO::PARAM_INT);
-			$statement->bindValue(":start_year", $year, PDO::PARAM_INT);
-			$statement->bindValue(":start_month", $month, PDO::PARAM_INT);
-			$statement->bindValue(":end_year", $end_year, PDO::PARAM_INT);
-			$statement->bindValue(":end_month", $end_month, PDO::PARAM_INT);
+			$statement->bindValue(":start_year", $year, PDO::PARAM_STR);
+			$statement->bindValue(":start_month", $month, PDO::PARAM_STR);
+			$statement->bindValue(":end_year", $end_year, PDO::PARAM_STR);
+			$statement->bindValue(":end_month", $end_month, PDO::PARAM_STR);
 			$statement->execute();
 			return "end_year = $end_year, end_month = $end_month, user_id = $userID, year = $year, month = $month and received = ". $statement->fetchColumn();
 			return $statement->fetchColumn();
