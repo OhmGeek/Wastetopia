@@ -20,6 +20,7 @@ class CurrentConfig
     }
 
     public function loadConfig($mode) {
+        $mode = "production";
         if($mode === "production") {
             $currentConfig = (new ProductionConfig())->getConfiguration();
         }

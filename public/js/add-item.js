@@ -41,3 +41,33 @@ $('#form-image').change(function() {
     imageUpload();
 });
 
+function getImagesFromDOM() {
+    return [];
+}
+
+function getSelectedDietaryReqs() {
+    return [];
+}
+function getMayContainsDetails() {
+    return [];
+}
+
+function getLocationOfItem() {
+    var location = {
+        "state": Alabama,
+        "firstLineAddr": 23 Frances,
+        "secondLineAddr" Postcode
+    }
+}
+function serializeItem() {
+    item = {
+        "name": $('#name').val(),
+        "images": getImagesFromDOM(),
+        "classification": itemType,
+        "dietary": getSelectedDietaryReqs(),
+        "contains": getMayContainsDetails(),
+        "expires": expiryDate,
+        "description": $('description').val(),
+        "location": getLocationOfItem()
+    }
+}
