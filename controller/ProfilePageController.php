@@ -77,6 +77,7 @@ class ProfilePageController
         $output = array(
             "isUser" => $isCurrentUser,
 
+	    "userID" => $userInformation["userID"],	
             "userimage" => $userInformation["userimage"],
             "username" => $userInformation["username"],
             "userscore" => $userInformation["userscore"],
@@ -107,6 +108,7 @@ class ProfilePageController
         $userDetails = $this->cardDetailsModel->getUserDetails($this->userID);
         $userImage = $this->cardDetailsModel->getUserImage($this->userID);
         $userInformation = array();
+	$userInformation["userID"] = $userDetails["UserID"];    
         $userInformation["username"] = $userDetails["Forename"] . " " . $userDetails["Surname"];
 //        $userInformation["email"] = $userDetails["Email_Address"];
         $userInformation["userscore"] = $userDetails["Mean_Rating_Percent"];
