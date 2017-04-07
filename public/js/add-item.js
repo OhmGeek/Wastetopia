@@ -1,5 +1,3 @@
-
-
 function showUploadedItem(url, id) {
     var item = $('div').html = '<div>' +
                                     '<div class="col-xs-4 col-sm-2 zero-padding">'+
@@ -42,17 +40,45 @@ $('#form-image').change(function() {
 });
 
 function getImagesFromDOM() {
-    return [];
+    var imageList = [];
+    $('.upload-pic img').forEach(function(elem) {
+        imageList.append(elem.href); //todo check this - we want to get the href of the image tag
+    });
+    return imageList;
 }
 
 function getSelectedDietaryReqs() {
-    return [];
+    var requirementsList = [];
+    // todo use filter to get this working nicely.
+    $('.dietary-req').forEach(function(elem) {
+        // if the selected checkbox is actually selected, add the item
+        // to the requirements list. Otherwise, move to the next one.
+        if(elem.val()) {
+            requirementsList.append(elem.text); //get the text (or the contents of the tag).
+        }
+    });
+
+    // check if the user has any other requirements that need fulfilling.
+    var otherRequirements = $('#other-req').val();
+
+    if(otherRequirements) {
+        requirementsList.append(otherRequirements);
+    }
+
+    return requirementsList;
 }
 function getMayContainsDetails() {
-    return [];
+    var mayContain = [];
+    $('.may-contains-select option').forEach(function(elem) {
+        if(elem.val()) {
+            mayContain.append(elem.text);
+        }
+    });
+    return mayContain;
 }
 
 function getLocationOfItem() {
+    // todo use Google Maps/Ben's API
     var location = {
         "state": Alabama,
         "firstLineAddr": 23 Frances,
@@ -60,7 +86,9 @@ function getLocationOfItem() {
     }
 }
 function serializeItem() {
-    item = {
+    //todo: process expiry date (need more research into this)
+    // todo: process item type properly.
+    var item = {
         "name": $('#name').val(),
         "images": getImagesFromDOM(),
         "classification": itemType,
