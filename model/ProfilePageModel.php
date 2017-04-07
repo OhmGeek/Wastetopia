@@ -281,7 +281,7 @@ class ProfilePageModel
 		$end_year = $year;
 		$end_month = $month;
 		if($year == -1 && $month == -1){
-			return "$year = 1 and $month = 1";
+			#return "$year = 1 and $month = 1";
 			$statement = $this->db->prepare("
 				SELECT COUNT(*) as `Count`
 				FROM `Listing`
@@ -291,9 +291,10 @@ class ProfilePageModel
 				AND `ListingTransaction`.`Success` = 1;
 			");
 			$statement->bindValue(":userID", $userID, PDO::PARAM_INT);
+			$statement->execute();
+			return $statement->fetchColumn();
 		}
 		else if($year > -1 && $month > -1){
-			return "Neither $year nor $month <= -1";
 			#error_log("GOT HERE!");
 			$statement = $this->db->prepare("
 				SELECT COUNT(*) as `Count`
@@ -326,7 +327,8 @@ class ProfilePageModel
 			else{
 				$end_month = $end_month + $timespan;
 			}
-			
+			$statement->execute();
+			return $statement->fetchColumn();
 		}
 		else{
 			return "Neither $year nor $month were equal to -1 and were not >= -1";
@@ -334,8 +336,7 @@ class ProfilePageModel
 			return false;
 		}
 		
-        $statement->execute();
-        return $statement->fetchColumn();
+        
     }
 
     /**
