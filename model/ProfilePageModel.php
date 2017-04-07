@@ -255,10 +255,10 @@ class ProfilePageModel
 				$end_month = $end_month + $timespan;
 			}
 			$statement->bindValue(":userID", $userID, PDO::PARAM_INT);
-			$statement->bindValue(":start_year", $year, PDO::PARAM_STR);
-			$statement->bindValue(":start_month", $month, PDO::PARAM_STR);
-			$statement->bindValue(":end_year", $end_year, PDO::PARAM_STR);
-			$statement->bindValue(":end_month", $end_month, PDO::PARAM_STR);
+			$statement->bindValue(":start_year", $year, PDO::PARAM_INT);
+			$statement->bindValue(":start_month", $month, PDO::PARAM_INT);
+			$statement->bindValue(":end_year", $end_year, PDO::PARAM_INT);
+			$statement->bindValue(":end_month", $end_month, PDO::PARAM_INT);
 			$statement->execute();
 			$errors = $statement->errorInfo();
 			return "" . $errors[2] . ", " . $errors[1] . " ," . $errors[0];
@@ -329,11 +329,11 @@ class ProfilePageModel
 			else{
 				$end_month = $end_month + $timespan;
 			}
-			$statement->bindValue(":userID", $userID, PDO::PARAM_INT);
-			$statement->bindValue(":start_year", $year, PDO::PARAM_STR);
-			$statement->bindValue(":start_month", $month, PDO::PARAM_STR);
-			$statement->bindValue(":end_year", $end_year, PDO::PARAM_STR);
-			$statement->bindValue(":end_month", $end_month, PDO::PARAM_STR);
+			$statement->bindValue(":userID", $userID);
+			$statement->bindValue(":start_year", $year);
+			$statement->bindValue(":start_month", $month);
+			$statement->bindValue(":end_year", $end_year);
+			$statement->bindValue(":end_month", $end_month);
 
 			$statement->execute();
 			$errors = $statement->errorInfo();
@@ -384,7 +384,7 @@ class ProfilePageModel
 	    AND `Watch`.`FK_User_UserID` = :userID;
         ");
         $statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);
-	$statement->bindValue(":userID", $userID, PDO::PARAM_INT);
+		$statement->bindValue(":userID", $userID, PDO::PARAM_INT);
         $statement->execute();
         return True;
     }
