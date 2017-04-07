@@ -30,13 +30,26 @@ $(function () {
     $('.user-profile .popularity').css('font-size',iconSize);
     $('.page-height').css('padding-top',topPadding);
   });
-
+  
+  
+  // Reload HTML content when Back buttons pressed on each tab
+  $grid.on('click', 'a[href="#home"]',function (){
+    var userID = $('.user-name').attr("id");
+    var url = window.location.protocol + "//" + window.location.host + "/" + "/profile/update/" + userID;
+     $.get(url, function(response){
+        var div = $("#profileContentWrapper");
+        div.replaceWith(response);
+     });
+   });
+  
+  // Delete a card from the page
   $grid.on( 'click', '#delete', function() {
     // get the id of the item would be removed
     console.log($(this).closest('.thumbnail').attr("id"));
     remove(this)
   });
 
+  // Remove an element from the layout
   function remove(ele) {
     // remove clicked element (in a very skitchy way right now)
     $grid.isotope( 'remove', $(ele).closest('.grid-item'))
@@ -44,6 +57,7 @@ $(function () {
     .isotope('layout');
   };
 
+  // Toggle listings in the watch list
   $grid.on('click', '.btn-watch', function(){
      var listingID = $(this).closest('.thumbnail').attr("id");
      var isUser = parseInt($(this).closest('.user-stats').attr("id"));
