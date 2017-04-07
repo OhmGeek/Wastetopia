@@ -329,11 +329,11 @@ class ProfilePageModel
 			else{
 				$end_month = $end_month + $timespan;
 			}
-			$statement->bindValue(":userID", $userID);
-			$statement->bindValue(":start_year", $year);
-			$statement->bindValue(":start_month", $month);
-			$statement->bindValue(":end_year", $end_year);
-			$statement->bindValue(":end_month", $end_month);
+			$statement->bindParam(":userID", $userID);
+			$statement->bindParam(":start_year", $year);
+			$statement->bindParam(":start_month", $month);
+			$statement->bindParam(":end_year", $end_year);
+			$statement->bindParam(":end_month", $end_month);
 
 			try{
 				$statement->execute();
