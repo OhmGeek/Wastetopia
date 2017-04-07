@@ -260,7 +260,8 @@ class ProfilePageModel
 			$statement->bindValue(":end_year", $end_year, PDO::PARAM_STR);
 			$statement->bindValue(":end_month", $end_month, PDO::PARAM_STR);
 			$statement->execute();
-			return ($statement->errorInfo())[0];
+			$errors = $statement->errorInfo();
+			return "" . $errors[2] . ", " . $errors[1] . " ," . $errors[0];
 			return "end_year = $end_year, end_month = $end_month, user_id = $userID, year = $year, month = $month and given = ". $statement->fetchColumn();
 			return $statement->fetchColumn();
 		}
@@ -335,7 +336,8 @@ class ProfilePageModel
 			$statement->bindValue(":end_month", $end_month, PDO::PARAM_STR);
 
 			$statement->execute();
-			return ($statement->errorInfo())[1];
+			$errors = $statement->errorInfo();
+			return "" . $errors[2] . ", " . $errors[1] . " ," . $errors[0];
 			return "end_year = $end_year, end_month = $end_month, user_id = $userID, year = $year, month = $month and received = ". $statement->fetchColumn();
 			return $statement->fetchColumn();
 		}
