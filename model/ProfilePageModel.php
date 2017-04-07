@@ -234,10 +234,10 @@ class ProfilePageModel
 				AND Time_Of_Acceptance < ':end_year-:end_month-01 00:00:00';
 			");
 			$statement->bindValue(":userID", $userID, PDO::PARAM_INT);
-			$statement->bindValue(":start_year", $year, PDO::PARAM_STR);
-			$statement->bindValue(":start_month", $month, PDO::PARAM_STR);
-			$statement->bindValue(":end_year", $end_year, PDO::PARAM_STR);
-			$statement->bindValue(":end_month", $end_month, PDO::PARAM_STR);
+			$statement->bindValue(":start_year", $year, PDO::PARAM_INT);
+			$statement->bindValue(":start_month", $month, PDO::PARAM_INT);
+			$statement->bindValue(":end_year", $end_year, PDO::PARAM_INT);
+			$statement->bindValue(":end_month", $end_month, PDO::PARAM_INT);
 			if($month + $timespan >= 13){
 				error_log("GREATER THAN 13!");
 				while($timespan > 1){
@@ -291,8 +291,8 @@ class ProfilePageModel
 			");
 			$statement->bindValue(":userID", $userID, PDO::PARAM_INT);
 		}
-		else if($year != -1 && $month != -1){
-			error_log("GOT HERE!");
+		else if($year > -1 && $month > -1){
+			#error_log("GOT HERE!");
 			$statement = $this->db->prepare("
 				SELECT COUNT(*) as `Count`
 				FROM `Listing`
@@ -304,12 +304,12 @@ class ProfilePageModel
 				AND Time_Of_Acceptance < ':end_year-:end_month-01 00:00:00';
 			");
 			$statement->bindValue(":userID", $userID, PDO::PARAM_INT);
-			$statement->bindValue(":start_year", $year, PDO::PARAM_STR);
-			$statement->bindValue(":start_month", $month, PDO::PARAM_STR);
-			$statement->bindValue(":end_year", $end_year, PDO::PARAM_STR);
-			$statement->bindValue(":end_month", $end_month, PDO::PARAM_STR);
+			$statement->bindValue(":start_year", $year, PDO::PARAM_INT);
+			$statement->bindValue(":start_month", $month, PDO::PARAM_INT);
+			$statement->bindValue(":end_year", $end_year, PDO::PARAM_INT);
+			$statement->bindValue(":end_month", $end_month, PDO::PARAM_INT);
 			if($month + $timespan >= 13){
-				while($timespan > 1){
+				while($timespan >= 1){
 					if($end_month == 12){
 						$end_month = 1;
 						$end_year = $end_year + 1;
