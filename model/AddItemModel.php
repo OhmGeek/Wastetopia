@@ -258,11 +258,12 @@ class AddItemModel
      */
     function addAllImages($itemID, $images)
     {
+        $isDefault = 1;
         foreach ($images as $image) {
             $imageURL = $image["url"];
-            $isDefault = $image["isDefault"];
             $imageID = $this->getImageIDFromURL($imageURL); //Add to image table
             $this->addToItemImageTable($imageID, $isDefault, $itemID); //Link image to item
+            $isDefault = 0; // first image is default, others aren't.
         }
     }
 
@@ -296,8 +297,8 @@ class AddItemModel
         $barcodeType = $barcode["barcodeType"];
         $this->addToBarcodeTable($itemID, $barcodeNumber, $barcodeType); //Add barcode and link to item
 
-        //Add the whole listing
-        $this->addToListingTable($locationID, $itemID, $quantity);
+        //Add the whole listing                       quantity=1
+        $this->addToListingTable($locationID, $itemID, 1);
     }
 
     private function getImageIDFromURL($imageURL)
