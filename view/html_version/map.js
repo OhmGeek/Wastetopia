@@ -1,4 +1,4 @@
-var searchTerm = 'apple'
+var searchTerm = 'ben'
 
 // var url = window.location.protocol + "//" + window.location.host + "/" + 'search/json/' + searchTerm
 
@@ -31,6 +31,7 @@ function initMap() {
     markerCluster = new MarkerClusterer(map, markers,
                 {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'})
     $.getJSON(url, function(items){
+      console.log(items)
       for (var i in items) {
         console.log(items[i])
         geocodeAddress(items[i]);

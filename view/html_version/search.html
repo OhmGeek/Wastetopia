@@ -59,244 +59,140 @@
   </nav>
 
   <!-- Create the search results window -->
-  <div id="main-content">
-    <div id="sidebar">
-    <!-- for using isotope for filtering with checkboxes worth looking at -> https://codepen.io/desandro/pen/JGKyrY -->
-      <ul id="filter-list" role="tablist" aria-multiselectable="true">
-        <li role="tab">
-          <div class="filter-category" id="type-category">
-            Type
-            <a role="button" data-toggle="collapse" data-parent="#filter-list" href="#type-options" aria-expanded="true" aria-controls="type-options"><i class="material-icons"></i></a>
-          </div>
-          <ul class="filter-options collapse in" id="type-options" role="tabpanel" aria-labelledby="type-category">
-            <li>
-              <div class="form-group zero-padding">
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"> Fruit
-                  </label>
+  <!-- for using isotope for filtering with checkboxes worth looking at -> https://codepen.io/desandro/pen/JGKyrY -->
+  <div class="search-advance" style="padding-top:65px;">
+    <div class="btn-group zero-padding" id="filter-dropdown">
+      <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Filter
+        <span class="caret"></span></button>
+        <ul id="filter-list" class="dropdown-menu" role="tablist" aria-multiselectable="true">
+          <li role="tab">
+            <div class="filter-category" id="type-category">
+              Type
+              <a role="button" data-toggle="collapse" data-parent="#filter-list" href="#type-options" aria-expanded="true" aria-controls="type-options"><i class="material-icons"></i></a>
+            </div>
+            <ul class="filter-options collapse in" id="type-options" role="tabpanel" aria-labelledby="type-category">
+              <li>
+                <div class="form-group zero-padding">
+                  <div class="checkbox">
+                    <label>
+                      <input type="checkbox" value="Fruit"> Fruit
+                    </label>
+                  </div>
                 </div>
-              </div>
-            </li>
-            <li>
-              <div class="form-group zero-padding">
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"> Vegetable
-                  </label>
+              </li>
+              <li>
+                <div class="form-group zero-padding">
+                  <div class="checkbox">
+                    <label>
+                      <input type="checkbox" value="Vegetable"> Vegetable
+                    </label>
+                  </div>
                 </div>
-              </div>
-            </li>
-          </ul>
-        </li>
-        <li role="tab">
-          <div class="filter-category" id="dietary-category">
-            Dietary Requirement
-            <a role="button" data-toggle="collapse" data-parent="#filter-list" href="#dietary-options" aria-expanded="true" aria-controls="dietary-options"><i class="material-icons"></i></a>
-          </div>
-          <ul class="filter-options collapse in" id="dietary-options" role="tabpanel" aria-labelledby="dietary-category">
-            <li>
-              <div class="form-group zero-padding">
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"> Vegan
-                  </label>
+              </li>
+            </ul>
+          </li>
+          <li role="tab">
+            <div class="filter-category" id="dietary-category">
+              Dietary Requirement
+              <a role="button" data-toggle="collapse" data-parent="#filter-list" href="#dietary-options" aria-expanded="true" aria-controls="dietary-options"><i class="material-icons"></i></a>
+            </div>
+            <ul class="filter-options collapse in" id="dietary-options" role="tabpanel" aria-labelledby="dietary-category">
+              <li>
+                <div class="form-group zero-padding">
+                  <div class="checkbox">
+                    <label>
+                      <input type="checkbox" value="Vegan"> Vegan
+                    </label>
+                  </div>
                 </div>
-              </div>
-            </li>
-            <li>
-              <div class="form-group zero-padding">
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"> Gluten Free
-                  </label>
+              </li>
+              <li>
+                <div class="form-group zero-padding">
+                  <div class="checkbox">
+                    <label>
+                      <input type="checkbox" value="Gluten Free"> Gluten Free
+                    </label>
+                  </div>
                 </div>
-              </div>
-            </li>
-            <li>
-              <div class="form-group zero-padding">
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"> Gluten Free
-                  </label>
+              </li>
+              <li>
+                <div class="form-group zero-padding">
+                  <div class="checkbox">
+                    <label>
+                      <input type="checkbox" value="Gluten Free"> Gluten Free
+                    </label>
+                  </div>
                 </div>
-              </div>
-            </li>
-            <li>
-              <div class="form-group zero-padding">
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"> Gluten Free
-                  </label>
+              </li>
+              <li>
+                <div class="form-group zero-padding">
+                  <div class="checkbox">
+                    <label>
+                      <input type="checkbox" value="Gluten Free"> Gluten Free
+                    </label>
+                  </div>
                 </div>
-              </div>
-            </li>
-            <li>
-              <div class="form-group zero-padding">
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"> Gluten Free
-                  </label>
+              </li>
+              <li>
+                <div class="form-group zero-padding">
+                  <div class="checkbox">
+                    <label>
+                      <input type="checkbox" value="Gluten Free"> Gluten Free
+                    </label>
+                  </div>
                 </div>
-              </div>
-            </li>
-          </ul>
-        </li>
-      </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <div class="form-group zero-padding" id="sort-select">
+        <label for="sort-options">Sort by</label>
+          <select id="sort-options" class="form-control">
+            <option value="distance">Distance</option>
+            <option value="a-z">A-Z</option>
+            <option value="z-a">Z-A</option>
+            <option value="user-pop">User Popularity</option>
+          </select>
+      </div>
     </div>
-    <div id="main">
-      <button id="filter-btn">Click me</button>
-      <div class="grid-body">
-        <div class="row">
-          <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 no-padding">
-            <div class="itemView">
-              <div class="item-background">
-                <img src="BUS.jpg"/>
-              </div>
-              <div class="item-header black-top">
-                <ul>
-                  <li class="item-name">item name write here</li>
-                  <li class="item-summary">subtitle or some sort of small explanation / dietry specification?</li>
-                </ul>
-              </div>
-              <div class="item-nav-btn">
-                <button type="button" class="item-btn item-btn-send">
-                  <span class="glyphicon glyphicon-send" aria-hidden="true"></span>
-                  <p class="btn-text" >Request</p>
-                </button>
-                <button type="button" class="item-btn item-btn-view">
-                  <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                  <p class="btn-text" >View</p>
-                </button>
-              </div>
-              <div class="item-footer black-bottom">
-                <div class="user-sign">
-                  <img src="flowery.jpg" class="user-image"/>
-                  <p class="user-name">flower boy</p>
+  </div>
+  <div id="filters-picked">
+  </div>
+  <div class="search-result">
+    <div class="container-fluid">
+      <div class="grid">
+        <!-- need this for mosonry layout to work properly with bootstrap grid system -->
+        <div class="grid-sizer col-xs-12 col-sm-6 col-md-4"></div>
+
+        <div class="grid-item col-xs-12 col-sm-6 col-md-4">
+          <div class="thumbnail zero-padding">
+            <div class="caption">
+              <div class="centerAll">
+                <img src="flowery.jpg" class="user-image"/>
+                <div class="user-details">
+                  <a class="user-name" href="#">
+                    Mark Smith
+                  </a>
+                  <div class="added-date">
+                    12 December, 2017
+                  </div>
                 </div>
-                <div class="added-date">
-                  date added 12/12/2016
+                <div class="road-distance">
+                  <i class="material-icons">place</i> 250m
                 </div>
               </div>
             </div>
-          </div>
-          <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 no-padding">
-            <div class="itemView">
-              <div class="item-background">
-                <img src="BUS.jpg"/>
+            <img src="food2.jpg" style="border-color: lightgrey;" />
+            <div class="caption">
+              <h3>Vegetables</h3>
+              <div class="trans-info">
+                <div><span>Quantity: </span> 5</div>
               </div>
-              <div class="item-header black-top">
-                <ul>
-                  <li class="item-name">item name write here</li>
-                  <li class="item-summary">subtitle or some sort of small explanation / dietry specification?</li>
-                </ul>
-              </div>
-              <div class="item-nav-btn">
-                <button type="button" class="item-btn item-btn-send">
-                  <span class="glyphicon glyphicon-send" aria-hidden="true"></span>
-                </button>
-                <button type="button" class="item-btn item-btn-view">
-                  <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                </button>
-              </div>
-              <div class="item-footer black-bottom">
-                <div class="user-sign">
-                  <img src="flowery.jpg" class="user-image"/>
-                  <p class="user-name">flower boy</p>
-                </div>
-                <div class="added-date">
-                  date added 12/12/2016
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 no-padding">
-            <div class="itemView">
-              <div class="item-background">
-                <img src="BUS.jpg"/>
-              </div>
-              <div class="item-header black-top">
-                <ul>
-                  <li class="item-name">item name write here</li>
-                  <li class="item-summary">subtitle or some sort of small explanation / dietry specification?</li>
-                </ul>
-              </div>
-              <div class="item-nav-btn">
-                <button type="button" class="item-btn item-btn-send">
-                  <span class="glyphicon glyphicon-send" aria-hidden="true"></span>
-                </button>
-                <button type="button" class="item-btn item-btn-view">
-                  <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                </button>
-              </div>
-              <div class="item-footer black-bottom">
-                <div class="user-sign">
-                  <img src="flowery.jpg" class="user-image"/>
-                  <p class="user-name">flower boy</p>
-                </div>
-                <div class="added-date">
-                  date added 12/12/2016
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 no-padding">
-            <div class="itemView">
-              <div class="item-background">
-                <img src="flowery.jpg"/>
-              </div>
-              <div class="item-header black-top">
-                <ul>
-                  <li class="item-name">item name write here</li>
-                  <li class="item-summary">subtitle or some sort of small explanation / dietry specification?</li>
-                </ul>
-              </div>
-              <div class="item-nav-btn">
-                <button type="button" class="item-btn item-btn-send">
-                  <span class="glyphicon glyphicon-send" aria-hidden="true"></span>
-                </button>
-                <button type="button" class="item-btn item-btn-view">
-                  <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                </button>
-              </div>
-              <div class="item-footer black-bottom">
-                <div class="user-sign">
-                  <img src="BUS.jpg" class="user-image"/>
-                  <p class="user-name">flower boy</p>
-                </div>
-                <div class="added-date">
-                  date added 12/12/2016
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 no-padding">
-            <div class="itemView">
-              <div class="item-background">
-                <img src="https://eatbelive.files.wordpress.com/2014/02/carrots-bunch.jpg"/>
-              </div>
-              <div class="item-header black-top">
-                <ul>
-                  <li class="item-name">item name write here</li>
-                  <li class="item-summary">subtitle or some sort of small explanation / dietry specification?</li>
-                </ul>
-              </div>
-              <div class="item-nav-btn">
-                <button type="button" class="item-btn item-btn-send">
-                  <span class="glyphicon glyphicon-send" aria-hidden="true"></span>
-                </button>
-                <button type="button" class="item-btn item-btn-view">
-                  <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                </button>
-              </div>
-              <div class="item-footer black-bottom">
-                <div class="user-sign">
-                  <img src="flowery.jpg" class="user-image"/>
-                  <p class="user-name">flower boy</p>
-                </div>
-                <div class="added-date">
-                  date added 12/12/2016
-                </div>
+              <div class="nav-btns">
+                <a href="#" class="btn btn-primary" role="button">View</a>
+                <a href="#" class="btn btn-default" role="button">Request</a>
+                <a href="#" role="button" class="btn-watch"><i class="material-icons">visibility</i></a>
               </div>
             </div>
           </div>
@@ -305,18 +201,53 @@
     </div>
   </div>
 
-  <!-- to have the fancy effects of material design bootstrap -->  
+  <!-- to have the fancy effects of material design bootstrap -->
   <script src="bootstrap-material-design-master/dist/js/ripples.min.js"></script>
   <script src="bootstrap-material-design-master/dist/js/material.min.js"></script>
 
+  <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.js"></script>
+
   <script>
-    $(function () {
-      $.material.init();
-      $("#filter-btn").click(function(e){
-        e.preventDefault();
-        $("#main-content").toggleClass("toggled");
-      });
+  $(function () {
+    $.material.init();
+
+    var $grid = $('.grid').isotope({
+      itemSelector: '.grid-item',
+      percentPosition: true,
+      masonry: {
+        columnWidth: '.grid-sizer'
+      }
     });
+
+    $('#filter-list').on('click', '.filter-category a', function(e){
+      $(this).closest('.btn-group').addClass('dontClose');
+    })
+
+    // filter with selects and checkboxes
+    var $checkboxes = $('#filter-list input');
+
+    $checkboxes.change( function() {
+      var filters = "";
+      // inclusive filters from checkboxes
+      $checkboxes.each( function( i, elem ) {
+        // if checkbox, use value if checked
+        if ( elem.checked ) {
+          filters += '<span class="label label-primary">' + elem.value + '</span>';
+        }
+      });
+      $('#filters-picked').html(filters);
+    });
+
+    $('#filter-dropdown').on('hide.bs.dropdown', function(e) {
+      if ( $(this).hasClass('dontClose') ){
+        e.preventDefault();
+        $('#filter-dropdown > button').addClass('white')
+      } else {
+        $('#filter-dropdown > button').removeClass('white')
+      }
+      $(this).removeClass('dontClose');
+    });
+  });
   </script>
 
 </body>
