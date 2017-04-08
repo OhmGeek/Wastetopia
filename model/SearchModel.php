@@ -33,7 +33,7 @@ class SearchModel
      */
     function getCardDetails($listingID){
         $statement = $this->db->prepare("
-            SELECT `Listing`.`ListingID`, `Listing`.`Quantity`, `Listing`.`Time_Of_Creation`,
+        SELECT `Listing`.`ListingID`, `Listing`.`Quantity`, `Listing`.`Time_Of_Creation`,
                 `Item`.`ItemID`, `Item`.`Name`, `Item`.`Description`, 
                 `Location`.`Post_Code`,
                 `User`.`UserID`, `User`.`Forename`, `User`.`Surname`

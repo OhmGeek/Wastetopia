@@ -72,7 +72,6 @@ class CardDetailsModel
                 `Item`.`ItemID`, `Item`.`Name`, `Item`.`Description`, 
                 `Location`.`Post_Code`,
                 `User`.`UserID`, `User`.`Forename`, `User`.`Surname`
-                `Location`.`Latitude`, `Location`.`Longitude`
         FROM `Listing`
         JOIN `User` ON `Listing`.`FK_User_UserID` = `User`.`UserID`
         JOIN `Location` ON `Listing`.`FK_Location_LocationID` = `Location`.`LocationID`
