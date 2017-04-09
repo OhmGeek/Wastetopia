@@ -130,11 +130,11 @@ $(document).ready(function(){
     //     $("#errorMessage").append($errorDiv);
      }
 
-   // $("#firstName, #lastName, #pwd, #pwdConfirm, #email").click(function(){
-    //    if($(this).val() == ""){
-    //      $(this).parent().addClass("has-error");   
-    //    }
-   // });
+    $("#firstName, #lastName, #pwd, #pwdConfirm, #email").click(function(){
+        if($(this).val() == ""){
+          $(this).parent().addClass("has-error");   
+       }
+    });
     
     // Checks the input field is filled
     $("#firstName, #lastName").keyup(function(){
