@@ -141,10 +141,12 @@ $(document).ready(function(){
         console.log($(this).val());
         console.log($(this).val().length);
         if(($(this).val().length) < 8){
+            console.log("Password red");
             // Field is empty associated box/symbol is red
             $(this).parent().addClass('has-error')
         }else{
             // Field is filled, associated box/symbol is green
+            console.log("Password green");
             $(this).parent().removeClass('has-error')
         }
     });
@@ -156,9 +158,11 @@ $(document).ready(function(){
         console.log(passwordConfirm);
         console.log(password.length<8);
         if ((password.length < 8) && checkPassword(password, passwordConfirm)){
+            console.log("PC green");
            // Passwords are filled and match, make box/symbol green
            $(this).parent().removeClass('has-error')
         }else{
+            console.log("PC red");
            // Passwords don't match, make box/symbol red
            $(this).parent().addClass('has-error')
         }
