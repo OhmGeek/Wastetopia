@@ -49,6 +49,8 @@ class RegistrationController
      */
     function checkAvailable($email){
         $temp = $this->model->checkEmailExists($email);
+        print_r("Email exists??");
+        print_r($temp);
         // $temp will be True if the email exists, want to then return False
         return !$temp;
     }
@@ -77,6 +79,11 @@ class RegistrationController
      * @return JSON (in form {"error":...} or {"success":...}
      */
     function addUser($forename, $surname, $email, $password, $passwordConfirm, $pictureURL = NULL){
+        // Check password length
+        if(strlen($password) < 8){
+            return $this->errorMessage("Password must be at least 8 characters in length");   
+        }
+        
         // Check passwords match
         if(!($this->checkPassword($password, $passwordConfirm))){
             return $this->errorMessage("Passwords don't match");
