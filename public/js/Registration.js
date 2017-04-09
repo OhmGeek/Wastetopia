@@ -148,7 +148,8 @@ $(document).ready(function(){
     });
 
    // Checks the input field is filled
-    $("#pwd").keydown(function(){
+    $("#pwd").keydown(function(event){
+        event.preventDefault();
         console.log($(this).val());
         console.log($(this).val().length < 8);
         if(($(this).val().length) < 8){
@@ -164,7 +165,8 @@ $(document).ready(function(){
         $(this).parent().addClass('has-error'); //Testing
     });
 
-    $("#pwdConfirm").keydown(function(){
+    $("#pwdConfirm").keydown(function(event){
+        event.preventDefault();
         var password = $("#pwd").val();
         var passwordConfirm = $(this).val();
         console.log(password);
