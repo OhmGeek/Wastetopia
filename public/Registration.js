@@ -2,20 +2,9 @@
  * Created by Stephen on 09/04/2017.
  */
 $(document).ready(function(){
-
-    // // Should use separate alert box for this, or just colour box next to passwordConfirm box
-    // $('#pwd, #pwdConfirm').on('keyup', function () {
-    //     if ($('#pwd').val() == $('#pwdConfirm').val()) {
-    //         $('#errorMessage').html('Matching').css('color', 'green');
-    //     } else
-    //         $('#errorMessage').html('Not Matching').css('color', 'red');
-    // });
-
     //TODO: Add real-time checking of fields (especially password match)
-    // Can add a coloured box/line next to/under each field, change the colour when the field is filled in
-
-    //TODO: Disable Submit button until all checks are passed
-
+  
+    
     $("#submit").click(function(){
         var firstName = $("#firstName").val();
         var lastName = $("#lastName").val();
@@ -23,7 +12,7 @@ $(document).ready(function(){
         var passwd = $("#pwd").val();
         var passwdConfirm = $("#pwdConfirm").val();
         var tAndC = $("#termsAndConditions");
-        var picture = $("#profilePic").val();
+        //var picture = $("#profilePic").val();
 
         // Check all the necessary fields are filled in
         if(firstName == ""){
@@ -48,18 +37,24 @@ $(document).ready(function(){
             displayError("Passwords don't match");
             return;
         }
+        
+        // Check email is valid
+        if(!(checkEmail(email)){
+            displayError("Email is not in valid form");
+            return;
+        }
 
         // Check the Terms and Conditions are checked
         if (!(tAndC.is(":checked"))){
             displayError("Must accept terms and conditions to submit");
             return;
         }
-
+        
         // Get pictureURL from pictureDIV (put there by another controller when user uploads a picture??)
-        var pictureURL = picture.val() == "" ? null : picture.val();
+        //var pictureURL = picture.val() == "" ? null : picture.val();
 
         // Create dictionary of data
-        var data = {forename:firstName, surname:lastName, password:passwd, passwordConfirm: passwdConfirm, email:email, pictureURL: pictureURL};
+        var data = {forename:firstName, surname:lastName, password:passwd, passwordConfirm: passwdConfirm, email:email};//, pictureURL: pictureURL};
         // Create url
         var url = window.location.protocol + "//" + window.location.host + "/register/add-user";
 
@@ -73,7 +68,7 @@ $(document).ready(function(){
                console.log("Successful");
              // User added successfully
              // Reload page?? OR Send to Home page??
-              location.href = "";
+             // location.href = "#";
             }else{
                displayError("WHAAAAT");
                console.log("Something really went wrong");
@@ -97,6 +92,13 @@ $(document).ready(function(){
             return false;
         }
     }
+    
+    // Returns True if email valid 
+    function checkEmail(email){
+     // Still to do   
+     var re = ^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$;   
+     return re.test(email);   
+    }
 
     // Displays an error message in the appropriate place
     function displayError(error){
@@ -112,8 +114,45 @@ $(document).ready(function(){
     //     $errorDiv.text(error);
     //
     //     // Add alert to the alert div
-    //     $("#alerts").append($errorDiv);
+    //     $("#errorMessage").append($errorDiv);
      }
+    
+    // Checks the input field is filled
+    $("#firstName, #lastName, #pwd").keyup(function(){
+        if($(this).val() == ""){
+            // Field is empty associated box/symbol is red
+            
+        }else{
+            // Field is filled, associated box/symbol is green
+            
+        }
+    });
+    
+    $("#pwdConfirm").keyup(){
+        var password = $("#pwd").val();
+        var passwordConfirm = $(this).val();
+        if (password != "" && checkPassword(password, passwordConfirm)){
+           // Passwords are filled and match, make box/symbol green   
+           
+        }else{
+           // Passwords don't match, make box/symbol red   
+           
+        }
+    }
+    
+    $("#email").keyup(){
+        var email = $(this).val();
+        
+        if (email != ""){
+            if (checkEmail(email)){
+              // Set box/symbol to green   
+            }else{
+              // Set box/symbol to red   
+            }
+        }else{
+           // Set box/symbol to red   
+        }
+    }
 
 });
 
