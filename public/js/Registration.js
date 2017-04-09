@@ -87,8 +87,10 @@ $(document).ready(function(){
     // Returns true if the passwords match
     function checkPassword(p, c){
         if (p === c){
+            console.log("Passwords match");
             return true;
         }else{
+            console.log("Passwords don't match");
             return false;
         }
     }
@@ -138,7 +140,7 @@ $(document).ready(function(){
     $("#pwd").keyup(function(){
         console.log($(this).val());
         console.log($(this).val().length);
-        if($(this).val().length < 8){
+        if(($(this).val().length) < 8){
             // Field is empty associated box/symbol is red
             $(this).parent().addClass('has-error')
         }else{
@@ -152,6 +154,7 @@ $(document).ready(function(){
         var passwordConfirm = $(this).val();
         console.log(password);
         console.log(passwordConfirm);
+        console.log(password.length<8);
         if ((password.length < 8) && checkPassword(password, passwordConfirm)){
            // Passwords are filled and match, make box/symbol green
            $(this).parent().removeClass('has-error')
