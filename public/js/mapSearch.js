@@ -1,6 +1,7 @@
 var searchTerm = 'apple'
 
 // var url = window.location.protocol + "//" + window.location.host + "/" + 'search/json/' + searchTerm
+// the proper link for the search wastetopia.herokuapp.com/api/search/map/<user latitude>/<user longitude>/<search term>/<tag+ids+split+by+signs>/<tags+to+disclude>/
 
 var url = 'https://wastetopia-pr-25.herokuapp.com/search/JSON/' + searchTerm
 
@@ -11,7 +12,7 @@ var markerIcon;
 
 function initMap() {
   map = new google.maps.Map(
-    document.getElementById("map"), {
+    document.getElementById("search-map"), {
       zoom: 13,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     });
