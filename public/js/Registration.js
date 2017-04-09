@@ -36,6 +36,12 @@ $(document).ready(function(){
             displayError("Password field must be filled in");
             return;
         }
+        
+        if(passwd.length < 8){
+            $('#pwd').parent().addClass('has-error')
+            displayError("Password must be at least 8 characters in length");
+            return;
+        }
 
         // Check the passwords match
         if (!(checkPassword(passwd, passwdConfirm))){
