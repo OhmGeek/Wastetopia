@@ -76,6 +76,7 @@ $(document).ready(function(){
 
         $.post(url, data, function(json){
             console.log(json);
+            var json = $.parseJSON(json);
            // If there was an error, display it
            if(json.hasOwnProperty("error")){
                console.log("Error occurred");
