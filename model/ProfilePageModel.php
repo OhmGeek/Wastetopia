@@ -253,21 +253,6 @@ class ProfilePageModel
 			
 			$statement->execute();
 			$errors = $statement->errorInfo();
-			
-			return "
-				SELECT COUNT(*) as `Count`
-				FROM `Listing`
-				JOIN `ListingTransaction` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
-				JOIN `Transaction` ON `Transaction`.`TransactionID` = `ListingTransaction`.`FK_Transaction_TransactionID`
-				JOIN `User` ON `User`.`UserID` = `Listing`.`FK_User_UserID`
-				WHERE `User`.`UserID` = $userID
-				AND `ListingTransaction`.`Success` = 1
-				AND Time_Of_Acceptance >= '$year-$month-01 00:00:00'
-				AND Time_Of_Acceptance < '$end_year-$end_month-01 00:00:00';
-			" . $statement->fetchColumn();
-			
-			
-			return "end_year = $end_year, end_month = $end_month, user_id = $userID, year = $year, month = $month and given = ". $statement->fetchColumn();
 			return $statement->fetchColumn();
 		}
 		else{
@@ -326,7 +311,7 @@ class ProfilePageModel
 				FROM `Listing`
 				JOIN `ListingTransaction` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
 				JOIN `Transaction` ON `Transaction`.`TransactionID` = `ListingTransaction`.`FK_Transaction_TransactionID`
-				WHERE `Transaction`.`FK_User_UserID` = :userID
+				WHERE `Transaction`.`FK_User_UserID` = $userID
 				AND `ListingTransaction`.`Success` = 1
 				AND Time_Of_Acceptance >= '$year-$month-01 00:00:00'
 				AND Time_Of_Acceptance < '$end_year-$end_month-01 00:00:00';
@@ -334,20 +319,6 @@ class ProfilePageModel
 			
 			$statement->execute();
 			$errors = $statement->errorInfo();
-						
-			//return "end_year = $end_year, end_month = $end_month, user_id = $userID, year = $year, month = $month and received = ". $statement->fetchColumn();
-			return "
-				SELECT COUNT(*) as `Count`
-				FROM `Listing`
-				JOIN `ListingTransaction` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
-				JOIN `Transaction` ON `Transaction`.`TransactionID` = `ListingTransaction`.`FK_Transaction_TransactionID`
-				WHERE `Transaction`.`FK_User_UserID` = $userID
-				AND `ListingTransaction`.`Success` = 1
-				AND Time_Of_Acceptance >= '$year-$month-01 00:00:00'
-				AND Time_Of_Acceptance < '$end_year-$end_month-01 00:00:00';
-			" . $statement->fetchColumn();;
-			
-			
 			return $statement->fetchColumn();
 		}
 		else{
