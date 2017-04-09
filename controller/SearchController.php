@@ -18,7 +18,10 @@ class SearchController
         $searchResults = $this->search("", "", "", $tagsArr);
         return array_slice($searchResults, 0, 4);
     }
-    public function JSONSearch($lat, $long, $search, $tagsArr, $pageNumber)
+
+
+    //TODO add notTags and distance limit to search fucntion
+    public function JSONSearch($lat, $long, $search, $tagsArr, $notTagsArr, $distanceLimit, $pageNumber)
     {
         $offset = 30*$pageNumber;
         $limit = $offset + 30;
@@ -28,6 +31,12 @@ class SearchController
         return json_encode($pageResults);
     }
 
+    public function MAPSearch($lat, $long, $search, $tagsArr, $notTagsArr, $distanceLimit)
+    {
+        $searchResults = $this->search($lat, $long, $search, $tagsArr);
+
+        return json_encode($searchResults);
+    }
     /*lat = Latitude
       long = Longitude 
       $search = Search term
