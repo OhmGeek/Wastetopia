@@ -258,8 +258,7 @@ class ProfilePageModel
 			$statement->bindValue(":end_month", $end_month); */
 			
 			$statement->execute();
-			$errors = $statement->errorInfo();
-			return $errors[0].$errors[1].$errors[2].$statement->fetchColumn();
+			return $statement->fetchColumn();
 		}
 		else{
 			$error_log("Received failed");
