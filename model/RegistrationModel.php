@@ -48,7 +48,9 @@ class RegistrationModel
         $statement->bindValue(":email", $email, PDO::PARAM_STR);
 
         $statement->execute();
-
+        
+        print_r("CHECKING EMAIL");
+        print_r($statement->fetchAll(PDO::FETCH_ASSOC));
         return (count($statement->fetchAll(PDO::FETCH_ASSOC)) > 0);
     }
 
