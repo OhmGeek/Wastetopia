@@ -129,10 +129,10 @@ $(document).ready(function(){
     $("#firstName, #lastName").keyup(function(){
         if($(this).val() == ""){
             // Field is empty associated box/symbol is red
-            $(this).parent().addClass('has-error')
+            $(this).parent().addClass('has-error');
         }else{
             // Field is filled, associated box/symbol is green
-            $(this).parent().removeClass('has-error')
+            $(this).parent().removeClass('has-error');
         }
     });
 
@@ -143,11 +143,11 @@ $(document).ready(function(){
         if(($(this).val().length) < 8){
             console.log("Password red");
             // Field is empty associated box/symbol is red
-            $(this).parent().addClass('has-error')
+            $(this).parent().addClass('has-error');
         }else{
             // Field is filled, associated box/symbol is green
             console.log("Password green");
-            $(this).parent().removeClass('has-error')
+            $(this).parent().removeClass('has-error');
         }
     });
 
