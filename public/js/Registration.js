@@ -32,13 +32,13 @@ $(document).ready(function(){
             displayError("Email field must be filled in");
             return;
         }
-        
+
         if(passwd == ""){
             $('#pwd').parent().addClass('has-error')
             displayError("Password field must be filled in");
             return;
         }
-        
+
         if(passwd.length < 8){
             $('#pwd').parent().addClass('has-error')
             displayError("Password must be at least 8 characters in length");
@@ -132,10 +132,10 @@ $(document).ready(function(){
 
     $("#firstName, #lastName, #pwd, #pwdConfirm, #email").click(function(){
         if($(this).val() == ""){
-          $(this).parent().addClass("has-error");   
+          $(this).parent().addClass("has-error");
        }
     });
-    
+
     // Checks the input field is filled
     $("#firstName, #lastName").keyup(function(){
         if($(this).val() == ""){
@@ -154,6 +154,7 @@ $(document).ready(function(){
         if(($(this).val().length) < 8){
             console.log("Password red");
             // Field is empty associated box/symbol is red
+            console.log($(this).parent())
             $(this).parent().addClass('has-error');
         }else{
             // Field is filled, associated box/symbol is green
@@ -170,10 +171,12 @@ $(document).ready(function(){
         console.log(password.length<8);
         if ((password.length < 8) && checkPassword(password, passwordConfirm)){
             console.log("PC green");
+            console.log($(this).parent())
            // Passwords are filled and match, make box/symbol green
            $(this).parent().removeClass('has-error')
         }else{
             console.log("PC red");
+            console.log($(this).parent())
            // Passwords don't match, make box/symbol red
            $(this).parent().addClass('has-error')
         }
@@ -192,7 +195,7 @@ $(document).ready(function(){
             }
         }else{
            // Set box/symbol to red
-           $(this).parent().addClass('has-error') 
+           $(this).parent().addClass('has-error')
         }
     });
 
