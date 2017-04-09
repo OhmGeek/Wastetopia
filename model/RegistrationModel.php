@@ -65,10 +65,10 @@ class RegistrationModel
      */
     function addMainUserDetails($forename, $surname, $email, $passwordHash, $salt, $pictureURL)
     {
-        //Need to calculate password hash with salt
+        //Need to add PictureURL when we have default
         $statement = $this->db->prepare("
-            INSERT INTO `User` (`Forename`, `Surname`, `Email_Address` `Password_Hash`, `Salt`, `Picture_URL`)
-            VALUES (:forename, :surname, :email, :passwordHash, :salt, :pictureURL); 
+            INSERT INTO `User` (`Forename`, `Surname`, `Email_Address` `Password_Hash`, `Salt`)
+            VALUES (:forename, :surname, :email, :passwordHash, :salt); 
         ");
 
         $statement->bindValue(":forename", $forename, PDO::PARAM_STR);
@@ -76,7 +76,7 @@ class RegistrationModel
         $statement->bindValue(":email", $email, PDO::PARAM_STR);
         $statement->bindValue(":passwordHash", $passwordHash, PDO::PARAM_STR);
         $statement->bindValue(":salt", $salt, PDO::PARAM_STR);
-        $statement->bindValue(":pictureURL", $pictureURL, PDO::PARAM_STR);
+        //$statement->bindValue(":pictureURL", $pictureURL, PDO::PARAM_STR);
 
         $statement->execute();
 
@@ -121,13 +121,22 @@ class RegistrationModel
     function addUser($forename, $surname, $email, $password, $pictureURL = NULL)
     {
         //If no picture specified, add a Default image
-        if ($pictureURL !== NULL) {
+        if ($pictureURL == NULL) {
             // $pictureURL = DEFAULT_IMAGE;
         }
 
         $salt = $this->generateSalt();
         $passwordHash = hash('sha256',$salt.$password);
 
+        print_r("FROM MODEL");
+        print_r($forename);
+        print_r($surname);
+        print_r($email);
+        print_r($password);
+        print_r($pictureURL);
+        print_r($salt);
+        print_r($passwordHash);
+        
         //Add user's details
         $result= $this->addMainUserDetails($forename, $surname, $email, $passwordHash, $salt, $pictureURL);
 
