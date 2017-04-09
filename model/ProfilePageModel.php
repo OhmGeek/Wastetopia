@@ -251,15 +251,13 @@ class ProfilePageModel
 				JOIN `User` ON `User`.`UserID` = `Listing`.`FK_User_UserID`
 				WHERE `User`.`UserID` = :user_id
 				AND `ListingTransaction`.`Success` = 1
-				AND Time_Of_Acceptance >= ':start_year-:start_month-01 00:00:00'
-				AND Time_Of_Aceptance < ':end_year-:end_month-01 00:00:00';
+				AND Time_Of_Acceptance >= :start_date
+				AND Time_Of_Aceptance < :end_date ;
 			");
 			
 			$statement->bindValue(":user_id", $userID);
-			$statement->bindValue(":start_year", $year);
-			$statement->bindValue(":start_month", $month);
-			$statement->bindValue(":end_year", $end_year);
-			$statement->bindValue(":end_month", $end_month);
+			$statement->bindValue(":start_date", "" . $year . "-" . $month . "-01 00:00:00", PDO::PARAM_STR);
+			$statement->bindValue(":end_date", "" . $end_year . "-" . $end_month . "-01 00:00:00", PDO::PARAM_STR);
 			
 			$statement->execute();
 			$errors = $statement->errorInfo();
