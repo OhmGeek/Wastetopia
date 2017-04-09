@@ -154,7 +154,7 @@ $(document).ready(function(){
         if(($(this).val().length) < 8){
             console.log("Password red");
             // Field is empty associated box/symbol is red
-            console.log($(this).parent())
+            console.log($(this).parent().addClass('has-error'))
             $(this).parent().addClass('has-error');
         }else{
             // Field is filled, associated box/symbol is green
