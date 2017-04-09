@@ -251,17 +251,19 @@ class ProfilePageModel
 				JOIN `User` ON `User`.`UserID` = `Listing`.`FK_User_UserID`
 				WHERE `User`.`UserID` = :user_id
 				AND `ListingTransaction`.`Success` = 1
-				AND Time_Of_Acceptance >= :start_date
-				AND Time_Of_Acceptance < :end_date ;
+				AND Time_Of_Acceptance >= ':start_date'
+				AND Time_Of_Acceptance < ':end_date' ;
 			");
 			
 			$statement->bindValue(":user_id", $userID);
-			$statement->bindValue(":start_date", "" . $year . "-" . $month . "-01 00:00:00", PDO::PARAM_STR);
-			$statement->bindValue(":end_date", "" . $end_year . "-" . $end_month . "-01 00:00:00", PDO::PARAM_STR);
+			$start_date = "" . $year . "-" . $month . "-01 00:00:00";
+			$end_date = "" . $end_year . "-" . $end_month . "-01 00:00:00";
+			$statement->bindValue(":start_date", $start_date, PDO::PARAM_STR);
+			$statement->bindValue(":end_date", $end_date, PDO::PARAM_STR);
 			
 			$statement->execute();
 			$errors = $statement->errorInfo();
-			return $statement->fetchColumn() . " + errors: " . $errors[0] . $errors[1] . $errors[2];
+			return $statement->fetchColumn() . " + errors: " . $errors[0] . $errors[1] . $errors[2] . "start_date: " . $start_date . "end_date: " . $end_date;
 		}
 		else{
 			$error_log("Received failed");
