@@ -224,7 +224,7 @@ class ProfilePageModel
 		}
 		else if($year != -1 && $month != -1){
 			if($month + $timespan >= 13){
-				while($timespan > 1){
+				while($timespan >= 1){
 					if($end_month == 12){
 						$end_month = 1;
 						$end_year = $end_year + 1;
