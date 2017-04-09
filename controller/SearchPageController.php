@@ -1,18 +1,28 @@
 <?php
 
+namespace Wastetopia\Controller;
+use Twig_Loader_Filesystem;
+use Twig_Environment;
+use Wastetopia\Config\CurrentConfig;
+
 class SearchPageController
 {
     function __construct()
     {
-        $this->createPage();
     }
 
-    function createPage()
+    function render()
     {
-        $loader = new Twig_Loader_Filesystem('../../view/');
+        $loader = new Twig_Loader_Filesystem('../view/');
         $twig = new Twig_Environment($loader);
 
-        $template = $twig->loadTemplate("searchPage.twig");
-        print($template->render(array()));
+
+        $currentConfig = new CurrentConfig();
+        $config = $currentConfig->getAll();
+
+        $template = $twig->loadTemplate("search/search.twig");
+        return $template->render(array('config' => $config
+            
+                                      ));
     }
 }

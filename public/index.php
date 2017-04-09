@@ -8,6 +8,7 @@ use Wastetopia\Controller\ConversationListController;
 use Wastetopia\Controller\Login_Controller;
 use Wastetopia\Controller\SearchController;
 use Wastetopia\Controller\MessageController;
+use Wastetopia\Controller\SearchPageController;
 
 
 // check if we should use production? Otherwise, use community.
@@ -43,6 +44,11 @@ $klein->with('/api', function () use ($klein) {
         $response->sendHeaders('Content-Type: application/jpg');
         return $searchController->JSONSearch($lat, $long, $search, $tagsArr, $pageNumber);
     });
+});
+
+$klein->respond('GET', '/search', function ($request, $response) {
+    $controller = new SearchPageController();
+    return $controller->render();
 });
 
 $klein->respond("GET", "/login", function($request, $response) {
