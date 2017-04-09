@@ -10,9 +10,12 @@
 
 {% block content %}
         <div class="container-fluid">
+       
       <h1>
         Join our community!
       </h1>
+       <div id="errorMessage">
+      </div>
       <form class="form-horizontal">
       <div class="form-group label-floating">
           <label class="control-label" for="firstName">First Name</label>
@@ -41,10 +44,9 @@
         </div>
         <button type = "submit" class = "btn btn-default active" id="submit">Submit</button>
       </form>
-      <div id="errorMessage">
-      </div>
+     
     </div>
   </div>
 {% endblock %}
 
-{% set jslist = ["name your","custom js","files here"] %}<div id="register-form">
+{% set jslist = ["Registration.js"] %}<div id="register-form">
