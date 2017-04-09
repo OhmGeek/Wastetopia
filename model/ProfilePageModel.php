@@ -323,7 +323,8 @@ class ProfilePageModel
 			
 			$statement->execute();
 			$errors = $statement->errorInfo();
-			return $statement->fetchAll(PDO::FETCH_ASSOC)[0]["Count"];
+			$the_array = $statement->fetchAll(PDO::FETCH_ASSOC);
+			return $the_array[0], $the_array[1], $the_array["Count"], $the_array[0]["Count"], $the_array[1]["Count"], $the_array[0][0], $the_array[0][1],$the_array[1][0], $the_array[1][1], $the_array["Count"];
 		}
 		else{
 			return "Neither $year nor $month were equal to -1 and were not >= -1";
