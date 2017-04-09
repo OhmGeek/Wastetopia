@@ -117,6 +117,12 @@ $(document).ready(function(){
     //     $("#errorMessage").append($errorDiv);
      }
 
+    $("#firstName, #lastName, #pwd, #pwdConfirm, #email").click(function(){
+        if($(this).val() == ""){
+          $(this).parent.addClass("has-error");   
+        }
+    });
+    
     // Checks the input field is filled
     $("#firstName, #lastName").keyup(function(){
         if($(this).val() == ""){
@@ -130,7 +136,7 @@ $(document).ready(function(){
 
    // Checks the input field is filled
     $("#pwd").keyup(function(){
-        if($(this).val() == "" || length($(this).val()) < 8){
+        if($(this).val() == "" || ($(this).val()).length < 8){
             // Field is empty associated box/symbol is red
             $(this).parent().addClass('has-error')
         }else{
