@@ -139,7 +139,7 @@ $(document).ready(function(){
         }
     });
 
-    $("#pwdConfirm").keyup(){
+    $("#pwdConfirm").keyup(function(){
         var password = $("#pwd").val();
         var passwordConfirm = $(this).val();
         if (password != "" && checkPassword(password, passwordConfirm)){
@@ -149,9 +149,9 @@ $(document).ready(function(){
            // Passwords don't match, make box/symbol red
            $(this).parent().addClass('has-error')
         }
-    }
+    });
 
-    $("#email").keyup(){
+    $("#email").keyup(function(){
         var email = $(this).val();
 
         if (email != ""){
@@ -166,6 +166,6 @@ $(document).ready(function(){
            // Set box/symbol to red
            $(this).parent().addClass('has-error') 
         }
-    }
+    });
 
 });
