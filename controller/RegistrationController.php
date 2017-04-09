@@ -24,7 +24,7 @@ class RegistrationController
      */
     function generatePage()
     {
-        $template = $this->twig->loadTemplate('users/registration.twig'); // Need to add Twig file
+        $template = $this->twig->loadTemplate('users/registrationForm.twig'); // Need to add Twig file
 
         $CurrentConfig = new CurrentConfig();
         $config = $CurrentConfig->getAll();
