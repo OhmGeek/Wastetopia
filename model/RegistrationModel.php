@@ -123,9 +123,9 @@ class RegistrationModel
     function addUser($forename, $surname, $email, $password, $pictureURL = NULL)
     {
         //If no picture specified, add a Default image
-        if ($pictureURL == NULL) {
-            // $pictureURL = DEFAULT_IMAGE;
-        }
+//         if ($pictureURL == NULL) {
+//             // $pictureURL = DEFAULT_IMAGE;
+//         }
 
         $salt = $this->generateSalt();
         $passwordHash = hash('sha256',$salt.$password);
@@ -137,11 +137,12 @@ class RegistrationModel
         print_r("PASSWORD:: ".$password);
         print_r($pictureURL);
         print_r("SALT:: ".$salt);
-        print_r("HASH:: .$passwordHash);
+        print_r("HASH:: ".$passwordHash);
         
         //Add user's details
         // $result= $this->addMainUserDetails($forename, $surname, $email, $passwordHash, $salt, $pictureURL);
-
+        
+        $result = false;
         return $result;
     }
 
