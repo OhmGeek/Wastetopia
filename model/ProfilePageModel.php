@@ -224,18 +224,6 @@ class ProfilePageModel
 		}
 		else if($year != -1 && $month != -1){
 			#error_log("GOT HERE INSTEAD!");
-			$statement = $this->db->prepare("
-				SELECT COUNT(*) as `Count`
-				FROM `Listing`
-				JOIN `ListingTransaction` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
-				JOIN `Transaction` ON `Transaction`.`TransactionID` = `ListingTransaction`.`FK_Transaction_TransactionID`
-				JOIN `User` ON `User`.`UserID` = `Listing`.`FK_User_UserID`
-				WHERE `User`.`UserID` = :userID
-				AND `ListingTransaction`.`Success` = 1
-				AND Time_Of_Acceptance >= ':start_year-:start_month-01 00:00:00'
-				AND Time_Of_Acceptance < ':end_year-:end_month-01 00:00:00';
-			");
-			
 			if($month + $timespan >= 13){
 				#error_log("GREATER THAN 13!");
 				while($timespan > 1){
@@ -254,14 +242,27 @@ class ProfilePageModel
 				#error_log("NOT GREATER THAN 13");
 				$end_month = $end_month + $timespan;
 			}
+			$statement = $this->db->prepare("
+				SELECT COUNT(*) as `Count`
+				FROM `Listing`
+				JOIN `ListingTransaction` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
+				JOIN `Transaction` ON `Transaction`.`TransactionID` = `ListingTransaction`.`FK_Transaction_TransactionID`
+				JOIN `User` ON `User`.`UserID` = `Listing`.`FK_User_UserID`
+				WHERE `User`.`UserID` = :userID
+				AND `ListingTransaction`.`Success` = 1
+				AND Time_Of_Acceptance >= '$year-$month-01 00:00:00'
+				AND Time_Of_Acceptance < '$end_year-$end_month-01 00:00:00';
+			");
+			
+			
 			$statement->bindValue(":userID", $userID, PDO::PARAM_INT);
-			$statement->bindValue(":start_year", $year, PDO::PARAM_INT);
+			/* $statement->bindValue(":start_year", $year, PDO::PARAM_INT);
 			$statement->bindValue(":start_month", $month, PDO::PARAM_INT);
 			$statement->bindValue(":end_year", $end_year, PDO::PARAM_INT);
-			$statement->bindValue(":end_month", $end_month, PDO::PARAM_INT);
+			$statement->bindValue(":end_month", $end_month, PDO::PARAM_INT); */
 			$statement->execute();
 			$errors = $statement->errorInfo();
-			return "" . $errors[2] . ", " . $errors[1] . " ," . $errors[0];
+			//return "" . $errors[2] . ", " . $errors[1] . " ," . $errors[0];
 			return "end_year = $end_year, end_month = $end_month, user_id = $userID, year = $year, month = $month and given = ". $statement->fetchColumn();
 			return $statement->fetchColumn();
 		}
