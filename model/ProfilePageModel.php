@@ -251,8 +251,8 @@ class ProfilePageModel
 				JOIN `User` ON `User`.`UserID` = `Listing`.`FK_User_UserID`
 				WHERE `User`.`UserID` = :user_id
 				AND `ListingTransaction`.`Success` = 1
-				AND Time_Of_Acceptance >= ':start_date'
-				AND Time_Of_Acceptance < ':end_date' ;
+				AND Time_Of_Acceptance >= :start_date
+				AND Time_Of_Acceptance < :end_date;
 			");
 			
 			$statement->bindValue(":user_id", $userID);
