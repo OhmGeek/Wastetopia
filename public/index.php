@@ -30,9 +30,7 @@ $klein->respond("GET", "/", function() {
 });
 
 
-$klein->with('/search', function () use ($klein) {
 
-    $klein->respond('GET', '/[**:param]', function ($request, $response) {
         $searchController = new SearchController();
         $paramArr = explode("/", $request->param);
         $lat = $paramArr[0];

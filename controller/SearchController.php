@@ -101,9 +101,9 @@ class SearchController
 
         $searchResults = [];
         foreach ($itemInformation as $item) {
-            $result = $this->searchModel->getCardDetails($item["ListingID"]);
+            $result = $this->searchModel->getCardDetails($item["ListingID"])[0];
             $result[] = $this->cardDetailsModel->getDefaultImage($item["ListingID"])[0];
-            $searchResults[] = $result[0];
+            $searchResults[] = $result;
         }
         return $searchResults;
     }

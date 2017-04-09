@@ -24,7 +24,7 @@ class SearchModel
     {
         $this->db = DB::getDB();
     }
-    //DISPLAY FUNCTIONS HERE: RETURNS DETAILS NEEDED FOR DISPLAY GIVEN THE LISTING IDs
+
     /**
      * Returns the details needed for display on the search page given the listing ID
      *
