@@ -136,6 +136,8 @@ $(document).ready(function(){
 
    // Checks the input field is filled
     $("#pwd").keyup(function(){
+        console.log($(this).val());
+        console.log($(this).val().length);
         if($(this).val() == "" || ($(this).val()).length < 8){
             // Field is empty associated box/symbol is red
             $(this).parent().addClass('has-error')
@@ -148,6 +150,8 @@ $(document).ready(function(){
     $("#pwdConfirm").keyup(function(){
         var password = $("#pwd").val();
         var passwordConfirm = $(this).val();
+        console.log(password);
+        console.log(passwordConfirm);
         if (password != "" && checkPassword(password, passwordConfirm)){
            // Passwords are filled and match, make box/symbol green
            $(this).parent().removeClass('has-error')
