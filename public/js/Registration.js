@@ -137,7 +137,7 @@ $(document).ready(function(){
     });
 
     // Checks the input field is filled
-    $("#firstName, #lastName").keyup(function(){
+    $("#firstName, #lastName").keydown(function(){
         if($(this).val() == ""){
             // Field is empty associated box/symbol is red
             $(this).parent().addClass('has-error');
@@ -148,7 +148,7 @@ $(document).ready(function(){
     });
 
    // Checks the input field is filled
-    $("#pwd").keyup(function(){
+    $("#pwd").keydown(function(){
         console.log($(this).val());
         console.log($(this).val().length);
         if(($(this).val().length) < 8){
@@ -163,7 +163,7 @@ $(document).ready(function(){
         }
     });
 
-    $("#pwdConfirm").keyup(function(){
+    $("#pwdConfirm").keydown(function(){
         var password = $("#pwd").val();
         var passwordConfirm = $(this).val();
         console.log(password);
@@ -182,7 +182,7 @@ $(document).ready(function(){
         }
     });
 
-    $("#email").keyup(function(){
+    $("#email").keydown(function(){
         var email = $(this).val();
 
         if (email != ""){
