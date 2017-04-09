@@ -30,8 +30,8 @@ $(function () {
     $('.user-profile .popularity').css('font-size',iconSize);
     $('.page-height').css('padding-top',topPadding);
   });
-  
-  
+
+
   // Reload HTML content when Back buttons pressed on each tab
   $grid.on('click', 'a[href="#home"]',function (){
     var userID = $('.user-name').attr("id");
@@ -41,7 +41,7 @@ $(function () {
         div.replaceWith(response);
      });
    });
-  
+
   // Delete a card from the page
   $grid.on( 'click', '#delete', function() {
     // get the id of the item would be removed
@@ -62,7 +62,7 @@ $(function () {
      var listingID = $(this).closest('.thumbnail').attr("id");
      var isUser = parseInt($(this).closest('.user-stats').attr("id"));
      var listing = $(this);
-    
+
      $.post("/profile/toggle-watch-list/"+listingID, function(response){
        // Do something depending on if response is true or false?? (Currently always true)
        console.log("DONE");
