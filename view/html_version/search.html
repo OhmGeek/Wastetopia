@@ -21,7 +21,6 @@
 
   <!-- Wastopia Custom CSS -->
   <link rel="stylesheet" href="wastetopia-main.css"/>
-  <link href="startbootstrap-simple-sidebar-gh-pages/css/simple-sidebar.css" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
@@ -66,6 +65,18 @@
         <span class="caret"></span></button>
         <ul id="filter-list" class="dropdown-menu" role="tablist" aria-multiselectable="true">
           <li role="tab">
+            <div class="filter-category" id="radius-category">
+              Search Radius
+              <a role="button" data-toggle="collapse" data-parent="#filter-list" href="#radius-options" aria-expanded="true" aria-controls="radius-options"><i class="material-icons"></i></a>
+            </div>
+            <div class="filter-options collapse in" id="radius-options" role="tabpanel" aria-labelledby="dietary-category">
+              <div class="container-fluid">
+                <div class="slider shor" id="radius"></div>
+                <div id="radius-output"></div>
+              </div>
+            </div>
+          </li>
+          <li role="tab">
             <div class="filter-category" id="type-category">
               Type
               <a role="button" data-toggle="collapse" data-parent="#filter-list" href="#type-options" aria-expanded="true" aria-controls="type-options"><i class="material-icons"></i></a>
@@ -101,7 +112,7 @@
                 <div class="form-group zero-padding">
                   <div class="checkbox">
                     <label>
-                      <input type="checkbox" value="Vegan"> Vegan
+                      <input type="checkbox" value="Vegan" id="5"> Vegan
                     </label>
                   </div>
                 </div>
@@ -148,12 +159,12 @@
       </div>
       <div class="form-group zero-padding" id="sort-select">
         <label for="sort-options">Sort by</label>
-          <select id="sort-options" class="form-control">
-            <option value="distance">Distance</option>
-            <option value="a-z">A-Z</option>
-            <option value="z-a">Z-A</option>
-            <option value="user-pop">User Popularity</option>
-          </select>
+        <select id="sort-options" class="form-control">
+          <option value="distance">Distance</option>
+          <option value="a-z">A-Z</option>
+          <option value="z-a">Z-A</option>
+          <option value="user-pop">User Popularity</option>
+        </select>
       </div>
     </div>
   </div>
@@ -206,10 +217,51 @@
   <script src="bootstrap-material-design-master/dist/js/material.min.js"></script>
 
   <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.js"></script>
+  <script src="plugins/noUiSlider/noUiSlider.min.js"></script>
+  <script src="plugins/wnumb-1.1.0/wNumb.js"></script>
 
   <script>
   $(function () {
     $.material.init();
+
+    var radiusSlider = document.getElementById('radius');
+    var radiusFormat = wNumb({ decimals: 0, postfix: 'km' })
+
+    noUiSlider.create(radiusSlider, {
+      range: {
+        'min': 5,
+        'max': 50
+      },
+      connect: [true, false],
+      step: 5,
+      start: 5
+    });
+
+    $('.slider').css({background:'#31353D'})
+
+    var filters = "";
+    // filter with selects and checkboxes
+    var $checkboxes = $('#filter-list input');
+
+    function getFilters(){
+      var radius = radiusFormat.to(parseFloat(radiusSlider.noUiSlider.get()));
+      filters = '<span class="label label-primary"> within ' + radius + ' radius </span>'
+      $('#radius-output').html('radius: <span>' + radius + '</span>')
+      // inclusive filters from checkboxes
+      $checkboxes.each( function( i, elem ) {
+        // if checkbox, use value if checked
+        if ( elem.checked ) {
+          filters += '<span class="label label-primary">' + elem.value + '</span>';
+        }
+      });
+      $('#filters-picked').html(filters);
+    }
+
+    getFilters();
+
+    radiusSlider.noUiSlider.on('update', function (e) {
+      getFilters();
+    });
 
     var $grid = $('.grid').isotope({
       itemSelector: '.grid-item',
@@ -223,19 +275,8 @@
       $(this).closest('.btn-group').addClass('dontClose');
     })
 
-    // filter with selects and checkboxes
-    var $checkboxes = $('#filter-list input');
-
-    $checkboxes.change( function() {
-      var filters = "";
-      // inclusive filters from checkboxes
-      $checkboxes.each( function( i, elem ) {
-        // if checkbox, use value if checked
-        if ( elem.checked ) {
-          filters += '<span class="label label-primary">' + elem.value + '</span>';
-        }
-      });
-      $('#filters-picked').html(filters);
+    $checkboxes.change( function(e) {
+      getFilters();
     });
 
     $('#filter-dropdown').on('hide.bs.dropdown', function(e) {

@@ -131,7 +131,7 @@
   align-items: center;
 }
 
-#sort-select label {
+#sort-select label, #radius-output  {
   font-size: 14px;
   font-weight: 500;
   text-transform: uppercase;
@@ -145,6 +145,16 @@
 #sort-select #sort-options{
   font-size: 14px;
   margin: 0;
+}
+
+#radius-options {
+  height: auto;
+  padding: 10px;
+}
+
+#radius-output span{
+  color: grey;
+  text-transform: lowercase;
 }
 
 /* item page */
