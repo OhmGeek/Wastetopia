@@ -255,17 +255,7 @@ class ProfilePageModel
 			
 			$statement->execute();
 			$errors = $statement->errorInfo();
-			return "
-				SELECT COUNT(*) as `Count`
-				FROM `Listing`
-				JOIN `ListingTransaction` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
-				JOIN `Transaction` ON `Transaction`.`TransactionID` = `ListingTransaction`.`FK_Transaction_TransactionID`
-				JOIN `User` ON `User`.`UserID` = `Listing`.`FK_User_UserID`
-				WHERE `User`.`UserID` = $userID
-				AND `ListingTransaction`.`Success` = 1
-				AND Time_Of_Acceptance >= '$year-$month-01 00:00:00'
-				AND Time_Of_Acceptance < '$end_year-$end_month-01 00:00:00';
-			" . $statement->fetchAll(PDO::FETCH_ASSOC);
+			return $statement->fetchAll(PDO::FETCH_ASSOC)["Count"];
 		}
 		else{
 			$error_log("Received failed");
@@ -333,16 +323,7 @@ class ProfilePageModel
 			
 			$statement->execute();
 			$errors = $statement->errorInfo();
-			return "
-				SELECT COUNT(*) as `Count`
-				FROM `Listing`
-				JOIN `ListingTransaction` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
-				JOIN `Transaction` ON `Transaction`.`TransactionID` = `ListingTransaction`.`FK_Transaction_TransactionID`
-				WHERE `Transaction`.`FK_User_UserID` = $userID
-				AND `ListingTransaction`.`Success` = 1
-				AND Time_Of_Acceptance >= '$year-$month-01 00:00:00'
-				AND Time_Of_Acceptance < '$end_year-$end_month-01 00:00:00';
-			" . $statement->fetchAll(PDO::FETCH_ASSOC);
+			return $statement->fetchAll(PDO::FETCH_ASSOC)["Count"];
 		}
 		else{
 			return "Neither $year nor $month were equal to -1 and were not >= -1";
