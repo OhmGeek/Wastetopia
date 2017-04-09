@@ -119,7 +119,7 @@ $(document).ready(function(){
 
     $("#firstName, #lastName, #pwd, #pwdConfirm, #email").click(function(){
         if($(this).val() == ""){
-          $(this).parent.addClass("has-error");   
+          $(this).parent().addClass("has-error");   
         }
     });
     
