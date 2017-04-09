@@ -254,10 +254,10 @@ class ProfilePageModel
 			");
 			
 			$statement->bindValue(":user_id", $userID, PDO::PARAM_INT);
-			$statement->bindValue(":start_year", $year, PDO::PARAM_INT);
-			$statement->bindValue(":start_month", $month, PDO::PARAM_INT);
-			$statement->bindValue(":end_year", $end_year, PDO::PARAM_INT);
-			$statement->bindValue(":end_month", $end_month, PDO::PARAM_INT);
+			$statement->bindValue(":start_year", $year);
+			$statement->bindValue(":start_month", $month);
+			$statement->bindValue(":end_year", $end_year);
+			$statement->bindValue(":end_month", $end_month);
 			
 			$statement->execute();
 			$errors = $statement->errorInfo();
