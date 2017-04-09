@@ -269,8 +269,7 @@ class ProfilePageModel
 			$error_log("Received failed");
 			return false;
 		}
-			
-        
+		
     }
 
     /**
@@ -323,24 +322,21 @@ class ProfilePageModel
 				FROM `Listing`
 				JOIN `ListingTransaction` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
 				JOIN `Transaction` ON `Transaction`.`TransactionID` = `ListingTransaction`.`FK_Transaction_TransactionID`
-				WHERE `Transaction`.`FK_User_UserID` = $userID
+				WHERE `Transaction`.`FK_User_UserID` = :user_id
 				AND `ListingTransaction`.`Success` = 1
-				AND Time_Of_Acceptance >= '$year-$month-01 00:00:00'
-				AND Time_Of_Acceptance < '$end_year-$end_month-01 00:00:00';
+				AND Time_Of_Acceptance >= :start_date
+				AND Time_Of_Acceptance < :end_date;
 			");
+			
+			$statement->bindValue(":user_id", $userID);
+			$start_date = "" . $year . "-" . $month . "-01 00:00:00";
+			$end_date = "" . $end_year . "-" . $end_month . "-01 00:00:00";
+			$statement->bindValue(":start_date", $start_date, PDO::PARAM_STR);
+			$statement->bindValue(":end_date", $end_date, PDO::PARAM_STR);
 			
 			$statement->execute();
 			$errors = $statement->errorInfo();
-			return "
-				SELECT COUNT(*) as `Count`
-				FROM `Listing`
-				JOIN `ListingTransaction` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
-				JOIN `Transaction` ON `Transaction`.`TransactionID` = `ListingTransaction`.`FK_Transaction_TransactionID`
-				WHERE `Transaction`.`FK_User_UserID` = $userID
-				AND `ListingTransaction`.`Success` = 1
-				AND Time_Of_Acceptance >= '$year-$month-01 00:00:00'
-				AND Time_Of_Acceptance < '$end_year-$end_month-01 00:00:00';
-			" . $statement->fetchColumn(). " + errors: " . $errors[0] . $errors[1] . $errors[2];
+			return $statement->fetchColumn() . " + errors: " . $errors[0] . $errors[1] . $errors[2] . "start_date: " . $start_date . "end_date: " . $end_date;
 		}
 		else{
 			return "Neither $year nor $month were equal to -1 and were not >= -1";
