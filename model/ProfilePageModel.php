@@ -245,14 +245,12 @@ class ProfilePageModel
 				JOIN `ListingTransaction` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
 				JOIN `Transaction` ON `Transaction`.`TransactionID` = `ListingTransaction`.`FK_Transaction_TransactionID`
 				JOIN `User` ON `User`.`UserID` = `Listing`.`FK_User_UserID`
-				WHERE `User`.`UserID` = :userID
+				WHERE `User`.`UserID` = $userID
 				AND `ListingTransaction`.`Success` = 1
 				AND Time_Of_Acceptance >= '$year-$month-01 00:00:00'
 				AND Time_Of_Acceptance < '$end_year-$end_month-01 00:00:00';
 			");
 			
-			
-			$statement->bindValue(":userID", $userID, PDO::PARAM_INT);
 			$statement->execute();
 			$errors = $statement->errorInfo();
 			
@@ -262,11 +260,11 @@ class ProfilePageModel
 				JOIN `ListingTransaction` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
 				JOIN `Transaction` ON `Transaction`.`TransactionID` = `ListingTransaction`.`FK_Transaction_TransactionID`
 				JOIN `User` ON `User`.`UserID` = `Listing`.`FK_User_UserID`
-				WHERE `User`.`UserID` = :userID
+				WHERE `User`.`UserID` = $userID
 				AND `ListingTransaction`.`Success` = 1
 				AND Time_Of_Acceptance >= '$year-$month-01 00:00:00'
 				AND Time_Of_Acceptance < '$end_year-$end_month-01 00:00:00';
-			";
+			" . $statement->fetchColumn();
 			
 			
 			return "end_year = $end_year, end_month = $end_month, user_id = $userID, year = $year, month = $month and given = ". $statement->fetchColumn();
@@ -334,7 +332,6 @@ class ProfilePageModel
 				AND Time_Of_Acceptance < '$end_year-$end_month-01 00:00:00';
 			");
 			
-			$statement->bindParam(":userID", $userID);
 			$statement->execute();
 			$errors = $statement->errorInfo();
 						
@@ -344,11 +341,11 @@ class ProfilePageModel
 				FROM `Listing`
 				JOIN `ListingTransaction` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
 				JOIN `Transaction` ON `Transaction`.`TransactionID` = `ListingTransaction`.`FK_Transaction_TransactionID`
-				WHERE `Transaction`.`FK_User_UserID` = :userID
+				WHERE `Transaction`.`FK_User_UserID` = $userID
 				AND `ListingTransaction`.`Success` = 1
 				AND Time_Of_Acceptance >= '$year-$month-01 00:00:00'
 				AND Time_Of_Acceptance < '$end_year-$end_month-01 00:00:00';
-			";
+			" . $statement->fetchColumn();;
 			
 			
 			return $statement->fetchColumn();
