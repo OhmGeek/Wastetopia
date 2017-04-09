@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html style="height: 100vh;">
 <head>
   <meta charset="utf-8">
   <title>Main Page | Wastetopia</title>
@@ -23,7 +23,7 @@
   <link rel="stylesheet" href="wastetopia-main.css"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-<body>
+<body style="height: 100vh;">
   <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
       <div class="navbar-header">
@@ -166,11 +166,13 @@
           <option value="user-pop">User Popularity</option>
         </select>
       </div>
+      <a class="search-view" role="button" data-toggle="tab" href="#map"><i class="material-icons">map</i></a>
+      <a class="search-view" role="button" data-toggle="tab" href="#grid"><i class="material-icons">view_module</i></a>
     </div>
   </div>
-  <div id="filters-picked">
-  </div>
-  <div class="search-result">
+  <div id="filters-picked"></div>
+  <div class="tab-content search-result">
+    <div id="grid" class="tab-pane fade in active">
     <div class="container-fluid">
       <div class="grid">
         <!-- need this for mosonry layout to work properly with bootstrap grid system -->
@@ -211,6 +213,18 @@
       </div>
     </div>
   </div>
+  <div id="map" class="tab-pane fade">
+    <div class="container-fluid">
+      <div id="search-map"></div>
+      <script src="mapSearch.js"></script>
+      <script src="plugins/MarkerClusterer/markerclusterer.js">
+         </script>
+      <script async defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCrh2cKWRAFifeLIkznE2Iw4Oblqlmyyt0&callback=initMap">
+     </script>
+    </div>
+  </div>
+</div>
 
   <!-- to have the fancy effects of material design bootstrap -->
   <script src="bootstrap-material-design-master/dist/js/ripples.min.js"></script>
