@@ -197,7 +197,8 @@ class ProfilePageModel
 
     /**
      * Gets the total number of completed listings the user has given
-	 * @param $year The subject year
+	 * If neither year nor month are specified then all completed listings are evaluated, regardless of date
+	 * @param $year The subject year.
 	 * @param $month The subject month
 	 * @param $timespan How many months to evaluate, default 1
      * @return Integer
@@ -208,7 +209,6 @@ class ProfilePageModel
 		$end_year = $year;
 		$end_month = $month;
 		if($year == -1 && $month == -1){
-			#error_log($end_year);
 			$statement = $this->db->prepare("
 				SELECT COUNT(*) as `Count`
 				FROM `Listing`
@@ -223,9 +223,7 @@ class ProfilePageModel
 			return $statement->fetchColumn();
 		}
 		else if($year != -1 && $month != -1){
-			#error_log("GOT HERE INSTEAD!");
 			if($month + $timespan >= 13){
-				#error_log("GREATER THAN 13!");
 				while($timespan > 1){
 					if($end_month == 12){
 						$end_month = 1;
@@ -239,7 +237,6 @@ class ProfilePageModel
 				}
 			}
 			else{
-				#error_log("NOT GREATER THAN 13");
 				$end_month = $end_month + $timespan;
 			}
 			$statement = $this->db->prepare("
@@ -256,13 +253,8 @@ class ProfilePageModel
 			
 			
 			$statement->bindValue(":userID", $userID, PDO::PARAM_INT);
-			/* $statement->bindValue(":start_year", $year, PDO::PARAM_INT);
-			$statement->bindValue(":start_month", $month, PDO::PARAM_INT);
-			$statement->bindValue(":end_year", $end_year, PDO::PARAM_INT);
-			$statement->bindValue(":end_month", $end_month, PDO::PARAM_INT); */
 			$statement->execute();
 			$errors = $statement->errorInfo();
-			//return "" . $errors[2] . ", " . $errors[1] . " ," . $errors[0];
 			return "end_year = $end_year, end_month = $end_month, user_id = $userID, year = $year, month = $month and given = ". $statement->fetchColumn();
 			return $statement->fetchColumn();
 		}
@@ -276,6 +268,7 @@ class ProfilePageModel
 
     /**
      * Gets the total number of completed listings the user has received
+	 * If neither year nor month are specified then all completed listings are evaluated, regardless of date
 	 * @param $year The subject year
 	 * @param $month The subject month
 	 * @param $timespan How many months to evaluate, default 1
@@ -283,12 +276,10 @@ class ProfilePageModel
      */
     function getNumberOfCompletedReceived($year = -1, $month = -1, $timespan = 1)
     {
-		#error_log("FINISH HERE OR SOMETHING");
 		$userID = $this->getUserID();
 		$end_year = $year;
 		$end_month = $month;
 		if($year == -1 && $month == -1){
-			#return "$year = 1 and $month = 1";
 			$statement = $this->db->prepare("
 				SELECT COUNT(*) as `Count`
 				FROM `Listing`
@@ -302,18 +293,6 @@ class ProfilePageModel
 			return $statement->fetchColumn();
 		}
 		else if($year > -1 && $month > -1){
-			#error_log("GOT HERE!");
-			$statement = $this->db->prepare("
-				SELECT COUNT(*) as `Count`
-				FROM `Listing`
-				JOIN `ListingTransaction` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
-				JOIN `Transaction` ON `Transaction`.`TransactionID` = `ListingTransaction`.`FK_Transaction_TransactionID`
-				WHERE `Transaction`.`FK_User_UserID` = :userID
-				AND `ListingTransaction`.`Success` = 1
-				AND Time_Of_Acceptance >= ':start_year-:start_month-01 00:00:00'
-				AND Time_Of_Acceptance < ':end_year-:end_month-01 00:00:00';
-			");
-			
 			if($month + $timespan >= 13){
 				while($timespan >= 1){
 					if($end_month == 12){
@@ -330,20 +309,22 @@ class ProfilePageModel
 			else{
 				$end_month = $end_month + $timespan;
 			}
-			$statement->bindParam(":userID", $userID);
-			$statement->bindValue(":start_year", $year);
-			$statement->bindValue(":start_month", $month);
-			$statement->bindValue(":end_year", $end_year);
-			$statement->bindValue(":end_month", $end_month);
-			try{
-				$statement->execute();
-				$errors = $statement->errorInfo();
-			}
-			catch(Exception $e){
-				return "" . $e->getMessage() . $errors[2] . ", " . $errors[1] . " ," . $errors[0];
-			}
+			$statement = $this->db->prepare("
+				SELECT COUNT(*) as `Count`
+				FROM `Listing`
+				JOIN `ListingTransaction` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
+				JOIN `Transaction` ON `Transaction`.`TransactionID` = `ListingTransaction`.`FK_Transaction_TransactionID`
+				WHERE `Transaction`.`FK_User_UserID` = :userID
+				AND `ListingTransaction`.`Success` = 1
+				AND Time_Of_Acceptance >= '$year-$month-01 00:00:00'
+				AND Time_Of_Acceptance < '$end_year-$end_month-01 00:00:00';
+			");
 			
-			return "end_year = $end_year, end_month = $end_month, user_id = $userID, year = $year, month = $month and received = ". $statement->fetchColumn();
+			$statement->bindParam(":userID", $userID);
+			$statement->execute();
+			$errors = $statement->errorInfo();
+						
+			//return "end_year = $end_year, end_month = $end_month, user_id = $userID, year = $year, month = $month and received = ". $statement->fetchColumn();
 			return $statement->fetchColumn();
 		}
 		else{
