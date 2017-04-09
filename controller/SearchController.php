@@ -10,7 +10,7 @@ class SearchController
     public function __construct()
     {
         $this->searchModel = new SearchModel();
-        $this->CardDetailsModel = new CardDetailsModel();
+        $this->cardDetailsModel = new CardDetailsModel();
     }
 
     public function recommendationSearch($tagsArr)
@@ -102,6 +102,7 @@ class SearchController
         $searchResults = [];
         foreach ($itemInformation as $item) {
             $result = $this->searchModel->getCardDetails($item["ListingID"]);
+            $result[] = $this->cardDetailsModel->getDefaultImage($item["ListingID"])[0];
             $searchResults[] = $result[0];
         }
         return $searchResults;
