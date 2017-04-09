@@ -129,7 +129,7 @@ $(document).ready(function(){
     });
 
    // Checks the input field is filled
-    $("#pwd).keyup(function(){
+    $("#pwd").keyup(function(){
         if($(this).val() == "" || length($(this).val()) < 8){
             // Field is empty associated box/symbol is red
             $(this).parent().addClass('has-error')
