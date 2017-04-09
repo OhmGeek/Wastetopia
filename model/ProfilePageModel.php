@@ -239,6 +239,8 @@ class ProfilePageModel
 			else{
 				$end_month = $end_month + $timespan;
 			}
+			$month = sprintf("%02d", $month);
+			$end_month = sprintf("%02d", $end_month);
 			$statement = $this->db->prepare("
 				SELECT COUNT(*) as `Count`
 				FROM `Listing`
@@ -316,6 +318,8 @@ class ProfilePageModel
 			else{
 				$end_month = $end_month + $timespan;
 			}
+			$month = sprintf("%02d", $month);
+			$end_month = sprintf("%02d", $end_month);
 			$statement = $this->db->prepare("
 				SELECT COUNT(*) as `Count`
 				FROM `Listing`
