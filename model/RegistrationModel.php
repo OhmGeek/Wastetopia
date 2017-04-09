@@ -131,14 +131,14 @@ class RegistrationModel
         print_r("FROM MODEL");
         print_r($forename);
         print_r($surname);
-        print_r($email);
-        print_r($password);
+        print_r("EMAIL:: ".$email);
+        print_r("PASSWORD:: ".$password);
         print_r($pictureURL);
-        print_r($salt);
-        print_r($passwordHash);
+        print_r("SALT:: ".$salt);
+        print_r("HASH:: .$passwordHash);
         
         //Add user's details
-        $result= $this->addMainUserDetails($forename, $surname, $email, $passwordHash, $salt, $pictureURL);
+        // $result= $this->addMainUserDetails($forename, $surname, $email, $passwordHash, $salt, $pictureURL);
 
         return $result;
     }
