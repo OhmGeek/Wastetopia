@@ -4,6 +4,7 @@
 $(document).ready(function(){
     //TODO: Fix issue with password bars going green when they should be red
     //TODO: fix issue with email section going green but then going red when you press submit
+    //TODO: fix issue with page reloading if eveything is filled in but passwords don't match
 
 
     $("#submit").click(function(){
@@ -31,6 +32,7 @@ $(document).ready(function(){
             displayError("Email field must be filled in");
             return;
         }
+        
         if(passwd == ""){
             $('#pwd').parent().addClass('has-error')
             displayError("Password field must be filled in");
