@@ -6,6 +6,7 @@ use Wastetopia\Model\RegistrationModel;
 use Twig_Loader_Filesystem;
 use Twig_Environment;
 
+use Wastetopia\Config\CurrentConfig;
 class RegistrationController
 {
 
