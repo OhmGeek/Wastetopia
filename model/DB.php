@@ -1,12 +1,21 @@
 <?php
+namespace Wastetopia\Model;
 
 use PDO;
+use Wastetopia\Config\CurrentConfig;
 
 class DB {
+    private static function initDefaultDB() {
 
+	}
     public static function getDB()
-    {
-        return new PDO("mysql:host=mysql.dur.ac.uk;dbname=Idcs8s04_Wasteopia",'dcs8s04','when58');
+	{
+	    $host = CurrentConfig::getProperty('DB_HOST');
+	    $name = CurrentConfig::getProperty('DB_NAME');
+	    $user = CurrentConfig::getProperty('DB_USER');
+	    $pass = CurrentConfig::getProperty('DB_PASS');
+
+        return new PDO("mysql:host=" . $host . ";dbname=" . $name,$user,$pass);
     }
 
 }

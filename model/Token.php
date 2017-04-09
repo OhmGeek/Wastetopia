@@ -1,5 +1,5 @@
 <?php
-
+namespace Wastetopia\Model;
 
 class Token {
     private $before_salt = "Dr.Pr0jectWA5t0Pia";

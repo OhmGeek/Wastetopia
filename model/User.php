@@ -1,6 +1,7 @@
 <?php
 
-require_once('db.php');
+namespace Wastetopia\Model;
+use \PDO;
 class User {
 
     public static function verify_credentials($username, $password) {

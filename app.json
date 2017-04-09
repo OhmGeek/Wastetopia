@@ -1,0 +1,45 @@
+{
+  "name": "Wastetopia",
+  "description": "Food sharing",
+  "scripts": {
+  },
+  "env": {
+    "COOKIE_IDENTIFIER": {
+      "required": true
+    },
+    "DB_HOST": {
+      "required": true
+    },
+    "DB_NAME": {
+      "required": true
+    },
+    "DB_PASS": {
+      "required": true
+    },
+    "DB_USER": {
+      "required": true
+    },
+    "ROOT_BASE": {
+      "required": true
+    },
+    "TOKEN_AFTERSALT": {
+      "required": true
+    },
+    "CLEARDB_DATABASE_URL": {
+      "required": true
+    },
+    "TOKEN_BEFORESALT": {
+      "required": true
+    }
+  },
+  "formation": {
+  },
+  "addons": [
+
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/php"
+    }
+  ]
+}
