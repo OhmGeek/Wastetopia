@@ -4,6 +4,8 @@ use Wastetopia\Controller\ConversationListController;
 use Wastetopia\Controller\Login_Controller;
 use Wastetopia\Config\CurrentConfig;
 use Wastetopia\Controller\MessageController;
+use Wastetopia\Controller\RegistrationController;
+
 require_once '../vendor/autoload.php';
 // check if we should use production? Otherwise, use community.
 $mode = $_ENV['MODE'];
