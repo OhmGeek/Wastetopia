@@ -255,7 +255,7 @@ class ProfilePageModel
 			
 			$statement->execute();
 			$errors = $statement->errorInfo();
-			return $statement->fetchAll(PDO::FETCH_ASSOC)[0][0];
+			return $statement->fetchAll(PDO::FETCH_ASSOC)[0]["Count"];
 		}
 		else{
 			$error_log("Received failed");
@@ -323,7 +323,7 @@ class ProfilePageModel
 			
 			$statement->execute();
 			$errors = $statement->errorInfo();
-			return $statement->fetchAll(PDO::FETCH_ASSOC)[0][0];
+			return $statement->fetchAll(PDO::FETCH_ASSOC)[0]["Count"];
 		}
 		else{
 			return "Neither $year nor $month were equal to -1 and were not >= -1";
