@@ -44,7 +44,7 @@ $(document).ready(function(){
         }
 
         // Check email is valid
-        if(!(checkEmail(email)){
+        if(!(checkEmail(email))){
             $('#email').parent().addClass('has-error')
             displayError("Email is not in valid form");
             return;
