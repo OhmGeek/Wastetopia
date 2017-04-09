@@ -18,14 +18,14 @@ class RegistrationModel
     }
 
 
-    private function getLastInsertID()
-    {
-        $statement = $this->db->prepare("
-            SELECT LAST_INSERT_ID()
-         ");
-        $statement->execute();
-        return $statement->fetchColumn();
-    }
+//    private function getLastInsertID()
+//    {
+//        $statement = $this->db->prepare("
+//            SELECT LAST_INSERT_ID()
+//         ");
+//        $statement->execute();
+//        return $statement->fetchColumn();
+//    }
 
 
     /**
@@ -121,9 +121,22 @@ class RegistrationModel
             // $pictureURL = DEFAULT_IMAGE;
         }
 
+        $salt = $this->generateSalt();
+        $passwordHash = hash('sha256',$salt.$password);
+
         //Add user's details
-        $result= $this->addMainUserDetails($forename, $surname, $email, $password, $pictureURL);
+        $result= $this->addMainUserDetails($forename, $surname, $email, $passwordHash, $salt, $pictureURL);
 
         return $result;
+    }
+
+
+    /**
+     * Generates a random Salt string (in Hexadecimal) between 30 and 40 bytes in length
+     * @return string
+     */
+    function generateSalt(){
+        $salt = random_bytes(mt_rand(30, 40));
+        return bin2hex($salt);
     }
 }
