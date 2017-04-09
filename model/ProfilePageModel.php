@@ -246,7 +246,7 @@ class ProfilePageModel
 			$statement = $this->db->prepare("
 				SELECT COUNT(*) as `Count`
 				FROM `Listing`
-				JOIN `ListingTransaction` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
+				RIGHT JOIN `ListingTransaction` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
 				JOIN `Transaction` ON `Transaction`.`TransactionID` = `ListingTransaction`.`FK_Transaction_TransactionID`
 				JOIN `User` ON `User`.`UserID` = `Listing`.`FK_User_UserID`
 				WHERE `User`.`UserID` = :user_id
