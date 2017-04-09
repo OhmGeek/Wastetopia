@@ -149,7 +149,6 @@ $(document).ready(function(){
 
    // Checks the input field is filled
     $("#pwd").keydown(function(event){
-        event.preventDefault();
         console.log($(this).val());
         console.log($(this).val().length < 8);
         if(($(this).val().length) < 8){
@@ -166,13 +165,12 @@ $(document).ready(function(){
     });
 
     $("#pwdConfirm").keydown(function(event){
-        event.preventDefault();
         var password = $("#pwd").val();
         var passwordConfirm = $(this).val();
         console.log(password);
         console.log(passwordConfirm);
         console.log(password.length<8);
-        if ((password.length < 8) && checkPassword(password, passwordConfirm)){
+        if ((password.length > 8) && checkPassword(password, passwordConfirm)){
             console.log("PC green");
             console.log($(this).parent())
            // Passwords are filled and match, make box/symbol green
