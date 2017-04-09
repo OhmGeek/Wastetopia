@@ -96,7 +96,7 @@ $(document).ready(function(){
     // Returns True if email valid
     function checkEmail(email){
      // Still to do
-     var re = ^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$;
+     var re = [a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,};
      return re.test(email);
     }
 
