@@ -50,7 +50,7 @@ class RegistrationModel
         $statement->execute();
         
         print_r("CHECKING EMAIL");
-        print_r(count($statement->fetchAll(PDO::FETCH_ASSOC));
+        print_r(count($statement->fetchAll(PDO::FETCH_ASSOC)));
         return (count($statement->fetchAll(PDO::FETCH_ASSOC)) > 0);
     }
 
