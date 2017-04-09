@@ -118,8 +118,19 @@ $(document).ready(function(){
      }
 
     // Checks the input field is filled
-    $("#firstName, #lastName, #pwd").keyup(function(){
+    $("#firstName, #lastName).keyup(function(){
         if($(this).val() == ""){
+            // Field is empty associated box/symbol is red
+            $(this).parent().addClass('has-error')
+        }else{
+            // Field is filled, associated box/symbol is green
+            $(this).parent().removeClass('has-error')
+        }
+    });
+
+   // Checks the input field is filled
+    $("#pwd).keyup(function(){
+        if($(this).val() == "" || length($(this).val()) < 8){
             // Field is empty associated box/symbol is red
             $(this).parent().addClass('has-error')
         }else{
