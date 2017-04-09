@@ -32,6 +32,16 @@ class RegistrationController
         return $template->render(array("config" => $config)); // Need to pass config stuff
     }
 
+
+    /** Checks an email address using a Regex (NEEDS TESTING)
+     * @param $email
+     * @return bool (True if valid email)
+     */
+    function checkValidEmail($email){
+        return (filter_var($email, FILTER_VALIDATE_EMAIL));
+    }
+
+
     /**
      * Checks if the given email already exists in the database
      * @param $email
@@ -68,11 +78,15 @@ class RegistrationController
      */
     function addUser($forename, $surname, $email, $password, $passwordConfirm, $pictureURL = NULL){
         // Check passwords match
-        if(!(checkPassword($password, $passwordConfirm))){
+        if(!($this->checkPassword($password, $passwordConfirm))){
             return $this->errorMessage("Passwords don't match");
         }
+        // Check the email is of a valid type
+        elseif(!$this->checkValidEmail($email)){
+            return $this->errorMessage("Email is not valid");
+        }
         // Check the email is available(i.e, not already in use)
-        elseif(!checkAvailable($email)){
+        elseif(!$this->checkAvailable($email)){
             return $this->errorMessage("Email already in use");
         }
         else {
