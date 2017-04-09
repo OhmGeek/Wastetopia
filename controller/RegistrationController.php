@@ -49,8 +49,7 @@ class RegistrationController
      */
     function checkAvailable($email){
         $temp = $this->model->checkEmailExists($email);
-        print_r("Email exists??");
-        print_r(!$temp);
+
         // $temp will be True if the email exists, want to then return False
         return !$temp;
     }
