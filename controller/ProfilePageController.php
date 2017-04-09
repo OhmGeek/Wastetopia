@@ -39,7 +39,7 @@ class ProfilePageController
     {
         // $reader = new UserCookieReader();
         // return $reader->get_user_id();
-        return 11;
+        return 7;
     }
 
     function generatePage()
@@ -88,8 +88,8 @@ class ProfilePageController
         $userInformation = array();
         $userInformation["username"] = $userDetails["Forename"] . " " . $userDetails["Surname"];
 		
-		$given = $this->model->getNumberOfCompletedGiving(2016,12);
-		$received = $this->model->getNumberOfCompletedReceived(2016,12);
+		$given = $this->model->getNumberOfCompletedGiving(2016,12,2);
+		$received = $this->model->getNumberOfCompletedReceived(2016,12,2);
 		
 		$userInformation["given"] = $given;
 		$userInformation["received"] = $received;
