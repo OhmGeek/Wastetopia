@@ -2,7 +2,8 @@
  * Created by Stephen on 09/04/2017.
  */
 $(document).ready(function(){
-    //TODO: Add real-time checking of fields (especially password match)
+    //TODO: Fix issue with password bars going green when they should be red
+    //TODO: fix issue with email section going green but then going red when you press submit
 
 
     $("#submit").click(function(){
@@ -98,7 +99,7 @@ $(document).ready(function(){
     // Returns True if email valid
     function checkEmail(email){
      // Still to do
-     var re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+     var re = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i
      return re.test(email);
     }
 
