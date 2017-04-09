@@ -150,7 +150,7 @@ $(document).ready(function(){
    // Checks the input field is filled
     $("#pwd").keydown(function(){
         console.log($(this).val());
-        console.log($(this).val().length);
+        console.log($(this).val().length < 8);
         if(($(this).val().length) < 8){
             console.log("Password red");
             // Field is empty associated box/symbol is red
@@ -161,6 +161,7 @@ $(document).ready(function(){
             console.log("Password green");
             $(this).parent().removeClass('has-error');
         }
+        $(this).parent().addClass('has-error'); //Testing
     });
 
     $("#pwdConfirm").keydown(function(){
