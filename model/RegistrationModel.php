@@ -6,6 +6,10 @@
  * Date: 03/03/2017
  * Time: 10:06
  */
+namespace Wastetopia\Model;
+use Wastetopia\Model\DB;
+use PDO;
+
 class RegistrationModel
 {
 
