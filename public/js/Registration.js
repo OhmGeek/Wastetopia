@@ -84,13 +84,6 @@ $(document).ready(function(){
 
     });
 
-
-    // What is this for?? this is for the material design effects XD
-    $(function () {
-        $.material.init();
-    });
-
-
     // Returns true if the passwords match
     function checkPassword(p, c){
         if (p === c){
