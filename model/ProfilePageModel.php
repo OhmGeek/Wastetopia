@@ -265,7 +265,7 @@ class ProfilePageModel
 				AND `ListingTransaction`.`Success` = 1
 				AND Time_Of_Acceptance >= '$year-$month-01 00:00:00'
 				AND Time_Of_Acceptance < '$end_year-$end_month-01 00:00:00';
-			" . $statement->fetchColumn();
+			" . $statement->fetchAll(PDO::FETCH_ASSOC)["Count"];
 		}
 		else{
 			$error_log("Received failed");
@@ -342,7 +342,7 @@ class ProfilePageModel
 				AND `ListingTransaction`.`Success` = 1
 				AND Time_Of_Acceptance >= '$year-$month-01 00:00:00'
 				AND Time_Of_Acceptance < '$end_year-$end_month-01 00:00:00';
-			" . $statement->fetchColumn();
+			" . $statement->fetchAll(PDO::FETCH_ASSOC)["Count"];
 		}
 		else{
 			return "Neither $year nor $month were equal to -1 and were not >= -1";
