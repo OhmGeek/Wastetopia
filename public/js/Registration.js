@@ -67,6 +67,7 @@ $(document).ready(function(){
         var url = window.location.protocol + "//" + window.location.host + "/register/add-user";
 
         $.post(url, data, function(json){
+            console.log(json);
            // If there was an error, display it
            if(json.hasOwnProperty("error")){
                console.log("Error occurred");
