@@ -50,8 +50,13 @@ class RegistrationModel
         $statement->execute();
         
         print_r("CHECKING EMAIL");
-        print_r(count($statement->fetchAll(PDO::FETCH_ASSOC)));
-        return (count($statement->fetchAll(PDO::FETCH_ASSOC)) > 0);
+        $result = count($statement->fetchAll(PDO::FETCH_ASSOC));
+        if ($result > 0){
+            print_r("Email exists");
+          }else{
+            print_r("Email does not exist");
+        }       
+        return $result > 0;
     }
 
 
