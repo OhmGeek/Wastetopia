@@ -106,12 +106,13 @@ class RegistrationController
                 // Send verification email
                 $final = $this->sendVerificationEmail($email);
                 //$final = True; // For testing
-                if ($final){
-                    return $this->successMessage("Success");
-                }else{
+                if (!($final)){
                     // Delete user so they can try again
                     $this->model->deleteUser($email);
                     return $this->errorMessage("Couldn't send verification email to that address, please use a different email");
+                    
+                }else{
+                    return $this->successMessage("Success");
                 }      
             }
         }
@@ -129,7 +130,7 @@ class RegistrationController
     
     
     /**
-    *NEED TO CHANGE THE LINK FOR PRODUCTION VERSION
+    *NEED TO CHANGE THE LINK FOR PRODUCTION VERSION (use config)
     * Sends an email to the new user with the verification code
     * @param $email
     * @return bool
@@ -144,7 +145,7 @@ class RegistrationController
         $to=$email;
         $subject="Activation Code For Wastetopia";
         $from = 'cs.seg04@durham.ac.uk'; 
-        $body='Your Activation Code is '.$code.' Please Click On This link <a href="VERIFICATION_URL">https://wastetopia-pr-27.herokuapp.com/verify/'.$code.'</a>to activate  your account.';
+        $body='Your Activation Code is '.$code.' Please Click On This link <a href="VERIFICATION_URL">https://wastetopia-pr-27.herokuapp.com/register/verify/'.$code.'</a>to activate  your account.';
         $headers = "From:".$from;
         print_r($body);
         return mail($to,$subject,$body,$headers);
