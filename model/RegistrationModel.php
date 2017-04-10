@@ -185,4 +185,40 @@ class RegistrationModel
         $salt = random_bytes(mt_rand(30, 40));
         return bin2hex($salt);
     }
+    
+    
+    /** Changes the Active flag for user with the given verification code
+    * @param $verificationCode
+    * @return bool
+    */
+    function verifyUser($verificationCode){
+        $statement = $this->db->prepare("
+            SELECT *
+            FROM `User`
+            WHERE `User`.`Verification_Code` = :code
+            AND `User`.`Active` = 0;
+        ");
+
+        $statement->bindValue(":code", $verificationCode, PDO::PARAM_STR);
+        $statement->execute();
+        
+        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+        
+        if(count($result) > 0){
+             $userID = $result["UserID"]; // UserID of new user
+             $statement2 = $this->db->prepare("
+                UPDATE `User`
+                SET `Active` = 1
+                WHERE `User`.`UserID` = :userID;
+                
+            ");
+
+            $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
+
+            $statement->execute();
+            return True
+        }else{
+            return False;
+        }
+    }
 }
