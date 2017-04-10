@@ -1,5 +1,4 @@
 <?php
-require("../../public/PHPMailer_5.2.0/class.PHPMailer.php"); //PHPMailer location
 
 namespace Wastetopia\Controller;
 
@@ -8,6 +7,9 @@ use Twig_Loader_Filesystem;
 use Twig_Environment;
 
 use Wastetopia\Config\CurrentConfig;
+
+require("../../public/PHPMailer_5.2.0/class.PHPMailer.php"); //PHPMailer location
+
 class RegistrationController
 {
 
