@@ -61,11 +61,12 @@ $klein->with('/register', function() use ($klein){
         }
     });
     
+    // Only for testing purposes
     $klein->respond("GET", "/delete/[:firstName]/[:lastName]", function($request, $response){
        $firstName = $request->firstName;
         $lastName = $request->lastName;
         $model = new RegistrationModel();
-        return $model->deleteUser($firstName, $lastName);
+        return $model->deleteUserByName($firstName, $lastName);
     });
   
 });
