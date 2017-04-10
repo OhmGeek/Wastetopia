@@ -9,6 +9,7 @@
 {% endblock %}
 
 {% block content %}
+<div id="#register-form">
         <div class="container-fluid">
 
       <h1>
@@ -33,7 +34,7 @@
         </div>
         <div class="form-group label-floating">
           <label class="control-label" for="pwdConfirm">Confirm password</label>
-          <input required type="password" class="form-control" id="pwdConfirm" minlength="8">
+          <input required type="password" class="form-control" id="pwdConfirm">
         </div>
         <div class="form-group label-floating">
           <label class="control-label" for="email">Email</label>
@@ -47,6 +48,7 @@
       </form>
     </div>
   </div>
+</div>
 {% endblock %}
 
 

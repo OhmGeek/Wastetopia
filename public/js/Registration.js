@@ -18,50 +18,50 @@ $(document).ready(function(){
 
         // Check all the necessary fields are filled in
         if(firstName == ""){
-            $('#firstName').parent().addClass('has-error')
+            $('#firstName').parent().addClass('there-error')
             displayError("First name field must be filled in");
             return;
         }
         if(lastName == ""){
-            $('#lastName').parent().addClass('has-error')
+            $('#lastName').parent().addClass('there-error')
             displayError("Last name field must be filled in");
             return;
         }
         if(email == ""){
-            $('#email').parent().addClass('has-error')
+            $('#email').parent().addClass('there-error')
             displayError("Email field must be filled in");
             return;
         }
 
         if(passwd == ""){
-            $('#pwd').parent().addClass('has-error')
+            $('#pwd').parent().addClass('there-error')
             displayError("Password field must be filled in");
             return;
         }
 
         if(passwd.length < 8){
-            $('#pwd').parent().addClass('has-error')
+            $('#pwd').parent().addClass('there-error')
             displayError("Password must be at least 8 characters in length");
             return;
         }
 
         // Check the passwords match
         if (!(checkPassword(passwd, passwdConfirm))){
-            $('#pwdConfirm').parent().addClass('has-error')
+            $('#pwdConfirm').parent().addClass('there-error')
             displayError("Passwords don't match");
             return;
         }
 
         // Check email is valid
         if(!(checkEmail(email))){
-            $('#email').parent().addClass('has-error')
+            $('#email').parent().addClass('there-error')
             displayError("Email is not in valid form");
             return;
         }
 
         // Check the Terms and Conditions are checked
         if (!(tAndC.is(":checked"))){
-            $('#termsAndConditions').parent().addClass('has-error')
+            $('#termsAndConditions').parent().addClass('there-error')
             displayError("Must accept terms and conditions to submit");
             return;
         }
@@ -132,7 +132,7 @@ $(document).ready(function(){
 
     $("#firstName, #lastName, #pwd, #pwdConfirm, #email").click(function(){
         if($(this).val() == ""){
-          $(this).closest(".form-group").addClass("has-error");
+          $(this).closest(".form-group").addClass("there-error");
        }
     });
 
@@ -140,10 +140,10 @@ $(document).ready(function(){
     $("#firstName, #lastName").keyup(function(){
         if($(this).val() == ""){
             // Field is empty associated box/symbol is red
-            $(this).closest(".form-group").addClass('has-error');
+            $(this).closest(".form-group").addClass('there-error');
         }else{
             // Field is filled, associated box/symbol is green
-            $(this).closest(".form-group").removeClass('has-error');
+            $(this).closest(".form-group").removeClass('there-error');
         }
     });
 
@@ -154,14 +154,14 @@ $(document).ready(function(){
     //     if(($(this).val().length) < 8){
     //         console.log("Password red");
     //         // Field is empty associated box/symbol is red
-    //         console.log($(this).closest(".form-group").addClass('has-error'))
-    //         $(this).closest(".form-group").addClass('has-error');
+    //         console.log($(this).closest(".form-group").addClass('there-error'))
+    //         $(this).closest(".form-group").addClass('there-error');
     //     }else{
     //         // Field is filled, associated box/symbol is green
     //         console.log("Password green");
-    //         $(this).closest(".form-group").removeClass('has-error');
+    //         $(this).closest(".form-group").removeClass('there-error');
     //     }
-    //     $(this).closest(".form-group").addClass('has-error'); //Testing
+    //     $(this).closest(".form-group").addClass('there-error'); //Testing
     // });
 
     $("#pwdConfirm").keyup(function(event){
@@ -174,12 +174,12 @@ $(document).ready(function(){
             console.log("PC green");
             console.log($(this).parent())
            // Passwords are filled and match, make box/symbol green
-           $(this).parent().removeClass('has-error')
+           $(this).parent().removeClass('there-error')
         }else{
             console.log("PC red");
             console.log($(this).parent())
            // Passwords don't match, make box/symbol red
-           $(this).parent().addClass('has-error')
+           $(this).parent().addClass('there-error')
         }
     });
 
@@ -189,14 +189,14 @@ $(document).ready(function(){
         if (email != ""){
             if (checkEmail(email)){
               // Set box/symbol to green
-              $(this).parent().removeClass('has-error')
+              $(this).parent().removeClass('there-error')
             }else{
               // Set box/symbol to red
-               $(this).parent().addClass('has-error')
+               $(this).parent().addClass('there-error')
             }
         }else{
            // Set box/symbol to red
-           $(this).parent().addClass('has-error')
+           $(this).parent().addClass('there-error')
         }
     });
 
