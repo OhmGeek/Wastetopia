@@ -96,7 +96,7 @@ $(function(){
     });
     
     
-    // Request listing
+    // Request listing - THIS WORKS
     $grid.on('click', '#request', function(event){
         event.preventDefault();
         
@@ -137,7 +137,7 @@ $(function(){
     });
     
     
-    // View listing
+    // View listing - THIS WORKS
     $('a[href="#view"]').click(function(event){
         event.preventDefault();
         console.log("VIEW");
