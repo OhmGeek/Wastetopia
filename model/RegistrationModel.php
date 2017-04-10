@@ -22,6 +22,22 @@ class RegistrationModel
     }
 
 
+    function deleteUser($firstName, $lastName){
+        $statement = $this->db->prepare("
+            DELETE FROM `User`
+                WHERE `Forename` = :firstName
+                AND `Surname` = :lastName
+        ");
+        
+        $statement->bindValue(":firstName", $firstName, PDO::PARAM_STR);
+        $statement->bindValue(":lastName", $lastName, PDO::PARAM_STR);
+        
+        $statement->execute();
+        return True
+      
+    }
+    
+    
 //    private function getLastInsertID()
 //    {
 //        $statement = $this->db->prepare("
