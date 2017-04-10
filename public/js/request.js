@@ -102,6 +102,8 @@ $(function(){
         
         // Extract listingID
       var listingID = $(this).closest('a[href="#view"]').attr("id"); 
+        console.log($(this).closest('a[href="#view"]').attr("id"));
+        
         // Send to /items/request
         var url = baseURL + "/items/request";
         var data = {listingID : listingID};
