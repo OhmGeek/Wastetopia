@@ -23,9 +23,8 @@
 /* registration page */
 
 #register-form{
-  width: 75%;
-  left: 50%;
-  margin-left: -37.5%;
+  width: 100%;
+  margin-left: 0;
   padding: 100px 30px;
   background-color: white;
   top: 0;
@@ -38,7 +37,7 @@
 @media(min-width:768px) {
   #register-form{
     width: 50%;
-    margin-left: -25%;
+    margin-left: 25%;
   }
 }
 
@@ -143,6 +142,7 @@
 }
 
 #sort-select {
+  margin-left: auto;
   display: flex;
   align-items: center;
 }
@@ -171,6 +171,18 @@
 #radius-output span{
   color: grey;
   text-transform: lowercase;
+}
+
+.search-view {
+  padding: 0 0 0 10px;
+  margin: 10px;
+  border-left: 2px solid black;
+}
+
+.search-result #map {
+  height: 100vh;
+  width: 100%;
+  background-color: black;
 }
 
 /* item page */
@@ -789,7 +801,6 @@ a:link, a:hover, a:visited, a:active  {
 
 .tab-content {
   flex:1;
-  background-color: #2658BC;
   padding-top: 2px;
   overflow: auto;
 }
