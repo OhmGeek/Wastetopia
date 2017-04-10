@@ -204,7 +204,7 @@ class RegistrationModel
         
         if($result > 0){
             print_r("Result");
-            print_r($statement->fetchColumn());
+            print_r($results->"0"->"Verification_Code");
           return $statement->fetchColumn();   
         }else{
             return -1;
