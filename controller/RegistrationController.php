@@ -82,7 +82,9 @@ class RegistrationController
         if(strlen($password) < 8){
             return $this->errorMessage("Password must be at least 8 characters in length");   
         }
-        
+        // Check the email is available(i.e, not already in use)
+        print_r($email);
+        print_r($this->checkAvailable($email));
         // Check passwords match
         if(!($this->checkPassword($password, $passwordConfirm))){
             return $this->errorMessage("Passwords don't match");
@@ -91,9 +93,6 @@ class RegistrationController
         elseif(!$this->checkValidEmail($email)){
             return $this->errorMessage("Email is not valid");
         }
-        // Check the email is available(i.e, not already in use)
-        print_r($email);
-        print_r($this->checkAvailable($email));
         elseif(!$this->checkAvailable($email)){
             return $this->errorMessage("Email already in use");
         }
