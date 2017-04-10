@@ -28,7 +28,7 @@ $(function(){
       // Send to /items/remove-listing 
         
         var url = baseURL + "/items/remove-listing";
-        var data = {"listingID" : listingID};
+        var data = {listingID : listingID};
         $.post(url, data, function(response){
            if(response){
                // Do something
@@ -43,11 +43,11 @@ $(function(){
     $grid.on('click', '#complete', function(){
       // Extract transactionID and listingID and new quantity
        var transactionID = $(this).closest('.thumbnail').attr("id");
-       var listingID = $(this).prevAll('a[href="#view"]').attr("id"); 
+       var listingID = $(this).closest(".btn-watch").prevAll('a[href="#view"]').attr("id");
       // Send to /items/confirm-request
         
         var url = baseURL + "/items/confirm-request";
-        var data = {"listingID" : listingID, "transactionID" : transactionID};
+        var data = {listingID : listingID, transactionID : transactionID};
         $.post(url, data, function(response){
            if(response){
                // Do something
@@ -62,11 +62,11 @@ $(function(){
     $grid.on('click', '#reject', function(){
       // Extract transactionID and listingID
        var transactionID = $(this).closest('.thumbnail').attr("id");
-       var listingID = $(this).prevAll('a[href="#view"]').attr("id"); 
+       var listingID = $(this).closest(".btn-watch").prevAll('a[href="#view"]').attr("id"); 
       // Send to /items/reject-request
         
         var url = baseURL + "/items/reject-request";
-        var data = {"listingID" : listingID, "transactionID" : transactionID};
+        var data = {listingID : listingID, transactionID : transactionID};
         $.post(url, data, function(response){
            if(response){
                // Do something
@@ -83,12 +83,11 @@ $(function(){
       // Extract transactionID and listingID
         var transactionID = $(this).closest('.thumbnail').attr("id");
         console.log(transactionID);
-       var listingID = $(this).closest(".btn-watch").prevAll('a[href="#view"]').attr("id"); 
-        console.log(listingID);
+
       // Send to /items/cancel-request
         
         var url = baseURL + "/items/cancel-request";
-        var data = {"listingID" : listingID, "transactionID" : transactionID};
+        var data = {transactionID : transactionID};
         $.post(url, data, function(response){
             console.log(response);
            if(response){
@@ -128,7 +127,7 @@ $(function(){
        // Send to /items/renew-listing/
         
         var url = baseURL + "/items/renew-listing";
-        var data = {"listingID" : listingID};
+        var data = {listingID : listingID};
         $.post(url, data, function(response){
            if(response){
                // Do something
