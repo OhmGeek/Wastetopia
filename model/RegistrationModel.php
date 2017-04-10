@@ -160,6 +160,7 @@ class RegistrationModel
         $passwordHash = hash('sha256',$salt.$password);
 
         $verificationCode = $this->generateSalt(); // New random string for verification
+        print_r("CODE: ".$verificationCode);
       //  print_r("FROM MODEL");
       //  print_r($forename);
       //  print_r($surname);
@@ -194,6 +195,8 @@ class RegistrationModel
         
         
         $statement->execute();
+        
+        print_r($statement->fetchAll(PDO::FETCH_ASSOC));
         
         $result = count($statement->fetchAll(PDO::FETCH_ASSOC));
         
