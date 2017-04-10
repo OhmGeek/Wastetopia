@@ -14,7 +14,7 @@ $('.upload-pic').matchHeight();
 $(".js-example-basic-multiple").select2();
 
 //fancy datetime picker
-$('#date').bootstrapMaterialDatePicker({ format : 'DD/MM/YYYY', weekStart : 0, time: false });
+$('#date').bootstrapMaterialDatePicker({ format : 'D MMMM, YYYY', weekStart : 0, time: false });
 
 // Remove an element from the layout in the grid
 function remove(elem) {
