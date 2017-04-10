@@ -127,6 +127,26 @@ $(function(){
         });
     });
     
+    // Edit listing
+    $grid.on('click', '#edit', function(event){
+        event.preventDefault();
+        
+        // Extract listingID
+      var listingID = $(this).prevAll('a[href="#view"]').attr("id");  
+        
+        // Send to /items/request
+        var url = baseURL + "/items/edit"; // REPLACE WITH  CORRECT URL
+        var data = {listingID : listingID};
+        $.post(url, data, function(response){
+            console.log(response);
+           if(response){
+               // Do something
+           }else{
+               // Show error   
+           }
+        });
+    });
+    
     
     // Renew listing
     $('a[href="#renew"]').click(function(){
@@ -159,6 +179,7 @@ $(function(){
        
         location.href = url;
     });
+    
     
     
 //     // View conversation
