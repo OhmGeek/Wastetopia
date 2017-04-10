@@ -157,7 +157,7 @@ class RegistrationController
 //         // PHPMailer code
         
 
-        $mail = new \PHPMailer();
+        $mail = new \PHPMailer(true); //true makes it give errors
 
         $mail->IsSMTP();                                      // set mailer to use SMTP
         $mail->Host = "smtp.dur.ac.uk";  // specify main and backup server
