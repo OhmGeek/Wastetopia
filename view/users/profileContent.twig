@@ -394,7 +394,7 @@
                             <a href="#" role="button" class="btn-watch" id="remove"><i
                               class="material-icons">delete</i></a>
                             {% else %}
-                            <a href="#" role="button" class="btn-watch" id="watch"><i
+                            <a href="#" role="button" class="btn-watch {% if item.isWatching %}watched{% endif %}" id="watch"><i
                               class="material-icons">visibility</i></a>
                             {% endif %}
                             </div>
