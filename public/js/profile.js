@@ -31,7 +31,7 @@ $(function () {
     $('.page-height').css('padding-top',topPadding);
   });
 
-  // Reload HTML content when Back buttons pressed on each tab
+  // Reload HTML content when Back buttons pressed on each tab - not working
   $grid.on('click', 'a[href="#home"]',function (){
     console.log("Reloading");
     var userID = $('.user-name').attr("id");
