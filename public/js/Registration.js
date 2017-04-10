@@ -137,7 +137,7 @@ $(document).ready(function(){
     });
 
     // Checks the input field is filled
-    $("#firstName, #lastName").keydown(function(){
+    $("#firstName, #lastName").keyup(function(){
         if($(this).val() == ""){
             // Field is empty associated box/symbol is red
             $(this).closest(".form-group").addClass('has-error');
@@ -183,7 +183,7 @@ $(document).ready(function(){
         }
     });
 
-    $("#email").keydown(function(){
+    $("#email").keyup(function(){
         var email = $(this).val();
 
         if (email != ""){
