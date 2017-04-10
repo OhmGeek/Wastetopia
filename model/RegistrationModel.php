@@ -22,7 +22,7 @@ class RegistrationModel
     }
 
 
-    function deleteUser($firstName, $lastName){
+    function deleteUserByName($firstName, $lastName){
         $statement = $this->db->prepare("
             DELETE FROM `User`
                 WHERE `Forename` = :firstName
