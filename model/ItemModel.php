@@ -17,7 +17,7 @@ class ItemModel
 	function getItemInfoFromItemID($item_id){
 		
 		$statement = $this->db->prepare("
-			SELECT Name, Description, Use_By
+			SELECT *
 			FROM Item
 			WHERE ItemID = :item_id;
 		");
@@ -39,7 +39,7 @@ class ItemModel
 		$item_id = $statement0->fetchColumn();
 		
 		$statement = $this->db->prepare("
-			SELECT Name, Description, Use_By
+			SELECT *
 			FROM Item
 			WHERE ItemID = :item_id;
 		");
