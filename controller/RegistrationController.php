@@ -109,6 +109,8 @@ class RegistrationController
                 if ($final){
                     return $this->successMessage("Success");
                 }else{
+                    // Delete user so they can try again
+                    // $this->model->deleteUser($email);
                     return $this->errorMessage("Couldn't send verification email to that address");
                 }      
             }
