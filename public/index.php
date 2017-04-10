@@ -17,9 +17,9 @@ $config->loadConfig($mode);
 $base  = dirname($_SERVER['PHP_SELF']);
 
 //// Update request when we have a subdirectory
-//if(ltrim($base, '/')){
-//    $_SERVER['REQUEST_URI'] = substr($_SERVER['REQUEST_URI'], strlen($base));
-//}
+if(ltrim($base, '/')){
+    $_SERVER['REQUEST_URI'] = substr($_SERVER['REQUEST_URI'], strlen($base));
+}
 
 // Dispatch as always
 $klein = new Klein();
@@ -36,8 +36,8 @@ $klein->respond("GET", "/login", function($request, $response) {
 
 $klein->with("/register", function() use $(klein){
   $klein->respond("GET", "/?", function() {
-    $controller = new RegistrationController();
-    return $controller->generatePage():
+//    $controller = new RegistrationController();
+//    return $controller->generatePage():
   });
 
   $klein->respond("POST", "/add-user", function($request,$response){
@@ -48,8 +48,8 @@ $klein->with("/register", function() use $(klein){
     $passwordConfirm = $request->passwordConfirm;
     $pictureURL = $request->pictureURL;
 
-    $controller = new RegistrationController();
-    return $controller->addUser($firstName, $lastName, $email, $password, $passwordConfirm, $pictureURL);
+//    $controller = new RegistrationController();
+//    return $controller->addUser($firstName, $lastName, $email, $password, $passwordConfirm, $pictureURL);
   });
 });
 
