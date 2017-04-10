@@ -80,6 +80,7 @@ $(function(){
     // Cancel request
     $grid.on('click', '#cancel', function(){
         console.log("Cancelling");
+        
       // Extract transactionID and listingID
         var transactionID = $(this).closest('.thumbnail').attr("id");
         console.log(transactionID);
@@ -88,6 +89,7 @@ $(function(){
         
         var url = baseURL + "/items/cancel-request";
         var data = {transactionID : transactionID};
+        
         $.post(url, data, function(response){
             console.log(response);
            if(response){
