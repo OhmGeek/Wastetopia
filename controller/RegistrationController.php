@@ -104,7 +104,14 @@ class RegistrationController
             if (!($result)) {
                 return $this->errorMessage("Couldn't add user (something unexpected went wrong)");
             } else {
-                return $this->successMessage("Success");
+                // Send verification email
+                //$final = $this->sendVerificationEmail($email);
+                $final = True; // For testing
+                if ($final){
+                    return $this->successMessage("Success");
+                }else{
+                    return $this->errorMessage("Couldn't send verification email to that address");
+                }      
             }
         }
     }
@@ -117,6 +124,27 @@ class RegistrationController
     function successMessage($s){
         $successArray = array("success" => $s);
         return json_encode($successArray);
+    }
+    
+    
+    /**
+    * Sends an email to the new user with the verification code
+    * @param $email
+    * @return bool
+    */
+    function sendVerificationEmail($email){
+        $code = $this->model->getVerifcationCode($email);
+        if($code == -1){
+            return False;   
+        }
+        $message = "Your Activation Code is ".$code."";
+        $to=$email;
+        $subject="Activation Code For Wastetopia";
+        $from = 'cs.seg04@durham.ac.uk'; 
+        $body='Your Activation Code is '.$code.' Please Click On This link <a href="VERIFICATION_URL">https://wastetopia.herokuapp.com/verify/'.$code.'</a>to activate  your account.';
+        $headers = "From:".$from;
+        return mail($to,$subject,$body,$headers);
+    
     }
 }
 ?>
