@@ -130,6 +130,7 @@ class RegistrationModel
         $salt = $this->generateSalt();
         $passwordHash = hash('sha256',$salt.$password);
 
+        $verificationCode = $this->generateSalt(); // New random string for verification
       //  print_r("FROM MODEL");
       //  print_r($forename);
       //  print_r($surname);
@@ -147,7 +148,35 @@ class RegistrationModel
         return $result;
     }
 
+    
+    /**
+    * Returns the verification code to send to the given email
+    * @param $email
+    * @return mixed (-1 if email not in DB, String otherwise)
+    */
+    function getVerificationCode($email){
+        $statement = $this->db->prepare("
+            SELECT `Verification_Code`
+            FROM `User`
+            WHERE `User`.`Email_Address` = :email;
+        ");
 
+        $statement->bindValue(":email", $email, PDO::PARAM_STR);
+        
+        
+        $statement->execute();
+        
+        $result = count($statement->fetchAll(PDO::FETCH_ASSOC));
+        
+        if($result > 0){
+          return $statement->fetchColumn();   
+        }else{
+            return -1;
+        }
+
+    }
+    
+    
     /**
      * Generates a random Salt string (in Hexadecimal) between 30 and 40 bytes in length
      * @return string
