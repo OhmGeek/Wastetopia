@@ -128,7 +128,7 @@ class RegistrationController
     
     
     /**
-    NEED TO CHANGE THE LINK FOR PRODUCTION VERSION
+    *NEED TO CHANGE THE LINK FOR PRODUCTION VERSION
     * Sends an email to the new user with the verification code
     * @param $email
     * @return bool
