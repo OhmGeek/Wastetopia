@@ -345,5 +345,28 @@ class ProfilePageModel
         $statement->execute();
         return;
     }
+	
+	
+    /** 
+    * Checks whether the current user has an ongoing request for the given listing
+    * @param $listingID
+    * @return bool (True if user is requesting the listing)
+    */
+    function isRequesting($listingID){
+	$userID = $this->getUserID();
+        $statement = $this->db->prepare("
+            SELECT COUNT(*) AS `Count`
+	    FROM `ListingTransaction`
+	    JOIN `Transaction` ON `Transaction`.`TransactionID` = `ListingTransaction`.`FK_Transaction_TransactionID`
+	    WHERE `ListingTransaction`.`FK_Listing_ListingID` = :listingID
+	    AND `Transaction`.`FK_User_UserID` = :userID
+	    AND `ListingTransaction`.`Success` = 0;
+        ");
+        $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
+        $statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);
+        $statement->execute();
+        return $statement->fetchColumn() > 0;
+	    
+    }
 
 }
