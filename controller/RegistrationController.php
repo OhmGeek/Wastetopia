@@ -150,18 +150,18 @@ class RegistrationController
         $subject="Activation Code For Wastetopia";
         $from = 'stephenchurch9@hotmail.com'; 
         $body='Your Activation Code is '.$code.' Please Click On This link <a href="https://wastetopia-pr-27.herokuapp.com/register/verify/'.$code.'"> https://wastetopia-pr-27.herokuapp.com/register/verify/'.$code.' </a>to activate  your account.';
-        
+        $altBody = "Please go to: https://wastetopia-pr-27.herokuapp.com/register/verify/".$code;
 //         // PHPMailer code
         
 
         $mail = new \PHPMailer(true); //true makes it give errors
 
         $mail->IsSMTP();                                      // set mailer to use SMTP
-        //$mail->Host = "smtp.dur.ac.uk";  // specify main and backup server
-        $mail->Host = "";
+        $mail->Host = "mail3.gridhost.co.uk";
+        $mail->Port = 465;
         $mail->SMTPAuth = true;     // turn on SMTP authentication
-        $mail->Username = "";  // SMTP username
-        $mail->Password = ""; // SMTP password
+        $mail->Username = "wastetopia@ohmgeek.co.uk";  // SMTP username
+        $mail->Password = "IHatePHP"; // SMTP password
 
         $mail->From = $from;
         $mail->FromName = "Wastetopia";
@@ -173,7 +173,7 @@ class RegistrationController
 
         $mail->Subject = $subject;
         $mail->Body    = $body;
-        $mail->AltBody = "STILL TO ADD";
+        $mail->AltBody = $altBody;
 
         if(!$mail->Send())
         {
