@@ -136,10 +136,9 @@ $klein->with('/items', function () use ($klein) {
     });
     
     $klein->respond('POST', '/cancel-request/?', function($request, $response){
-        $listingID = $request->listingID; // Might not have this information
         $transactionID = $request->transactionID; // Can use this to get listingID
         $model = new RequestModel();
-        return $model->cancelRequest($listingID, $transactionID);
+        return $model->withdrawRequest($transactionID);
     });
     
     $klein->respond('POST', '/renew-listing/?', function($request, $response){
