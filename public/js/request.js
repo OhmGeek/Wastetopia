@@ -148,6 +148,25 @@ $(function(){
         });
     });
     
+    // Rate listing(user)
+    $grid.on('click', '#rate', function(){
+      // Extract listingID
+        var listingID = $(this).closest('.thumbnail').attr("id"); //????
+        
+      // Send to /items/remove-listing 
+        var url = baseURL + "/items/rate-user"; // GET CORRECT URL
+        var data = {listingID : listingID};
+        console.log(data);
+        $.post(url, data, function(response){
+           if(response){
+               // Remove card from screen
+           }else{
+               // Show error   
+           }
+        });
+        
+    });
+    
     
     // Renew listing
     $('a[href="#renew"]').click(function(){
