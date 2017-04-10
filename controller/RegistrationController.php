@@ -141,7 +141,6 @@ class RegistrationController
     */
     function sendVerificationEmail($email, $name){
         $code = $this->model->getVerificationCode($email);
-        print_r($code);
         if($code == -1){
             return False;   
         }
@@ -161,7 +160,7 @@ class RegistrationController
         $mail->Port = 465;
         $mail->SMTPAuth = true;     // turn on SMTP authentication
         $mail->Username = "wastetopia@ohmgeek.co.uk";  // SMTP username
-        $mail->Password = "IHatePHP"; // SMTP password
+        $mail->Password = "wyI4wwPRhHGk"; // SMTP password
 
         $mail->From = $from;
         $mail->FromName = "Wastetopia";
@@ -178,7 +177,6 @@ class RegistrationController
         if(!$mail->Send())
         {
            return False;
-           exit;
         }
 
         return True;
