@@ -142,7 +142,7 @@ $klein->with('/items', function () use ($klein) {
         return $model->cancelRequest($listingID, $transactionID);
     });
     
-    $klein->respond('POST', '/renew-listing/?' function($request, $response){
+    $klein->respond('POST', '/renew-listing/?', function($request, $response){
         $listingID = $request->listingID;
         $newQuantity = $request->quantity;
         $model = new RequestModel();
