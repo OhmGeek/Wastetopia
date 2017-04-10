@@ -203,6 +203,8 @@ class RegistrationModel
         print_r($result);
         
         if($result > 0){
+            print_r("Result");
+            print_r($statement->fetchColumn());
           return $statement->fetchColumn();   
         }else{
             return -1;
