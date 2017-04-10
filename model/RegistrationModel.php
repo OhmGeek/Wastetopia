@@ -217,7 +217,7 @@ class RegistrationModel
             $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
 
             $statement->execute();
-            return True
+            return True;
         }else{
             return False;
         }
