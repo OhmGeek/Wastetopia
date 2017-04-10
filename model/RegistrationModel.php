@@ -37,6 +37,18 @@ class RegistrationModel
       
     }
     
+     function deleteUser($email){
+        $statement = $this->db->prepare("
+            DELETE FROM `User`
+                WHERE `Email_Address` = :email
+        ");
+        
+        $statement->bindValue(":email", $email, PDO::PARAM_STR);
+        $statement->execute();
+        return True;
+      
+    }
+    
     
 //    private function getLastInsertID()
 //    {
