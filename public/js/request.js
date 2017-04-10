@@ -124,12 +124,15 @@ $(function(){
     
     
     // View listing
-    $('a[href="#view"]').click(function(){
+    $('a[href="#view"]').click(function(event){
+        event.preventDefault();
+        console.log("VIEW");
         var listingID = $(this).attr("id");
        // Send to /items/view/[:listingID]
         
         var url = baseURL + "/items/view/"+listingID;
-     
+        console.log(url);
+       
         location.href = url;
     });
     
