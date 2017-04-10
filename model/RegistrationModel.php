@@ -65,12 +65,12 @@ class RegistrationModel
      * @param $pictureURL
      * @return The ID of the user added
      */
-    function addMainUserDetails($forename, $surname, $email, $passwordHash, $salt, $pictureURL)
+    function addMainUserDetails($forename, $surname, $email, $passwordHash, $salt, $pictureURL, $verificationCode)
     {
         //Need to add PictureURL when we have default
         $statement = $this->db->prepare("
-            INSERT INTO `User` (`Forename`, `Surname`, `Email_Address`, `Password_Hash`, `Salt`)
-            VALUES (:forename, :surname, :email, :passwordHash, :salt); 
+            INSERT INTO `User` (`Forename`, `Surname`, `Email_Address`, `Password_Hash`, `Salt`, `Verification_Code`)
+            VALUES (:forename, :surname, :email, :passwordHash, :salt, :code); 
         ");
 
         $statement->bindValue(":forename", $forename, PDO::PARAM_STR);
@@ -78,6 +78,7 @@ class RegistrationModel
         $statement->bindValue(":email", $email, PDO::PARAM_STR);
         $statement->bindValue(":passwordHash", $passwordHash, PDO::PARAM_STR);
         $statement->bindValue(":salt", $salt, PDO::PARAM_STR);
+        $statement->bindValue(":code", $verificationCode, PDO::PARAM_STR);
         //$statement->bindValue(":pictureURL", $pictureURL, PDO::PARAM_STR);
 
         $statement->execute();
@@ -141,7 +142,7 @@ class RegistrationModel
       //  print_r("HASH:: ".$passwordHash);
         
         //Add user's details
-        $result= $this->addMainUserDetails($forename, $surname, $email, $passwordHash, $salt, $pictureURL);
+        $result= $this->addMainUserDetails($forename, $surname, $email, $passwordHash, $salt, $pictureURL, $verificationCode);
         
         
         //$result = false;
