@@ -151,7 +151,7 @@ $(document).ready(function(){
     $("#pwd").keyup(function(event){
         console.log($(this).val());
         console.log($(this).val().length < 8);
-        if(($(this).val().length) < 8){
+        if($(this).val().length < 8){
             console.log("Password red");
             // Field is empty associated box/symbol is red
             console.log($(this).closest(".form-group").addClass('there-error'))
@@ -166,7 +166,6 @@ $(document).ready(function(){
                 $("#pwdConfirm").closest(".form-group").removeClass('there-error');                
             }
         }
-        $(this).closest(".form-group").addClass('there-error'); //Testing
     });
 
     $("#pwdConfirm").keyup(function(event){
