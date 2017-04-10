@@ -77,7 +77,7 @@ $(function(){
     });
     
     
-    // Cancel request
+    // Cancel request - THIS WORKS
     $grid.on('click', '#cancel', function(){
         console.log("Cancelling");
         
