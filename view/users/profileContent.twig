@@ -380,8 +380,16 @@
                           <div class="nav-btns">
                             <a href="#view" class="btn btn-primary" role="button"
                             id="{{ item.listingID }}">View</a>
-                            <a href="#" class="btn btn-default" role="button"
-                            id="{{ item.listingID }}">{% if isUser == 1 %} edit {% else %} request {% endif %}</a>
+                            {% if isUser %}
+                              <a href="#" class="btn btn-default" role="button"
+                              id="edit">Edit</a>
+                            {% else if item.isRequesting %}
+                              <a href="#" class="btn btn-default" role="button"
+                              id="cancel">Cancel request</a>
+                            {% else %}
+                              <a href="#" class="btn btn-default" role="button"
+                              id="request">Request</a>
+                            {% endif %}
                             {% if isUser == 1 %}
                             <a href="#" role="button" class="btn-watch" id="remove"><i
                               class="material-icons">delete</i></a>
