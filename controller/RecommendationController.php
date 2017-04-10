@@ -6,15 +6,26 @@ use Wastetopia\Model\AnalysisModel;
 use Wastetopia\Controller\SearchController;  
 use Wastetopia\Config\CurrentConfig;
 use Wastetopia\Model\CardDetailsModel;
+use Wastetopia\Model\ProfilePageModel;
 
 class RecommendationController {
     
     function __construct(){
       $this->model = new AnalysisModel();
       $this->cardDetailsModel = new CardDetailsModel();  
-      
+      $this->profilePageModel = new ProfilePageModel($this->getUserID());
+        
       $loader = new Twig_Loader_Filesystem('../view/');
       $this->twig = new Twig_Environment($loader);
+    }
+    
+    /**
+     * Returns the ID of the user whose profile you're trying to view
+     * @return int
+     */
+    private function getUserID()
+    {
+        return $this->userID;
     }
     
     
@@ -53,7 +64,7 @@ class RecommendationController {
           $imgURL = $this->cardDetailsModel->getDefaultImage($listingID);//$listing[""]; // Add later
           $itemName = $listing["Name"];
           $quantity = $listing["Quantity"];
-          
+          $isRequesting = $this->profilePageModel->isRequesting($listingID);
           $item = array(
             "listingID" => $listingID,
             "userImg" => $userImage,
@@ -63,7 +74,8 @@ class RecommendationController {
             "postCode" => $postCode,
             "imgURL" => $imgURL,
             "itemName" => $itemName,
-            "quantity" => $quantity
+            "quantity" => $quantity,
+            "isRequesting" => $isRequesting  
           );
           
           array_push($recommendationList, $item);
