@@ -146,7 +146,7 @@ class RegistrationController
         $from = 'cs.seg04@durham.ac.uk'; 
         $body='Your Activation Code is '.$code.' Please Click On This link <a href="VERIFICATION_URL">https://wastetopia-pr-27.herokuapp.com/verify/'.$code.'</a>to activate  your account.';
         $headers = "From:".$from;
-        $print_r($body);
+        print_r($body);
         return mail($to,$subject,$body,$headers);
     
     }
