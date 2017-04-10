@@ -102,11 +102,12 @@ $(function(){
         
         // Extract listingID
       var listingID = $(this).next('a[href="#view"]').attr("id");  
-        console.log($(this).closest('a[href="#view"]').attr("id"));
+        console.log($(this).next('a[href="#view"]').attr("id"));
         
         // Send to /items/request
         var url = baseURL + "/items/request";
         var data = {listingID : listingID};
+        console.log(data);
         $.post(url, data, function(response){
             console.log(response);
            if(response){
