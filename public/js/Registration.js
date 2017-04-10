@@ -164,7 +164,7 @@ $(document).ready(function(){
     //     $(this).closest(".form-group").addClass('has-error'); //Testing
     // });
 
-    $("#pwdConfirm").keydown(function(event){
+    $("#pwdConfirm").keyup(function(event){
         var password = $("#pwd").val();
         var passwordConfirm = $(this).val();
         console.log(password);
