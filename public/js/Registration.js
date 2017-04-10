@@ -148,21 +148,21 @@ $(document).ready(function(){
     });
 
    // Checks the input field is filled
-    $("#pwd").keydown(function(event){
-        console.log($(this).val());
-        console.log($(this).val().length < 8);
-        if(($(this).val().length) < 8){
-            console.log("Password red");
-            // Field is empty associated box/symbol is red
-            console.log($(this).closest(".form-group").addClass('has-error'))
-            $(this).closest(".form-group").addClass('has-error');
-        }else{
-            // Field is filled, associated box/symbol is green
-            console.log("Password green");
-            $(this).closest(".form-group").removeClass('has-error');
-        }
-        $(this).closest(".form-group").addClass('has-error'); //Testing
-    });
+    // $("#pwd").keydown(function(event){
+    //     console.log($(this).val());
+    //     console.log($(this).val().length < 8);
+    //     if(($(this).val().length) < 8){
+    //         console.log("Password red");
+    //         // Field is empty associated box/symbol is red
+    //         console.log($(this).closest(".form-group").addClass('has-error'))
+    //         $(this).closest(".form-group").addClass('has-error');
+    //     }else{
+    //         // Field is filled, associated box/symbol is green
+    //         console.log("Password green");
+    //         $(this).closest(".form-group").removeClass('has-error');
+    //     }
+    //     $(this).closest(".form-group").addClass('has-error'); //Testing
+    // });
 
     $("#pwdConfirm").keydown(function(event){
         var password = $("#pwd").val();
