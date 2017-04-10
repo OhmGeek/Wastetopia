@@ -97,7 +97,7 @@ var scanBarcode = function() {
                     ]
                 }
             }, "code_128_reader"]
-        }
+        },
         src: reader.result
     }, function(result) {console.log(result)});
 };
