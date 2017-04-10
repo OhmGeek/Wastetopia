@@ -51,8 +51,6 @@ class RegistrationModel
         
         
         $result = count($statement->fetchAll(PDO::FETCH_ASSOC));
-        print_r("FROM MODEL");
-        print_r($result);
         return $result > 0;
     }
 
@@ -71,7 +69,7 @@ class RegistrationModel
     {
         //Need to add PictureURL when we have default
         $statement = $this->db->prepare("
-            INSERT INTO `User` (`Forename`, `Surname`, `Email_Address` `Password_Hash`, `Salt`)
+            INSERT INTO `User` (`Forename`, `Surname`, `Email_Address`, `Password_Hash`, `Salt`)
             VALUES (:forename, :surname, :email, :passwordHash, :salt); 
         ");
 
@@ -144,7 +142,6 @@ class RegistrationModel
         //Add user's details
         $result= $this->addMainUserDetails($forename, $surname, $email, $passwordHash, $salt, $pictureURL);
         
-        print_r($result);
         
         //$result = false;
         return $result;
