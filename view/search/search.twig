@@ -10,22 +10,36 @@
 
 {% block content %}
 <!-- Create the search results window -->
-<div id="main-content">
-    <div id="sidebar">
-      <ul id="filter-list" role="tablist" aria-multiselectable="true">
+<div class="search-advance" style="padding-top:65px;">
+  <div class="btn-group zero-padding" id="filter-dropdown">
+    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Filter
+      <span class="caret"></span></button>
+      <ul id="filter-list" class="dropdown-menu" role="tablist" aria-multiselectable="true">
+        <li role="tab">
+          <div class="filter-category" id="radius-category">
+            Search Radius
+            <a role="button" data-toggle="collapse" data-parent="#filter-list" href="#radius-options" aria-expanded="true" aria-controls="radius-options"><i class="material-icons"></i></a>
+          </div>
+          <div class="filter-options collapse in" id="radius-options" role="tabpanel" aria-labelledby="dietary-category">
+            <div class="container-fluid">
+              <div class="slider shor" id="radius"></div>
+              <div id="radius-output"></div>
+            </div>
+          </div>
+        </li>
         {% for itemFilter in filters %}
         <li role="tab">
-          <div class="filter-category" id="type-category">
+          <div class="filter-category" id="{{itemFilter.id}}-category">
             {{itemFilter.optionsCategory}}
-            <a role="button" data-toggle="collapse" data-parent="#filter-list" href="#type-options" aria-expanded="true" aria-controls="type-options"><i class="material-icons"></i></a>
+            <a role="button" data-toggle="collapse" data-parent="#filter-list" href="#{{itemFilter.id}}-options" aria-expanded="true" aria-controls="{{itemFilter.id}}-options"><i class="material-icons"></i></a>
           </div>
-          <ul class="filter-options collapse in" id="type-options" role="tabpanel" aria-labelledby="type-category">
+          <ul class="filter-options collapse in" id="{{itemFilter.id}}-options" role="tabpanel" aria-labelledby="{{itemFilter.id}}-category">
             {% for option in itemFilter.options %}
             <li>
               <div class="form-group zero-padding">
                 <div class="checkbox">
                   <label>
-                    <input type="checkbox"> {{option}}
+                    <input type="checkbox" value="{{option.value}}" id="{{option.id}}"> {{option.value}}
                   </label>
                 </div>
               </div>
@@ -36,8 +50,19 @@
         {% end for %}
       </ul>
     </div>
-    <div id="main">
-      <button id="filter-btn">Click me</button>
+    <div class="form-group zero-padding" id="sort-select">
+      <label for="sort-options">Sort by</label>
+      <select id="sort-options" class="form-control">
+        <option value="distance">Distance</option>
+        <option value="a-z">A-Z</option>
+        <option value="z-a">Z-A</option>
+        <option value="user-pop">User Popularity</option>
+      </select>
+    </div>
+  </div>
+</div>
+<div id="filters-picked"></div>
+  <div class="search-result">
       <div class="container-fluid">
         <div class="grid">
           <!-- need this for mosonry layout to work properly with bootstrap grid system -->
@@ -64,6 +89,9 @@
               <img src="{{item.imgURL}}" style="border-color: lightgrey;" />
               <div class="caption">
                 <h3>{{item.itemName}}</h3>
+                <div class="trans-info">
+                  <div><span>Quantity: </span> {{ item.quantity }}</div>
+                </div>
                 <div class="nav-btns">
                   <a href="#" class="btn btn-primary" role="button" id="{{item.ID}}">View</a>
                   <a href="#" class="btn btn-default" role="button">Request</a>
@@ -79,4 +107,4 @@
 </div>
 {% endblock %}
 
-{% set jslist = ["name your","custom js","files here"] %}
+{% set jslist = ["plugins/noUiSlider/noUiSlider.min.js", "plugins/wnumb-1.1.0/wNumb.js", "search.js"] %}

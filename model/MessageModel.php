@@ -23,9 +23,36 @@ class MessageModel
 
 //        $reader = new UserCookieReader();
 //        return $reader->get_user_id();
-        return 20; //Hardcoded for now
+        return 6; //Hardcoded for now
     }
 
+	
+    /**
+    * Returns the ID of the conversation associated with the given listing and the current logged in user
+    * @param $listingID
+    * @return int ($conversationID)
+    */
+    function getConversationIDFromListing($listingID){
+	$userID = $this->getUserID();
+	$statement = $this->db->prepare("
+		SELECT `Conversation`.`ConversationID`
+		FROM `Conversation`
+		JOIN `Listing` ON `Listing`.`ListingID` = `Conversation`.`FK_Listing_ListingID`
+		WHERE (`Conversation`.`FK_User_ReceiverID` = :userID OR `Listing`.`FK_User_UserID` = :userID2)
+		AND `Listing`.`ListingID` = :listingID;
+	");
+								
+		$statement->bindValue(':userID',$userID, PDO::PARAM_INT);							
+		$statement->bindValue(':userID2',$userID, PDO::PARAM_INT);
+	        $statement->bindValue(':listingID', $listingID, PDO::PARAM_INT);
+
+		$statement->execute();
+
+		$results = $statement->fetchAll(PDO::FETCH_ASSOC);    
+	        return $results;
+	   
+    }
+	
 
     /**
      * Return all messages in the conversation betweeen you and another user
@@ -161,26 +188,6 @@ class MessageModel
     }
 
 
-    /**
-     * Gets the profile picture of the given user (Possibly will be moved to another model)
-     * @param $userID
-     * @return URL
-     */
-    function getUserImage($userID)
-    {
-        $statement = $this->db->prepare("
-                                SELECT Picture_URL
-                                FROM `User`
-                                WHERE `User`.`UserID` = :userID
-							");
-
-        $statement->bindValue(':userID', $userID, PDO::PARAM_INT);
-
-        $statement->execute();
-
-        return $statement->fetchColumn();
-    }
-
 
     /**
      * Gets general details needed for side-panel on messages page
@@ -206,30 +213,6 @@ class MessageModel
         $statement->execute();
 
         return $statement->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-
-    /**
-     * Returns the default image for this listing (if there is one)
-     * @param $listingID
-     * @return mixed
-     */
-    function getDefaultImage($listingID){
-        $statement = $this->db->prepare("
-            SELECT `Image`.`Image_URL`
-FROM `Image`
-JOIN `ItemImage` ON `ItemImage`.`FK_Image_ImageID` = `Image`. `ImageID`
-JOIN `Item` ON `ItemImage`.`FK_Item_ItemID` = `Item`.`ItemID`
-JOIN `Listing` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
-WHERE `Listing`.`ListingID` = :listingID
-AND `ItemImage`.`Is_Default` = 1;
-        ");
-
-        $statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);
-
-        $statement->execute();
-
-        return $statement->fetchColumn();
     }
 
 }

@@ -1,17 +1,18 @@
 /**
- * Created by Stephen on 04/03/2017.
- */
-$(document).ready(function(){
-console.log("ready");
-//Set scroll bar to bottom
-    $("#message-location").scrollTop($("#message-location")[0].scrollHeight);
-$(document).ajaxError(function(e, xhr, opt){
-    alert("Error requesting " + opt.url + ": " + xhr.status + " " + xhr.statusText);
-});
-});
+* Created by Stephen on 04/03/2017.
+*/
+$(function () {
+  console.log("ready");
+  //Set scroll bar to bottom
 
-//Sends message when button is clicked
-$(document).on('click', '#sendBtn', function(ev){
+  scrollToBottom();
+
+  function scrollToBottom(){
+    $('#message-location').scrollTop($('#message-location')[0].scrollHeight);
+  }
+
+  //Sends message when button is clicked
+  $(document).on('click', '#sendBtn', function(ev){
     ev.preventDefault();
     console.log("Sending message");
 
@@ -28,31 +29,28 @@ $(document).on('click', '#sendBtn', function(ev){
     //Send message
     var url = window.location.protocol + "//" + window.location.host + "/" + 'messages/send';
     var data = {conversationID:conversationID, message:content};
-    console.log(url);   
+    console.log(url);
     console.log(data);
- $.get(url, data, function(response){
-        //Don't care what the response is
-        //Load message	
-	console.log(response);
-	console.log("sent the message");
-        loadMessages();
 
-	//Set scroll bar to bottom
-    	$("#message-location").scrollTop($("#message-location")[0].scrollHeight);
-	
+    $.post(url, data, function(response){
+      //Don't care what the response is
+      //Load message
+      console.log(response);
+      console.log("sent the message");
+      loadMessages();
+
     });
 
-});
+  });
 
 
-//Polling for messages in the current conversation
-setInterval(function(){
+  //Polling for messages in the current conversation
+  setInterval(function(){
     loadMessages();
-}, 3000);
+  }, 3000);
 
-
-//GOES ON MESSAGES PAGE
-function loadMessages(){
+  //GOES ON MESSAGES PAGE
+  function loadMessages(){
     console.log("Checking for new messages");
 
     //Extract conversation ID from the page
@@ -64,7 +62,10 @@ function loadMessages(){
 
     //Replace its inner HTML with new messages
     var url = window.location.protocol + '//' + window.location.host + '/messages/poll-messages/' + conversationID;
-    messageDisplay.load(url);
-
-
-}
+    $.get(url, function(htmlResponse){
+      console.log(htmlResponse);
+      messageDisplay.replaceWith(htmlResponse);
+      scrollToBottom();
+    });
+  }
+});

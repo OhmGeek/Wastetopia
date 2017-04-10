@@ -25,10 +25,10 @@ class ProductionConfig extends AbstractConfig
             'TOKEN_BEFORESALT' => 'Dr.Pr0jectWA5t0Pia',
             'TOKEN_AFTERSALT' => 'EndSalt11!!!1',
             'COOKIE_IDENTIFIER' => 'gpwastetopiadata',
-            'ROOT_JS' => 'http://wastetopia.herokuapp.com/js',
-            'ROOT_CSS' => 'http://wastetopia.herokuapp.com/css',
-            'ROOT_IMG' => 'http://wastetopia.herokuapp.com/img',
-            'ROOT_BASE' => 'http://wastetopia.herokuapp.com'
+            'ROOT_JS' => '//wastetopia.herokuapp.com/js',
+            'ROOT_CSS' => '//wastetopia.herokuapp.com/css',
+            'ROOT_IMG' => '//wastetopia.herokuapp.com/img',
+            'ROOT_BASE' => '//wastetopia.herokuapp.com'
         );
     }
 }

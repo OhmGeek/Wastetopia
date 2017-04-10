@@ -5,14 +5,11 @@ $(document).ready(function(){
 });
 
 //Takes user to MessagePage for this conversation
-//Will just be a link on the page
-// $(document).on('click', '#chatBtn', function(){
-//     var id = $(this).attr("id");
-//     var details = id.split("-");
-//     var conversationID = details[1]; //ADDED TO MAKE IT EASIER (need to add it to TWIG file)
-//
-//     //Send to conversation page
-//
+
+// $(document).on('click', '.chatBtn', function(){
+//   var conversationID = $(this).attr("id");
+//   var url = window.location.protocol + "//" + window.location.host + "/" + 'messages/conversation/' + conversationID ;
+//   window.location.href = url;
 // });
 
 $(document).on('click', '#deleteBtn', function(){
@@ -26,9 +23,9 @@ $(document).on('click', '#deleteBtn', function(){
 });
 
 //Polling to update People-list (in case of new conversations/messages)
-setInterval(function(){
-    loadUsers();
-}, 3000);
+//setInterval(function(){
+//    loadUsers();
+//}, 3000);
 
 
 function loadUsers(){
