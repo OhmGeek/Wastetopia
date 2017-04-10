@@ -69,7 +69,7 @@ class RequestModel
 	function requestItem($listing_id, $quantity=1){
 		$currentUser = $this->getUserID();
 		//first make the transaction
-		$item_quantity = $this->item_model->getItemInfoFromListingID($listing_id)["Quantity"];
+		$item_quantity = $this->item_model->getItemInfoFromListingID($listing_id)["0"]["Quantity"];
 		print_r($this->item_model->getItemInfoFromListingID($listing_id));
 		print_r($item_quantity);
 		print_r("Quantity ".$quantity);
@@ -109,7 +109,7 @@ class RequestModel
 		if($quantity == -1){
 			$quantity = $this->getRequestQuantity($listing_id, $transaction_id);
 		}
-		$item_quantity = $this->listing_model->getListingInfo($listing_id)["Quantity"];
+		$item_quantity = $this->listing_model->getListingInfo($listing_id)["0"]["Quantity"];
 		if($item_quantity < $quantity){
 			return false;
 		}
@@ -218,8 +218,8 @@ class RequestModel
 	
 	function renewListing($listing_id, $new_quantity){
 		//create the new listing of the specified quantity
-		$listing_info = $this->listing_model->getListingInfo($listing_id);
-		$item_info = $this->item_model->getItemInfoFromItemID($listing_info["FK_Item_ItemID"]);
+		$listing_info = $this->listing_model->getListingInfo($listing_id)["0"];
+		$item_info = $this->item_model->getItemInfoFromItemID($listing_info["FK_Item_ItemID"])["0"];
 		$statement0 = $this->db->prepare("
 			INSERT INTO Item(Name, Description,Use_By)
 			VALUES(:name, :description, :use_by);
