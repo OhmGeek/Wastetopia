@@ -1,5 +1,14 @@
 // JS file to deal with requestModel stuff on any page (if cardIDs are the same)
 $(function(){
+    // init Isotope
+  var $grid = $('.grid').isotope({
+    itemSelector: '.grid-item',
+    percentPosition: true,
+    masonry: {
+      columnWidth: '.grid-sizer'
+    }
+  });
+    
     var baseURL =  window.location.protocol + "//" + window.location.host;
     
     // Delete completed transacion??
