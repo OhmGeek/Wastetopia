@@ -1,4 +1,5 @@
 <?php
+require("../../public/PHPMailer_5.2.0/class.PHPMailer.php"); //PHPMailer location
 
 namespace Wastetopia\Controller;
 
@@ -148,39 +149,39 @@ class RegistrationController
         $from = 'cs.seg04@durham.ac.uk'; 
         $body='Your Activation Code is '.$code.' Please Click On This link <a href="VERIFICATION_URL">https://wastetopia-pr-27.herokuapp.com/register/verify/'.$code.'</a>to activate  your account.';
         $headers = "From:".$from;
-        print_r($body);
-        return mail($to,$subject,$body,$headers);
+//         print_r($body);
+//         return mail($to,$subject,$body,$headers);
     
 //         // PHPMailer code
-//         require("class.PHPMailer.php");
-
-//         $mail = new PHPMailer();
-
-//         $mail->IsSMTP(true);                                      // set mailer to use SMTP
-//         $mail->Host = "smtp.dur.ac.uk";  // specify main and backup server
-//         $mail->SMTPAuth = true;     // turn on SMTP authentication
-//         $mail->Username = "dcs8s04";  // SMTP username
-//         $mail->Password = "HHrv4673"; // SMTP password
-
-//         $mail->From = $from;
-//         $mail->FromName = "Wastetopia";
         
-//         $mail->AddAddress($email, $name);
+
+        $mail = new PHPMailer();
+
+        $mail->IsSMTP(true);                                      // set mailer to use SMTP
+        $mail->Host = "smtp.dur.ac.uk";  // specify main and backup server
+        $mail->SMTPAuth = true;     // turn on SMTP authentication
+        $mail->Username = "dcs8s04";  // SMTP username
+        $mail->Password = "HHrv4673"; // SMTP password
+
+        $mail->From = $from;
+        $mail->FromName = "Wastetopia";
+        
+        $mail->AddAddress($email, $name);
        
-//         $mail->WordWrap = 50;                                 // set word wrap to 50 characters
-//         $mail->IsHTML(true);                                  // set email format to HTML
+        $mail->WordWrap = 50;                                 // set word wrap to 50 characters
+        $mail->IsHTML(true);                                  // set email format to HTML
 
-//         $mail->Subject = $subject;
-//         $mail->Body    = $body;
-//         $mail->AltBody = "STILL TO ADD";
+        $mail->Subject = $subject;
+        $mail->Body    = $body;
+        $mail->AltBody = "STILL TO ADD";
 
-//         if(!$mail->Send())
-//         {
-//            return False;
-//            exit;
-//         }
+        if(!$mail->Send())
+        {
+           return False;
+           exit;
+        }
 
-//         return True;
+        return True;
       
     }
 }
