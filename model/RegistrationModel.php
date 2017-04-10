@@ -33,7 +33,7 @@ class RegistrationModel
         $statement->bindValue(":lastName", $lastName, PDO::PARAM_STR);
         
         $statement->execute();
-        return True
+        return True;
       
     }
     
