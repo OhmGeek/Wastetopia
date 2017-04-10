@@ -28,23 +28,15 @@ class ItemModel
 	}
 	
 	function getItemInfoFromListingID($listing_id){
-		$statement0 = $this->db->prepare("
-			SELECT ItemID 
+		$statement = $this->db->prepare("
+			SELECT * 
 			FROM Item
 			RIGHT JOIN Listing ON Item.ItemID = Listing.FK_Item_ItemID
 			WHERE Listing.ListingID = :listing_id;
 		");
-		$statement0->bindValue(":listing_id", $listing_id, PDO::PARAM_INT);
-		$statement0->execute();
-		$item_id = $statement0->fetchColumn();
-		
-		$statement = $this->db->prepare("
-			SELECT *
-			FROM Item
-			WHERE ItemID = :item_id;
-		");
-		$statement->bindValue(":item_id", $item_id, PDO::PARAM_INT);
+		$statement->bindValue(":listing_id", $listing_id, PDO::PARAM_INT);
 		$statement->execute();
+		
 		return $statement->fetchAll(PDO::FETCH_ASSOC);
 	}
 }
