@@ -110,10 +110,10 @@ $(function(){
     // Request listing - THIS WORKS
     $grid.on('click', '#request', function(event){
         event.preventDefault();
-        
+        console.log("Requesting");
         // Extract listingID
       var listingID = $(this).prevAll('a[href="#view"]').attr("id");  
-        
+        console.log(listingID);
         // Send to /items/request
         var url = baseURL + "/items/request";
         var data = {listingID : listingID};
@@ -121,6 +121,7 @@ $(function(){
             console.log(response);
            if(response){
                // Do something
+               // Change button to cancel request button
            }else{
                // Show error   
            }
