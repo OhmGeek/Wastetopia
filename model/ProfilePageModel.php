@@ -64,7 +64,8 @@ class ProfilePageModel
                 JOIN `ListingTransaction` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
                 JOIN `Transaction` ON `Transaction`.`TransactionID` = `ListingTransaction`.`FK_Transaction_TransactionID`
                 JOIN `User` ON `User`.`UserID` = `Transaction`.`FK_User_UserID`
-                WHERE `User`.`UserID` = :userID;
+                WHERE `User`.`UserID` = :userID
+		AND `Listing`.`Active` = 1;
         ");
         $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
         $statement->execute();
@@ -85,6 +86,7 @@ class ProfilePageModel
 	    WHERE `ListingTransaction`.`Success` = 0
 	    AND `ListingTransaction`.`Viewed` = 0
 	    AND `Listing`.`FK_User_UserID` = :userID
+	    AND `Listing`.`Active` = 1;
         ");
         $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
         $statement->execute();
@@ -301,6 +303,7 @@ class ProfilePageModel
             JOIN `Watch` ON `Listing`.`ListingID` = `Watch`.`FK_Listing_ListingID`
             JOIN `User` ON `User`.`UserID` = `Watch`.`FK_User_UserID`
             WHERE `User`.`UserID` = :userID
+	    AND `Listing`.`Active` = 1;
         ");
         $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
         $statement->execute();
