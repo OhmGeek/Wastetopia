@@ -134,7 +134,7 @@ class RegistrationController
     
     
     /**
-    *NEED TO CHANGE THE LINK FOR PRODUCTION VERSION (use config)
+    * NEED TO CHANGE THE LINK FOR PRODUCTION VERSION (use config)
     * Sends an email to the new user with the verification code
     * @param $email
     * @return bool
@@ -149,7 +149,7 @@ class RegistrationController
         $to=$email;
         $subject="Activation Code For Wastetopia";
         $from = 'stephenchurch9@hotmail.com'; 
-        $body='Your Activation Code is '.$code.' Please Click On This link <a href="VERIFICATION_URL">https://wastetopia-pr-27.herokuapp.com/register/verify/'.$code.'</a>to activate  your account.';
+        $body='Your Activation Code is '.$code.' Please Click On This link <a href="https://wastetopia-pr-27.herokuapp.com/register/verify/'.$code.'"> https://wastetopia-pr-27.herokuapp.com/register/verify/'.$code.' </a>to activate  your account.';
         
 //         // PHPMailer code
         
@@ -158,10 +158,10 @@ class RegistrationController
 
         $mail->IsSMTP();                                      // set mailer to use SMTP
         //$mail->Host = "smtp.dur.ac.uk";  // specify main and backup server
-        $mail->Host = "smtp-mail.outlook.com";
+        $mail->Host = "smtp.dur.ac.uk";
         $mail->SMTPAuth = true;     // turn on SMTP authentication
-        $mail->Username = "stephenchurch9@hotmail.com";  // SMTP username
-        $mail->Password = "Squirrel29!"; // SMTP password
+        $mail->Username = "stephen.church@durham.ac.uk";  // SMTP username
+        $mail->Password = "Azkabat2992!"; // SMTP password
 
         $mail->From = $from;
         $mail->FromName = "Wastetopia";
