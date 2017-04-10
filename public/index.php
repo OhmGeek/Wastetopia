@@ -137,6 +137,7 @@ $klein->with('/items', function () use ($klein) {
     
     $klein->respond('POST', '/cancel-request/?', function($request, $response){
         $transactionID = $request->transactionID; // Can use this to get listingID
+        print_r($transactionID);
         $model = new RequestModel();
         return $model->withdrawRequest($transactionID);
     });
