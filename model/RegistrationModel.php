@@ -198,9 +198,8 @@ class RegistrationModel
         
         $results = $statement->fetchAll(PDO::FETCH_ASSOC);
         print_r($results);
-        print_r(count($results));
         
-        $result = count($statement->fetchAll(PDO::FETCH_ASSOC));
+        $result = count($results);
         print_r($result);
         
         if($result > 0){
