@@ -121,11 +121,11 @@ $(document).ready(function(){
 
         // OR using bootstrap alerts
         // Create warning div
-        $errorDiv = $("<div>").addClass("alert-warning");
+        $errorDiv = $("<div>").addClass("alert alert-danger fade in");
     
         // Add error to the div
-        $errorDiv.text(error);
-    
+        $errorDiv.html('<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'.error);
+        
         // Add alert to the alert div
         $("#errorMessage").append($errorDiv);
      }
