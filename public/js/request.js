@@ -105,7 +105,7 @@ $(function(){
         // Send to /items/request
     
         var url = baseURL + "/items/request";
-        var data = {"listingID" : listingID};
+        var data = {listingID : listingID};
         $.post(url, data, function(response){
             console.log(response);
            if(response){
