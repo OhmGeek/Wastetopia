@@ -85,6 +85,7 @@
   padding: 10px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 
 .filter-category > a.collapsed > i.material-icons:before

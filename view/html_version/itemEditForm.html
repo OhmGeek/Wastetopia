@@ -79,8 +79,10 @@
                   Upload item images here
                 </div>
                 <div class="container-fluid">
-                  <div class="row">
-                    <div class="col-xs-4 col-sm-2 zero-padding">
+                  <div class="grid">
+                    <!-- need this for mosonry layout to work properly with bootstrap grid system -->
+                    <div class="grid-sizer col-xs-4 col-sm-2"></div>
+                    <div class="grid-item col-xs-4 col-sm-2 zero-padding">
                       <div class="row-action-primary checkbox img-checkbox">
                         <label><input type="checkbox"></label>
                       </div>
@@ -88,7 +90,7 @@
                         <img src="food.jpg" alt="Chania">
                       </div>
                     </div>
-                    <div class="col-xs-4 col-sm-2 zero-padding">
+                    <div class="grid-item col-xs-4 col-sm-2 zero-padding">
                       <div class="row-action-primary checkbox img-checkbox">
                         <label><input type="checkbox"></label>
                       </div>
@@ -96,7 +98,7 @@
                         <img src="food1.jpg" alt="Chania">
                       </div>
                     </div>
-                    <div class="col-xs-4 col-sm-2 zero-padding">
+                    <div class="grid-item col-xs-4 col-sm-2 zero-padding">
                       <div class="form-group zero-padding">
                         <div data-mh="my-group" class="upload-pic">
                           <div class="img-box">
@@ -113,7 +115,7 @@
                     <i class="material-icons">delete</i>
                   </button>
                 </div>
-              </div>  
+              </div>
             </div>
             <div class="col-sm-12 zero-padding">
               <div class="item-details-section">
