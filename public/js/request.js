@@ -1,6 +1,6 @@
 // JS file to deal with requestModel stuff on any page (if cardIDs are the same)
 $(function(){
-    var baseURL = var url = window.location.protocol + "//" + window.location.host;
+    var baseURL =  window.location.protocol + "//" + window.location.host;
     
     // Delete completed transacion??
     $grid.on('click', '#delete', function(){{
