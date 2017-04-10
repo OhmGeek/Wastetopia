@@ -69,7 +69,7 @@ class RequestModel
 	function requestItem($listing_id, $quantity=1){
 		$currentUser = $this->getUserID();
 		//first make the transaction
-		$item_quantity = $this->item_model->getItemInfo(-1, $listing_id)["Quantity"];
+		$item_quantity = $this->item_model->getItemInfoFromItemID(-1, $listing_id)["Quantity"];
 		if($quantity > $item_quantity){
 			return false;
 		}
