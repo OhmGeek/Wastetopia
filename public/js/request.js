@@ -83,7 +83,7 @@ $(function(){
       // Extract transactionID and listingID
         var transactionID = $(this).closest('.thumbnail').attr("id");
         console.log(transactionID);
-       var listingID = $(this).prevAll('a[href="#view"]').attr("id"); 
+       var listingID = $(this).closest(".btn-watch").prevAll('a[href="#view"]').attr("id"); 
         console.log(listingID);
       // Send to /items/cancel-request
         
