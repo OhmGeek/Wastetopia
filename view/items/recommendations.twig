@@ -32,8 +32,13 @@
           </div>
           <div class="nav-btns">
             <a href="#view" class="btn btn-primary" role="button" id="{{item.listingID}}">View</a>
-            <a href="#" class="btn btn-default" role="button" id="request">Request</a>
-            <a href="#" role="button" class="btn-watch watched" id="watch"><i class="material-icons">visibility</i></a>
+            {% if item.isRequesting %}
+              <a href="#" class="btn btn-default" role="button" id="cancel">Cancel request</a>
+            {% else %}
+              <a href="#" class="btn btn-default" role="button" id="request">Request</a>
+            {% endif %}
+           
+            <a href="#" role="button" class="btn-watch {% if item.isWatching %} watched {% endif %}" id="watch"><i class="material-icons">visibility</i></a>
           </div>
         </div>
       </div>
