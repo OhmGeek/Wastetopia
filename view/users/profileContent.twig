@@ -118,7 +118,7 @@
                         <div><span>Quantity:</span>{{ item.quantity }}</div>
                       </div>
                       <div class="nav-btns">
-                        <a href="#" class="btn btn-primary" role="button" id="{{ item.listingID }}">View</a>
+                        <a href="#view" class="btn btn-primary" role="button" id="{{ item.listingID }}">View</a>
                         <a href="#" role="button" class="btn-watch" id="delete"><i
                           class="material-icons">delete</i></a>
                         </div>
@@ -156,17 +156,17 @@
                           <div><span>Quantity: </span>{{ item.quantity }}</div>
                         </div>
                         <div class="nav-btns">
-                          <a href="#" class="btn btn-primary" role="button" id="{{ item.listingID }}">View</a>
-                          <a href="#" class="btn btn-default" role="button"
-                          id="{{ item.conversationID }}">Message</a>
+                          <a href="#view" class="btn btn-primary" role="button" id="{{ item.listingID }}">View</a>
+                          <a href="#message" class="btn btn-default" role="button"
+                          id="{{ item.listingID }}">Message</a>
                           <div class="dropup btn-watch">
                             <a href="bootstrap-elements.html" data-target="#"
                             class="dropdown-toggle" data-toggle="dropdown">
                             <i class="material-icons">more_vert</i>
                           </a>
                           <ul class="dropdown-menu dropdown-menu-right">
-                            <li><a href="javascript:void(0)">Mark as Complete</a></li>
-                            <li><a href="javascript:void(0)">Cancel Offer</a></li>
+                            <li><a href="javascript:void(0)" id="complete">Mark as Complete</a></li>
+                            <li><a href="javascript:void(0)" id="reject">Rject Offer</a></li>
                           </ul>
                         </div>
                       </div>
@@ -225,7 +225,7 @@
                       <div><span>Quantity:</span>{{ item.quantity }}</div>
                     </div>
                     <div class="nav-btns">
-                      <a href="#" class="btn btn-primary" role="button"
+                      <a href="#view" class="btn btn-primary" role="button"
                       id="{{ item.listingID }}">View</a>
                       <a href="#" role="button" class="btn-watch" id="delete"><i
                         class="material-icons">delete</i></a>
@@ -271,18 +271,18 @@
                         <div><span>Quantity: </span> {{ item.quantity }}</div>
                       </div>
                       <div class="nav-btns">
-                        <a href="#" class="btn btn-primary" role="button"
+                        <a href="#view" class="btn btn-primary" role="button"
                         id="{{ item.listingID }}">View</a>
-                        <a href="#" class="btn btn-default" role="button"
-                        id="{{ item.conversationID }}">Message</a>
+                        <a href="#message" class="btn btn-default" role="button"
+                        id="{{ item.listingID }}">Message</a>
                         <div class="dropup btn-watch">
                           <a href="bootstrap-elements.html" data-target="#"
                           class="dropdown-toggle" data-toggle="dropdown">
                           <i class="material-icons">more_vert</i>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-right">
-                          <li><a href="javascript:void(0)">Mark as Complete</a></li>
-                          <li><a href="javascript:void(0)">Cancel Request</a></li>
+                          <!--<li><a href="javascript:void(0)">Mark as Complete</a></li> Shouldn't be able to mark it as complete-->
+                          <li><a href="javascript:void(0)" id="cancel">Cancel Request</a></li>
                         </ul>
                       </div>
                     </div>
@@ -329,8 +329,8 @@
                   <div><span>Quantity: </span> {{ item.quantity }}</div>
                 </div>
                 <div class="nav-btns">
-                  <a href="#" class="btn btn-primary" role="button" id="{{ item.listingID }}">View</a>
-                  <a href="#" class="btn btn-default" role="button">Request</a>
+                  <a href="#view" class="btn btn-primary" role="button" id="{{ item.listingID }}">View</a>
+                  <a href="#" class="btn btn-default" role="button" id="request">Request</a>
                   <a href="#" role="button" class="btn-watch watched" id="watch"><i
                     class="material-icons">visibility</i></a>
                   </div>
@@ -377,12 +377,12 @@
                             <div><span>Quantity:</span>{{ item.quantity }}</div>
                           </div>
                           <div class="nav-btns">
-                            <a href="#" class="btn btn-primary" role="button"
+                            <a href="#view" class="btn btn-primary" role="button"
                             id="{{ item.listingID }}">View</a>
                             <a href="#" class="btn btn-default" role="button"
-                            id="{{ item.listingID }}">{% if isUser == 1 %} Edit {% else %} Request {% endif %}</a>
+                            id="{{ item.listingID }}">{% if isUser == 1 %} edit {% else %} request {% endif %}</a>
                             {% if isUser == 1 %}
-                            <a href="#" role="button" class="btn-watch" id="delete"><i
+                            <a href="#" role="button" class="btn-watch" id="remove"><i
                               class="material-icons">delete</i></a>
                             {% else %}
                             <a href="#" role="button" class="btn-watch" id="watch"><i
@@ -416,11 +416,11 @@
                               <div><span>Quantity:</span>{{ item.quantity }}</div>
                             </div>
                             <div class="nav-btns">
-                              <a href="#" class="btn btn-primary" role="button"
+                              <a href="#view" class="btn btn-primary" role="button"
                               id="{{ item.listingID }}">View</a>
-                              <a href="#" class="btn btn-default" role="button"
+                              <a href="#renew" class="btn btn-default" role="button"
                               id="{{ item.listingID }}">Renew</a>
-                              <a href="#" role="button" class="btn-watch" id="delete"><i
+                              <a href="#" role="button" class="btn-watch" id="remove"><i
                                 class="material-icons">delete</i></a>
                               </div>
                             </div>
