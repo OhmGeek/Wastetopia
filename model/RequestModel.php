@@ -70,6 +70,8 @@ class RequestModel
 		$currentUser = $this->getUserID();
 		//first make the transaction
 		$item_quantity = $this->item_model->getItemInfoFromListingID($listing_id)["Quantity"];
+		print_r($item_quantity);
+		print_r("Quantity ".$quantity);
 		if($quantity > $item_quantity){
 			return false;
 		}
@@ -81,7 +83,7 @@ class RequestModel
 		$statement1->execute();
 		
 		$transaction_id = $this->getLastInsertID();
-		
+		print_r("Transaction: ".$transactionID;
 		//then link the transaction to the listing
 		$statement2 = $this->db->prepare("
 			INSERT INTO ListingTransaction(FK_Listing_ListingID, FK_Transaction_TransactionID, Quantity)
@@ -93,7 +95,7 @@ class RequestModel
 		$statement2->execute();
 		
 		
-		return true;
+		return True;
 	}
 	
 	/**
