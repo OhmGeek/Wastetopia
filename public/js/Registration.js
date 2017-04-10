@@ -7,7 +7,8 @@ $(document).ready(function(){
     //TODO: fix issue with page reloading if eveything is filled in but passwords don't match
 
 
-    $("#submit").click(function(){
+    $("#submit").click(function(event){
+        event.preventDefault();
         var firstName = $("#firstName").val();
         var lastName = $("#lastName").val();
         var email = $("#email").val();
