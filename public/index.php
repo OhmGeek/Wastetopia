@@ -108,7 +108,7 @@ $klein->with('/items', function () use ($klein) {
         return "Main Item Page";
     });
     
-    $klein->respond('GET', /view/[:id]', function($request, $response){
+    $klein->respond('GET', '/view/[:id]', function($request, $response){
         $itemID = $request->id;
         return "Show item ".$itemID;
     });
