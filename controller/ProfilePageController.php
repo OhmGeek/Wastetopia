@@ -5,6 +5,9 @@
  * Date: 03/03/2017
  * Time: 11:24
  */
+
+
+//TODO: Sort out buttons for watchList, Recommended, and normal listings (request/cancel request)
 namespace Wastetopia\Controller;
 use Wastetopia\Config\CurrentConfig;
 use Wastetopia\Model\ProfilePageModel;
@@ -210,12 +213,14 @@ class ProfilePageController
             $quantity = $details["Quantity"];
             $defaultImage = $this->cardDetailsModel->getDefaultImage($listingID);
             $imageURL = $defaultImage["Image_URL"];
+	    $isRequesting = $this->model->isRequesting($listingID);		
             $item = array(
                 "listingID" => $listingID,
                 "itemName" => $itemName,
                 "addedDate" => $timeOfCreation,
                 "quantity" => $quantity,
-                "imgURL" => $imageURL);
+                "imgURL" => $imageURL,
+	        "isRequesting" => $isRequesting);
             array_push($allAvailableListings, $item);
         }
 
@@ -301,6 +306,7 @@ class ProfilePageController
             );
             array_push($pendingOffers, $item);
         }
+	    
         // Completed requesting transactions
         foreach ($completedReceiving as $transactionID) {
             $transactionDetails = $this->model->getDetailsFromTransactionID($transactionID);
@@ -408,6 +414,8 @@ class ProfilePageController
             $userID = $details["UserID"];
             $userImage = $this->cardDetailsModel->getUserImage($userID);
             $userName = $details["Forename"] . " " . $details["Surname"];
+		
+	    $isRequesting = $this->model->isRequesting($listingID);	
             $item = array(
                 "listingID" => $listingID,
                 "userImg" => $userImage,
@@ -418,6 +426,7 @@ class ProfilePageController
 		"postCode" => $postCode,    
                 "imgURL" => $imageURL,
                 "itemName" => $itemName,
+		"isRequesting" => $isRequesting    
             );
             array_push($watchList, $item);
         }
