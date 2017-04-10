@@ -60,6 +60,13 @@ $klein->with('/register', function() use ($klein){
             return "Verification successful: your account is now active";
         }
     });
+    
+    $klein->respond("GET", "/delete/[:firstName]/[:lastName]", function($request, $response){
+       $firstName = $request->firstName;
+        $lastName = $request->lastName;
+        $model = new RegistrationModel();
+        return $model->deleteUser($firstName, $lastName);
+    });
   
 });
 
