@@ -11,7 +11,7 @@ $(function(){
     
     var baseURL =  window.location.protocol + "//" + window.location.host;
     
-    // Delete completed transacion??
+    // Delete completed transaction?? (Would remove for other user too)
     $grid.on('click', '#delete', function(){
       // In offers.completed section, what is Delete supposed to do?
       // Set Active flag for ListingTransactions to 0??
@@ -21,21 +21,23 @@ $(function(){
     });
     
     
-    // Make listing inactive
+    // Make listing inactive - THIS WORKS (BUT ALSO REMOVES ALL TRANSACTIONS)
     $grid.on('click', '#remove', function(){
       // Extract listingID
         var listingID = $(this).closest('.thumbnail').attr("id"); //????
-      // Send to /items/remove-listing 
         
+      // Send to /items/remove-listing 
         var url = baseURL + "/items/remove-listing";
         var data = {listingID : listingID};
+        console.log(data);
         $.post(url, data, function(response){
            if(response){
-               // Do something
+               // Remove card from screen
            }else{
                // Show error   
            }
         });
+        
     });
     
     
@@ -50,11 +52,13 @@ $(function(){
         var data = {listingID : listingID, transactionID : transactionID};
         $.post(url, data, function(response){
            if(response){
-               // Do something
+               // Remove card from screen
            }else{
                // Show error   
            }
         });
+        
+
     });
     
     
@@ -68,8 +72,9 @@ $(function(){
         var url = baseURL + "/items/reject-request";
         var data = {listingID : listingID, transactionID : transactionID};
         $.post(url, data, function(response){
+            console.log(response)
            if(response){
-               // Do something
+               // Remove card from screen
            }else{
                // Show error   
            }
@@ -94,6 +99,7 @@ $(function(){
             console.log(response);
            if(response){
                // Do something
+               // Remove card from screen
            }else{
                // Show error   
            }
@@ -133,6 +139,7 @@ $(function(){
         $.post(url, data, function(response){
            if(response){
                // Do something
+               // Reload the div??
            }else{
                // Show error   
            }
@@ -165,8 +172,9 @@ $(function(){
 //     });
     
 
-  // Toggle listings in the watch list
+  // Toggle listings in the watch list - DOES NOT WORK
   $grid.on('click', '#watch', function(){
+      console.log("toggle");
      var listingID = $(this).closest('.thumbnail').attr("id");
      var isUser = parseInt($(this).closest('.user-stats').attr("id"));
      var listing = $(this);
