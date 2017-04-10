@@ -79,14 +79,18 @@ $(function(){
     
     // Cancel request
     $grid.on('click', '#cancel', function(){
+        console.log("Cancelling");
       // Extract transactionID and listingID
         var transactionID = $(this).closest('.thumbnail').attr("id");
+        console.log(transactionID);
        var listingID = $(this).prev('a[href="#view"]').attr("id"); 
+        console.log(listingID);
       // Send to /items/cancel-request
         
         var url = baseURL + "/items/cancel-request";
         var data = {"listingID" : listingID, "transactionID" : transactionID};
         $.post(url, data, function(response){
+            console.log(response);
            if(response){
                // Do something
            }else{
