@@ -15,7 +15,7 @@ function autofill(data) {
         // item name
         if(data.product_name) {
             //auto fill item name
-
+            $('#name').val(data.product_name);
         }
 
         if(data.expiration_date) {
@@ -24,6 +24,7 @@ function autofill(data) {
 
         if(data.generic_name) {
             // auto fill the description
+            $('#description').val(data.generic_name);
         }
 
         // now add the images
@@ -42,7 +43,7 @@ function getBarcodeInfo(barcode) {
     $.getJSON('https://world.openfoodfacts.org/api/v0/product/' + barcode + ".json", function (resp) {
         var data = JSON.parse(resp);
         console.log(data);
-        if(data.status == 1) {
+        if(data.status === 1) {
             return data.product;
         }
         else {
@@ -52,12 +53,13 @@ function getBarcodeInfo(barcode) {
 }
 Quagga.init({
     inputStream : {
-        name : "Live",
-        type : "LiveStream",
-        target: document.querySelector('#yourElement')    // Or '#yourElement' (optional)
+        name : "Test",
+        type : "ImageStream",
+        length: 10,
+        size: 800
     },
     decoder : {
-        readers : ["code_128_reader"]
+        readers : ["ean_reader", "code_128_reader"]
     }
 }, function(err) {
     if (err) {
@@ -68,12 +70,14 @@ Quagga.init({
     Quagga.start();
 });
 
-
-// this is the callback called once decoding has occurred
-Quagga.decodeSingle({
-    decoder: {
-        readers: ["code_128_reader"] // List of active readers
-    },
-    locate: true, // try to locate the barcode in the image
-    src: '/test/fixtures/code_128/image-001.jpg' // or 'data:image/jpg;base64,' + data
-},autofill);
+$('#scan-barcode').on('click', function() {
+    // this is the callback called once decoding has occurred
+    Quagga.decodeSingle({
+        decoder: {
+            readers: ["code_128_reader"] // List of active readers
+        },
+        locate: true, // try to locate the barcode in the image
+        // get the first image uploaded using jQuery
+        src: 'data:image/jpg;base64,' + $('#barcode-upload').prop('files')[0]
+    },autofill);
+});

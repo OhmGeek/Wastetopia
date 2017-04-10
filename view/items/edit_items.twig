@@ -12,6 +12,13 @@ Add/Edit Items
 <div class="grid-body" style="padding-top: 60px;">
   <div class="container-fluid">
     <div class="row">
+      <form id="barcode-scanner" enctype="multipart/form-data">
+        <label for="barcode-upload">Scan Barcode:</label>
+        <input id="barcode-upload" type="image">
+        <button type="button" id="scan-barcode">Scan</button>
+      </form>
+    </div>
+    <div class="row">
       <form id="form-image" enctype="multipart/form-data" method="post" action="{{ config.ROOT_BASE }}/api/items/add">
         <fieldset>
           <div class="col-sm-12 zero-padding">
@@ -172,6 +179,6 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMWP9iC-OW_pO7U9VmkAbZf7u
 
 {% set jslist = ["plugins/isotope/isotope.pkgd.min.js","plugins/jquery-match-height/jquery.matchHeight.js",
 "plugins/select2-4.0.3/select2.min.js","plugins/bootstrap-material-datetimepicker-gh-pages/bootstrap-material-datetimepicker.js",
-"plugins/image-upload/jquery.upload.js","add-item.js"] %}
+"plugins/image-upload/jquery.upload.js","add-item.js", "plugins/barcode/quagga.min.js", "barcode.js"] %}
 
 {% set csslist = ["plugins/select2-4.0.3/select2.min.css","plugins/bootstrap-material-datetimepicker-gh-pages/bootstrap-material-datetimepicker.css"] %}
