@@ -92,12 +92,15 @@ class RegistrationController
             return $this->errorMessage("Email is not valid");
         }
         // Check the email is available(i.e, not already in use)
+        print_r($email);
+        print_r($this->checkAvailable($email));
         elseif(!$this->checkAvailable($email)){
             return $this->errorMessage("Email already in use");
         }
         else {
             // Add user to DB
             $result = $this->model->addUser($forename, $surname, $email, $password, $pictureURL);
+            print_r($result);
             // Send back success or error message
             if (!($result)) {
                 return $this->errorMessage("Couldn't add user (something unexpected went wrong)");
