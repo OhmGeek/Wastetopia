@@ -37,6 +37,7 @@ function autofill(data) {
     } else {
         // no autofill.
         // provide some feedback saying it couldn't be detected.
+        console.log("not detected");
     }
 }
 
