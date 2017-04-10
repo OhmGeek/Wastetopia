@@ -140,9 +140,9 @@ class RegistrationModel
       //  print_r("HASH:: ".$passwordHash);
         
         //Add user's details
-        // $result= $this->addMainUserDetails($forename, $surname, $email, $passwordHash, $salt, $pictureURL);
+        $result= $this->addMainUserDetails($forename, $surname, $email, $passwordHash, $salt, $pictureURL);
         
-        $result = false;
+        //$result = false;
         return $result;
     }
 
