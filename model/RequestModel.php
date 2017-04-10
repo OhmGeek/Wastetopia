@@ -60,6 +60,7 @@ class RequestModel
 		return $statement->fetchColumn();
 	}
 	
+	//Add something for if item is in watchList, need to remove it
 	/**
 	 * Makes a new request for the specified quantity of the specified item
 	 * @return bool
@@ -90,6 +91,8 @@ class RequestModel
 		$statement2->bindValue(":transaction_id", $transaction_id, PDO::PARAM_INT);
 		$statement2->bindValue(":quantity", $quantity, PDO::PARAM_INT);
 		$statement2->execute();
+		
+		
 		return true;
 	}
 	
