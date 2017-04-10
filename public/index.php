@@ -10,6 +10,8 @@ use Wastetopia\Controller\RegistrationController;
 use Wastetopia\Model\RegistrationModel; // For verification
 
 require_once '../vendor/autoload.php';
+require_once 'PHPMailer_5.2.0/class.PHPMailer.php'; //PHPMailer location
+
 // check if we should use production? Otherwise, use community.
 $mode = $_ENV['MODE'];
 $config = new CurrentConfig();
