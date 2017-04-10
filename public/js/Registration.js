@@ -169,6 +169,8 @@ $(document).ready(function(){
             // Check values again
             if ($(this).val() == $("#pwdConfirm").val()){
                 $("#pwdConfirm").closest(".form-group").removeClass('there-error');                
+            }else{
+                $("#pwdConfirm").closest(".form-group").addClass('there-error');   
             }
         }
     });
