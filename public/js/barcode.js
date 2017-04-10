@@ -6,7 +6,7 @@
  * Created by ryan on 10/04/17.
 */
 
-var process = function (data) {
+function process(data) {
     console.log("On Processed");
     console.log(data);
     if(data.codeResult) {
@@ -63,6 +63,7 @@ $(document).ready(function() {
             length: 10,
             size: 800
         },
+        locate: true,
         decoder : {
             readers : [{
                 format: "ean_reader",
@@ -105,7 +106,10 @@ var scanBarcode = function() {
             }, "code_128_reader"]
         },
         src: reader.result
-    }, function(result) {console.log(result); process(result)});
+    }, function(result) {
+        console.log(result);
+        process(result);
+    });
 };
 
 $('#scan-barcode').on('click', scanBarcode);
