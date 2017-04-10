@@ -104,7 +104,8 @@ class RegistrationController
                 return $this->errorMessage("Couldn't add user (something unexpected went wrong)");
             } else {
                 // Send verification email
-                $final = $this->sendVerificationEmail($email);
+                $name = $forename." ".$surname;
+                $final = $this->sendVerificationEmail($email, $name);
                 //$final = True; // For testing
                 if (!($final)){
                     // Delete user so they can try again
@@ -135,7 +136,7 @@ class RegistrationController
     * @param $email
     * @return bool
     */
-    function sendVerificationEmail($email){
+    function sendVerificationEmail($email, $name){
         $code = $this->model->getVerificationCode($email);
         print_r($code);
         if($code == -1){
@@ -150,6 +151,37 @@ class RegistrationController
         print_r($body);
         return mail($to,$subject,$body,$headers);
     
+//         // PHPMailer code
+//         require("class.PHPMailer.php");
+
+//         $mail = new PHPMailer();
+
+//         $mail->IsSMTP(true);                                      // set mailer to use SMTP
+//         $mail->Host = "smtp.dur.ac.uk";  // specify main and backup server
+//         $mail->SMTPAuth = true;     // turn on SMTP authentication
+//         $mail->Username = "dcs8s04";  // SMTP username
+//         $mail->Password = "HHrv4673"; // SMTP password
+
+//         $mail->From = $from;
+//         $mail->FromName = "Wastetopia";
+        
+//         $mail->AddAddress($email, $name);
+       
+//         $mail->WordWrap = 50;                                 // set word wrap to 50 characters
+//         $mail->IsHTML(true);                                  // set email format to HTML
+
+//         $mail->Subject = $subject;
+//         $mail->Body    = $body;
+//         $mail->AltBody = "STILL TO ADD";
+
+//         if(!$mail->Send())
+//         {
+//            return False;
+//            exit;
+//         }
+
+//         return True;
+      
     }
 }
 ?>
