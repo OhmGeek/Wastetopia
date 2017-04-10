@@ -164,21 +164,14 @@ Add/Edit Items
     </div>
   </div>
 </div>
-<script>
-$(function () {
-  $.material.init();
-  //equal height rows
-  $('.upload-pic').matchHeight();
-  //fancy select
-  $(".js-example-basic-multiple").select2();
-  //fancy datetime picker
-  $('#date').bootstrapMaterialDatePicker({ format : 'DD/MM/YYYY', weekStart : 0, time: false });
-});
-</script>
 {% endblock %}
 
 <script async defer
 src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMWP9iC-OW_pO7U9VmkAbZf7uqJAJ4GQE">
 </script>
 
-{% set jslist = ["plugins/image-upload/jquery.upload.js","add-item.js"] %}
+{% set jslist = ["plugins/isotope/isotope.pkgd.min.js","plugins/jquery-match-height/jquery.matchHeight.js",
+"plugins/select2-4.0.3/select2.min.js","plugins/bootstrap-material-datetimepicker-gh-pages/bootstrap-material-datetimepicker.js",
+"plugins/image-upload/jquery.upload.js","add-item.js"] %}
+
+{% set csslist = ["plugins/select2-4.0.3/select2.min.css","plugins/bootstrap-material-datetimepicker-gh-pages/bootstrap-material-datetimepicker.css"] %}

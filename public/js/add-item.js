@@ -7,6 +7,15 @@ var $grid = $('.grid').isotope({
   }
 });
 
+//equal height rows
+$('.upload-pic').matchHeight();
+
+//fancy select
+$(".js-example-basic-multiple").select2();
+
+//fancy datetime picker
+$('#date').bootstrapMaterialDatePicker({ format : 'DD/MM/YYYY', weekStart : 0, time: false });
+
 // Remove an element from the layout in the grid
 function remove(elem) {
   // remove clicked element (in a very skitchy way right now)
