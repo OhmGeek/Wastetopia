@@ -283,8 +283,9 @@ class RequestModel
 			DELETE FROM Transaction 
 			WHERE TransactionID = :transaction_id;
 		");
-		$statement->bindValue(":transaction_id"< $transaction_id, PDO::PARAM_INT);
+		$statement->bindValue(":transaction_id", $transaction_id, PDO::PARAM_INT);
 		$statement->execute();
+		return True;
 	}
 }
 
