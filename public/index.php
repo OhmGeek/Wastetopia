@@ -11,6 +11,7 @@ use Wastetopia\Controller\SearchController;
 use Wastetopia\Controller\MessageController;
 use Wastetopia\Controller\RecommendationController;
 
+use Wastetopia\Model\RequestModel;
 
 
 
@@ -96,6 +97,7 @@ $klein->with("/profile", function() use ($klein) {
         $controller = new RecommendationController();
         return $controller->generateRecommendedSection();
     });
+   
 });
 
 
@@ -105,12 +107,48 @@ $klein->with('/items', function () use ($klein) {
         // Generic Items Page
         return "Main Item Page";
     });
-
-    $klein->respond('GET', '/[:id]', function ($request, $response) {
-        // Show a single user
+    
+    $klein->respond('GET', /view/[:id]', function($request, $response){
         $itemID = $request->id;
-        return "Show Item " . $itemID;
+        return "Show item ".$itemID;
     });
+    
+    $klein->respond('POST', '/request/?', function ($request, $response) {
+        // Show a single user
+        $listingID = $request->listingID;
+        $model = new RequestModel();
+        return $model->requestItem($listingID, $transactionID);
+    });
+    
+    $klein->respond('POST', '/confirm-request/?', function($request, $response){
+        $listingID = $request->listingID; // Might not have this information
+        $transactionID = $request->transactionID; // Can use this to get listingID
+        $quantity = $request->quantity; // Assume it is given by default
+        $model = new RequestModel();
+        return $model->confirmRequest($listingID, $transactionID, $quantity);
+    });
+    
+    $klein->respond('POST', '/reject-request/?', function($request, $response){
+        $listingID = $request->listingID; // Might not have this information
+        $transactionID = $request->transactionID; // Can use this to get listingID
+        $model = new RequestModel();
+        return $model->rejectRequest($listingID, $transactionID);
+    });
+    
+    $klein->respond('POST', '/cancel-request/?', function($request, $response){
+        $listingID = $request->listingID; // Might not have this information
+        $transactionID = $request->transactionID; // Can use this to get listingID
+        $model = new RequestModel();
+        return $model->cancelRequest($listingID, $transactionID);
+    });
+    
+    $klein->respond('POST', '/renew-listing/?' function($request, $response){
+        $listingID = $request->listingID;
+        $newQuantity = $request->quantity;
+        $model = new RequestModel();
+        return $model->renewListing($listingID, $newQuantity);
+    });
+    
 });
 
 
