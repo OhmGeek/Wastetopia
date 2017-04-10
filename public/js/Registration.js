@@ -161,6 +161,7 @@ $(document).ready(function(){
             console.log("Password green");
             $(this).closest(".form-group").removeClass('there-error');
             
+            // Check values again
             if ($(this).val() == $("#pwdConfirm").val()){
                 $("#pwdConfirm").closest(".form-group").removeClass('there-error');                
             }
@@ -171,9 +172,6 @@ $(document).ready(function(){
     $("#pwdConfirm").keyup(function(event){
         var password = $("#pwd").val();
         var passwordConfirm = $(this).val();
-        console.log(password);
-        console.log(passwordConfirm);
-        console.log(password.length < 8);
         if ((password.length >= 8) && checkPassword(password, passwordConfirm)){
             console.log("PC green");
             console.log($(this).parent())
