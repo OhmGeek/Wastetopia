@@ -7,6 +7,7 @@
 */
 
 function autofill(data) {
+    console.log(data);
     if(data.codeResult) {
         var barcode = data.codeResult.code;
         console.log(barcode);
@@ -79,6 +80,6 @@ $('#scan-barcode').on('click', function() {
 
         locate: true, // try to locate the barcode in the image
         // get the first image uploaded using jQuery
-        src: 'data:image/jpg;base64,' + reader.result
+        src: reader.result
     },autofill);
 });
