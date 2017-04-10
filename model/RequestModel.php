@@ -84,7 +84,8 @@ class RequestModel
 		$statement1->execute();
 		
 		$transaction_id = $this->getLastInsertID();
-		print_r("Transaction: ".$transactionID);
+		print_r("Transaction: ".$transaction_id);
+		
 		//then link the transaction to the listing
 		$statement2 = $this->db->prepare("
 			INSERT INTO ListingTransaction(FK_Listing_ListingID, FK_Transaction_TransactionID, Quantity)
