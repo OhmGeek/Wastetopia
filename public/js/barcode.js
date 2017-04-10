@@ -79,7 +79,7 @@ Quagga.init({
     Quagga.start();
 });
 
-$('#scan-barcode').on('click', function() {
+var scanBarcode = function() {
     // this is the callback called once decoding has occurred
     var file = $('#barcode-upload').prop('files')[0];
     var reader = new FileReader();
@@ -89,5 +89,7 @@ $('#scan-barcode').on('click', function() {
         locate: true, // try to locate the barcode in the image
         // get the first image uploaded using jQuery
         src: reader.result
-    },autofill);
-});
+    }, autofill);
+};
+
+$('#scan-barcode').on('click', scanBarcode);
