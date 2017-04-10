@@ -141,7 +141,7 @@ class ProfilePageController
             $listingQuantity = $listing["Quantity"]; // Will be 0 if listing has run out
             $active = $listing["Active"]; // Will be 0 if user no longer wants to see it
             // Only process active listings
-            if ($active) {
+            
                 //Get details about the transactions involving this listing
                 $stateDetails = $this->model->getStateOfListingTransaction($listingID);
                 //If no transactions, this listing will not be in the history page
@@ -159,7 +159,7 @@ class ProfilePageController
                         }
                     }
                 }
-
+	if(active){
                 // Check whether it has quantity or not
                 if ($listingQuantity > 0){
                     array_push($availableListingsSending, $listingID);
