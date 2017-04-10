@@ -7,6 +7,8 @@ use Wastetopia\Config\CurrentConfig;
 use Wastetopia\Controller\MessageController;
 use Wastetopia\Controller\RegistrationController;
 
+use Wastetopia\Model\RegistrationModel; // For verification
+
 require_once '../vendor/autoload.php';
 // check if we should use production? Otherwise, use community.
 $mode = $_ENV['MODE'];
@@ -45,6 +47,13 @@ $klein->with('/register', function() use ($klein){
       $controller = new RegistrationController();
       return $controller->addUser($forename, $surname, $email, $password, $passwordConfirm, $pictureURL);
   });
+    
+    $klein->respond("GET","/verify/[:verificationCode", function($request, $response){
+        $verificationCode = $request->verificationCode;
+        $model = new RegistrationModel(); // Put function in controller?
+        $result = $model->verifyUser($verificationCode);
+        return $result;
+    });
   
 });
 
