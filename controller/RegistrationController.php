@@ -1,5 +1,6 @@
 <?php
 
+//TODO: Fix issue with not being able to find PHPMailerAutoload.php
 namespace Wastetopia\Controller;
 
 use Wastetopia\Model\RegistrationModel;
