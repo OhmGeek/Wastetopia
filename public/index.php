@@ -117,7 +117,7 @@ $klein->with('/items', function () use ($klein) {
         // Show a single user
         $listingID = $request->listingID;
         $model = new RequestModel();
-        return $model->requestItem($listingID, $transactionID);
+        return $model->requestItem($listingID);
     });
     
     $klein->respond('POST', '/confirm-request/?', function($request, $response){
