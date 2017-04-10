@@ -116,18 +116,18 @@ $(document).ready(function(){
     // Displays an error message in the appropriate place
     function displayError(error){
         // Change HTML in an existing DIV
-        console.log("Displaying error message");
-        $("#errorMessage").html("<p>"+error+"<p>");
+//         console.log("Displaying error message");
+//         $("#errorMessage").html("<p>"+error+"<p>");
 
         // OR using bootstrap alerts
-    //     // Create warning div
-    //     $errorDiv = $("<div>").addClass("alert-warning");
-    //
-    //     // Add error to the div
-    //     $errorDiv.text(error);
-    //
-    //     // Add alert to the alert div
-    //     $("#errorMessage").append($errorDiv);
+        // Create warning div
+        $errorDiv = $("<div>").addClass("alert-warning");
+    
+        // Add error to the div
+        $errorDiv.text(error);
+    
+        // Add alert to the alert div
+        $("#errorMessage").append($errorDiv);
      }
 
     $("#firstName, #lastName, #pwd, #pwdConfirm, #email").click(function(){
