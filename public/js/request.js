@@ -163,7 +163,7 @@ $(function(){
     
 
   // Toggle listings in the watch list
-  $grid.on('click', '.btn-watch', function(){
+  $grid.on('click', '#watch', function(){
      var listingID = $(this).closest('.thumbnail').attr("id");
      var isUser = parseInt($(this).closest('.user-stats').attr("id"));
      var listing = $(this);
