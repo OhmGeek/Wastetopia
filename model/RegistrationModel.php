@@ -191,21 +191,14 @@ class RegistrationModel
             WHERE `User`.`Email_Address` = :email;
         ");
 
-        $statement->bindValue(":email", $email, PDO::PARAM_STR);
-        
-        
+        $statement->bindValue(":email", $email, PDO::PARAM_STR);        
         $statement->execute();
         
-        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
-        print_r($results);
-        
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC);        
         $result = count($results);
-        print_r($result);
         
         if($result > 0){
-            print_r("Result");
-            print_r($results["0"]["Verification_Code"]);
-          return $statement->fetchColumn();   
+            return $results["0"]["Verification_Code"];
         }else{
             return -1;
         }
