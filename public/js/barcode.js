@@ -88,6 +88,16 @@ var scanBarcode = function() {
 
         locate: true, // try to locate the barcode in the image
         // get the first image uploaded using jQuery
+        decoder : {
+            readers : [{
+                format: "ean_reader",
+                config: {
+                    supplements: [
+                        'ean_5_reader', 'ean_8_reader'
+                    ]
+                }
+            }, "code_128_reader"]
+        }
         src: reader.result
     }, function(result) {console.log(result)});
 };
