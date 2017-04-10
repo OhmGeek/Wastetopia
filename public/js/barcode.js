@@ -6,7 +6,74 @@
  * Created by ryan on 10/04/17.
 */
 
+
+function getBarcodeInfo(barcode) {
+    $.getJSON('https://world.openfoodfacts.org/api/v0/product/' + barcode + ".json", function (resp) {
+        var data = JSON.parse(resp);
+        console.log(data);
+        if(data.status === 1) {
+            return data.product;
+        }
+        else {
+            return {};
+        }
+    });
+}
+$(document).ready(function() {
+    Quagga.init({
+        inputStream : {
+            name : "Test",
+            type : "ImageStream",
+            length: 10,
+            size: 800
+        },
+        decoder : {
+            readers : [{
+                format: "ean_reader",
+                config: {
+                    supplements: [
+                        'ean_5_reader', 'ean_2_reader', 'ean_8_reader'
+                    ]
+                }
+            }, "code_128_reader"]
+        }
+    }, function(err) {
+        if (err) {
+            console.log(err);
+            return;
+        }
+        console.log("Initialization finished. Ready to start");
+        Quagga.start();
+    });
+});
+
+var scanBarcode = function() {
+    console.log("Run scan barcode");
+    // this is the callback called once decoding has occurred
+    var file = $('#barcode-upload').prop('files')[0];
+    var reader = new FileReader();
+    reader.readAsDataURL(file);
+    console.log(file);
+    Quagga.decodeSingle({
+
+        locate: true, // try to locate the barcode in the image
+        // get the first image uploaded using jQuery
+        decoder : {
+            readers : [{
+                format: "ean_reader",
+                config: {
+                    supplements: [
+                        'ean_5_reader', 'ean_8_reader'
+                    ]
+                }
+            }, "code_128_reader"]
+        },
+        src: reader.result
+    }, function(result) {console.log(result)});
+};
+
 Quagga.onProcessed(function (data) {
+    console.log("On Processed");
     console.log(data);
     if(data.codeResult) {
         var barcode = data.codeResult.code;
@@ -40,66 +107,4 @@ Quagga.onProcessed(function (data) {
         console.log("not detected");
     }
 });
-
-function getBarcodeInfo(barcode) {
-    $.getJSON('https://world.openfoodfacts.org/api/v0/product/' + barcode + ".json", function (resp) {
-        var data = JSON.parse(resp);
-        console.log(data);
-        if(data.status === 1) {
-            return data.product;
-        }
-        else {
-            return {};
-        }
-    });
-}
-Quagga.init({
-    inputStream : {
-        name : "Test",
-        type : "ImageStream",
-        length: 10,
-        size: 800
-    },
-    decoder : {
-        readers : [{
-            format: "ean_reader",
-            config: {
-                supplements: [
-                    'ean_5_reader', 'ean_2_reader', 'ean_8_reader'
-                ]
-            }
-        }, "code_128_reader"]
-    }
-}, function(err) {
-    if (err) {
-        console.log(err);
-        return;
-    }
-    console.log("Initialization finished. Ready to start");
-    Quagga.start();
-});
-
-var scanBarcode = function() {
-    // this is the callback called once decoding has occurred
-    var file = $('#barcode-upload').prop('files')[0];
-    var reader = new FileReader();
-    reader.readAsDataURL(file);
-    Quagga.decodeSingle({
-
-        locate: true, // try to locate the barcode in the image
-        // get the first image uploaded using jQuery
-        decoder : {
-            readers : [{
-                format: "ean_reader",
-                config: {
-                    supplements: [
-                        'ean_5_reader', 'ean_8_reader'
-                    ]
-                }
-            }, "code_128_reader"]
-        },
-        src: reader.result
-    }, function(result) {console.log(result)});
-};
-
 $('#scan-barcode').on('click', scanBarcode);
