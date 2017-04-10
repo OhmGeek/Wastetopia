@@ -92,23 +92,17 @@ var scanBarcode = function() {
     reader.readAsDataURL(file);
     console.log(file);
     Quagga.decodeSingle({
-
-        locate: true, // try to locate the barcode in the image
-        // get the first image uploaded using jQuery
-        decoder : {
-            readers : [{
-                format: "ean_reader",
-                config: {
-                    supplements: [
-                        'ean_5_reader', 'ean_8_reader'
-                    ]
-                }
-            }, "code_128_reader"]
+        decoder: {
+            readers: ["code_128_reader"] // List of active readers
         },
+        locate: true, // try to locate the barcode in the image
         src: reader.result
-    }, function(result) {
-        console.log(result);
-        process(result);
+    }, function(result){
+        if(result.codeResult) {
+            console.log("result", result.codeResult.code);
+        } else {
+            console.log("not detected");
+        }
     });
 };
 
