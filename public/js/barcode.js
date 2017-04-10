@@ -6,7 +6,7 @@
  * Created by ryan on 10/04/17.
 */
 
-function autofill(data) {
+Quagga.onProcessed(function (data) {
     console.log(data);
     if(data.codeResult) {
         var barcode = data.codeResult.code;
@@ -39,7 +39,7 @@ function autofill(data) {
         // provide some feedback saying it couldn't be detected.
         console.log("not detected");
     }
-}
+});
 
 function getBarcodeInfo(barcode) {
     $.getJSON('https://world.openfoodfacts.org/api/v0/product/' + barcode + ".json", function (resp) {
@@ -89,7 +89,7 @@ var scanBarcode = function() {
         locate: true, // try to locate the barcode in the image
         // get the first image uploaded using jQuery
         src: reader.result
-    }, autofill);
+    }, function(result) {console.log(result)});
 };
 
 $('#scan-barcode').on('click', scanBarcode);
