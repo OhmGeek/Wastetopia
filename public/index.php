@@ -149,6 +149,12 @@ $klein->with('/items', function () use ($klein) {
         return $model->renewListing($listingID, $newQuantity);
     });
     
+    $klein->respond('POST', '/remove-listing/?', function($request, $response){
+        $listingID = $request->listingID;
+        $model = new RequestModel();
+        return $model->withdrawListing($listingID);
+    });
+    
 });
 
 
