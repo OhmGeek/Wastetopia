@@ -162,7 +162,7 @@ class RegistrationController
         $mail->IsSMTP();                                      // set mailer to use SMTP
         $mail->Host = "smtp.dur.ac.uk";  // specify main and backup server
         $mail->SMTPAuth = true;     // turn on SMTP authentication
-        $mail->Username = "dcs8s04";  // SMTP username
+        $mail->Username = "cs.seg04@durham.ac.uk";  // SMTP username
         $mail->Password = "HHrv4673"; // SMTP password
 
         $mail->From = $from;
