@@ -88,7 +88,9 @@ $(function(){
     
     
     // Request listing
-    $grid.on('click', '#request', function(){{
+    $grid.on('click', '#request', function(event){{
+        event.preventDefault();
+        
         // Extract listingID
       var listingID = $(this).closest('a[href=view]').attr("id"); 
         // Send to /items/request
@@ -96,6 +98,7 @@ $(function(){
         var url = baseURL + "/items/request";
         var data = {"listingID" : listingID};
         $.post(url, data, function(response){
+            console.log(response);
            if(response){
                // Do something
            }else{
