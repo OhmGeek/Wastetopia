@@ -154,8 +154,13 @@ $(document).ready(function(){
         if($(this).val().length < 8){
             console.log("Password red");
             // Field is empty associated box/symbol is red
-            console.log($(this).closest(".form-group").addClass('there-error'))
+  
             $(this).closest(".form-group").addClass('there-error');
+            
+            // Check values again
+            if ($(this).val() != $("#pwdConfirm").val()){
+                $("#pwdConfirm").closest(".form-group").addClass('there-error');                
+            }
         }else{
             // Field is filled, associated box/symbol is green
             console.log("Password green");
