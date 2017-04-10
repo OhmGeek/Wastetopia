@@ -358,9 +358,11 @@ class ProfilePageModel
             SELECT COUNT(*) AS `Count`
 	    FROM `ListingTransaction`
 	    JOIN `Transaction` ON `Transaction`.`TransactionID` = `ListingTransaction`.`FK_Transaction_TransactionID`
+		JOIN `Listing` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
 	    WHERE `ListingTransaction`.`FK_Listing_ListingID` = :listingID
 	    AND `Transaction`.`FK_User_UserID` = :userID
-	    AND `ListingTransaction`.`Success` = 0;
+	    AND `ListingTransaction`.`Success` = 0
+	    AND `Listing`.`Active` = 1;
         ");
         $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
         $statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);
