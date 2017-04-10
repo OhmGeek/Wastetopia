@@ -45,7 +45,7 @@ class AddItemModel
      */
     function getAllTagOptions(){
         $statement = $this->db->prepare("
-            SELECT * 
+            SELECT *
             FROM `Tag`
             ORDER BY `Tag`.`FK_Category_Category_ID`
          ");
@@ -190,15 +190,17 @@ class AddItemModel
      * @param $postCode (String format)
      * @return int (the ID inserted into the location table)
      */
-    function addToLocationTable($name, $postCode)
+    function addToLocationTable($name, $postCode, $long, $lat)
     {
         $statement = $this->db->prepare("
-            INSERT INTO `Location` (`Name`, `Post_Code`)
-            VALUES (:name, :postCode);
+            INSERT INTO `Location` (`Name`, `Post_Code`, `Longitude`, `Latitude`)
+            VALUES (:name, :postCode, :long, :lat);
          ");
 
         $statement->bindValue(":name", $name, PDO::PARAM_STR);
         $statement->bindValue(":postCode", $postCode, PDO::PARAM_STR);
+        $statement->bindValue(":long", $long, PDO::PARAM_STR);
+        $statement->bindValue(":lat", $lat, PDO::PARAM_STR);
         $statement->execute();
         return $this->getLastInsertID();
     }
@@ -216,14 +218,13 @@ class AddItemModel
 
         $statement = $this->db->prepare("
             INSERT INTO `Listing` (`FK_Location_LocationID`, `FK_UserItem_UserITemID`, `FK_User_UserID`, `Quantity`, `Time_Of_Creation`)
-            VALUES (:locationID, :itemID, :userID, :quantity, :time);
+            VALUES (:locationID, :itemID, :userID, :quantity, NOW());
          ");
 
         $statement->bindValue(":locationID", $locationID, PDO::PARAM_INT);
         $statement->bindValue(":itemID", $itemID, PDO::PARAM_INT);
         $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
         $statement->bindValue(":quantity", $quantity, PDO::PARAM_INT);
-        $statement->bindValue(":time", NOW(), PDO::PARAM_INT);
         $statement->execute();
     }
 
@@ -316,4 +317,3 @@ class AddItemModel
 
 
 }
-
