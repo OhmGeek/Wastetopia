@@ -3,7 +3,7 @@ $(function(){
     var baseURL = var url = window.location.protocol + "//" + window.location.host;
     
     // Delete completed transacion??
-    $("#delete").click(function(){
+    $grid.on('click', '#delete', function(){{
       // In offers.completed section, what is Delete supposed to do?
       // Set Active flag for ListingTransactions to 0??
         var transactionID = $(this).closest('.thumbnail').attr("id");
@@ -13,7 +13,7 @@ $(function(){
     
     
     // Make listing inactive
-    $("#remove").click(function(){
+    $grid.on('click', '#remove', function(){{
       // Extract listingID
         var listingID = $(this).closest('.thumbnail').attr("id"); //????
       // Send to /items/remove-listing 
@@ -31,7 +31,7 @@ $(function(){
     
     
     // Mark request as complete
-    $("#complete").click(function(){
+    $grid.on('click', '#complete', function(){{
       // Extract transactionID and listingID and new quantity
        var transactionID = $(this).closest('.thumbnail').attr("id");
         var listingID = $(this).closest('a[href=view]').attr("id");
@@ -50,7 +50,7 @@ $(function(){
     
     
     //Reject request
-    $("#reject").click(function(){
+    $grid.on('click', '#reject', function(){{
       // Extract transactionID and listingID
        var transactionID = $(this).closest('.thumbnail').attr("id");
         var listingID = $(this).closest('a[href=view]').attr("id"); 
@@ -69,7 +69,7 @@ $(function(){
     
     
     // Cancel request
-    $("#cancel").click(function(){
+    $grid.on('click', '#cancel', function(){{
       // Extract transactionID and listingID
         var transactionID = $(this).closest('.thumbnail').attr("id");
         var listingID = $(this).closest('a[href=view]').attr("id"); 
@@ -88,7 +88,7 @@ $(function(){
     
     
     // Request listing
-    $("#request).click(function(){
+    $grid.on('click', '#request', function(){{
         // Extract listingID
       var listingID = $(this).closest('a[href=view]').attr("id"); 
         // Send to /items/request
