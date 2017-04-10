@@ -4,12 +4,16 @@ $(function(){
     // Delete completed transacion??
     $("#delete").click(function(){
       // In offers.completed section, what is Delete supposed to do?
+      // Set Active flag for ListingTransactions to 0??
+        var transactionID = $(this).closest('.thumbnail').attr("id");
+        var listingID = $(this).closest('a[href=view]').attr("id"); 
     });
     
     
     // Make listing inactive
     $("#remove").click(function(){
       // Extract listingID
+        var listingID = $(this).closest('.thumbnail').attr("id"); //????
       // Send to /items/remove-listing 
     });
     
@@ -17,6 +21,8 @@ $(function(){
     // Mark request as complete
     $("#complete").click(function(){
       // Extract transactionID and listingID and new quantity
+       var transactionID = $(this).closest('.thumbnail').attr("id");
+        var listingID = $(this).closest('a[href=view]').attr("id");
       // Send to /items/confirm-request
     });
     
@@ -24,6 +30,8 @@ $(function(){
     //Reject request
     $("#reject").click(function(){
       // Extract transactionID and listingID
+       var transactionID = $(this).closest('.thumbnail').attr("id");
+        var listingID = $(this).closest('a[href=view]').attr("id"); 
       // Send to /items/reject-request
     });
     
@@ -31,6 +39,8 @@ $(function(){
     // Cancel request
     $("#cancel").click(function(){
       // Extract transactionID and listingID
+        var transactionID = $(this).closest('.thumbnail').attr("id");
+        var listingID = $(this).closest('a[href=view]').attr("id"); 
       // Send to /items/cancel-request
     });
     
@@ -38,12 +48,13 @@ $(function(){
     // Request listing
     $("#request).click(function(){
         // Extract listingID
+      var listingID = $(this).closest('a[href=view]').attr("id"); 
         // Send to /items/request
     });
     
     
     // Renew listing
-    $("a[href=renew]").click(function(){
+    $('a[href="#renew"]').click(function(){
        // var listingID = $(this).attr("id");
        // Get new quantity to renew with
        // Send to /items/renew-listing/
@@ -51,14 +62,14 @@ $(function(){
     
     
     // View listing
-    $("a[href=view]").click(function(){
+    $('a[href="#view"]').click(function(){
        // var listingID = $(this).attr("id");
        // Send to /items/view/[:listingID]
     });
     
     
     // View conversation
-    $("a[href=message]".click(function(){
+    $('a[href="#message"]'.click(function(){
        // var listingID = $(this).attr("id");
        // Send to /messages/conversation/[:listingID]
     });
