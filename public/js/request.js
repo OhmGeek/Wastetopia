@@ -16,7 +16,7 @@ $(function(){
       // In offers.completed section, what is Delete supposed to do?
       // Set Active flag for ListingTransactions to 0??
         var transactionID = $(this).closest('.thumbnail').attr("id");
-        var listingID = $(this).closest('a[href=view]').attr("id"); 
+        var listingID = $(this).closest('a[href="#view"]').attr("id"); 
         
     });
     
@@ -43,7 +43,7 @@ $(function(){
     $grid.on('click', '#complete', function(){
       // Extract transactionID and listingID and new quantity
        var transactionID = $(this).closest('.thumbnail').attr("id");
-        var listingID = $(this).closest('a[href=view]').attr("id");
+       var listingID = $(this).closest('a[href="#view"]').attr("id"); 
       // Send to /items/confirm-request
         
         var url = baseURL + "/items/confirm-request";
@@ -62,7 +62,7 @@ $(function(){
     $grid.on('click', '#reject', function(){
       // Extract transactionID and listingID
        var transactionID = $(this).closest('.thumbnail').attr("id");
-        var listingID = $(this).closest('a[href=view]').attr("id"); 
+       var listingID = $(this).closest('a[href="#view"]').attr("id");  
       // Send to /items/reject-request
         
         var url = baseURL + "/items/reject-request";
@@ -81,7 +81,7 @@ $(function(){
     $grid.on('click', '#cancel', function(){
       // Extract transactionID and listingID
         var transactionID = $(this).closest('.thumbnail').attr("id");
-        var listingID = $(this).closest('a[href=view]').attr("id"); 
+       var listingID = $(this).closest('a[href="#view"]').attr("id"); 
       // Send to /items/cancel-request
         
         var url = baseURL + "/items/cancel-request";
@@ -101,9 +101,8 @@ $(function(){
         event.preventDefault();
         
         // Extract listingID
-      var listingID = $(this).closest('a[href=view]').attr("id"); 
+      var listingID = $(this).closest('a[href="#view"]').attr("id"); 
         // Send to /items/request
-    
         var url = baseURL + "/items/request";
         var data = {listingID : listingID};
         $.post(url, data, function(response){
