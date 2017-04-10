@@ -22,7 +22,7 @@ class AddItemController
 
     public function renderAddPage() {
 
-        $loader  = new Twig_Loader_Filesystem(__DIR__.'/../view/items');
+        $loader  = new Twig_Loader_Filesystem(__DIR__.'/../view/');
         $twig = new Twig_Environment($loader);
         $template = $twig->loadTemplate('items/edit_items.twig');
         return $template->render(array()); // todo add required details here.
