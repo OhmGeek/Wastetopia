@@ -132,7 +132,7 @@ $(document).ready(function(){
 
     $("#firstName, #lastName, #pwd, #pwdConfirm, #email").click(function(){
         if($(this).val() == ""){
-          $(this).parent().addClass("has-error");
+          $(this).closest(".form-group").addClass("has-error");
        }
     });
 
@@ -140,10 +140,10 @@ $(document).ready(function(){
     $("#firstName, #lastName").keydown(function(){
         if($(this).val() == ""){
             // Field is empty associated box/symbol is red
-            $(this).parent().addClass('has-error');
+            $(this).closest(".form-group").addClass('has-error');
         }else{
             // Field is filled, associated box/symbol is green
-            $(this).parent().removeClass('has-error');
+            $(this).closest(".form-group").removeClass('has-error');
         }
     });
 
@@ -154,14 +154,14 @@ $(document).ready(function(){
         if(($(this).val().length) < 8){
             console.log("Password red");
             // Field is empty associated box/symbol is red
-            console.log($(this).parent().addClass('has-error'))
-            $(this).parent().addClass('has-error');
+            console.log($(this).closest(".form-group").addClass('has-error'))
+            $(this).closest(".form-group").addClass('has-error');
         }else{
             // Field is filled, associated box/symbol is green
             console.log("Password green");
-            $(this).parent().removeClass('has-error');
+            $(this).closest(".form-group").removeClass('has-error');
         }
-        $(this).parent().addClass('has-error'); //Testing
+        $(this).closest(".form-group").addClass('has-error'); //Testing
     });
 
     $("#pwdConfirm").keydown(function(event){
