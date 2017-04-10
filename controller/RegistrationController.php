@@ -104,8 +104,8 @@ class RegistrationController
                 return $this->errorMessage("Couldn't add user (something unexpected went wrong)");
             } else {
                 // Send verification email
-                //$final = $this->sendVerificationEmail($email);
-                $final = True; // For testing
+                $final = $this->sendVerificationEmail($email);
+                //$final = True; // For testing
                 if ($final){
                     return $this->successMessage("Success");
                 }else{
