@@ -8,7 +8,6 @@ use Twig_Environment;
 
 use Wastetopia\Config\CurrentConfig;
 
-require 'PHPMailerAutoload.php';
 
 class RegistrationController
 {
