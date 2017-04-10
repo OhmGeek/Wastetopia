@@ -133,7 +133,7 @@ class RegistrationController
     * @return bool
     */
     function sendVerificationEmail($email){
-        $code = $this->model->getVerifcationCode($email);
+        $code = $this->model->getVerificationCode($email);
         if($code == -1){
             return False;   
         }
