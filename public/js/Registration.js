@@ -84,12 +84,12 @@ $(document).ready(function(){
                 return;
            }else if(json.hasOwnProperty("success")){
                console.log("Successful");
-             // User added successfully
-             // Reload page?? OR Send to Home page??
-             // location.href = "#";
+               displaySuccess("Verificaiton email has been sent");
+               return;
             }else{
                displayError("WHAAAAT");
                console.log("Something really went wrong");
+               return;
            }
         });
 
@@ -128,6 +128,23 @@ $(document).ready(function(){
         
         // Add alert to the alert div
         $("#errorMessage").append($errorDiv);
+     }
+    
+     // Displays an error message in the appropriate place
+    function displaySuccess(message){
+        // Change HTML in an existing DIV
+//         console.log("Displaying error message");
+//         $("#errorMessage").html("<p>"+error+"<p>");
+
+        // OR using bootstrap alerts
+        // Create warning div
+        $successDiv = $("<div>").addClass("alert alert-success fade in");
+    
+        // Add error to the div
+        $successDiv.html('<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'+ message)
+        
+        // Add alert to the alert div
+        $("#errorMessage").append($successDiv);
      }
 
     $("#firstName, #lastName, #pwd, #pwdConfirm, #email").click(function(){
