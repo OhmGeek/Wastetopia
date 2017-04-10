@@ -8,6 +8,7 @@ use Twig_Environment;
 
 use Wastetopia\Config\CurrentConfig;
 
+require 'PHPMailerAutoload.php';
 
 class RegistrationController
 {
@@ -158,7 +159,7 @@ class RegistrationController
 
         $mail = new PHPMailer();
 
-        $mail->IsSMTP(true);                                      // set mailer to use SMTP
+        $mail->IsSMTP();                                      // set mailer to use SMTP
         $mail->Host = "smtp.dur.ac.uk";  // specify main and backup server
         $mail->SMTPAuth = true;     // turn on SMTP authentication
         $mail->Username = "dcs8s04";  // SMTP username
