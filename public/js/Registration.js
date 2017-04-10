@@ -124,7 +124,7 @@ $(document).ready(function(){
         $errorDiv = $("<div>").addClass("alert alert-danger fade in");
     
         // Add error to the div
-        $errorDiv.html('<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a> ERROR')
+        $errorDiv.html('<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'+ error)
         
         // Add alert to the alert div
         $("#errorMessage").append($errorDiv);
