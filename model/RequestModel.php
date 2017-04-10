@@ -83,11 +83,12 @@ class RequestModel
 		
 		//then link the transaction to the listing
 		$statement2 = $this->db->prepare("
-			INSERT INTO ListingTransaction(FK_Listing_ListingID, FK_Transaction_TransactionID)
-			VALUES (:listing_id, :transaction_id);
+			INSERT INTO ListingTransaction(FK_Listing_ListingID, FK_Transaction_TransactionID, Quantity)
+			VALUES (:listing_id, :transaction_id, :quantity);
 		");
 		$statement2->bindValue(":listing_id", $listing_id, PDO::PARAM_INT);
 		$statement2->bindValue(":transaction_id", $transaction_id, PDO::PARAM_INT);
+		$statement2->bindValue(":quantity", $quantity, PDO::PARAM_INT);
 		$statement2->execute();
 		return true;
 	}
@@ -118,12 +119,13 @@ class RequestModel
 		//then update ListingTransaction to aknowledge the acceptance
 		$statement2 = $this->db->prepare("
 			UPDATE ListingTransaction
-			SET Success = 1
+			SET Success = 1, Quantity = :quantity
 			WHERE FK_Listing_ListingID = :listing_id
 			AND FK_Transaction_TransactionID = :transaction_id;
 		");
 		$statement2->bindValue(":listing_id", $listing_id, PDO::PARAM_INT);
 		$statement2->bindValue(":transaction_id", $transaction_id, PDO::PARAM_INT);
+		$statement2->bindValue(":quantity", $quantity, PDO::PARAM_INT);
 		$statement2->execute();
 		// then enter the acceptance time into the Transaction
 		$statement3 = $this->db->prepare("
@@ -138,34 +140,51 @@ class RequestModel
 	
 	/**
 	 * Returns all unique identifiers for the requests associated with the user, optionally only the unviewed requests
-	 * @return int
+	 * optionally specify a specific listing to get requests for
+	 * optionally specify unviewed_only for whether to get all regardless of whether they've been viewed(0)
+	 * only the unviewed requests(1)
+	 * only the viewed requests(2)
+	 * @return associative array
 	 */
 	
-	function getRequestIDPairsForUser($only_new = 0){
+	function getRequestIDPairsForUser($unviewed_only = 1, $listing_id = -1){
 		$currentUser = $this->getUserID();
-		if($only_new == 0){
+		if($listing_id == -1){
 			$statement = $this->db->prepare("
 				SELECT FK_Listing_ListingID, FK_Transaction_TransactionID
 				FROM ListingTransaction
-				JOIN Listing ON Listing.ListingID = ListingTransaction.FK_ListingID
+				JOIN Listing ON Listing.ListingID = ListingTransaction.FK_Listing_ListingID
 				WHERE Listing.FK_User_UserID = :user_id
+				:viewed_string
 				AND Success = 0;
 			");
 			$statement->bindValue(":user_id", $currentUser, PDO::PARAM_INT);
-			$statement->execute();
 		}
-		else if($only_new == 1){
+			
+		else{
 			$statement = $this->db->prepare("
 				SELECT FK_Listing_ListingID, FK_Transaction_TransactionID
 				FROM ListingTransaction
-				JOIN Listing ON Listing.ListingID = ListingTransaction.FK_ListingID
+				JOIN Listing ON Listing.ListingID = ListingTransaction.FK_Listing_ListingID
 				WHERE Listing.FK_User_UserID = :user_id
-				AND ListingTransaction.Viewed = 0
-				AND Success = 0;
+				:viewed_string
+				AND Success = 0
+				AND ListingTransaction.FK_Listing_ListingID = :listing_id;
 			");
 			$statement->bindValue(":user_id", $currentUser, PDO::PARAM_INT);
-			$statement->execute();
+			$statement->bindValue(":listing_id", $listing_id, PDO::PARAM_INT);
 		}
+		if($unviewed_only == 0){
+			$statement->bindValue(":viewed_string", "", PDO::PARAM_STR);
+		}
+		else if($unviewed_only == 1){
+			$statement->bindValue(":viewed_string", "AND Viewed = 0", PDO::PARAM_STR);
+		}
+		else if($unviewed_only == 2){
+			$statement->bindValue(":viewed_string", "AND Viewed = 1", PDO::PARAM_STR);
+		}
+		$statement->execute();
+		return $statement->fetchAll(PDO::FETCH_ASSOC);
 	}
 	
 	/**
@@ -192,14 +211,25 @@ class RequestModel
 	 */
 	
 	function renewListing($listing_id, $new_quantity){
-		//create the new listing of the specified quantiyt
+		//create the new listing of the specified quantity
 		$listing_info = $this->listing_model->getListingInfo($listing_id);
+		$item_info = $this->item_model->getItemInfoFromItemID($listing_info["FK_Item_ItemID"]);
+		$statement0 = $this->db->prepare("
+			INSERT INTO Item(Name, Description,Use_By)
+			VALUES(:name, :description, :use_by);
+		");
+		$statement0->bindValue(":name", $item_info["Name"], PDO::PARAM_STR);
+		$statement0->bindValue(":description", $item_info["Description"], PDO::PARAM_STR);
+		$statement0->bindValue(":use_by", $item_info["Use_By"], PDO::PARAM_STR);
+		$statement0->execute();
+		$new_item_id = $this->getLastInsertID();
+		
 		$statement = $this->db->prepare("
 			INSERT INTO Listing(FK_Location_LocationID, FK_Item_ItemID, FK_User_UserID, Quantity)
 			VALUES (:location, :item_id, :user_id, :new_quantity);
 		");
 		$statement->bindValue(":location", $listing_info["FK_Location_LocationID"]);
-		$statement->bindValue(":item_id", $listing_info["FK_Item_ItemID"]);
+		$statement->bindValue(":item_id", $new_item_id);
 		$statement->bindValue(":user_id", $listing_info["FK_User_UserID"]);
 		$statement->bindValue(":new_quantity", $new_quantity);
 		$statement->execute();
@@ -238,6 +268,15 @@ class RequestModel
 		");
 		$statement->bindValue(":listing_id", $listing_id, PDO::PARAM_INT);
 		$statement->bindValue(":transaction_id", $transaction_id, PDO::PARAM_INT);
+		$statement->execute();
+	}
+	
+	function withdrawRequest($transaction_id){
+		$statement = $this->db->prepare("
+			DELETE FROM Transaction 
+			WHERE TransactionID = :transaction_id;
+		");
+		$statement->bindValue(":transaction_id"< $transaction_id, PDO::PARAM_INT);
 		$statement->execute();
 	}
 }
