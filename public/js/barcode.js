@@ -72,12 +72,13 @@ Quagga.init({
 
 $('#scan-barcode').on('click', function() {
     // this is the callback called once decoding has occurred
+    var file = $('#barcode-upload').prop('files')[0];
+    var reader = new FileReader();
+    reader.readAsDataURL(file);
     Quagga.decodeSingle({
-        decoder: {
-            readers: ["code_128_reader"] // List of active readers
-        },
+
         locate: true, // try to locate the barcode in the image
         // get the first image uploaded using jQuery
-        src: 'data:image/jpg;base64,' + $('#barcode-upload').prop('files')[0]
+        src: 'data:image/jpg;base64,' + reader.result
     },autofill);
 });
