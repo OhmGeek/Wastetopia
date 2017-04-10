@@ -51,6 +51,8 @@ class RegistrationModel
         
         
         $result = count($statement->fetchAll(PDO::FETCH_ASSOC));
+        print_r("FROM MODEL");
+        print_r($result);
         return $result > 0;
     }
 
@@ -141,6 +143,8 @@ class RegistrationModel
         
         //Add user's details
         $result= $this->addMainUserDetails($forename, $surname, $email, $passwordHash, $salt, $pictureURL);
+        
+        print_r($result);
         
         //$result = false;
         return $result;
