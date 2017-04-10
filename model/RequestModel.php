@@ -70,6 +70,7 @@ class RequestModel
 		$currentUser = $this->getUserID();
 		//first make the transaction
 		$item_quantity = $this->item_model->getItemInfoFromListingID($listing_id)["Quantity"];
+		print_r($this->item_model->getItemInfoFromListingID($listing_id));
 		print_r($item_quantity);
 		print_r("Quantity ".$quantity);
 		if($quantity > $item_quantity){
