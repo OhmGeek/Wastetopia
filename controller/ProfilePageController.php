@@ -213,14 +213,16 @@ class ProfilePageController
             $quantity = $details["Quantity"];
             $defaultImage = $this->cardDetailsModel->getDefaultImage($listingID);
             $imageURL = $defaultImage["Image_URL"];
-	    $isRequesting = $this->model->isRequesting($listingID);		
+	    $isRequesting = $this->model->isRequesting($listingID);
+            $isWatching = $this->inWatchList($listingID);		
             $item = array(
                 "listingID" => $listingID,
                 "itemName" => $itemName,
                 "addedDate" => $timeOfCreation,
                 "quantity" => $quantity,
                 "imgURL" => $imageURL,
-	        "isRequesting" => $isRequesting);
+	        "isRequesting" => $isRequesting,
+	        "isWatching" => $isWatching);
             array_push($allAvailableListings, $item);
         }
 
