@@ -128,6 +128,7 @@ class RegistrationController
     
     
     /**
+    NEED TO CHANGE THE LINK FOR PRODUCTION VERSION
     * Sends an email to the new user with the verification code
     * @param $email
     * @return bool
@@ -141,7 +142,7 @@ class RegistrationController
         $to=$email;
         $subject="Activation Code For Wastetopia";
         $from = 'cs.seg04@durham.ac.uk'; 
-        $body='Your Activation Code is '.$code.' Please Click On This link <a href="VERIFICATION_URL">https://wastetopia.herokuapp.com/verify/'.$code.'</a>to activate  your account.';
+        $body='Your Activation Code is '.$code.' Please Click On This link <a href="VERIFICATION_URL">https://wastetopia-pr-27.herokuapp.com/verify/'.$code.'</a>to activate  your account.';
         $headers = "From:".$from;
         return mail($to,$subject,$body,$headers);
     
