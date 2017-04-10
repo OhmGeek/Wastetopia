@@ -6,6 +6,42 @@
  * Created by ryan on 10/04/17.
 */
 
+var process = function (data) {
+    console.log("On Processed");
+    console.log(data);
+    if(data.codeResult) {
+        var barcode = data.codeResult.code;
+        console.log(barcode);
+        var data = getBarcodeInfo(barcode);
+
+        // item name
+        if(data.product_name) {
+            //auto fill item name
+            $('#name').val(data.product_name);
+        }
+
+        if(data.expiration_date) {
+            // auto fill expiration date
+        }
+
+        if(data.generic_name) {
+            // auto fill the description
+            $('#description').val(data.generic_name);
+        }
+
+        // now add the images
+
+        if(data.image_url) {
+            showUploadedItem(data.image_url, 0); // we don't use the id anymore
+        }
+
+    } else {
+        // no autofill.
+        // provide some feedback saying it couldn't be detected.
+        console.log("not detected");
+    }
+};
+
 
 function getBarcodeInfo(barcode) {
     $.getJSON('https://world.openfoodfacts.org/api/v0/product/' + barcode + ".json", function (resp) {
@@ -69,42 +105,7 @@ var scanBarcode = function() {
             }, "code_128_reader"]
         },
         src: reader.result
-    }, function(result) {console.log(result)});
+    }, function(result) {console.log(result); process(result)});
 };
 
-Quagga.onProcessed(function (data) {
-    console.log("On Processed");
-    console.log(data);
-    if(data.codeResult) {
-        var barcode = data.codeResult.code;
-        console.log(barcode);
-        var data = getBarcodeInfo(barcode);
-
-        // item name
-        if(data.product_name) {
-            //auto fill item name
-            $('#name').val(data.product_name);
-        }
-
-        if(data.expiration_date) {
-            // auto fill expiration date
-        }
-
-        if(data.generic_name) {
-            // auto fill the description
-            $('#description').val(data.generic_name);
-        }
-
-        // now add the images
-
-        if(data.image_url) {
-            showUploadedItem(data.image_url, 0); // we don't use the id anymore
-        }
-
-    } else {
-        // no autofill.
-        // provide some feedback saying it couldn't be detected.
-        console.log("not detected");
-    }
-});
 $('#scan-barcode').on('click', scanBarcode);
