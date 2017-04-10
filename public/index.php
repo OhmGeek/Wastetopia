@@ -48,11 +48,17 @@ $klein->with('/register', function() use ($klein){
       return $controller->addUser($forename, $surname, $email, $password, $passwordConfirm, $pictureURL);
   });
     
-    $klein->respond("GET","/verify/[:verificationCode", function($request, $response){
+    $klein->respond("GET","/verify/[:verificationCode]", function($request, $response){
         $verificationCode = $request->verificationCode;
         $model = new RegistrationModel(); // Put function in controller?
         $result = $model->verifyUser($verificationCode);
-        return $result;
+        if (!($result)){
+            // Verification didn't work, what do we do now??
+            return "It didn't work";
+        }else{
+            // Verirification worked, send them to login page??
+            return "Verification successful: your account is now active";
+        }
     });
   
 });
