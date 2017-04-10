@@ -148,22 +148,20 @@ class RegistrationController
         $message = "Your Activation Code is ".$code."";
         $to=$email;
         $subject="Activation Code For Wastetopia";
-        $from = 'cs.seg04@durham.ac.uk'; 
+        $from = 'stephenchurch9@hotmail.com'; 
         $body='Your Activation Code is '.$code.' Please Click On This link <a href="VERIFICATION_URL">https://wastetopia-pr-27.herokuapp.com/register/verify/'.$code.'</a>to activate  your account.';
-        $headers = "From:".$from;
-//         print_r($body);
-//         return mail($to,$subject,$body,$headers);
-    
+        
 //         // PHPMailer code
         
 
         $mail = new \PHPMailer(true); //true makes it give errors
 
         $mail->IsSMTP();                                      // set mailer to use SMTP
-        $mail->Host = "smtp.dur.ac.uk";  // specify main and backup server
+        //$mail->Host = "smtp.dur.ac.uk";  // specify main and backup server
+        $mail->Host = "smtp-mail.outlook.com"
         $mail->SMTPAuth = true;     // turn on SMTP authentication
-        $mail->Username = "cs.seg04@durham.ac.uk";  // SMTP username
-        $mail->Password = "HHrv4673"; // SMTP password
+        $mail->Username = "stephenchurch9@hotmail.com";  // SMTP username
+        $mail->Password = "Squirrel29!"; // SMTP password
 
         $mail->From = $from;
         $mail->FromName = "Wastetopia";
