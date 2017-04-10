@@ -1,12 +1,14 @@
 // JS file to deal with requestModel stuff on any page (if cardIDs are the same)
 $(function(){
-
+    var baseURL = var url = window.location.protocol + "//" + window.location.host;
+    
     // Delete completed transacion??
     $("#delete").click(function(){
       // In offers.completed section, what is Delete supposed to do?
       // Set Active flag for ListingTransactions to 0??
         var transactionID = $(this).closest('.thumbnail').attr("id");
         var listingID = $(this).closest('a[href=view]').attr("id"); 
+        
     });
     
     
@@ -15,6 +17,16 @@ $(function(){
       // Extract listingID
         var listingID = $(this).closest('.thumbnail').attr("id"); //????
       // Send to /items/remove-listing 
+        
+        var url = baseURL + "/items/remove-listing";
+        var data = {"listingID" : listingID};
+        $.post(url, data, function(response){
+           if(response){
+               // Do something
+           }else{
+               // Show error   
+           }
+        });
     });
     
     
@@ -24,6 +36,16 @@ $(function(){
        var transactionID = $(this).closest('.thumbnail').attr("id");
         var listingID = $(this).closest('a[href=view]').attr("id");
       // Send to /items/confirm-request
+        
+        var url = baseURL + "/items/confirm-request";
+        var data = {"listingID" : listingID, "transactionID" : transactionID};
+        $.post(url, data, function(response){
+           if(response){
+               // Do something
+           }else{
+               // Show error   
+           }
+        });
     });
     
     
@@ -33,6 +55,16 @@ $(function(){
        var transactionID = $(this).closest('.thumbnail').attr("id");
         var listingID = $(this).closest('a[href=view]').attr("id"); 
       // Send to /items/reject-request
+        
+        var url = baseURL + "/items/reject-request";
+        var data = {"listingID" : listingID, "transactionID" : transactionID};
+        $.post(url, data, function(response){
+           if(response){
+               // Do something
+           }else{
+               // Show error   
+           }
+        });
     });
     
     
@@ -42,6 +74,16 @@ $(function(){
         var transactionID = $(this).closest('.thumbnail').attr("id");
         var listingID = $(this).closest('a[href=view]').attr("id"); 
       // Send to /items/cancel-request
+        
+        var url = baseURL + "/items/cancel-request";
+        var data = {"listingID" : listingID, "transactionID" : transactionID};
+        $.post(url, data, function(response){
+           if(response){
+               // Do something
+           }else{
+               // Show error   
+           }
+        });
     });
     
     
@@ -50,30 +92,59 @@ $(function(){
         // Extract listingID
       var listingID = $(this).closest('a[href=view]').attr("id"); 
         // Send to /items/request
+    
+        var url = baseURL + "/items/request";
+        var data = {"listingID" : listingID};
+        $.post(url, data, function(response){
+           if(response){
+               // Do something
+           }else{
+               // Show error   
+           }
+        });
     });
     
     
     // Renew listing
     $('a[href="#renew"]').click(function(){
-       // var listingID = $(this).attr("id");
-       // Get new quantity to renew with
+        var listingID = $(this).attr("id");
+       // Get new quantity to renew with from an alert?
        // Send to /items/renew-listing/
+        
+        var url = baseURL + "/items/renew-listing";
+        var data = {"listingID" : listingID};
+        $.post(url, data, function(response){
+           if(response){
+               // Do something
+           }else{
+               // Show error   
+           }
+        });
     });
     
     
     // View listing
     $('a[href="#view"]').click(function(){
-       // var listingID = $(this).attr("id");
+        var listingID = $(this).attr("id");
        // Send to /items/view/[:listingID]
+        
+        var url = baseURL + "/items/view/"+listingID;
+     
+        location.href = url;
     });
     
     
-    // View conversation
-    $('a[href="#message"]'.click(function(){
-       // var listingID = $(this).attr("id");
-       // Send to /messages/conversation/[:listingID]
-    });
+//     // View conversation
+//     $('a[href="#message"]'.click(function(){
+//         var listingID = $(this).attr("id");
+//        // Send to /messages/conversation/[:listingID]
+        
+//         var url = baseURL + "/messages/conversation/"+listingID;
+        
+//         location.href = url;
+//     });
     
+
   // Toggle listings in the watch list
   $grid.on('click', '.btn-watch', function(){
      var listingID = $(this).closest('.thumbnail').attr("id");
