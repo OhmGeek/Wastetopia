@@ -134,10 +134,9 @@ function getLocationOfItem() {
       postalCode: $('#postcode').val()
     }
   },
-
   function(results, status) {
     if (status == google.maps.GeocoderStatus.OK) {
-      return results[0].geometry.location,
+      return results[0].geometry.location;
     } else {
       alert("geocode of " + $('#postcode').val() + " failed:" + status);
     }
