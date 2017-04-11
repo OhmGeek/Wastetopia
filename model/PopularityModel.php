@@ -98,8 +98,8 @@ class PopularityModel
       
         $statement->execute();
 
-        return true;
-    };
+        return True;
+    }
     
     
     /**
