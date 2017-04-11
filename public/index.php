@@ -146,7 +146,8 @@ $klein->with('/items', function () use ($klein) {
         $listingID = $request->listingID;
         $model = new RequestModel();
         $transactionID = $model->getTransactionIDFromListingID($listingID);
-        return $model->withdrawRequest($transactionID);
+        return $transactionID;
+        //return $model->withdrawRequest($transactionID);
     });
     
     $klein->respond('POST', '/renew-listing/?', function($request, $response){
