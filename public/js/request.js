@@ -1,14 +1,5 @@
 // JS file to deal with requestModel stuff on any page (if cardIDs are the same)
 $(function(){
-//     // init Isotope
-//   var $grid = $('.grid').isotope({
-//     itemSelector: '.grid-item',
-//     percentPosition: true,
-//     masonry: {
-//       columnWidth: '.grid-sizer'
-//     }
-//   });
-
 
     //TODO: Fix watch-list toggle issue
     //TODO: Test renew and rate
@@ -460,6 +451,14 @@ $(function(){
 
   // Remove an element from the layout - ele is in the form $(element)
   function remove(ele) {
+      // init Isotope
+        var $grid = $('.grid').isotope({
+        itemSelector: '.grid-item',
+        percentPosition: true,
+        masonry: {
+          columnWidth: '.grid-sizer'
+        }
+        });
     // remove clicked element (in a very skitchy way right now)
     $grid.isotope( 'remove', ele.closest('.grid-item'))
     // layout remaining item elements
