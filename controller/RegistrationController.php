@@ -140,16 +140,23 @@ class RegistrationController
     * @return bool
     */
     function sendVerificationEmail($email, $name){
+        $$CurrentConfig = new CurrentConfig();
+        $config = $CurrentConfig->getAll();
+            
         $code = $this->model->getVerificationCode($email);
         if($code == -1){
             return False;   
         }
+        
+        $root = $config["ROOT_BASE"]; // Base url for the website
+        $fullURL = $root."/register/verify/".$code; // Verification URL
+        
         $message = "Your Activation Code is ".$code."";
         $to=$email;
         $subject="Activation Code For Wastetopia";
         $from = 'stephenchurch9@hotmail.com'; 
-        $body='Your Activation Code is '.$code.' Please Click On This link <a href="https://wastetopia-pr-27.herokuapp.com/register/verify/'.$code.'"> https://wastetopia-pr-27.herokuapp.com/register/verify/'.$code.' </a>to activate  your account.';
-        $altBody = "Please go to: https://wastetopia-pr-27.herokuapp.com/register/verify/".$code;
+        $body='Your Activation Code is '.$code.' Please Click On This link <a href='.$fullURL'.> https:'.$fullURL.' </a> to activate  your account.';
+        $altBody = "Please go to: https:".$fullURL;
 //         // PHPMailer code
         
 
