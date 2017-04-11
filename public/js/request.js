@@ -107,6 +107,7 @@ $(function(){
     });
     
     // Cancel request using listingID - WORKS WHEN VIEWING CARD OUTSIDE OF YOUR PROFILE (I.E on search page)
+    // WORKS BUT DOES SOME WEIRD REDIRECTION WITH A SERVER ERROR AFTER IT'S DONE
     $grid.on('click', '#cancel-by-listing', function(){
         console.log("Cancelling");
         
