@@ -315,7 +315,7 @@ class RequestModel
 			SELECT :new_item_id, FK_Image_ImageID, Is_Default
 			FROM ItemImage WHERE FK_Item_ItemID = :old_item_id;
 		");
-		$statement02->bindValue(":new_item_id", :new_item_id, PDO::PARAM_INT);
+		$statement02->bindValue(":new_item_id", $new_item_id, PDO::PARAM_INT);
 		$statement02->bindValue(":old_item_id", $listing_info["FK_Item_ItemID"], PDO::PARAM_INT);
 		$statement02->execute();
 
