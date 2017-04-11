@@ -151,9 +151,9 @@ function serializeItem() {
   var item = {
     "name": $('#name').val(),
     "images": getImagesFromDOM(),
-    "classification": itemType,
-    "dietary": getSelectedDietaryReqs(),
-    "contains": getMayContainsDetails(),
+    "classification": itemType, //type tag
+    "dietary": getSelectedDietaryReqs(), //dietary requirement
+    "contains": getMayContainsDetails(), //allergy tags
     "expires": expiryDate,
     "description": $('description').val(),
     "location": getLocationOfItem()

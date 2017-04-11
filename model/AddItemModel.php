@@ -315,5 +315,25 @@ class AddItemModel
         return $statement->fetchColumn(0);
     }
 
+    public function getTagDetails($name)
+    {
+        $statement = $this->db->prepare("
+                            SELECT *
+                            FROM Tag
+                            WHERE Tag.Name = :name
+                            ");
+
+        $statement->bindValue(":name", $name,PDO::PARAM_STR);
+        $statement->execute();
+        // return the ID, or nothing if none is found.
+        $results = $statement->execute(PDO::FETCH_ASSOC);
+        // now we have the results, create a tag and return it.
+        return array(
+            'name' => $results[0]['Name'],
+            'categoryID' => $results[0]['FK_Category_Category_ID'],
+            'description' => $results[0]['Description']
+        );
+    }
+
 
 }
