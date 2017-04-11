@@ -20,12 +20,12 @@ class RecommendationController {
     }
     
     /**
-     * Returns the ID of the user whose profile you're trying to view
+     * Returns the ID of the user currently logged in
      * @return int
      */
     private function getUserID()
     {
-        return $this->userID;
+        return 20; // Hard coded for now
     }
     
     
@@ -64,7 +64,7 @@ class RecommendationController {
           $imgURL = $this->cardDetailsModel->getDefaultImage($listingID);//$listing[""]; // Add later
           $itemName = $listing["Name"];
           $quantity = $listing["Quantity"];
-          $isRequesting = $this->profilePageModel->isRequesting($listingID);
+          $isRequesting = $this->profilePageModel->isRequesting($listingID, $this->getUserID());
           $isWatching = $this->inWatchList($listingID);
           $item = array(
             "listingID" => $listingID,
@@ -102,7 +102,7 @@ class RecommendationController {
     * @returns boolean
     */
     function inWatchList($listingID){
-        $watchedListings = $this->profilePageModel->getWatchedListings();
+        $watchedListings = $this->profilePageModel->getWatchedListings($this->getUserID());
         $inWathcList = False; // Assume it isn't in the watch list
         foreach($watchedListings as $listing){
             if($listing["ListingID"] == $listingID){
