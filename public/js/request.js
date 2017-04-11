@@ -206,12 +206,16 @@ $(function(){
         event.preventDefault();
         var button = $(this);
         console.log("Requesting");
-        // Extract listingID
+	    
+       // Extract listingID
       var listingID = $(this).prevAll('a[href="#view"]').attr("id");
-        console.log(listingID);
+	    
+      // Pop up to get quantity
+	//var quantity = ;    
+	    
         // Send to /items/request
         var url = baseURL + "/items/request";
-        var data = {listingID : listingID};
+        var data = {listingID : listingID, quantity: quantity};
         $.post(url, data, function(response){
             console.log(response);
            if(response){
@@ -246,6 +250,8 @@ $(function(){
 
       // Extract listingID
         var transactionID = $(this).closest('.thumbnail').attr("id");
+	    
+	// Pop up box here     
         var rating = 0; // Get from pop-up
 
       // NEED TO DECIDE WHAT URL TO USE
