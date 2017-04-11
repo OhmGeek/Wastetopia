@@ -40,7 +40,7 @@ class MessageController
 	   $conversationID = $conversationIDs[0];	
 	}
 	
-	$conversationID = $conversation["ConversationID"];    
+	$conversationID = $conversationID["ConversationID"];  
 	return $this->generatePage($conversationID);    
     }
 
