@@ -25,7 +25,7 @@ class RecommendationController {
      */
     private function getUserID()
     {
-        return 20; // Hard coded for now
+        return 6; // Hard coded for now
     }
     
     
@@ -65,7 +65,7 @@ class RecommendationController {
           $itemName = $listing["Name"];
           $quantity = $listing["Quantity"];
           $isRequesting = $this->profilePageModel->isRequesting($listingID, $this->getUserID());
-          $isWatching = $this->inWatchList($listingID);
+          $isWatching = $this->profilePageModel->isWatching($listingID, $this->getUserID());
           $item = array(
             "listingID" => $listingID,
             "userImg" => $userImage,
@@ -96,21 +96,6 @@ class RecommendationController {
         return $template->render($output); // Render with cardDetails for listings that match most frequent tags
       }
     
-    /**
-    * Returns True if the given listing is in the current user's watch list
-    * @param $listingID
-    * @returns boolean
-    */
-    function inWatchList($listingID){
-        $watchedListings = $this->profilePageModel->getWatchedListings($this->getUserID());
-        $inWathcList = False; // Assume it isn't in the watch list
-        foreach($watchedListings as $listing){
-            if($listing["ListingID"] == $listingID){
-                $inWatchList = True;
-                break;
-            }
-        }
-        return $inWatchList;
-    }
+    
 }
 
