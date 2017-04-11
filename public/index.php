@@ -124,7 +124,7 @@ $klein->with("/profile", function() use ($klein) {
         return $controller->generateRecommendedSection();
     });
     
-    $klein->respond('GET', '/set-pending-viewd', function($request, $response){
+    $klein->respond('GET', '/set-pending-viewed', function($request, $response){
        $controller = new ProfilePageController(1);
        return $controller->setAllPendingAsViewed();
     });
