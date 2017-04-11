@@ -9,6 +9,7 @@ $(function () {
   });
 
   $(document).on('click', 'a[data-toggle="tab"]', function(){
+    var userID = $('.user-name').attr("id");
     var tabID = $(this).attr('href');
     var relativeURL = "";
     if (tabID == "#listings" || tabID == "#available-listing" || "#out-of-stock-listing" ){
@@ -42,7 +43,6 @@ $(function () {
   });
 
   $(document).on('shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
-    var userID = $('.user-name').attr("id");
 
     console.log($(e.target).attr("href"));
     var width = 150;
