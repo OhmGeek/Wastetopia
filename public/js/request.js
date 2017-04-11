@@ -29,20 +29,25 @@ $(function(){
 //         });
 //     });
     
-    // Delete completed transaction?? (Would remove for other user too)
-    $grid.on('click', '#delete', function(){
-      // In offers.completed section, what is Delete supposed to do?
-      // Set Active flag for ListingTransactions to 0??
-        var transactionID = $(this).closest('.thumbnail').attr("id");
-        var listingID = $(this).prevAll('a[href="#view"]').attr("id"); 
+//     $(document).on('click', '#addOffer', function(){
+//         // Send to add-item page
+//     });
+    
+    
+//     // Delete completed transaction?? (Would remove for other user too)
+//     $grid.on('click', 'a[href="#delete"]', function(){
+//       // In offers.completed section, what is Delete supposed to do?
+//       // Set Active flag for ListingTransactions to 0??
+//         var transactionID = $(this).closest('.thumbnail').attr("id");
+//         var listingID = $(this).prevAll('a[href="#view"]').attr("id"); 
         
-    });
+//     });
     
     
     // Make listing inactive - THIS WORKS (BUT ALSO REMOVES ALL TRANSACTIONS FOR THAT LISTING)
-    $grid.on('click', '#remove', function(){
+    $(document).on('click', 'a[href="#remove"]', function(){
       // Extract listingID
-        var listingID = $(this).closest('.thumbnail').attr("id"); //????
+        var listingID = $(this).attr("id"); 
         
       // Send to /items/remove-listing 
         var url = baseURL + "/items/remove-listing";
@@ -60,7 +65,7 @@ $(function(){
     
     
     // Mark request as complete - SEEMS TO WORK 
-    $grid.on('click', '#complete', function(){
+    $(document).on('click', 'a[href="#complete"]', function(){
       // Extract transactionID and listingID and new quantity
        var transactionID = $(this).closest('.thumbnail').attr("id");
        var listingID = $(this).closest(".btn-watch").prevAll('a[href="#view"]').attr("id");
@@ -83,7 +88,7 @@ $(function(){
     
     
     //Reject request - THIS WORKS
-    $grid.on('click', '#reject', function(){
+    $(document).on('click', 'a[href="#reject"]', function(){
       // Extract transactionID and listingID
        var transactionID = $(this).closest('.thumbnail').attr("id");
        var listingID = $(this).closest(".btn-watch").prevAll('a[href="#view"]').attr("id"); 
@@ -104,7 +109,7 @@ $(function(){
     
     
     // Cancel request - THIS WORKS (ONLY ON USER'S OWN PROFILE)
-    $grid.on('click', '#cancel', function(){
+    $(document).on('click', 'a[href="#cancel"]', function(){
         console.log("Cancelling");
         
       // Extract transactionID and listingID
@@ -129,7 +134,7 @@ $(function(){
     
     // Cancel request using listingID - USED WHEN VIEWING CARD OUTSIDE OF YOUR PROFILE (I.E on search page)
     // WORKS BUT DOES SOME WEIRD REDIRECTION WITH A SERVER ERROR AFTER IT'S DONE
-    $(document).on('click', '#cancel-by-listing', function(){
+    $(document).on('click', 'a[href="#cancel-by-listing"]', function(){
         console.log("Cancelling");
         
       // Extract transactionID and listingID
@@ -154,7 +159,7 @@ $(function(){
     
     
     // Request listing - THIS WORKS
-    $(document).on('click', '#request', function(event){
+    $(document).on('click', 'a[href="#request"]', function(event){
         event.preventDefault();
         console.log("Requesting");
         // Extract listingID
@@ -175,7 +180,7 @@ $(function(){
     });
     
     // Edit listing - ADD URL FROM RYAN'S PAGES
-    $(document).on('click', '#edit', function(event){
+    $(document).on('click', 'a[href="#edit"]', function(event){
         event.preventDefault();
         
         // Extract listingID
@@ -259,7 +264,7 @@ $(function(){
     
 
   // Toggle listings in the watch list - DOES NOT WORK (WEIRD ERROR)
-  $(document).on('click', '#watch', function(){
+  $(document).on('click', 'a[href="#watch"]', function(){
       console.log("toggle");
      var listingID = $(this).closest('.thumbnail').attr("id");
      var isUser = parseInt($(this).closest('.user-stats').attr("id"));
