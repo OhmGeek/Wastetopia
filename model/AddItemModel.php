@@ -291,13 +291,14 @@ class AddItemModel
         //Extract location information
         $locationName = $location["locationName"];
         $postCode = $location["postCode"];
-        $locationID = $this->addToLocationTable($locationName, $postCode); //Add the location to the database
+        $locationID = $this->addToLocationTable($locationName, $postCode, $location['long'], $location['lat']); //Add the location to the database
 
-        //Extract barcode information
-        $barcodeNumber = $barcode["barcodeNumber"];
-        $barcodeType = $barcode["barcodeType"];
-        $this->addToBarcodeTable($itemID, $barcodeNumber, $barcodeType); //Add barcode and link to item
-
+        if(isset($barcode)) {
+            //Extract barcode information
+            $barcodeNumber = $barcode["barcodeNumber"];
+            $barcodeType = $barcode["barcodeType"];
+            $this->addToBarcodeTable($itemID, $barcodeNumber, $barcodeType); //Add barcode and link to item
+        }
         //Add the whole listing                       quantity=1
         $this->addToListingTable($locationID, $itemID, 1);
     }

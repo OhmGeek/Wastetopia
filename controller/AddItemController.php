@@ -45,6 +45,21 @@ class AddItemController
         return $listOfTags;
     }
 
+    private function getImageArray($details) {
+        // we are given a list of urls
+        // we need just to add the filetype to the array
+        $imageArray = array();
+        foreach($details['images'] as $img) {
+            $obj = array(
+                'fileType' => 'img',
+                'url' => $img,
+                'isDefault' => 0
+            );
+            array_push($imageArray, $obj);
+        }
+        return $imageArray;
+    }
+
     public function addItem($details) {
         $info = array(
             'item' => array(
@@ -53,13 +68,18 @@ class AddItemController
                 'useByDate' => $details['expires'],
                 'quantity' => 1
             ),
-            'images' => array(
-
-            ),
+            'images' => $this->getImageArray($details),
             'tags' => $this->generateTags($details),
+            'location' => $details['location']
+            );
 
-        )
-
+        $this->model->mainAddItemFunction(
+            $info['item'],
+            $info['tags'],
+            $info['images'],
+            $info['barcode'],
+            $info['location']
+        );
     }
 
     public function addItemImage($files) {
