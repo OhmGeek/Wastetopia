@@ -213,7 +213,7 @@ class ProfilePageController
             $quantity = $details["Quantity"];
             $defaultImage = $this->cardDetailsModel->getDefaultImage($listingID);
             $imageURL = $defaultImage["Image_URL"];
-	    $isRequesting = $this->model->isRequesting($listingID);
+	    $isRequesting = $this->model->isRequesting($listingID, $this->getUserID());
 	    print_r("LISTING: ".$listingID);
             print_r("IS REQUESTING: ".$isRequesting);		
             $isWatching = $this->inWatchList($listingID);		
@@ -400,7 +400,7 @@ class ProfilePageController
     function generateWatchListSection()
     {
         //Get IDs of listings user is watching
-        $watchedListings = $this->model->getWatchedListings();
+        $watchedListings = $this->model->getWatchedListings($this->getUserID());
         $count = count($watchedListings);
         $watchList = array();
         foreach ($watchedListings as $listing) {
@@ -419,7 +419,7 @@ class ProfilePageController
             $userImage = $this->cardDetailsModel->getUserImage($userID);
             $userName = $details["Forename"] . " " . $details["Surname"];
 		
-	    $isRequesting = $this->model->isRequesting($listingID);	
+	    $isRequesting = $this->model->isRequesting($listingID, $this->getUserID());	
             $item = array(
                 "listingID" => $listingID,
                 "userImg" => $userImage,
@@ -447,7 +447,7 @@ class ProfilePageController
 	return $controller->generateRecommendedSection();
     }
     function inWatchList($listingID){
-        $watchedListings = $this->model->getWatchedListings();
+        $watchedListings = $this->model->getWatchedListings($this->getUserID());
         $inWathcList = False; // Assume it isn't in the watch list
         foreach($watchedListings as $listing){
             if($listing["ListingID"] == $listingID){
@@ -458,13 +458,13 @@ class ProfilePageController
         return $inWatchList;
     }
     
-    function toggleWatchListListing( $listingID){
+    function toggleWatchListListing($listingID){
        $listingID = (int)$listingID; 
        if ($this->inWatchList($listingID)){
-           $this->model->deleteFromWatchList($listingID);
+           $this->model->deleteFromWatchList($listingID, $this->getUserID());
            return 1; // Code for deletion
        }else{
-           $this->model->addToWatchList($listingID);
+           $this->model->addToWatchList($listingID, $this->getUserID());
            return 2; // Code for added to watch list
        }
     }
