@@ -567,7 +567,7 @@ class ProfilePageController
             "offers" => $offers, // Transactions for your items
         );
 
-        $template = $this->twig->loadTemplate("/users/listingsTab.twig");
+        $template = $this->twig->loadTemplate("/users/offersTab.twig");
         return $template->render($listingsInformation);
     }
 
@@ -675,7 +675,7 @@ class ProfilePageController
             "requests" => $requests // Transactions for other user's items
         );
 
-        $template = $this->twig->loadTemplate("/users/listingsTab.twig");
+        $template = $this->twig->loadTemplate("/users/requestsTab.twig");
         return $template->render($listingsInformation);
     }
 
@@ -799,13 +799,9 @@ class ProfilePageController
             );
             array_push($watchList, $item);
         }
-        $watchListDetails = array(
-            "watchListCount" => $count,
-            "watchList" => $watchList
-        );
 
         $template = $this->twig->loadTemplate("/users/watchlistTab.twig");
-        return $template->render($watchList);
+        return $template->render(array("watchList"=>$watchList));
 
         //return $watchListDetails;
     }
