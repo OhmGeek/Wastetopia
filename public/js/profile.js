@@ -32,7 +32,7 @@ $(function () {
   });
 
   // Reload HTML content when Back buttons pressed on each tab - not working
-  $grid.on('click', 'a[href="#home"]',function (){
+  $('a[href="#home"]').click(function (){
     console.log("Reloading");
     var userID = $('.user-name').attr("id");
     var url = window.location.protocol + "//" + window.location.host + "/profile/update/" + userID;
