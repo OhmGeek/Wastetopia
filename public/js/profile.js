@@ -39,6 +39,15 @@ $(function () {
      $.get(url, function(response){
         var div = $("#profileContentWrapper");
         div.replaceWith(response);
+       
+         // init Isotope
+        $grid = $('.grid').isotope({
+        itemSelector: '.grid-item',
+        percentPosition: true,
+        masonry: {
+          columnWidth: '.grid-sizer'
+        }
+        });
      });
    });
 
