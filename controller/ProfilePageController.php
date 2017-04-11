@@ -50,7 +50,7 @@ class ProfilePageController
     {
         // $reader = new UserCookieReader();
         // return $reader->get_user_id();
-        return 6;
+        return 20; // Usually 6
     }
 
     function generatePage(){
