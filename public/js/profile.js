@@ -72,6 +72,7 @@ $(function () {
     var url = window.location.protocol + "//" + window.location.host + "/profile/set-pending-viewed";
       $.post(url, function(response){
         // Do nothing
+        console.log(response);
       })
   });
 
