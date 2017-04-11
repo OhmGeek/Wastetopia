@@ -46,6 +46,8 @@ $(function(){
     
     // Make listing inactive - THIS WORKS (BUT ALSO REMOVES ALL TRANSACTIONS FOR THAT LISTING)
     $(document).on('click', 'a[href="#remove"]', function(){
+        var card = $(this).closest('.thumbnail');
+        
       // Extract listingID
         var listingID = $(this).attr("id"); 
         
@@ -56,6 +58,7 @@ $(function(){
         $.post(url, data, function(response){
            if(response){
                // Remove card from screen
+               remove(card);
            }else{
                // Show error   
            }
@@ -66,6 +69,7 @@ $(function(){
     
     // Mark request as complete - SEEMS TO WORK 
     $(document).on('click', 'a[href="#complete"]', function(){
+        var card = $(this).closest('.thumbnail');
       // Extract transactionID and listingID and new quantity
        var transactionID = $(this).closest('.thumbnail').attr("id");
        var listingID = $(this).closest(".btn-watch").prevAll('a[href="#view"]').attr("id");
@@ -78,6 +82,7 @@ $(function(){
         $.post(url, data, function(response){
            if(response){
                // Remove card from screen
+               remove(card);
            }else{
                // Show error   
            }
@@ -89,6 +94,7 @@ $(function(){
     
     //Reject request - THIS WORKS
     $(document).on('click', 'a[href="#reject"]', function(){
+        var card = $(this).closest('.thumbnail');
       // Extract transactionID and listingID
        var transactionID = $(this).closest('.thumbnail').attr("id");
        var listingID = $(this).closest(".btn-watch").prevAll('a[href="#view"]').attr("id"); 
@@ -101,6 +107,7 @@ $(function(){
             console.log(response)
            if(response){
                // Remove card from screen
+               remove(card);
            }else{
                // Show error   
            }
@@ -110,6 +117,7 @@ $(function(){
     
     // Cancel request - THIS WORKS (ONLY ON USER'S OWN PROFILE)
     $(document).on('click', 'a[href="#cancel"]', function(){
+        var card = $(this).closest('.thumbnail');
         console.log("Cancelling");
         
       // Extract transactionID and listingID
@@ -124,8 +132,8 @@ $(function(){
         $.post(url, data, function(response){
             console.log(response);
            if(response){
-               // Do something
                // Remove card from screen
+               remove(card);
            }else{
                // Show error   
            }
@@ -135,6 +143,7 @@ $(function(){
     // Cancel request using listingID - USED WHEN VIEWING CARD OUTSIDE OF YOUR PROFILE (I.E on search page)
     // WORKS BUT DOES SOME WEIRD REDIRECTION WITH A SERVER ERROR AFTER IT'S DONE
     $(document).on('click', 'a[href="#cancel-by-listing"]', function(){
+        var button = $(this);
         console.log("Cancelling");
         
       // Extract transactionID and listingID
@@ -150,7 +159,9 @@ $(function(){
             console.log(response);
            if(response){
                // Do something
-               // Change button to "Request"
+               // Change button to a "Request" button
+               button.html("Request");
+               button.attr("href", "#request");
            }else{
                // Show error   
            }
@@ -161,6 +172,7 @@ $(function(){
     // Request listing - THIS WORKS
     $(document).on('click', 'a[href="#request"]', function(event){
         event.preventDefault();
+        var button = $(this);
         console.log("Requesting");
         // Extract listingID
       var listingID = $(this).prevAll('a[href="#view"]').attr("id");  
@@ -173,6 +185,8 @@ $(function(){
            if(response){
                // Do something
                // Change button to cancel request button
+               button.html("Cancel request");
+               button.attr("href", "#cancel-by-listing");
            }else{
                // Show error   
            }
@@ -195,6 +209,7 @@ $(function(){
     
     // Rate listing(user)
     $(document).on('click', '#rate', function(){
+        var button = $(this);
         console.log("Rating");
         
       // Extract listingID
@@ -209,6 +224,7 @@ $(function(){
         $.post(url, data, function(response){
            if(response){
                // Remove rating buton from card
+               button.remove();
            }else{
                // Show error   
            }
@@ -286,4 +302,12 @@ $(function(){
       }
      });
   });
+    
+  // Remove an element from the layout - ele is in the form $(element)
+  function remove(ele) {
+    // remove clicked element (in a very skitchy way right now)
+    $grid.isotope( 'remove', ele.closest('.grid-item'))
+    // layout remaining item elements
+    .isotope('layout');
+  };
 });
