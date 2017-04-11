@@ -4,8 +4,8 @@
             <a role="button" data-toggle="tab" href="#home"><i class="material-icons">chevron_left</i></a>REQUESTS
         </div>
         <ul class="nav nav-pills request-options">
-            <li class="active"><a href="#pending-request" data-toggle="tab" role="button">Pending</a></li>
-            <li><a href="#completed-request" data-toggle="tab" role="button">Completed</a></li>
+            <li class="active"><a href="#pending-request" data-toggle="tab" role="button">Pending - {{ requests.pending|length }}</a></li>
+            <li><a href="#completed-request" data-toggle="tab" role="button">Completed - {{ requests.completed|length }}</a></li>
         </ul>
     </div>
     <div class="tab-content zero-padding" style="padding-top:10px; background-color:transparent;">
@@ -45,6 +45,8 @@
                                     <div class="nav-btns">
                                         <a href="#view" class="btn btn-primary" role="button"
                                            id="{{ item.listingID }}">View</a>
+                                        <a href="#rate" class="btn btn-default" role="button"
+                                              id="{{ item.listingID }}">Rate</a>
                                         <a href="#delete" role="button" class="btn-watch"><i
                                                     class="material-icons">delete</i></a>
                                     </div>

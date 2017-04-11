@@ -5,8 +5,8 @@
             OFFERS
         </div>
         <ul class="nav nav-pills request-options">
-            <li class="active"><a href="#pending-transaction" data-toggle="tab" role="button">Pending</a></li>
-            <li><a href="#completed-transaction" data-toggle="tab" role="button">Completed</a></li>
+            <li class="active"><a href="#pending-transaction" data-toggle="tab" role="button">Pending - {{ offers.pending|length }}</a></li>
+            <li><a href="#completed-transaction" data-toggle="tab" role="button">Completed - {{ offers.completed|length }}</a></li>
         </ul>
     </div>
     <div class="tab-content zero-padding" style="padding-top:10px; background-color:transparent;">

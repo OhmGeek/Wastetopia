@@ -8,8 +8,8 @@
         </div>
         {% if isUser == 1 %}
             <ul class="nav nav-pills request-options">
-                <li class="active"><a href="#available-listing" data-toggle="tab" role="button">Available</a></li>
-                <li><a href="#out-of-stock-listing" data-toggle="tab" role="button">Out of Stock</a></li>
+                <li class="active"><a href="#available-listing" data-toggle="tab" role="button">Available - {{ userListings.available|length }}</a></li>
+                <li><a href="#out-of-stock-listing" data-toggle="tab" role="button">Out of Stock - {{ userListings.outOfStock|length }}</a></li>
             </ul>
         {% endif %}
     </div>
