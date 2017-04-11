@@ -371,4 +371,27 @@ class ProfilePageModel
 	    
     }
 
+	
+    /** 
+    * Returns 1 if the given user has rated the given transaction
+    * @param $transactionID
+    * @param $userID
+    * @return int
+    */
+    function hasRated($transactionID, $userID){
+	$statement = $this->db->prepare("
+            SELECT COUNT(*) AS `Count`
+	    FROM `ListingTransaction`
+	    JOIN `Transaction` ON `Transaction`.`TransactionID` = `ListingTransaction`.`FK_Transaction_TransactionID`
+	    WHERE `Transaction`.`FK_User_UserID` = :userID
+	    AND `Transaction`.`TransactionID` = :transactionID
+	    AND `ListingTransaction`.`Rated` = 1;
+        ");
+        $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
+        $statement->bindValue(":transactionID", $transactionID, PDO::PARAM_INT);
+        $statement->execute();
+	
+        return $statement->fetchColumn() > 0;
+    }
+
 }
