@@ -48,9 +48,8 @@ class RequestModel
 	$statement->bindValue(":userID", $userID, PDO::PARAM_INT);    
         $statement->execute();
 	$results = $statement->fetchAll(PDO::FETCH_ASSOC);
-	print_r($results);
-	print_r($results["0"]);    
-        return $results["0"];
+	$result = $results["0"];   
+        return $result["TransactionID"];
     }
 	
 	/**
@@ -74,7 +73,8 @@ class RequestModel
 	$statement->bindValue(":useBy", $useBy, PDO::PARAM_STR); 
 	$statement->bindValue(":description", $description, PDO::PARAM_STR);     
         $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_ASSOC)["0"];
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC)["0"];
+	return $results["ItemID"];    
     }
 	
 	/**
