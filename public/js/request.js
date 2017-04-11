@@ -130,7 +130,8 @@ $(function(){
 
 
     //Reject request - THIS WORKS
-    $(document).on('click', 'a[href="#reject"]', function(){
+    $(document).on('click', 'a[href="#reject"]', function(event){
+      event.preventDefault();
         var card = $(this).closest('.thumbnail');
       // Extract transactionID and listingID
        var transactionID = card.attr("id");
@@ -172,7 +173,8 @@ $(function(){
 
 
     // Cancel request - THIS WORKS (ONLY ON USER'S OWN PROFILE)
-    $(document).on('click', 'a[href="#cancel"]', function(){
+    $(document).on('click', 'a[href="#cancel"]', function(event){
+      event.preventDefault();
       var card = $(this).closest('.thumbnail');
       console.log("Cancelling");
 
@@ -217,7 +219,8 @@ $(function(){
 
     // Cancel request using listingID - USED WHEN VIEWING CARD OUTSIDE OF YOUR PROFILE (I.E on search page)
     // WORKS BUT DOES SOME WEIRD REDIRECTION WITH A SERVER ERROR AFTER IT'S DONE
-    $(document).on('click', 'a[href="#cancel-by-listing"]', function(){
+    $(document).on('click', 'a[href="#cancel-by-listing"]', function(event){
+      event.preventDefault();
       var button = $(this);
       console.log("Cancelling");
 
@@ -325,7 +328,8 @@ $(function(){
        });
 
        // Rate listing(user)
-       $(document).on('click', '#rate', function(){
+       $(document).on('click', '#rate', function(event){
+         event.preventDefault();
          var button = $(this);
          console.log("Rating");
 
@@ -373,7 +377,8 @@ $(function(){
 
 
     // Renew listing
-    $(document).on('click','a[href="#renew"]',function(){
+    $(document).on('click','a[href="#renew"]',function(event){
+      event.preventDefault();
         var listingID = $(this).attr("id");
         var quantity = 1; // Get from pop-up
 
