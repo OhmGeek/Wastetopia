@@ -372,6 +372,7 @@ class ProfilePageModel
     /** 
     * Checks whether the given user has an ongoing request for the given listing
     * @param $listingID
+    * @param $userID
     * @return bool (True if user is requesting the listing)
     */
     function isRequesting($listingID, $userID){
@@ -383,8 +384,7 @@ class ProfilePageModel
 		JOIN `Listing` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
 	    WHERE `ListingTransaction`.`FK_Listing_ListingID` = :listingID
 	    AND `Transaction`.`FK_User_UserID` = :userID
-	    AND `ListingTransaction`.`Success` = 0
-	    AND `Listing`.`Active` = 1;
+	    AND `ListingTransaction`.`Success` = 0;
         ");
         $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
         $statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);
@@ -392,6 +392,27 @@ class ProfilePageModel
 	
         return $statement->fetchColumn() > 0;
 	    
+    }
+	
+	
+    /** 
+    * Checks whether the given user has the listing in their watch list
+    * @param $listingID
+    * @param $userID
+    * @return bool (True if user is requesting the listing)
+    */	
+    function isWatching($listingID, $userID){
+	$statement = $this->db->prepare("
+            SELECT COUNT(*) AS `Count`
+	    FROM `Watch`
+	    WHERE `FK_User_UserID` = :userID
+	    AND `FK_Listing_ListingID` = :listingID;
+        ");
+        $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
+        $statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);
+        $statement->execute();
+	
+        return $statement->fetchColumn() > 0;	
     }
 
 	
