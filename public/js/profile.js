@@ -9,7 +9,6 @@ $(function () {
   });
 
   $(document).on('shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
-    console.log("Reloading tab");
     var userID = $('.user-name').attr("id");
     var tabID = $(this).attr('href');
     var relativeURL = "";
@@ -26,16 +25,13 @@ $(function () {
     }else{
       return; 
     }
-    
-    console.log(tabID);
-   
     var url = window.location.protocol + "//" + window.location.host + "/profile/" + relativeURL +"/" + userID;
-    console.log(url);
+
      $.get(url, function(response){
-       console.log(response);
+
         var div = $(tabID); // Reload specific tab section
         div.load(response);
-       console.log("Loaded");
+
        
        // re initialize isotope
        $grid = $('.grid').isotope({
@@ -70,17 +66,17 @@ $(function () {
     
   });
 
-  // Reload HTML content in HOME tab when Back buttons pressed on each tab - not working
-  $(document).on('click', 'a[href="#home"]', function (){
-    console.log("Reloading");
-    var userID = $('.user-name').attr("id");
-    var url = window.location.protocol + "//" + window.location.host + "/profile/load-home-tab/" + userID;
-     $.get(url, function(response){
-        var div = $("#home");
-        div.replaceWith(response);
+//   // Reload HTML content in HOME tab when Back buttons pressed on each tab - not working
+//   $(document).on('click', 'a[href="#home"]', function (){
+//     console.log("Reloading");
+//     var userID = $('.user-name').attr("id");
+//     var url = window.location.protocol + "//" + window.location.host + "/profile/load-home-tab/" + userID;
+//      $.get(url, function(response){
+//         var div = $("#home");
+//         div.replaceWith(response);
        
-     });
-   });
+//      });
+//    });
   
 
 
@@ -91,13 +87,13 @@ $(function () {
 //     remove(this)
 //   });
 
-  // Remove an element from the layout
-  function remove(ele) {
-    // remove clicked element (in a very skitchy way right now)
-    $grid.isotope( 'remove', $(ele).closest('.grid-item'))
-    // layout remaining item elements
-    .isotope('layout');
-  };
+//   // Remove an element from the layout
+//   function remove(ele) {
+//     // remove clicked element (in a very skitchy way right now)
+//     $grid.isotope( 'remove', $(ele).closest('.grid-item'))
+//     // layout remaining item elements
+//     .isotope('layout');
+//   };
 
 //   // Toggle listings in the watch list
 //   $grid.on('click', '.btn-watch', function(){
