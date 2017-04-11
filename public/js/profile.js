@@ -8,7 +8,7 @@ $(function () {
     }
   });
 
-  $('a[data-toggle="tab"]').live('shown.bs.tab', function (e) {
+  $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
     console.log($(e.target).attr("href"));
     var width = 150;
     var height = 150;
@@ -32,7 +32,7 @@ $(function () {
   });
 
   // Reload HTML content when Back buttons pressed on each tab - not working
-  $('a[href="#home"]').live('click',function (){
+  $('a[href="#home"]').on('click',function (){
     console.log("Reloading");
     var userID = $('.user-name').attr("id");
     var url = window.location.protocol + "//" + window.location.host + "/profile/update/" + userID;
@@ -43,7 +43,7 @@ $(function () {
    });
 
   // Delete a card from the page
-  $grid.live('click', '#delete', function() {
+  $grid.on('click', '#delete', function() {
     // get the id of the item would be removed
     console.log($(this).closest('.thumbnail').attr("id"));
     remove(this)
