@@ -162,7 +162,7 @@ function serializeItem() {
   return item;
 }
 
-$( "#main-form" ).submit(function( event ) {
+$( "#main-form" ).on('submit', function( event ) {
     console.log( "Handler for .submit() called." );
     event.preventDefault();
 
