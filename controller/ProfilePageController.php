@@ -453,7 +453,7 @@ class ProfilePageController
             $defaultImage = $this->cardDetailsModel->getDefaultImage($listingID);
             $imageURL = $defaultImage["Image_URL"];
             $isRequesting = $this->model->isRequesting($listingID, $this->getUserID());
-            $isWatching = $this->profilePageModel->isWatching($listingID, $this->getUserID());
+            $isWatching = $this->model->isWatching($listingID, $this->getUserID());
             $item = array(
                 "listingID" => $listingID,
                 "itemName" => $itemName,
