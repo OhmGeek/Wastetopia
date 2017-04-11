@@ -108,9 +108,9 @@ function getSelectedDietaryReqs() {
 
 function getMayContainsDetails() {
   var mayContain = [];
-  $('.may-contains-select option').forEach(function(elem) {
-    if(elem.val()) {
-      mayContain.append(elem.text);
+  $('.may-contains-select option:selected').forEach(function(elem) {
+    if(elem.text()) {
+      mayContain.append(elem.text());
     }
   });
   return mayContain;
