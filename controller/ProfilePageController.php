@@ -162,7 +162,7 @@ class ProfilePageController
                         }
                     }
                 }
-	if(active){
+	if($active){
                 // Check whether it has quantity or not
                 if ($listingQuantity > 0){
                     array_push($availableListingsSending, $listingID);
