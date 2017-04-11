@@ -153,13 +153,15 @@ class ProfilePageController
                         $sendingTransactionsCount += 1;
                         $transactionID = $transaction["TransactionID"];
                         $completed = $transaction["Success"];
-                        if ($completed) {
+                        if ($completed == 1) {
                             // Need to figure out how to deal with these as transactions
                             array_push($completedSending, $transactionID); //Get display information later
-                        } else {
+                        }elseif($completed == 0) {
                             // Need to figure out how to deal with these as transactions
                             array_push($pendingSending, $transactionID);   //Get display information later
-                        }
+                        }else{
+			  //Do nothing	- it transaction has been rejected
+			}
                     }
                 }
 	if($active){
