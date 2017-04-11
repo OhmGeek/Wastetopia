@@ -578,7 +578,12 @@ class ProfilePageController
         }
     }
     
-    public setAllPendingAsViewed(){
+    
+    /**
+    * Sets all pending requests to viewed
+    * @return bool
+    */
+    function setAllPendingAsViewed(){
         $listingTransactions = $this->model->getUnseenPendingTransactions();
         foreach($listingTransactions as $listingTransaction){
             $transactionID = $listingTransaction["TransactionID"];
