@@ -1,13 +1,13 @@
 // JS file to deal with requestModel stuff on any page (if cardIDs are the same)
 $(function(){
-    // init Isotope
-  var $grid = $('.grid').isotope({
-    itemSelector: '.grid-item',
-    percentPosition: true,
-    masonry: {
-      columnWidth: '.grid-sizer'
-    }
-  });
+//     // init Isotope
+//   var $grid = $('.grid').isotope({
+//     itemSelector: '.grid-item',
+//     percentPosition: true,
+//     masonry: {
+//       columnWidth: '.grid-sizer'
+//     }
+//   });
 
     //TODO: ADD FUNCTIONALITY TO SET ALL PENDING TRANSACTIONS AS VIEWED
     //TODO: Fix watch-list toggle issue
