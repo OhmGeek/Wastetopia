@@ -43,12 +43,12 @@ $(function () {
      });
    });
 
-  // Delete a card from the page
-  $grid.on('click', '#delete', function() {
-    // get the id of the item would be removed
-    console.log($(this).closest('.thumbnail').attr("id"));
-    remove(this)
-  });
+//   // Delete a card from the page
+//   $grid.on('click', '#delete', function() {
+//     // get the id of the item would be removed
+//     console.log($(this).closest('.thumbnail').attr("id"));
+//     remove(this)
+//   });
 
   // Remove an element from the layout
   function remove(ele) {
