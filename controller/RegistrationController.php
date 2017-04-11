@@ -154,7 +154,7 @@ class RegistrationController
         $message = "Your Activation Code is ".$code."";
         $to=$email;
         $subject="Activation Code For Wastetopia";
-        $from = 'stephenchurch9@hotmail.com'; 
+        $from = 'wastetopia@ohmgeek.co.uk'; 
         $body='Your Activation Code is '.$code.' Please Click On This link <a href='.$fullURL'.> https:'.$fullURL.' </a> to activate  your account.';
         $altBody = "Please go to: https:".$fullURL;
 //         // PHPMailer code
