@@ -8,8 +8,7 @@ $(function () {
     }
   });
 
-  $(document).on('shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
-    var userID = $('.user-name').attr("id");
+  $(document).on('click', 'a[data-toggle="tab"]', function(){
     var tabID = $(this).attr('href');
     var relativeURL = "";
     if (tabID == "#listings" || tabID == "#available-listing" || "#out-of-stock-listing" ){
@@ -25,6 +24,43 @@ $(function () {
     }else{
       return;
     }
+    
+    var url = window.location.protocol + "//" + window.location.host + "/profile/" + relativeURL +"/" + userID;
+
+     $.get(url, function(response){
+
+        var div = $(tabID); // Reload specific tab section
+        div.load(response);
+
+
+       // re initialize isotope
+       $grid = $('.grid').isotope({
+          itemSelector: '.grid-item',
+          percentPosition: true,
+          masonry: {
+            columnWidth: '.grid-sizer'
+          }
+        });
+      });
+  });
+  
+  $(document).on('shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
+    var userID = $('.user-name').attr("id");
+//     var tabID = $(this).attr('href');
+//     var relativeURL = "";
+//     if (tabID == "#listings" || tabID == "#available-listing" || "#out-of-stock-listing" ){
+//       relativeURL = "load-listings-tab";
+//     }else if(tabID == "#requests" || tabID == "#completed-request" || "#pending-request" ){
+//       relativeURL = "load-requests-tab";
+//     }else if(tabID == "#offers" || tabID == "#completed-transaction" || "#pending-transaction" ){
+//      relativeURL = "load-offers-tab";
+//     }else if(tabID == "#watchList"){
+//      relativeURL = "load-watchlist-tab";
+//     }else if(tabID == "#home"){
+//      relativeURL = "load-home-tab";
+//     }else{
+//       return;
+//     }
     console.log($(e.target).attr("href"));
     var width = 150;
     var height = 150;
@@ -46,23 +82,23 @@ $(function () {
     $('.user-profile .popularity').css('font-size',iconSize);
     $('.page-height').css('padding-top',topPadding);
     
-    var url = window.location.protocol + "//" + window.location.host + "/profile/" + relativeURL +"/" + userID;
+//     var url = window.location.protocol + "//" + window.location.host + "/profile/" + relativeURL +"/" + userID;
 
-     $.get(url, function(response){
+//      $.get(url, function(response){
 
-        var div = $(tabID); // Reload specific tab section
-        div.load(response);
+//         var div = $(tabID); // Reload specific tab section
+//         div.load(response);
 
 
-       // re initialize isotope
-       $grid = $('.grid').isotope({
-          itemSelector: '.grid-item',
-          percentPosition: true,
-          masonry: {
-            columnWidth: '.grid-sizer'
-          }
-        });
-      });
+//        // re initialize isotope
+//        $grid = $('.grid').isotope({
+//           itemSelector: '.grid-item',
+//           percentPosition: true,
+//           masonry: {
+//             columnWidth: '.grid-sizer'
+//           }
+//         });
+//       });
   });
 
 //   // Reload HTML content in HOME tab when Back buttons pressed on each tab - not working
