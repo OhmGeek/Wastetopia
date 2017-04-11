@@ -30,7 +30,9 @@ $(function () {
     console.log(tabID);
    
     var url = window.location.protocol + "//" + window.location.host + "/profile/" + relativeURL +"/" + userID;
+    console.log(url);
      $.get(url, function(response){
+       console.log(response);
         var div = $(tabID); // Reload specific tab section
         div.replaceWith(response);
        console.log("Loaded");
