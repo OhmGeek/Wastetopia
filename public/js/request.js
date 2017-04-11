@@ -213,7 +213,7 @@ $(function(){
     
     
     // Renew listing
-    $('a[href="#renew"]').click(function(){
+    $(document).on('click','a[href="#renew"]',function(){
         var listingID = $(this).attr("id");
         var quantity = 1; // Get from pop-up
         
@@ -233,7 +233,7 @@ $(function(){
     
     
     // View listing - THIS WORKS
-    $('a[href="#view"]').click(function(event){
+    $(document).on('click','a[href="#view"]',function(event){
         event.preventDefault();
         console.log("VIEW");
         var listingID = $(this).attr("id");
