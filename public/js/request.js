@@ -9,7 +9,7 @@ $(function(){
 //     }
 //   });
 
-   
+
     //TODO: Fix watch-list toggle issue
     //TODO: Test renew and rate
     //TODO: Link to edit and messaging pages
@@ -93,6 +93,7 @@ $(function(){
 
        var itemName = card.find('.caption').find('h3').text()
        var requestedQuantity = card.find('.caption').find('.trans-info .quantity').text()
+       console.log(requestedQuantity)
 
        $('body').append(completeModal);
 
@@ -208,13 +209,13 @@ $(function(){
         event.preventDefault();
         var button = $(this);
         console.log("Requesting");
-	    
+
        // Extract listingID
       var listingID = $(this).prevAll('a[href="#view"]').attr("id");
-	    
+
       // Pop up to get quantity
-	//var quantity = ;    
-	    
+	//var quantity = ;
+
         // Send to /items/request
         var url = baseURL + "/items/request";
         var data = {listingID : listingID, quantity: quantity};
@@ -252,8 +253,8 @@ $(function(){
 
       // Extract listingID
         var transactionID = $(this).closest('.thumbnail').attr("id");
-	    
-	// Pop up box here     
+
+	// Pop up box here
         var rating = 0; // Get from pop-up
 
       // NEED TO DECIDE WHAT URL TO USE
