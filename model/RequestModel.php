@@ -31,16 +31,46 @@ class RequestModel
     }
 
 	/**
-     * Returns the ID of the last thing inserted in the database
+     * Returns the ID of the last incomplete transaction the $userID made for the $listingID
+     * @param $listingID
+     * @param $userID
      * @return int
      */
-    private function getLastInsertID()
+    private function getLastTransactionID($listingID, $userID)
     {
         $statement = $this->db->prepare("
-            SELECT LAST_INSERT_ID()
+            SELECT `Transaction`.`TransactionID`
+	    FROM `Transaction`
+	    JOIN `ListingTransaction` ON `Transaction`.`TransactionID` = `ListingTransaction`.`FK_Transaction_TransactionID`
+	    WHERE `Transaction`.`FK_User_UserID` = :userID
+	    AND `ListingTransaction`.`FK_Listing_ListingID` = :listingID
+	    AND `ListingTransaction`.`Success` = 0
+	    ORDER BY `Transaction`.`Time_Of_Application` DESC;
          ");
+	    
         $statement->execute();
-        return $statement->fetchColumn();
+        return $statement->fetchAll(PDO::FETCH_ASSOC)["0"];
+    }
+	
+	/**
+     * Returns the ID of the last item inserted with the given parameters
+     * @param $name
+     * @param $useBy
+     * @param $description
+     * @return int
+     */
+    private function getLastItemID($name, $useBy, $description)
+    {
+        $statement = $this->db->prepare("
+            SELECT `Item`.`ItemID`
+	    WHERE `Item`.`Name` = :name
+	    AND `Item`.`Use_By` = :useBy
+	    AND `Item`.`Description` = :description
+	    ORDER BY `Item`.`ItemID` DESC;
+         ");
+	    
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_ASSOC)["0"];
     }
 	
 	/**
@@ -59,6 +89,7 @@ class RequestModel
 		$statement->execute();
 		return $statement->fetchColumn();
 	}
+
 	
 	//Add something for if item is in watchList, need to remove it
 	/**
@@ -83,7 +114,7 @@ class RequestModel
 		$statement1->bindValue(":userID", $currentUser, PDO::PARAM_INT);
 		$statement1->execute();
 		
-		$transaction_id = $this->getLastInsertID();
+		$transaction_id = $this->getLastTransactionID();
 		print_r("Transaction: ".$transaction_id);
 		
 		//then link the transaction to the listing
@@ -221,15 +252,23 @@ class RequestModel
 		//create the new listing of the specified quantity
 		$listing_info = $this->listing_model->getListingInfo($listing_id)["0"];
 		$item_info = $this->item_model->getItemInfoFromItemID($listing_info["FK_Item_ItemID"])["0"];
+		
+		$name = $item_info["Name"];
+		$useBy = $item_info["Use_By"];
+		$description = $item_info["Description"];
+		
 		$statement0 = $this->db->prepare("
 			INSERT INTO Item(Name, Description,Use_By)
 			VALUES(:name, :description, :use_by);
 		");
-		$statement0->bindValue(":name", $item_info["Name"], PDO::PARAM_STR);
-		$statement0->bindValue(":description", $item_info["Description"], PDO::PARAM_STR);
-		$statement0->bindValue(":use_by", $item_info["Use_By"], PDO::PARAM_STR);
+		$statement0->bindValue(":name", $name, PDO::PARAM_STR);
+		$statement0->bindValue(":description", $description, $item_info["Description"], PDO::PARAM_STR);
+		$statement0->bindValue(":use_by", $useBy, PDO::PARAM_STR);
 		$statement0->execute();
-		$new_item_id = $this->getLastInsertID();
+		
+		$new_item_id = $this->getLastItemID($name, $useBy, $description); // Replace with SQL query
+		
+		// NEED TO LINK THE ITEM TO THE CORRECT TAGS AND IMAGES
 		
 		$statement = $this->db->prepare("
 			INSERT INTO Listing(FK_Location_LocationID, FK_Item_ItemID, FK_User_UserID, Quantity)
