@@ -16,7 +16,7 @@ $(function () {
     if (tabID == "#listings"){
       relativeURL = "load-listings-tab";
     }else if(tabID == "#requests"){
-      relativeURL == "load-requests-tab"; 
+      relativeURL = "load-requests-tab"; 
     }else if(tabID == "#offers"){
      relativeURL = "load-offers-tab"; 
     }else if(tabID == "#watchList"){
