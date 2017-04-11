@@ -27,6 +27,7 @@ class MessageController
 
 
     function generatePageFromListing($listingID){
+	    print_r($listingID);
 	$conversationIDs = $this->model->getConversationIDFromListing($listingID);
 	if (count($conversationsIDs) > 0){
 	    // Conversation already exists	
@@ -38,6 +39,7 @@ class MessageController
 	   $conversationIDs = $this->model->getConversationIDFromListing($listingID);
 	   $conversationID = $conversationIDs[0];	
 	}
+	print_r($conversationID);    
 	return $this->generatePage($conversationID);    
     }
 
@@ -56,6 +58,7 @@ class MessageController
 
         //Get details of conversation (names)
         $details = $this->model->getConversationDetails($conversationID);
+	print_r($details);    
 	$details = $details[0];
         $userName = $details["Forename"]." ".$details["Surname"];
         $userID = $details["UserID"]; //ID of other user in conversation
@@ -95,7 +98,7 @@ class MessageController
 
         // Get the messages
         $messageResults = $this->model->getMessagesFromConversation($conversationID);
-
+	print_r($messageResults);
 
         //Do all the processing of variables here
 		$messages = array();
