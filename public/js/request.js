@@ -71,6 +71,7 @@ $(function(){
         
         var url = baseURL + "/items/reject-request";
         var data = {listingID : listingID, transactionID : transactionID};
+        console.log(data);
         $.post(url, data, function(response){
             console.log(response)
            if(response){
