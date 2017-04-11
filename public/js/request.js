@@ -386,6 +386,8 @@ $(function(){
         var listingID = $(this).attr("id");
         var quantity = 1; // Get from pop-up
 
+        
+        // NEED TO ADD A POP-UP HERE
        // Send to /items/renew-listing/
 
         var url = baseURL + "/items/renew-listing";
