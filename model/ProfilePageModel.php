@@ -72,7 +72,30 @@ class ProfilePageModel
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 	
-    
+   
+	
+    /*
+    * Gets the pending offers made for user's items which they haven't seen yet (notification)
+    * @return mixed 
+    */
+    function getUnseenPendingTransactions(){
+	$userID = $this->getUserID();
+        $statement = $this->db->prepare("
+            SELECT `Transaction`.`TransactionID, `Listing`.`ListingID`
+	    FROM `ListingTransaction`
+	    JOIN `Listing` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
+	    JOIN `Transaction` ON `Transaction`.`TransactionID` = ListingTransaction`.`FK_Transaction_TransactionID`
+	    WHERE `ListingTransaction`.`Success` = 0
+	    AND `ListingTransaction`.`Viewed` = 0
+	    AND `Listing`.`FK_User_UserID` = :userID
+	    AND `Listing`.`Active` = 1;
+        ");
+        $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
+        $statement->execute();
+        return $statement->fetchColumn();    
+    }
+	
+	
     /*
     * Gets the total number of pending offers made for user's items which they haven't seen yet (notification)
     * @returns integer (total)
@@ -294,9 +317,8 @@ class ProfilePageModel
      * Can then use getStateOfListingTransactions() to check if the transaction should go in History or Currently Watching
      * @return mixed (listingID and WatchID)
      */
-    function getWatchedListings()
+    function getWatchedListings($userID)
     {
-        $userID = $this->getUserID();
         $statement = $this->db->prepare("
             SELECT `Listing`.`ListingID`, `Watch`.`WatchID`
             FROM `Listing`
@@ -314,9 +336,9 @@ class ProfilePageModel
      * Deletes a listing from user's watch list
      * @param $watchID
      */
-    function deleteFromWatchList($listingID)
+    function deleteFromWatchList($listingID, $userID)
     {
-        $userID = $this->getUserID();
+ 
         $statement = $this->db->prepare("
             DELETE
             FROM `Watch`
@@ -332,9 +354,9 @@ class ProfilePageModel
      * Adds a listing to a user's watch list
      * @param $listingID
      */
-    function addToWatchList($listingID)
+    function addToWatchList($listingID, $userID)
     {
-        $userID = $this->getUserID();
+
         $statement = $this->db->prepare("
             INSERT
             INTO `Watch`(`FK_User_UserID`, `FK_Listing_ListingID`)
@@ -348,12 +370,13 @@ class ProfilePageModel
 	
 	
     /** 
-    * Checks whether the current user has an ongoing request for the given listing
+    * Checks whether the given user has an ongoing request for the given listing
     * @param $listingID
+    * @param $userID
     * @return bool (True if user is requesting the listing)
     */
-    function isRequesting($listingID){
-	$userID = $this->getUserID();
+    function isRequesting($listingID, $userID){
+
         $statement = $this->db->prepare("
             SELECT COUNT(*) AS `Count`
 	    FROM `ListingTransaction`
@@ -361,14 +384,58 @@ class ProfilePageModel
 		JOIN `Listing` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
 	    WHERE `ListingTransaction`.`FK_Listing_ListingID` = :listingID
 	    AND `Transaction`.`FK_User_UserID` = :userID
-	    AND `ListingTransaction`.`Success` = 0
-	    AND `Listing`.`Active` = 1;
+	    AND `ListingTransaction`.`Success` = 0;
         ");
         $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
         $statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);
         $statement->execute();
+	
         return $statement->fetchColumn() > 0;
 	    
+    }
+	
+	
+    /** 
+    * Checks whether the given user has the listing in their watch list
+    * @param $listingID
+    * @param $userID
+    * @return bool (True if user is requesting the listing)
+    */	
+    function isWatching($listingID, $userID){
+	$statement = $this->db->prepare("
+            SELECT COUNT(*) AS `Count`
+	    FROM `Watch`
+	    WHERE `FK_User_UserID` = :userID
+	    AND `FK_Listing_ListingID` = :listingID;
+        ");
+        $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
+        $statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);
+        $statement->execute();
+	
+        return $statement->fetchColumn() > 0;	
+    }
+
+	
+    /** 
+    * Returns 1 if the given user has rated the given transaction
+    * @param $transactionID
+    * @param $userID
+    * @return int
+    */
+    function hasRated($transactionID, $userID){
+	$statement = $this->db->prepare("
+            SELECT COUNT(*) AS `Count`
+	    FROM `ListingTransaction`
+	    JOIN `Transaction` ON `Transaction`.`TransactionID` = `ListingTransaction`.`FK_Transaction_TransactionID`
+	    WHERE `Transaction`.`FK_User_UserID` = :userID
+	    AND `Transaction`.`TransactionID` = :transactionID
+	    AND `ListingTransaction`.`Rated` = 1;
+        ");
+        $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
+        $statement->bindValue(":transactionID", $transactionID, PDO::PARAM_INT);
+        $statement->execute();
+	
+        return $statement->fetchColumn() > 0;
     }
 
 }

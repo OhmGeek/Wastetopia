@@ -8,7 +8,43 @@ $(function () {
     }
   });
 
-  $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+  // RELOADING IS NOT WORKING
+  $(document).on('click', 'a[data-toggle="tab"]', function(){
+    var userID = $('.user-name').attr("id");
+    var tabID = $(this).attr('href');
+    var relativeURL = "";
+    if (tabID == "#listings" || tabID == "#available-listing" || "#out-of-stock-listing" ){
+      relativeURL = "load-listings-tab";
+    }else if(tabID == "#requests" || tabID == "#completed-request" || "#pending-request" ){
+      relativeURL = "load-requests-tab";
+    }else if(tabID == "#offers" || tabID == "#completed-transaction" || "#pending-transaction" ){
+     relativeURL = "load-offers-tab";
+    }else if(tabID == "#watchList"){
+     relativeURL = "load-watchlist-tab";
+    }else if(tabID == "#home"){
+     relativeURL = "load-home-tab";
+    }else{
+      return;
+    }
+
+    var url = window.location.protocol + "//" + window.location.host + "/profile/" + relativeURL +"/" + userID;
+     $.get(url, function(response){
+        var div = $(tabID); // Reload specific tab section
+        div.load(response);
+
+       // re initialize isotope
+       $grid = $('.grid').isotope({
+          itemSelector: '.grid-item',
+          percentPosition: true,
+          masonry: {
+            columnWidth: '.grid-sizer'
+          }
+        });
+      });
+  });
+
+  $(document).on('shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
+
     console.log($(e.target).attr("href"));
     var width = 150;
     var height = 150;
@@ -29,54 +65,16 @@ $(function () {
     $('.user-profile .popularity i').css('font-size',iconSize);
     $('.user-profile .popularity').css('font-size',iconSize);
     $('.page-height').css('padding-top',topPadding);
+
   });
 
-  // Reload HTML content when Back buttons pressed on each tab - not working
-  $grid.on('click', 'a[href="#home"]',function (){
-    console.log("Reloading");
-    var userID = $('.user-name').attr("id");
-    var url = window.location.protocol + "//" + window.location.host + "/profile/update/" + userID;
-     $.get(url, function(response){
-        var div = $("#profileContentWrapper");
-        div.replaceWith(response);
-     });
-   });
-
-  // Delete a card from the page
-  $grid.on( 'click', '#delete', function() {
-    // get the id of the item would be removed
-    console.log($(this).closest('.thumbnail').attr("id"));
-    remove(this)
+  // Set all pending transactions to viewed
+  $(document).on('shown.bs.tab', 'a[href="#pending-transaction"]', function(){
+    var url = window.location.protocol + "//" + window.location.host + "/profile/set-pending-viewed";
+      $.post(url, function(response){
+        // Do nothing
+        console.log(response);
+      })
   });
 
-  // Remove an element from the layout
-  function remove(ele) {
-    // remove clicked element (in a very skitchy way right now)
-    $grid.isotope( 'remove', $(ele).closest('.grid-item'))
-    // layout remaining item elements
-    .isotope('layout');
-  };
-
-//   // Toggle listings in the watch list
-//   $grid.on('click', '.btn-watch', function(){
-//      var listingID = $(this).closest('.thumbnail').attr("id");
-//      var isUser = parseInt($(this).closest('.user-stats').attr("id"));
-//      var listing = $(this);
-
-//      $.post("/profile/toggle-watch-list/"+listingID, function(response){
-//        // Do something depending on if response is true or false?? (Currently always true)
-//        console.log("DONE");
-//        console.log(response);
-//       // 1 means deleted, 2 means added
-//       if (response == 1){
-//         // Set colour to pale (Deleted)
-//         listing.removeClass("watched");
-//         console.log(listing);
-//       }else{
-//         // Set colour to dark (Added)
-//         listing.addClass("watched");
-//         console.log(listing);
-//       }
-//      });
-//   });
 });

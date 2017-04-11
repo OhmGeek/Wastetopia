@@ -30,17 +30,77 @@ class RequestModel
         return 6; //Hardcoded for now
     }
 
+	
+   /**
+     * Returns the ID of the last incomplete transaction the $userID made for the $listingID
+     * @param $listingID
+     * @param $userID
+     * @return int
+     */	
+   function getTransactionIDFromListingID($listingID){
+	   $userID = $this->getUserID();
+	   $statement = $this->db->prepare("
+            SELECT `Transaction`.`TransactionID`
+	    FROM `Transaction`
+	    JOIN `ListingTransaction` ON `Transaction`.`TransactionID` = `ListingTransaction`.`FK_Transaction_TransactionID`
+	    WHERE `Transaction`.`FK_User_UserID` = :userID	
+	    AND `ListingTransaction`.`FK_Listing_ListingID` = :listingID
+	    AND `ListingTransaction`.`Success` = 0
+	    ORDER BY `Transaction`.`Time_Of_Application` DESC;
+         ");
+	$statement->bindValue(":userID", $userID, PDO::PARAM_INT);    
+	$statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);   
+        $statement->execute();
+	$results = $statement->fetchAll(PDO::FETCH_ASSOC);
+	$result = $results["0"];   
+        return $result["TransactionID"];
+	   
+   }
+	
 	/**
-     * Returns the ID of the last thing inserted in the database
+     * Returns the ID of the last transaction the User made
+     * @param $userID
      * @return int
      */
-    private function getLastInsertID()
+    private function getLastTransactionID($userID)
+    {
+
+        $statement = $this->db->prepare("
+            SELECT `Transaction`.`TransactionID`
+	    FROM `Transaction`
+	    WHERE `Transaction`.`FK_User_UserID` = :userID	    
+	    ORDER BY `Transaction`.`Time_Of_Application` DESC;
+         ");
+	$statement->bindValue(":userID", $userID, PDO::PARAM_INT);    
+        $statement->execute();
+	$results = $statement->fetchAll(PDO::FETCH_ASSOC);
+	$result = $results["0"];   
+        return $result["TransactionID"];
+    }
+	
+	/**
+     * Returns the ID of the last item inserted with the given parameters
+     * @param $name
+     * @param $useBy
+     * @param $description
+     * @return int
+     */
+    private function getLastItemID($name, $useBy, $description)
     {
         $statement = $this->db->prepare("
-            SELECT LAST_INSERT_ID()
+            SELECT `Item`.`ItemID`
+	    WHERE `Item`.`Name` = :name
+	    AND `Item`.`Use_By` = :useBy
+	    AND `Item`.`Description` = :description
+	    ORDER BY `Item`.`ItemID` DESC;
          ");
+	    
+	$statement->bindValue(":name", $name, PDO::PARAM_STR); 
+	$statement->bindValue(":useBy", $useBy, PDO::PARAM_STR); 
+	$statement->bindValue(":description", $description, PDO::PARAM_STR);     
         $statement->execute();
-        return $statement->fetchColumn();
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC)["0"];
+	return $results["ItemID"];    
     }
 	
 	/**
@@ -59,6 +119,7 @@ class RequestModel
 		$statement->execute();
 		return $statement->fetchColumn();
 	}
+
 	
 	//Add something for if item is in watchList, need to remove it
 	/**
@@ -83,7 +144,7 @@ class RequestModel
 		$statement1->bindValue(":userID", $currentUser, PDO::PARAM_INT);
 		$statement1->execute();
 		
-		$transaction_id = $this->getLastInsertID();
+		$transaction_id = $this->getLastTransactionID($currentUser);
 		print_r("Transaction: ".$transaction_id);
 		
 		//then link the transaction to the listing
@@ -221,15 +282,45 @@ class RequestModel
 		//create the new listing of the specified quantity
 		$listing_info = $this->listing_model->getListingInfo($listing_id)["0"];
 		$item_info = $this->item_model->getItemInfoFromItemID($listing_info["FK_Item_ItemID"])["0"];
+		
+		$name = $item_info["Name"];
+		$useBy = $item_info["Use_By"];
+		$description = $item_info["Description"];
+		
 		$statement0 = $this->db->prepare("
 			INSERT INTO Item(Name, Description,Use_By)
 			VALUES(:name, :description, :use_by);
 		");
-		$statement0->bindValue(":name", $item_info["Name"], PDO::PARAM_STR);
-		$statement0->bindValue(":description", $item_info["Description"], PDO::PARAM_STR);
-		$statement0->bindValue(":use_by", $item_info["Use_By"], PDO::PARAM_STR);
+		$statement0->bindValue(":name", $name, PDO::PARAM_STR);
+		$statement0->bindValue(":description", $description, $item_info["Description"], PDO::PARAM_STR);
+		$statement0->bindValue(":use_by", $useBy, PDO::PARAM_STR);
 		$statement0->execute();
-		$new_item_id = $this->getLastInsertID();
+		
+		$new_item_id = $this->getLastItemID($name, $useBy, $description); // Replace with SQL query
+		
+		//adding item tags
+		$statement01 = $this->db->prepare("
+			INSERT INTO ItemTag(FK_Item_ItemID, FK_Tag_TagID)
+			SELECT :new_item_id, ItemTag.FK_Tag_TagID
+			FROM ItemTag WHERE FK_Item_ItemID = :old_item_id;
+		");
+		$statement01->bindValue(":new_item_id", $new_item_id, PDO::PARAM_INT);
+		$statement01->bindValue(":old_item_id", $listing_info["FK_Item_ItemID"], PDO::PARAM_INT);
+		$statement01->execute();
+		
+		
+		// adding item's images 
+		$statement01 = $this->db->prepare("
+			INSERT INTO ItemImage(FK_Item_ItemID, FK_Image_ImageID, Is_Default)
+			SELECT :new_item_id, FK_Image_ImageID, Is_Default
+			FROM ItemImage WHERE FK_Item_ItemID = :old_item_id;
+		");
+		$statement02->bindValue(":new_item_id", $new_item_id, PDO::PARAM_INT);
+		$statement02->bindValue(":old_item_id", $listing_info["FK_Item_ItemID"], PDO::PARAM_INT);
+		$statement02->execute();
+
+		
+		
 		
 		$statement = $this->db->prepare("
 			INSERT INTO Listing(FK_Location_LocationID, FK_Item_ItemID, FK_User_UserID, Quantity)
@@ -267,15 +358,18 @@ class RequestModel
 	 */
 	
 	function rejectRequest($listing_id, $transaction_id){
+		print_r("LISTING: ".$listing_id);
+		print_r("TRANSACTION: ".$transaction_id);
 		$statement = $this->db->prepare("
-			UPDATE ListingTransaction
-			SET Success = 2
-			WHERE FK_Listing_ListingID = :listing_id
-			AND FK_Transaction_TransactionID = :transaction_id;
+			UPDATE `ListingTransaction`
+			SET `ListingTransaction`.`Success` = 2
+			WHERE `ListingTransaction`.`FK_Listing_ListingID` = :listing_id
+			AND `ListingTransaction`.`FK_Transaction_TransactionID` = :transaction_id;
 		");
 		$statement->bindValue(":listing_id", $listing_id, PDO::PARAM_INT);
 		$statement->bindValue(":transaction_id", $transaction_id, PDO::PARAM_INT);
 		$statement->execute();
+		return True;
 	}
 	
 	function withdrawRequest($transaction_id){

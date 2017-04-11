@@ -12,6 +12,7 @@ use Wastetopia\Controller\MessageController;
 use Wastetopia\Controller\RecommendationController;
 
 use Wastetopia\Model\RequestModel;
+use Wastetopia\Model\PopularityModel;
 
 
 
@@ -82,9 +83,34 @@ $klein->with("/profile", function() use ($klein) {
         return $controller->generatePage();
     });
     
-    $klein->respond('GET', 'update/[:userID]', function($request, $response){
+    $klein->respond('GET', '/update/[:userID]', function($request, $response){
        $controller = new ProfilePageController(0, $request->userID);
        return $controller->generateProfileContentHTML(); 
+    });
+    
+    $klein->respond('GET', '/load-home-tab/[:userID]', function($request, $response){
+        $controller = new ProfilePageController(0, $request->userID);
+        return $controller->generateHomeSection(); 
+    });
+                    
+    $klein->respond('GET', '/load-listings-tab/[:userID]', function($request, $response){
+        $controller = new ProfilePageController(0, $request->userID);
+        return $controller->generateListingsSection(); 
+    });
+    
+    $klein->respond('GET', '/load-offers-tab/[:userID]', function($request, $response){
+        $controller = new ProfilePageController(0, $request->userID);
+        return $controller->generateOffersSection(); 
+    });
+    
+    $klein->respond('GET', '/load-requests-tab/[:userID]', function($request, $response){
+        $controller = new ProfilePageController(0, $request->userID);
+        return $controller->generateRequestsSection(); 
+    });
+    
+    $klein->respond('GET', '/load-watchlist-tab/[:userID]', function($request, $response){
+        $controller = new ProfilePageController(0, $request->userID);
+        return $controller->generateWatchListSection(); 
     });
     
     $klein->respond('POST', '/toggle-watch-list/[:listingID]', function($request, $response){
@@ -96,6 +122,11 @@ $klein->with("/profile", function() use ($klein) {
     $klein->respond('GET', '/recommended', function($request, $response){
         $controller = new RecommendationController();
         return $controller->generateRecommendedSection();
+    });
+    
+    $klein->respond('GET', '/set-pending-viewed', function($request, $response){
+       $controller = new ProfilePageController(1);
+       return $controller->setAllPendingAsViewed();
     });
    
 });
@@ -116,8 +147,9 @@ $klein->with('/items', function () use ($klein) {
     $klein->respond('POST', '/request/?', function ($request, $response) {
         // Show a single user
         $listingID = $request->listingID;
+        $quantity = $request->quantity;
         $model = new RequestModel();
-        return $model->requestItem($listingID);
+        return $model->requestItem($listingID, $quantity);
     });
     
     $klein->respond('POST', '/confirm-request/?', function($request, $response){
@@ -142,6 +174,13 @@ $klein->with('/items', function () use ($klein) {
         return $model->withdrawRequest($transactionID);
     });
     
+    $klein->respond('POST', '/cancel-request-listing/?', function($request, $response){
+        $listingID = $request->listingID;
+        $model = new RequestModel();
+        $transactionID = $model->getTransactionIDFromListingID($listingID);
+        return $model->withdrawRequest($transactionID);
+    });
+    
     $klein->respond('POST', '/renew-listing/?', function($request, $response){
         $listingID = $request->listingID;
         $newQuantity = $request->quantity;
@@ -153,6 +192,14 @@ $klein->with('/items', function () use ($klein) {
         $listingID = $request->listingID;
         $model = new RequestModel();
         return $model->withdrawListing($listingID);
+    });
+    
+    // Not sure whether to move this to profile page as this will be where it is used
+    $klein->respond('POST', '/rate-user/?', function($request, $response){
+        $transactionID = $request->transactionID;
+        $rating = $request->rating;
+        $model = new PopularityModel();
+        return $model->rateTransaction($transactionID, $rating);
     });
     
 });
