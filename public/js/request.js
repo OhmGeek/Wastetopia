@@ -9,6 +9,8 @@ $(function(){
     }
   });
     
+    //ADD FUNCTIONALITY TO SET ALL PENDING TRANSACTIONS AS VIEWED 
+    
     var baseURL =  window.location.protocol + "//" + window.location.host;
     
     // Delete completed transaction?? (Would remove for other user too)
