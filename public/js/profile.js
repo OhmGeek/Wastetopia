@@ -25,6 +25,27 @@ $(function () {
     }else{
       return;
     }
+    console.log($(e.target).attr("href"));
+    var width = 150;
+    var height = 150;
+    var nameSize = 25;
+    var iconSize = 35;
+    var topPadding = 230;
+    if ($(e.target).attr("href") != '#home') {
+      width = 50;
+      height = 50;
+      nameSize = 16;
+      iconSize = 20;
+      topPadding = 130;
+      $grid.isotope('layout');
+    }
+    $('.user-profile .user-img').css('width',width);
+    $('.user-profile .user-img').css('height',height);
+    $('.user-profile .user-name').css('font-size',nameSize);
+    $('.user-profile .popularity i').css('font-size',iconSize);
+    $('.user-profile .popularity').css('font-size',iconSize);
+    $('.page-height').css('padding-top',topPadding);
+    
     var url = window.location.protocol + "//" + window.location.host + "/profile/" + relativeURL +"/" + userID;
 
      $.get(url, function(response){
@@ -42,27 +63,6 @@ $(function () {
           }
         });
       });
-      console.log($(e.target).attr("href"));
-      var width = 150;
-      var height = 150;
-      var nameSize = 25;
-      var iconSize = 35;
-      var topPadding = 230;
-      if ($(e.target).attr("href") != '#home') {
-        width = 50;
-        height = 50;
-        nameSize = 16;
-        iconSize = 20;
-        topPadding = 130;
-        $grid.isotope('layout');
-      }
-      $('.user-profile .user-img').css('width',width);
-      $('.user-profile .user-img').css('height',height);
-      $('.user-profile .user-name').css('font-size',nameSize);
-      $('.user-profile .popularity i').css('font-size',iconSize);
-      $('.user-profile .popularity').css('font-size',iconSize);
-      $('.page-height').css('padding-top',topPadding);
-
   });
 
 //   // Reload HTML content in HOME tab when Back buttons pressed on each tab - not working

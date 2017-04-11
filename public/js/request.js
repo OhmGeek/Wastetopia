@@ -51,7 +51,7 @@ $(function(){
 
       // Extract listingID
        var listingID = $(this).attr("id");
-     	
+
        var itemName = card.closest('.caption').find('h3').text();
 
        $('body').append(deleteModal);
@@ -61,8 +61,8 @@ $(function(){
        $("#delete-modal").on("shown.bs.modal", function () {
                 $(this).find('.item-name').html(itemName)
            }).modal('show');
-	    
-	$("#delete-modal #ok").on('click', function(){    
+
+	$("#delete-modal #ok").on('click', function(){
 	      // Send to /items/remove-listing
 		var url = baseURL + "/items/remove-listing";
 		var data = {listingID : listingID};
@@ -360,8 +360,8 @@ $(function(){
                               '</div>'+
                             '</div>'+
                             '<div class="modal-footer">'+
-                              '<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>'
-                              '<button type="button" class="btn btn-primary" id="ok">Ok</button>'
+                              '<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>'+
+                              '<button type="button" class="btn btn-primary" id="ok">Ok</button>'+
                             '</div>'+
                           '</div>'+
                         '</div>'+
