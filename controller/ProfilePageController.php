@@ -338,6 +338,7 @@ class ProfilePageController
             $offeringUserID = $listingDetails["UserID"];
             $offeringUserName = $listingDetails["Forename"] . " " . $listingDetails["Surname"];
             $offeringUserImage = $this->cardDetailsModel->getUserImage($offeringUserID);
+            $hasRated = $this->model->hasRated($transactionID, $this->getUserID());		
             $item = array(
                 "transactionID" => $transactionID,
                 "completedDate" => $completedDate,
@@ -350,7 +351,8 @@ class ProfilePageController
                 "itemName" => $itemName,
                 "quantity" => $transactionQuantity,
                 "listingID" => $listingID,
-                "postCode" => $postCode
+                "postCode" => $postCode,
+		"hasRated" => $hasRated    
             );
             array_push($completedRequests, $item);
         }
