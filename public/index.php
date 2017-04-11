@@ -142,8 +142,9 @@ $klein->with('/items', function () use ($klein) {
     $klein->respond('POST', '/request/?', function ($request, $response) {
         // Show a single user
         $listingID = $request->listingID;
+        $quantity = $request->quantity;
         $model = new RequestModel();
-        return $model->requestItem($listingID);
+        return $model->requestItem($listingID, $quantity);
     });
     
     $klein->respond('POST', '/confirm-request/?', function($request, $response){
