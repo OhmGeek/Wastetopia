@@ -15,7 +15,7 @@ $(function(){
     //TODO: Put in pop-up boxes where necessary
     //TODO: Add responses to successful functions (Deleting cards or reloading page or changing buttons)
     //TODO: Link to edit and messaging pages
-    //TODO: Come up with functionality for delete button
+    //TODO: Stop quantity of completed transaction exceeding quantity of listing
 
     var baseURL =  window.location.protocol + "//" + window.location.host;
 
