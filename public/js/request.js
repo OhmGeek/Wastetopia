@@ -213,7 +213,7 @@ $(function(){
 //     });
     
 
-  // Toggle listings in the watch list - DOES NOT WORK
+  // Toggle listings in the watch list - DOES NOT WORK (WEIRD ERROR)
   $grid.on('click', '#watch', function(){
       console.log("toggle");
      var listingID = $(this).closest('.thumbnail').attr("id");
