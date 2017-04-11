@@ -93,7 +93,7 @@ $(function(){
 
        var itemName = card.find('.caption').find('h3').text()
        var requestedQuantity = card.find('.caption').find('.trans-info .quantity').text()
-       console.log(requestedQuantity)
+       console.log(card.find('.caption').find('.trans-info .quantity'))
 
        $('body').append(completeModal);
 
@@ -101,7 +101,7 @@ $(function(){
 
        $("#complete-modal").on("shown.bs.modal", function () {
                 $(this).find('.item-name').html(itemName)
-                $(this).find('.requested-quantity').html(requestedQuantity)
+                $(this).find('.requested-quantity').html(' / ' + requestedQuantity)
            }).modal('show');
 
         $("#complete-modal #ok").on('click', function(){
