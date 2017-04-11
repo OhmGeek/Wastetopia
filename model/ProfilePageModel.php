@@ -59,7 +59,7 @@ class ProfilePageModel
     {
         $userID = $this->getUserID();
         $statement = $this->db->prepare("
-            SELECT `Listing`.*, `Transaction`.*
+            SELECT `Listing`.*, `Transaction`.*, `ListingTransaction`.`Success`
                 FROM `Listing`
                 JOIN `ListingTransaction` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
                 JOIN `Transaction` ON `Transaction`.`TransactionID` = `ListingTransaction`.`FK_Transaction_TransactionID`
