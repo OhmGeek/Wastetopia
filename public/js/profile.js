@@ -31,17 +31,44 @@ $(function () {
     $('.page-height').css('padding-top',topPadding);
   });
 
-  // Reload HTML content when Back buttons pressed on each tab - not working
+  // Reload HTML content in HOME tab when Back buttons pressed on each tab - not working
   $(document).on('click', 'a[href="#home"]', function (){
     console.log("Reloading");
     var userID = $('.user-name').attr("id");
-    var url = window.location.protocol + "//" + window.location.host + "/profile/update/" + userID;
+    var url = window.location.protocol + "//" + window.location.host + "/profile/load-home-tab/" + userID;
      $.get(url, function(response){
-        var div = $("#profileContentWrapper");
+        var div = $("#home");
         div.replaceWith(response);
        
      });
    });
+  
+  $(document).on('click', '.tab-pane', function(){
+     console.log("Reloading tab");
+    var userID = $('.user-name').attr("id");
+    var tabID = $(this).attr('id');
+    var relativeURL = "";
+    if (tabID == "listings"){
+      relativeURL = "load-listings-tab";
+    }else if(tabID == "requests"){
+      relativeURL == "load-requests-tab"; 
+    }else if(tabID == "offers"){
+     relativeURL = "load-offers-tab"; 
+    }else if(tabID == "watchList"){
+     relativeURL = "load-watchlist-tab"; 
+    }else if(tabID == "home"){
+     relativeURL = "load-home-tab"; 
+    }else{
+      return; 
+    }
+   
+    var url = window.location.protocol + "//" + window.location.host + "/profile/" + relativeURL +"/" + userID;
+     $.get(url, function(response){
+        var div = $("#"+tabID); // Reload specific tab section
+        div.replaceWith(response);
+       
+     });
+  });
 
 //   // Delete a card from the page
 //   $grid.on('click', '#delete', function() {
