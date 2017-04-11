@@ -68,8 +68,7 @@ print_r($conversationID);
         $senderName = $userName;//." - ".$itemName;
 	
 
-	$CurrentConfig = new CurrentConfig();
-	$CurrentConfig->loadConfig("production");    
+	$CurrentConfig = new CurrentConfig();  
 	$config = $CurrentConfig->getAll();    
         $output = array(
             "config" => $config,
