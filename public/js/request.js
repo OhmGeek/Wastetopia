@@ -48,6 +48,8 @@ $(function(){
       // Extract transactionID and listingID and new quantity
        var transactionID = $(this).closest('.thumbnail').attr("id");
        var listingID = $(this).closest(".btn-watch").prevAll('a[href="#view"]').attr("id");
+        
+       var quantity = 1; // GET FROM POP-UP
       // Send to /items/confirm-request
         
         var url = baseURL + "/items/confirm-request";
