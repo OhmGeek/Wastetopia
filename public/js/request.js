@@ -1,8 +1,8 @@
 // JS file to deal with requestModel stuff on any page (if cardIDs are the same)
 $(function(){
 
-    //TODO: Fix watch-list toggle issue
-    //TODO: Test renew and rate - renew needs a Modal
+    //TODO: Fix watch-list toggle issue and loading tabs issue (same error message)
+    //TODO: Test renew - renew needs a Modal
     //TODO: Link to edit and messaging pages - When everything is merged to master
     //TODO: Stop quantity of completed transaction exceeding quantity of listing - Has to be done in requestModel
 
@@ -329,7 +329,8 @@ $(function(){
          return;
        });
 
-       // Rate listing(user)
+    
+       // Rate listing(user) - THIS WORKS
        $(document).on('click', 'a[href="#rate"]', function(event){
          event.preventDefault();
          var button = $(this);
