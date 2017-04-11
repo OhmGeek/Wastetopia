@@ -137,14 +137,19 @@ class PopularityModel
 
         //Calculate original total rating
         $originalTotal = $originalNumberOfRatings*$originalMeanRatingPercent;
-
+        
+        print_r("Calculate original");
+        print_r($originalTotal);
+        
         //Add new rating
         $newTotal = $originalTotal + $rating;
-
+        
         //Calculate new mean value
         $newNumberOfRatings = $originalNumberOfRatings + 1;
         $newMeanRatingPercent = $newTotal/$newNumberOfRatings;
 
+        print_r("New mean rating: ".$newMeanRatingPercent);
+        
         //Set values in Database
         $this->setUserRating($userID, $newMeanRatingPercent, $newNumberOfRatings);
         return True;
@@ -152,8 +157,14 @@ class PopularityModel
 
     
     function rateTransaction($transactionID, $rating){
+        print_r($transactionID);
+        print_r($rating);
         $this->setListingTransactionRated($transactionID);
+        print_r("Set transaction as rated");
+        print_r("Get userID");
         $userID = $this->getUserIDFromTransactionID($transactionID);
+        print_r($userID);
+        print_r("Add rating");
         return $this->addNewRating($userID, $rating);
     }
 }
