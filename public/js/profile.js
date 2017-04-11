@@ -8,6 +8,7 @@ $(function () {
     }
   });
 
+  // RELOADING IS NOT WORKING
   $(document).on('click', 'a[data-toggle="tab"]', function(){
     var userID = $('.user-name').attr("id");
     var tabID = $(this).attr('href');
