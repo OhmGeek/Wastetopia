@@ -304,7 +304,7 @@ class RequestModel
 			SELECT :new_item_id, ItemTag.FK_Tag_TagID
 			FROM ItemTag WHERE FK_Item_ItemID = :old_item_id;
 		");
-		$statement01->bindValue(":new_item_id", :new_item_id, PDO::PARAM_INT);
+		$statement01->bindValue(":new_item_id", $new_item_id, PDO::PARAM_INT);
 		$statement01->bindValue(":old_item_id", $listing_info["FK_Item_ItemID"], PDO::PARAM_INT);
 		$statement01->execute();
 		
