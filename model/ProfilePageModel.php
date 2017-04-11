@@ -294,9 +294,8 @@ class ProfilePageModel
      * Can then use getStateOfListingTransactions() to check if the transaction should go in History or Currently Watching
      * @return mixed (listingID and WatchID)
      */
-    function getWatchedListings()
+    function getWatchedListings($userID)
     {
-        $userID = $this->getUserID();
         $statement = $this->db->prepare("
             SELECT `Listing`.`ListingID`, `Watch`.`WatchID`
             FROM `Listing`
@@ -314,9 +313,9 @@ class ProfilePageModel
      * Deletes a listing from user's watch list
      * @param $watchID
      */
-    function deleteFromWatchList($listingID)
+    function deleteFromWatchList($listingID, $userID)
     {
-        $userID = $this->getUserID();
+ 
         $statement = $this->db->prepare("
             DELETE
             FROM `Watch`
@@ -332,9 +331,9 @@ class ProfilePageModel
      * Adds a listing to a user's watch list
      * @param $listingID
      */
-    function addToWatchList($listingID)
+    function addToWatchList($listingID, $userID)
     {
-        $userID = $this->getUserID();
+
         $statement = $this->db->prepare("
             INSERT
             INTO `Watch`(`FK_User_UserID`, `FK_Listing_ListingID`)
