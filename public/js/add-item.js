@@ -155,7 +155,7 @@ function serializeItem() {
     "classification": $("#type option:selected").text(), //get the text of the selected option
     "dietary": getSelectedDietaryReqs(), //dietary requirement
     "contains": getMayContainsDetails(), //allergy tags
-    "expires": expiryDate,
+    "expires": $('#date').val(),
     "description": $('description').val(),
     "location": getLocationOfItem()
   };
@@ -174,10 +174,11 @@ function serializeItem() {
 
 $('#submit-item').on('click', function() {
   var itemData = serializeItem();
-  if(isValid(itemData)) {
-    // submit using AJAX
-      $.post('https://wastetopia-pr-17.herokuapp.com/api/items/additem', jsonData, function(response) {
-          console.log(response);
-      }, 'json');
-  }
+  console.log(itemData);
+  // if(isValid(itemData)) {
+  //   // submit using AJAX
+  //     $.post('https://wastetopia-pr-17.herokuapp.com/api/items/additem', jsonData, function(response) {
+  //         console.log(response);
+  //     }, 'json');
+  // }
 });
