@@ -140,7 +140,7 @@ class RegistrationController
     * @return bool
     */
     function sendVerificationEmail($email, $name){
-        $$CurrentConfig = new CurrentConfig();
+        $CurrentConfig = new CurrentConfig();
         $config = $CurrentConfig->getAll();
             
         $code = $this->model->getVerificationCode($email);
