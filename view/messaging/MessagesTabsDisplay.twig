@@ -21,7 +21,7 @@
 					<button type="button" id="deleteBtn" class="btn-nav">
 						<i class="material-icons">delete</i>
 					</button>
-					<a role="button" id="{{conversation.conversationID}}" class="btn-nav chatBtn" href="/messages/conversation/{{conversation.conversationID}}" >
+					<a role="button" id="{{conversation.listingID}}" class="btn-nav chatBtn" href="/messages/conversation/{{conversation.listingID}}" >
 						{% if conversation.numUnread == 0 %}<i class="material-icons">arrow_forward</i>{% else %}<span class="badge">{{conversation.numUnread}}</span>{% endif %}
 					</a>
 				</div>
