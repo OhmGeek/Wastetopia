@@ -38,13 +38,14 @@ class RequestModel
      */
     private function getLastTransactionID($userID)
     {
+
         $statement = $this->db->prepare("
             SELECT `Transaction`.`TransactionID`
 	    FROM `Transaction`
 	    WHERE `Transaction`.`FK_User_UserID` = :userID	    
 	    ORDER BY `Transaction`.`Time_Of_Application` DESC;
          ");
-	    
+	$statement->bindValue(":userID", $userID, PDO::PARAM_INT);    
         $statement->execute();
 	$results = $statement->fetchAll(PDO::FETCH_ASSOC);
 	print_r($results);
@@ -69,6 +70,9 @@ class RequestModel
 	    ORDER BY `Item`.`ItemID` DESC;
          ");
 	    
+	$statement->bindValue(":name", $name, PDO::PARAM_STR); 
+	$statement->bindValue(":useBy", $useBy, PDO::PARAM_STR); 
+	$statement->bindValue(":description", $description, PDO::PARAM_STR);     
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_ASSOC)["0"];
     }
