@@ -176,11 +176,11 @@ $(function(){
         
       // Extract listingID
         var transactionID = $(this).closest('.thumbnail').attr("id"); 
-        //var rating = ??;
+        var rating = 0; // Get from pop-up
         
       // NEED TO DECIDE WHAT URL TO USE
         var url = baseURL + "/items/rate-user"; // GET CORRECT URL
-        var data = {transactionID : transactionID};
+        var data = {transactionID : transactionID, rating: rating};
         console.log(data);
         
         $.post(url, data, function(response){
