@@ -335,6 +335,4 @@ class AddItemModel
             'description' => $results[0]['Description']
         );
     }
-
-
 }

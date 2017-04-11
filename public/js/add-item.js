@@ -129,7 +129,7 @@ function getLocationOfItem() {
   var geocoder = new google.maps.Geocoder();
   geocoder.geocode({
     componentRestrictions: {
-      country: $('#counrty').val(),
+      country: $('#country').val(),
       postalCode: $('#postcode').val()
     }
   },
@@ -161,3 +161,22 @@ function serializeItem() {
 
   return item;
 }
+
+// function submitForm() {
+//   var data = serializeItem();
+//   var jsonData = JSON.stringify(data);
+//     $.post('https://wastetopia-pr-17.herokuapp.com/api/items/additem', jsonData, function(response) {
+//         console.log(response);
+//     }, 'json');
+// }
+
+
+$('#submit-item').on('click', function() {
+  var itemData = serializeItem();
+  if(isValid(itemData)) {
+    // submit using AJAX
+      $.post('https://wastetopia-pr-17.herokuapp.com/api/items/additem', jsonData, function(response) {
+          console.log(response);
+      }, 'json');
+  }
+});

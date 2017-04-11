@@ -105,17 +105,13 @@ $klein->with('/api', function () use ($klein) {
 
   // NOW DEAL WITH API STUFF
   // This just returns JSON versions of the views, useful for javascript/testing.
-  $klein->respond('POST', '/items/add', function ($request, $response, $service, $app) {
+  $klein->respond('POST', '/items/additem', function ($request, $response, $service, $app) {
     // todo validate each field server side (and return false if not with an error message
     // Take in a JSON of things needed to add items
     // make a post request to add this item, and return whether it was successful or not (TODO return success from DB).
-    $details = array(
-      "itemname" => $request->itemname,
-      "itemtype" => $request->itemType,
-      "itemtypeother" => $request->otherreq
-    );
+
     $control = new AddItemController();
-    $control->addItem($details);
+    $control->addItem($request->item);
   });
 
   $klein->respond('POST', '/items/addimage', function($request,$response) {
@@ -209,7 +205,6 @@ $klein->with('/api', function () use ($klein) {
     // view a specific conversation
     console.log("Getting conversation");
     $listingID = $request->listingID;
-
     $controller = new MessageController();
     return $controller->generatePageFromListing($listingID);
   });
