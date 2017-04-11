@@ -49,26 +49,38 @@ $(function(){
         var card = $(this).closest('.thumbnail');
 
       // Extract listingID
-        var listingID = $(this).attr("id");
+       var listingID = $(this).attr("id");
+     	
+       var itemName = card.closest('.caption').find('h3').text();
 
-      // Send to /items/remove-listing
-        var url = baseURL + "/items/remove-listing";
-        var data = {listingID : listingID};
-        console.log(data);
-        $.post(url, data, function(response){
-           if(response){
-               // Remove card from screen
-               remove(card);
-           }else{
-               // Show error
-           }
-        });
+       $('body').append(deleteModal);
+
+       $("#delete-modal").modal({backdrop: "static"})
+
+       $("#delete-modal").on("shown.bs.modal", function () {
+                $(this).find('.item-name').html(itemName)
+           }).modal('show');
+	    
+	$("#delete-modal #ok").on('click', function(){    
+	      // Send to /items/remove-listing
+		var url = baseURL + "/items/remove-listing";
+		var data = {listingID : listingID};
+		console.log(data);
+		$.post(url, data, function(response){
+		   if(response){
+		       // Remove card from screen
+		       remove(card);
+		   }else{
+		       // Show error
+		   }
+		});
+	});
 
     });
 
 
     // Mark request as complete - SEEMS TO WORK
-    //added modal for this code
+    // added modal for this code
     $(document).on('click', 'a[href="#complete"]', function(){
         var card = $(this).closest('.thumbnail');
       // Extract transactionID and listingID and new quantity
