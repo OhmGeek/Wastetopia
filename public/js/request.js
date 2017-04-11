@@ -199,11 +199,12 @@ $(function(){
     // Renew listing
     $('a[href="#renew"]').click(function(){
         var listingID = $(this).attr("id");
-       // Get new quantity to renew with from an alert?
+        var quantity = 1; // Get from pop-up
+        
        // Send to /items/renew-listing/
         
         var url = baseURL + "/items/renew-listing";
-        var data = {listingID : listingID};
+        var data = {listingID : listingID, quantity:quantity};
         $.post(url, data, function(response){
            if(response){
                // Do something
