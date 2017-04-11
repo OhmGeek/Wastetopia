@@ -452,13 +452,16 @@ class ProfilePageController
         // Get Recommendation HTML
         $recommendationHTML = $this->generateRecommendationHTML();
 
+        $isCurrentUser = ($this->userID == $this->getUserID() ? 1 : 0);
+
         $listingsInformation = array(
             "listingsCount" => $totalAvailabaleListings, // Total number of listings with quantity > 0
             "emptyListingsCount" => $totalEmptyListings, // Total number of listings with quantity <= 0
             "itemsOfferedCount" => $sendingTransactionsCount, // Total of all transactions for your items (can be greater than listings count)
             "requestsMadeCount" => $receivingCount, // Total of all transactions you're in for other user's items
             "watchListCount" => $watchListCount,
-            "recommendationhtml" => $recommendationHTML
+            "recommendationhtml" => $recommendationHTML,
+            "isUser" => $isCurrentUser
         );
 
         $template = $this->twig->loadTemplate("/users/homeTab.twig");
@@ -563,8 +566,11 @@ class ProfilePageController
 
         $offers = array("completed" => $completedOffers, "pending" => $pendingOffers);
 
+        $isCurrentUser = ($this->userID == $this->getUserID() ? 1 : 0);
+
         $listingsInformation = array(
             "offers" => $offers, // Transactions for your items
+            "isUser" => $isCurrentUser
         );
 
         $template = $this->twig->loadTemplate("/users/offersTab.twig");
@@ -671,8 +677,10 @@ class ProfilePageController
 
         $requests = array("completed" => $completedRequests, "pending" => $pendingRequests);
 
+        $isCurrentUser = ($this->userID == $this->getUserID() ? 1 : 0);
         $listingsInformation = array(
-            "requests" => $requests // Transactions for other user's items
+            "requests" => $requests, // Transactions for other user's items
+            "isUser" => $isCurrentUser
         );
 
         $template = $this->twig->loadTemplate("/users/requestsTab.twig");
@@ -752,8 +760,11 @@ class ProfilePageController
         }
 
         $userListings = array("available" => $allAvailableListings, "outOfStock" => $allEmptyListings);
+
+        $isCurrentUser = ($this->userID == $this->getUserID() ? 1 : 0);
         $listingsInformation = array(
             "userListings" => $userListings, // All your listings
+            "isUser" => $isCurrentUser
         );
 
         $template = $this->twig->loadTemplate("/users/listingsTab.twig");
@@ -799,9 +810,9 @@ class ProfilePageController
             );
             array_push($watchList, $item);
         }
-
+        $isCurrentUser = ($this->userID == $this->getUserID() ? 1 : 0);
         $template = $this->twig->loadTemplate("/users/watchlistTab.twig");
-        return $template->render(array("watchList"=>$watchList));
+        return $template->render(array("watchList"=>$watchList, "isUser" => $isCurrentUser));
 
         //return $watchListDetails;
     }
