@@ -91,7 +91,7 @@ $klein->with("/profile", function() use ($klein) {
     $klein->respond('GET', '/load-home-tab/[:userID]', function($request, $response){
         $controller = new ProfilePageController(0, $request->userID);
         return $controller->generateHomeSection(); 
-    }
+    });
                     
     $klein->respond('GET', '/load-listings-tab/[:userID]', function($request, $response){
         $controller = new ProfilePageController(0, $request->userID);
