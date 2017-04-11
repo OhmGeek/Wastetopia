@@ -82,7 +82,7 @@ $(function(){
     });
     
     
-    // Cancel request - THIS WORKS
+    // Cancel request - THIS WORKS (ONLY ON USER'S OWN PROFILE)
     $grid.on('click', '#cancel', function(){
         console.log("Cancelling");
         
@@ -94,6 +94,30 @@ $(function(){
         
         var url = baseURL + "/items/cancel-request";
         var data = {transactionID : transactionID};
+        
+        $.post(url, data, function(response){
+            console.log(response);
+           if(response){
+               // Do something
+               // Remove card from screen
+           }else{
+               // Show error   
+           }
+        });
+    });
+    
+    // Cancel request using listingID - WORKS WHEN VIEWING CARD OUTSIDE OF YOUR PROFILE (I.E on search page)
+    $grid.on('click', '#cancel-by-listing', function(){
+        console.log("Cancelling");
+        
+      // Extract transactionID and listingID
+        var listingID = $(this).closest('.thumbnail').attr("id");
+        console.log(listingID);
+
+      // Send to /items/cancel-request
+        
+        var url = baseURL + "/items/cancel-request-listing";
+        var data = {listingID : listingID};
         
         $.post(url, data, function(response){
             console.log(response);
