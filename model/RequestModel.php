@@ -46,7 +46,8 @@ class RequestModel
          ");
 	    
         $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_ASSOC)["0"];
+	$results = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $results["0"];
     }
 	
 	/**
