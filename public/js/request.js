@@ -15,8 +15,19 @@ $(function(){
     //TODO: Put in pop-up boxes where necessary
     //TODO: Add responses to successful functions (Deleting cards or reloading page or changing buttons)
     //TODO: Link to edit and messaging pages 
+    //TODO: Come up with functionality for delete button
     
     var baseURL =  window.location.protocol + "//" + window.location.host;
+    
+//     $('a[data-target="PENDING_REQUESTS_TAB"]').click(function(){
+//        var url = baseURL + "/profile/set-pending-requests-viewed";
+       
+//         $.post(url, function(response){
+//             if(reponse){
+//                 // Do nothing ?
+//             }
+//         });
+//     });
     
     // Delete completed transaction?? (Would remove for other user too)
     $grid.on('click', '#delete', function(){
