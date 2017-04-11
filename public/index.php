@@ -12,6 +12,7 @@ use Wastetopia\Controller\MessageController;
 use Wastetopia\Controller\RecommendationController;
 
 use Wastetopia\Model\RequestModel;
+use Wastetopia\Model\PopularityModel;
 
 
 
