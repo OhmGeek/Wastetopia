@@ -162,6 +162,14 @@ $klein->with('/items', function () use ($klein) {
         return $model->withdrawListing($listingID);
     });
     
+    // Not sure whether to move this to profile page as this will be where it is used
+    $klein->respond('POST', '/rate-user/?', function($request, $response){
+        $transactionID = $request->transactionID;
+        $rating = $request->rating;
+        $model = new PopularityModel();
+        return $model->rateTransaction($transactionID, $rating);
+    });
+    
 });
 
 
