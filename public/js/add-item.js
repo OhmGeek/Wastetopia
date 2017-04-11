@@ -79,7 +79,7 @@ $('#form-image').change(function() {
 
 function getImagesFromDOM() {
   var imageList = [];
-  $('.upload-pic img').forEach(function(elem) {
+  $('.upload-pic img').each(function(elem) {
     imageList.append(elem.href); //todo check this - we want to get the href of the image tag
   });
   return imageList;
@@ -88,7 +88,7 @@ function getImagesFromDOM() {
 function getSelectedDietaryReqs() {
   var requirementsList = [];
   // todo use filter to get this working nicely.
-  $('.dietary-req').forEach(function(elem) {
+  $('.dietary-req').each(function(elem) {
     // if the selected checkbox is actually selected, add the item
     // to the requirements list. Otherwise, move to the next one.
     if(elem.val()) {
@@ -108,7 +108,7 @@ function getSelectedDietaryReqs() {
 
 function getMayContainsDetails() {
   var mayContain = [];
-  $('.may-contains-select option:selected').forEach(function(elem) {
+  $('.may-contains-select option:selected').each(function(elem) {
     if(elem.text()) {
       mayContain.append(elem.text());
     }
