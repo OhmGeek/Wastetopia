@@ -38,6 +38,7 @@ $(function () {
       console.log(response);
       console.log("sent the message");
       loadMessages();
+      scrollToBottom();
 
     });
 
@@ -65,7 +66,6 @@ $(function () {
     $.get(url, function(htmlResponse){
       console.log(htmlResponse);
       messageDisplay.replaceWith(htmlResponse);
-      scrollToBottom();
     });
   }
 });
