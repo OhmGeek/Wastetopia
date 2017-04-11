@@ -36,15 +36,12 @@ class RequestModel
      * @param $userID
      * @return int
      */
-    private function getLastTransactionID($listingID, $userID)
+    private function getLastTransactionID($userID)
     {
         $statement = $this->db->prepare("
             SELECT `Transaction`.`TransactionID`
 	    FROM `Transaction`
-	    JOIN `ListingTransaction` ON `Transaction`.`TransactionID` = `ListingTransaction`.`FK_Transaction_TransactionID`
-	    WHERE `Transaction`.`FK_User_UserID` = :userID
-	    AND `ListingTransaction`.`FK_Listing_ListingID` = :listingID
-	    AND `ListingTransaction`.`Success` = 0
+	    WHERE `Transaction`.`FK_User_UserID` = :userID	    
 	    ORDER BY `Transaction`.`Time_Of_Application` DESC;
          ");
 	    
