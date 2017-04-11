@@ -150,13 +150,15 @@ class ProfilePageController
                 //If no transactions, this listing will not be in the history page
                 if (count($stateDetails) > 0) {
                     foreach ($stateDetails as $transaction) {
-                        $sendingTransactionsCount += 1;
+                        
                         $transactionID = $transaction["TransactionID"];
                         $completed = $transaction["Success"];
                         if ($completed == 1) {
+			    $sendingTransactionsCount += 1;
                             // Need to figure out how to deal with these as transactions
                             array_push($completedSending, $transactionID); //Get display information later
                         }elseif($completed == 0) {
+			    $sendingTransactionsCount += 1;	
                             // Need to figure out how to deal with these as transactions
                             array_push($pendingSending, $transactionID);   //Get display information later
                         }else{
@@ -182,21 +184,27 @@ class ProfilePageController
         $pendingReceiving = array();    //Incomplete transactions
 
         $completedReceiving = array();  //Incomplete transactions
+	    
         // Total number of listings the user has requested
         // Should this be changed to not include completed listings?
-        $receivingCount = count($userListingsReceiving);
+        $receivingCount = 0;
+	    
         //Split listings into complete and pending transactions
         foreach ($userListingsReceiving as $listing) {
             $listingID = $listing["ListingID"];
             $transactionID = $listing["TransactionID"];
             $completed = $listing["Success"]; // Transaction completed?
-            if ($completed) {
+            if ($completed == 1) {
+		$receivingCount += 1;    
                 // Need to figure out how to deal with these as transactions
                 array_push($completedReceiving, $transactionID); //Get display information later
-            } else {
+            } elseif($completed == 0) {
+		$receivingCount += 1;        
                 // Need to figure out how to deal with these as transactions
                 array_push($pendingReceiving, $transactionID);   //Get display information later
-            }
+            }else{
+		// Do nothing - Rejected it     
+	    }
         }
         // NOW GET APPROPRIATE INFORMATION FROM EACH LISTING
         $allAvailableListings = array();
@@ -386,6 +394,7 @@ class ProfilePageController
         $userListings = array("available" => $allAvailableListings, "outOfStock" => $allEmptyListings);
         $offers = array("completed" => $completedOffers, "pending" => $pendingOffers);
         $requests = array("completed" => $completedRequests, "pending" => $pendingRequests);
+	    
         $listingsInformation = array(
             "listingsCount" => $totalAvailabaleListings, // Total number of listings with quantity > 0
             "emptyListingsCount" => $totalEmptyListings, // Total number of listings with quantity <= 0
