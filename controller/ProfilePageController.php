@@ -214,6 +214,8 @@ class ProfilePageController
             $defaultImage = $this->cardDetailsModel->getDefaultImage($listingID);
             $imageURL = $defaultImage["Image_URL"];
 	    $isRequesting = $this->model->isRequesting($listingID);
+	    print_r("LISTING: ".$listingID);
+            print_r("IS REQUESTING: ".$isRequesting);		
             $isWatching = $this->inWatchList($listingID);		
             $item = array(
                 "listingID" => $listingID,
