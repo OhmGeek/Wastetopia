@@ -203,11 +203,11 @@
           </div>
           <div class="col-xs-12 col-sm-6 zero-padding">
            <div id="item-map-section"></div>
-           <script src="map.js"></script>
+           <!-- <script src="map.js"></script>
 
            <script async defer
            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCrh2cKWRAFifeLIkznE2Iw4Oblqlmyyt0&callback=initMap">
-         </script>
+         </script> -->
        </div>
        <div class="col-xs-12 col-sm-6 zero-padding">
         <div class="item-address-section">
@@ -242,18 +242,53 @@
 
 <script src="bootstrap-material-design-master/dist/js/ripples.min.js"></script>
 <script src="bootstrap-material-design-master/dist/js/material.min.js"></script>
-
+  <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.js"></script>
 <!-- script for having equal height rows -->
 <script src="plugins/jquery-match-height/jquery.matchHeight.js" type="text/javascript"></script>
 <script>
   $(function () {
     $.material.init();
+
+    // init Isotope
+    var $grid = $('.grid').isotope({
+      itemSelector: '.grid-item',
+      percentPosition: true,
+      masonry: {
+        columnWidth: '.grid-sizer'
+      }
+    });
+
     //equal height rows
     $('.upload-pic').matchHeight();
+
     //fancy select
     $(".js-example-basic-multiple").select2();
+
     //fancy datetime picker
     $('#date').bootstrapMaterialDatePicker({ format : 'DD/MM/YYYY', weekStart : 0, time: false });
+
+    // Remove an element from the layout
+    function remove(elem) {
+      // remove clicked element (in a very skitchy way right now)
+      console.log($(elem).closest('.grid-item'))
+      $grid.isotope( 'remove', $(elem).closest('.grid-item'))
+      // layout remaining item elements
+      .isotope('layout');
+    };
+
+    // Remove selected images
+    $('#deleteBtn').on( 'click', function() {
+      console.log("i've been clicked to delete the selected images")
+      var $checkboxes = $('.item-imgs-section input');
+      console.log($checkboxes)
+      // inclusive filters from checkboxes
+      $checkboxes.each( function( i, elem ) {
+        // if checkbox, use value if checked
+        if ( elem.checked ) {
+          remove(elem)
+        }
+      });
+    });
   });
 </script>
 

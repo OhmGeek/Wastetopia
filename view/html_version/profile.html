@@ -70,7 +70,6 @@
         </div>
       </div>
       <div>
-        <a href="#" class="btn btn-primary" style="margin-bottom:0;" role="button">Follow</a>
         <a href="#" class="btn btn-default" style="margin-bottom:0;" role="button">Report</a>
       </div>
     </div>
@@ -461,6 +460,119 @@
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal -->
+      <div id="delete-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <!-- <h4 class="modal-title"></h4> -->
+            </div>
+            <div class="modal-body">
+              <div class="modal-msg">Are you sure you want to remove the request for this item</div>
+              <div class="item-name">
+              </div>
+              <div class="modal-submsg">
+                The history of this request would be removed entirely from the site and can't be retrieved.
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+              <button type="button" class="btn btn-primary" id="delete-ok" data-dismiss="modal">Ok</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="request-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+              <div class="modal-msg">Make a request for</div>
+              <div class="item-name">
+              </div>
+              <div class="container-fluid">
+                <div class="form-group zero-padding request-quantity">
+                  <label for="request-quantity">Quantity</label>
+                  <input type="number" class="form-control" id="request-quantity" min="0">
+                  <label class="item-quantity"></label>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+              <button type="button" class="btn btn-primary" id="request-ok" data-dismiss="modal">Ok</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div id="rate-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+              <div class="modal-msg">The request for
+              <div class="item-name">
+              </div>
+              Has been marked as complete
+              </div>
+              <div class="container-fluid">
+                <div class="form-group zero-padding request-quantity">
+                  <label for="rate" class="rate-user"></label>
+                  <input type="number" class="form-control" id="rate" min="0" max="10">
+                  <label> / 10</label>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+              <button type="button" class="btn btn-primary" id="rate-ok" data-dismiss="modal">Ok</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div id="complete-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+              <div class="modal-msg">To mark the request for
+              <div class="item-name">
+              </div>
+              as complete, please confirm the quantity requested.
+              </div>
+              <div class="container-fluid">
+                <div class="form-group zero-padding request-quantity">
+                  <label for="complete-quantity">Requested quantity</label>
+                  <input type="number" class="form-control" id="complete-quantity" min="0">
+                  <label class="requested-quantity"></label>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+              <button type="button" class="btn btn-primary" id="complete-ok" data-dismiss="modal">Ok</button>
             </div>
           </div>
         </div>

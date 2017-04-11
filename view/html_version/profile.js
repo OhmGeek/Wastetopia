@@ -33,8 +33,18 @@ $(function () {
 
   $grid.on( 'click', '#delete', function() {
     // get the id of the item would be removed
-    console.log($(this).closest('.user-stats').attr("id"));
-    remove(this)
+    console.log($(this).closest('.caption').find('h3').text());
+    var item = $(this)
+    var itemName = item.closest('.caption').find('h3').text()
+    var itemQuantity = item.closest('.caption').find('.trans-info .quantity').text()
+    $("#complete-modal").modal({backdrop: "static"})
+    $("#complete-modal").on("shown.bs.modal", function () {
+             $(this).find('.item-name').html(itemName + '?')
+             $(this).find('.rate-user').html('Rate Mark Smith ')
+        }).modal('show');
+    $("#complete-modal #complete-ok").on('click', function(){
+      remove(item)
+    })
   });
 
   function remove(ele) {
