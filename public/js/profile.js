@@ -8,7 +8,7 @@ $(function () {
     }
   });
 
-  $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+  $(document).on('shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
     console.log($(e.target).attr("href"));
     var width = 150;
     var height = 150;
