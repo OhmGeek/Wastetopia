@@ -8,7 +8,7 @@
  */
 
 namespace Wastetopia\Model;
-use DB;
+use Wastetopia\Model\DB;
 
 class PopularityModel
 {
