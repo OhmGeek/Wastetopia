@@ -348,15 +348,12 @@ class ProfilePageModel
 	
 	
     /** 
-    * Checks whether the current user has an ongoing request for the given listing
+    * Checks whether the given user has an ongoing request for the given listing
     * @param $listingID
     * @return bool (True if user is requesting the listing)
     */
-    function isRequesting($listingID){
-	    print_r("FROM MODEL::::");
-	$userID = $this->getUserID();
-	    print_r("USER: ".$userID);
-	    print_r("Listing: ".$listingID);
+    function isRequesting($listingID, $userID){
+
         $statement = $this->db->prepare("
             SELECT COUNT(*) AS `Count`
 	    FROM `ListingTransaction`
@@ -370,7 +367,7 @@ class ProfilePageModel
         $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
         $statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);
         $statement->execute();
-	 print_r($statement->fetchColumn());   
+	
         return $statement->fetchColumn() > 0;
 	    
     }
