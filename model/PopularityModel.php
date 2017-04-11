@@ -68,8 +68,7 @@ class PopularityModel
 
         $statement = $this->db->prepare("
             UPDATE `User`
-            SET `Number_Of_Ratings` = :numberOfRatings
-            AND `Mean_Rating_Percent` = :meanRating
+            SET `Number_Of_Ratings` = :numberOfRatings, `Mean_Rating_Percent` = :meanRating
             WHERE `UserID` = :userID
         ");
 
