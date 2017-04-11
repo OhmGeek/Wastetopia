@@ -116,11 +116,7 @@ $(document).ready(function(){
 
     // Displays an error message in the appropriate place
     function displayError(error){
-        // Change HTML in an existing DIV
-//         console.log("Displaying error message");
-//         $("#errorMessage").html("<p>"+error+"<p>");
 
-        // OR using bootstrap alerts
         // Create warning div
         $errorDiv = $("<div>").addClass("alert alert-danger fade in");
     
@@ -167,12 +163,9 @@ $(document).ready(function(){
 
    // Checks the input field is filled
     $("#pwd").keyup(function(event){
-        console.log($(this).val());
-        console.log($(this).val().length < 8);
         if($(this).val().length < 8){
-            console.log("Password red");
-            // Field is empty associated box/symbol is red
-  
+            
+            // Field is empty associated box/symbol is red 
             $(this).closest(".form-group").addClass('there-error');
             
             // Check values again
@@ -181,7 +174,6 @@ $(document).ready(function(){
             }
         }else{
             // Field is filled, associated box/symbol is green
-            console.log("Password green");
             $(this).closest(".form-group").removeClass('there-error');
             
             // Check values again
@@ -197,13 +189,9 @@ $(document).ready(function(){
         var password = $("#pwd").val();
         var passwordConfirm = $(this).val();
         if ((password.length >= 8) && checkPassword(password, passwordConfirm)){
-            console.log("PC green");
-            console.log($(this).parent())
            // Passwords are filled and match, make box/symbol green
            $(this).parent().removeClass('there-error')
         }else{
-            console.log("PC red");
-            console.log($(this).parent())
            // Passwords don't match, make box/symbol red
            $(this).parent().addClass('there-error')
         }
