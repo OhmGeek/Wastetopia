@@ -45,7 +45,7 @@
                                     <div class="nav-btns">
                                         <a href="#view" class="btn btn-primary" role="button"
                                            id="{{ item.listingID }}">View</a>
-                                           {% if !item.hasRated %}
+                                           {% if not item.hasRated %}
                                         <a href="#rate" class="btn btn-default" role="button"
                                               id="{{ item.listingID }}">Rate</a>
                                              {% endif %}
