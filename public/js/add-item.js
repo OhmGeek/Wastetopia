@@ -116,6 +116,7 @@ function getMayContainsDetails() {
   return mayContain;
 }
 
+
 function getLocationOfItem() {
   // todo use Google Maps/Ben's API
   // var location = {
@@ -151,7 +152,7 @@ function serializeItem() {
   var item = {
     "name": $('#name').val(),
     "images": getImagesFromDOM(),
-    "classification": itemType, //type tag
+    "classification": $("#type option:selected").text(), //get the text of the selected option
     "dietary": getSelectedDietaryReqs(), //dietary requirement
     "contains": getMayContainsDetails(), //allergy tags
     "expires": expiryDate,
