@@ -9,7 +9,12 @@ $(function(){
     }
   });
     
-    //ADD FUNCTIONALITY TO SET ALL PENDING TRANSACTIONS AS VIEWED 
+    //TODO: ADD FUNCTIONALITY TO SET ALL PENDING TRANSACTIONS AS VIEWED 
+    //TODO: Fix watch-list toggle issue
+    //TODO: Test renew and rate
+    //TODO: Put in pop-up boxes where necessary
+    //TODO: Add responses to successful functions (Deleting cards or reloading page or changing buttons)
+    //TODO: Link to edit and messaging pages 
     
     var baseURL =  window.location.protocol + "//" + window.location.host;
     
