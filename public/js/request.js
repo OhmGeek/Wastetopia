@@ -45,7 +45,8 @@ $(function(){
 
 
     // Make listing inactive - THIS WORKS (BUT ALSO REMOVES ALL TRANSACTIONS FOR THAT LISTING)
-    $(document).on('click', 'a[href="#remove"]', function(){
+    $(document).on('click', 'a[href="#remove"]', function(event){
+	event.preventDefault();
         var card = $(this).closest('.thumbnail');
 
       // Extract listingID
@@ -81,7 +82,8 @@ $(function(){
 
     // Mark request as complete - SEEMS TO WORK
     // added modal for this code
-    $(document).on('click', 'a[href="#complete"]', function(){
+    $(document).on('click', 'a[href="#complete"]', function(event){
+	event.preventDefault();
         var card = $(this).closest('.thumbnail');
       // Extract transactionID and listingID and new quantity
        var transactionID = card.attr("id");
