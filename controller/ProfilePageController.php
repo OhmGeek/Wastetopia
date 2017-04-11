@@ -109,7 +109,7 @@ class ProfilePageController
         $userInformation["userID"] = $userDetails["UserID"];
         $userInformation["username"] = $userDetails["Forename"] . " " . $userDetails["Surname"];
 //        $userInformation["email"] = $userDetails["Email_Address"];
-        $userInformation["userscore"] = $userDetails["Mean_Rating_Percent"];
+        $userInformation["userscore"] = round($userDetails["Mean_Rating_Percent"], 1);
         $userInformation["userimage"] = $userImage;
         return $userInformation;
     }
