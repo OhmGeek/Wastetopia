@@ -7,7 +7,8 @@
  */
 
 
-//TODO: Sort out buttons for watchList, Recommended, and normal listings (request/cancel request)
+//TODO: Split tabs into separate Twig files that can be separately loaded
+
 namespace Wastetopia\Controller;
 use Wastetopia\Config\CurrentConfig;
 use Wastetopia\Model\ProfilePageModel;
