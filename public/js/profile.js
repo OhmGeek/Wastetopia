@@ -13,11 +13,11 @@ $(function () {
     var userID = $('.user-name').attr("id");
     var tabID = $(this).attr('href');
     var relativeURL = "";
-    if (tabID == "#listings"){
+    if (tabID == "#listings" || tabID == "#available-listing" || "#out-of-stock-listing" ){
       relativeURL = "load-listings-tab";
-    }else if(tabID == "#requests"){
+    }else if(tabID == "#requests" || tabID == "#completed-request" || "#pending-request" ){
       relativeURL = "load-requests-tab"; 
-    }else if(tabID == "#offers"){
+    }else if(tabID == "#offers" || tabID == "#completed-transaction" || "#pending-transaction" ){
      relativeURL = "load-offers-tab"; 
     }else if(tabID == "#watchList"){
      relativeURL = "load-watchlist-tab"; 
