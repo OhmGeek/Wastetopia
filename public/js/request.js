@@ -85,7 +85,7 @@ $(function(){
       var listingID = $(this).closest(".btn-watch").prevAll('a[href="#view"]').attr("id");
 
       var itemName = card.find('.caption').find('h3').text()
-      var requestedQuantity = card.find('.caption').find('.trans-info .quantity').text()
+      var requestedQuantity = card.find('.caption').find('.trans-info .quantity').text() // This doesn't work
       console.log(card.find('.caption').find('.trans-info .quantity'))
 
       $('body').append(completeModal);
@@ -99,6 +99,7 @@ $(function(){
 
       $("#complete-modal #ok").on('click', function(){
         var quantity = $('#complete-modal #complete-quantity').val(); // GET FROM POP-UP
+        // What's to stop them putting more than their original listing had?? Nothing. In the requestModel, don't ever set a quantity < 0, default it to 0 as the boundary  
         // Send to /items/confirm-request
 
         var url = baseURL + "/items/confirm-request";
