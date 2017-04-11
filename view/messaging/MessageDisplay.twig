@@ -1,4 +1,3 @@
-<div id="message-location">
     {% for message in messages %}
         <div class="{% if message.sender == 1 %}sender{% else %}receiver{% endif %}">
             <div class="content">
@@ -9,4 +8,4 @@
             </div>
         </div>
     {% endfor %}
-</div>
+
