@@ -16,9 +16,9 @@
     <div class="tab-content user-stats zero-padding" style="padding-top:10px; background-color:transparent;" id="{{ isUser }}">
         {% if isUser == 1 %}
             {{ homeTab | raw }}
-
+        {%  endif %}
             {{ listingsTab | raw }}
-            
+        {% if isUser == 1 %}
             {{ offersTab | raw }}
 
             {{ requestsTab | raw }}
