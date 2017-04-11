@@ -281,7 +281,7 @@ $(function(){
       var card = $(this).closest('.thumbnail');
       
       var itemName = card.find('.caption').find('h3').text()
-      var requestedQuantity = card.find('.caption').find('.trans-info .quantity').text()
+      var actualQuantity = card.find('.caption').find('.trans-info .quantity').text()
       console.log(card.find('.caption').find('.trans-info .quantity'))
 
       $('body').append(requestModal);
@@ -290,12 +290,17 @@ $(function(){
 
       $("#request-modal").on("shown.bs.modal", function () {
         $(this).find('.item-name').html(itemName)
-        $(this).find('.item-quantity').html(' / ' + requestedQuantity)
+        $(this).find('.item-quantity').html(' / ' + actualQuantity)
       }).modal('show');
 
       $("#request-modal #ok").on('click', function(){
         var quantity = $('#request-modal #request-quantity').val(); // GET FROM POP-UP
         console.log(quantity)
+         if(quantity > actualQuantity){
+             // Display error
+             console.log("Asking for too much");
+             return;
+         }
         // Send to /items/request
         var url = baseURL + "/items/request";
         var data = {listingID : listingID, quantity: quantity};
