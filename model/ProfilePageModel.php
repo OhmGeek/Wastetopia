@@ -10,6 +10,7 @@ use PDO;
 use Wastetopia\Model\DB;
 class ProfilePageModel
 {
+	
     /**
      * ProfilePageModel constructor.
      * @param @userID ID of user whose profile you're trying to view
