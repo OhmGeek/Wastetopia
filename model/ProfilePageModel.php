@@ -72,7 +72,30 @@ class ProfilePageModel
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 	
-    
+   
+	
+    /*
+    * Gets the pending offers made for user's items which they haven't seen yet (notification)
+    * @return mixed 
+    */
+    function getUnseenPendingTransactions(){
+	$userID = $this->getUserID();
+        $statement = $this->db->prepare("
+            SELECT `Transaction`.`TransactionID, `Listing`.`ListingID`
+	    FROM `ListingTransaction`
+	    JOIN `Listing` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
+	    JOIN `Transaction` ON `Transaction`.`TransactionID` = ListingTransaction`.`FK_Transaction_TransactionID`
+	    WHERE `ListingTransaction`.`Success` = 0
+	    AND `ListingTransaction`.`Viewed` = 0
+	    AND `Listing`.`FK_User_UserID` = :userID
+	    AND `Listing`.`Active` = 1;
+        ");
+        $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
+        $statement->execute();
+        return $statement->fetchColumn();    
+    }
+	
+	
     /*
     * Gets the total number of pending offers made for user's items which they haven't seen yet (notification)
     * @returns integer (total)
