@@ -133,10 +133,24 @@ $(function(){
     $(document).on('click', 'a[href="#reject"]', function(){
         var card = $(this).closest('.thumbnail');
       // Extract transactionID and listingID
-       var transactionID = $(this).closest('.thumbnail').attr("id");
+       var transactionID = card.attr("id");
        var listingID = $(this).closest(".btn-watch").prevAll('a[href="#view"]').attr("id");
       // Send to /items/reject-request
 
+      var itemName = card.find('.caption').find('h3').text()
+      console.log(itemName)
+
+      $('body').append(deleteModal);
+
+      $("#delete-modal").modal({backdrop: "static"})
+
+      $("#delete-modal").on("shown.bs.modal", function () {
+        $(this).find('.modal-msg').html("Do you want to reject the request for ")
+        $(this).find('.item-name').html(itemName + '?')
+        $(this).find('.modal-submsg').html("You won't be able to undo this once you press 'Ok'")
+      }).modal('show');
+
+      $("#delete-modal #ok").on('click', function(){
         var url = baseURL + "/items/reject-request";
         var data = {listingID : listingID, transactionID : transactionID};
         console.log(data);
@@ -149,6 +163,11 @@ $(function(){
                // Show error
            }
         });
+      });
+      $('#delete-modal').on('hidden.bs.modal', function(){
+        console.log("hidden");
+        $('#delete-modal').remove();
+      });
     });
 
 
@@ -280,57 +299,77 @@ $(function(){
                // Change button to cancel request button
                button.html("Cancel request");
                button.attr("href", "#cancel-by-listing");
-           }else{
+             }else{
                // Show error
-           }
-        });
-      });
-      $('#request-modal').on('hidden.bs.modal', function(){
-        console.log("hidden");
-        $('#request-modal').remove();
-      });
-    });
+             }
+           });
+         });
+         $('#request-modal').on('hidden.bs.modal', function(){
+           console.log("hidden");
+           $('#request-modal').remove();
+         });
+       });
 
-    // Edit listing - ADD URL FROM RYAN'S PAGES
-    $(document).on('click', 'a[href="#edit"]', function(event){
-        event.preventDefault();
+       // Edit listing - ADD URL FROM RYAN'S PAGES
+       $(document).on('click', 'a[href="#edit"]', function(event){
+         event.preventDefault();
 
-        // Extract listingID
-      var listingID = $(this).prevAll('a[href="#view"]').attr("id");
+         // Extract listingID
+         var listingID = $(this).prevAll('a[href="#view"]').attr("id");
 
-        // Send to /items/request
-        var url = baseURL + "/items/edit"; // REPLACE WITH  CORRECT URL
-        var data = {listingID : listingID};
-        //location.href = "EDIT_PAGE_URL";
-        return;
-    });
+         // Send to /items/request
+         var url = baseURL + "/items/edit"; // REPLACE WITH  CORRECT URL
+         var data = {listingID : listingID};
+         //location.href = "EDIT_PAGE_URL";
+         return;
+       });
 
-    // Rate listing(user)
-    $(document).on('click', '#rate', function(){
-        var button = $(this);
-        console.log("Rating");
+       // Rate listing(user)
+       $(document).on('click', '#rate', function(){
+         var button = $(this);
+         console.log("Rating");
 
-      // Extract listingID
-        var transactionID = $(this).closest('.thumbnail').attr("id");
+         // Extract listingID
+         var card = $(this).closest('.thumbnail')
+         var transactionID = card.attr("id");
 
-	// Pop up box here
-        var rating = 0; // Get from pop-up
+         // Pop up box here
+         // Pop up to get quantity
+         var itemName = card.find('.caption').find('h3').text()
+         var userName = card.find('.caption').find('.user-name').text()
 
-      // NEED TO DECIDE WHAT URL TO USE
-        var url = baseURL + "/items/rate-user"; // GET CORRECT URL
-        var data = {transactionID : transactionID, rating: rating};
-        console.log(data);
+         $('body').append(rateModal);
 
-        $.post(url, data, function(response){
-           if(response){
+         $("#rate-modal").modal({backdrop: "static"})
+
+         $("#rate-modal").on("shown.bs.modal", function () {
+           $(this).find('.item-name').html(itemName)
+           $(this).find('.rate-user').html('Rate ' + userName)
+         }).modal('show');
+
+         $("#rate-modal #ok").on('click', function(){
+           var quantity = $('#rate-modal #rate').val(); // GET FROM POP-UP
+           var rating = 0; // Get from pop-up
+
+           // NEED TO DECIDE WHAT URL TO USE
+           var url = baseURL + "/items/rate-user"; // GET CORRECT URL
+           var data = {transactionID : transactionID, rating: rating};
+           console.log(data);
+
+           $.post(url, data, function(response){
+             if(response){
                // Remove rating buton from card
                button.remove();
-           }else{
+             }else{
                // Show error
-           }
-        });
-
-    });
+             }
+           });
+         });
+         $('#rate-modal').on('hidden.bs.modal', function(){
+           console.log("hidden");
+           $('#rate-modal').remove();
+         });
+       });
 
 
     // Renew listing
