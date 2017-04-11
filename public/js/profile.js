@@ -34,7 +34,7 @@ $(function () {
      $.get(url, function(response){
        console.log(response);
         var div = $(tabID); // Reload specific tab section
-        div.replaceWith(response);
+        div.load(response);
        console.log("Loaded");
        
        // re initialize isotope
