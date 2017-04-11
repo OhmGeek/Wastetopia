@@ -44,37 +44,41 @@ $(function(){
 
     // Make listing inactive - THIS WORKS (BUT ALSO REMOVES ALL TRANSACTIONS FOR THAT LISTING)
     $(document).on('click', 'a[href="#remove"]', function(event){
-	event.preventDefault();
-        var card = $(this).closest('.thumbnail');
+      event.preventDefault();
+      var card = $(this).closest('.thumbnail');
 
       // Extract listingID
-       var listingID = $(this).attr("id");
+      var listingID = $(this).attr("id");
 
-       var itemName = card.closest('.caption').find('h3').text();
+      var itemName = card.find('.caption').find('h3').text()
+      console.log(itemName)
 
-       $('body').append(deleteModal);
+      $('body').append(deleteModal);
 
-       $("#delete-modal").modal({backdrop: "static"})
+      $("#delete-modal").modal({backdrop: "static"})
 
-       $("#delete-modal").on("shown.bs.modal", function () {
-                $(this).find('.item-name').html(itemName)
-           }).modal('show');
+      $("#delete-modal").on("shown.bs.modal", function () {
+        $(this).find('.item-name').html(itemName)
+      }).modal('show');
 
-	$("#delete-modal #ok").on('click', function(){
-	      // Send to /items/remove-listing
-		var url = baseURL + "/items/remove-listing";
-		var data = {listingID : listingID};
-		console.log(data);
-		$.post(url, data, function(response){
-		   if(response){
-		       // Remove card from screen
-		       remove(card);
-		   }else{
-		       // Show error
-		   }
-		});
-	});
-
+      $("#delete-modal #ok").on('click', function(){
+        // Send to /items/remove-listing
+        var url = baseURL + "/items/remove-listing";
+        var data = {listingID : listingID};
+        console.log(data);
+        $.post(url, data, function(response){
+          if(response){
+            // Remove card from screen
+            remove(card);
+          }else{
+            // Show error
+          }
+        });
+      });
+      $('#delete-modal').on('hidden.bs.modal', function(){
+          console.log("hidden");
+           $('#delete-modal').remove();
+       });
     });
 
 
@@ -87,8 +91,8 @@ $(function(){
        var transactionID = card.attr("id");
        var listingID = $(this).closest(".btn-watch").prevAll('a[href="#view"]').attr("id");
 
-       var itemName = card.closest('.caption').find('h3').text()
-       var requestedQuantity = card.closest('.caption').find('.trans-info .quantity').text()
+       var itemName = card.find('.caption').find('h3').text()
+       var requestedQuantity = card.find('.caption').find('.trans-info .quantity').text()
 
        $('body').append(completeModal);
 
