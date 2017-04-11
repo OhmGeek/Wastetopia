@@ -232,6 +232,8 @@ $(function(){
 
       var url = baseURL + "/items/cancel-request-listing";
       var data = {listingID : listingID};
+      
+      var card = $(this).closest('.thumbnail');
 
       var itemName = card.find('.caption').find('h3').text()
       console.log(itemName)
