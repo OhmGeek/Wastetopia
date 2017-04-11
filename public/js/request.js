@@ -23,7 +23,7 @@ $(function(){
     });
     
     
-    // Make listing inactive - THIS WORKS (BUT ALSO REMOVES ALL TRANSACTIONS)
+    // Make listing inactive - THIS WORKS (BUT ALSO REMOVES ALL TRANSACTIONS FOR THAT LISTING)
     $grid.on('click', '#remove', function(){
       // Extract listingID
         var listingID = $(this).closest('.thumbnail').attr("id"); //????
@@ -43,7 +43,7 @@ $(function(){
     });
     
     
-    // Mark request as complete
+    // Mark request as complete - SEEMS TO WORK 
     $grid.on('click', '#complete', function(){
       // Extract transactionID and listingID and new quantity
        var transactionID = $(this).closest('.thumbnail').attr("id");
@@ -64,7 +64,7 @@ $(function(){
     });
     
     
-    //Reject request
+    //Reject request - THIS WORKS
     $grid.on('click', '#reject', function(){
       // Extract transactionID and listingID
        var transactionID = $(this).closest('.thumbnail').attr("id");
@@ -109,7 +109,7 @@ $(function(){
         });
     });
     
-    // Cancel request using listingID - WORKS WHEN VIEWING CARD OUTSIDE OF YOUR PROFILE (I.E on search page)
+    // Cancel request using listingID - USED WHEN VIEWING CARD OUTSIDE OF YOUR PROFILE (I.E on search page)
     // WORKS BUT DOES SOME WEIRD REDIRECTION WITH A SERVER ERROR AFTER IT'S DONE
     $grid.on('click', '#cancel-by-listing', function(){
         console.log("Cancelling");
@@ -156,7 +156,7 @@ $(function(){
         });
     });
     
-    // Edit listing
+    // Edit listing - ADD URL FROM RYAN'S PAGES
     $grid.on('click', '#edit', function(event){
         event.preventDefault();
         
@@ -172,13 +172,17 @@ $(function(){
     
     // Rate listing(user)
     $grid.on('click', '#rate', function(){
-      // Extract listingID
-        var listingID = $(this).closest('.thumbnail').attr("id"); //????
+        console.log("Rating");
         
-      // Send to /items/remove-listing 
+      // Extract listingID
+        var transactionID = $(this).closest('.thumbnail').attr("id"); 
+        //var rating = ??;
+        
+      // NEED TO DECIDE WHAT URL TO USE
         var url = baseURL + "/items/rate-user"; // GET CORRECT URL
-        var data = {listingID : listingID};
+        var data = {transactionID : transactionID};
         console.log(data);
+        
         $.post(url, data, function(response){
            if(response){
                // Remove rating buton from card
