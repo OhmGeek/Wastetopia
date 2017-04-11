@@ -88,6 +88,31 @@ $klein->with("/profile", function() use ($klein) {
        return $controller->generateProfileContentHTML(); 
     });
     
+    $klein->respond('GET', '/load-home-tab/[:userID]', function($request, $response){
+        $controller = new ProfilePageController(0, $request->userID);
+        return $controller->generateHomeSection(); 
+    }
+                    
+    $klein->respond('GET', '/load-listings-tab/[:userID]', function($request, $response){
+        $controller = new ProfilePageController(0, $request->userID);
+        return $controller->generateListingsSection(); 
+    });
+    
+    $klein->respond('GET', '/load-offers-tab/[:userID]', function($request, $response){
+        $controller = new ProfilePageController(0, $request->userID);
+        return $controller->generateOffersSection(); 
+    });
+    
+    $klein->respond('GET', '/load-requests-tab/[:userID]', function($request, $response){
+        $controller = new ProfilePageController(0, $request->userID);
+        return $controller->generateRequestsSection(); 
+    });
+    
+    $klein->respond('GET', '/load-watchlist-tab/[:userID]', function($request, $response){
+        $controller = new ProfilePageController(0, $request->userID);
+        return $controller->generateWatchListSection(); 
+    });
+    
     $klein->respond('POST', '/toggle-watch-list/[:listingID]', function($request, $response){
        $controller = new ProfilePageController(1);
        $response = $controller->toggleWatchListListing($request->listingID);
