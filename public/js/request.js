@@ -232,7 +232,7 @@ $(function(){
 
       var url = baseURL + "/items/cancel-request-listing";
       var data = {listingID : listingID};
-      
+
       var card = $(this).closest('.thumbnail');
 
       var itemName = card.find('.caption').find('h3').text()
@@ -278,6 +278,8 @@ $(function(){
       var listingID = $(this).prevAll('a[href="#view"]').attr("id");
 
       // Pop up to get quantity
+      var card = $(this).closest('.thumbnail');
+      
       var itemName = card.find('.caption').find('h3').text()
       var requestedQuantity = card.find('.caption').find('.trans-info .quantity').text()
       console.log(card.find('.caption').find('.trans-info .quantity'))
