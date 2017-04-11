@@ -39,8 +39,9 @@ class MessageController
 	   $conversationIDs = $this->model->getConversationIDFromListing($listingID);
 	   $conversationID = $conversationIDs[0];	
 	}
-	
+print_r($conversationID);
 	$conversationID = $conversationID["ConversationID"];  
+print_r($conversationID);
 	return $this->generatePage($conversationID);    
     }
 
