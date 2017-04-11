@@ -45,8 +45,10 @@
                                     <div class="nav-btns">
                                         <a href="#view" class="btn btn-primary" role="button"
                                            id="{{ item.listingID }}">View</a>
+                                           {% if !item.hasRated %}
                                         <a href="#rate" class="btn btn-default" role="button"
                                               id="{{ item.listingID }}">Rate</a>
+                                             {% endif %}
                                         <a href="#delete" role="button" class="btn-watch"><i
                                                     class="material-icons">delete</i></a>
                                     </div>
