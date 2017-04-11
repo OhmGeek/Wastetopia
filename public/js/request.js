@@ -129,7 +129,7 @@ $(function(){
     
     // Cancel request using listingID - USED WHEN VIEWING CARD OUTSIDE OF YOUR PROFILE (I.E on search page)
     // WORKS BUT DOES SOME WEIRD REDIRECTION WITH A SERVER ERROR AFTER IT'S DONE
-    $grid.on('click', '#cancel-by-listing', function(){
+    $(document).on('click', '#cancel-by-listing', function(){
         console.log("Cancelling");
         
       // Extract transactionID and listingID
@@ -154,7 +154,7 @@ $(function(){
     
     
     // Request listing - THIS WORKS
-    $grid.on('click', '#request', function(event){
+    $(document).on('click', '#request', function(event){
         event.preventDefault();
         console.log("Requesting");
         // Extract listingID
@@ -175,7 +175,7 @@ $(function(){
     });
     
     // Edit listing - ADD URL FROM RYAN'S PAGES
-    $grid.on('click', '#edit', function(event){
+    $(document).on('click', '#edit', function(event){
         event.preventDefault();
         
         // Extract listingID
@@ -189,7 +189,7 @@ $(function(){
     });
     
     // Rate listing(user)
-    $grid.on('click', '#rate', function(){
+    $(document).on('click', '#rate', function(){
         console.log("Rating");
         
       // Extract listingID
@@ -259,7 +259,7 @@ $(function(){
     
 
   // Toggle listings in the watch list - DOES NOT WORK (WEIRD ERROR)
-  $grid.on('click', '#watch', function(){
+  $(document).on('click', '#watch', function(){
       console.log("toggle");
      var listingID = $(this).closest('.thumbnail').attr("id");
      var isUser = parseInt($(this).closest('.user-stats').attr("id"));
