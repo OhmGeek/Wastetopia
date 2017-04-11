@@ -32,7 +32,7 @@ $klein->respond("GET", "/login", function($request, $response) {
     return $controller->index($response);
 });
 
-$klein->with("/register", function() use $(klein){
+$klein->with("/register", function() use ($klein){
     $klein->respond("GET", "/?", function() {
         $controller = new RegistrationController();
         return $controller->generatePage():    
