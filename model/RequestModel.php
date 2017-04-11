@@ -298,7 +298,29 @@ class RequestModel
 		
 		$new_item_id = $this->getLastItemID($name, $useBy, $description); // Replace with SQL query
 		
-		// NEED TO LINK THE ITEM TO THE CORRECT TAGS AND IMAGES
+		//adding item tags
+		$statement01 = $this->db->prepare("
+			INSERT INTO ItemTag(FK_Item_ItemID, FK_Tag_TagID)
+			SELECT :new_item_id, ItemTag.FK_Tag_TagID
+			FROM ItemTag WHERE FK_Item_ItemID = :old_item_id;
+		");
+		$statement01->bindValue(":new_item_id", :new_item_id, PDO::PARAM_INT);
+		$statement01->bindValue(":old_item_id", $listing_info["FK_Item_ItemID"], PDO::PARAM_INT);
+		$statement01->execute();
+		
+		
+		// adding item's images 
+		$statement01 = $this->db->prepare("
+			INSERT INTO ItemImage(FK_Item_ItemID, FK_Image_ImageID, Is_Default)
+			SELECT :new_item_id, FK_Image_ImageID, Is_Default
+			FROM ItemImage WHERE FK_Item_ItemID = :old_item_id;
+		");
+		$statement02->bindValue(":new_item_id", :new_item_id, PDO::PARAM_INT);
+		$statement02->bindValue(":old_item_id", $listing_info["FK_Item_ItemID"], PDO::PARAM_INT);
+		$statement02->execute();
+
+		
+		
 		
 		$statement = $this->db->prepare("
 			INSERT INTO Listing(FK_Location_LocationID, FK_Item_ItemID, FK_User_UserID, Quantity)
