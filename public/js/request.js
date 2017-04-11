@@ -124,7 +124,7 @@ $(function(){
             console.log(response);
            if(response){
                // Do something
-               // Remove card from screen
+               // Change button to "Request"
            }else{
                // Show error   
            }
@@ -163,14 +163,8 @@ $(function(){
         // Send to /items/request
         var url = baseURL + "/items/edit"; // REPLACE WITH  CORRECT URL
         var data = {listingID : listingID};
-        $.post(url, data, function(response){
-            console.log(response);
-           if(response){
-               // Do something
-           }else{
-               // Show error   
-           }
-        });
+        //location.href = "EDIT_PAGE_URL";
+        return;
     });
     
     // Rate listing(user)
@@ -184,7 +178,7 @@ $(function(){
         console.log(data);
         $.post(url, data, function(response){
            if(response){
-               // Remove card from screen
+               // Remove rating buton from card
            }else{
                // Show error   
            }
