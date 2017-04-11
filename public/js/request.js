@@ -58,7 +58,9 @@ $(function(){
       $("#delete-modal").modal({backdrop: "static"})
 
       $("#delete-modal").on("shown.bs.modal", function () {
-        $(this).find('.item-name').html(itemName)
+        $(this).find('.modal-msg').html("Do you want to remove the offer for ")
+        $(this).find('.item-name').html(itemName + '?')
+        $(this).find('.modal-submsg').html("You won't be able to undo this once you press 'Ok'")
       }).modal('show');
 
       $("#delete-modal #ok").on('click', function(){
@@ -76,54 +78,54 @@ $(function(){
         });
       });
       $('#delete-modal').on('hidden.bs.modal', function(){
-          console.log("hidden");
-           $('#delete-modal').remove();
-       });
+        console.log("hidden");
+        $('#delete-modal').remove();
+      });
     });
 
 
     // Mark request as complete - SEEMS TO WORK
     // added modal for this code
     $(document).on('click', 'a[href="#complete"]', function(event){
-	event.preventDefault();
-        var card = $(this).closest('.thumbnail');
+      event.preventDefault();
+      var card = $(this).closest('.thumbnail');
       // Extract transactionID and listingID and new quantity
-       var transactionID = card.attr("id");
-       var listingID = $(this).closest(".btn-watch").prevAll('a[href="#view"]').attr("id");
+      var transactionID = card.attr("id");
+      var listingID = $(this).closest(".btn-watch").prevAll('a[href="#view"]').attr("id");
 
-       var itemName = card.find('.caption').find('h3').text()
-       var requestedQuantity = card.find('.caption').find('.trans-info .quantity').text()
-       console.log(card.find('.caption').find('.trans-info .quantity'))
+      var itemName = card.find('.caption').find('h3').text()
+      var requestedQuantity = card.find('.caption').find('.trans-info .quantity').text()
+      console.log(card.find('.caption').find('.trans-info .quantity'))
 
-       $('body').append(completeModal);
+      $('body').append(completeModal);
 
-       $("#complete-modal").modal({backdrop: "static"})
+      $("#complete-modal").modal({backdrop: "static"})
 
-       $("#complete-modal").on("shown.bs.modal", function () {
-                $(this).find('.item-name').html(itemName)
-                $(this).find('.requested-quantity').html(' / ' + requestedQuantity)
-           }).modal('show');
+      $("#complete-modal").on("shown.bs.modal", function () {
+        $(this).find('.item-name').html(itemName)
+        $(this).find('.requested-quantity').html(' / ' + requestedQuantity)
+      }).modal('show');
 
-        $("#complete-modal #ok").on('click', function(){
-          var quantity = $('#complete-modal #complete-quantity').val(); // GET FROM POP-UP
-         // Send to /items/confirm-request
+      $("#complete-modal #ok").on('click', function(){
+        var quantity = $('#complete-modal #complete-quantity').val(); // GET FROM POP-UP
+        // Send to /items/confirm-request
 
-           var url = baseURL + "/items/confirm-request";
-           var data = {listingID : listingID, transactionID : transactionID, quantity: quantity};
-           $.post(url, data, function(response){
-              if(response){
-                  // Remove card from screen
-                  remove(card);
-              }else{
-                  // Show error
-              }
-           });
+        var url = baseURL + "/items/confirm-request";
+        var data = {listingID : listingID, transactionID : transactionID, quantity: quantity};
+        $.post(url, data, function(response){
+          if(response){
+            // Remove card from screen
+            remove(card);
+          }else{
+            // Show error
+          }
         });
+      });
 
-        $('#complete-modal').on('hidden.bs.modal', function(){
- 		        console.log("hidden");
-    	       $('#complete-modal').remove();
-	       });
+      $('#complete-modal').on('hidden.bs.modal', function(){
+        console.log("hidden");
+        $('#complete-modal').remove();
+      });
     });
 
 
@@ -152,55 +154,93 @@ $(function(){
 
     // Cancel request - THIS WORKS (ONLY ON USER'S OWN PROFILE)
     $(document).on('click', 'a[href="#cancel"]', function(){
-        var card = $(this).closest('.thumbnail');
-        console.log("Cancelling");
+      var card = $(this).closest('.thumbnail');
+      console.log("Cancelling");
 
       // Extract transactionID and listingID
-        var transactionID = $(this).closest('.thumbnail').attr("id");
-        console.log(transactionID);
+      var transactionID = card.attr("id");
+      console.log(transactionID);
 
       // Send to /items/cancel-request
 
-        var url = baseURL + "/items/cancel-request";
-        var data = {transactionID : transactionID};
+      var url = baseURL + "/items/cancel-request";
+      var data = {transactionID : transactionID};
 
+      var itemName = card.find('.caption').find('h3').text()
+      console.log(itemName)
+
+      $('body').append(deleteModal);
+
+      $("#delete-modal").modal({backdrop: "static"})
+
+      $("#delete-modal").on("shown.bs.modal", function () {
+        $(this).find('.modal-msg').html("Are you sure you want to cancel the request for ")
+        $(this).find('.item-name').html(itemName + '?')
+        $(this).find('.modal-submsg').html("You won't be able to undo this once you press 'Ok'")
+      }).modal('show');
+
+      $("#delete-modal #ok").on('click', function(){
         $.post(url, data, function(response){
-            console.log(response);
-           if(response){
-               // Remove card from screen
-               remove(card);
-           }else{
-               // Show error
-           }
+          console.log(response);
+          if(response){
+            // Remove card from screen
+            remove(card);
+          }else{
+            // Show error
+          }
         });
+      });
+      $('#delete-modal').on('hidden.bs.modal', function(){
+        console.log("hidden");
+        $('#delete-modal').remove();
+      });
     });
 
     // Cancel request using listingID - USED WHEN VIEWING CARD OUTSIDE OF YOUR PROFILE (I.E on search page)
     // WORKS BUT DOES SOME WEIRD REDIRECTION WITH A SERVER ERROR AFTER IT'S DONE
     $(document).on('click', 'a[href="#cancel-by-listing"]', function(){
-        var button = $(this);
-        console.log("Cancelling");
+      var button = $(this);
+      console.log("Cancelling");
 
       // Extract transactionID and listingID
-        var listingID = $(this).closest('.thumbnail').attr("id");
-        console.log(listingID);
+      var listingID = $(this).closest('.thumbnail').attr("id");
+      console.log(listingID);
 
       // Send to /items/cancel-request
 
-        var url = baseURL + "/items/cancel-request-listing";
-        var data = {listingID : listingID};
+      var url = baseURL + "/items/cancel-request-listing";
+      var data = {listingID : listingID};
 
+      var itemName = card.find('.caption').find('h3').text()
+      console.log(itemName)
+
+      $('body').append(deleteModal);
+
+      $("#delete-modal").modal({backdrop: "static"})
+
+      $("#delete-modal").on("shown.bs.modal", function () {
+        $(this).find('.modal-msg').html("Are you sure you want to cancel the request for ")
+        $(this).find('.item-name').html(itemName + '?')
+        $(this).find('.modal-submsg').html("You won't be able to undo this once you press 'Ok'")
+      }).modal('show');
+
+      $("#delete-modal #ok").on('click', function(){
         $.post(url, data, function(response){
-            console.log(response);
-           if(response){
-               // Do something
-               // Change button to a "Request" button
-               button.html("Request");
-               button.attr("href", "#request");
-           }else{
-               // Show error
-           }
+          console.log(response);
+          if(response){
+            // Do something
+            // Change button to a "Request" button
+            button.html("Request");
+            button.attr("href", "#request");
+          }else{
+            // Show error
+          }
         });
+      });
+      $('#delete-modal').on('hidden.bs.modal', function(){
+        console.log("hidden");
+        $('#delete-modal').remove();
+      });
     });
 
 
@@ -214,8 +254,22 @@ $(function(){
       var listingID = $(this).prevAll('a[href="#view"]').attr("id");
 
       // Pop up to get quantity
-	//var quantity = ;
+      var itemName = card.find('.caption').find('h3').text()
+      var requestedQuantity = card.find('.caption').find('.trans-info .quantity').text()
+      console.log(card.find('.caption').find('.trans-info .quantity'))
 
+      $('body').append(requestModal);
+
+      $("#request-modal").modal({backdrop: "static"})
+
+      $("#request-modal").on("shown.bs.modal", function () {
+        $(this).find('.item-name').html(itemName)
+        $(this).find('.item-quantity').html(' / ' + requestedQuantity)
+      }).modal('show');
+
+      $("#request-modal #ok").on('click', function(){
+        var quantity = $('#request-modal #request-quantity').val(); // GET FROM POP-UP
+        console.log(quantity)
         // Send to /items/request
         var url = baseURL + "/items/request";
         var data = {listingID : listingID, quantity: quantity};
@@ -230,6 +284,11 @@ $(function(){
                // Show error
            }
         });
+      });
+      $('#request-modal').on('hidden.bs.modal', function(){
+        console.log("hidden");
+        $('#request-modal').remove();
+      });
     });
 
     // Edit listing - ADD URL FROM RYAN'S PAGES
