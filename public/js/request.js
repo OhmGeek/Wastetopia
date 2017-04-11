@@ -53,7 +53,7 @@ $(function(){
       // Send to /items/confirm-request
         
         var url = baseURL + "/items/confirm-request";
-        var data = {listingID : listingID, transactionID : transactionID};
+        var data = {listingID : listingID, transactionID : transactionID, quantity: quantity};
         $.post(url, data, function(response){
            if(response){
                // Remove card from screen
