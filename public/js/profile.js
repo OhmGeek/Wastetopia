@@ -61,12 +61,14 @@ $(function () {
     }else{
       return; 
     }
+    
+    console.log(tabID);
    
     var url = window.location.protocol + "//" + window.location.host + "/profile/" + relativeURL +"/" + userID;
      $.get(url, function(response){
         var div = $("#"+tabID); // Reload specific tab section
         div.replaceWith(response);
-       
+       console.log("Loaded");
      });
   });
 
