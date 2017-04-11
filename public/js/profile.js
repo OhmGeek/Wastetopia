@@ -15,15 +15,15 @@ $(function () {
     if (tabID == "#listings" || tabID == "#available-listing" || "#out-of-stock-listing" ){
       relativeURL = "load-listings-tab";
     }else if(tabID == "#requests" || tabID == "#completed-request" || "#pending-request" ){
-      relativeURL = "load-requests-tab"; 
+      relativeURL = "load-requests-tab";
     }else if(tabID == "#offers" || tabID == "#completed-transaction" || "#pending-transaction" ){
-     relativeURL = "load-offers-tab"; 
+     relativeURL = "load-offers-tab";
     }else if(tabID == "#watchList"){
-     relativeURL = "load-watchlist-tab"; 
+     relativeURL = "load-watchlist-tab";
     }else if(tabID == "#home"){
-     relativeURL = "load-home-tab"; 
+     relativeURL = "load-home-tab";
     }else{
-      return; 
+      return;
     }
     var url = window.location.protocol + "//" + window.location.host + "/profile/" + relativeURL +"/" + userID;
 
@@ -32,7 +32,7 @@ $(function () {
         var div = $(tabID); // Reload specific tab section
         div.load(response);
 
-       
+
        // re initialize isotope
        $grid = $('.grid').isotope({
           itemSelector: '.grid-item',
@@ -41,7 +41,7 @@ $(function () {
             columnWidth: '.grid-sizer'
           }
         });
-       
+      });
       console.log($(e.target).attr("href"));
       var width = 150;
       var height = 150;
@@ -62,8 +62,7 @@ $(function () {
       $('.user-profile .popularity i').css('font-size',iconSize);
       $('.user-profile .popularity').css('font-size',iconSize);
       $('.page-height').css('padding-top',topPadding);
-     });
-    
+
   });
 
 //   // Reload HTML content in HOME tab when Back buttons pressed on each tab - not working
@@ -74,10 +73,10 @@ $(function () {
 //      $.get(url, function(response){
 //         var div = $("#home");
 //         div.replaceWith(response);
-       
+
 //      });
 //    });
-  
+
 
 
 //   // Delete a card from the page

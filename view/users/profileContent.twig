@@ -10,7 +10,7 @@
             </div>
         </div>
         <div>
-            <a href="#" class="btn btn-default" style="margin-bottom:0;" role="button">Report</a>
+            {% if isUser != 1 %}<a href="#" class="btn btn-default" style="margin-bottom:0;" role="button">Report</a>{% endif %}
         </div>
     </div>
     <div class="tab-content user-stats zero-padding" style="padding-top:10px; background-color:transparent;" id="{{ isUser }}">
