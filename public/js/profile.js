@@ -23,13 +23,13 @@ $(function () {
      relativeURL = "load-home-tab";
     }else{
       return;
-    }  
-    
+    }
+
     var url = window.location.protocol + "//" + window.location.host + "/profile/" + relativeURL +"/" + userID;
      $.get(url, function(response){
         var div = $(tabID); // Reload specific tab section
         div.load(response);
-       
+
        // re initialize isotope
        $grid = $('.grid').isotope({
           itemSelector: '.grid-item',
@@ -40,7 +40,7 @@ $(function () {
         });
       });
   });
-  
+
   $(document).on('shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
     var userID = $('.user-name').attr("id");
 
@@ -64,14 +64,14 @@ $(function () {
     $('.user-profile .popularity i').css('font-size',iconSize);
     $('.user-profile .popularity').css('font-size',iconSize);
     $('.page-height').css('padding-top',topPadding);
-    
+
   });
-  
+
   // Set all pending transactions to viewed
   $(document).on('shown.bs.tab', 'a[href="#pending-transaction"]', function(){
-    var url = window.location.protocol + "//" + window.location.host + "/profile/set-pending-viewed;
+    var url = window.location.protocol + "//" + window.location.host + "/profile/set-pending-viewed";
       $.post(url, function(response){
-        // Do nothing 
+        // Do nothing
       }
   });
 
