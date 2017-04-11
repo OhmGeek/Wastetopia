@@ -119,7 +119,7 @@
                       </div>
                       <div class="nav-btns">
                         <a href="#view" class="btn btn-primary" role="button" id="{{ item.listingID }}">View</a>
-                        <a href="#" role="button" class="btn-watch" id="delete"><i
+                        <a href="#delete" role="button" class="btn-watch"><i
                           class="material-icons">delete</i></a>
                         </div>
                       </div>
@@ -165,8 +165,8 @@
                             <i class="material-icons">more_vert</i>
                           </a>
                           <ul class="dropdown-menu dropdown-menu-right">
-                            <li><a href="javascript:void(0)" id="complete">Mark as Complete</a></li>
-                            <li><a href="javascript:void(0)" id="reject">Reject Offer</a></li>
+                            <li><a href="#complete)" id = "{{item.transactionID}}">Mark as Complete</a></li>
+                            <li><a href="#reject" id = "{{item.transactionID}}">Reject Offer</a></li>
                           </ul>
                         </div>
                       </div>
@@ -227,7 +227,7 @@
                     <div class="nav-btns">
                       <a href="#view" class="btn btn-primary" role="button"
                       id="{{ item.listingID }}">View</a>
-                      <a href="#" role="button" class="btn-watch" id="delete"><i
+                      <a href="#delete" role="button" class="btn-watch"><i
                         class="material-icons">delete</i></a>
                       </div>
                     </div>
@@ -282,7 +282,7 @@
                         </a>
                         <ul class="dropdown-menu dropdown-menu-right">
                           <!--<li><a href="javascript:void(0)">Mark as Complete</a></li> Shouldn't be able to mark it as complete-->
-                          <li><a href="javascript:void(0)" id="cancel">Cancel Request</a></li>
+                          <li><a href="#cancel" id="{{item.transactionID}}">Cancel Request</a></li>
                         </ul>
                       </div>
                     </div>
@@ -331,8 +331,8 @@
                 <div class="nav-btns">
                   <a href="#view" class="btn btn-primary" role="button" id="{{ item.listingID }}">View</a>
                   {% if item.isRequesting %}<a href="#" class="btn btn-default" role="button" id="cancel">Cancel request</a>
-                  {% else %}<a href="#" class="btn btn-default" role="button" id="request">Request</a> {% endif %}
-                  <a href="#" role="button" class="btn-watch watched" id="watch"><i
+                  {% else %}<a href="#request" class="btn btn-default" role="button" id="{{item.listingID}}">Request</a> {% endif %}
+                  <a href="#watch" role="button" class="btn-watch watched"><i
                     class="material-icons">visibility</i></a>
                   </div>
                 </div>
@@ -381,20 +381,20 @@
                             <a href="#view" class="btn btn-primary" role="button"
                             id="{{ item.listingID }}">View</a>
                             {% if isUser %}
-                              <a href="#" class="btn btn-default" role="button"
-                              id="edit">Edit</a>
+                              <a href="#edit" class="btn btn-default" role="button"
+                              id="{{item.listingID}}">Edit</a>
                             {% elseif item.isRequesting %}
-                              <a href="#" class="btn btn-default" role="button"
-                              id="cancel-by-listing">Cancel request</a>
+                              <a href="#cancel-by-listing" class="btn btn-default" role="button"
+                              id=""{{item.listingID}}"">Cancel request</a>
                             {% else %}
-                              <a href="#" class="btn btn-default" role="button"
-                              id="request">Request</a>
+                              <a href="#request" class="btn btn-default" role="button"
+                              id="{{item.listingID}}">Request</a>
                             {% endif %}
                             {% if isUser == 1 %}
-                            <a href="#" role="button" class="btn-watch" id="remove"><i
+                            <a href="#remove" role="button" class="btn-watch" id="{{item.listingID}}"><i
                               class="material-icons">delete</i></a>
                             {% else %}
-                            <a href="#" role="button" class="btn-watch {% if item.isWatching %}watched{% endif %}" id="watch"><i
+                            <a href="#watch" role="button" class="btn-watch {% if item.isWatching %}watched{% endif %}" id="{{item.listingID}}"><i
                               class="material-icons">visibility</i></a>
                             {% endif %}
                             </div>
@@ -429,7 +429,7 @@
                               id="{{ item.listingID }}">View</a>
                               <a href="#renew" class="btn btn-default" role="button"
                               id="{{ item.listingID }}">Renew</a>
-                              <a href="#" role="button" class="btn-watch" id="remove"><i
+                              <a href="#remove" role="button" class="btn-watch" id="{{item.listingID}}"><i
                                 class="material-icons">delete</i></a>
                               </div>
                             </div>
