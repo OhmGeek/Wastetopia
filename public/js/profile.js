@@ -35,6 +35,15 @@ $(function () {
         div.replaceWith(response);
        console.log("Loaded");
        
+       // re initialize isotope
+       $grid = $('.grid').isotope({
+          itemSelector: '.grid-item',
+          percentPosition: true,
+          masonry: {
+            columnWidth: '.grid-sizer'
+          }
+        });
+       
       console.log($(e.target).attr("href"));
       var width = 150;
       var height = 150;
