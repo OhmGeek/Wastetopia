@@ -6,6 +6,7 @@ use Twig_Loader_Filesystem;
 use Twig_Environment;
 use Wastetopia\Config\CurrentConfig;
 use Wastetopia\Model\CardDetailsModel;
+use Wastetopia\Model\ConversationListModel;
 
 class MessageController
 {
