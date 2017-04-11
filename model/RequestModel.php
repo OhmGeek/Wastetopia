@@ -30,9 +30,35 @@ class RequestModel
         return 20; //Hardcoded for now
     }
 
-	/**
+	
+   /**
      * Returns the ID of the last incomplete transaction the $userID made for the $listingID
      * @param $listingID
+     * @param $userID
+     * @return int
+     */	
+   function getTransactionIDFromListingID($listingID){
+	   $userID = $this->getUserID();
+	   $statement = $this->db->prepare("
+            SELECT `Transaction`.`TransactionID`
+	    FROM `Transaction`
+	    JOIN `ListingTransaction` ON `Transaction`.`TransactionID` = `ListingTransaction`.`FK_Transaction_TransactionID`
+	    WHERE `Transaction`.`FK_User_UserID` = :userID	
+	    AND `ListingTransaction`.`FK_Listing_ListingID` = :listingID
+	    AND `ListingTransaction`.`Success` = 0
+	    ORDER BY `Transaction`.`Time_Of_Application` DESC;
+         ");
+	$statement->bindValue(":userID", $userID, PDO::PARAM_INT);    
+	$statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);   
+        $statement->execute();
+	$results = $statement->fetchAll(PDO::FETCH_ASSOC);
+	$result = $results["0"];   
+        return $result["TransactionID"];
+	   
+   }
+	
+	/**
+     * Returns the ID of the last transaction the User made
      * @param $userID
      * @return int
      */
