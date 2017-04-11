@@ -35,7 +35,7 @@ $klein->respond("GET", "/login", function($request, $response) {
 $klein->with("/register", function() use ($klein){
     $klein->respond("GET", "/?", function() {
         $controller = new RegistrationController();
-        return $controller->generatePage():    
+        return $controller->generatePage();    
     });
     
     $klein->respond("POST", "/add-user", function($request,$response){
