@@ -111,7 +111,7 @@ class RequestModel
 		$statement1->bindValue(":userID", $currentUser, PDO::PARAM_INT);
 		$statement1->execute();
 		
-		$transaction_id = $this->getLastTransactionID();
+		$transaction_id = $this->getLastTransactionID($currentUser);
 		print_r("Transaction: ".$transaction_id);
 		
 		//then link the transaction to the listing
