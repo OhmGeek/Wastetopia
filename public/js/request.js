@@ -330,7 +330,7 @@ $(function(){
        });
 
        // Rate listing(user)
-       $(document).on('click', '#rate', function(event){
+       $(document).on('click', 'a[href="#rate"]', function(event){
          event.preventDefault();
          var button = $(this);
          console.log("Rating");
