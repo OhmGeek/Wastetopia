@@ -2,9 +2,9 @@
 $(function(){
 
     //TODO: Fix watch-list toggle issue
-    //TODO: Test renew and rate
-    //TODO: Link to edit and messaging pages
-    //TODO: Stop quantity of completed transaction exceeding quantity of listing
+    //TODO: Test renew and rate - renew needs a Modal
+    //TODO: Link to edit and messaging pages - When everything is merged to master
+    //TODO: Stop quantity of completed transaction exceeding quantity of listing - Has to be done in requestModel
 
     var baseURL =  window.location.protocol + "//" + window.location.host;
 
@@ -94,7 +94,7 @@ $(function(){
 
       $("#complete-modal").on("shown.bs.modal", function () {
         $(this).find('.item-name').html(itemName)
-        $(this).find('.requested-quantity').html(' / ' + requestedQuantity)
+        $(this).find('.requested-quantity').html(' / ' + requestedQuantity) 
       }).modal('show');
 
       $("#complete-modal #ok").on('click', function(){
@@ -283,6 +283,7 @@ $(function(){
       $("#request-modal").on("shown.bs.modal", function () {
         $(this).find('.item-name').html(itemName)
         $(this).find('.item-quantity').html(' / ' + actualQuantity)
+        $('#request-modal #request-quantity').attr("max", actualQuantity); // Don't allow user to request more than is available
       }).modal('show');
 
       $("#request-modal #ok").on('click', function(){
@@ -353,8 +354,8 @@ $(function(){
          }).modal('show');
 
          $("#rate-modal #ok").on('click', function(){
-           var quantity = $('#rate-modal #rate').val(); // GET FROM POP-UP
-           var rating = 0; // Get from pop-up
+           // What limits the rating the user can give?  
+           var rating = $('#rate-modal #rate').val(); // GET FROM POP-UP
 
            // NEED TO DECIDE WHAT URL TO USE
            var url = baseURL + "/items/rate-user"; // GET CORRECT URL
@@ -468,6 +469,8 @@ $(function(){
 
 
   // modals/popups html
+    
+  // Delete - anything to do with removing or cancelling  
   var deleteModal = '<div id="delete-modal" class="modal fade" role="dialog">'+
                       '<div class="modal-dialog">'+
                         '<div class="modal-content">'+
@@ -490,6 +493,7 @@ $(function(){
                         '</div>'+
                       '</div>';
 
+  // Requesting a listing 
   var requestModal = '<div id="request-modal" class="modal fade" role="dialog">'+
                         '<div class="modal-dialog">'+
                           '<div class="modal-content">'+
@@ -516,6 +520,7 @@ $(function(){
                       '</div>'+
                     '</div>';
 
+  // Rating a user from a transaction 
   var rateModal = '<div id="rate-modal" class="modal fade" role="dialog">'+
                     '<div class="modal-dialog">'+
                       '<div class="modal-content">'+
@@ -544,6 +549,7 @@ $(function(){
               '</div>'+
             '</div>';
 
+  // Marking as complete  
   var completeModal = '<div id="complete-modal" class="modal fade" role="dialog">'+
                         '<div class="modal-dialog">'+
                         '<div class="modal-content">'+
