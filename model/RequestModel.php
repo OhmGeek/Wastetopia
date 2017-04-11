@@ -336,15 +336,18 @@ class RequestModel
 	 */
 	
 	function rejectRequest($listing_id, $transaction_id){
+		print_r("LISTING: ".$listing_id);
+		print_r("TRANSACTION: ".$transaction_id);
 		$statement = $this->db->prepare("
-			UPDATE ListingTransaction
-			SET Success = 2
-			WHERE FK_Listing_ListingID = :listing_id
-			AND FK_Transaction_TransactionID = :transaction_id;
+			UPDATE `ListingTransaction`
+			SET `ListingTransaction`.`Success` = 2
+			WHERE `ListingTransaction`.`FK_Listing_ListingID` = :listing_id
+			AND `ListingTransaction`.`FK_Transaction_TransactionID` = :transaction_id;
 		");
 		$statement->bindValue(":listing_id", $listing_id, PDO::PARAM_INT);
 		$statement->bindValue(":transaction_id", $transaction_id, PDO::PARAM_INT);
 		$statement->execute();
+		return True;
 	}
 	
 	function withdrawRequest($transaction_id){
