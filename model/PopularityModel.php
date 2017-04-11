@@ -30,7 +30,7 @@ class PopularityModel
 
 //        $reader = new UserCookieReader();
 //        return $reader->get_user_id();
-        return 20; //Hardcoded for now
+        return 6; //Hardcoded for now - usually 6
     }
 
 
@@ -66,7 +66,7 @@ class PopularityModel
     {
 
         $statement = $this->db->prepare("
-            SELECT `User`
+            UPDATE `User`
             SET `Number_Of_Ratings` = :numberOfRatings
             AND `Mean_Rating_Percent` = :meanRating
             WHERE `UserID` = :userID
@@ -83,7 +83,49 @@ class PopularityModel
 
 
     /**
-     * Main function to add a new rating for a given user
+    * Sets the Rated flag to 1 for the given transaction
+    * @param $transactionID
+    * @return bool
+    */
+    function setListingTransactionRated($transactionID){
+        $statement = $this->db->prepare("
+            UPDATE `ListingTransaction`
+            SET `ListingTransaction`.`Rated` = 1
+            WHERE `ListingTransaction`.`FK_Transaction_TransactionID` = :transactionID
+        ");
+
+        $statement->bindValue(":transactionID", $transactionID, PDO::PARAM_INT);
+      
+        $statement->execute();
+
+        return true;
+    };
+    
+    
+    /**
+    * Gets the UserID of the User who put up the listing involved in the transaction
+    *  @param $transactionID
+    *  @return int (userID)
+    */
+    function getUserIDFromTransactionID($transactionID){
+        $statement = $this->db->prepare("
+            SELECT `User`.`UserID`
+            FROM `User`
+            JOIN `Listing` ON `Listing`.`FK_User_UserID` = `User`.`UserID`
+            JOIN `ListingTransaction` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
+            WHERE `ListingTransaction`.`FK_Transaction_TransactionID` = :transactionID
+        ");
+
+        $statement->bindValue(":transactionID", $transactionID, PDO::PARAM_INT);
+      
+        $statement->execute();
+
+        return $statement->fetchColumn();
+    }
+    
+    
+    /**
+     * Calculates and adds a new rating for a given user
      * @param $userID
      * @param $rating
      */
@@ -105,6 +147,13 @@ class PopularityModel
 
         //Set values in Database
         $this->setUserRating($userID, $newMeanRatingPercent, $newNumberOfRatings);
+        return True;
     }
 
+    
+    function rateTransaction($transactionID, $rating){
+        $this->setListingTransactionRated($transactionID);
+        $userID = $this->getUserIDFromTransactionID($transactionID);
+        return $this->addNewRating($userID, $rating);
+    }
 }
