@@ -58,7 +58,7 @@ $(function(){
       $("#delete-modal").modal({backdrop: "static"})
 
       $("#delete-modal").on("shown.bs.modal", function () {
-        $(this).find('.modal-msg').html("Do you want to remove the offer for ")
+        $(this).find('.modal-msg').html("Do you want to remove the item ")
         $(this).find('.item-name').html(itemName + '?')
         $(this).find('.modal-submsg').html("You won't be able to undo this once you press 'Ok'")
       }).modal('show');
