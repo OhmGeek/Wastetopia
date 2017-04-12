@@ -91,8 +91,8 @@ function getSelectedDietaryReqs() {
   $('.dietary-req').each(function(elem) {
     // if the selected checkbox is actually selected, add the item
     // to the requirements list. Otherwise, move to the next one.
-    if(elem.val()) {
-      requirementsList.append(elem.text); //get the text (or the contents of the tag).
+    if(elem.text()) {
+      requirementsList.append(elem.text()); //get the text (or the contents of the tag).
     }
   });
 
@@ -166,17 +166,18 @@ $('#submit-item').on('click', function() {
   this.submit();
 });
 
+$(document).ready(function() {
+    $( "#main-form" ).on('submit', function( event ) {
+        console.log( "Handler for .submit() called." );
+        event.preventDefault();
 
-$( "#main-form" ).on('submit', function( event ) {
-    console.log( "Handler for .submit() called." );
-    event.preventDefault();
-
-    var itemData = serializeItem();
-    console.log(itemData);
-    // if(isValid(itemData)) {
-    //   // submit using AJAX
-    //     $.post('https://wastetopia-pr-17.herokuapp.com/api/items/additem', jsonData, function(response) {
-    //         console.log(response);
-    //     }, 'json');
-    // }
+        var itemData = serializeItem();
+        console.log(itemData);
+        // if(isValid(itemData)) {
+        //   // submit using AJAX
+        //     $.post('https://wastetopia-pr-17.herokuapp.com/api/items/additem', jsonData, function(response) {
+        //         console.log(response);
+        //     }, 'json');
+        // }
+    });
 });
