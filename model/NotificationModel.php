@@ -7,7 +7,8 @@
  * Time: 15:13
  */
 namespace Wastetopia\Model;
-use DB;
+use Wastetopia\Model\DB;
+use PDO;
 
 class NotificationModel
 {
