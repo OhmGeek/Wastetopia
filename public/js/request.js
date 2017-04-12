@@ -10,9 +10,11 @@ $(function(){
     var baseURL =  window.location.protocol + "//" + window.location.host;
 
     //fancy datetime picker
-    $('#renew-date').bootstrapMaterialDatePicker({ format : 'D MMMM, YYYY', weekStart : 0, time: false });
+    $('#renew-date').bootstrapMaterialDatePicker({ format : 'D MMMM, YYYY', weekStart : 0, time: false }).on('open', function(event){
+      console.log('open');
+    });
 
-    
+
     $('a[data-target="#pending-request"]').click(function(){
        var url = baseURL + "/profile/set-pending-requests-viewed";
 
@@ -72,33 +74,33 @@ $(function(){
           if(response){
             // Remove card from screen
             remove(card);
-              
-            // Take 1 off Listings counter 
-            var listingsCounter = $('a[href="#listings"] .count');   
+
+            // Take 1 off Listings counter
+            var listingsCounter = $('a[href="#listings"] .count');
             if (!(listingsCounter == null)){
-                listingsCounter.html(parseInt(listingsCounter.html()) - 1);   
+                listingsCounter.html(parseInt(listingsCounter.html()) - 1);
             }
-            
+
             // Take 1 off appropriate sub tab (check both of them)
             var availableListingsTab = $('#available-listing');
             var outOfStockTab = $('#out-of-stock-listing');
-              
-            var counter = "";  
-            // Set counter to whichever tab is active  
+
+            var counter = "";
+            // Set counter to whichever tab is active
             if (availableListingsTab.hasClass("in active")){
-               var counter = $('a[href="#available-listing"]'); 
+               var counter = $('a[href="#available-listing"]');
                 console.log("available listings tab");
             }else if(outOfStockTab.hasClass("active") && outOfStockTab.hasClass("in")){
-              console.log("out of stock tab");  
+              console.log("out of stock tab");
               var counter = $('a[href="#out-of-stock-listing"]');
             }else{
                 // Do nothing else
             }
-              
-            // If it exists on the page, change the name  
-            console.log(counter);  
+
+            // If it exists on the page, change the name
+            console.log(counter);
             if(!(counter == "")){
-              changeSubTabCounter(counter, -1) 
+              changeSubTabCounter(counter, -1)
             }
           }else{
             // Show error
@@ -115,8 +117,8 @@ $(function(){
     function changeSubTabCounter(counter, value){
         var html = counter.html();
         var name = html.split("-")[0];
-        var count = html.split("-")[1];  
-        var newCount = parseInt(count) + value; 
+        var count = html.split("-")[1];
+        var newCount = parseInt(count) + value;
         counter.html(name+"- "+newCount);
     }
 
@@ -160,13 +162,13 @@ $(function(){
                     var pendingTransactionsTab = $('#pending-transaction');
                     var completedTransactionsTab = $('#completed-transaction');
 
-                      if(!(pendingTransactionsTab == null) && !(completedTransactionsTab == null)){                
-                            var pendingCounter = $('a[href="#pending-transaction"]'); 
+                      if(!(pendingTransactionsTab == null) && !(completedTransactionsTab == null)){
+                            var pendingCounter = $('a[href="#pending-transaction"]');
                             var completedCounter = $('a[href="#completed-transaction"]');
                             changeSubTabCounter(pendingCounter, - 1);
                             changeSubTabCounter(completedCounter, 1);
                        }else{
-                            // DO NOTHING     
+                            // DO NOTHING
                        }
               }else{
                 // Show error
@@ -215,20 +217,20 @@ $(function(){
            if(response){
                // Remove card from screen
                remove(card);
-               
+
                // Take 1 off offers received tab
                var offersReceivedCounter = $('a[href="#offers"] .count');
                if(!(offersReceivedCounter == null)){
-                  offersReceivedCounter.html(parseInt(offersReceivedCounter.html()) - 1);   
+                  offersReceivedCounter.html(parseInt(offersReceivedCounter.html()) - 1);
                }
-               
+
                // Take 1 off pending transactions sub tab
                var pendingTransactionsTab = $('#pending-transaction');
-               if(!(pendingTransactionsTab == null)){                
-                    var pendingCounter = $('a[href="#pending-transaction"]'); 
+               if(!(pendingTransactionsTab == null)){
+                    var pendingCounter = $('a[href="#pending-transaction"]');
                     changeSubTabCounter(pendingCounter, - 1);
                 }else{
-                    // DO NOTHING     
+                    // DO NOTHING
                 }
            }else{
                // Show error
@@ -277,22 +279,22 @@ $(function(){
           if(response){
             // Remove card from screen
             remove(card);
-              
+
              // Take 1 off requests made tab
                var requestsMadeCounter = $('a[href="#offers"] .count');
                if(!(requestsMadeCounter == null)){
-                  requestsMadeCounter.html(parseInt(requestsMadeCounter.html()) - 1);   
+                  requestsMadeCounter.html(parseInt(requestsMadeCounter.html()) - 1);
                }
-               
+
                // Take 1 off pending requests sub tab
                var pendingRequestsTab = $('#pending-request');
-               if(!(pendingRequestsTab == null)){                
-                    var pendingCounter = $('a[href="#pending-request"]'); 
+               if(!(pendingRequestsTab == null)){
+                    var pendingCounter = $('a[href="#pending-request"]');
                     changeSubTabCounter(pendingCounter, - 1);
                 }else{
-                    // DO NOTHING     
-                } 
-            
+                    // DO NOTHING
+                }
+
               // Take one off Requests Made counter and Pending counter
           }else{
             // Show error
@@ -347,13 +349,13 @@ $(function(){
             // Change button to a "Request" button
             button.html("Request");
             button.attr("href", "#request");
-              
+
             // Take 1 off Requests Made tab counter
                var requestsMadeCounter = $('a[href="#offers"] .count');
                if(!(requestsMadeCounter == null)){
-                  requestsMadeCounter.html(parseInt(requestsMadeCounter.html()) - 1);   
+                  requestsMadeCounter.html(parseInt(requestsMadeCounter.html()) - 1);
                }
-              
+
           }else{
             // Show error
           }
@@ -416,21 +418,21 @@ $(function(){
                // Change button to cancel request button
                button.html("Cancel request");
                button.attr("href", "#cancel-by-listing");
-               
+
                // Add 1 to Requests Made tab counter
                var requestsMadeCounter = $('a[href="#offers"] .count');
                if(!(requestsMadeCounter == null)){
-                  requestsMadeCounter.html(parseInt(requestsMadeCounter.html()) + 1);   
+                  requestsMadeCounter.html(parseInt(requestsMadeCounter.html()) + 1);
                }
-               
+
                // Add 1 to pending requests sub tab
                var pendingRequestsTab = $('#pending-request');
-               if(!(pendingRequestsTab == null)){                
-                    var pendingCounter = $('a[href="#pending-request"]'); 
+               if(!(pendingRequestsTab == null)){
+                    var pendingCounter = $('a[href="#pending-request"]');
                     changeSubTabCounter(pendingCounter, + 1);
                 }else{
-                    // DO NOTHING     
-                } 
+                    // DO NOTHING
+                }
              }else{
                // Show error
              }
@@ -524,7 +526,7 @@ $(function(){
         }).modal('show');
 
         $("#renew-modal .accept-button").on('click', function(){
-           var button = $(this); 
+           var button = $(this);
           var quantity = $('#renew-modal #renew-quantity').val();
           var date = $('#renew-modal #renew-date').val();
 
@@ -539,28 +541,28 @@ $(function(){
                    // Do something
                    // Reload the div??
                    remove(card);
-                    
+
                    if (button.attr("id") == "renewEdit"){
                        var newListingID = parseInt(response);
                        var editPageURL = baseURL + "/item/edit/" + newListingID
-                        //location.href = editPageURL 
+                        //location.href = editPageURL
                        // return;
                    }
                    // Add 1 to the counter for Available listings
                    var availableListingsTab = $('#available-listing');
                    if(!(availableListingsTab == null)){
-                       var counter = $('a[href="#available-listing"]'); 
+                       var counter = $('a[href="#available-listing"]');
                        changeSubTabCounter(counter, 1);
                    }
-                   
+
                    // Take 1 off the counter for Out of Stock listings
                    var outOfStockTab = $('#out-of-stock-listing');
                    if(!(outOfStockTab == null)){
-                       var counter = $('a[href="#out-of-stock-listing"]'); 
+                       var counter = $('a[href="#out-of-stock-listing"]');
                        changeSubTabCounter(counter, -1);
                    }
-    
-               
+
+
                }else{
                    // Show error
                }
@@ -607,24 +609,24 @@ $(function(){
      var isUser = parseInt($(this).closest('.user-stats').attr("id"));
      var listing = $(this);
 
-     var data = {listingID: listingID} 
-     var url = baseURL + "/profile/toggle-watch-list" 
+     var data = {listingID: listingID}
+     var url = baseURL + "/profile/toggle-watch-list"
      $.post(url, data, function(response){
        // Do something depending on if response is true or false?? (Currently always true)
        console.log("DONE");
        console.log(response);
-         
+
       // Get tab button link to watch list
        var counter = $('a[href="#watchList"] .count');
        if(!(counter == null)){
             var watchListCount = parseInt(counter.html()); // Extract watchListCount if it exists
         }
-         
+
       // 1 means deleted, 2 means added
       if (response == 1){
         // Set colour to pale (Deleted)
         listing.removeClass("watched");
-        
+
         // Take 1 off watch list tab counter
         if(!(counter == null)){
             counter.html(watchListCount-1); // Extract watchListCount if it exists
@@ -632,12 +634,12 @@ $(function(){
       }else{
         // Set colour to dark (Added)
         listing.addClass("watched");
-          
-        // Add 1 to watch list tab counter  
+
+        // Add 1 to watch list tab counter
         if(!(counter == null)){
-            counter.html(watchListCount+1); 
-        }  
-        
+            counter.html(watchListCount+1);
+        }
+
       }
      });
   });
