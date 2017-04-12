@@ -10,6 +10,7 @@ $(function () {
 
   // RELOADING IS NOT WORKING
   $(document).on('click', 'a[data-toggle="tab"]', function(){
+    console.log("Trying to reload");
     var userID = $('.user-name').attr("id");
     var tabID = $(this).attr('href');
     var relativeURL = "";
@@ -26,9 +27,16 @@ $(function () {
     }else{
       return;
     }
+   
 
     var url = window.location.protocol + "//" + window.location.host + "/profile/" + relativeURL +"/" + userID;
+    
+    console.log(userID);
+    console.log(tabID);
+    console.log(url);
+    
      $.get(url, function(response){
+       console.log(response);
         var div = $(tabID); // Reload specific tab section
         div.load(response);
 
