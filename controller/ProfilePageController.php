@@ -125,6 +125,8 @@ class ProfilePageController
         $listingsCount = count($userListingsSending);
 
         $sendingTransactionsCount = 0; // total number of transactions that have been made for user's listings
+        $sendingPendingTransactionsCount = 0;
+        $sendingCompletedTransactionsCount = 0;
         $totalAvailabaleListings = 0; // total number of listings with quantity > 0
         $totalEmptyListings = 0; // total number of listings with 0 quantity
 
@@ -141,9 +143,13 @@ class ProfilePageController
             //Count number of relevant transactions
             if (count($stateDetails) > 0) {
                 foreach ($stateDetails as $transaction) {
-                    $completed = $transaction["Success"];
-                    if ($completed != 2) {
-                        $sendingTransactionsCount += 1;
+                    $completed = $transaction["Success"]; //2-rejected. 1-completed. 0-pending
+                    if ($completed == 1) {
+                        $sendingCompletedTransactionsCount += 1;
+                    }elseif($completed == 0){
+                        $sendingPendingTransactionsCount += 1;
+                    }else{
+                        //Do nothing
                     }
                 }
             }
@@ -162,13 +168,18 @@ class ProfilePageController
 
         // Total number of listings the user has requested
         // Should this be changed to not include completed listings?
-        $receivingCount = 0;
-
+        $pendingRequestingCount = 0;
+        $completedRequestingCount = 0;
+        
         //Counts number of transactions
         foreach ($userListingsReceiving as $listing) {
             $completed = $listing["Success"]; // Transaction completed?
-            if ($completed != 2) {
-                $receivingCount += 1;
+            if ($completed == 1) {
+                $completedRequestingCount += 1;
+            }elseif($completed == 0){
+                $pendingRequestingCount += 1;
+            }else{
+                //Do nothing
             }
         }
 
@@ -180,12 +191,15 @@ class ProfilePageController
         $recommendationHTML = $this->generateRecommendationHTML();
 
         $isCurrentUser = ($this->userID == $this->getUserID() ? 1 : 0);
-
+        
+        $sendingTransactionsCount = $sendingCompletedTransactionsCount + $sendingPendingTransactionsCount;
+        $requestingCount = $pendingRequestingCount + $completedRequestingCount;
+        
         $listingsInformation = array(
             "listingsCount" => $totalAvailabaleListings, // Total number of listings with quantity > 0
             "emptyListingsCount" => $totalEmptyListings, // Total number of listings with quantity <= 0
             "itemsOfferedCount" => $sendingTransactionsCount, // Total of all transactions for your items (can be greater than listings count)
-            "requestsMadeCount" => $receivingCount, // Total of all transactions you're in for other user's items
+            "requestsMadeCount" => $requestingCount, // Total of all transactions you're in for other user's items
             "watchListCount" => $watchListCount,
             "recommendationhtml" => $recommendationHTML,
             "isUser" => $isCurrentUser
@@ -215,7 +229,7 @@ class ProfilePageController
             if (count($stateDetails) > 0) {
                 foreach ($stateDetails as $transaction) {
                     $transactionID = $transaction["TransactionID"];
-                    $completed = $transaction["Success"];
+                    $completed = $transaction["Success"]; //1-completed. 0-pending. 2-rejected
                     if ($completed == 1) {
                         array_push($completedSending, $transactionID); //Get display information later
                     }elseif($completed == 0) {
@@ -316,7 +330,7 @@ class ProfilePageController
         foreach ($userListingsReceiving as $listing) {
             $listingID = $listing["ListingID"];
             $transactionID = $listing["TransactionID"];
-            $completed = $listing["Success"]; // Transaction completed?
+            $completed = $listing["Success"]; // 1-completed. 0-pending. 2-rejected
             if ($completed == 1) {
                 array_push($completedReceiving, $transactionID); //Get display information later
             } elseif($completed == 0) {
