@@ -55,7 +55,7 @@ function showUploadedItem(url, id) {
 function imageUpload() {
   // go through and get the images
   var formdata = new FormData($('#form-image')[0]);
-  formdata.append('image', $('input[type=file]')[0].files[0]); // todo add all files
+  formdata.push('image', $('input[type=file]')[0].files[0]); // todo add all files
   $.ajax({
     url: 'https://wastetopia-pr-17.herokuapp.com/api/items/addimage',
     type: "POST",
@@ -80,7 +80,7 @@ $('#form-image').change(function() {
 function getImagesFromDOM() {
   var imageList = [];
   $('.upload-pic img').each(function(elem) {
-    imageList.append(elem.href); //todo check this - we want to get the href of the image tag
+    imageList.push(elem.href); //todo check this - we want to get the href of the image tag
   });
   return imageList;
 }
@@ -92,7 +92,7 @@ function getSelectedDietaryReqs() {
     // if the selected checkbox is actually selected, add the item
     // to the requirements list. Otherwise, move to the next one.
     if(elem.text) {
-      requirementsList.append(elem.text); //get the text (or the contents of the tag).
+      requirementsList.push(elem.text); //get the text (or the contents of the tag).
     }
   });
 
@@ -100,7 +100,7 @@ function getSelectedDietaryReqs() {
   var otherRequirements = $('#other-req').val();
 
   if(otherRequirements) {
-    requirementsList.append(otherRequirements);
+    requirementsList.push(otherRequirements);
   }
 
   return requirementsList;
@@ -110,7 +110,7 @@ function getMayContainsDetails() {
   var mayContain = [];
   $('.may-contains-select option:selected').each(function(elem) {
     if(elem.text) {
-      mayContain.append(elem.text);
+      mayContain.push(elem.text);
     }
   });
   return mayContain;
