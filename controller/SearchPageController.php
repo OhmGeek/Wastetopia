@@ -37,7 +37,18 @@ class SearchPageController
                                                                                                 array('value' => 'Vegetable', 'id' => '15'),
                                                                                                 array('value' => 'Other', 'id' => '16'),
                                                                                                 array('value' => 'Meat', 'id' => '17'),
-                                                                                                array('value' => 'Confectionary', 'id' => '18'))));
+                                                                                                array('value' => 'Confectionary', 'id' => '18'),
+                                                                                                array('value' => 'Bread', 'id' => '23'))),
+                         array('id'=>'2', 'optionsCategory' => 'Other', 'options' => array(array('value' => 'Chilled', 'id' => '21'),
+                                                                                           array('value' => 'Frozen', 'id' => '22'),
+                                                                                           array('value' => 'Unopened', 'id'=>'28'),
+                                                                                           array('value' => 'Damaged', 'id'=>'29'),
+                                                                                           array('value' => 'No use by date', 'id'=>'30'),
+                                                                                           array('value' => 'Large Item', 'id'=>'31'))),
+                         array('id'=>'3', 'optionsCategory' => 'Dietery Requirements', 'options' => array(array('value'=>'Kosher', 'id'=>'24'),
+                                                                                                          array('value'=>'Halal', 'id'=>'25'),
+                                                                                                          array('value'=>'Vegetarian', 'id'=>'26'),
+                                                                                                          array('value'=>'Vegan', 'id'=>'27'))));
 
         $template = $twig->loadTemplate("search/search.twig");
         return $template->render(array('config' => $config,
