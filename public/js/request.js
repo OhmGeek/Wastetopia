@@ -402,6 +402,10 @@ $(function(){
     $(document).on('click','a[href="#renew"]',function(event){
       event.preventDefault();
         var listingID = $(this).attr("id");
+        
+        var card = $(this).closest('.thumbnail')
+        var itemName = card.find('.caption').find('h3').text()
+
         $('body').append(requestModal);
 
         $("#request-modal").modal({backdrop: "static"})
