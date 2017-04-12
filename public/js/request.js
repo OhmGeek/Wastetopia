@@ -514,7 +514,7 @@ $(function(){
            $('#renew-modal').modal('hide');
 
             var url = baseURL + "/items/renew-listing";
-            var data = {listingID : listingID, quantity:quantity};
+            var data = {listingID : listingID, quantity:quantity, useByDate: date};
             $.post(url, data, function(response){
                console.log(response);
                if(response >= 1){
