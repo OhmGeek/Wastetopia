@@ -91,8 +91,8 @@ function getSelectedDietaryReqs() {
   $('.dietary-req').each(function(elem) {
     // if the selected checkbox is actually selected, add the item
     // to the requirements list. Otherwise, move to the next one.
-    if(elem.text()) {
-      requirementsList.append(elem.text()); //get the text (or the contents of the tag).
+    if(elem.text) {
+      requirementsList.append(elem.text); //get the text (or the contents of the tag).
     }
   });
 
@@ -109,8 +109,8 @@ function getSelectedDietaryReqs() {
 function getMayContainsDetails() {
   var mayContain = [];
   $('.may-contains-select option:selected').each(function(elem) {
-    if(elem.text()) {
-      mayContain.append(elem.text());
+    if(elem.text) {
+      mayContain.append(elem.text);
     }
   });
   return mayContain;
@@ -151,7 +151,7 @@ function serializeItem() {
   var item = {
     "name": $('#name').val(),
     "images": getImagesFromDOM(),
-    "classification": $("#type option:selected").text(), //get the text of the selected option
+    "classification": $("#type option:selected").text, //get the text of the selected option
     "dietary": getSelectedDietaryReqs(), //dietary requirement
     "contains": getMayContainsDetails(), //allergy tags
     "expires": $('#date').val(),
