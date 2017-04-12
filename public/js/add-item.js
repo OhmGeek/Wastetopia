@@ -113,6 +113,11 @@ function getMayContainsDetails() {
       mayContain.push(elem.text);
     }
   });
+  var otherMayContains = $('#other-content').val();
+
+  if(otherMayContains) {
+    mayContain.push(otherMayContains);
+  }
   return mayContain;
 }
 
