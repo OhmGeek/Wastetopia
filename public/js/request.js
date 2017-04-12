@@ -474,7 +474,8 @@ $(function(){
      var isUser = parseInt($(this).closest('.user-stats').attr("id"));
      var listing = $(this);
 
-     $.post("/profile/toggle-watch-list/"+listingID, function(response){
+     var data = {listingID: listingID} 
+     $.post("/profile/toggle-watch-list",data, function(response){
        // Do something depending on if response is true or false?? (Currently always true)
        console.log("DONE");
        console.log(response);
