@@ -479,25 +479,37 @@ $(function(){
      var isUser = parseInt($(this).closest('.user-stats').attr("id"));
      var listing = $(this);
 
-     var data = {listingID: listingID}
-     var url = baseURL + "/profile/toggle-watch-list"
+     var data = {listingID: listingID} 
+     var url = baseURL + "/profile/toggle-watch-list" 
      $.post(url, data, function(response){
        // Do something depending on if response is true or false?? (Currently always true)
        console.log("DONE");
        console.log(response);
          
       // Get tab button link to watch list
-        var counter = $('a[href="#watchList"] .count');
-         console.log(counter);
+       var counter = $('a[href="#watchList"] .count');
+       if(!(counter == null)){
+            var watchListCount = parseInt(counter.html()); // Extract watchListCount if it exists
+        }
+         
       // 1 means deleted, 2 means added
       if (response == 1){
         // Set colour to pale (Deleted)
         listing.removeClass("watched");
-        console.log(listing);
+        
+        // Take 1 off watch list tab counter
+        if(!(counter == null)){
+            counter.html(watchListCounter-1); // Extract watchListCount if it exists
+        }
       }else{
         // Set colour to dark (Added)
         listing.addClass("watched");
-        console.log(listing);
+          
+        // Add 1 to watch list tab counter  
+        if(!(counter == null)){
+            counter.html(watchListCounter+1); 
+        }  
+        
       }
      });
   });
