@@ -73,7 +73,29 @@ $(function(){
             // Remove card from screen
             remove(card);
               
-            // Take 1 off Listings counter and 1 off whichever tab it came from  
+            // Take 1 off Listings counter 
+            var listingsCounter = $('a[href="#listings"] .count');   
+            if (!(listingsCounter == null)){
+                listingsCounter.html(parseInt(listingsCounter.html()) - 1);   
+            }
+            
+            // Take 1 off appropriate sub tab (check both of them)
+            var availableListingsTab = $('#available-listing');
+            var outOfStockTab = $('#out-of-stock-listing');
+              
+            var counter = "";  
+            // Set counter to whichever tab is active  
+            if (availableListingsTab.hasClass("in active")){
+               var counter = $('a[href="#available-listing"]'); 
+            }else if(outOfStockTab.hasClass("in active")){
+              var counter = $('a[href="#out-of-stock-listing"]');
+            }else{
+                // Do nothing else
+            }
+            // If it exists on the page, change the name  
+            if(!(counter == "")){
+              changeSubTabCounter(counter, -1) 
+            }
           }else{
             // Show error
           }
@@ -85,6 +107,14 @@ $(function(){
       });
     });
 
+    // Given a sub tab (i.e "pending-3"), it updates the number by adding "value" to it (can be negative)
+    function changeSubTabCounter(counter, value){
+        var html = counter.html();
+        var name = html.split("-")[0];
+        var count = html.split("-")[1];  
+        var newCount = parseInt(count) + value; 
+        counter.html(name+"- "+newCount);
+    }
 
     // Mark request as complete - SEEMS TO WORK
     // added modal for this code
