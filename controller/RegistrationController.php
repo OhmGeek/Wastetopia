@@ -162,11 +162,11 @@ class RegistrationController
 
         $mail = new \PHPMailer(true); //true makes it give errors
 
-       // $mail->IsSMTP();                                      // set mailer to use SMTP
+        $mail->IsSMTP();                                      // set mailer to use SMTP
         $mail->Host = "mail3.gridhost.co.uk"; // For SSL, use mail3.gridhost.co.uk, else try mail.ohmgeek.co.uk
         $mail->Port = 465; //25 for non-SSL, 465  for SSL
-        $mail->SMTPSecure = false; 
-        $mail->SMTPAuth = false;     // turn off SMTP authentiocation
+        $mail->SMTPSecure = 'ssl'; 
+        $mail->SMTPAuth = true;     // turn off SMTP authentiocation
         $mail->SMTPDebug = 2;
         $mail->Username = "wastetopia@ohmgeek.co.uk";  // SMTP username
         $mail->Password = "wyI4wwPRhHGk"; // SMTP password (IHatePHP  or wyI4wwPRhHGk)
