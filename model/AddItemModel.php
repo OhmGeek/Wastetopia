@@ -38,6 +38,82 @@ class AddItemModel
         return $statement->fetchColumn();
     }
 
+    /**
+     * Returns the ID of the last item inserted with the given parameters
+     * @param $name
+     * @param $useBy
+     * @param $description
+     * @return int
+     */
+    private function getLastItemID($name, $useBy, $description)
+    {
+        $statement = $this->db->prepare("
+            SELECT `Item`.`ItemID`
+	    FROM `Item`
+	    WHERE `Item`.`Name` = :name
+	    AND `Item`.`Use_By` = :useBy
+	    AND `Item`.`Description` = :description
+	    ORDER BY `Item`.`ItemID` DESC;
+         ");
+	    
+	$statement->bindValue(":name", $name, PDO::PARAM_STR); 
+	$statement->bindValue(":useBy", $useBy, PDO::PARAM_STR); 
+	$statement->bindValue(":description", $description, PDO::PARAM_STR);     
+    $statement->execute();
+    $results = $statement->fetchAll(PDO::FETCH_ASSOC)["0"];
+	return $results["ItemID"];    
+    }
+    
+    
+    /**
+     * Returns the ID of the last image inserted with the given parameters
+     * @param $fileType
+     * @param $imageURL
+     * @return int
+     */
+    function getLastImageID($fileType, $imageURL){
+        $statement = $this->db->prepare("
+            SELECT Image.ImageID
+            FROM Image
+            WHERE File_Type = :fileType
+            AND Image_URL = :imageURL
+         ");
+
+        $statement->bindValue(":fileType", $fileType, PDO::PARAM_STR);
+        $statement->bindValue(":imageURL", $imageURL, PDO::PARAM_STR);
+        $statement->execute();
+
+        return $statement->fetchColumn();         
+    }
+    
+    /**
+     * Returns the ID of the last location inserted with the given parameters
+     * @param $name
+     * @param $postCode
+     * @param $long
+     * @param $lat
+     * @return int
+     */
+    function getLastLocationID($name, $postCode, $long, $lat){
+        $statement = $this->db->prepare("
+            SELECT Location.LocationID
+            FROM Location
+            WHERE Name = :name
+            AND Post_Code = :postCode
+            AND Longitude = :long
+            AND Latitude = :lat
+            ORDER BY LocationID DESC;
+         ");
+
+        $statement->bindValue(":name", $name, PDO::PARAM_STR);
+        $statement->bindValue(":postCode", $postCode, PDO::PARAM_STR);
+        $statement->bindValue(":long", $long, PDO::PARAM_STR);
+        $statement->bindValue(":lat", $lat, PDO::PARAM_STR);
+        $statement->execute();
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC)["0"];
+	    return $results["LocationID"];   
+    }
+    
 
     /**
      * Gets all the select options user can choose for tags
@@ -79,12 +155,13 @@ class AddItemModel
         $statement->bindValue(":useByDate", $useByDate, PDO::PARAM_STR);
 
         $statement->execute();
-        return $this->getLastInsertID();
+       // return $this->getLastInsertID(); // replace with another query 
+        return $this->getLastItemID($name, $useByDate, $description); 
     }
 
 
 //    /**
-//     * Adds a tag to the Tag table
+//     * Adds a tag to the Tag table - used if we want user's to be able to define their own tags
 //     * @param $name
 //     * @param $categoryID
 //     * @param $description
@@ -140,10 +217,13 @@ class AddItemModel
         $statement->bindValue(":imageURL", $imageURL, PDO::PARAM_STR);
         $statement->execute();
 
-        return $this->getLastInsertID();
+        //return $this->getLastInsertID(); // Need to change to another sql query
+        return $this->getLastImageID();
     }
 
 
+    
+    
     /**
      * Links an image to an item
      * @param $imageID
@@ -202,10 +282,12 @@ class AddItemModel
         $statement->bindValue(":long", $long, PDO::PARAM_STR);
         $statement->bindValue(":lat", $lat, PDO::PARAM_STR);
         $statement->execute();
-        return $this->getLastInsertID();
+        return $this->getLastLocationID(); // Changed from getLastInsertID()
     }
 
 
+    
+    
     /**
      * Adds the details to the listing table
      * @param $locationID
@@ -272,7 +354,7 @@ class AddItemModel
     /**
      * Calls all the other linking functions and is the only one needed by the user
      * @param $item (Associative array in the form ["itemName"=>name, "itemDescription"=>description, "useByDate"=>date, "quantity"=>quantity])
-     * @param $tags (Array of tag arrays in the form ["name"=>name, "categoryID"=>categoryID, "description"=>description])
+     * @param $tags (Array of tag arrays in the form ["tagID"=>tagID]) (Seems like that's what it's using)
      * @param $images (Array of image arrays in the form ["fileType"=>fileType, "url"=>url, "isDefault"=>isDefault])
      * @param $barcode (Associative array in the form ["barcodeNumber"=>number, "barcodeType"=>type])
      * @param $location (Associative array in the form ["locationName"=>name, "postCode"=>postCode])
