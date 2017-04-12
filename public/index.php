@@ -70,9 +70,25 @@ $klein->respond("GET", "/login", function($request, $response) {
     return $controller->index($response);
 });
 
-$klein->respond("GET", "/register", function() {
-   return "Registering page";
+$klein->with("/register", function() use $(klein){
+    $klein->respond("GET", "/?", function() {
+        $controller = new RegistrationController();
+        return $controller->generatePage():    
+    });
+    
+    $klein->respond("POST", "/add-user", function($request,$response){
+       $firstName = $request->firstName;
+        $lastName = $request->lastName;
+        $email = $request->email;
+        $password = $request->password;
+        $passwordConfirm = $request->passwordConfirm;
+        $pictureURL = $request->pictureURL;
+        
+        $controller = new RegistrationController();
+        return $controller->addUser($firstName, $lastName, $email, $password, $passwordConfirm, $pictureURL);
+    });
 });
+
 
 $klein->respond("GET", "/get-env", function() {
    $envStr = "DB Host: " . $_ENV['DB_HOST'] . "\n";
