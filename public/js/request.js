@@ -475,7 +475,8 @@ $(function(){
      var listing = $(this);
 
      var data = {listingID: listingID} 
-     $.post("/profile/toggle-watch-list",data, function(response){
+     var url = baseURL + "/profile/toggle-watch-list" 
+     $.post(url, data, function(response){
        // Do something depending on if response is true or false?? (Currently always true)
        console.log("DONE");
        console.log(response);
