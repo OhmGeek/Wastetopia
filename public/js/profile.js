@@ -35,6 +35,8 @@ $(function () {
        var div = $(tabID);
        div.replaceWith(response);
       
+      div.addClass("in active"); // Make it visible?
+        
       // re initialize isotope
        $grid = $('.grid').isotope({
           itemSelector: '.grid-item',
