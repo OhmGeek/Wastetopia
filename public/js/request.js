@@ -428,6 +428,7 @@ $(function(){
            if(response){
                // Do something
                // Reload the div??
+               remove(card);
            }else{
                // Show error
            }
