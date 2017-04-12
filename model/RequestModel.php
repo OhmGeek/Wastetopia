@@ -380,6 +380,10 @@ class RequestModel
 		");
 		$statement->bindValue(":listing_id", $listing_id, PDO::PARAM_INT);
 		$statement->execute();
+		
+		// REMOVE/REJECT ALL PENDING TRANSACTIONS FOR THIS LISTING
+		// Get all pending transactions for this listing
+		
 		return True;
 	}
 	
