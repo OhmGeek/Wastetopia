@@ -1,10 +1,10 @@
 // JS file to deal with requestModel stuff on any page (if cardIDs are the same)
 $(function(){
-
-    //TODO: Fix watch-list toggle issue and loading tabs issue (same error message)
-    //TODO: Test renew - renew needs a Modal
+    
+    //TODO: Test renew with date
     //TODO: Link to edit and messaging pages - When everything is merged to master
     //TODO: Stop quantity of completed transaction exceeding quantity of listing - Has to be done in requestModel
+    //TODO: Fix issue with requestedQuantity not showing on Modal for Marking as Complete
 
 
     var baseURL =  window.location.protocol + "//" + window.location.host;
