@@ -481,6 +481,10 @@ $(function(){
        // Do something depending on if response is true or false?? (Currently always true)
        console.log("DONE");
        console.log(response);
+         
+      // Get tab button link to watch list
+        var counter = $('a[href="#watchList"] .count');
+         console.log(counter);
       // 1 means deleted, 2 means added
       if (response == 1){
         // Set colour to pale (Deleted)
