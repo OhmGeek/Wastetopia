@@ -28,7 +28,7 @@ class NotificationModel
     {
         //$reader = new UserCookieReader();
         //return $reader->get_user_id();
-        return 20; //Hardcoded for now
+        return 6; // Usually 6
     }
 
 
@@ -41,15 +41,15 @@ class NotificationModel
         $userID = $this->getUserID();
 
         $statement = $this->db->prepare("
-        SELECT COUNT(*) AS `Count`
-        FROM `ListingTransaction` 
-        JOIN `Listing` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
-        JOIN `User` ON `User`.`UserID` = `Listing`.`FK_User_UserID`
-        WHERE `UserID` = :userID
-        AND `ListingTransaction`.`Viewed` = 0; 
+            SELECT COUNT(*) AS `Count`
+            FROM `ListingTransaction` 
+            JOIN `Listing` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
+            JOIN `User` ON `User`.`UserID` = `Listing`.`FK_User_UserID`
+            WHERE `UserID` = :userID
+            AND `ListingTransaction`.`Viewed` = 0; 
         ");
 
-        $statement->bindValue(":userID", $userID, PDO::PARAM_STR);
+        $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
         $statement->execute();
 
         return $statement->fetchColumn();
@@ -65,21 +65,35 @@ class NotificationModel
         $userID = $this->getUserID();
 
         $statement = $this->db->prepare("
-        SELECT COUNT(*) AS `Count`
-        FROM `Message`
-        JOIN `Conversation` ON `Conversation`.`ConversationID` = `Message`.`FK_Conversation_ConversationID`
-        WHERE ((`Conversation`.`FK_User_ReceiverID` = :userID       
-            AND `Message`.`Giver_Or_Receiver` = 0)            
-            OR (NOT(`Conversation`.`FK_User_ReceiverID` = :userID2) 
-                AND `Message`.`Giver_Or_Receiver`= 1)))      
-        AND `Message`.`Read` = 0;   
+            SELECT COUNT(*) AS `Count`
+            FROM `Message`
+            JOIN `Conversation` ON `Conversation`.`ConversationID` = `Message`.`FK_Conversation_ConversationID`
+            WHERE ((`Conversation`.`FK_User_ReceiverID` = :userID       
+                AND `Message`.`Giver_Or_Receiver` = 0)            
+                OR (NOT(`Conversation`.`FK_User_ReceiverID` = :userID2) 
+                    AND `Message`.`Giver_Or_Receiver`= 1)))      
+            AND `Message`.`Read` = 0;   
         ");
 
-        $statement->bindValue(":userID", $userID, PDO::PARAM_STR);
-        $statement->bindValue(":userID2", $userID, PDO::PARAM_STR);
+        $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
+        $statement->bindValue(":userID2", $userID, PDO::PARAM_INT);
         $statement->execute();
 
         return $statement->fetchColumn();
+    }
+    
+    
+    /**
+    * Returns array with all notifications in
+    * @return array in form ("requestNotifications => numberOfUnseenRequests, "messageNotifications" => numberOfUnseenMessages)
+    */
+    function getAll(){
+        $requestNotifications = $this->requestNotifications();
+        $messageNotifications = $this->messageNotifications();
+        
+        $notifications = array("requestNotifications" => $requestNotifications, "messageNotifications" => $messageNotifications);
+        
+        return $notifications;
     }
 
 
