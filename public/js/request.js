@@ -444,13 +444,15 @@ $(function(){
             var data = {listingID : listingID, quantity:quantity};
             $.post(url, data, function(response){
                console.log(response);
-               if(response){
+               if(response >= 1){
                    // Do something
                    // Reload the div??
                    remove(card);
                     
                    if (button.attr("id") == "renewEdit"){
-                        //location.href = "EDIT_PAGE_WITH_THIS_LISTING_ID";   
+                       var newListingID = parseInt(response);
+                       var editPageURL = baseURL + "/item/edit/" + newListingID
+                        //location.href = editPageURL   
                    }
                    // Add 1 to the counter for Available listings
                }else{
