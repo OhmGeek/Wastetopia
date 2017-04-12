@@ -14,7 +14,6 @@ $(function () {
   //Sends message when button is clicked
   $(document).on('click', '#sendBtn', function(ev){
     ev.preventDefault();
-    console.log("Sending message");
 
     //Extract conversation ID from the page
     var conversationIDDiv = $("#conversation-id");
@@ -29,15 +28,12 @@ $(function () {
     //Send message
     var url = window.location.protocol + "//" + window.location.host + "/" + 'messages/send';
     var data = {conversationID:conversationID, message:content};
-    console.log(url);
-    console.log(data);
 
     $.post(url, data, function(response){
       //Don't care what the response is
-      //Load message
-      console.log(response);
-      console.log("sent the message");
+      //Load messages
       loadMessages();
+      scrollToBottom();
 
     });
 
@@ -51,7 +47,6 @@ $(function () {
 
   //GOES ON MESSAGES PAGE
   function loadMessages(){
-    console.log("Checking for new messages");
 
     //Extract conversation ID from the page
     var conversationIDDiv = $("#conversation-id");
@@ -62,10 +57,6 @@ $(function () {
 
     //Replace its inner HTML with new messages
     var url = window.location.protocol + '//' + window.location.host + '/messages/poll-messages/' + conversationID;
-    $.get(url, function(htmlResponse){
-      console.log(htmlResponse);
-      messageDisplay.replaceWith(htmlResponse);
-      scrollToBottom();
-    });
+    messageDisplay.load(url);
   }
 });

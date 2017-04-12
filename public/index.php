@@ -8,6 +8,8 @@ use Wastetopia\Controller\LoginController;
 use Wastetopia\Controller\ViewItemController;
 use Wastetopia\Config\CurrentConfig;
 use Wastetopia\Controller\MessageController;
+use Wastetopia\Model\NotificationModel;
+
 
 // check if we should use production? Otherwise, use community.
 $mode = $_ENV['MODE'];
@@ -34,23 +36,24 @@ $klein->respond("GET", "/login", function($request, $response) {
   return $controller->index($response);
 });
 
-$klein->with("/register", function() use ($klein) {
-  $klein->respond("GET", "/?", function() {
-//    $controller = new RegistrationController();
-//    return $controller->generatePage():
-  });
 
-  $klein->respond("POST", "/add-user", function($request,$response){
-    $firstName = $request->firstName;
-    $lastName = $request->lastName;
-    $email = $request->email;
-    $password = $request->password;
-    $passwordConfirm = $request->passwordConfirm;
-    $pictureURL = $request->pictureURL;
-
-//    $controller = new RegistrationController();
-//    return $controller->addUser($firstName, $lastName, $email, $password, $passwordConfirm, $pictureURL);
-  });
+$klein->with("/register", function() use ($klein){
+    $klein->respond("GET", "/?", function() {
+        $controller = new RegistrationController();
+        return $controller->generatePage();    
+    });
+    
+    $klein->respond("POST", "/add-user", function($request,$response){
+       $firstName = $request->firstName;
+        $lastName = $request->lastName;
+        $email = $request->email;
+        $password = $request->password;
+        $passwordConfirm = $request->passwordConfirm;
+        $pictureURL = $request->pictureURL;
+        
+        $controller = new RegistrationController();
+        return $controller->addUser($firstName, $lastName, $email, $password, $passwordConfirm, $pictureURL);
+    });
 });
 
 
@@ -181,8 +184,21 @@ $klein->with('/api', function () use ($klein) {
     });
   });
 
+    $klein->respond('GET', '/notifications/update', function($request, $response){
+        $model = new NotificationModel();
+        return $model->getAll(1); // getAll in JSON format
+    });
 
-  $klein->onHttpError(function ($code, $router) {
+    $klein->respond('GET', '/conversation/[:listingID]', function ($request, $response) {
+        // view a specific conversation
+        console.log("Getting conversation");
+        $listingID = $request->listingID;
+        $controller = new MessageController();
+        return $controller->generatePageFromListing($listingID);
+    });
+});
+
+$klein->onHttpError(function ($code, $router) {
     switch ($code) {
       case 404:
       $router->response()->body(
@@ -199,15 +215,8 @@ $klein->with('/api', function () use ($klein) {
         'Oh no, a bad error happened that caused a ' . $code
       );
     }
-  });
-
-  $klein->respond('GET', '/conversation/[:listingID]', function ($request, $response) {
-    // view a specific conversation
-    console.log("Getting conversation");
-    $listingID = $request->listingID;
-    $controller = new MessageController();
-    return $controller->generatePageFromListing($listingID);
-  });
 });
+
+
 
 $klein->dispatch();
