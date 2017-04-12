@@ -12,15 +12,17 @@ $(function(){
     //fancy datetime picker
     $('#renew-date').bootstrapMaterialDatePicker({ format : 'D MMMM, YYYY', weekStart : 0, time: false });
 
-//     $('a[data-target="PENDING_REQUESTS_TAB"]').click(function(){
-//        var url = baseURL + "/profile/set-pending-requests-viewed";
+    
+    $('a[data-target="PENDING_REQUESTS_TAB"]').click(function(){
+       var url = baseURL + "/profile/set-pending-requests-viewed";
 
-//         $.post(url, function(response){
-//             if(reponse){
-//                 // Do nothing ?
-//             }
-//         });
-//     });
+        $.post(url, function(response){
+            if(reponse){
+                console.log("Requests set to viewed");
+                // Do nothing ?
+            }
+        });
+    });
 
 //     $(document).on('click', '#addOffer', function(){
 //         // Send to add-item page
