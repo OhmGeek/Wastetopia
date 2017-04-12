@@ -13,7 +13,7 @@ $(function(){
     $('#renew-date').bootstrapMaterialDatePicker({ format : 'D MMMM, YYYY', weekStart : 0, time: false });
 
     
-    $('a[data-target="PENDING_REQUESTS_TAB"]').click(function(){
+    $('a[data-target="#pending-request"]').click(function(){
        var url = baseURL + "/profile/set-pending-requests-viewed";
 
         $.post(url, function(response){
