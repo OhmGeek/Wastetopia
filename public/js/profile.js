@@ -17,10 +17,13 @@ $(function () {
     var relativeURL = "";
     if (tabID == "#listings" || tabID == "#available-listing" || tabID == "#out-of-stock-listing" ){
       relativeURL = "load-listings-tab";
+      tabID = "#listing"; // So it doesn't load Divs inside the other two tabs
     }else if(tabID == "#requests" || tabID == "#completed-request" || tabID == "#pending-request" ){
       relativeURL = "load-requests-tab";
+      tabID = "#requests";
     }else if(tabID == "#offers" || tabID == "#completed-transaction" || tabID == "#pending-transaction" ){
      relativeURL = "load-offers-tab";
+      tabID = "#offers";
     }else if(tabID == "#watchList"){
      relativeURL = "load-watchlist-tab";
     }else if(tabID == "#home"){
