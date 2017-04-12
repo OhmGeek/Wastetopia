@@ -1,10 +1,19 @@
 // JS file to deal with requestModel stuff on any page (if cardIDs are the same)
 $(function(){
+//     // init Isotope
+//   var $grid = $('.grid').isotope({
+//     itemSelector: '.grid-item',
+//     percentPosition: true,
+//     masonry: {
+//       columnWidth: '.grid-sizer'
+//     }
+//   });
 
-    //TODO: Fix watch-list toggle issue and loading tabs issue (same error message)
-    //TODO: Test renew - renew needs a Modal
-    //TODO: Link to edit and messaging pages - When everything is merged to master
-    //TODO: Stop quantity of completed transaction exceeding quantity of listing - Has to be done in requestModel
+
+    //TODO: Fix watch-list toggle issue
+    //TODO: Test renew and rate
+    //TODO: Link to edit and messaging pages
+    //TODO: Stop quantity of completed transaction exceeding quantity of listing
 
     var baseURL =  window.location.protocol + "//" + window.location.host;
 
@@ -49,7 +58,7 @@ $(function(){
       $("#delete-modal").modal({backdrop: "static"})
 
       $("#delete-modal").on("shown.bs.modal", function () {
-        $(this).find('.modal-msg').html("Do you want to remove the item ")
+        $(this).find('.modal-msg').html("Do you want to remove the offer for ")
         $(this).find('.item-name').html(itemName + '?')
         $(this).find('.modal-submsg').html("You won't be able to undo this once you press 'Ok'")
       }).modal('show');
@@ -59,6 +68,9 @@ $(function(){
         var url = baseURL + "/items/remove-listing";
         var data = {listingID : listingID};
         console.log(data);
+
+        ('#delete-modal').modal('hide');
+
         $.post(url, data, function(response){
           if(response){
             // Remove card from screen
@@ -85,7 +97,7 @@ $(function(){
       var listingID = $(this).closest(".btn-watch").prevAll('a[href="#view"]').attr("id");
 
       var itemName = card.find('.caption').find('h3').text()
-      var requestedQuantity = card.find('.caption').find('.trans-info .quantity').text() // This doesn't work
+      var requestedQuantity = card.find('.caption').find('.trans-info .quantity').text()
       console.log(card.find('.caption').find('.trans-info .quantity'))
 
       $('body').append(completeModal);
@@ -94,16 +106,18 @@ $(function(){
 
       $("#complete-modal").on("shown.bs.modal", function () {
         $(this).find('.item-name').html(itemName)
-        $(this).find('.requested-quantity').html(' / ' + requestedQuantity) 
+        $(this).find('.requested-quantity').html(' / ' + requestedQuantity)
       }).modal('show');
 
       $("#complete-modal #ok").on('click', function(){
         var quantity = $('#complete-modal #complete-quantity').val(); // GET FROM POP-UP
-        // What's to stop them putting more than their original listing had?? Nothing. In the requestModel, don't ever set a quantity < 0, default it to 0 as the boundary  
         // Send to /items/confirm-request
 
         var url = baseURL + "/items/confirm-request";
         var data = {listingID : listingID, transactionID : transactionID, quantity: quantity};
+
+        ('#complete-modal').modal('hide');
+
         $.post(url, data, function(response){
           if(response){
             // Remove card from screen
@@ -147,6 +161,9 @@ $(function(){
         var url = baseURL + "/items/reject-request";
         var data = {listingID : listingID, transactionID : transactionID};
         console.log(data);
+
+        ('#delete-modal').modal('hide');
+
         $.post(url, data, function(response){
             console.log(response)
            if(response){
@@ -193,6 +210,7 @@ $(function(){
       }).modal('show');
 
       $("#delete-modal #ok").on('click', function(){
+        ('#delete-modal').modal('hide');
         $.post(url, data, function(response){
           console.log(response);
           if(response){
@@ -241,6 +259,9 @@ $(function(){
       }).modal('show');
 
       $("#delete-modal #ok").on('click', function(){
+
+        ('#delete-modal').modal('hide');
+
         $.post(url, data, function(response){
           console.log(response);
           if(response){
@@ -271,9 +292,9 @@ $(function(){
 
       // Pop up to get quantity
       var card = $(this).closest('.thumbnail');
-      
+
       var itemName = card.find('.caption').find('h3').text()
-      var actualQuantity = card.find('.caption').find('.trans-info .quantity').text()
+      var requestedQuantity = card.find('.caption').find('.trans-info .quantity').text()
       console.log(card.find('.caption').find('.trans-info .quantity'))
 
       $('body').append(requestModal);
@@ -282,21 +303,18 @@ $(function(){
 
       $("#request-modal").on("shown.bs.modal", function () {
         $(this).find('.item-name').html(itemName)
-        $(this).find('.item-quantity').html(' / ' + actualQuantity)
-        $('#request-modal #request-quantity').attr("max", actualQuantity); // Don't allow user to request more than is available
+        $(this).find('.item-quantity').html(' / ' + requestedQuantity)
       }).modal('show');
 
       $("#request-modal #ok").on('click', function(){
         var quantity = $('#request-modal #request-quantity').val(); // GET FROM POP-UP
         console.log(quantity)
-         if(quantity > actualQuantity){
-             // Display error
-             console.log("Asking for too much");
-             return;
-         }
         // Send to /items/request
         var url = baseURL + "/items/request";
         var data = {listingID : listingID, quantity: quantity};
+
+        ('#request-modal').modal('hide');
+
         $.post(url, data, function(response){
             console.log(response);
            if(response){
@@ -329,9 +347,8 @@ $(function(){
          return;
        });
 
-    
-       // Rate listing(user) - THIS WORKS
-       $(document).on('click', 'a[href="#rate"]', function(event){
+       // Rate listing(user)
+       $(document).on('click', '#rate', function(event){
          event.preventDefault();
          var button = $(this);
          console.log("Rating");
@@ -355,13 +372,15 @@ $(function(){
          }).modal('show');
 
          $("#rate-modal #ok").on('click', function(){
-           // What limits the rating the user can give?  
-           var rating = $('#rate-modal #rate').val(); // GET FROM POP-UP
+           var rating = $('#rate-modal #rate').val();; // Get from pop-up
 
            // NEED TO DECIDE WHAT URL TO USE
            var url = baseURL + "/items/rate-user"; // GET CORRECT URL
            var data = {transactionID : transactionID, rating: rating};
            console.log(data);
+
+           //TODO add a check for the rating value then allow the modal to hide
+           ('#rate-modal').modal('hide');
 
            $.post(url, data, function(response){
              if(response){
@@ -385,8 +404,6 @@ $(function(){
         var listingID = $(this).attr("id");
         var quantity = 1; // Get from pop-up
 
-        
-        // NEED TO ADD A POP-UP HERE
        // Send to /items/renew-listing/
 
         var url = baseURL + "/items/renew-listing";
@@ -454,14 +471,6 @@ $(function(){
 
   // Remove an element from the layout - ele is in the form $(element)
   function remove(ele) {
-      // init Isotope
-        var $grid = $('.grid').isotope({
-        itemSelector: '.grid-item',
-        percentPosition: true,
-        masonry: {
-          columnWidth: '.grid-sizer'
-        }
-        });
     // remove clicked element (in a very skitchy way right now)
     $grid.isotope( 'remove', ele.closest('.grid-item'))
     // layout remaining item elements
@@ -470,8 +479,6 @@ $(function(){
 
 
   // modals/popups html
-    
-  // Delete - anything to do with removing or cancelling  
   var deleteModal = '<div id="delete-modal" class="modal fade" role="dialog">'+
                       '<div class="modal-dialog">'+
                         '<div class="modal-content">'+
@@ -494,7 +501,6 @@ $(function(){
                         '</div>'+
                       '</div>';
 
-  // Requesting a listing 
   var requestModal = '<div id="request-modal" class="modal fade" role="dialog">'+
                         '<div class="modal-dialog">'+
                           '<div class="modal-content">'+
@@ -521,7 +527,6 @@ $(function(){
                       '</div>'+
                     '</div>';
 
-  // Rating a user from a transaction 
   var rateModal = '<div id="rate-modal" class="modal fade" role="dialog">'+
                     '<div class="modal-dialog">'+
                       '<div class="modal-content">'+
@@ -550,7 +555,6 @@ $(function(){
               '</div>'+
             '</div>';
 
-  // Marking as complete  
   var completeModal = '<div id="complete-modal" class="modal fade" role="dialog">'+
                         '<div class="modal-dialog">'+
                         '<div class="modal-content">'+
