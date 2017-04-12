@@ -1,0 +1,31 @@
+{% extends 'header.twig' %}
+
+{% block title %}
+    Messages | Wastetopia
+{% endblock %}
+
+{% block navbar %}
+    {% include 'navbar.twig' %}
+{% endblock %}
+
+{% block content %}
+        <div class="title">
+        Messages
+    </div>
+
+    <ul class="nav nav-justified zero-padding nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#giving-tab">Giving</a></li>
+        <li><a data-toggle="tab" href="#receiving-tab">Receiving</a></li>
+    </ul>
+    <div class="tab-content">
+        <div id="giving-tab" class="tab-pane fade in active">
+            {{givingList|raw}}
+        </div>
+        <div id="receiving-tab" class="tab-pane fade">
+            {{receivingList|raw}}
+        </div>
+    </div>
+{% endblock %}
+
+{% set jslist = ["ConversationListPage.js"] %}
+

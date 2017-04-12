@@ -13,15 +13,17 @@ class ProductionConfig extends AbstractConfig
 {
     public function getConfiguration()
     {
+        // get the database url from the environment variables
+        $db_url = getenv('CLEARDB_DATABASE_URL');
+        $comp_url = parse_url($db_url);
+        // return the configuration
         return array(
-            'DB_HOST' => 'mysql.dur.ac.uk',
-            'DB_NAME' => 'Idcs8s04_Wastetopia',
-            'DB_USER' => 'dcs8s04',
-            'DB_PASS' => 'when58',
-
+            'DB_HOST' => $comp_url['host'],
+            'DB_NAME' => substr($comp_url['path'],1),
+            'DB_USER' => $comp_url['user'],
+            'DB_PASS' => $comp_url['pass'],
             'TOKEN_BEFORESALT' => 'Dr.Pr0jectWA5t0Pia',
             'TOKEN_AFTERSALT' => 'EndSalt11!!!1',
-
             'COOKIE_IDENTIFIER' => 'gpwastetopiadata',
 
             'ROOT_JS' => '//wastetopia.herokuapp.com/js',

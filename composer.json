@@ -18,7 +18,7 @@
     },
     {
       "name": "Ben Hemsworth",
-      "email": "ben.j.hemsworth@durham.ac.uk"
+      "email": "b.j.hemsworth@durham.ac.uk"
     },
     {
       "name": "Stephen Church",
@@ -31,7 +31,8 @@
   ],
   "require": {
     "twig/twig": "1.27.*",
-    "klein/klein": "^2.1"
+    "klein/klein": "^2.1",
+    "aws/aws-sdk-php": "3.24.7"
   },
   "autoload": {
 	"psr-4": {
