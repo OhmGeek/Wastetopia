@@ -13,12 +13,13 @@ $(function () {
     console.log("Trying to reload");
     var userID = $('.user-name').attr("id");
     var tabID = $(this).attr('href');
+    
     var relativeURL = "";
-    if (tabID == "#listings" || tabID == "#available-listing" || "#out-of-stock-listing" ){
+    if (tabID == "#listings" || tabID == "#available-listing" || tabID == "#out-of-stock-listing" ){
       relativeURL = "load-listings-tab";
-    }else if(tabID == "#requests" || tabID == "#completed-request" || "#pending-request" ){
+    }else if(tabID == "#requests" || tabID == "#completed-request" || tabID == "#pending-request" ){
       relativeURL = "load-requests-tab";
-    }else if(tabID == "#offers" || tabID == "#completed-transaction" || "#pending-transaction" ){
+    }else if(tabID == "#offers" || tabID == "#completed-transaction" || tabID == "#pending-transaction" ){
      relativeURL = "load-offers-tab";
     }else if(tabID == "#watchList"){
      relativeURL = "load-watchlist-tab";
