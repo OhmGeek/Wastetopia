@@ -523,7 +523,7 @@ $(function(){
         
         // Take 1 off watch list tab counter
         if(!(counter == null)){
-            counter.html(watchListCounter-1); // Extract watchListCount if it exists
+            counter.html(watchListCount-1); // Extract watchListCount if it exists
         }
       }else{
         // Set colour to dark (Added)
@@ -531,7 +531,7 @@ $(function(){
           
         // Add 1 to watch list tab counter  
         if(!(counter == null)){
-            counter.html(watchListCounter+1); 
+            counter.html(watchListCount+1); 
         }  
         
       }
