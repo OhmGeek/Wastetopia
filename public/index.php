@@ -114,7 +114,8 @@ $klein->with('/api', function () use ($klein) {
     // make a post request to add this item, and return whether it was successful or not (TODO return success from DB).
 
     $control = new AddItemController();
-    $control->addItem($request->item);
+    $item = json_decode($request->body(),true);
+    $control->addItem($item);
   });
 
   $klein->respond('POST', '/items/addimage', function($request,$response) {

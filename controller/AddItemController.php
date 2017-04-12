@@ -63,6 +63,7 @@ class AddItemController
         // we are given a list of urls
         // we need just to add the filetype to the array
         $imageArray = array();
+        error_log(json_encode($details['image']));
         foreach($details['images'] as $img) {
             $obj = array(
                 'fileType' => 'img',
@@ -87,6 +88,8 @@ class AddItemController
             'location' => $details['location']
             );
 
+        error_log('Now for the Serialized Item after changes:');
+        error_log(json_encode($info));
         $this->model->mainAddItemFunction(
             $info['item'],
             $info['tags'],
