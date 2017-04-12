@@ -155,7 +155,7 @@ class RegistrationController
         $to=$email;
         $subject="Activation Code For Wastetopia";
         $from = 'wastetopia@ohmgeek.co.uk'; 
-        $body='<p>Your Activation Code is '.$code.' Please Click On This link: </p> <br> <a href='.$fullURL.'> https:'.$fullURL.' </a> <br> <p> to activate  your account. </p>';
+        $body='<p>Your Activation Code is '.$code.' Please Click On This link: </p> <a href='.$fullURL.'> https:'.$fullURL.' </a> <br> <p> to activate  your account. </p>';
         $altBody = "Please go to: https:".$fullURL;
 //         // PHPMailer code
         
@@ -167,7 +167,6 @@ class RegistrationController
         $mail->Port = 465; //25 for non-SSL, 465  for SSL
         $mail->SMTPSecure = 'ssl'; 
         $mail->SMTPAuth = true;     // turn off SMTP authentiocation
-        $mail->SMTPDebug = 2;
         $mail->Username = "wastetopia@ohmgeek.co.uk";  // SMTP username
         $mail->Password = "wyI4wwPRhHGk"; // SMTP password (IHatePHP  or wyI4wwPRhHGk)
 
