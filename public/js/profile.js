@@ -31,8 +31,10 @@ $(function () {
    
     var url = window.location.protocol + "//" + window.location.host + "/profile/" + relativeURL +"/" + userID;
     
-    var div = $(tabID);
-    div.load(url, function(){
+    $.get(url, function(response){
+       var div = $(tabID);
+       div.replaceWith(response);
+      
       // re initialize isotope
        $grid = $('.grid').isotope({
           itemSelector: '.grid-item',
