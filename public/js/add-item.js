@@ -168,7 +168,7 @@ function serializeItem() {
 }
 
 $('#submit-item').on('click', function() {
-  this.submit();
+  $('#main-form').submit();
 });
 
 $(document).ready(function() {
