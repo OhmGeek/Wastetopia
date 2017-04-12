@@ -432,7 +432,8 @@ $(function(){
           $(this).find('.item-name').html(itemName)
         }).modal('show');
 
-        $("#renew-modal #justRenew").on('click', function(){
+        $("#renew-modal .accept-button").on('click', function(){
+           var button = $(this); 
           var quantity = $('#renew-modal #renew-quantity').val();
           var date = $('#renew-modal #renew-date').val();
 
@@ -447,7 +448,10 @@ $(function(){
                    // Do something
                    // Reload the div??
                    remove(card);
-
+                    
+                   if (button.attr("id") == "renewEdit"){
+                        //location.href = "EDIT_PAGE_WITH_THIS_LISTING_ID";   
+                   }
                    // Add 1 to the counter for Available listings
                }else{
                    // Show error
