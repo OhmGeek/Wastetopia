@@ -88,12 +88,13 @@ $(function(){
             if (availableListingsTab.hasClass("in active")){
                var counter = $('a[href="#available-listing"]'); 
                 console.log("available listings tab");
-            }else if(outOfStockTab.hasClass("in active")){
+            }else if(outOfStockTab.hasClass("active") && outOfStockTab.hasClass("in")){
               console.log("out of stock tab");  
               var counter = $('a[href="#out-of-stock-listing"]');
             }else{
                 // Do nothing else
             }
+              
             // If it exists on the page, change the name  
             console.log(counter);  
             if(!(counter == "")){
@@ -215,7 +216,20 @@ $(function(){
                // Remove card from screen
                remove(card);
                
-               // Take 1 off offers made and pending transactions
+               // Take 1 off offers received tab
+               var offersReceivedCounter = $('a[href="#offers"] .count');
+               if(!(offersReceivedCounter == null)){
+                  offersReceivedCounter.html(parseInt(offersReceivedCounter.html()) - 1);   
+               }
+               
+               // Take 1 off pending transactions sub tab
+               var pendingTransactionsTab = $('#pending-transaction');
+               if(!(pendingTransactionsTab == null)){                
+                    var pendingCounter = $('a[href="#pending-transaction"]'); 
+                    changeSubTabCounter(pendingCounter, - 1);
+                }else{
+                    // DO NOTHING     
+                }
            }else{
                // Show error
            }
@@ -263,6 +277,21 @@ $(function(){
           if(response){
             // Remove card from screen
             remove(card);
+              
+             // Take 1 off requests made tab
+               var requestsMadeCounter = $('a[href="#offers"] .count');
+               if(!(requestsMadeCounter == null)){
+                  requestsMadeCounter.html(parseInt(requestsMadeCounter.html()) - 1);   
+               }
+               
+               // Take 1 off pending requests sub tab
+               var pendingRequestsTab = $('#pending-request');
+               if(!(pendingRequestsTab == null)){                
+                    var pendingCounter = $('a[href="#pending-request"]'); 
+                    changeSubTabCounter(pendingCounter, - 1);
+                }else{
+                    // DO NOTHING     
+                } 
             
               // Take one off Requests Made counter and Pending counter
           }else{
@@ -319,7 +348,12 @@ $(function(){
             button.html("Request");
             button.attr("href", "#request");
               
-            // Take one off counter for Requests Made and Pending transactions  
+            // Take 1 off Requests Made tab counter
+               var requestsMadeCounter = $('a[href="#offers"] .count');
+               if(!(requestsMadeCounter == null)){
+                  requestsMadeCounter.html(parseInt(requestsMadeCounter.html()) - 1);   
+               }
+              
           }else{
             // Show error
           }
@@ -383,8 +417,20 @@ $(function(){
                button.html("Cancel request");
                button.attr("href", "#cancel-by-listing");
                
-               // Add one to counter for Requests Made and pending transactions
+               // Add 1 to Requests Made tab counter
+               var requestsMadeCounter = $('a[href="#offers"] .count');
+               if(!(requestsMadeCounter == null)){
+                  requestsMadeCounter.html(parseInt(requestsMadeCounter.html()) + 1);   
+               }
                
+               // Add 1 to pending requests sub tab
+               var pendingRequestsTab = $('#pending-request');
+               if(!(pendingRequestsTab == null)){                
+                    var pendingCounter = $('a[href="#pending-request"]'); 
+                    changeSubTabCounter(pendingCounter, + 1);
+                }else{
+                    // DO NOTHING     
+                } 
              }else{
                // Show error
              }
@@ -497,9 +543,24 @@ $(function(){
                    if (button.attr("id") == "renewEdit"){
                        var newListingID = parseInt(response);
                        var editPageURL = baseURL + "/item/edit/" + newListingID
-                        //location.href = editPageURL   
+                        //location.href = editPageURL 
+                       // return;
                    }
                    // Add 1 to the counter for Available listings
+                   var availableListingsTab = $('#available-listing');
+                   if(!(availableListingsTab == null)){
+                       var counter = $('a[href="#available-listing"]'); 
+                       changeSubTabCounter(counter, 1);
+                   }
+                   
+                   // Take 1 off the counter for Out of Stock listings
+                   var outOfStockTab = $('#out-of-stock-listing');
+                   if(!(outOfStockTab == null)){
+                       var counter = $('a[href="#out-of-stock-listing"]'); 
+                       changeSubTabCounter(counter, -1);
+                   }
+    
+               
                }else{
                    // Show error
                }
