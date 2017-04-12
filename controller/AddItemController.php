@@ -25,9 +25,22 @@ class AddItemController
         $loader  = new Twig_Loader_Filesystem(__DIR__.'/../view/');
         $twig = new Twig_Environment($loader);
         $template = $twig->loadTemplate('items/edit_items.twig');
-        return $template->render(array()); // todo add required details here.
+        return $template->render(array(
+            'tags' => $this->getListOfTagsForView()
+        )); // todo add required details here.
     }
 
+
+    private function getListOfTagsForView() {
+        return array(
+            'type' => $this->model->getAllTagOptions(1),
+            'classification' => $this->model->getAllTagOptions(2),
+            'dietary' => $this->model->getAllTagOptions(3),
+            'contains' => $this->model->getAllTagOptions(4)
+        );
+    }
+
+    // this code below flattens the selected tags into one list
     private function generateTags($details) {
         $properties = array('classification', 'dietary', 'contains');
         // create a tag collection, collating all tags

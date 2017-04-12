@@ -119,14 +119,15 @@ class AddItemModel
      * Gets all the select options user can choose for tags
      * @return mixed
      */
-    function getAllTagOptions(){
+    function getAllTagOptions($categoryID){
         $statement = $this->db->prepare("
             SELECT *
             FROM `Tag`
-            ORDER BY `Tag`.`FK_Category_Category_ID`
+            WHERE `Tag`.`FK_Category_Category_ID` = :catID
+            ORDER BY `Tag`.`Name`
          ");
 
-
+        $statement->bindValue(':catID',$categoryID,PDO::PARAM_INT);
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
