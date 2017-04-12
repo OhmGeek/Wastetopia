@@ -641,12 +641,12 @@ a:link, a:hover, a:visited, a:active  {
 .sender{
   width: 75%;
   padding: 10px;
+  margin-left: auto;
 }
 
-.reciever {
+.receiver {
   padding: 10px;
   width: 75%;
-  margin-left: auto;
 }
 
 .content {
