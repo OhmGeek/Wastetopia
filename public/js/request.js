@@ -70,6 +70,8 @@ $(function(){
           if(response){
             // Remove card from screen
             remove(card);
+              
+            // Take 1 off Listings counter and 1 off whichever tab it came from  
           }else{
             // Show error
           }
@@ -117,6 +119,9 @@ $(function(){
           if(response){
             // Remove card from screen
             remove(card);
+              
+            // Take 1 off pending transactions, add 1 to complete transactions
+              
           }else{
             // Show error
           }
@@ -164,6 +169,8 @@ $(function(){
            if(response){
                // Remove card from screen
                remove(card);
+               
+               // Take 1 off offers made and pending transactions
            }else{
                // Show error
            }
@@ -211,6 +218,8 @@ $(function(){
           if(response){
             // Remove card from screen
             remove(card);
+            
+              // Take one off Requests Made counter and Pending counter
           }else{
             // Show error
           }
@@ -264,6 +273,8 @@ $(function(){
             // Change button to a "Request" button
             button.html("Request");
             button.attr("href", "#request");
+              
+            // Take one off counter for Requests Made and Pending transactions  
           }else{
             // Show error
           }
@@ -326,6 +337,9 @@ $(function(){
                // Change button to cancel request button
                button.html("Cancel request");
                button.attr("href", "#cancel-by-listing");
+               
+               // Add one to counter for Requests Made and pending transactions
+               
              }else{
                // Show error
              }
@@ -433,6 +447,8 @@ $(function(){
                // Do something
                // Reload the div??
                remove(card);
+               
+               // Add 1 to the counter for Available listings
            }else{
                // Show error
            }
