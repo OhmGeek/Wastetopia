@@ -89,6 +89,7 @@ class RequestModel
     {
         $statement = $this->db->prepare("
             SELECT `Item`.`ItemID`
+	    FROM `Item`
 	    WHERE `Item`.`Name` = :name
 	    AND `Item`.`Use_By` = :useBy
 	    AND `Item`.`Description` = :description
@@ -135,7 +136,7 @@ class RequestModel
 		print_r($item_quantity);
 		print_r("Quantity ".$quantity);
 		if($quantity > $item_quantity){
-			return false;
+			return False;
 		}
 		$statement1 = $this->db->prepare("
 			INSERT INTO Transaction(FK_User_UserID)
@@ -203,7 +204,7 @@ class RequestModel
 		");
 		$statement3->bindValue(":transaction_id", $transaction_id, PDO::PARAM_INT);
 		$statement3->execute();
-		return true;
+		return True;
 	}
 	
 	/**
@@ -287,16 +288,26 @@ class RequestModel
 		$useBy = $item_info["Use_By"];
 		$description = $item_info["Description"];
 		
+		print_r("Listing Data: ");
+		print_r($listing_info);
+		print_r("       ");
+		print_r("ITEM DATA: ");
+		print_r($name);
+		print_r($useBy);
+		print_r($description);
+		
 		$statement0 = $this->db->prepare("
 			INSERT INTO Item(Name, Description,Use_By)
 			VALUES(:name, :description, :use_by);
 		");
 		$statement0->bindValue(":name", $name, PDO::PARAM_STR);
-		$statement0->bindValue(":description", $description, $item_info["Description"], PDO::PARAM_STR);
+		$statement0->bindValue(":description", $description, PDO::PARAM_STR);
 		$statement0->bindValue(":use_by", $useBy, PDO::PARAM_STR);
 		$statement0->execute();
 		
-		$new_item_id = $this->getLastItemID($name, $useBy, $description); // Replace with SQL query
+		$new_item_id = $this->getLastItemID($name, $useBy, $description);
+		
+		print_r("ItemID: ".$new_item_id);
 		
 		//adding item tags
 		$statement01 = $this->db->prepare("
@@ -308,8 +319,9 @@ class RequestModel
 		$statement01->bindValue(":old_item_id", $listing_info["FK_Item_ItemID"], PDO::PARAM_INT);
 		$statement01->execute();
 		
+		print_r("Added tags");
 		
-		// adding item's images 
+		// adding item's images - item may now how two default images
 		$statement02 = $this->db->prepare("
 			INSERT INTO ItemImage(FK_Item_ItemID, FK_Image_ImageID, Is_Default)
 			SELECT :new_item_id, FK_Image_ImageID, Is_Default
@@ -321,6 +333,7 @@ class RequestModel
 
 		
 		
+		print_r("Added images");
 		
 		$statement = $this->db->prepare("
 			INSERT INTO Listing(FK_Location_LocationID, FK_Item_ItemID, FK_User_UserID, Quantity)
@@ -331,9 +344,12 @@ class RequestModel
 		$statement->bindValue(":user_id", $listing_info["FK_User_UserID"]);
 		$statement->bindValue(":new_quantity", $new_quantity);
 		$statement->execute();
+		
 		//remove the old listing so that the new listing replaces it
 		$this->withdrawListing($listing_id);
-		return true;
+		
+		print_r("Withdrawn old listing");
+		return True;
 	}
 	
 	/**
@@ -349,7 +365,7 @@ class RequestModel
 		");
 		$statement->bindValue(":listing_id", $listing_id, PDO::PARAM_INT);
 		$statement->execute();
-		return true;
+		return True;
 	}
 	
 	/**
