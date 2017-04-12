@@ -187,7 +187,7 @@ function isValid(itemData) {
   return true;
 }
 $(document).ready(function() {
-    $( "#main-form" ).submit(function(event) {
+    $('#main-form').on('submit', function(event) {
         console.log( "Handler for .submit() called." );
         event.preventDefault();
 
