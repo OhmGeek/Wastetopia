@@ -427,6 +427,7 @@ $(function(){
 
                // Add 1 to pending requests sub tab
                var pendingRequestsTab = $('#pending-request');
+               console.log(pendingRequestsTab);
                if(!(pendingRequestsTab == null)){
                     var pendingCounter = $('a[href="#pending-request"]');
                     changeSubTabCounter(pendingCounter, + 1);
