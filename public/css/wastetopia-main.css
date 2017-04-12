@@ -935,7 +935,7 @@ a:link, a:hover, a:visited, a:active  {
 }
 
 .caption .nav-btns .lightgrey i{
-  color: grey;
+  color: lightgrey;
 }
 
 .caption .nav-btns .watched i {
