@@ -121,7 +121,7 @@ class AddItemModel
      */
     function getAllTagOptions($categoryID){
         $statement = $this->db->prepare("
-            SELECT *
+            SELECT `Tag`.`Name`
             FROM `Tag`
             WHERE `Tag`.`FK_Category_Category_ID` = :catID
             ORDER BY `Tag`.`Name`
@@ -129,7 +129,8 @@ class AddItemModel
 
         $statement->bindValue(':catID',$categoryID,PDO::PARAM_INT);
         $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_ASSOC);
+        $results = $statement->fetchColumn(0);
+        return $results;
     }
 
 
