@@ -117,6 +117,7 @@ class AddItemModel
 
     /**
      * Gets all the select options user can choose for tags
+     * @param $categoryID (category to search for)
      * @return mixed
      */
     function getAllTagOptions($categoryID){
@@ -390,6 +391,7 @@ class AddItemModel
         // return the ID, or nothing if none is found.
         $results = $statement->execute(PDO::FETCH_ASSOC);
         // now we have the results, create a tag and return it.
+        error_log(json_encode($results));
         return array(
             'name' => $results[0]['Name'],
             'categoryID' => $results[0]['FK_Category_Category_ID'],
