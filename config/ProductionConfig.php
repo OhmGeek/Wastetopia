@@ -28,7 +28,7 @@ class ProductionConfig extends AbstractConfig
             'ROOT_JS' => '//wastetest.xyxthris.xyz/public/js',
             'ROOT_CSS' => '//wastetopia.herokuapp.com/css',
             'ROOT_IMG' => '//wastetopia.herokuapp.com/img',
-            'ROOT_BASE' => '//wastetopia.herokuapp.com'
+            'ROOT_BASE' => '//wastetest.xyxthris.xyz/public'
         );
     }
 }
