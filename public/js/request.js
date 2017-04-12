@@ -1,19 +1,11 @@
 // JS file to deal with requestModel stuff on any page (if cardIDs are the same)
 $(function(){
-//     // init Isotope
-//   var $grid = $('.grid').isotope({
-//     itemSelector: '.grid-item',
-//     percentPosition: true,
-//     masonry: {
-//       columnWidth: '.grid-sizer'
-//     }
-//   });
 
-
-    //TODO: Fix watch-list toggle issue
-    //TODO: Test renew and rate
-    //TODO: Link to edit and messaging pages
-    //TODO: Stop quantity of completed transaction exceeding quantity of listing
+    //TODO: Fix watch-list toggle issue and loading tabs issue (same error message)
+    //TODO: Test renew - renew needs a Modal
+    //TODO: Link to edit and messaging pages - When everything is merged to master
+    //TODO: Stop quantity of completed transaction exceeding quantity of listing - Has to be done in requestModel
+ 
 
     var baseURL =  window.location.protocol + "//" + window.location.host;
 
@@ -58,7 +50,7 @@ $(function(){
       $("#delete-modal").modal({backdrop: "static"})
 
       $("#delete-modal").on("shown.bs.modal", function () {
-        $(this).find('.modal-msg').html("Do you want to remove the offer for ")
+        $(this).find('.modal-msg').html("Do you want to remove the item ")
         $(this).find('.item-name').html(itemName + '?')
         $(this).find('.modal-submsg').html("You won't be able to undo this once you press 'Ok'")
       }).modal('show');
@@ -97,8 +89,9 @@ $(function(){
       var listingID = $(this).closest(".btn-watch").prevAll('a[href="#view"]').attr("id");
 
       var itemName = card.find('.caption').find('h3').text()
-      var requestedQuantity = card.find('.caption').find('.trans-info .quantity').text()
-      console.log(card.find('.caption').find('.trans-info .quantity'))
+      var requestedQuantity = card.find('.caption').find('.trans-info .quantity').text() // This doesn't work
+      
+      .log(card.find('.caption').find('.trans-info .quantity'))
 
       $('body').append(completeModal);
 
@@ -111,6 +104,7 @@ $(function(){
 
       $("#complete-modal #ok").on('click', function(){
         var quantity = $('#complete-modal #complete-quantity').val(); // GET FROM POP-UP
+          // What's to stop them putting more than their original listing had?? Nothing. In the requestModel, don't ever set a quantity < 0, default it to 0 as the boundary 
         // Send to /items/confirm-request
 
         var url = baseURL + "/items/confirm-request";
@@ -294,7 +288,7 @@ $(function(){
       var card = $(this).closest('.thumbnail');
 
       var itemName = card.find('.caption').find('h3').text()
-      var requestedQuantity = card.find('.caption').find('.trans-info .quantity').text()
+      var actualQuantity = card.find('.caption').find('.trans-info .quantity').text()
       console.log(card.find('.caption').find('.trans-info .quantity'))
 
       $('body').append(requestModal);
@@ -303,12 +297,21 @@ $(function(){
 
       $("#request-modal").on("shown.bs.modal", function () {
         $(this).find('.item-name').html(itemName)
-        $(this).find('.item-quantity').html(' / ' + requestedQuantity)
+        $(this).find('.item-quantity').html(' / ' + actualQuantity)
+        $('#request-modal #request-quantity').attr("max", actualQuantity); // Don't allow user to request more than is available
+  
       }).modal('show');
 
       $("#request-modal #ok").on('click', function(){
         var quantity = $('#request-modal #request-quantity').val(); // GET FROM POP-UP
         console.log(quantity)
+          
+         if(quantity > actualQuantity){
+             // Display error
+             console.log("Asking for too much");
+             return;
+         }
+ 
         // Send to /items/request
         var url = baseURL + "/items/request";
         var data = {listingID : listingID, quantity: quantity};
@@ -348,7 +351,7 @@ $(function(){
        });
 
        // Rate listing(user)
-       $(document).on('click', '#rate', function(event){
+       $(document).on('click', 'a[href="#rate"]', function(event){
          event.preventDefault();
          var button = $(this);
          console.log("Rating");
@@ -423,6 +426,7 @@ $(function(){
         var url = baseURL + "/items/renew-listing";
         var data = {listingID : listingID, quantity:quantity};
         $.post(url, data, function(response){
+           console.log(response);
            if(response){
                // Do something
                // Reload the div??
@@ -490,6 +494,14 @@ $(function(){
 
   // Remove an element from the layout - ele is in the form $(element)
   function remove(ele) {
+    // init Isotope
+   var $grid = $('.grid').isotope({
+      itemSelector: '.grid-item',
+      percentPosition: true,
+      masonry: {
+        columnWidth: '.grid-sizer'
+      }
+    });  
     // remove clicked element (in a very skitchy way right now)
     $grid.isotope( 'remove', ele.closest('.grid-item'))
     // layout remaining item elements
@@ -498,6 +510,7 @@ $(function(){
 
 
   // modals/popups html
+  // Delete - anything to do with removing or cancelling  
   var deleteModal = '<div id="delete-modal" class="modal fade" role="dialog">'+
                       '<div class="modal-dialog">'+
                         '<div class="modal-content">'+
@@ -520,6 +533,7 @@ $(function(){
                         '</div>'+
                       '</div>';
 
+  // Requesting a listing (and renew)  
   var requestModal = '<div id="request-modal" class="modal fade" role="dialog">'+
                         '<div class="modal-dialog">'+
                           '<div class="modal-content">'+
@@ -546,6 +560,7 @@ $(function(){
                       '</div>'+
                     '</div>';
 
+  // Rating a user from a transaction   
   var rateModal = '<div id="rate-modal" class="modal fade" role="dialog">'+
                     '<div class="modal-dialog">'+
                       '<div class="modal-content">'+
@@ -574,6 +589,7 @@ $(function(){
               '</div>'+
             '</div>';
 
+  // Marking as complete   
   var completeModal = '<div id="complete-modal" class="modal fade" role="dialog">'+
                         '<div class="modal-dialog">'+
                         '<div class="modal-content">'+
