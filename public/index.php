@@ -2,6 +2,7 @@
 
 use Klein\Klein;
 use Wastetopia\Controller\Login_Controller;
+use Wastetopia\Model\NotificationModel;
 
 require_once '../vendor/autoload.php';
 
@@ -40,6 +41,11 @@ $klein->with('/items', function () use ($klein) {
         return "Show Item " . $itemID;
     });
 
+});
+
+$klein->respond('GET', '/notifications/update', function($request, $response){
+        $model = new NotificationModel();
+        return $model->getAll(1); // getAll in JSON format
 });
 
 $klein->onHttpError(function ($code, $router) {
