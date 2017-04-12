@@ -998,6 +998,6 @@ a:link, a:hover, a:visited, a:active  {
   width: 100px;
 }
 
-.ui-datepicker{
+.dtp{
   z-index: 100000 !important;
 }
