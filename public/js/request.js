@@ -436,24 +436,24 @@ $(function(){
           var quantity = $('#renew-modal #renew-quantity').val();
           var date = $('#renew-modal #renew-date').val();
 
-       // Send to /items/renew-listing/
-       $('#renew-modal').modal('hide');
+           // Send to /items/renew-listing/
+           $('#renew-modal').modal('hide');
 
-        var url = baseURL + "/items/renew-listing";
-        var data = {listingID : listingID, quantity:quantity};
-        $.post(url, data, function(response){
-           console.log(response);
-           if(response){
-               // Do something
-               // Reload the div??
-               remove(card);
-               
-               // Add 1 to the counter for Available listings
-           }else{
-               // Show error
-           }
-        });
-      });
+            var url = baseURL + "/items/renew-listing";
+            var data = {listingID : listingID, quantity:quantity};
+            $.post(url, data, function(response){
+               console.log(response);
+               if(response){
+                   // Do something
+                   // Reload the div??
+                   remove(card);
+
+                   // Add 1 to the counter for Available listings
+               }else{
+                   // Show error
+               }
+            });
+          });
       $('#renew-modal').on('hidden.bs.modal', function(){
         console.log("hidden");
         $('#renew-modal').remove();
@@ -680,8 +680,8 @@ $(function(){
                             '</div>'+
                             '<div class="modal-footer">'+
                               '<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>'+
-                              '<button type="button" class="btn btn-primary" id="justRenew">Renew</button>'+
-                              '<button type="button" class="btn btn-default" id="renewEdit">Renew & Edit</button>'+
+                              '<button type="button" class="btn btn-primary accept-button" id="justRenew">Renew</button>'+
+                              '<button type="button" class="btn btn-default accept-button" id="renewEdit">Renew & Edit</button>'+
                             '</div>'+
                           '</div>'+
                         '</div>'+
