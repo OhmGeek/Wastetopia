@@ -32,6 +32,19 @@ $(function () {
       return;
     }
    
+    reloadTab(tabID, relativeURL, userID);
+
+  });
+  
+  // Reloads HOME tab when watch list pressed (will this reload the page?)
+  $(document).on('click', 'a[href="#watch"]', function(){
+    var userID = $('.user-name').attr("id");
+    reloadTab('#home', "load-home-tab", userID);
+  });
+  
+  
+  // Reloads the content of the given tab, for the given user, from the given relative URL
+  function reloadTab(tabID, relativeURL, userID){
     var url = window.location.protocol + "//" + window.location.host + "/profile/" + relativeURL +"/" + userID;
     
     $.get(url, function(response){
@@ -49,9 +62,8 @@ $(function () {
           }
         });
     });
-
-  });
-
+  }
+  
   $(document).on('shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
 
     console.log($(e.target).attr("href"));
