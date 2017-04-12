@@ -412,7 +412,7 @@ $(function(){
         }).modal('show');
 
         $("#request-modal #ok").on('click', function(){
-          var rating = $('#request-modal #rate').val();
+          var quantity = $('#request-modal #request-quantity').val();
 
        // Send to /items/renew-listing/
 
