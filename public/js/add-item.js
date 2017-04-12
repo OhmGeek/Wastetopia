@@ -199,6 +199,7 @@ function submit() {
     console.log(itemData);
     if(isValid(itemData)) {
         // submit using AJAX
+        var jsonData = JSON.stringify(itemData);
         $.post('https://wastetopia-pr-17.herokuapp.com/api/items/additem', jsonData, function(response) {
             console.log(response);
         }, 'json');
