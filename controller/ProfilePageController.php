@@ -543,7 +543,6 @@ class ProfilePageController
                 "userID" => $userID,
                 "userName" => $userName,
                 "addedDate" => $addedDate,
-                "distance" => $distance, //CAN'T GET THIS INFORMATION
                 "postCode" => $postCode,
                 "imgURL" => $imageURL,
                 "itemName" => $itemName,
