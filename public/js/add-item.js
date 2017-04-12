@@ -148,6 +148,21 @@ function getLocationOfItem() {
   });
 }
 
+
+function getStateDetails() {
+    var state = [];
+    $('#state option:selected').each(function(index, elem) {
+        if(elem.text) {
+            state.push(elem.text);
+        }
+    });
+    var otherMayContains = $('#otherstate').val();
+
+    if(otherMayContains) {
+        state.push(otherMayContains);
+    }
+    return state;
+}
 function serializeItem() {
   //todo: process expiry date (need more research into this). Think it's just .val, but not fully sure.
   // todo: process item type properly.
@@ -159,6 +174,7 @@ function serializeItem() {
     "classification": $("#type option:selected").text(), //get the text of the selected option
     "dietary": getSelectedDietaryReqs(), //dietary requirement
     "contains": getMayContainsDetails(), //allergy tags
+    "state": getStateDetails(),
     "expires": $('#date').val(),
     "description": $('#description').val(),
     "location": getLocationOfItem()

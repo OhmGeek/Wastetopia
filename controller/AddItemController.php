@@ -43,7 +43,7 @@ class AddItemController
 
     // this code below flattens the selected tags into one list
     private function generateTags($details) {
-        $properties = array('classification', 'dietary', 'contains');
+        $properties = array('classification', 'dietary', 'contains', 'state');
         // create a tag collection, collating all tags
         $listOfTags = array();
         // go through all properties individually, getting the tag details.
