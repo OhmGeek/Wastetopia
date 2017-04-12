@@ -167,6 +167,7 @@ class RegistrationController
         $mail->Port = 465; //25 for non-SSL, 465  for SSL
         $mail->SMTPSecure = false; 
         $mail->SMTPAuth = false;     // turn off SMTP authentiocation
+        $mail->SMTPDebug = 2;
         $mail->Username = "wastetopia@ohmgeek.co.uk";  // SMTP username
         $mail->Password = "wyI4wwPRhHGk"; // SMTP password (IHatePHP  or wyI4wwPRhHGk)
 
