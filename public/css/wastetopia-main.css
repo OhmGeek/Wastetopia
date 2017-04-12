@@ -934,7 +934,7 @@ a:link, a:hover, a:visited, a:active  {
   color: lightgrey;
 }
 
-.caption .nav-btns .watched {
+.caption .nav-btns .watched i {
   color: green;
 }
 
