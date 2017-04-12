@@ -166,23 +166,22 @@ function serializeItem() {
 
   return item;
 }
-
-$('#submit-item').on('click', function() {
-  $('#main-form').submit();
-});
-
+//todo validate all the fields
+function isValid(itemData) {
+  return true;
+}
 $(document).ready(function() {
-    $( "#main-form" ).on('submit', function( event ) {
+    $( "#main-form" ).submit(function(event) {
         console.log( "Handler for .submit() called." );
         event.preventDefault();
 
         var itemData = serializeItem();
         console.log(itemData);
-        // if(isValid(itemData)) {
-        //   // submit using AJAX
-        //     $.post('https://wastetopia-pr-17.herokuapp.com/api/items/additem', jsonData, function(response) {
-        //         console.log(response);
-        //     }, 'json');
-        // }
+        if(isValid(itemData)) {
+          // submit using AJAX
+            $.post('https://wastetopia-pr-17.herokuapp.com/api/items/additem', jsonData, function(response) {
+                console.log(response);
+            }, 'json');
+        }
     });
 });
