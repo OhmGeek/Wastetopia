@@ -90,8 +90,6 @@ $(function(){
 
       var itemName = card.find('.caption').find('h3').text()
       var requestedQuantity = card.find('.caption').find('.trans-info .quantity').text() // This doesn't work
-      
-      .log(card.find('.caption').find('.trans-info .quantity'))
 
       $('body').append(completeModal);
 
