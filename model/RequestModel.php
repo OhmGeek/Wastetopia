@@ -310,7 +310,7 @@ class RequestModel
 		
 		
 		// adding item's images 
-		$statement01 = $this->db->prepare("
+		$statement02 = $this->db->prepare("
 			INSERT INTO ItemImage(FK_Item_ItemID, FK_Image_ImageID, Is_Default)
 			SELECT :new_item_id, FK_Image_ImageID, Is_Default
 			FROM ItemImage WHERE FK_Item_ItemID = :old_item_id;
