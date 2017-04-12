@@ -160,7 +160,7 @@ function serializeItem() {
     "dietary": getSelectedDietaryReqs(), //dietary requirement
     "contains": getMayContainsDetails(), //allergy tags
     "expires": $('#date').val(),
-    "description": $('description').val(),
+    "description": $('#description').val(),
     "location": getLocationOfItem()
   };
 
