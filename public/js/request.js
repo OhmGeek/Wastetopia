@@ -87,12 +87,15 @@ $(function(){
             // Set counter to whichever tab is active  
             if (availableListingsTab.hasClass("in active")){
                var counter = $('a[href="#available-listing"]'); 
+                console.log("available listings tab");
             }else if(outOfStockTab.hasClass("in active")){
+              console.log("out of stock tab");  
               var counter = $('a[href="#out-of-stock-listing"]');
             }else{
                 // Do nothing else
             }
             // If it exists on the page, change the name  
+            console.log(counter);  
             if(!(counter == "")){
               changeSubTabCounter(counter, -1) 
             }
@@ -118,7 +121,7 @@ $(function(){
 
     // Mark request as complete - SEEMS TO WORK
     // added modal for this code
-    $(document).on('click', 'a[href="#complete"]', function(event){
+ $(document).on('click', 'a[href="#complete"]', function(event){
       event.preventDefault();
       var card = $(this).closest('.thumbnail');
       // Extract transactionID and listingID and new quantity
@@ -137,38 +140,48 @@ $(function(){
         $(this).find('.requested-quantity').html(' / ' + requestedQuantity)
       }).modal('show');
 
-      $("#complete-modal #ok").on('click', function(){
-        var quantity = $('#complete-modal #complete-quantity').val(); // GET FROM POP-UP
-          // What's to stop them putting more than their original listing had?? Nothing. In the requestModel, don't ever set a quantity < 0, default it to 0 as the boundary
-        // Send to /items/confirm-request
+        $("#complete-modal #ok").on('click', function(){
+            var quantity = $('#complete-modal #complete-quantity').val(); // GET FROM POP-UP
+              // What's to stop them putting more than their original listing had?? Nothing. In the requestModel, don't ever set a quantity < 0, default it to 0 as the boundary
+            // Send to /items/confirm-request
 
-        var url = baseURL + "/items/confirm-request";
-        var data = {listingID : listingID, transactionID : transactionID, quantity: quantity};
+            var url = baseURL + "/items/confirm-request";
+            var data = {listingID : listingID, transactionID : transactionID, quantity: quantity};
 
-        $('#complete-modal').modal('hide');
+            $('#complete-modal').modal('hide');
 
-        $.post(url, data, function(response){
-          if(response){
-            // Remove card from screen
-            remove(card);
-              
-            // Take 1 off pending transactions, add 1 to complete transactions
-              
-          }else{
-            // Show error
-          }
+            $.post(url, data, function(response){
+              if(response){
+                    // Remove card from screen
+                    remove(card);
+
+                    // Take 1 off pending transactions, add 1 to complete transactions
+                    var pendingTransactionsTab = $('#pending-transaction');
+                    var completedTransactionsTab = $('#completed-transaction');
+
+                      if(!(pendingTransactionsTab == null) && !(completedTransactionsTab == null)){                
+                            var pendingCounter = $('a[href="#pending-transaction"]'); 
+                            var completedCounter = $('a[href="#completed-transaction"]');
+                            changeSubTabCounter(pendingCounter, - 1);
+                            changeSubTabCounter(completedCounter, 1);
+                       }else{
+                            // DO NOTHING     
+                       }
+              }else{
+                // Show error
+              }
+            });
         });
-      });
 
       $('#complete-modal').on('hidden.bs.modal', function(){
         console.log("hidden");
         $('#complete-modal').remove();
       });
-    });
+ });
 
 
     //Reject request - THIS WORKS
-    $(document).on('click', 'a[href="#reject"]', function(event){
+ $(document).on('click', 'a[href="#reject"]', function(event){
       event.preventDefault();
         var card = $(this).closest('.thumbnail');
       // Extract transactionID and listingID
