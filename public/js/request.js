@@ -5,9 +5,12 @@ $(function(){
     //TODO: Test renew - renew needs a Modal
     //TODO: Link to edit and messaging pages - When everything is merged to master
     //TODO: Stop quantity of completed transaction exceeding quantity of listing - Has to be done in requestModel
- 
+
 
     var baseURL =  window.location.protocol + "//" + window.location.host;
+
+    //fancy datetime picker
+    $('#renew-date').bootstrapMaterialDatePicker({ format : 'D MMMM, YYYY', weekStart : 0, time: false });
 
 //     $('a[data-target="PENDING_REQUESTS_TAB"]').click(function(){
 //        var url = baseURL + "/profile/set-pending-requests-viewed";
@@ -102,7 +105,7 @@ $(function(){
 
       $("#complete-modal #ok").on('click', function(){
         var quantity = $('#complete-modal #complete-quantity').val(); // GET FROM POP-UP
-          // What's to stop them putting more than their original listing had?? Nothing. In the requestModel, don't ever set a quantity < 0, default it to 0 as the boundary 
+          // What's to stop them putting more than their original listing had?? Nothing. In the requestModel, don't ever set a quantity < 0, default it to 0 as the boundary
         // Send to /items/confirm-request
 
         var url = baseURL + "/items/confirm-request";
@@ -297,19 +300,19 @@ $(function(){
         $(this).find('.item-name').html(itemName)
         $(this).find('.item-quantity').html(' / ' + actualQuantity)
         $('#request-modal #request-quantity').attr("max", actualQuantity); // Don't allow user to request more than is available
-  
+
       }).modal('show');
 
       $("#request-modal #ok").on('click', function(){
         var quantity = $('#request-modal #request-quantity').val(); // GET FROM POP-UP
         console.log(quantity)
-          
+
          if(quantity > actualQuantity || quantity == 0){
              // Display error
              console.log("Asking for a stupid amount, won't request");
              return;
          }
- 
+
         // Send to /items/request
         var url = baseURL + "/items/request";
         var data = {listingID : listingID, quantity: quantity};
@@ -403,23 +406,24 @@ $(function(){
     $(document).on('click','a[href="#renew"]',function(event){
       event.preventDefault();
         var listingID = $(this).attr("id");
-        
+
         var card = $(this).closest('.thumbnail')
         var itemName = card.find('.caption').find('h3').text()
 
-        $('body').append(requestModal);
+        $('body').append(renewModal);
 
-        $("#request-modal").modal({backdrop: "static"})
+        $("#renew-modal").modal({backdrop: "static"})
 
-        $("#request-modal").on("shown.bs.modal", function () {
-          $(this).find('.modal-msg').html('Renew')
+        $("#renew-modal").on("shown.bs.modal", function () {
           $(this).find('.item-name').html(itemName)
         }).modal('show');
 
-        $("#request-modal #ok").on('click', function(){
-          var quantity = $('#request-modal #request-quantity').val();
+        $("#renew-modal #justRenew").on('click', function(){
+          var quantity = $('#renew-modal #renew-quantity').val();
+          var date = $('#renew-modal #renew-date').val();
 
        // Send to /items/renew-listing/
+       $('#renew-modal').modal('hide');
 
         var url = baseURL + "/items/renew-listing";
         var data = {listingID : listingID, quantity:quantity};
@@ -434,9 +438,9 @@ $(function(){
            }
         });
       });
-      $('#request-modal').on('hidden.bs.modal', function(){
+      $('#renew-modal').on('hidden.bs.modal', function(){
         console.log("hidden");
-        $('#request-modal').remove();
+        $('#renew-modal').remove();
       });
     });
 
@@ -475,8 +479,8 @@ $(function(){
      var isUser = parseInt($(this).closest('.user-stats').attr("id"));
      var listing = $(this);
 
-     var data = {listingID: listingID} 
-     var url = baseURL + "/profile/toggle-watch-list" 
+     var data = {listingID: listingID}
+     var url = baseURL + "/profile/toggle-watch-list"
      $.post(url, data, function(response){
        // Do something depending on if response is true or false?? (Currently always true)
        console.log("DONE");
@@ -507,7 +511,7 @@ $(function(){
       masonry: {
         columnWidth: '.grid-sizer'
       }
-    });  
+    });
     // remove clicked element (in a very skitchy way right now)
     $grid.isotope( 'remove', ele.closest('.grid-item'))
     // layout remaining item elements
@@ -516,7 +520,7 @@ $(function(){
 
 
   // modals/popups html
-  // Delete - anything to do with removing or cancelling  
+  // Delete - anything to do with removing or cancelling
   var deleteModal = '<div id="delete-modal" class="modal fade" role="dialog">'+
                       '<div class="modal-dialog">'+
                         '<div class="modal-content">'+
@@ -539,7 +543,7 @@ $(function(){
                         '</div>'+
                       '</div>';
 
-  // Requesting a listing (and renew)  
+  // Requesting a listing (and renew)
   var requestModal = '<div id="request-modal" class="modal fade" role="dialog">'+
                         '<div class="modal-dialog">'+
                           '<div class="modal-content">'+
@@ -566,7 +570,7 @@ $(function(){
                       '</div>'+
                     '</div>';
 
-  // Rating a user from a transaction   
+  // Rating a user from a transaction
   var rateModal = '<div id="rate-modal" class="modal fade" role="dialog">'+
                     '<div class="modal-dialog">'+
                       '<div class="modal-content">'+
@@ -595,7 +599,7 @@ $(function(){
               '</div>'+
             '</div>';
 
-  // Marking as complete   
+  // Marking as complete
   var completeModal = '<div id="complete-modal" class="modal fade" role="dialog">'+
                         '<div class="modal-dialog">'+
                         '<div class="modal-content">'+
@@ -623,4 +627,35 @@ $(function(){
                         '</div>'+
                       '</div>'+
                     '</div>';
+
+    // Requesting a listing (and renew)
+    var renewModal = '<div id="renew-modal" class="modal fade" role="dialog">'+
+                          '<div class="modal-dialog">'+
+                            '<div class="modal-content">'+
+                              '<div class="modal-header">'+
+                                '<button type="button" class="close" data-dismiss="modal">&times;</button>'+
+                              '</div>'+
+                              '<div class="modal-body">'+
+                              '<div class="modal-msg">Renew offer for </div>'+
+                              '<div class="item-name">'+
+                              '</div>'+
+                              '<div class="container-fluid">'+
+                                '<div class="form-group zero-padding request-quantity">'+
+                                  '<label for="renew-quantity">Quantity</label>'+
+                                  '<input type="number" class="form-control" id="renew-quantity" min="0">'+
+                                '</div>'+
+                                '<div class="form-group zero-padding request-quantity">'+
+                                  '<label for="renew-date">Expiry Date</label>'+
+                                  '<input type="text" class="form-control" id="renew-date">'+
+                                '</div>'+
+                              '</div>'+
+                            '</div>'+
+                            '<div class="modal-footer">'+
+                              '<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>'+
+                              '<button type="button" class="btn btn-primary" id="justRenew">Renew</button>'+
+                              '<button type="button" class="btn btn-default" id="renewEdit">Renew & Edit</button>'+
+                            '</div>'+
+                          '</div>'+
+                        '</div>'+
+                      '</div>';
 });

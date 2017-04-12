@@ -931,7 +931,11 @@ a:link, a:hover, a:visited, a:active  {
 }
 
 .caption .nav-btns .btn-watch i{
-  color: lightgrey;
+  color: darkgrey;
+}
+
+.caption .nav-btns .lightgrey i{
+  color: grey;
 }
 
 .caption .nav-btns .watched i {
@@ -988,4 +992,8 @@ a:link, a:hover, a:visited, a:active  {
 
 .modal .modal-body .request-quantity input {
   width: 50px;
+}
+
+.modal .modal-body .request-quantity #renew-date {
+  width: 100px;
 }
