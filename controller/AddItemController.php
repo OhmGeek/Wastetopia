@@ -20,6 +20,9 @@ class AddItemController
         $this->model = new AddItemModel();
     }
 
+    /**
+     * @return string (HTML for the add item page)
+     */
     public function renderAddPage() {
 
         $loader  = new Twig_Loader_Filesystem(__DIR__.'/../view/');
@@ -31,6 +34,9 @@ class AddItemController
     }
 
 
+    /**
+     * @return array (object containing list of tag names to display on the form)
+     */
     private function getListOfTagsForView() {
         return array(
             'type' => $this->model->getAllTagOptions(1),
@@ -42,6 +48,11 @@ class AddItemController
     }
 
     // this code below flattens the selected tags into one list
+
+    /**
+     * @param $details (the item object as serialized by JavaScript)
+     * @return array (list of tags)
+     */
     private function generateTags($details) {
         $properties = array('classification', 'dietary', 'contains', 'state');
         // create a tag collection, collating all tags
@@ -49,16 +60,23 @@ class AddItemController
         // go through all properties individually, getting the tag details.
         foreach($properties as $prop) {
             // now go through the dietary requirements
-            foreach ($details[$prop] as $t) {
-                $dietTag = $this->model->getTagDetails($t);
-                if (isset($dietTag)) {
-                    array_push($listOfTags, $dietTag);
+            // only do this if the array itself is defined (as errors will be thrown otherwise
+            if (is_array($details[$prop]) || is_object($details[$prop])) {
+                foreach ($details[$prop] as $t) {
+                    $dietTag = $this->model->getTagDetails($t);
+                    if (isset($dietTag)) {
+                        array_push($listOfTags, $dietTag);
+                    }
                 }
             }
         }
         return $listOfTags;
     }
 
+    /**
+     * @param $details (the item object as serialized by JavaScript)
+     * @return array (list of images)
+     */
     private function getImageArray($details) {
         // we are given a list of urls
         // we need just to add the filetype to the array
@@ -75,6 +93,10 @@ class AddItemController
         return $imageArray;
     }
 
+    /**
+     * Add an item to the DB
+     * @param $details (a serialized item)
+     */
     public function addItem($details) {
         $info = array(
             'item' => array(
