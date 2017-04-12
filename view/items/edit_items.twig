@@ -88,8 +88,9 @@ Add/Edit Items
                   <div class="form-group col-xs-12 col-md-6">
                     <label class="control-label" for="state">State</label>
                     <select id="state" name="state" class="js-example-basic-multiple form-control" multiple="multiple" style="width: 100%;">
-                      <option value="AL">Alabama</option>
-                      <option value="WY">Wyoming</option>
+                        {% for tag in tags.state %}
+                          <option>{{ tag }}</option>
+                        {% endfor %}
                     </select>
                     <div class="form-group">
                       <label class="control-label" for="other-state">other</label>

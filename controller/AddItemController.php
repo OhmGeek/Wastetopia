@@ -34,9 +34,10 @@ class AddItemController
     private function getListOfTagsForView() {
         return array(
             'type' => $this->model->getAllTagOptions(1),
-            'classification' => $this->model->getAllTagOptions(2),
+            'classification' => $this->model->getAllTagOptions(5),
             'dietary' => $this->model->getAllTagOptions(3),
-            'contains' => $this->model->getAllTagOptions(4)
+            'contains' => $this->model->getAllTagOptions(4),
+            'state' => $this->model->getAllTagOptions(2)
         );
     }
 
