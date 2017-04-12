@@ -306,9 +306,9 @@ $(function(){
         var quantity = $('#request-modal #request-quantity').val(); // GET FROM POP-UP
         console.log(quantity)
           
-         if(quantity > actualQuantity){
+         if(quantity > actualQuantity || quantity == 0){
              // Display error
-             console.log("Asking for too much");
+             console.log("Asking for a stupid amount, won't request");
              return;
          }
  
