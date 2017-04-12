@@ -55,16 +55,16 @@ class AddItemModel
 	    AND `Item`.`Description` = :description
 	    ORDER BY `Item`.`ItemID` DESC;
          ");
-	    
-	$statement->bindValue(":name", $name, PDO::PARAM_STR); 
-	$statement->bindValue(":useBy", $useBy, PDO::PARAM_STR); 
-	$statement->bindValue(":description", $description, PDO::PARAM_STR);     
+
+	$statement->bindValue(":name", $name, PDO::PARAM_STR);
+	$statement->bindValue(":useBy", $useBy, PDO::PARAM_STR);
+	$statement->bindValue(":description", $description, PDO::PARAM_STR);
     $statement->execute();
     $results = $statement->fetchAll(PDO::FETCH_ASSOC)["0"];
-	return $results["ItemID"];    
+	return $results["ItemID"];
     }
-    
-    
+
+
     /**
      * Returns the ID of the last image inserted with the given parameters
      * @param $fileType
@@ -83,9 +83,9 @@ class AddItemModel
         $statement->bindValue(":imageURL", $imageURL, PDO::PARAM_STR);
         $statement->execute();
 
-        return $statement->fetchColumn();         
+        return $statement->fetchColumn();
     }
-    
+
     /**
      * Returns the ID of the last location inserted with the given parameters
      * @param $name
@@ -111,9 +111,9 @@ class AddItemModel
         $statement->bindValue(":lat", $lat, PDO::PARAM_STR);
         $statement->execute();
         $results = $statement->fetchAll(PDO::FETCH_ASSOC)["0"];
-	    return $results["LocationID"];   
+	    return $results["LocationID"];
     }
-    
+
 
     /**
      * Gets all the select options user can choose for tags
@@ -149,7 +149,7 @@ class AddItemModel
     {
         $statement = $this->db->prepare("
             INSERT INTO `Item` (Name, Description, Use_By)
-            VALUES (:name, :description, :useByDate);
+            VALUES (:name, :description, STR_TO_DATE(:useByDate, '%e %M, %Y'));
          ");
 
         $statement->bindValue(":name", $name, PDO::PARAM_STR);
@@ -157,8 +157,8 @@ class AddItemModel
         $statement->bindValue(":useByDate", $useByDate, PDO::PARAM_STR);
 
         $statement->execute();
-       // return $this->getLastInsertID(); // replace with another query 
-        return $this->getLastItemID($name, $useByDate, $description); 
+       // return $this->getLastInsertID(); // replace with another query
+        return $this->getLastItemID($name, $useByDate, $description);
     }
 
     /**
@@ -201,8 +201,8 @@ class AddItemModel
     }
 
 
-    
-    
+
+
     /**
      * Links an image to an item
      * @param $imageID
@@ -265,8 +265,8 @@ class AddItemModel
     }
 
 
-    
-    
+
+
     /**
      * Adds the details to the listing table
      * @param $locationID
