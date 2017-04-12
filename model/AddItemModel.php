@@ -389,7 +389,8 @@ class AddItemModel
         $statement->bindValue(":name", $name,PDO::PARAM_STR);
         $statement->execute();
         // return the ID, or nothing if none is found.
-        $results = $statement->execute(PDO::FETCH_ASSOC);
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+
         // now we have the results, create a tag and return it.
         error_log(json_encode($results));
         return array(
