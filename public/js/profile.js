@@ -41,6 +41,7 @@ $(function () {
     var url = window.location.protocol + "//" + window.location.host + "/profile/" + relativeURL +"/" + userID;
     
     $.get(url, function(response){
+      console.log("Successful");
        var div = $(tabID);
        div.replaceWith(response);
       
