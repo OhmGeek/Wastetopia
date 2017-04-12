@@ -151,7 +151,7 @@ function serializeItem() {
   var item = {
     "name": $('#name').val(),
     "images": getImagesFromDOM(),
-    "classification": $("#type option:selected").text, //get the text of the selected option
+    "classification": $("#type option:selected").text(), //get the text of the selected option
     "dietary": getSelectedDietaryReqs(), //dietary requirement
     "contains": getMayContainsDetails(), //allergy tags
     "expires": $('#date').val(),
