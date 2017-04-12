@@ -37,7 +37,6 @@ $(function () {
     console.log(url);
     
      $.get(url, function(response){
-       console.log(response);
         var div = $(tabID); // Reload specific tab section
         div.load(response);
 
