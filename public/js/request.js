@@ -7,6 +7,7 @@ $(function(){
     //TODO: Fix issue with requestedQuantity not showing on Modal for Marking as Complete
     //TODO: Deal with transactions for listings with 0 quantity or for inactive listings
     //TODO: Let user know when a request is rejected
+    //TODO: There is no formatting for the date on the renew modal: user doesn't know how to write it
 
 
     var baseURL =  window.location.protocol + "//" + window.location.host;
