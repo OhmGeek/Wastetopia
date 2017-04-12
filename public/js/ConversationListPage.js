@@ -15,8 +15,8 @@ $(document).ready(function(){
 $(document).on('click', '#deleteBtn', function(){
   var url = window.location.protocol + "//" + window.location.host + "/" + 'messages/delete-conversation';
   
-  var conversationID = $(this).val();
-  var data = {conversationID: conversationID}
+  var listingID = $(this).val();
+  var data = {listingID: listingID}
   $.get(url, data, function(response){
       loadUsers();
   });
