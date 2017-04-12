@@ -69,7 +69,7 @@ $(function(){
         var data = {listingID : listingID};
         console.log(data);
 
-        ('#delete-modal').modal('hide');
+        $('#delete-modal').modal('hide');
 
         $.post(url, data, function(response){
           if(response){
@@ -116,7 +116,7 @@ $(function(){
         var url = baseURL + "/items/confirm-request";
         var data = {listingID : listingID, transactionID : transactionID, quantity: quantity};
 
-        ('#complete-modal').modal('hide');
+        $('#complete-modal').modal('hide');
 
         $.post(url, data, function(response){
           if(response){
@@ -162,7 +162,7 @@ $(function(){
         var data = {listingID : listingID, transactionID : transactionID};
         console.log(data);
 
-        ('#delete-modal').modal('hide');
+        $('#delete-modal').modal('hide');
 
         $.post(url, data, function(response){
             console.log(response)
@@ -210,7 +210,7 @@ $(function(){
       }).modal('show');
 
       $("#delete-modal #ok").on('click', function(){
-        ('#delete-modal').modal('hide');
+        $('#delete-modal').modal('hide');
         $.post(url, data, function(response){
           console.log(response);
           if(response){
@@ -260,7 +260,7 @@ $(function(){
 
       $("#delete-modal #ok").on('click', function(){
 
-        ('#delete-modal').modal('hide');
+        $('#delete-modal').modal('hide');
 
         $.post(url, data, function(response){
           console.log(response);
@@ -313,7 +313,7 @@ $(function(){
         var url = baseURL + "/items/request";
         var data = {listingID : listingID, quantity: quantity};
 
-        ('#request-modal').modal('hide');
+        $('#request-modal').modal('hide');
 
         $.post(url, data, function(response){
             console.log(response);
@@ -380,7 +380,7 @@ $(function(){
            console.log(data);
 
            //TODO add a check for the rating value then allow the modal to hide
-           ('#rate-modal').modal('hide');
+           $('#rate-modal').modal('hide');
 
            $.post(url, data, function(response){
              if(response){
