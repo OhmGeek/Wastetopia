@@ -308,22 +308,22 @@ class RequestModel
 	 * @return bool
 	 */
 	
-	function renewListing($listing_id, $new_quantity){
+	function renewListing($listing_id, $new_quantity, $new_use_by_date){
 		//create the new listing of the specified quantity
 		$listing_info = $this->listing_model->getListingInfo($listing_id)["0"];
 		$item_info = $this->item_model->getItemInfoFromItemID($listing_info["FK_Item_ItemID"])["0"];
 		
 		$name = $item_info["Name"];
-		$useBy = $item_info["Use_By"];
+		
 		$description = $item_info["Description"];
 		
 		$statement0 = $this->db->prepare("
 			INSERT INTO Item(Name, Description,Use_By)
-			VALUES(:name, :description, :use_by);
+			VALUES(:name, :description, STR_TO_DATE(:use_by, '%e %M, %Y'));
 		");
 		$statement0->bindValue(":name", $name, PDO::PARAM_STR);
 		$statement0->bindValue(":description", $description, PDO::PARAM_STR);
-		$statement0->bindValue(":use_by", $useBy, PDO::PARAM_STR);
+		$statement0->bindValue(":use_by", $new_use_by, PDO::PARAM_STR);
 		$statement0->execute();
 		
 		$new_item_id = $this->getLastItemID($name, $useBy, $description);
