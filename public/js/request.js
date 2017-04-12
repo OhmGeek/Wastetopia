@@ -372,7 +372,7 @@ $(function(){
          }).modal('show');
 
          $("#rate-modal #ok").on('click', function(){
-           var rating = $('#rate-modal #rate').val();; // Get from pop-up
+           var rating = $('#rate-modal #rate').val();// Get from pop-up
 
            // NEED TO DECIDE WHAT URL TO USE
            var url = baseURL + "/items/rate-user"; // GET CORRECT URL
@@ -402,7 +402,17 @@ $(function(){
     $(document).on('click','a[href="#renew"]',function(event){
       event.preventDefault();
         var listingID = $(this).attr("id");
-        var quantity = 1; // Get from pop-up
+        $('body').append(requestModal);
+
+        $("#request-modal").modal({backdrop: "static"})
+
+        $("#request-modal").on("shown.bs.modal", function () {
+          $(this).find('.modal-msg').html('Renew')
+          $(this).find('.item-name').html(itemName)
+        }).modal('show');
+
+        $("#request-modal #ok").on('click', function(){
+          var rating = $('#request-modal #rate').val();
 
        // Send to /items/renew-listing/
 
@@ -416,6 +426,11 @@ $(function(){
                // Show error
            }
         });
+      });
+      $('#request-modal').on('hidden.bs.modal', function(){
+        console.log("hidden");
+        $('#request-modal').remove();
+      });
     });
 
 
