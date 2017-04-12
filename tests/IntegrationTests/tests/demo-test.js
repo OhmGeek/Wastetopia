@@ -1,7 +1,8 @@
+const url = require('../url.js');
 module.exports = {
   'Demo Test Wastetopia' : function(client) {
     client
-      .url('http://wastetopia.herokuapp.com')
+      .url(url.ROOT)
       .waitForElementVisible('body', 1000);
     client.assert.containsText('body',"HomePage");
     client.end();
