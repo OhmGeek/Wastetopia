@@ -86,15 +86,20 @@ class NotificationModel
     
     /**
     * Returns array with all notifications in
+    * @param $json (defaults to 0, set to 1 if you need the array in JSON format)
     * @return array in form ("requestNotifications => numberOfUnseenRequests, "messageNotifications" => numberOfUnseenMessages)
     */
-    function getAll(){
+    function getAll($json=0){
         $requestNotifications = $this->requestNotifications();
         $messageNotifications = $this->messageNotifications();
         
         $notifications = array("requestNotifications" => $requestNotifications, "messageNotifications" => $messageNotifications);
         
-        return $notifications;
+        if($json){
+            return json_encode($notifications);   
+        }else{
+            return $notifications;
+        }
     }
 
 
