@@ -468,7 +468,8 @@ $(function(){
 
 
   // Toggle listings in the watch list - DOES NOT WORK (WEIRD ERROR)
-  $(document).on('click', 'a[href="#watch"]', function(){
+  $(document).on('click', 'a[href="#watch"]', function(event){
+      event.preventDefault();
       console.log("toggle");
      var listingID = $(this).closest('.thumbnail').attr("id");
      var isUser = parseInt($(this).closest('.user-stats').attr("id"));
