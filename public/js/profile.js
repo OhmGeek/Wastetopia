@@ -29,18 +29,11 @@ $(function () {
       return;
     }
    
-
     var url = window.location.protocol + "//" + window.location.host + "/profile/" + relativeURL +"/" + userID;
     
-    console.log(userID);
-    console.log(tabID);
-    console.log(url);
-    
-     $.get(url, function(response){
-        var div = $(tabID); // Reload specific tab section
-        div.load(response);
-
-       // re initialize isotope
+    var div = $(tabID);
+    div.load(url, function(){
+      // re initialize isotope
        $grid = $('.grid').isotope({
           itemSelector: '.grid-item',
           percentPosition: true,
@@ -48,7 +41,8 @@ $(function () {
             columnWidth: '.grid-sizer'
           }
         });
-      });
+    });
+
   });
 
   $(document).on('shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
