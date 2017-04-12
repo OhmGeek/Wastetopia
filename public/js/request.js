@@ -5,6 +5,8 @@ $(function(){
     //TODO: Link to edit and messaging pages - When everything is merged to master
     //TODO: Stop quantity of completed transaction exceeding quantity of listing - Has to be done in requestModel
     //TODO: Fix issue with requestedQuantity not showing on Modal for Marking as Complete
+    //TODO: Deal with transactions for listings with 0 quantity or for inactive listings
+    //TODO: Let user know when a request is rejected
 
 
     var baseURL =  window.location.protocol + "//" + window.location.host;
@@ -14,7 +16,18 @@ $(function(){
       console.log('open');
     });
 
-
+    
+    // Given a sub tab (i.e "pending-3"), it updates the number by adding "value" to it (can be negative)
+    function changeSubTabCounter(counter, value){
+        if (!(counter == null)){
+            var html = counter.html();
+            var name = html.split("-")[0];
+            var count = html.split("-")[1];
+            var newCount = parseInt(count) + value;
+            counter.html(name+"- "+newCount);
+        }
+    }
+    
     $('a[data-target="#pending-request"]').click(function(){
        var url = baseURL + "/profile/set-pending-requests-viewed";
 
@@ -66,7 +79,6 @@ $(function(){
         // Send to /items/remove-listing
         var url = baseURL + "/items/remove-listing";
         var data = {listingID : listingID};
-        console.log(data);
 
         $('#delete-modal').modal('hide');
 
@@ -85,23 +97,19 @@ $(function(){
             var availableListingsTab = $('#available-listing');
             var outOfStockTab = $('#out-of-stock-listing');
 
-            var counter = "";
+            var counter = null;
             // Set counter to whichever tab is active
-            if (availableListingsTab.hasClass("in active")){
+            if (availableListingsTab.hasClass("active")){
                var counter = $('a[href="#available-listing"]');
-                console.log("available listings tab");
-            }else if(outOfStockTab.hasClass("active") && outOfStockTab.hasClass("in")){
-              console.log("out of stock tab");
+            }else if(outOfStockTab.hasClass("active")){
               var counter = $('a[href="#out-of-stock-listing"]');
             }else{
                 // Do nothing else
             }
 
             // If it exists on the page, change the name
-            console.log(counter);
-            if(!(counter == "")){
-              changeSubTabCounter(counter, -1)
-            }
+             changeSubTabCounter(counter, -1)
+            
           }else{
             // Show error
           }
@@ -112,15 +120,6 @@ $(function(){
         $('#delete-modal').remove();
       });
     });
-
-    // Given a sub tab (i.e "pending-3"), it updates the number by adding "value" to it (can be negative)
-    function changeSubTabCounter(counter, value){
-        var html = counter.html();
-        var name = html.split("-")[0];
-        var count = html.split("-")[1];
-        var newCount = parseInt(count) + value;
-        counter.html(name+"- "+newCount);
-    }
 
     // Mark request as complete - SEEMS TO WORK
     // added modal for this code
@@ -159,17 +158,10 @@ $(function(){
                     remove(card);
 
                     // Take 1 off pending transactions, add 1 to complete transactions
-                    var pendingTransactionsTab = $('#pending-transaction');
-                    var completedTransactionsTab = $('#completed-transaction');
-
-                      if(!(pendingTransactionsTab == null) && !(completedTransactionsTab == null)){
-                            var pendingCounter = $('a[href="#pending-transaction"]');
-                            var completedCounter = $('a[href="#completed-transaction"]');
-                            changeSubTabCounter(pendingCounter, - 1);
-                            changeSubTabCounter(completedCounter, 1);
-                       }else{
-                            // DO NOTHING
-                       }
+                    var pendingCounter = $('a[href="#pending-transaction"]');
+                    var completedCounter = $('a[href="#completed-transaction"]');
+                    changeSubTabCounter(pendingCounter, - 1);
+                    changeSubTabCounter(completedCounter, 1);
               }else{
                 // Show error
               }
@@ -225,13 +217,9 @@ $(function(){
                }
 
                // Take 1 off pending transactions sub tab
-               var pendingTransactionsTab = $('#pending-transaction');
-               if(!(pendingTransactionsTab == null)){
-                    var pendingCounter = $('a[href="#pending-transaction"]');
-                    changeSubTabCounter(pendingCounter, - 1);
-                }else{
-                    // DO NOTHING
-                }
+               var pendingCounter = $('a[href="#pending-transaction"]');
+                changeSubTabCounter(pendingCounter, - 1);
+
            }else{
                // Show error
            }
@@ -287,13 +275,9 @@ $(function(){
                }
 
                // Take 1 off pending requests sub tab
-               var pendingRequestsTab = $('#pending-request');
-               if(!(pendingRequestsTab == null)){
-                    var pendingCounter = $('a[href="#pending-request"]');
-                    changeSubTabCounter(pendingCounter, - 1);
-                }else{
-                    // DO NOTHING
-                }
+               var pendingCounter = $('a[href="#pending-request"]');
+                changeSubTabCounter(pendingCounter, - 1);
+            
 
               // Take one off Requests Made counter and Pending counter
           }else{
@@ -427,13 +411,8 @@ $(function(){
 
                // Add 1 to pending requests sub tab
                var pendingRequestsTab = $('#pending-request');
-               console.log(pendingRequestsTab);
-               if(!(pendingRequestsTab == null)){
-                    var pendingCounter = $('a[href="#pending-request"]');
-                    changeSubTabCounter(pendingCounter, + 1);
-                }else{
-                    // DO NOTHING
-                }
+               var pendingCounter = $('a[href="#pending-request"]');
+               changeSubTabCounter(pendingCounter, + 1);
              }else{
                // Show error
              }
