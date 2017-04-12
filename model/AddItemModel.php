@@ -159,29 +159,6 @@ class AddItemModel
         return $this->getLastItemID($name, $useByDate, $description); 
     }
 
-
-//    /**
-//     * Adds a tag to the Tag table - used if we want user's to be able to define their own tags
-//     * @param $name
-//     * @param $categoryID
-//     * @param $description
-//     * @return int (the ID of the tag)
-//     */
-//    function addToTagTable($name, $categoryID, $description)
-//    {
-//        $statement = $this->db->prepare("
-//            INSERT INTO `Tag` (`Name`, `Category_ID` `Description`)
-//            VALUES (:name, :categoryID, :description)
-//         ");
-//
-//        $statement->bindValue(":name", $name, PDO::PARAM_STR);
-//        $statement->bindValue(":categoryID", $categoryID, PDO::PARAM_INT);
-//        $statement->bindValue(":description", $description, PDO::PARAM_STR);
-//        $statement->execute();
-//        return $this->getLastInsertID();
-//    }
-
-
     /**
      * Links a tag to an item
      * @param $itemID
@@ -218,7 +195,7 @@ class AddItemModel
         $statement->execute();
 
         //return $this->getLastInsertID(); // Need to change to another sql query
-        return $this->getLastImageID();
+        return $this->getLastImageID($fileType, $imageURL);
     }
 
 
@@ -282,7 +259,7 @@ class AddItemModel
         $statement->bindValue(":long", $long, PDO::PARAM_STR);
         $statement->bindValue(":lat", $lat, PDO::PARAM_STR);
         $statement->execute();
-        return $this->getLastLocationID(); // Changed from getLastInsertID()
+        return $this->getLastLocationID($name,$postCode,$long, $lat); // Changed from getLastInsertID()
     }
 
 
