@@ -113,7 +113,7 @@ $klein->with("/profile", function() use ($klein) {
         return $controller->generateWatchListSection(); 
     });
     
-    $klein->respond('POST', '/toggle-watch-list/[:listingID]', function($request, $response){
+    $klein->respond('POST', '/toggle-watch-list/?', function($request, $response){
        $controller = new ProfilePageController(1);
        $response = $controller->toggleWatchListListing($request->listingID);
        return $response;
