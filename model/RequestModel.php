@@ -203,7 +203,11 @@ class RequestModel
 		}
 		$item_quantity = $this->listing_model->getListingInfo($listing_id)["0"]["Quantity"];
 		if($item_quantity < $quantity){
-			return false;
+			//return false; 
+			// Assume the user knows how much they said they're giving away 
+			// Maybe they just couldn't be bothered increasing the listing quantity but actually had more to give away
+			// Set the quantity to equal max available so listing quantity will never go below 0 in the DB
+			$quantity = $item_quantity; 
 		}
 		// first update the listing to take into account the quantity being taken
 		$statement1 = $this->db->prepare("
