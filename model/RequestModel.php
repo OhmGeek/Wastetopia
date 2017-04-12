@@ -104,6 +104,35 @@ class RequestModel
 	return $results["ItemID"];    
     }
 	
+	
+
+    	/**
+     * Returns the ID of the last item inserted with the given parameters
+     * @param $name
+     * @param $useBy
+     * @param $description
+     * @return int
+     */
+    private function getLastListingID($itemID, $locationID, $userID)
+    {
+        $statement = $this->db->prepare("
+            SELECT `Listing`.`ListingID`
+	    WHERE `FK_Item_ItemID` = :itemID
+	    AND `FK_User_UserID` = :userID
+	    AND `FK_Location_LocationID` = :locationID
+	    ORDER BY ListingID DESC
+         ");
+	    
+	$statement->bindValue(":itemID", $itemID, PDO::PARAM_STR); 
+	$statement->bindValue(":userID", $userID, PDO::PARAM_STR); 
+	$statement->bindValue(":locationID", $locationID, PDO::PARAM_STR);     
+        $statement->execute();
+	    
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC)["0"];
+	return $results["ListingID"];    
+    }
+	
+	
 	/**
 	 * Returns the quantity of the item requested 
 	 * @return int
@@ -288,14 +317,6 @@ class RequestModel
 		$useBy = $item_info["Use_By"];
 		$description = $item_info["Description"];
 		
-		print_r("Listing Data: ");
-		print_r($listing_info);
-		print_r("       ");
-		print_r("ITEM DATA: ");
-		print_r($name);
-		print_r($useBy);
-		print_r($description);
-		
 		$statement0 = $this->db->prepare("
 			INSERT INTO Item(Name, Description,Use_By)
 			VALUES(:name, :description, :use_by);
@@ -307,8 +328,6 @@ class RequestModel
 		
 		$new_item_id = $this->getLastItemID($name, $useBy, $description);
 		
-		print_r("ItemID: ".$new_item_id);
-		
 		//adding item tags
 		$statement01 = $this->db->prepare("
 			INSERT INTO ItemTag(FK_Item_ItemID, FK_Tag_TagID)
@@ -319,7 +338,6 @@ class RequestModel
 		$statement01->bindValue(":old_item_id", $listing_info["FK_Item_ItemID"], PDO::PARAM_INT);
 		$statement01->execute();
 		
-		print_r("Added tags");
 		
 		// adding item's images - item may now how two default images
 		$statement02 = $this->db->prepare("
@@ -331,9 +349,6 @@ class RequestModel
 		$statement02->bindValue(":old_item_id", $listing_info["FK_Item_ItemID"], PDO::PARAM_INT);
 		$statement02->execute();
 
-		
-		
-		print_r("Added images");
 		
 		$statement = $this->db->prepare("
 			INSERT INTO Listing(FK_Location_LocationID, FK_Item_ItemID, FK_User_UserID, Quantity)
@@ -349,7 +364,7 @@ class RequestModel
 		$this->withdrawListing($listing_id);
 		
 		print_r("Withdrawn old listing");
-		return True;
+		return $this->getLastListingID($itemID, $listing_info["FK_Location_LocationID"], $listing_info["FK_User_UserID"]);
 	}
 	
 	/**
