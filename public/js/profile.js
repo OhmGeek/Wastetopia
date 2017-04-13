@@ -175,7 +175,7 @@ $(function () {
       var card = $(this).closest('.thumbnail');
       var giverOrReceiver = $("#offers").hasClass("active");
       var listingID = $(this).prevAll('a[href="#view"]').attr("id");
-      var url = baseURL + "/profile/set-listing-transaction-viewed';
+      var url = baseURL + "/profile/set-listing-transaction-viewed";
       $.post(url, data, function(response){
         console.log("Done");
         if(response){
