@@ -194,8 +194,12 @@ function serializeAndSendItem(location) {
         // submit using AJAX
         var jsonData = JSON.stringify(itemData);
         $.post('https://wastetopia-pr-17.herokuapp.com/api/items/additem', jsonData, function(response) {
+            console.log("Sent AJAX");
             console.log(response);
         }, 'json');
+    }
+    else {
+      console.log("Not valid");
     }
 };
 //todo validate all the fields
