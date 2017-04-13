@@ -36,13 +36,13 @@ class AnalysisModel
    
     /**
      * Gets a list of Tag Names along with their frequencies for current user's listings
-     * @param $categoryID (optional - defaults to 1)
+     * @param $categoryID (optional - defaults to -1 to search through all categories. Specificy categoryID to only search by one of them)
      * @return array
      */
-    function getTagFrequenciesForListings($categoryID = 1)
+    function getTagFrequenciesForListings($categoryID = -1)
     {
         $userID = $this->getUserID();
-
+        $categorySQL = ($categoryID == -1) ? "" : "AND `Tag`.`FK_Category_Category_ID` = "+$categoryID;
         $statement = $this->db->prepare("
         SELECT `Tag`.`Name`, `Tag`.`TagID`, COUNT(*) as `Count`
                 FROM `Tag` 
@@ -51,12 +51,13 @@ class AnalysisModel
                 JOIN `Listing` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
                 JOIN `User` ON `UserID` = `Listing`.`FK_User_UserID`
                 WHERE `User`.`UserID` = :userID
+                :categoryRestriction
                 AND `Tag`.`FK_Category_Category_ID` = :categoryID
                 GROUP BY `Tag`.`Name`
                 ORDER BY `Count` DESC;");
 
         $statement->bindValue(":userID", $userID, PDO::PARAM_STR);
-        $statement->bindValue(":categoryID", $categoryID, PDO::PARAM_INT);
+        $statement->bindValue(":categoryRestriction", $cateogorySQL, PDO::PARAM_STR):
         $statement->execute();
 
         return $statement->fetchAll(PDO::FETCH_ASSOC);
