@@ -30,7 +30,7 @@ class AnalysisModel
     {
         //$reader = new UserCookieReader();
         //return $reader->get_user_id();
-        return 6; //Hardcoded for now
+        return 2; //Hardcoded for now
     }
 
    
@@ -51,9 +51,6 @@ class AnalysisModel
                 JOIN `User` ON `UserID` = `Listing`.`FK_User_UserID`
                 WHERE `User`.`UserID` = :userID
                 ";
-        print_r(count($categoryIDArray));
-        
-        print_r($sql);
         
         if(count($categoryIDArray) != 0){
             $sql .= "AND ("; 
@@ -74,8 +71,6 @@ class AnalysisModel
         // Group into Tag Name and order by count in descending order
         $sql .= "GROUP BY `Tag`.`Name`
                 ORDER BY `Count` DESC;";
-        print_r("SQL: ");
-        print_r($sql);
         
         //Prepare the SQL statement
         $statement = $this->db->prepare($sql); 
@@ -115,9 +110,6 @@ class AnalysisModel
                 JOIN `User` ON `UserID` = `Transaction`.`FK_User_UserID`
                 WHERE `User`.`UserID` = :userID
                 ";
-        print_r(count($categoryIDArray));
-        
-        print_r($sql);
         
         if(count($categoryIDArray) != 0){
             $sql .= "AND ("; 
@@ -139,8 +131,6 @@ class AnalysisModel
         $sql .= "AND `ListingTransaction`.`Success` = 1
                 GROUP BY `Tag`.`Name`
                 ORDER BY `Count` DESC;";
-        print_r("SQL: ");
-        print_r($sql);
         
         //Prepare the SQL statement
         $statement = $this->db->prepare($sql); 
