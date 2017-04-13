@@ -249,52 +249,84 @@ $(function () {
   });
  
   
-  // Lets user upload a new profile picture
-  $(document).on('click', '#upload-picture', function(event){
-      event.preventDefault();
-      var userID = $('.user-name').attr("id");
-      var url = baseURL + "/profile/change-profile-picture";
+//   // Lets user upload a new profile picture
+//   $(document).on('click', '#upload-picture', function(event){
+//       event.preventDefault();
+//       var userID = $('.user-name').attr("id");
+//       var url = baseURL + "/profile/change-profile-picture";
     
-    //ADD FILE UPLOAD STUFF HERE
-      //var data = ;// Some array of files (only contains one file)
+//     //ADD FILE UPLOAD STUFF HERE
+//       //var data = ;// Some array of files (only contains one file)
     
-    $.post(url, data, function(response){
-          if (response){
-              reloadTab("#home", "load-home-tab", userID, "", "");
-          }
-     });
-  });
+//     $.post(url, data, function(response){
+//           if (response){
+//               reloadTab("#home", "load-home-tab", userID, "", "");
+//           }
+//      });
+//   });
   
   
-  $(document).on('click', '#change-password', function(event){
-    event.preventDefault();
+//   // Let user change their password - NEEDS MODAL
+//   $(document).on('click', '#change-password', function(event){
+//     event.preventDefault();
     
-    // Set up Modal with one input for old password, one input for new password
+//     // Set up Modal with one input for old password, one input for new password
     
-    var oldPassword = ;// Get from modal
-    var newPassword = ;// Get from modal
+//     var oldPassword = ;// Get from modal
+//     var newPassword = ;// Get from modal
     
-    var url = baseURL + "/change-password";
-    var data = {oldPassword : oldPassword, newPassword : newPassword};
+//     var url = baseURL + "/change-password";
+//     var data = {oldPassword : oldPassword, newPassword : newPassword};
     
-    $.post(url, data, function(response){
-      var json = $.parseJSON(response);
-      if(json.hasOwnProperty("error")){
-               console.log("Error occurred");
-                displayError(json["error"]);
-                return;
-           }else if(json.hasOwnProperty("success")){
-               console.log("Successful");
-               displaySuccess("Verificaiton email has been sent");
-               return;
-            }else{
-               displayError("WHAAAAT");
-               console.log("Something really went wrong");
-               return;
-           }
-    });
-  });
+//     $.post(url, data, function(response){
+//       var json = $.parseJSON(response);
+//       if(json.hasOwnProperty("error")){
+//                console.log("Error occurred");
+//                 displayError(json["error"]);
+//                 return;
+//            }else if(json.hasOwnProperty("success")){
+//                console.log("Successful");
+//                displaySuccess("Password successfully changed");
+//                //Reload page (logged out so should take user to login page)   
+//                return;
+//             }else{
+//                displayError("WHAAAAT");
+//                console.log("Something really went wrong");
+//                return;
+//            }
+//     });
+//   });
   
+//   // Let user change their email - NEEDS MODAL
+//     $(document).on('click', '#change-email', function(event){
+//     event.preventDefault();
+    
+//     // Set up Modal with one input for old password, one input for new password
+    
+//     var oldEmail = ;// Get from modal
+//     var newEmail = ;// Get from modal
+    
+//     var url = baseURL + "/change-password";
+//     var data = {oldEmail : oldEmail, newEmail : newEmail};
+    
+//     $.post(url, data, function(response){
+//       var json = $.parseJSON(response);
+//       if(json.hasOwnProperty("error")){
+//                console.log("Error occurred");
+//                 displayError(json["error"]);
+//                 return;
+//            }else if(json.hasOwnProperty("success")){
+//                console.log("Successful");
+//                displaySuccess("Email changed");
+//                // Reload page (logged out so should take user to login page)  
+//                return;
+//             }else{
+//                displayError("WHAAAAT");
+//                console.log("Something really went wrong");
+//                return;
+//            }
+//     });
+//   });
   
   
 //     $(document).on('click', '#addOffer', function(){
