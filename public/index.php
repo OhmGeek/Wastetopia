@@ -124,9 +124,17 @@ $klein->with("/profile", function() use ($klein) {
         return $controller->generateRecommendedSection();
     });
     
-    $klein->respond('GET', '/set-pending-viewed', function($request, $response){
+    $klein->respond('POST', '/set-pending-viewed', function($request, $response){
        $controller = new ProfilePageController(1);
        return $controller->setAllPendingAsViewed();
+    });
+    
+    $klein->respnd('POST', '/set-listing-transaction-viewed', function($request, $response){
+       $giverOrReceiver = $request->giverOrReceiver;
+        $listingID = $request->listingID;
+        $value = 1;
+        $controller = new ProfilePageController(1); // Own profile
+        return $controller-> setListingTransactionViewedFlag($giverOrReceiver, $listingID, $value);
     });
    
 });
