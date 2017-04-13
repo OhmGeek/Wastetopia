@@ -79,6 +79,8 @@ $(function () {
       
       $(tabID).addClass("in active"); // Make it visible?
       console.log(subTabID);
+      console.log(otherSubTab);
+      console.log((subTabID).parent("li"));
       if(!(subTabID === "" )){
          $(subTabID).addClass("in active"); // Make it visible?
         $(subTabID).parent("li").addClass("active");
