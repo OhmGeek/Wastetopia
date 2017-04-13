@@ -34,7 +34,7 @@ class RecommendationController {
     */
     function generateRecommendedSection(){
       $frequentTags = $this->model->getTagFrequenciesForTransactions();
-      
+      print_r($frequentTags);
       // Deal with if there are not enough tags
       
       // Extract 5 most frequent tags
@@ -103,7 +103,7 @@ class RecommendationController {
     */
     function generatePredictionSection(){
       $frequentTags = $this->model->getTagFrequenciesForListings();
-      
+      print_r($frequentTags);
       // Deal with if there are not enough tags
       
       // Extract 5 most frequent tags
