@@ -25,7 +25,7 @@ class RecommendationController {
      */
     private function getUserID()
     {
-        return 2; // Hard coded for now
+        return 6; // Hard coded for now
     }
     
     
