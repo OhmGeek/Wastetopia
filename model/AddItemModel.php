@@ -52,7 +52,6 @@ class AddItemModel
             SELECT `Item`.`ItemID`
 	    FROM `Item`
 	    WHERE `Item`.`Name` = :name
-	    AND `Item`.`Use_By` = :useBy
 	    AND `Item`.`Description` = :description
 	    ORDER BY `Item`.`ItemID` DESC;
          ");
