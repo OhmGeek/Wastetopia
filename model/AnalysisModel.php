@@ -132,6 +132,7 @@ class AnalysisModel
                 GROUP BY `Tag`.`Name`
                 ORDER BY `Count` DESC;";
         
+        print_r($sql);
         //Prepare the SQL statement
         $statement = $this->db->prepare($sql); 
 
