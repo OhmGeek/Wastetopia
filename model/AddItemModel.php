@@ -284,8 +284,8 @@ class AddItemModel
         $userID = $this->getUserID();
 
         $statement = $this->db->prepare("
-            INSERT INTO `Listing` (`FK_Location_LocationID`, `FK_UserItem_UserItemID`, `FK_User_UserID`, `Quantity`, `Time_Of_Creation`)
-            VALUES (:locationID, :itemID, :userID, :quantity, NOW());
+            INSERT INTO `Listing` (`FK_Location_LocationID`, `FK_Item_ItemID`, `FK_User_UserID`, `Quantity`, `Time_Of_Creation`, `ACTIVE`)
+            VALUES (:locationID, :itemID, :userID, :quantity, NOW(), 1);
          ");
 
         $statement->bindValue(":locationID", $locationID, PDO::PARAM_INT);
