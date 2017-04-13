@@ -187,11 +187,12 @@ $(function () {
       event.preventDefault();
       var card = $(this).closest('.thumbnail');
       var giverOrReceiver = $("#offers").hasClass("active");
-      var listingID = $(this).prevAll('a[href="#view"]').attr("id");
+      var transactionID = card.attr("id");
       var url = baseURL + "/profile/set-listing-transaction-hidden";
-     var data = {giverOrReceiver: giverOrReceiver, listingID: listingID}
+     var data = {giverOrReceiver: giverOrReceiver, transactionID: transactionID}
      console.log(data);
       $.post(url, data, function(response){
+        console.log(response);
         console.log("Done");
         if(response){
           // Remove card from screen
