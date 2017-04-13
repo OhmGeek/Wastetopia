@@ -12,7 +12,7 @@
     <!-- need this for mosonry layout to work properly with bootstrap grid system -->
     <div class="grid-sizer col-xs-12 col-sm-6 col-md-3"></div>
     {% if recommendationList|length < 4 %}
-      <h5 style="text-align: left;"> Not enough data to generate this section </h5>
+      <h5> Not enough data to generate this section </h5>
     {% else %}
       {% for item in recommendationList %}
       <div class="grid-item col-xs-12 col-sm-6 col-md-3">
