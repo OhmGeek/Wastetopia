@@ -147,8 +147,8 @@ function getLocationOfItem(callbackToSubmit) {
         var locationFinal = {
             'firstLineAddr': $('#inputLocation1').val(),
             'secondLineAddr': $('#inputLocation2').val(),
-            'lat': latlng['lat'],
-            'long': latlng['lng']
+            'lat': latlng.lat(),
+            'long': latlng.lng()
         };
       return callbackToSubmit(locationFinal);
     } else {
