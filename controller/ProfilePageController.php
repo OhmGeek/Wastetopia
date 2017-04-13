@@ -175,10 +175,10 @@ class ProfilePageController
         //Counts number of transactions for listings user has put up
         foreach ($userListingsReceiving as $listing) {
             $completed = $listing["Success"]; // Transaction completed?
-            $senderViewed = 1; // Get from $listing  details
-            if ($completed == 1 && $senderViewed) {
+            $receiverViewed = 1; // Get from $listing  details
+            if ($completed == 1 && $receiverViewed) {
                 $completedRequestingCount += 1;
-            }elseif($completed == 0 && $senderViewed){
+            }elseif($completed == 0 && $receiverViewed){
                 $pendingRequestingCount += 1;
             }else{
                 //Do nothing
@@ -334,10 +334,10 @@ class ProfilePageController
             $listingID = $listing["ListingID"];
             $transactionID = $listing["TransactionID"];
             $completed = $listing["Success"]; // 1-completed. 0-pending. 2-rejected
-            $senderViewed = 1; // Get from listing details, 1 if sender still wants to view the listing transaction
-            if ($completed == 1 && $senderViewed) {
+            $receiverViewed = 1; // Get from listing details, 1 if sender still wants to view the listing transaction
+            if ($completed == 1 && $receiverViewed) {
                 array_push($completedReceiving, $transactionID); //Get display information later
-            } elseif($completed == 0 && $senderViewed) {
+            } elseif($completed == 0 && $receiverViewed) {
                 array_push($pendingReceiving, $transactionID);   //Get display information later
             }else{
                 // Do nothing - Rejected it
