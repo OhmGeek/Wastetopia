@@ -268,6 +268,8 @@ $(function () {
          formdata.append('image', $('#image-file')[0].files[0]); // todo add all files
         
         console.log($('#image-file'));
+        console.log($('#image-file').val());
+        console.log($('#image-file')[0].files[0]);
          var url = baseURL + "/profile/change-profile-picture";
         
           //ADD FILE UPLOAD STUFF HERE
