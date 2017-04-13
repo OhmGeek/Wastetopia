@@ -593,7 +593,7 @@ class ProfilePageModel
 	$statement = $this->db->prepare("
 		UPDATE `User`
 		SET `User`.`Picture_URL` = :url
-		WHERE `User`.`UserID` = :userId
+		WHERE `User`.`UserID` = :userID
 	");
 	    
 	$statement->bindValue(":url", $url, PDO::PARAM_STR);
