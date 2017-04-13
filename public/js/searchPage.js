@@ -257,4 +257,14 @@ $(function () {
     }
 
   });
+
+  $('#btn-map').on('click', function(event){
+    $('#btn-grid').removeClass('hide')
+    $('#btn-map').addClass('hide')
+  })
+
+  $('#btn-grid').on('click', function(event){
+    $('#btn-map').removeClass('hide')
+    $('#btn-grid').addClass('hide')
+  })
 });

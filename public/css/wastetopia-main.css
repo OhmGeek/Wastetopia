@@ -23,9 +23,8 @@
 /* registration page */
 
 #register-form{
-  width: 75%;
-  left: 50%;
-  margin-left: -37.5%;
+  width: 100%;
+  margin-left: 0;
   padding: 100px 30px;
   background-color: white;
   top: 0;
@@ -38,7 +37,7 @@
 @media(min-width:768px) {
   #register-form{
     width: 50%;
-    margin-left: -25%;
+    margin-left: 25%;
   }
 }
 
@@ -49,6 +48,22 @@
 .terms {
   margin: 0px -15px;
 }
+
+.form-group.there-error .form-control {
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+.form-group.there-error.is-focused .form-control {
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#f44336), to(#f44336)), -webkit-gradient(linear, left top, left bottom, from(#D2D2D2), to(#D2D2D2));
+  background-image: -webkit-linear-gradient(#f44336, #f44336), -webkit-linear-gradient(#D2D2D2, #D2D2D2);
+  background-image: -o-linear-gradient(#f44336, #f44336), -o-linear-gradient(#D2D2D2, #D2D2D2);
+  background-image: linear-gradient(#f44336, #f44336), linear-gradient(#D2D2D2, #D2D2D2);
+}
+.form-group.there-error label.control-label,
+.form-group.there-error .help-block {
+  color: #f44336;
+}
+
 /* search page */
 
 /*This is an edited version of the sidebar made by David Miller*/
@@ -126,7 +141,8 @@
   margin: 3px;
 }
 
-#sort-select {
+#sort-select, .request-quantity {
+  margin-left: auto;
   display: flex;
   align-items: center;
 }
@@ -155,6 +171,18 @@
 #radius-output span{
   color: grey;
   text-transform: lowercase;
+}
+
+.search-view {
+  padding: 0 0 0 10px;
+  margin: 10px;
+  border-left: 2px solid black;
+}
+
+.search-result #map {
+  height: 100vh;
+  width: 100%;
+  background-color: black;
 }
 
 /* item page */
@@ -656,7 +684,7 @@ a:link, a:hover, a:visited, a:active  {
   background-color: white;
 }
 
-.reciever .content {
+.receiver .content {
   background-color: #2658BC;
   color: white;
 }
@@ -773,7 +801,6 @@ a:link, a:hover, a:visited, a:active  {
 
 .tab-content {
   flex:1;
-  background-color: #2658BC;
   padding-top: 2px;
   overflow: auto;
 }
@@ -903,7 +930,15 @@ a:link, a:hover, a:visited, a:active  {
   margin-left: auto;
 }
 
-.caption .nav-btns .watched {
+.caption .nav-btns .btn-watch i{
+  color: darkgrey;
+}
+
+.caption .nav-btns .lightgrey i{
+  color: lightgrey;
+}
+
+.caption .nav-btns .watched i {
   color: green;
 }
 
@@ -921,4 +956,44 @@ a:link, a:hover, a:visited, a:active  {
 
 .pending {
   background-color: orange;
+}
+
+/* modals design */
+.modal .modal-body div {
+    text-align: center;
+    padding: 5px;
+}
+
+.modal .modal-body .item-name {
+  font-size: 20px;
+  font-weight: bolder;
+  text-transform: uppercase;
+  color: red;
+}
+
+.modal .modal-body .modal-submsg{
+  font-size: 12px;
+  font-weight: bolder;
+  color: grey;
+}
+
+.modal .modal-body .modal-msg{
+  color: black;
+  font-size: 14px;
+}
+
+.modal .modal-body .request-quantity {
+  justify-content: center;
+}
+
+.modal .modal-body .request-quantity label {
+  margin-right: 10px;
+}
+
+.modal .modal-body .request-quantity input {
+  width: 50px;
+}
+
+.modal .modal-body .request-quantity #renew-date {
+  width: 100px;
 }

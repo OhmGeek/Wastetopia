@@ -1,11 +1,11 @@
 {% extends 'header.twig' %}
 
 {% block title %}
-    Search
+Search
 {% endblock %}
 
 {% block navbar %}
-    {% include 'navbar.twig' %}
+{% include 'navbar.twig' %}
 {% endblock %}
 
 {% block content %}
@@ -28,29 +28,29 @@
             </div>
           </div>
         </li>
-            <form id='filter-form'>
-                {% for itemFilter in filters %}
-                <li role="tab" class="tab">
-                  <div class="filter-category" id="{{itemFilter.id}}-category" data-filtertype="{{itemFilter.type}}">
-                    {{itemFilter.optionsCategory}}
-                    <a role="button" data-toggle="collapse" data-parent="#filter-list" href="#{{itemFilter.id}}-options" aria-expanded="true" aria-controls="{{itemFilter.id}}-options"><i class="material-icons"></i></a>
+        <form id='filter-form'>
+          {% for itemFilter in filters %}
+          <li role="tab" class="tab">
+            <div class="filter-category" id="{{itemFilter.id}}-category" data-filtertype="{{itemFilter.type}}">
+              {{itemFilter.optionsCategory}}
+              <a role="button" data-toggle="collapse" data-parent="#filter-list" href="#{{itemFilter.id}}-options" aria-expanded="true" aria-controls="{{itemFilter.id}}-options"><i class="material-icons"></i></a>
+            </div>
+            <ul class="filter-options collapse in" id="{{itemFilter.id}}-options" role="tabpanel" aria-labelledby="{{itemFilter.id}}-category">
+              {% for option in itemFilter.options %}
+              <li>
+                <div class="form-group zero-padding">
+                  <div class="checkbox">
+                    <label>
+                      <input type="checkbox" value="{{option.value}}" id="{{option.id}}"> {{option.value}}
+                    </label>
                   </div>
-                  <ul class="filter-options collapse in" id="{{itemFilter.id}}-options" role="tabpanel" aria-labelledby="{{itemFilter.id}}-category">
-                    {% for option in itemFilter.options %}
-                    <li>
-                      <div class="form-group zero-padding">
-                        <div class="checkbox">
-                          <label>
-                            <input type="checkbox" value="{{option.value}}" id="{{option.id}}"> {{option.value}}
-                          </label>
-                        </div>
-                      </div>
-                    </li>
-                    {% endfor %}
-                  </ul>
-                </li>
-                {% endfor %}
-          </form>
+                </div>
+              </li>
+              {% endfor %}
+            </ul>
+          </li>
+          {% endfor %}
+        </form>
       </ul>
     </div>
     <div class="form-group zero-padding" id="sort-select">
@@ -62,55 +62,69 @@
         <option value="user-pop">User Popularity</option>
       </select>
     </div>
+    <a class="search-view" role="button" data-toggle="tab" href="#map" id="btn-map"><i class="material-icons">map</i></a>
+    <a class="search-view hide" role="button" data-toggle="tab" href="#grid" id="btn-grid"><i class="material-icons">view_module</i></a>
   </div>
 </div>
 <div id="filters-picked"></div>
-  <div class="search-result">
-      <div class="container-fluid">
-        <div class="grid">
-          <!-- need this for mosonry layout to work properly with bootstrap grid system -->
-          <div class="grid-sizer col-xs-12 col-sm-6 col-md-4"></div>
-          {% for item in itemList %}
-          <div class="grid-item col-xs-12 col-sm-6 col-md-4">
-            <div class="thumbnail zero-padding" id="{{item.listingID}}">
-              <div class="caption">
-                <div class="centerAll">
-                  <img src="{{item.userImg}}" class="user-image"/>
-                  <div class="user-details">
-                    <a class="user-name" href="#{{item.userID}}">
-                      {{item.userName}}
-                    </a>
-                    <div class="added-date">
-                      {{item.addedDate}}
-                    </div>
-                  </div>
-                  <div class="road-distance">
-                    <i class="material-icons">place</i> {{item.distance}}m
+<div class="tab-content search-result">
+  <div id="grid" class="tab-pane fade in active">
+    <div class="container-fluid">
+      <div class="grid">
+        <!-- need this for mosonry layout to work properly with bootstrap grid system -->
+        <div class="grid-sizer col-xs-12 col-sm-6 col-md-4"></div>
+        {% for item in itemList %}
+        <div class="grid-item col-xs-12 col-sm-6 col-md-4">
+          <div class="thumbnail zero-padding" id="{{item.listingID}}">
+            <div class="caption">
+              <div class="centerAll">
+                <img src="{{item.userImg}}" class="user-image"/>
+                <div class="user-details">
+                  <a class="user-name" href="#{{item.userID}}">
+                    {{item.userName}}
+                  </a>
+                  <div class="added-date">
+                    {{item.addedDate}}
                   </div>
                 </div>
-              </div>
-              <img src="{{item.imgURL}}" style="border-color: lightgrey;" />
-              <div class="caption">
-                <h3>{{item.itemName}}</h3>
-                <div class="trans-info">
-                  <div><span>Quantity: </span> {{ item.quantity }}</div>
-                </div>
-                <div class="nav-btns">
-                  <a href="#view" class="btn btn-primary" role="button" id="{{item.listingID}}">View</a>
-                  {% if isRequesting %}
-                    <a href="#cancel-by-listing" class="btn btn-default" role="button">Cancel request</a>
-                  {% else %}
-                    <a href="#request" class="btn btn-default" role="button">Request</a>
-                  {% endif %}
-                  <a href="#watch" role="button" class="btn-watch {% if isWatching %} watched {% endif %}" id="{{item.listingID}}"><i class="material-icons">visibility</i></a>
+                <div class="road-distance">
+                  <i class="material-icons">place</i> {{item.distance}}m
                 </div>
               </div>
             </div>
+            <img src="{{item.imgURL}}" style="border-color: lightgrey;" />
+            <div class="caption">
+              <h3>{{item.itemName}}</h3>
+              <div class="trans-info">
+                <div><span>Quantity: </span> {{ item.quantity }}</div>
+              </div>
+              <div class="nav-btns">
+                <a href="#view" class="btn btn-primary" role="button" id="{{item.listingID}}">View</a>
+                {% if isRequesting %}
+                <a href="#cancel-by-listing" class="btn btn-default" role="button">Cancel request</a>
+                {% else %}
+                <a href="#request" class="btn btn-default" role="button">Request</a>
+                {% endif %}
+                <a href="#watch" role="button" class="btn-watch {% if isWatching %} watched {% endif %}" id="{{item.listingID}}"><i class="material-icons">visibility</i></a>
+              </div>
+            </div>
           </div>
-          {% endfor %}
         </div>
+        {% endfor %}
       </div>
     </div>
+  </div>
+  <div id="map" class="tab-pane fade">
+    <div class="container-fluid">
+      <div id="search-map"></div>
+      <!-- <script src="mapSearch.js"></script>
+      <script src="plugins/MarkerClusterer/markerclusterer.js">
+         </script>
+      <script async defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCrh2cKWRAFifeLIkznE2Iw4Oblqlmyyt0&callback=initMap">
+     </script> -->
+    </div>
+  </div>
 </div>
 {% endblock %}
 
