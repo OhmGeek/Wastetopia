@@ -153,8 +153,10 @@ class AddItemModel
     {
         $statement = $this->db->prepare("
             INSERT INTO Item (Name, Description, Use_By)
-            VALUES (:name, :description, STR_TO_DATE(:useByDate, '%e %M, %Y'));
+            VALUES ( :name, :description, STR_TO_DATE(:useByDate, '%e %M, %Y'));
          ");
+        error_log("Name:");
+        error_log($name);
 
         $statement->bindValue(":name", $name, PDO::PARAM_STR);
         $statement->bindValue(":description", $description, PDO::PARAM_STR);
