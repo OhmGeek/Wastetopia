@@ -9,6 +9,7 @@ use Wastetopia\Controller\Login_Controller;
 use Wastetopia\Controller\ProfilePageController;
 use Wastetopia\Controller\SearchController;
 use Wastetopia\Controller\MessageController;
+
 use Wastetopia\Controller\RecommendationController;
 
 use Wastetopia\Model\RequestModel;
@@ -17,25 +18,28 @@ use Wastetopia\Model\PopularityModel;
 use Wastetopia\Controller\SearchPageController;
 
 
+use Wastetopia\Controller\RegistrationController;
+
+use Wastetopia\Model\RegistrationModel; // For verification
+
+require_once '../vendor/autoload.php';
+
 
 // check if we should use production? Otherwise, use community.
 $mode = $_ENV['MODE'];
 $config = new CurrentConfig();
 $config->loadConfig($mode);
-
 $base  = dirname($_SERVER['PHP_SELF']);
-
 // Update request when we have a subdirectory
 if(ltrim($base, '/')){
     $_SERVER['REQUEST_URI'] = substr($_SERVER['REQUEST_URI'], strlen($base));
 }
-
 // Dispatch as always
 $klein = new Klein();
-
 $klein->respond("GET", "/", function() {
     return "HomePage";
 });
+
 
 
 $klein->with('/api', function () use ($klein) {
@@ -72,30 +76,54 @@ $klein->respond('GET', '/search/[:search]?', function ($request, $response) {
     return $controller->render($request->search);
 });
 
+
 $klein->respond("GET", "/login", function($request, $response) {
     $controller = new LoginController();
     return $controller->index($response);
 });
 
-$klein->with("/register", function() use ($klein){
-    $klein->respond("GET", "/?", function() {
-        $controller = new RegistrationController();
-        return $controller->generatePage();    
+
+$klein->with('/register', function() use ($klein){
+  
+  $klein->respond("GET", "/?", function($request, $response) {
+    $controller = new RegistrationController();
+    return $controller->generatePage();
+  });
+  
+  $klein->respond("POST", "/add-user", function($request, $response){
+      $forename = $request->forename;
+      $surname = $request->surname;
+      $email = $request->email;
+      $password = $request->password;
+      $passwordConfirm = $request->passwordConfirm;
+      $pictureURL = $request->pictureURL;
+      
+      $controller = new RegistrationController();
+      return $controller->addUser($forename, $surname, $email, $password, $passwordConfirm, $pictureURL);
+  });
+    
+    $klein->respond("GET","/verify/[:verificationCode]", function($request, $response){
+        $verificationCode = $request->verificationCode;
+        $model = new RegistrationModel(); // Put function in controller?
+        $result = $model->verifyUser($verificationCode);
+        if (!($result)){
+            // Verification didn't work, what do we do now??
+            return "It didn't work";
+        }else{
+            // Verirification worked, send them to login page??
+            return "Verification successful: your account is now active";
+        }
     });
     
-    $klein->respond("POST", "/add-user", function($request,$response){
+    // Only for testing purposes
+    $klein->respond("GET", "/delete/[:firstName]/[:lastName]", function($request, $response){
        $firstName = $request->firstName;
         $lastName = $request->lastName;
-        $email = $request->email;
-        $password = $request->password;
-        $passwordConfirm = $request->passwordConfirm;
-        $pictureURL = $request->pictureURL;
-        
-        $controller = new RegistrationController();
-        return $controller->addUser($firstName, $lastName, $email, $password, $passwordConfirm, $pictureURL);
+        $model = new RegistrationModel();
+        return $model->deleteUserByName($firstName, $lastName);
     });
+  
 });
-
 
 
 $klein->respond("GET", "/get-env", function() {
@@ -106,6 +134,7 @@ $klein->respond("GET", "/get-env", function() {
     echo "Printing stuff now \n";
     return $envStr;
 });
+
 
 $klein->with("/profile", function() use ($klein) {
 
@@ -210,6 +239,7 @@ $klein->with("/profile", function() use ($klein) {
 
 
 
+
 $klein->with('/items', function () use ($klein) {
     $klein->respond('GET', '/?', function ($request, $response) {
         // Generic Items Page
@@ -220,6 +250,7 @@ $klein->with('/items', function () use ($klein) {
         $itemID = $request->id;
         return "Show item ".$itemID;
     });
+
     
     $klein->respond('POST', '/request/?', function ($request, $response) {
         // Show a single user
@@ -292,26 +323,19 @@ $klein->with('/api', function () use ($klein) {
         $dest = $_ENV['ROOT_BASE'];
         return $controller->login($username, $password, $dest, $response);
     });
-
     $klein->respond('GET', '/[:id]', function ($request, $response) {
         // Show a single user
         $itemID = $request->id;
         return "Show Item " . $itemID;
     });
-
 });
-
-
 // todo authenticate on messages. Must be logged in to view correct messages.
 $klein->with('/messages', function () use ($klein) {
-
     $klein->respond('GET', '/?', function ($request, $response) {
         // Show all conversations
         $controller = new ConversationListController();
         return $controller->generatePage();
     });
-
-
     // these are the API based messaging tasks
     // todo: error/failure in response.
     $klein->respond('POST', '/send', function ($request, $response) {
@@ -319,26 +343,22 @@ $klein->with('/messages', function () use ($klein) {
         //we need the conversationID and the message.
         $conversationID = $request->conversationID;
         $message = $request->message;
-
         console.log($conversationID);
         console.log($message);
         $controller = new MessageController();
         $controller->sendMessage($conversationID,$message);
         return "";
     });
-
     $klein->respond('POST', '/delete-conversation', function ($request, $response) {
         $controller = new ConversationListController();
         $conversationID = $request->conversationID;
         $controller->deleteConversation($conversationID);
         return "";
     });
-
     $klein->respond('GET', '/poll-sending', function ($request, $response) {
         $controller = new ConversationListController();
         return $controller->generateSendingTabHTML();
     });
-
     $klein->respond('GET', '/poll-receiving', function ($request, $response) {
         $controller = new ConversationListController();
         return $controller->generateReceivingTabHTML();
@@ -359,7 +379,6 @@ $klein->with('/messages', function () use ($klein) {
     });
 });
 
-
 $klein->onHttpError(function ($code, $router) {
     switch ($code) {
         case 404:
@@ -378,6 +397,4 @@ $klein->onHttpError(function ($code, $router) {
             );
     }
 });
-
-
 $klein->dispatch();
