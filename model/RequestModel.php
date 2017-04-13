@@ -321,10 +321,7 @@ class RequestModel
 		
 		$description = $item_info["Description"];
 		
-		print_r($name);
-		print_r($description);
-		print_r($new_use_by_date);
-		
+
 		$statement0 = $this->db->prepare("
 			INSERT INTO Item(Name, Description,Use_By)
 			VALUES(:name, :description, STR_TO_DATE(:use_by, '%e %M, %Y'));
@@ -378,6 +375,8 @@ class RequestModel
 		
 		//make old listing inactive so that the new listing replaces it
 		$this->withdrawListing($listing_id);
+		
+		return $new_listing_id;
 	}
 	
 	/**
@@ -385,9 +384,7 @@ class RequestModel
 	 * @return bool
 	 */
 	
-	function withdrawListing($listing_id){
-		print_r("Withdrawing: ".$listing_id);
-		
+	function withdrawListing($listing_id){		
 		$statement = $this->db->prepare("
 			UPDATE Listing
 			SET Active = 0
@@ -434,7 +431,6 @@ class RequestModel
 	 * @return void
 	 */	
 	function rejectRequest($listing_id, $transaction_id){
-
 		$statement = $this->db->prepare("
 			UPDATE `ListingTransaction`
 			SET `ListingTransaction`.`Success` = 2
