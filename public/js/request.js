@@ -18,10 +18,12 @@ $(function(){
     function changeSubTabCounter(counter, value){
         if (!(counter == null)){
             var html = counter.html();
-            var name = html.split("-")[0];
-            var count = html.split("-")[1];
-            var newCount = parseInt(count) + value;
-            counter.html(name+"- "+newCount);
+            if (!(html == null)){
+                var name = html.split("-")[0];
+                var count = html.split("-")[1];
+                var newCount = parseInt(count) + value;
+                counter.html(name+"- "+newCount);
+            }
         }
     }
 
