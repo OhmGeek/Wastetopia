@@ -14,6 +14,7 @@ $(function () {
     var userID = $('.user-name').attr("id");
     var tabID = $(this).attr('href');
     var subTabID = "";
+    var otherSubTab = "";
     
     var relativeURL = "";
     if (tabID == "#listings"){
@@ -22,27 +23,39 @@ $(function () {
     }else if (tabID == "#available-listing"){
       relativeURL = "load-listings-tab";
       subTabID = tabID;
+      otherSubTab = "#out-of-stock-listing";
       tabID = "#listing"; // So it doesn't load Divs inside the other two tabs
     }else if (tabID == "#out-of-stock-listing"){
       relativeURL = "load-listings-tab";
       subTabID = tabID;
+      otherSubTab = "#available-listing";
       tabID = "#listing"; // So it doesn't load Divs inside the other two tabs
     }else if (tabID == "#requests" ){
-      console.log("REQUESTS");
       relativeURL = "load-requests-tab";
       tabID = "#requests";
     }else if (tabID == "#completed-request" ){
       relativeURL = "load-requests-tab";
-      console.log("COMPLETED REQUESTS");
       subTabID = tabID;
+      otherSubTab = "#pending-request";
       tabID = "#requests";
     }else if(tabID == "#pending-request" ){
       relativeURL = "load-requests-tab";
       subTabID = tabID;
+      otherSubTab = "#comleted-request";
       tabID = "#requests";
     }else if(tabID == "#offers" || tabID == "#completed-transaction" || tabID == "#pending-transaction" ){
      relativeURL = "load-offers-tab";
       tabID = "#offers";
+    }else if(tabID == "#completed-transaction"){
+     relativeURL = "load-offers-tab";
+      subTabID = tabID;
+      otherSubTab = "#pending-transaction";
+      tabID = "#offers";
+    }else if(tabID == "#pending-transaction" ){
+     relativeURL = "load-offers-tab";
+     subTabID = tabID;
+      otherSubTab = "#completed-transaction";
+     tabID = "#offers";
     }else if(tabID == "#watchList"){
      relativeURL = "load-watchlist-tab";
     }else if(tabID == "#home"){
@@ -51,12 +64,12 @@ $(function () {
       return;
     }
    console.log(subTabID);
-    reloadTab(tabID, relativeURL, userID, subTabID);
+    reloadTab(tabID, relativeURL, userID, subTabID, otherSubTab);
 
   });
   
   // Reloads the content of the given tab, for the given user, from the given relative URL
-  function reloadTab(tabID, relativeURL, userID, subTabID){
+  function reloadTab(tabID, relativeURL, userID, subTabID, otherSubTab){
     var url = window.location.protocol + "//" + window.location.host + "/profile/" + relativeURL +"/" + userID;
     
     $.get(url, function(response){
@@ -68,6 +81,8 @@ $(function () {
       console.log(subTabID);
       if(!(subTabID === "" )){
          $(subTabID).addClass("in active"); // Make it visible?
+         $(otherSubTab).removeClass("in");
+        $(otherSubTab).removeClass("active");
        }
       console.log("Successful");
       // re initialize isotope
