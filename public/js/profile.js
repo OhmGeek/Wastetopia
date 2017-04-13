@@ -192,6 +192,13 @@ $(function () {
       });
   });
   
+  $(document).on('click', '.user-name', function(event){
+    event.preventDefault();
+    var userID = $(this).attr("id");
+    var url = baseURL + "/profile/user/" + userID;
+    location.href = url;
+  });
+ 
   
 //     $(document).on('click', '#addOffer', function(){
 //         // Send to add-item page
