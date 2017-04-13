@@ -47,6 +47,7 @@ $(function () {
      relativeURL = "load-offers-tab";
       tabID = "#offers";
     }else if(tabID == "#completed-transaction"){
+      console.log("Completed!");
      relativeURL = "load-offers-tab";
       subTabID = tabID;
       otherSubTab = "#pending-transaction";
@@ -63,7 +64,10 @@ $(function () {
     }else{
       return;
     }
-   console.log(subTabID);
+    console.log(subTabID);
+    console.log(otherSubTab);
+    console.log(tabID);
+    
     reloadTab(tabID, relativeURL, userID, subTabID, otherSubTab);
 
   });
