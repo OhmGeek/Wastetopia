@@ -19,6 +19,36 @@ $(function () {
     }
   });
   
+      // Displays an error message in the appropriate place
+    function displayError(error){
+
+        // Create warning div
+        var errorDiv = $("<div>").addClass("alert alert-danger fade in");
+    
+        // Add error to the div
+        errorDiv.html('<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'+ error)
+        
+        // Add alert to the alert div
+        $("#errorMessage").append(errorDiv);
+     }
+    
+     // Displays an error message in the appropriate place
+    function displaySuccess(message){
+        // Change HTML in an existing DIV
+//         console.log("Displaying error message");
+//         $("#errorMessage").html("<p>"+error+"<p>");
+
+        // OR using bootstrap alerts
+        // Create warning div
+        var successDiv = $("<div>").addClass("alert alert-success fade in");
+    
+        // Add error to the div
+        successDiv.html('<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'+ message)
+        
+        // Add alert to the alert div
+        $("#errorMessage").append(successDiv);
+     }
+  
     // Remove an element from the layout - ele is in the form $(element)
   function remove(ele) {
     // init Isotope
@@ -219,9 +249,58 @@ $(function () {
   });
  
   
+  // Lets user upload a new profile picture
+  $(document).on('click', '#upload-picture', function(event){
+      event.preventDefault();
+      var userID = $('.user-name').attr("id");
+      var url = baseURL + "/profile/change-profile-picture";
+    
+    //ADD FILE UPLOAD STUFF HERE
+      //var data = ;// Some array of files (only contains one file)
+    
+    $.post(url, data, function(response){
+          if (response){
+              reloadTab("#home", "load-home-tab", userID, "", "");
+          }
+     });
+  });
+  
+  
+  $(document).on('click', '#change-password', function(event){
+    event.preventDefault();
+    
+    // Set up Modal with one input for old password, one input for new password
+    
+    var oldPassword = ;// Get from modal
+    var newPassword = ;// Get from modal
+    
+    var url = baseURL + "/change-password";
+    var data = {oldPassword : oldPassword, newPassword : newPassword};
+    
+    $.post(url, data, function(response){
+      var json = $.parseJSON(response);
+      if(json.hasOwnProperty("error")){
+               console.log("Error occurred");
+                displayError(json["error"]);
+                return;
+           }else if(json.hasOwnProperty("success")){
+               console.log("Successful");
+               displaySuccess("Verificaiton email has been sent");
+               return;
+            }else{
+               displayError("WHAAAAT");
+               console.log("Something really went wrong");
+               return;
+           }
+    });
+  });
+  
+  
+  
 //     $(document).on('click', '#addOffer', function(){
 //         // Send to add-item page
 //     });
+  
   
 });
 
