@@ -157,11 +157,23 @@ class RegistrationController
         $from = 'wastetopia@ohmgeek.co.uk'; 
         $body='<p>Your Activation Code is '.$code.' Please Click On This link: </p> <a href='.$fullURL.'> https:'.$fullURL.' </a> <br> <p> to activate  your account. </p>';
         $altBody = "Please go to: https:".$fullURL;
-//         // PHPMailer code
-        
 
-        $mail = new \PHPMailer(true); //true makes it give errors
-
+        $this->sendEmail($from, $subject, $body, $altBody, $email, $name);
+    }
+    
+    /**
+    * Main function to send an email
+    * @param $from
+    * @param $subject
+    * @param $body
+    * @param $altBody
+    * @param $email
+    * @param $name
+    * @return bool
+    */
+    function sendEmail($from, $subject, $body, $altBody, $email, $name){
+	// PHPMailer code
+	$mail = new \PHPMailer(true); //true makes it give errors
         $mail->IsSMTP();                                      // set mailer to use SMTP
         $mail->Host = "mail3.gridhost.co.uk"; // For SSL, use mail3.gridhost.co.uk, else try mail.ohmgeek.co.uk
         $mail->Port = 465; //25 for non-SSL, 465  for SSL
@@ -172,7 +184,6 @@ class RegistrationController
         
         $mail->Username = "wastetopia@ohmgeek.co.uk";  // SMTP username
         $mail->Password = "wyI4wwPRhHGk"; // SMTP password (IHatePHP  or wyI4wwPRhHGk)
-
         $mail->From = $from;
         $mail->FromName = "Wastetopia";
         
@@ -180,18 +191,14 @@ class RegistrationController
        
         $mail->WordWrap = 50;                                 // set word wrap to 50 characters
         $mail->IsHTML(true);                                  // set email format to HTML
-
         $mail->Subject = $subject;
         $mail->Body    = $body;
         $mail->AltBody = $altBody;
-
         if(!$mail->Send())
         {
            return False;
         }
-
-        return True;
-      
+        return True;    
     }
 }
 ?>
