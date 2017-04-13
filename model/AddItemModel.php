@@ -161,6 +161,7 @@ class AddItemModel
         $statement->bindValue(":useByDate", $useByDate, PDO::PARAM_STR);
 
         $statement->execute();
+        error_log(json_encode($statement->errorInfo()));
         $lastItemID = $this->getLastItemID($name, $useByDate, $description);
         error_log($lastItemID);
         return $lastItemID;
