@@ -36,10 +36,10 @@ class AnalysisModel
    
     /**
      * Gets a list of Tag Names along with their frequencies for current user's listings
-     * @param $categoryIDArray (Optional - defaults to null. null checks all category IDs. Array of CategoryIDs to match)
+     * @param $categoryIDArray (Optional - defaults to empty array => checks all category IDs. Array of CategoryIDs to match)
      * @return array
      */
-    function getTagFrequenciesForListings($categoryIDArray = null)
+    function getTagFrequenciesForListings($categoryIDArray = array())
     {
         $userID = $this->getUserID();
         $categorySQL = ($categoryID == -1) ? "" : "AND `Tag`.`FK_Category_Category_ID` = "+$categoryID;
@@ -52,7 +52,7 @@ class AnalysisModel
                 WHERE `User`.`UserID` = :userID
                 ";
         
-        if($categoryIDArray != null){
+        if(count($categoryIDArray) != 0){
             $sql += "AND ("; 
             // Add the first CategoryID check
             $categoryID = $categoryIDArray[0];
@@ -78,7 +78,7 @@ class AnalysisModel
 
         $statement->bindValue(":userID", $userID, PDO::PARAM_STR);
         
-        if($categoryIDArray != null){
+        if(count($categoryIDArray) != 0){
             // Bind all of the categoryIDs to the statement
             for($x = 0; $x < count($categoryID); $x ++){
                 $categoryID = $categoryIDArray[$x];
