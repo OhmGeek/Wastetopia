@@ -383,6 +383,8 @@ class RequestModel
 	 */
 	
 	function withdrawListing($listing_id){
+		print_r("Withdrawing: ".$listing_id);
+		
 		$statement = $this->db->prepare("
 			UPDATE Listing
 			SET Active = 0
@@ -394,10 +396,11 @@ class RequestModel
 		
 		// Get all pending transactions for this listing
 		$pendingTransactions = $this->getPendingTransactionsForListing($listing_id);
-		
+		print_r($pendingTransactions);
 		
 		// Reject each transaction
 		foreach($pendingTransactions as $transaction_id){
+		    print_r("Rejecting: ".$transaction_id);
 		    $this->rejectRequest($listing_id, $transaction_id);
 		}
 		return True;
