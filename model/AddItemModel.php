@@ -107,6 +107,10 @@ class AddItemModel
          ");
         error_log("Name");
         error_log($name);
+        error_log("Postcode");
+        error_log($postCode);
+        error_log($long);
+        error_log($lat);
         $statement->bindValue(":name", $name, PDO::PARAM_STR);
         $statement->bindValue(":postCode", $postCode, PDO::PARAM_STR);
         $statement->bindValue(":long", $long, PDO::PARAM_STR);
