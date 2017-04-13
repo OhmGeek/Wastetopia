@@ -81,8 +81,10 @@ $(function () {
       console.log(subTabID);
       if(!(subTabID === "" )){
          $(subTabID).addClass("in active"); // Make it visible?
+        $(subTabID).parent("li").addClass("active");
          $(otherSubTab).removeClass("in");
         $(otherSubTab).removeClass("active");
+        $(otherSubTab).parent("li").removeClass("active");
        }
       console.log("Successful");
       // re initialize isotope
