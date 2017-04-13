@@ -366,14 +366,10 @@ $(function () {
                         '</div>'+
                         '<div class="modal-body">'+
                           '<div class="modal-msg"></div>'+
-                            '<div class="item-name">'+
-                            '</div>'+
-                            '<div class="modal-submsg">'+                             
-                             '</div>'+
                           '</div>'+
                           '<div class="modal-footer">'+
                             '<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>'+
-                            '<button type="button" class="btn btn-primary" id="ok">Ok</button>'+
+                            '<button type="button" class="btn btn-primary accept-button" id="ok">Ok</button>'+
                           '</div>'+
                         '</div>'+
                       '</div>'+
