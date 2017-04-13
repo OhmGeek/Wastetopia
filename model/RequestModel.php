@@ -393,7 +393,7 @@ class RequestModel
 		
 		
 		// Get all pending transactions for this listing
-		$pendingTransactions = $this->getPendingTransactionsForListing($lising_id);
+		$pendingTransactions = $this->getPendingTransactionsForListing($listing_id);
 		
 		// Reject each transaction
 		foreach($pendingTransactions as $transactionID){
