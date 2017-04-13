@@ -144,9 +144,10 @@ class ProfilePageController
             if (count($stateDetails) > 0) {
                 foreach ($stateDetails as $transaction) {
                     $completed = $transaction["Success"]; //2-rejected. 1-completed. 0-pending
-                    if ($completed == 1) {
+                    $giverViewed = 1; // Get from $transaction details
+                    if ($completed == 1 && $giverViewed) {
                         $sendingCompletedTransactionsCount += 1;
-                    }elseif($completed == 0){
+                    }elseif($completed == 0 && $giverViewed){
                         $sendingPendingTransactionsCount += 1;
                     }else{
                         //Do nothing
@@ -171,12 +172,13 @@ class ProfilePageController
         $pendingRequestingCount = 0;
         $completedRequestingCount = 0;
         
-        //Counts number of transactions
+        //Counts number of transactions for listings user has put up
         foreach ($userListingsReceiving as $listing) {
             $completed = $listing["Success"]; // Transaction completed?
-            if ($completed == 1) {
+            $senderViewed = 1; // Get from $listing  details
+            if ($completed == 1 && $senderViewed) {
                 $completedRequestingCount += 1;
-            }elseif($completed == 0){
+            }elseif($completed == 0 && $senderViewed){
                 $pendingRequestingCount += 1;
             }else{
                 //Do nothing
@@ -230,9 +232,10 @@ class ProfilePageController
                 foreach ($stateDetails as $transaction) {
                     $transactionID = $transaction["TransactionID"];
                     $completed = $transaction["Success"]; //1-completed. 0-pending. 2-rejected
-                    if ($completed == 1) {
+                    $giverViewed = 1; // Get from transaction details, flag for if user wants to see this transaction or not
+                    if ($completed == 1 && $giverViewed) {
                         array_push($completedSending, $transactionID); //Get display information later
-                    }elseif($completed == 0) {
+                    }elseif($completed == 0 && $giverViewed) {
                         array_push($pendingSending, $transactionID);   //Get display information later
                     }else{
                         //Do nothing	- it transaction has been rejected
@@ -331,9 +334,10 @@ class ProfilePageController
             $listingID = $listing["ListingID"];
             $transactionID = $listing["TransactionID"];
             $completed = $listing["Success"]; // 1-completed. 0-pending. 2-rejected
-            if ($completed == 1) {
+            $senderViewed = 1; // Get from listing details, 1 if sender still wants to view the listing transaction
+            if ($completed == 1 && $senderViewed) {
                 array_push($completedReceiving, $transactionID); //Get display information later
-            } elseif($completed == 0) {
+            } elseif($completed == 0 && $senderViewed) {
                 array_push($pendingReceiving, $transactionID);   //Get display information later
             }else{
                 // Do nothing - Rejected it
