@@ -133,10 +133,10 @@ $klein->with("/profile", function() use ($klein) {
     // Needs testing
     $klein->respond('POST', '/set-listing-transaction-hidden', function($request, $response){
        $giverOrReceiver = $request->giverOrReceiver;
-        $listingID = $request->listingID;
+        $transactionID = $request->transactionID;
         $value = 1;
         $controller = new ProfilePageController(1); // Own profile
-        return $controller-> setListingTransactionHiddenFlag($giverOrReceiver, $listingID, $value);
+        return $controller-> setListingTransactionHiddenFlag($giverOrReceiver, $transactionID, $value);
     });
     
     // Needs testing
