@@ -29,7 +29,7 @@ $(function () {
         errorDiv.html('<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'+ error)
         
         // Add alert to the alert div
-        $("#errorMessage").append(errorDiv);
+        $("#errorMessage").html(errorDiv);
      }
     
      // Displays an error message in the appropriate place
@@ -46,7 +46,7 @@ $(function () {
         successDiv.html('<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'+ message)
         
         // Add alert to the alert div
-        $("#errorMessage").append(successDiv);
+        $("#errorMessage").html(successDiv);
      }
   
     // Remove an element from the layout - ele is in the form $(element)
