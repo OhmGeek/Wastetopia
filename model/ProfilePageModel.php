@@ -472,5 +472,26 @@ class ProfilePageModel
         return True;
 	    
     }
+	
+	
+    /**
+    * Gets the password details for the given user)
+    * @param $userID
+    * @return array containing Password_Hash and Salt
+    */
+    function getPasswordDetails($userID){
+	$statement = $this->db->prepare("
+            SELECT `User`.`Password_Hash`, `User`.`Salt`
+	    FROM `User`
+	    WHERE `User`.`UserID` = :userID
+        ");
+	
+        $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
+        
+        $statement->execute();
+	
+        return $statement->fetchAll(PDO::FETCH_ASSOC)[0];    
+	    
+    }
 
 }
