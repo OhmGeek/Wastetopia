@@ -364,11 +364,19 @@ class RequestModel
 		$statement->bindValue(":new_quantity", $new_quantity);
 		$statement->execute();
 		
-		//remove the old listing so that the new listing replaces it
+		// Get all pending transactionIDs for old listing
+		$this->migrateTransactions($listing_id, 
+		
+		
+		//make old listing inactive so that the new listing replaces it
 		$this->withdrawListing($listing_id);
 		
 		print_r("Withdrawn old listing");
-		return $this->getLastListingID($itemID, $listing_info["FK_Location_LocationID"], $listing_info["FK_User_UserID"]);
+		$new_listing_id = $this->getLastListingID($itemID, $listing_info["FK_Location_LocationID"], $listing_info["FK_User_UserID"]);
+	
+		print_r("Migrating pending transaction");			   
+		// Move all pending transactions to new listing
+		$this->migratePendingTransactions($listing_id, $new_listing_id);			
 	}
 	
 	/**
@@ -420,6 +428,27 @@ class RequestModel
 		$statement->execute();
 		return True;
 	}
+	
+	
+	/**
+	* Links all the pending transactions for the old listing to the new listing
+	* @param $old_listing_id
+	* @param $new_listing_id
+	* @return bool
+	*/
+	function migratePendingTransactions($old_listing_id, $new_listing_id){
+		$statement = $this->db->prepare("
+			UPDATE `ListingTransaction`
+			SET `FK_Listing_ListingID` = :newListingID
+			WHERE `FK_Listing_ListingID` = :oldListingID
+			AND `ListingTransaction`.`Success` = 0;
+		");
+		$statement->bindValue(":newListingID", $new_listing_id, PDO::PARAM_INT);
+		$statement->bindValue(":oldListingID", $old_listing_id, PDO::PARAM_INT);
+		$statement->execute();
+		return True;
+	}
+	
 }
 
 ?>
