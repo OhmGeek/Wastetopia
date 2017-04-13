@@ -43,7 +43,7 @@ $(function () {
       subTabID = tabID;
       otherSubTab = "#comleted-request";
       tabID = "#requests";
-    }else if(tabID == "#offers" || tabID == "#completed-transaction" || tabID == "#pending-transaction" ){
+    }else if(tabID == "#offers"){
      relativeURL = "load-offers-tab";
       tabID = "#offers";
     }else if(tabID == "#completed-transaction"){
