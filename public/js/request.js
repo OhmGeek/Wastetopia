@@ -58,7 +58,9 @@ $(function(){
         $('#delete-modal').modal('hide');
 
         $.post(url, data, function(response){
+            console.log(response);
           if(response){
+              
             // Remove card from screen
             remove(card);
 
