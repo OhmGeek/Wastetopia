@@ -129,7 +129,7 @@ $klein->with("/profile", function() use ($klein) {
        return $controller->setAllPendingAsViewed();
     });
     
-    $klein->respnd('POST', '/set-listing-transaction-viewed', function($request, $response){
+    $klein->respond('POST', '/set-listing-transaction-viewed', function($request, $response){
        $giverOrReceiver = $request->giverOrReceiver;
         $listingID = $request->listingID;
         $value = 1;
