@@ -528,6 +528,7 @@ class ProfilePageController
             $listingID = $listing["ListingID"];
             // Get details about the listing
             $details = $this->cardDetailsModel->getCardDetails($listingID);
+            print_r($details);
             $itemName = $details["Name"];
             $distance = -1; // Can't get this information
             $postCode = $listing["Post_Code"];
