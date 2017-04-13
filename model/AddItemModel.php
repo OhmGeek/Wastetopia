@@ -111,7 +111,7 @@ class AddItemModel
         $statement->bindValue(":long", $long, PDO::PARAM_STR);
         $statement->bindValue(":lat", $lat, PDO::PARAM_STR);
         $statement->execute();
-        $results = $statement->fetchAll(PDO::FETCH_ASSOC)["0"];
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC)[0];
 	    return $results["LocationID"];
     }
 
