@@ -35,8 +35,6 @@ class RecommendationController {
     function generateRecommendedSection(){
       $frequentTags = $this->model->getTagFrequenciesForTransactions();
         
-      print_r("Getting Recommendations from RecommendationController");
-      print_r($frequentTags);  
       // Deal with if there are not enough tags    
       if(count($frequentTags) < 3){
           $recommendationList = array(); // Empty array
@@ -129,7 +127,10 @@ class RecommendationController {
           // get $results
           $searchController = new SearchController();
           $results = $searchController->recommendationSearch($tags);
-
+            
+          print_r("Search results: ");
+          print_r($results);
+          
           $recommendationList = array();  
           foreach($results as $listing){
               $listingID = $listing["ListingID"];
