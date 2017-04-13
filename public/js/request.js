@@ -475,7 +475,7 @@ $(function(){
         $("#renew-modal").modal({backdrop: "static"})
 
         //fancy datetime picker
-        $('#renew-date').bootstrapMaterialDatePicker({ format : 'D MMMM, YYYY', weekStart : 0, time: false })
+        $('#renew-modal #renew-date').bootstrapMaterialDatePicker({ format : 'D MMMM, YYYY', weekStart : 0, time: false })
 
         $("#renew-modal").on("shown.bs.modal", function () {
           $(this).find('.item-name').html(itemName)
