@@ -138,7 +138,7 @@ class AnalysisModel
         // Group into Tag Name and order by count in descending order
         $sql .= "AND `ListingTransaction`.`Success` = 1
                 GROUP BY `Tag`.`Name`
-                ORDER BY `Count` DESC;");";
+                ORDER BY `Count` DESC;";
         print_r("SQL: ");
         print_r($sql);
         
