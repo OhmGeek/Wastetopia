@@ -30,19 +30,7 @@ $(function(){
     }
     
 
-//     $(document).on('click', '#addOffer', function(){
-//         // Send to add-item page
-//     });
 
-
-//     // Delete completed transaction?? (Would remove for other user too)
-//     $grid.on('click', 'a[href="#delete"]', function(){
-//       // In offers.completed section, what is Delete supposed to do?
-//       // Set Active flag for ListingTransactions to 0??
-//         var transactionID = $(this).closest('.thumbnail').attr("id");
-//         var listingID = $(this).prevAll('a[href="#view"]').attr("id");
-
-//     });
 
 
     // Make listing inactive - THIS WORKS (BUT ALSO REMOVES ALL TRANSACTIONS FOR THAT LISTING)
