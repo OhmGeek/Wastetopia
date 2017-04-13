@@ -53,7 +53,7 @@ class RecommendationController {
           // Get user's lat/long 
           // get $results
           $searchController = new SearchController();
-          $results = $searchController->recommendationSearch($tags);
+          $results = $searchController->recommendationSearch($tags, $this->getUserID());
           
 
           $recommendationList = array();  
@@ -127,7 +127,7 @@ class RecommendationController {
           // Get user's lat/long 
           // get $results
           $searchController = new SearchController();
-          $results = $searchController->recommendationSearch($tags);
+          $results = $searchController->recommendationSearch($tags, $this->getUserID());
             
 //           print_r("Search results: ");
 //           print_r($results);
