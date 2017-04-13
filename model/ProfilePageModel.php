@@ -522,11 +522,43 @@ class ProfilePageModel
 	
 	
     /**
+    * Gets the email of the given user
+    * @param $userID
+    * @return string
+    */
+    function getUserEmail($userID){
+	 $statement = $this->db->prepare("
+		SELECT `User`.`Email_Address`
+		FROM `User`
+		WHERE `User`.`UserID` = :userID
+	    ");
+
+	    $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
+
+	    $statement->execute();
+	    $email = $statement->fetchColumn();
+	    return $email;   
+    }
+	
+	
+    /**
      * Generates a random Salt string (in Hexadecimal) between 30 and 40 bytes in length
+     * @param $min (default 30)
+     * @param $max (default 40)
      * @return string
      */
-    function generateSalt(){
+    function generateSalt($min = 30, $max - 40){
         $salt = random_bytes(mt_rand(30, 40));
         return bin2hex($salt);
     }	
+	
+	
+   /**
+   * Sends an email to the user with their password in
+   * @param $email
+   * @return bool
+   */
+    function sendPasswordEmail($email){
+	    
+    }
 }
