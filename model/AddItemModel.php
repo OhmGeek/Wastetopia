@@ -349,10 +349,10 @@ class AddItemModel
     function mainAddItemFunction($item, $tags, $images, $barcode, $location)
     {
         //Extract item information
-        $itemName = $item["name"];
+        $itemName = $item["itemName"];
         error_log(json_encode($item));
-        $itemDescription = $item["description"];
-        $useByDate = $item["useBy"];
+        $itemDescription = $item["itemDescription"];
+        $useByDate = $item["useByDate"];
         if(!isset($useByDate)) {
             $useByDate = "1st January, 1970";
         }
