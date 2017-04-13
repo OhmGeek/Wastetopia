@@ -105,13 +105,15 @@ class AddItemModel
             AND Latitude = :lat
             ORDER BY LocationID DESC;
          ");
-
+        error_log("Name");
+        error_log($name);
         $statement->bindValue(":name", $name, PDO::PARAM_STR);
         $statement->bindValue(":postCode", $postCode, PDO::PARAM_STR);
         $statement->bindValue(":long", $long, PDO::PARAM_STR);
         $statement->bindValue(":lat", $lat, PDO::PARAM_STR);
         $statement->execute();
         $results = $statement->fetchAll(PDO::FETCH_ASSOC)[0];
+        error_log(json_encode($statement->errorInfo()));
 	    return $results["LocationID"];
     }
 
