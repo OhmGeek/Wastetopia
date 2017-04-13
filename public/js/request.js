@@ -491,12 +491,15 @@ $(function(){
            var button = $(this);
           var quantity = $('#renew-modal #renew-quantity').val();
           var date = $('#renew-modal #renew-date').val();
+          console.log(date);
 
            // Send to /items/renew-listing/
            $('#renew-modal').modal('hide');
 
             var url = baseURL + "/items/renew-listing";
             var data = {listingID : listingID, quantity:quantity, useByDate: date};
+            console.log(data);
+            return;
             $.post(url, data, function(response){
                console.log(response);
                if(response >= 1){
