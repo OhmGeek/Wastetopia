@@ -28,10 +28,12 @@ $(function () {
       subTabID = tabID;
       tabID = "#listing"; // So it doesn't load Divs inside the other two tabs
     }else if (tabID == "#requests" ){
+      console.log("REQUESTS");
       relativeURL = "load-requests-tab";
       tabID = "#requests";
     }else if (tabID == "#completed-request" ){
       relativeURL = "load-requests-tab";
+      console.log("COMPLETED REQUESTS");
       subTabID = tabID;
       tabID = "#requests";
     }else if(tabID == "#pending-request" ){
