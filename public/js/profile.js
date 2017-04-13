@@ -291,7 +291,7 @@ $(function () {
            // Send to /items/renew-listing/
            $('#change-modal').modal('hide');
       
-            var url = baseURL + "/change-password";
+            var url = baseURL + "/profile/change-password";
             var data = {oldPassword : oldPassword, newPassword : newPassword};
 
             console.log(data);
