@@ -53,7 +53,15 @@ $(function () {
 
 
 
+    var searchBox = $('#searchBox')
+    var searchTerm = $('#searchTerm').attr("data-searchTerm");
 
+    if(searchTerm !== "")
+    {
+        searchBox.val(searchTerm);
+    }
+
+            
 
 
 
@@ -64,8 +72,8 @@ $(function () {
     var include = [];
     var exclude = [];
     var searchTerm = $('#searchTerm').attr("data-searchTerm");
-    var lat;
-    var long;
+    var lat = "";
+    var long = "";
     
 
     $('#filter-form *').filter('.tab').each(function(){
@@ -93,10 +101,79 @@ $(function () {
     });
 
     var baseURL = $('#baseURL').attr('href');
+    var query = baseURL + '/api/search/page/' + lat + '/' + long + '/' + searchTerm + '/' + include.join('+') + '/' + exclude.join('+') + '/' + '0';
 
     $.ajax({
-        url: baseURL + '/api/search/page/' + lat + '/' + long + '/' + searchTerm + '/' + include.join('+') + '/' + exclude.join('+') + '/' + '0'
+        url: query,
+        success: function(result){
+            if(result === "")
+            {
+                noResults();
+            }
+            else
+            {
+                displayPage(result);
+            }
+        }
     });
+
+    function displayPage(result)
+    {
+        var json = JSON.parse(result);
+
+        var html = `<div class="grid-sizer col-xs-12 col-sm-6 col-md-4"></div>`;
+        json.forEach(function(element){
+            console.log(element);
+            var cardHTML = `
+            <div class="grid-item col-xs-12 col-sm-6 col-md-4">
+                <div class="thumbnail zero-padding" id="`+ element.ListingID +`">
+                  <div class="caption">
+                    <div class="centerAll">
+                      <img src="`+ element.Picture_URL +`" class="user-image"/>
+                      <div class="user-details">
+                        <a class="user-name" href="#`+ element.UserID +`">
+                          `+ element.Forename + ` ` + element.Surname +`
+                        </a>
+                        <div class="added-date">
+                          `+ element.Time_Of_Creation +`
+                        </div>
+                      </div>
+                      <div class="road-distance">
+                        <i class="material-icons">place</i> `+ element.Post_Code +`
+                      </div>
+                    </div>
+                  </div>
+                  <img src="`+ element.Default_Image_URL +`" style="border-color: lightgrey;" />
+                  <div class="caption">
+                    <h3>`+ element.Name +`</h3>
+                    <div class="trans-info">
+                      <div><span>Quantity: </span>`+ element.Quantity +`</div>
+                    </div>
+                    <div class="nav-btns">
+                      <a href="#view" class="btn btn-primary" role="button" id="`+ element.ListingID +`">View</a>
+                      {% if isRequesting %}
+                        <a href="#cancel-by-listing" class="btn btn-default" role="button">Cancel request</a>
+                      {% else %}
+                        <a href="#request" class="btn btn-default" role="button">Request</a>
+                      {% endif %}
+                      <a href="#watch" role="button" class="btn-watch {% if isWatching %} watched {% endif %}" id="{{item.listingID}}"><i class="material-icons">visibility</i></a>
+                    </div>
+                  </div>
+                </div>
+            </div>`;
+
+            html += cardHTML;
+
+        });
+
+    $('.grid').html(html);
+
+    }
+
+    function noResults()
+    {
+        
+    }
 
 
 
@@ -143,6 +220,8 @@ $(function () {
     }
     $(this).removeClass('dontClose');
   });
+
+  refreshPage();
 });
 
 
