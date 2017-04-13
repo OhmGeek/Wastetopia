@@ -501,12 +501,13 @@ class ProfilePageModel
 
 
     /** 
-    * Hashes new password and stores it in the DB for the given user
-    * @param $userID
+    * Hashes new password and stores it in the DB for the current user
     * @param $newPassword
     * @return bool
     */
-    function updatePassword($userID, $newPassword){
+    function updatePassword($newPassword){
+	    $userID = $this->getUserID();
+	    
 	    $newSalt = $this->generateSalt();
 	    $newPasswordHash = hash('sha256', $newSalt.$newPassword);	
 	    
