@@ -56,7 +56,7 @@ class ProfilePageController
     {
         // $reader = new UserCookieReader();
         // return $reader->get_user_id();
-        return 2; // Usually 6
+        return 6; // Usually 6
     }
 
 
