@@ -1,6 +1,6 @@
 // JS file to deal with requestModel stuff on any page (if cardIDs are the same)
 $(function(){
-    
+
     //TODO: Test renew with date
     //TODO: Link to edit and messaging pages - When everything is merged to master
     //TODO: Stop quantity of completed transaction exceeding quantity of listing - Has to be done in requestModel
@@ -12,12 +12,6 @@ $(function(){
 
     var baseURL =  window.location.protocol + "//" + window.location.host;
 
-    //fancy datetime picker
-    $('#renew-date').bootstrapMaterialDatePicker({ format : 'D MMMM, YYYY', weekStart : 0, time: false }).on('open', function(event){
-      console.log('open');
-    });
-
-    
     // Given a sub tab (i.e "pending-3"), it updates the number by adding "value" to it (can be negative)
     function changeSubTabCounter(counter, value){
         if (!(counter == null)){
@@ -28,7 +22,7 @@ $(function(){
             counter.html(name+"- "+newCount);
         }
     }
-    
+
 
 
 
@@ -88,7 +82,7 @@ $(function(){
 
             // If it exists on the page, change the name
              changeSubTabCounter(counter, -1)
-            
+
           }else{
             // Show error
           }
@@ -256,7 +250,7 @@ $(function(){
                // Take 1 off pending requests sub tab
                var pendingCounter = $('a[href="#pending-request"]');
                 changeSubTabCounter(pendingCounter, - 1);
-            
+
 
               // Take one off Requests Made counter and Pending counter
           }else{
@@ -479,6 +473,9 @@ $(function(){
         $('body').append(renewModal);
 
         $("#renew-modal").modal({backdrop: "static"})
+
+        //fancy datetime picker
+        $('#renew-date').bootstrapMaterialDatePicker({ format : 'D MMMM, YYYY', weekStart : 0, time: false })
 
         $("#renew-modal").on("shown.bs.modal", function () {
           $(this).find('.item-name').html(itemName)
