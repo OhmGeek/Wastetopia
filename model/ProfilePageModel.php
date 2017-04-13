@@ -59,7 +59,7 @@ class ProfilePageModel
     {
         $userID = $this->getUserID();
         $statement = $this->db->prepare("
-            SELECT `Listing`.*, `Transaction`.*, `ListingTransaction`.`Success`
+            SELECT `Listing`.*, `Transaction`.*, `ListingTransaction`.`Success`, `ListingTransaction`.`Sender_Hide`, `ListingTransaction`.`Receiver_Hide`
                 FROM `Listing`
                 JOIN `ListingTransaction` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
                 JOIN `Transaction` ON `Transaction`.`TransactionID` = `ListingTransaction`.`FK_Transaction_TransactionID`
@@ -127,7 +127,7 @@ class ProfilePageModel
     function getStateOfListingTransaction($listingID)
     {
         $statement = $this->db->prepare("
-            SELECT `Transaction`.`TransactionID`, `ListingTransaction`.`Success`
+            SELECT `Transaction`.`TransactionID`, `ListingTransaction`.`Success`, `ListingTransaction`.`Sender_Hide`, `ListingTransaction`.`Receiver_Hide`
             FROM `Transaction`
             JOIN `ListingTransaction` ON `Transaction`.`TransactionID` = `ListingTransaction`.`FK_Transaction_TransactionID`
             JOIN `Listing` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
@@ -446,19 +446,19 @@ class ProfilePageModel
     * @param $value
     * @return bool
     */
-    function setListingTransactionViewedFlag($giverOrReceiver, $listingID,  $value){
+    function setListingTransactionHiddenFlag($giverOrReceiver, $listingID,  $value){
 	
 	// PDO statement for setting the Giver_Viewed flag
 	$statementOption1 = $this->db->prepare("
             UPDATE `ListingTransaction`
-	    SET `ListingTransaction`.`Giver_Viewed` = :value
+	    SET `ListingTransaction`.`Sender_Hide` = :value
 	    WHERE `ListingTransaction`.`FK_Listing_ListingID` = :listingID
         ");
 	
 	// PDO statement for setting the Receiver_Viewed flag    
 	$statementOption2 = $this->db->prepare("
             UPDATE `ListingTransaction`
-	    SET `ListingTransaction`.`Receiver_Viewed` = :value
+	    SET `ListingTransaction`.`Receiver_Hide` = :value
 	    WHERE `ListingTransaction`.`FK_Listing_ListingID` = :listingID
         ");
 	    
