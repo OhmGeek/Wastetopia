@@ -36,27 +36,56 @@ class AnalysisModel
    
     /**
      * Gets a list of Tag Names along with their frequencies for current user's listings
-     * @param $categoryID (optional - defaults to -1 to search through all categories. Specificy categoryID to only search by one of them)
+     * @param $categoryIDArray (Optional - defaults to null. null checks all category IDs. Array of CategoryIDs to match)
      * @return array
      */
-    function getTagFrequenciesForListings($categoryID = -1)
+    function getTagFrequenciesForListings($categoryIDArray = null)
     {
         $userID = $this->getUserID();
         $categorySQL = ($categoryID == -1) ? "" : "AND `Tag`.`FK_Category_Category_ID` = "+$categoryID;
-        $statement = $this->db->prepare("
-        SELECT `Tag`.`Name`, `Tag`.`TagID`, COUNT(*) as `Count`
+        $sql = "SELECT `Tag`.`Name`, `Tag`.`TagID`, COUNT(*) as `Count`
                 FROM `Tag` 
                 JOIN `ItemTag` ON `ItemTag`. `FK_Tag_TagID` = `Tag`.`TagID`
                 JOIN `Item` ON `Item`.`ItemID` = `ItemTag`.`FK_Item_ItemID`
                 JOIN `Listing` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
                 JOIN `User` ON `UserID` = `Listing`.`FK_User_UserID`
                 WHERE `User`.`UserID` = :userID
-                :categoryRestriction
-                GROUP BY `Tag`.`Name`
-                ORDER BY `Count` DESC;");
+                ";
+        
+        if($categoryIDArray != null){
+            $sql += "AND ("; 
+            // Add the first CategoryID check
+            $categoryID = $categoryIDArray[0];
+            $sql += "`Tag`.`FK_Category_Category_ID` = :category"+$categoryID;
+            
+            // Add all of the CategoryIDs to the SQL statement
+            for($x = 1; $x < count($categoryID); $x ++){
+                $categoryID = $categoryIDArray[$x];
+                // Add this with OR so it can match any of them
+                $sql += "OR `Tag`.`FK_Category_Category_ID` = :category"+$categoryID;
+            }
+            
+            $sql += ")"; // End the category section
+        }
+        
+        // Group into Tag Name and order by count in descending order
+        $sql += "GROUP BY `Tag`.`Name`
+                ORDER BY `Count` DESC;";
+            
+        //Prepare the SQL statement
+        $statement = $this->db->prepare($sql); 
 
         $statement->bindValue(":userID", $userID, PDO::PARAM_STR);
-        $statement->bindValue(":categoryRestriction", $cateogorySQL, PDO::PARAM_STR):
+        
+        if($categoryIDArray != null){
+            // Bind all of the categoryIDs to the statement
+            for($x = 0; $x < count($categoryID); $x ++){
+                $categoryID = $categoryIDArray[$x];
+                $statement->bindValue(":category"+$categoryID, $categoryID, PDO::PARAM_STR):
+            }
+            
+        }
+        
         $statement->execute();
 
         return $statement->fetchAll(PDO::FETCH_ASSOC);
