@@ -547,7 +547,7 @@ class ProfilePageModel
      * @param $max (default 40)
      * @return string
      */
-    function generateSalt($min = 30, $max - 40){
+    function generateSalt($min = 30, $max = 40){
         $salt = random_bytes(mt_rand(30, 40));
         return bin2hex($salt);
     }	
