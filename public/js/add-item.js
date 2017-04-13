@@ -176,7 +176,7 @@ function serializeAndSendItem(location) {
   //todo: process expiry date (need more research into this). Think it's just .val, but not fully sure.
   // todo: process item type properly.
   // todo: check errors in images/date/location
-
+  console.log("Start serializing and sending item");
   var itemData = {
     "name": $('#name').val(),
     "images": getImagesFromDOM(),

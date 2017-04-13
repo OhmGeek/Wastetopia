@@ -20,8 +20,9 @@ class AddItemModel
      */
     private function getUserID()
     {
-        $reader = new UserCookieReader();
-        return $reader->get_user_id();
+          return 1; //for now, return 1 for testing.
+//        $reader = new UserCookieReader();
+//        return $reader->get_user_id();
     }
 
 
@@ -151,7 +152,7 @@ class AddItemModel
     function addToItemTable($name, $description, $useByDate)
     {
         $statement = $this->db->prepare("
-            INSERT INTO `Item` (Name, Description, Use_By)
+            INSERT INTO Item (Name, Description, Use_By)
             VALUES (:name, :description, STR_TO_DATE(:useByDate, '%e %M, %Y'));
          ");
 
@@ -282,7 +283,7 @@ class AddItemModel
         $userID = $this->getUserID();
 
         $statement = $this->db->prepare("
-            INSERT INTO `Listing` (`FK_Location_LocationID`, `FK_UserItem_UserITemID`, `FK_User_UserID`, `Quantity`, `Time_Of_Creation`)
+            INSERT INTO `Listing` (`FK_Location_LocationID`, `FK_UserItem_UserItemID`, `FK_User_UserID`, `Quantity`, `Time_Of_Creation`)
             VALUES (:locationID, :itemID, :userID, :quantity, NOW());
          ");
 
