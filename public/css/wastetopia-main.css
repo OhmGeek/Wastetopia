@@ -997,7 +997,3 @@ a:link, a:hover, a:visited, a:active  {
 .modal .modal-body .request-quantity #renew-date {
   width: 100px;
 }
-
-.dtp{
-  z-index: 100000 !important;
-}
