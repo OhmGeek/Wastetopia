@@ -491,13 +491,13 @@ $(function(){
         $("#renew-modal .accept-button").on('click', function(){
            var button = $(this);
           var quantity = $('#renew-modal #renew-quantity').val();
-          var date = $('#renew-modal #renew-date').val();
+          //var date = $('#renew-modal #renew-date').val();
 
            // Send to /items/renew-listing/
            $('#renew-modal').modal('hide');
 
             var url = baseURL + "/items/renew-listing";
-            var data = {listingID : listingID, quantity:quantity, useByDate: date};
+            var data = {listingID : listingID, quantity:quantity}//, useByDate: date};
             $.post(url, data, function(response){
                console.log(response);
                if(response >= 1){
