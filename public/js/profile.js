@@ -265,15 +265,17 @@ $(function () {
     
       $("#update-picture-modal .accept-button").on('click', function(){
          var formdata = new FormData();
-         formdata.push('image', $('#image-file')[0].files[0]); // todo add all files
+         formdata.append('image', $('#image-file')[0].files[0]); // todo add all files
         
         console.log($('#image-file'));
         console.log($('#image-file').val());
         console.log($('#image-file')[0].files[0]);
-         var url = baseURL + "/profile/change-profile-picture";
+        console.log(formdata);
         
-          //ADD FILE UPLOAD STUFF HERE
-          var data = formdata;// Some array of files (only contains one file)
+        var url = baseURL + "/profile/change-profile-picture";
+        
+        //ADD FILE UPLOAD STUFF HERE
+        var data = formdata;// Some array of files (only contains one file)
           
         console.log(data);
          $('#update-picture-modal').modal('hide');
