@@ -191,7 +191,8 @@ class ProfilePageController
 
         // Get Recommendation HTML
         $recommendationHTML = $this->generateRecommendationHTML();
-
+        $predictionHTML = $this->generatePredictionHTML();
+        
         $isCurrentUser = ($this->userID == $this->getUserID() ? 1 : 0);
         
         $sendingTransactionsCount = $sendingCompletedTransactionsCount + $sendingPendingTransactionsCount;
@@ -203,7 +204,8 @@ class ProfilePageController
             "itemsOfferedCount" => $sendingTransactionsCount, // Total of all transactions for your items (can be greater than listings count)
             "requestsMadeCount" => $requestingCount, // Total of all transactions you're in for other user's items
             "watchListCount" => $watchListCount,
-            "recommendationhtml" => $recommendationHTML,
+            "recommendationHTML" => $recommendationHTML,
+            "predictionHTML" => $predictionHTML,
             "isUser" => $isCurrentUser
         );
 
