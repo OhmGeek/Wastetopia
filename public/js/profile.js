@@ -78,15 +78,14 @@ $(function () {
        div.replaceWith(response);
       
       $(tabID).addClass("in active"); // Make it visible?
-      console.log(subTabID);
-      console.log(otherSubTab);
-      console.log((subTabID).parent("li"));
+
       if(!(subTabID === "" )){
          $(subTabID).addClass("in active"); // Make it visible?
         $(subTabID).parent("li").addClass("active");
+        $('a[href="'+subTabID'"]').parent("li").addClass("active");
          $(otherSubTab).removeClass("in");
         $(otherSubTab).removeClass("active");
-        $(otherSubTab).parent("li").removeClass("active");
+        $('a[href="'+otherSubTab'"]').parent("li").removeClass("active");
        }
       console.log("Successful");
       // re initialize isotope
