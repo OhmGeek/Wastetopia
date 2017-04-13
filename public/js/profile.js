@@ -57,7 +57,7 @@ $(function () {
     var relativeURL = "";
     if (tabID == "#listings"){
       relativeURL = "load-listings-tab";
-      tabID = "#listing"; // So it doesn't load Divs inside the other two tabs
+      tabID = "#listings"; // So it doesn't load Divs inside the other two tabs
     }else if (tabID == "#available-listing"){
       relativeURL = "load-listings-tab";
       subTabID = tabID;
