@@ -414,7 +414,7 @@ $(function () {
                           '<div class="container-fluid">'+
                                 '<div class="form-group zero-padding profile-picture">'+
                                   '<label for="image-file">Image file name: </label>'+
-                                  '<input type="text" class="form-control" id="image-file">'+
+                                  '<input type="file" class="form-control" id="image-file">'+
                                 '</div>'+
                             '</div>'+
                           '</div>'+
