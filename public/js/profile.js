@@ -295,8 +295,6 @@ $(function () {
             var data = {oldPassword : oldPassword, newPassword : newPassword};
 
             console.log(data);
-      
-            return;
 
             $.post(url, data, function(response){
               var json = $.parseJSON(response);
