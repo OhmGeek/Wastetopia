@@ -13,13 +13,30 @@ $(function () {
     console.log("Trying to reload");
     var userID = $('.user-name').attr("id");
     var tabID = $(this).attr('href');
+    var subTabID = "":
     
     var relativeURL = "";
-    if (tabID == "#listings" || tabID == "#available-listing" || tabID == "#out-of-stock-listing" ){
+    if (tabID == "#listings"){
       relativeURL = "load-listings-tab";
       tabID = "#listing"; // So it doesn't load Divs inside the other two tabs
-    }else if(tabID == "#requests" || tabID == "#completed-request" || tabID == "#pending-request" ){
+    }else if (tabID == "#available-listing"){
+      relativeURL = "load-listings-tab";
+      subTabID = tabID;
+      tabID = "#listing"; // So it doesn't load Divs inside the other two tabs
+    }else if (tabID == "#out-of-stock-listing"){
+      relativeURL = "load-listings-tab";
+      subTabID = tabID;
+      tabID = "#listing"; // So it doesn't load Divs inside the other two tabs
+    }else if (tabID == "#requests" ){
       relativeURL = "load-requests-tab";
+      tabID = "#requests";
+    }else if (tabID == "#completed-request" ){
+      relativeURL = "load-requests-tab";
+      subTabID = tabID;
+      tabID = "#requests";
+    }else if(tabID == "#pending-request" ){
+      relativeURL = "load-requests-tab";
+      subTabID = tabID;
       tabID = "#requests";
     }else if(tabID == "#offers" || tabID == "#completed-transaction" || tabID == "#pending-transaction" ){
      relativeURL = "load-offers-tab";
@@ -32,12 +49,12 @@ $(function () {
       return;
     }
    
-    reloadTab(tabID, relativeURL, userID);
+    reloadTab(tabID, relativeURL, userID, subTabID);
 
   });
   
   // Reloads the content of the given tab, for the given user, from the given relative URL
-  function reloadTab(tabID, relativeURL, userID){
+  function reloadTab(tabID, relativeURL, userID, subTabID){
     var url = window.location.protocol + "//" + window.location.host + "/profile/" + relativeURL +"/" + userID;
     
     $.get(url, function(response){
@@ -46,7 +63,9 @@ $(function () {
        div.replaceWith(response);
       
       $(tabID).addClass("in active"); // Make it visible?
-        
+      if(!(subTabID === "" )){
+         $(subTabID).addClass("in active"); // Make it visible?
+       }
       // re initialize isotope
        $grid = $('.grid').isotope({
           itemSelector: '.grid-item',
