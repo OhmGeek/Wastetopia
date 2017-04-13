@@ -249,21 +249,42 @@ $(function () {
   });
  
   
-//   // Lets user upload a new profile picture
-//   $(document).on('click', '#upload-picture', function(event){
-//       event.preventDefault();
-//       var userID = $('.user-name').attr("id");
-//       var url = baseURL + "/profile/change-profile-picture";
+  // Lets user upload a new profile picture
+  $(document).on('click', '#upload-picture', function(event){
+      event.preventDefault();
+      var userID = $('.user-name').attr("id");
     
-//     //ADD FILE UPLOAD STUFF HERE
-//       //var data = ;// Some array of files (only contains one file)
+      // Set up Modal to get file from user
+      $('body').append(updatePictureModal);
+
+      $("#update-picture-modal").modal({backdrop: "static"})
+
+      $("#update-picture-modal").on("shown.bs.modal", function () {
+        // Do something?
+      }).modal('show');
     
-//     $.post(url, data, function(response){
-//           if (response){
-//               reloadTab("#home", "load-home-tab", userID, "", "");
-//           }
-//      });
-//   });
+      $("#update-picture-modal .accept-button").on('click', function(){
+         var file = "1280832"; // Get from modal
+         var url = baseURL + "/profile/change-profile-picture";
+          //ADD FILE UPLOAD STUFF HERE
+          //var data = ;// Some array of files (only contains one file)
+          
+         $('#update-picture-modal').modal('hide');
+        
+          return;
+          $.post(url, data, function(response){
+                if (response){
+                    reloadTab("#home", "load-home-tab", userID, "", "");
+                }
+           });
+      });
+    
+    // Remove the modal 
+     $('#update-picture-modal').on('hidden.bs.modal', function(){
+        console.log("hidden");
+        $('#update-picture-modal').remove();
+      });
+  });
   
   
   // Let user change their password - NEEDS MODAL
@@ -278,7 +299,6 @@ $(function () {
 
     $("#change-modal").on("shown.bs.modal", function () {
       $(this).find('.modal-msg').text("Please enter your current password and new password.");
-      $(this).find('.modal-submsg').text("Please enter your current password and new password.");
     }).modal('show');
     
     
@@ -294,13 +314,11 @@ $(function () {
             var url = baseURL + "/profile/change-password";
             var data = {oldPassword : oldPassword, newPassword : newPassword};
 
-            console.log(data);
-
             $.post(url, data, function(response){
               var json = $.parseJSON(response);
               if(json.hasOwnProperty("error")){
                        console.log("Error occurred");
-                        displayError(json["error"]);
+                        displayError("Couldn't change password: "+json["error"]);
                         return;
                    }else if(json.hasOwnProperty("success")){
                        console.log("Successful");
@@ -385,5 +403,27 @@ $(function () {
                       '</div>'+
                     '</div>';
   
+ var updatePictureModal = '<div id="update-picture-modal" class="modal fade" role="dialog">'+
+                    '<div class="modal-dialog">'+
+                      '<div class="modal-content">'+
+                        '<div class="modal-header">'+
+                          '<button type="button" class="close" data-dismiss="modal">&times;</button>'+
+                        '</div>'+
+                        '<div class="modal-body">'+
+                          '<div class="modal-msg"> Please enter the file name for the image </div>'+
+                          '<div class="container-fluid">'+
+                                '<div class="form-group zero-padding profile-picture">'+
+                                  '<label for="image-file">Image file name: </label>'+
+                                  '<input type="text" class="form-control" id="image-file">'+
+                                '</div>'+
+                            '</div>'+
+                          '</div>'+
+                          '<div class="modal-footer">'+
+                            '<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>'+
+                            '<button type="button" class="btn btn-primary accept-button" id="ok">Ok</button>'+
+                          '</div>'+
+                        '</div>'+
+                      '</div>'+
+                    '</div>';  
 });
 
