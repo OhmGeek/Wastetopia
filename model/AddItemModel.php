@@ -350,6 +350,7 @@ class AddItemModel
     {
         //Extract item information
         $itemName = $item["name"];
+        error_log($item);
         $itemDescription = $item["description"];
         $useByDate = $item["useBy"];
         if(!isset($useByDate)) {
