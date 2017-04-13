@@ -601,4 +601,16 @@ class ProfilePageController
         }
         return True;
     }
+    
+    
+     /** 
+    * Sets the Giver_Viewed or Receiver_Viewed flag to the given value for the given listingID
+    * @pram $giverOrReceiver - 1 for Giver_Viewed, 0 for Receiver_Viewed
+    * @param $listingID
+    * @param $value
+    * @return bool
+    */
+    function setListingTransactionViewedFlag($giverOrReceiver, $istingID, $value){
+        return $this->model->setListingTransactionViewedFlag($giverOrReceiver, $listingID, $value);
+    }
 }
