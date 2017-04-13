@@ -554,11 +554,24 @@ class ProfilePageModel
 	
 	
    /**
-   * Sends an email to the user with their password in
+   * Resets the verification code and active flag for the given user
    * @param $email
    * @return bool
    */
-    function sendPasswordEmail($email){
+    function resetAccount($userID){
+	// Change verification code
+	$newVerificationCode = $this->generateSalt(); 
 	    
+	$statement = $this->db->prepare("
+		UPDATE 	`User`
+		SET `Verification_Code` = :code, `Active` = 0
+		WHERE `UserID` = :userID
+	");
+	    
+	 $statement->bindValue(":code", $newVerificationCode, PDO::PARAM_INT);
+	 $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
+	    
+	 $statement->execute();
+	 return True;
     }
 }
