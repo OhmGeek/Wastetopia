@@ -29,16 +29,6 @@ $(function(){
         }
     }
     
-    $('a[data-target="#pending-request"]').click(function(){
-       var url = baseURL + "/profile/set-pending-requests-viewed";
-
-        $.post(url, function(response){
-            if(reponse){
-                console.log("Requests set to viewed");
-                // Do nothing ?
-            }
-        });
-    });
 
 //     $(document).on('click', '#addOffer', function(){
 //         // Send to add-item page
