@@ -44,11 +44,11 @@ class RecommendationController {
           $tags = array();
 
           for($x = 0; $x < 5; $x++){
-              $tagDetails = $frequentTags[x];
+              $tagDetails = $frequentTags[$x];
               $tagID = $tagDetails["TagID"];
               array_push($tags, $tagID);
           }
-
+          print_r("RECOMMENDATIONS");
           print_r($tags);
           // Use search query using $tags to find listings that match these tags
           // Get user's lat/long 
@@ -108,8 +108,8 @@ class RecommendationController {
     */
     function generatePredictionSection(){
       $frequentTags = $this->model->getTagFrequenciesForListings();
-      // Deal with if there are not enough tags
       
+        // Deal with if there are not enough tags    
       if(count($frequentTags) < 3){
           $recommendationList = array(); // Empty array
       }else{   
@@ -117,10 +117,11 @@ class RecommendationController {
           $tags = array();
 
           for($x = 0; $x < 5; $x++){
-              $tagDetails = $frequentTags[x];
+              $tagDetails = $frequentTags[$x];
               $tagID = $tagDetails["TagID"];
               array_push($tags, $tagID);
           }
+          print_r("PREDICTIONS");
             print_r($tags);
           // Use search query using $tags to find listings that match these tags
           // Get user's lat/long 
