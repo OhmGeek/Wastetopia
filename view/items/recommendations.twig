@@ -1,48 +1,58 @@
 <div class="header title">
-  ITEMS YOU MIGHT LIKE
+  {% if section == "recommendation" %}
+    RECOMMENDATIONS <small> - Items similar to those you've requested before (Based on Tags) <small>
+  {% else if section == "prediction" %}
+    PREDICTIONS <small> - Items similar to ones you give away (Base on Tags) <small>
+  {% else %}
+    THIS SHOULDN'T SHOW
+  {% endif %}
 </div>
 <div class="container-fluid">
   <div class="grid">
     <!-- need this for mosonry layout to work properly with bootstrap grid system -->
     <div class="grid-sizer col-xs-12 col-sm-6 col-md-3"></div>
-    {% for item in recommendationList %}
-    <div class="grid-item col-xs-12 col-sm-6 col-md-3">
-      <div class="thumbnail zero-padding" id="{{item.listingID}}">
-        <div class="caption">
-          <div class="centerAll">
-            <img src="{{item.userImg}}" class="user-image"/>
-            <div class="user-details">
-              <a class="user-name" href="#{{item.userID}}" id="{{item.userID}}">
-                {{item.userName}}
-              </a>
-              <div class="added-date">
-                {{item.addedDate}}
+    {% if recommendationList|length < 4 %}
+      <h3> Not enough data to generate this section </h3>
+    {% else %}
+      {% for item in recommendationList %}
+      <div class="grid-item col-xs-12 col-sm-6 col-md-3">
+        <div class="thumbnail zero-padding" id="{{item.listingID}}">
+          <div class="caption">
+            <div class="centerAll">
+              <img src="{{item.userImg}}" class="user-image"/>
+              <div class="user-details">
+                <a class="user-name" href="#{{item.userID}}" id="{{item.userID}}">
+                  {{item.userName}}
+                </a>
+                <div class="added-date">
+                  {{item.addedDate}}
+                </div>
+              </div>
+              <div class="road-distance">
+                <i class="material-icons">place</i> {{item.postCode}}
               </div>
             </div>
-            <div class="road-distance">
-              <i class="material-icons">place</i> {{item.postCode}}
+          </div>
+          <img src="{{item.imgURL}}" style="border-color: lightgrey;" />
+          <div class="caption">
+            <h3>{{item.itemName}}</h3>
+            <div class="trans-info">
+              <div><span>Quantity: </span> {{ item.quantity }}</div>
             </div>
-          </div>
-        </div>
-        <img src="{{item.imgURL}}" style="border-color: lightgrey;" />
-        <div class="caption">
-          <h3>{{item.itemName}}</h3>
-          <div class="trans-info">
-            <div><span>Quantity: </span> {{ item.quantity }}</div>
-          </div>
-          <div class="nav-btns">
-            <a href="#view" class="btn btn-primary" role="button" id="{{item.listingID}}">View</a>
-            {% if item.isRequesting %}
-              <a href="#cancel-by-listing" class="btn btn-default" role="button" id="{{item.listingID}}">Cancel request</a>
-            {% else %}
-              <a href="#request" class="btn btn-default" role="button" id="{{item.listingID}}">Request</a>
-            {% endif %}
+            <div class="nav-btns">
+              <a href="#view" class="btn btn-primary" role="button" id="{{item.listingID}}">View</a>
+              {% if item.isRequesting %}
+                <a href="#cancel-by-listing" class="btn btn-default" role="button" id="{{item.listingID}}">Cancel request</a>
+              {% else %}
+                <a href="#request" class="btn btn-default" role="button" id="{{item.listingID}}">Request</a>
+              {% endif %}
 
-            <a href="#watch" role="button" class="btn-watch lightgrey {% if item.isWatching %} watched {% endif %}" id="{{item.listingID}}"><i class="material-icons">visibility</i></a>
+              <a href="#watch" role="button" class="btn-watch lightgrey {% if item.isWatching %} watched {% endif %}" id="{{item.listingID}}"><i class="material-icons">visibility</i></a>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    {% endfor %}
+      {% endfor %}
+    {% endif %}
   </div>
 </div>
