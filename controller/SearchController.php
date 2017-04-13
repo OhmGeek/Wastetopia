@@ -11,7 +11,6 @@ class SearchController
     {
         $this->searchModel = new SearchModel();
         $this->cardDetailsModel = new CardDetailsModel();
-        $this->recommendationSearch(array(30));
     }
 
     public function recommendationSearch($tagsArr, $currentUserID)
