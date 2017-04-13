@@ -1,5 +1,11 @@
 $(function () {
   
+  // Get last active tab and make it active 
+  var activeTab = localStorage.getItem('activeTab');
+  if(activeTab){
+       $('#myTab a[href="' + activeTab + '"]').tab('show');
+  }
+  
   // Get baseURL for the site
   var baseURL = window.location.protocol + "//" + window.location.host;
   
@@ -135,14 +141,20 @@ $(function () {
   }
   
   $(document).on('shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
-
+    var tabHREF = $(e.target).attr('href');
+    // If tab shown is one of the main ones
+    if(tabHREF == "#home" || tabHREF == "#listings" || tabHREF == "#offers" || tabHREF == "#requests" || tabHREF == "#watchList"){
+      // Store this being active in local storage
+      localStorage.setItem('activeTab', $(e.target).attr('href'));
+    }
+    
     console.log($(e.target).attr("href"));
     var width = 150;
     var height = 150;
     var nameSize = 25;
     var iconSize = 35;
     var topPadding = 230;
-    if ($(e.target).attr("href") != '#home') {
+    if (tabHREF != '#home') {
       width = 50;
       height = 50;
       nameSize = 16;
@@ -159,6 +171,7 @@ $(function () {
 
   });
 
+  
   // Set all pending transactions to viewed
   $(document).on('shown.bs.tab', 'a[href="#pending-transaction"]', function(){
     console.log("Setting pending as viewed");
