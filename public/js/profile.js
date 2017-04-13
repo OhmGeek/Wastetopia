@@ -2,6 +2,7 @@ $(function () {
   
   // Get last active tab and make it active 
   var activeTab = localStorage.getItem('activeTab');
+  console.log(activeTab);
   if(activeTab){
        $('#myTab a[href="' + activeTab + '"]').tab('show');
   }
@@ -146,6 +147,8 @@ $(function () {
     if(tabHREF == "#home" || tabHREF == "#listings" || tabHREF == "#offers" || tabHREF == "#requests" || tabHREF == "#watchList"){
       // Store this being active in local storage
       localStorage.setItem('activeTab', $(e.target).attr('href'));
+      console.log("Stored active tab");
+      console.log(localStorage.getItem('activeTab');
     }
     
     console.log($(e.target).attr("href"));
