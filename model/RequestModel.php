@@ -395,8 +395,9 @@ class RequestModel
 		// Get all pending transactions for this listing
 		$pendingTransactions = $this->getPendingTransactionsForListing($listing_id);
 		
+		
 		// Reject each transaction
-		foreach($pendingTransactions as $transactionID){
+		foreach($pendingTransactions as $transaction_id){
 		    $this->rejectRequest($listing_id, $transaction_id);
 		}
 		return True;
@@ -410,7 +411,7 @@ class RequestModel
 	*/
 	function getPendingTransactionsForListing($listing_id){
 		$statement = $this->db->prepare("
-			SELECT `ListingTransaction`.`FK_Transaction_TransactionID` AS `Transaction`
+			SELECT `ListingTransaction`.`FK_Transaction_TransactionID` AS `TransactionID`
 			FROM `ListingTransaction`
 			WHERE `ListingTransaction`.`FK_Listing_ListingID` = :listingID
 			AND `ListingTransaction`.`Success` = 0
