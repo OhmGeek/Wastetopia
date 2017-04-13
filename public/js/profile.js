@@ -189,6 +189,7 @@ $(function () {
       var giverOrReceiver = $("#offers").hasClass("active");
       var listingID = $(this).prevAll('a[href="#view"]').attr("id");
       var url = baseURL + "/profile/set-listing-transaction-hidden";
+     var data = {giverOrReceiver: giverOrReceiver, listingID: listingID}
       $.post(url, data, function(response){
         console.log("Done");
         if(response){
