@@ -266,11 +266,10 @@ class ProfilePageController
             $listingDetails = $this->cardDetailsModel->getCardDetails($listingID);
             $itemName = $listingDetails["Name"];
             $defaultImage = $this->cardDetailsModel->getDefaultImage($listingID);
-            $imageURL = $defaultImage["Image_URL"];
             $item = array(
                 "transactionID" => $transactionID,
                 "completedDate" => $completedDate,
-                "imgURL" => $imageURL,
+                "imgURL" => $defaultImage,
                 "itemName" => $itemName,
                 "userImg" => $requestingUserImage,
                 "userID" => $requestingUserID,
@@ -296,11 +295,10 @@ class ProfilePageController
             $listingDetails = $this->cardDetailsModel->getCardDetails($listingID);
             $itemName = $listingDetails["Name"];
             $defaultImage = $this->cardDetailsModel->getDefaultImage($listingID);
-            $imageURL = $defaultImage["Image_URL"];
             $item = array(
                 "transactionID" => $transactionID,
                 "startedDate" => $startedDate,
-                "imgURL" => $imageURL,
+                "imgURL" => $defaultImage,
                 "itemName" => $itemName,
                 "userImg" => $requestingUserImage,
                 "userID" => $requestingUserID,
@@ -364,7 +362,6 @@ class ProfilePageController
             $timeOfCreation = $listingDetails["Time_Of_Creation"];
             $postCode = $listingDetails["Post_Code"];
             $defaultImage = $this->cardDetailsModel->getDefaultImage($listingID);
-            $imageURL = $defaultImage["Image_URL"];
             // Owner's details
             $offeringUserID = $listingDetails["UserID"];
             $offeringUserName = $listingDetails["Forename"] . " " . $listingDetails["Surname"];
@@ -378,7 +375,7 @@ class ProfilePageController
                 "userName" => $offeringUserName,
                 "addedDate" => $timeOfCreation,
                 "distance" => "CAN'T GET THIS INFORMATION",
-                "imgURL" => $imageURL,
+                "imgURL" => $defaultImage,
                 "itemName" => $itemName,
                 "quantity" => $transactionQuantity,
                 "listingID" => $listingID,
@@ -401,7 +398,7 @@ class ProfilePageController
             $timeOfCreation = $listingDetails["Time_Of_Creation"];
             $postCode = $listingDetails["Post_Code"];
             $defaultImage = $this->cardDetailsModel->getDefaultImage($listingID);
-            $imageURL = $defaultImage["Image_URL"];
+        
             // Owner's details
             $offeringUserID = $listingDetails["UserID"];
             $offeringUserName = $listingDetails["Forename"] . " " . $listingDetails["Surname"];
@@ -414,7 +411,7 @@ class ProfilePageController
                 "userName" => $offeringUserName,
                 "addedDate" => $timeOfCreation,
                 "distance" => "CAN'T GET THIS INFORMATION",
-                "imgURL" => $imageURL,
+                "imgURL" => $defaultImage,
                 "itemName" => $itemName,
                 "quantity" => $transactionQuantity,
                 "listingID" => $listingID,
@@ -473,7 +470,6 @@ class ProfilePageController
             $timeOfCreation = $details["Time_Of_Creation"];
             $quantity = $details["Quantity"];
             $defaultImage = $this->cardDetailsModel->getDefaultImage($listingID);
-            $imageURL = $defaultImage["Image_URL"];
             $isRequesting = $this->model->isRequesting($listingID, $this->getUserID());
             $isWatching = $this->model->isWatching($listingID, $this->getUserID());
             $item = array(
@@ -481,7 +477,7 @@ class ProfilePageController
                 "itemName" => $itemName,
                 "addedDate" => $timeOfCreation,
                 "quantity" => $quantity,
-                "imgURL" => $imageURL,
+                "imgURL" => $defaultImage,
                 "isRequesting" => $isRequesting,
                 "isWatching" => $isWatching);
             array_push($allAvailableListings, $item);
@@ -494,7 +490,6 @@ class ProfilePageController
             $timeOfCreation = $details["Time_Of_Creation"];
             $quantity = $details["Quantity"];
             $defaultImage = $this->cardDetailsModel->getDefaultImage($listingID);
-            $imageURL = $defaultImage["Image_URL"];
 
             // Figure out whether to display "Request" or "Cancel request" button
             // $isRequesting = $this->cardDetailsModel->isUserRequestingListing($this->userID, $listingID);
@@ -504,7 +499,7 @@ class ProfilePageController
                 "itemName" => $itemName,
                 "addedDate" => $timeOfCreation,
                 "quantity" => $quantity,
-                "imgURL" => $imageURL);
+                "imgURL" => $defaultImage);
             array_push($allEmptyListings, $item);
         }
 
@@ -538,7 +533,7 @@ class ProfilePageController
             $postCode = $listing["Post_Code"];
             $addedDate = $details["Time_Of_Creation"];
             $defaultImage = $this->cardDetailsModel->getDefaultImage($listingID);
-            $imageURL = $defaultImage["Image_URL"];
+
             // Owner's details
             $userID = $details["UserID"];
             $userImage = $this->cardDetailsModel->getUserImage($userID);
@@ -552,7 +547,7 @@ class ProfilePageController
                 "userName" => $userName,
                 "addedDate" => $addedDate,
                 "postCode" => $postCode,
-                "imgURL" => $imageURL,
+                "imgURL" => $defaultImage,
                 "itemName" => $itemName,
                 "isRequesting" => $isRequesting
             );
