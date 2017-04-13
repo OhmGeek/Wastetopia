@@ -98,15 +98,14 @@ class AnalysisModel
     
     /**
      * Gets a list of Tag Names along with their frequencies for items the user has received 
-     * @param $categoryID (optional - defaults to 1)
+     * @param $categoryIDArray (Optional - defaults to empty array => checks all category IDs. Array of CategoryIDs to match)
      * @return array
      */
-    function getTagFrequenciesForTransactions($categoryID = 1)
+    function getTagFrequenciesForTransactions($categoryIDArray = array())
     {
         $userID = $this->getUserID();
-
-        $statement = $this->db->prepare("
-        SELECT `Tag`.`Name`,  `Tag`.`TagID`, SUM(`ListingTransaction`.`Quantity`) as `Count`
+        
+        $sql = "SELECT `Tag`.`Name`,  `Tag`.`TagID`, SUM(`ListingTransaction`.`Quantity`) as `Count`
                 FROM `Tag` 
                 JOIN `ItemTag` ON `ItemTag`. `FK_Tag_TagID` = `Tag`.`TagID`
                 JOIN `Item` ON `Item`.`ItemID` = `ItemTag`.`FK_Item_ItemID`
@@ -115,13 +114,48 @@ class AnalysisModel
                 JOIN `Transaction` ON `Transaction`.`TransactionID` = `ListingTransaction`.`FK_Transaction_TransactionID`
                 JOIN `User` ON `UserID` = `Transaction`.`FK_User_UserID`
                 WHERE `User`.`UserID` = :userID
-                AND `Tag`.`FK_Category_Category_ID` = :categoryID
-                AND `ListingTransaction`.`Success` = 1
+                ";
+        print_r(count($categoryIDArray));
+        
+        print_r($sql);
+        
+        if(count($categoryIDArray) != 0){
+            $sql .= "AND ("; 
+            // Add the first CategoryID check
+            $categoryID = $categoryIDArray[0];
+            $sql .= "`Tag`.`FK_Category_Category_ID` = :category"+$categoryID;
+            
+            // Add all of the CategoryIDs to the SQL statement
+            for($x = 1; $x < count($categoryID); $x ++){
+                $categoryID = $categoryIDArray[$x];
+                // Add this with OR so it can match any of them
+                $sql .= "OR `Tag`.`FK_Category_Category_ID` = :category"+$categoryID;
+            }
+            
+            $sql .= ")"; // End the category section
+        }
+        
+        // Group into Tag Name and order by count in descending order
+        $sql .= "AND `ListingTransaction`.`Success` = 1
                 GROUP BY `Tag`.`Name`
-                ORDER BY `Count` DESC;");
+                ORDER BY `Count` DESC;");";
+        print_r("SQL: ");
+        print_r($sql);
+        
+        //Prepare the SQL statement
+        $statement = $this->db->prepare($sql); 
 
         $statement->bindValue(":userID", $userID, PDO::PARAM_STR);
-        $statement->bindValue(":categoryID", $categoryID, PDO::PARAM_INT);
+        
+        if(count($categoryIDArray) != 0){
+            // Bind all of the categoryIDs to the statement
+            for($x = 0; $x < count($categoryID); $x ++){
+                $categoryID = $categoryIDArray[$x];
+                $statement->bindValue(":category"+$categoryID, $categoryID, PDO::PARAM_STR);
+            }
+            
+        }
+        
         $statement->execute();
 
         return $statement->fetchAll(PDO::FETCH_ASSOC);
