@@ -646,6 +646,9 @@ class ProfilePageController
             return $this->errorMessage("Old password was incorrect");   
          }else{
             $this->model->updatePassword($newPassword);
+	
+            // Log out user - NOT SURE HOW
+		 
             return $this->successMessage("Password changed"); 
          }
 	    
