@@ -440,29 +440,29 @@ class ProfilePageModel
 	
 	
     /** 
-    * Sets the Giver_Viewed or Receiver_Viewed flag to the given value for the given listingID
+    * Sets the Giver_Viewed or Receiver_Viewed flag to the given value for the given transactionID
     * @pram $giverOrReceiver - 1 for Giver_Viewed, 0 for Receiver_Viewed
-    * @param $listingID
+    * @param $transactionID
     * @param $value
     * @return bool
     */
-    function setListingTransactionHiddenFlag($giverOrReceiver, $listingID,  $value){
-	print_r("FROM MODEL");
-	print_r($giverOrReceiver);
-	print_r($listingID);
+    function setListingTransactionHiddenFlag($giverOrReceiver, $transactionID,  $value){
+// 	print_r("FROM MODEL");
+// 	print_r($giverOrReceiver);
+// 	print_r($transactionID);
 	    
 	// PDO statement for setting the Giver_Viewed flag
 	$statementOption1 = $this->db->prepare("
             UPDATE `ListingTransaction`
 	    SET `ListingTransaction`.`Sender_Hide` = :value
-	    WHERE `ListingTransaction`.`FK_Listing_ListingID` = :listingID
+	    WHERE `ListingTransaction`.`FK_Transaction_TransactionID` = :transactionID
         ");
 	
 	// PDO statement for setting the Receiver_Viewed flag    
 	$statementOption2 = $this->db->prepare("
             UPDATE `ListingTransaction`
 	    SET `ListingTransaction`.`Receiver_Hide` = :value
-	    WHERE `ListingTransaction`.`FK_Listing_ListingID` = :listingID
+	    WHERE `ListingTransaction`.`FK_Transaction_TransactionID` = :transactionID
         ");
 	    
 	// Choose which statement option to use    
@@ -470,7 +470,7 @@ class ProfilePageModel
 		
 	print_r($statement);
 	    
-        $statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);
+        $statement->bindValue(":transactionID", $transactionID, PDO::PARAM_INT);
         $statement->bindValue(":value", $value, PDO::PARAM_INT);
         $statement->execute();
 	
