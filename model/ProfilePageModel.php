@@ -437,5 +437,40 @@ class ProfilePageModel
 	
         return $statement->fetchColumn() > 0;
     }
+	
+	
+    /** 
+    * Sets the Giver_Viewed or Receiver_Viewed flag to the given value for the given listingID
+    * @pram $giverOrReceiver - 1 for Giver_Viewed, 0 for Receiver_Viewed
+    * @param $listingID
+    * @param $value
+    * @return bool
+    */
+    function setListingTransactionViewedFlag($giverOrReceiver, $listingID,  $value){
+	
+	// PDO statement for setting the Giver_Viewed flag
+	$statementOption1 = $this->db->prepare("
+            UPDATE `ListingTransaction`
+	    SET `ListingTransaction`.`Giver_Viewed` = :value
+	    WHERE `ListingTransaction`.`FK_Listing_ListingID` = :listingID
+        ");
+	
+	// PDO statement for setting the Receiver_Viewed flag    
+	$statementOption2 = $this->db->prepare("
+            UPDATE `ListingTransaction`
+	    SET `ListingTransaction`.`Receiver_Viewed` = :value
+	    WHERE `ListingTransaction`.`FK_Listing_ListingID` = :listingID
+        ");
+	    
+	// Choose which statement option to use    
+	$statement = $giverOrReceiver ? $statementOption1 : $statementOption2;
+		
+        $statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);
+        $statement->bindValue(":value", $value, PDO::PARAM_INT);
+        $statement->execute();
+	
+        return True;
+	    
+    }
 
 }
