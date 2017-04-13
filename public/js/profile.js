@@ -275,16 +275,22 @@ $(function () {
         var url = baseURL + "/profile/change-profile-picture";
         
         //ADD FILE UPLOAD STUFF HERE
-        var data = formdata;// Some array of files (only contains one file)
-          
-        console.log(data);
+
          $('#update-picture-modal').modal('hide');
         
-          $.post(url, data, function(response){
-                if (response){
+        $.ajax({
+            url: url,
+            type: "POST",
+            data: formdata,
+            cache: false,
+            processData: false,
+            contentType: false,
+            success: function (res) {
+              if (response){
                     reloadTab("#home", "load-home-tab", userID, "", "");
-                }
-           });
+               }
+            }
+          });
       });
     
     // Remove the modal 
