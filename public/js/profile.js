@@ -13,7 +13,7 @@ $(function () {
     console.log("Trying to reload");
     var userID = $('.user-name').attr("id");
     var tabID = $(this).attr('href');
-    var subTabID = "":
+    var subTabID = "";
     
     var relativeURL = "";
     if (tabID == "#listings"){
