@@ -52,7 +52,6 @@ class AnalysisModel
                 JOIN `User` ON `UserID` = `Listing`.`FK_User_UserID`
                 WHERE `User`.`UserID` = :userID
                 :categoryRestriction
-                AND `Tag`.`FK_Category_Category_ID` = :categoryID
                 GROUP BY `Tag`.`Name`
                 ORDER BY `Count` DESC;");
 
