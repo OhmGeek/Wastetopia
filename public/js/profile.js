@@ -148,7 +148,7 @@ $(function () {
       // Store this being active in local storage
       localStorage.setItem('activeTab', $(e.target).attr('href'));
       console.log("Stored active tab");
-      console.log(localStorage.getItem('activeTab');
+      console.log(localStorage.getItem('activeTab'));
     }
     
     console.log($(e.target).attr("href"));
