@@ -61,6 +61,8 @@ class AddItemModel
 	$statement->bindValue(":description", $description, PDO::PARAM_STR);
     $statement->execute();
     $results = $statement->fetchAll(PDO::FETCH_ASSOC)["0"];
+    error_log("Get Last ItemID:");
+    error_log($results["ItemID"]);
 	return $results["ItemID"];
     }
 
@@ -346,14 +348,23 @@ class AddItemModel
         $itemName = $item["name"];
         $itemDescription = $item["description"];
         $useByDate = $item["useBy"];
+        if(!isset($useByDate)) {
+            $useByDate = "1st January, 1970";
+        }
         $itemID = $this->addToItemTable($itemName, $itemDescription, $useByDate); //Add the item
 
-        $this->addAllTags($itemID, $tags); //Add the tags and link to item
-        $this->addAllImages($itemID, $images); //Add the images and link to item
+        if(isset($tags) && count($tags) > 0) {
+            error_log("Add all tags");
+            $this->addAllTags($itemID, $tags); //Add the tags and link to item
+        }
 
+        if(isset($images) && count($images) > 0) {
+            $this->addAllImages($itemID, $images); //Add the images and link to item
+        }
         //Extract location information
         $locationName = $location["locationName"];
         $postCode = $location["postCode"];
+
         $locationID = $this->addToLocationTable($locationName, $postCode, $location['long'], $location['lat']); //Add the location to the database
 
         if(isset($barcode)) {
