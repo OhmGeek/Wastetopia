@@ -413,7 +413,7 @@ $(function () {
                           '<div class="modal-msg"> Please enter the file name for the image </div>'+
                           '<div class="container-fluid">'+
                                 '<div class="form-group zero-padding profile-picture">'+
-                                  '<label for="image-file">Image file name: </label>'+
+                                  '<label for="image-file">Upload Image </label>'+
                                   '<input type="file" class="form-control" id="image-file">'+
                                 '</div>'+
                             '</div>'+
