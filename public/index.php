@@ -130,7 +130,7 @@ $klein->with("/profile", function() use ($klein) {
        return $controller->setAllPendingAsViewed();
     });
     
-    // Needs testing
+    
     $klein->respond('POST', '/set-listing-transaction-hidden', function($request, $response){
        $giverOrReceiver = $request->giverOrReceiver;
         $transactionID = $request->transactionID;
