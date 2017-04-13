@@ -28,7 +28,12 @@ class ProductionConfig extends AbstractConfig
             'ROOT_JS' => '//wastetopia-pr-27.herokuapp.com/js',
             'ROOT_CSS' => '//wastetopia-pr-27.herokuapp.com/css',
             'ROOT_IMG' => '//wastetopia-pr-27.herokuapp.com/img',
-            'ROOT_BASE' => '//wastetopia-pr-27.herokuapp.com'
+            'ROOT_BASE' => '//wastetopia-pr-27.herokuapp.com',
+            'EMAIL_HOST' => 'smtp-mail.outlook.com',
+            'EMAIL_ADDRESS' => 'wastetopia@outlook.com',
+            'EMAIL_PASSWORD' => 'HHrv4673',
+            'EMAIL_SECURITY' => 'tls',
+            'EMAIL_PORT' => 587
         );
     }
 }
