@@ -114,6 +114,8 @@ class AddItemModel
         $statement->execute();
         $results = $statement->fetchAll(PDO::FETCH_ASSOC)[0];
         error_log(json_encode($statement->errorInfo()));
+        error_log("Results"):
+        error_log(json_encode($results));
 	    return $results["LocationID"];
     }
 
