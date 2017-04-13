@@ -220,12 +220,9 @@ $klein->with("/profile", function() use ($klein) {
     
     // Needs testing
     $klein->respond('POST', '/change-profile-picture', function($request, $response){
-        $files = $request->files();
-        $model = new AmazonS3();
-        $urls = $model->upload($files);
-        $url = $urls[0];
+        $files = $request->files();        
         $controller = new ProfilePageController(1);
-        return $controller->changeProfilePicture($url);
+        return $controller->changeProfilePicture($files);
     });
    
     //Needs testing
