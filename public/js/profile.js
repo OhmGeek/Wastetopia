@@ -130,11 +130,14 @@ $(function () {
 
   // Set all pending transactions to viewed
   $(document).on('shown.bs.tab', 'a[href="#pending-transaction"]', function(){
+    console.log("Setting pending as viewed");
     var url = window.location.protocol + "//" + window.location.host + "/profile/set-pending-viewed";
+    console.log(url);
       $.post(url, function(response){
         // Do nothing
         console.log(response);
       })
   });
 
+  
 });
