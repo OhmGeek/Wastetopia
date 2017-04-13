@@ -154,19 +154,77 @@ class AnalysisModel
     
     
     
+//     /**
+//     * Returns the frequencies of Names of items user is giving away
+//     * Frequncy calculated as SUM of current quantities
+//     * @return array
+//     */
+//     function getNameFrequenciesSending(){
+//         $userID = $this->getUserID();
+        
+//         $statement = $this->db->prepare("
+//             SELECT `Item`.`ItemID`, `Item`.`Name`, SUM(`Listing`.`Quantity`) AS `Count`
+//             FROM `Item`
+//             JOIN `Listing` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
+//             JOIN  `User` ON `Listing`.`FK_User_UserID` = `User`.`UserID`
+//             WHERE `User`.`UserID` = :userID
+//             GROUP BY `Item`.`Name`
+//             ORDER BY `Count` DESC;
+//         ");
+        
+//         $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
+//         $statement->execute();
+        
+//         return $statement->fetchAll(PDO::FETCH_ASSOC);
+        
+//     }
+    
+//     /**
+//     * Returns the frequencies of Names of items user is giving away
+//     * Frequncy calculated as SUM of quantities for successful transactions
+//     * @return array
+//     */
+//     function generateNameFrequenciesFromSendingTransactions(){
+//         $userID = $this->getUserID();
+        
+//         $statement = $this->db->prepare("
+//             SELECT `Item`.`ItemID`, `Item`.`Name`, SUM(`ListingTransaction`.`Quantity`) AS `Transactions_Quantity`
+//             FROM `ListingTransaction`
+//             JOIN `Listing` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
+//             JOIN `User` ON `User`.`UserID` = `Listing`.`FK_User_UserID`
+//             JOIN `Item` ON `Item`.`ItemID` = `Listing`.`FK_Item_ItemID`
+//             WHERE `User`.`UserID` = :userID
+//             AND `ListingTransaction`.`Success` = 1     
+//             GROUP BY `Item`.`Name`
+//             ORDER BY `Transactions_Quantity` DESC
+//         ");
+        
+//         $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
+//         $statement->execute();
+        
+//         return $statement->fetchAll(PDO::FETCH_ASSOC);
+//     }
+
     /**
     * Returns the frequencies of Names of items user is giving away
-    * Frequncy calculated as SUM of current quantities
+    * Frequncy calculated as SUM of quantities for successful transactions + SUM of current quantity left
     * @return array
     */
-    function getNameFrequenciesSending(){
-        $userID = $this->getUserID();
+    function getTotalNameFrequenciesSending(){
+       $userID = $this->getUserID();
         
         $statement = $this->db->prepare("
-            SELECT `Item`.`ItemID`, `Item`.`Name`, SUM(`Listing`.`Quantity`) AS `Count`
+            SELECT `Item`.`ItemID`, `Item`.`Name`, (SUM(`Listing`.`Quantity`) + SUM(`Inner`.`Transactions_Quantity`)) AS `Count`
             FROM `Item`
             JOIN `Listing` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
             JOIN  `User` ON `Listing`.`FK_User_UserID` = `User`.`UserID`
+            LEFT JOIN (SELECT `Item`.`ItemID`, `Item`.`Name`, `ListingTransaction`.`Quantity` AS `Transactions_Quantity`
+                        FROM `ListingTransaction`
+                        JOIN `Listing` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
+                        JOIN `User` ON `User`.`UserID` = `Listing`.`FK_User_UserID`
+                        JOIN `Item` ON `Item`.`ItemID` = `Listing`.`FK_Item_ItemID`
+                        WHERE `ListingTransaction`.`Success` = 1) AS `Inner` 
+                ON `Inner`.`ItemID` = `Item`.`ItemID`
             WHERE `User`.`UserID` = :userID
             GROUP BY `Item`.`Name`
             ORDER BY `Count` DESC;
@@ -175,33 +233,5 @@ class AnalysisModel
         $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
         $statement->execute();
         
-        return $statement->fetchAll(PDO::FETCH_ASSOC);
-        
+        return $statement->fetchAll(PDO::FETCH_ASSOC); 
     }
-    
-    /**
-    * Returns the frequencies of Names of items user is giving away
-    * Frequncy calculated as SUM of quantities for successful transactions
-    * @return array
-    */
-    function generateNameFrequenciesFromSendingTransactions(){
-        $userID = $this->getUserID();
-        
-        $statement = $this->db->prepare("
-            SELECT `Item`.`ItemID`, `Item`.`Name`, SUM(`ListingTransaction`.`Quantity`) AS `Transactions_Quantity`
-            FROM `ListingTransaction`
-            JOIN `Listing` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
-            JOIN `User` ON `User`.`UserID` = `Listing`.`FK_User_UserID`
-            JOIN `Item` ON `Item`.`ItemID` = `Listing`.`FK_Item_ItemID`
-            WHERE `User`.`UserID` = :userID
-            AND `ListingTransaction`.`Success` = 1     
-            GROUP BY `Item`.`Name`
-            ORDER BY `Transactions_Quantity` DESC
-        ");
-        
-        $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
-        $statement->execute();
-        
-        return $statement->fetchAll(PDO::FETCH_ASSOC);
-    }
-
