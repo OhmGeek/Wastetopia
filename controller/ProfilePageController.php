@@ -568,14 +568,12 @@ class ProfilePageController
 
     /* Generates HTML for recommendation section */
     function generateRecommendationHTML(){
-        print_r("Getting recommendations");
         $controller = new RecommendationController();
         return $controller->generateRecommendedSection();
     }
     
     /* Generates HTML for prediction section */
     function generatePredictionHTML(){
-        print_r("Getting predictions");
         $controller = new RecommendationController();
         return $controller->generatePredictionSection();
     }
