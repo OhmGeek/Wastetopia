@@ -752,7 +752,7 @@ class ProfilePageController
     }
 	
 	
-    /**
+        /**
     * Main function to send an email
     * @param $from
     * @param $subject
@@ -762,19 +762,22 @@ class ProfilePageController
     * @param $name
     * @return bool
     */
-    function sendEmail($from, $subject, $body, $altBody, $email, $name){
+    function sendEmail($from, $subject, $body, $altBody, $email, $name){	    
+	$CurrentConfig = new CurrentConfig();
+        $config = $CurrentConfig->getAll();
+	    
 	// PHPMailer code
 	$mail = new \PHPMailer(true); //true makes it give errors
         $mail->IsSMTP();                                      // set mailer to use SMTP
-        $mail->Host = "mail3.gridhost.co.uk"; // For SSL, use mail3.gridhost.co.uk, else try mail.ohmgeek.co.uk
-        $mail->Port = 465; //25 for non-SSL, 465  for SSL
+        $mail->Host = $config["EMAIL_HOST"]; // For SSL, use mail3.gridhost.co.uk, else try mail.ohmgeek.co.uk
+        $mail->Port = $config["EMAIL_PORT"]; //25 for non-SSL, 465  for SSL, 587 for tls
         
-        $mail->SMTPSecure = 'ssl'; 
-        $mail->SMTPDebug = 2;
-        $mail->SMTPAuth = true;     // turn off SMTP authentiocation
+        $mail->SMTPSecure = $config["EMAIL_SECURITY]"; 
+  
+        $mail->SMTPAuth = true;     // turn on SMTP authentiocation
         
-        $mail->Username = "wastetopia@ohmgeek.co.uk";  // SMTP username
-        $mail->Password = "wyI4wwPRhHGk"; // SMTP password (IHatePHP  or wyI4wwPRhHGk)
+        $mail->Username = $config["EMAIL_ADDRESS"];  // SMTP username
+        $mail->Password = $config["EMAIL_PASSWORD"]; // SMTP password (IHatePHP  or wyI4wwPRhHGk)
         $mail->From = $from;
         $mail->FromName = "Wastetopia";
         
