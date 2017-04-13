@@ -285,8 +285,8 @@ $(function () {
     
     $("#change-modal .accept-button").on('click', function(){
           var button = $(this);
-          var oldPassword = $(this).find('#old-password').val();// Get from modal
-          var newPassword = $(this).find('#new-password').val();// Get from modal
+          var oldPassword = $('#old-password').val();// Get from modal
+          var newPassword = $('#new-password').val();// Get from modal
         
            // Send to /items/renew-listing/
            $('#change-modal').modal('hide');
