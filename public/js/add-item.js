@@ -122,7 +122,7 @@ function getMayContainsDetails() {
 }
 
 
-function getLocationOfItem() {
+function getLocationOfItem(callbackToSubmit) {
   // todo use Google Maps/Ben's API
   // var location = {
   //     "state": Alabama,
@@ -140,20 +140,21 @@ function getLocationOfItem() {
     }
   },
   function(results, status) {
-    if (status == google.maps.GeocoderStatus.OK) {
+    if (status === google.maps.GeocoderStatus.OK) {
       console.log(results[0].geometry.location);
-      return results[0].geometry.location;
+        // return a location object
+        var latlng = results[0].geometry.location;
+        var locationFinal = {
+            'firstLineAddr': $('#inputLocation1').val(),
+            'secondLineAddr': $('#inputLocation2').val(),
+            'lat': latlng['lat'],
+            'long': latlng['lng']
+        };
+      return callbackToSubmit(locationFinal);
     } else {
-      alert("geocode of " + $('#postcode').val() + " failed:" + status);
+      alert("geocode of " + $('#inputLocation2').val() + " failed:" + status);
     }
   });
-  // return a location object
-  return {
-      'firstLineAddr': $('#inputLocation1').val(),
-      'secondLineAddr': $('#inputLocation2').val(),
-      'lat': latlng['lat'],
-      'long': latlng['lng']
-  };
 }
 
 
@@ -171,12 +172,12 @@ function getStateDetails() {
     }
     return state;
 }
-function serializeItem() {
+function serializeAndSendItem(location) {
   //todo: process expiry date (need more research into this). Think it's just .val, but not fully sure.
   // todo: process item type properly.
   // todo: check errors in images/date/location
 
-  var item = {
+  var itemData = {
     "name": $('#name').val(),
     "images": getImagesFromDOM(),
     "classification": $("#type option:selected").text(), //get the text of the selected option
@@ -185,11 +186,18 @@ function serializeItem() {
     "state": getStateDetails(),
     "expires": $('#date').val(),
     "description": $('#description').val(),
-    "location": getLocationOfItem()
+    "location": location
   };
 
-  return item;
-}
+    console.log(itemData);
+    if(isValid(itemData)) {
+        // submit using AJAX
+        var jsonData = JSON.stringify(itemData);
+        $.post('https://wastetopia-pr-17.herokuapp.com/api/items/additem', jsonData, function(response) {
+            console.log(response);
+        }, 'json');
+    }
+};
 //todo validate all the fields
 function isValid(itemData) {
   return true;
@@ -203,13 +211,6 @@ $(document).ready(function() {
 function submit() {
     console.log( "Handler for .submit() called." );
 
-    var itemData = serializeItem();
-    console.log(itemData);
-    if(isValid(itemData)) {
-        // submit using AJAX
-        var jsonData = JSON.stringify(itemData);
-        $.post('https://wastetopia-pr-17.herokuapp.com/api/items/additem', jsonData, function(response) {
-            console.log(response);
-        }, 'json');
-    }
+    getLocationOfItem(serializeAndSendItem);
+
 }
