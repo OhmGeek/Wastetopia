@@ -11,12 +11,22 @@ class SearchController
     {
         $this->searchModel = new SearchModel();
         $this->cardDetailsModel = new CardDetailsModel();
+        $this->recommendationSearch(array(30));
     }
 
     public function recommendationSearch($tagsArr)
     {
-        $searchResults = $this->search("", "", "", $tagsArr);
-        return array_slice($searchResults, 0, 4);
+        $results = $this->searchModel->getReccomendationResults($tagsArr);
+        $ids = array_slice($results, 0, 4);
+
+        $searchResults = [];
+        foreach ($ids as $item) {
+            $result = $this->searchModel->getCardDetails($item["ListingID"])[0];
+            $result[] = $this->cardDetailsModel->getDefaultImage($item["ListingID"])[0];
+            $searchResults[] = $result;
+        }
+
+        return $searchResults;
     }
 
 

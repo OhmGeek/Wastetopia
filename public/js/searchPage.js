@@ -64,6 +64,8 @@ $(function () {
     var include = [];
     var exclude = [];
     var searchTerm = $('#searchTerm').attr("data-searchTerm");
+    var lat;
+    var long;
     
 
     $('#filter-form *').filter('.tab').each(function(){
@@ -93,7 +95,7 @@ $(function () {
     var baseURL = $('#baseURL').attr('href');
 
     $.ajax({
-
+        url: baseURL + '/api/search/page/' + lat + '/' + long + '/' + searchTerm + '/' + include.join('+') + '/' + exclude.join('+') + '/' + '0'
     });
 
 

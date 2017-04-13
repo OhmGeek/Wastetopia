@@ -148,6 +148,51 @@ class SearchModel
 
 
 
+    public function getReccomendationResults($tagsArray)
+    {
+
+        $tagCount = count($tagsArray);
+
+        $sql = "SELECT `TagCount`.`ListingID`
+                FROM (
+                    SELECT `Listing`.`ListingID`, COUNT(DISTINCT `ItemTag`.`FK_Tag_TagID`) AS `Count`
+                    FROM `Listing`
+                    JOIN `Item` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
+                    JOIN `ItemTag` ON `Item`.`ItemID` = `ItemTag`.`FK_Item_ItemID`
+                    WHERE `ItemTag`.`FK_Tag_TagID` IN (";
+
+        foreach ($tagsArray as $key => $tag) 
+        {
+            if ($key == ($tagCount-1))
+            {
+                $sql .= ":tag".$key;
+            }
+            else
+            {
+                $sql .= ":tag".$key.",";
+            }
+        }
+
+        $sql .=    ")
+                    GROUP BY `Listing`.`ListingID`
+                    ) as `TagCount`
+                ORDER BY `TagCount`.`Count` DESC;";
+
+        $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+        $statement = $this->db->prepare($sql);
+
+        foreach ($tagsArray as $key => $tag)
+        {
+            $statement->bindValue(":tag".$key, $tag, PDO::PARAM_INT);
+        }
+
+        $statement->execute();
+
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
+
 
 
 
