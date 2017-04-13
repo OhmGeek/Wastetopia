@@ -148,7 +148,7 @@ class SearchModel
 
 
 
-    public function getReccomendationResults($tagsArray)
+    public function getReccomendationResults($tagsArray, $currentUserID)
     {
 
         $tagCount = count($tagsArray);
@@ -174,6 +174,9 @@ class SearchModel
         }
 
         $sql .=    ")
+                    AND NOT(`Listing`.`FK_User_UserID` = :currentUser)
+                    AND `Listing`.`Active` = 1
+                    AND `Listing`.`Quantity` > 0
                     GROUP BY `Listing`.`ListingID`
                     ) as `TagCount`
                 ORDER BY `TagCount`.`Count` DESC;";
@@ -185,6 +188,7 @@ class SearchModel
         {
             $statement->bindValue(":tag".$key, $tag, PDO::PARAM_INT);
         }
+        $statement->bindValue(":currentUser", $currentUserID, PDO::PARAM_INT)
 
         $statement->execute();
 

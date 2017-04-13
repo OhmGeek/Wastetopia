@@ -14,9 +14,9 @@ class SearchController
         $this->recommendationSearch(array(30));
     }
 
-    public function recommendationSearch($tagsArr)
+    public function recommendationSearch($tagsArr, $currentUserID)
     {
-        $results = $this->searchModel->getReccomendationResults($tagsArr);
+        $results = $this->searchModel->getReccomendationResults($tagsArr, $currentUserID);
         $ids = array_slice($results, 0, 4);
 
         $searchResults = [];
