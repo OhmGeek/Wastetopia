@@ -124,17 +124,33 @@ $klein->with("/profile", function() use ($klein) {
         return $controller->generateRecommendedSection();
     });
     
+    // Needs testing
     $klein->respond('POST', '/set-pending-viewed', function($request, $response){
        $controller = new ProfilePageController(1);
        return $controller->setAllPendingAsViewed();
     });
     
+    // Needs testing
     $klein->respond('POST', '/set-listing-transaction-hidden', function($request, $response){
        $giverOrReceiver = $request->giverOrReceiver;
         $listingID = $request->listingID;
         $value = 1;
         $controller = new ProfilePageController(1); // Own profile
         return $controller-> setListingTransactionHiddenFlag($giverOrReceiver, $listingID, $value);
+    });
+    
+    // Needs testing
+    $klein->respond('POST', '/change-password', function($request, $response){
+        $oldPassword = $request->oldPassword;
+        $newPassword = $request->newPassword;
+        $controller= new ProfilePageController(1);
+        return $controller->changePassword($oldPassword, $newPassword);    
+    });
+    
+    // Needs testing
+    $klein->respond('POST', '/reset-password', function($request, $response){
+       $controller = new ProfilePageController(1);
+       return $controller->resetPassword(); 
     });
    
 });
