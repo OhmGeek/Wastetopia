@@ -10,7 +10,18 @@
             </div>
         </div>
         <div>
-            {% if isUser != 1 %}<a href="#" class="btn btn-default" style="margin-bottom:0;" role="button">Report</a>{% endif %}
+            {% if isUser != 1 %}
+                <a href="#" class="btn btn-default" style="margin-bottom:0;" role="button">Report</a>
+            {% else %}
+                <a href="bootstrap-elements.html" data-target="#"
+                   class="dropdown-toggle" data-toggle="dropdown">
+                    Options <i class="material-icons">more_vert</i>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-right">
+                    <li><a href="#upload-picture" id = "upload-picture">Change picture</a></li>
+                    <li><a href="#change-password" id = "change-password">Change password</a></li>
+                </ul>
+            {% endif %}
         </div>
     </div>
     <div class="tab-content user-stats zero-padding" style="padding-top:10px; background-color:transparent;" id="{{ isUser }}">
