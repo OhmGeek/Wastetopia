@@ -494,4 +494,39 @@ class ProfilePageModel
 	    
     }
 
+
+    /** 
+    * Hashes new password and stores it in the DB for the given user
+    * @param $userID
+    * @param $newPassword
+    * @return bool
+    */
+    function updatePassword($userID, $newPassword){
+	    $newSalt = $this->generateSalt();
+	    $newPasswordHash = hash('sha256', $newSalt.$newPassword);	
+	    
+	    $statement = $this->db->prepare("
+	    	UPDATE `User`
+		SET `User`.`Password_Hash` = :hash , `User`.`Salt` = :salt
+		WHERE `User`.`UserID` = :userID
+	    ");
+	    
+	    $statement->bindValue(":hash", $newPasswordHash, PDO::PARAM_INT);
+	    $statement->bindValue(":salt", $newSalt, PDO::PARAM_INT);
+	    $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
+	    
+	    $statement->execute();
+	    
+	    return True;
+    }
+	
+	
+    /**
+     * Generates a random Salt string (in Hexadecimal) between 30 and 40 bytes in length
+     * @return string
+     */
+    function generateSalt(){
+        $salt = random_bytes(mt_rand(30, 40));
+        return bin2hex($salt);
+    }	
 }
