@@ -528,10 +528,11 @@ class ProfilePageController
             $listingID = $listing["ListingID"];
             // Get details about the listing
             $details = $this->cardDetailsModel->getCardDetails($listingID);
-            print_r($details);
+
             $itemName = $details["Name"];
+            $quantity = $details["Quantity"];
             $distance = -1; // Can't get this information
-            $postCode = $listing["Post_Code"];
+            $postCode = $details["Post_Code"];
             $addedDate = $details["Time_Of_Creation"];
             $defaultImage = $this->cardDetailsModel->getDefaultImage($listingID);
 
@@ -546,12 +547,14 @@ class ProfilePageController
                 "userImg" => $userImage,
                 "userID" => $userID,
                 "userName" => $userName,
+		"quantity" => $quantity,
                 "addedDate" => $addedDate,
                 "postCode" => $postCode,
                 "imgURL" => $defaultImage,
                 "itemName" => $itemName,
                 "isRequesting" => $isRequesting
             );
+
             array_push($watchList, $item);
         }
         $isCurrentUser = ($this->userID == $this->getUserID() ? 1 : 0);
