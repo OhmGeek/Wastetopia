@@ -154,7 +154,7 @@ class RegistrationController
         $message = "Your Activation Code is ".$code."";
         $to=$email;
         $subject="Activation Code For Wastetopia";
-        $from = 'wastetopia@ohmgeek.co.uk'; 
+        $from = 'wastetopia@outlook.com; 
         $body='<p>Your Activation Code is '.$code.' Please Click On This link: </p> <a href='.$fullURL.'> https:'.$fullURL.' </a> <br> <p> to activate  your account. </p>';
         $altBody = "Please go to: https:".$fullURL;
 
@@ -175,15 +175,15 @@ class RegistrationController
 	// PHPMailer code
 	$mail = new \PHPMailer(true); //true makes it give errors
         $mail->IsSMTP();                                      // set mailer to use SMTP
-        $mail->Host = "mail3.gridhost.co.uk"; // For SSL, use mail3.gridhost.co.uk, else try mail.ohmgeek.co.uk
-        $mail->Port = 465; //25 for non-SSL, 465  for SSL
+        $mail->Host = "smtp-mail.outlook.com"; // For SSL, use mail3.gridhost.co.uk, else try mail.ohmgeek.co.uk
+        $mail->Port = 587; //25 for non-SSL, 465  for SSL, 587 for tls
         
-        $mail->SMTPSecure = 'ssl'; 
+        $mail->SMTPSecure = 'tls'; 
         //$mail->SMTPDebug = 2;
-        $mail->SMTPAuth = true;     // turn off SMTP authentiocation
+        $mail->SMTPAuth = true;     // turn on SMTP authentiocation
         
-        $mail->Username = "wastetopia@ohmgeek.co.uk";  // SMTP username
-        $mail->Password = "wyI4wwPRhHGk"; // SMTP password (IHatePHP  or wyI4wwPRhHGk)
+        $mail->Username = "wastetopia@outlook.com";  // SMTP username
+        $mail->Password = "HHrv4673"; // SMTP password (IHatePHP  or wyI4wwPRhHGk)
         $mail->From = $from;
         $mail->FromName = "Wastetopia";
         
