@@ -71,7 +71,8 @@ class AnalysisModel
         // Group into Tag Name and order by count in descending order
         $sql += "GROUP BY `Tag`.`Name`
                 ORDER BY `Count` DESC;";
-         print_r($sql);
+        print_r("SQL: ");
+        print_r($sql);
         
         //Prepare the SQL statement
         $statement = $this->db->prepare($sql); 
