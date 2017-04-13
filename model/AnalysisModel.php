@@ -33,12 +33,13 @@ class AnalysisModel
         return 6; //Hardcoded for now
     }
 
-   //BOTH QUERIES DONE USING CATEGORYID = 1 (May change later)
+   
     /**
      * Gets a list of Tag Names along with their frequencies for current user's listings
+     * @param $categoryID (optional - defaults to 1)
      * @return array
      */
-    function getTagFrequenciesForListings()
+    function getTagFrequenciesForListings($categoryID = 1)
     {
         $userID = $this->getUserID();
 
@@ -50,11 +51,12 @@ class AnalysisModel
                 JOIN `Listing` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
                 JOIN `User` ON `UserID` = `Listing`.`FK_User_UserID`
                 WHERE `User`.`UserID` = :userID
-                AND `Tag`.`FK_Category_Category_ID` = 1
+                AND `Tag`.`FK_Category_Category_ID` = :categoryID
                 GROUP BY `Tag`.`Name`
                 ORDER BY `Count` DESC;");
 
         $statement->bindValue(":userID", $userID, PDO::PARAM_STR);
+        $statement->bindValue(":categoryID", $categoryID, PDO::PARAM_INT);
         $statement->execute();
 
         return $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -62,9 +64,10 @@ class AnalysisModel
     
     /**
      * Gets a list of Tag Names along with their frequencies for items the user has received 
+     * @param $categoryID (optional - defaults to 1)
      * @return array
      */
-    function getTagFrequenciesForTransactions()
+    function getTagFrequenciesForTransactions($categoryID = 1)
     {
         $userID = $this->getUserID();
 
@@ -78,12 +81,13 @@ class AnalysisModel
                 JOIN `Transaction` ON `Transaction`.`TransactionID` = `ListingTransaction`.`FK_Transaction_TransactionID`
                 JOIN `User` ON `UserID` = `Transaction`.`FK_User_UserID`
                 WHERE `User`.`UserID` = :userID
-                AND `Tag`.`FK_Category_Category_ID` = 1
+                AND `Tag`.`FK_Category_Category_ID` = :categoryID
                 AND `ListingTransaction`.`Success` = 1
                 GROUP BY `Tag`.`Name`
                 ORDER BY `Count` DESC;");
 
         $statement->bindValue(":userID", $userID, PDO::PARAM_STR);
+        $statement->bindValue(":categoryID", $categoryID, PDO::PARAM_INT);
         $statement->execute();
 
         return $statement->fetchAll(PDO::FETCH_ASSOC);
