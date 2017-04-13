@@ -266,36 +266,60 @@ $(function () {
 //   });
   
   
-//   // Let user change their password - NEEDS MODAL
-//   $(document).on('click', '#change-password', function(event){
-//     event.preventDefault();
+  // Let user change their password - NEEDS MODAL
+  $(document).on('click', '#change-password', function(event){
+    event.preventDefault();
     
-//     // Set up Modal with one input for old password, one input for new password
+    // Set up Modal with one input for old password, one input for new password
     
-//     var oldPassword = ;// Get from modal
-//     var newPassword = ;// Get from modal
+    $('body').append(changeModal);
+
+    $("#change-modal").modal({backdrop: "static"})
+
+    $("#change-modal").on("shown.bs.modal", function () {
+      $(this).find('.modal-msg').text("Please enter your current password and new password.");
+      $(this).find('.modal-submsg').text("Please enter your current password and new password.");
+    }).modal('show');
     
-//     var url = baseURL + "/change-password";
-//     var data = {oldPassword : oldPassword, newPassword : newPassword};
     
-//     $.post(url, data, function(response){
-//       var json = $.parseJSON(response);
-//       if(json.hasOwnProperty("error")){
-//                console.log("Error occurred");
-//                 displayError(json["error"]);
-//                 return;
-//            }else if(json.hasOwnProperty("success")){
-//                console.log("Successful");
-//                displaySuccess("Password successfully changed");
-//                //Reload page (logged out so should take user to login page)   
-//                return;
-//             }else{
-//                displayError("WHAAAAT");
-//                console.log("Something really went wrong");
-//                return;
-//            }
-//     });
-//   });
+    
+    $("#change-modal .accept-button").on('click', function(){
+          var button = $(this);
+          var oldPassword = "123";// Get from modal
+          var newPassword = "123";// Get from modal
+
+           // Send to /items/renew-listing/
+           $('#change-modal').modal('hide');
+      
+            var url = baseURL + "/change-password";
+            var data = {oldPassword : oldPassword, newPassword : newPassword};
+
+            return;
+
+            $.post(url, data, function(response){
+              var json = $.parseJSON(response);
+              if(json.hasOwnProperty("error")){
+                       console.log("Error occurred");
+                        displayError(json["error"]);
+                        return;
+                   }else if(json.hasOwnProperty("success")){
+                       console.log("Successful");
+                       displaySuccess("Password successfully changed");
+                       //Reload page (logged out so should take user to login page)   
+                       return;
+                    }else{
+                       displayError("WHAAAAT");
+                       console.log("Something really went wrong");
+                       return;
+                   }
+            });
+        });
+    
+       $('#change-modal').on('hidden.bs.modal', function(){
+        console.log("hidden");
+        $('#change-modal').remove();
+      });
+  });
   
 //   // Let user change their email - NEEDS MODAL
 //     $(document).on('click', '#change-email', function(event){
@@ -333,6 +357,27 @@ $(function () {
 //         // Send to add-item page
 //     });
   
+  
+  var changeModal = '<div id="change-modal" class="modal fade" role="dialog">'+
+                    '<div class="modal-dialog">'+
+                      '<div class="modal-content">'+
+                        '<div class="modal-header">'+
+                          '<button type="button" class="close" data-dismiss="modal">&times;</button>'+
+                        '</div>'+
+                        '<div class="modal-body">'+
+                          '<div class="modal-msg"></div>'+
+                            '<div class="item-name">'+
+                            '</div>'+
+                            '<div class="modal-submsg">'+                             
+                             '</div>'+
+                          '</div>'+
+                          '<div class="modal-footer">'+
+                            '<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>'+
+                            '<button type="button" class="btn btn-primary" id="ok">Ok</button>'+
+                          '</div>'+
+                        '</div>'+
+                      '</div>'+
+                    '</div>';
   
 });
 
