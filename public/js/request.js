@@ -3,11 +3,10 @@ $(function(){
 
     //TODO: Test renew with date
     //TODO: Link to edit and messaging pages - When everything is merged to master
-    //TODO: Stop quantity of completed transaction exceeding quantity of listing - Has to be done in requestModel
     //TODO: Fix issue with requestedQuantity not showing on Modal for Marking as Complete
-    //TODO: Deal with transactions for listings with 0 quantity or for inactive listings
     //TODO: Let user know when a request is rejected
     //TODO: There is no formatting for the date on the renew modal: user doesn't know how to write it
+    //TODO: Test renewing switching transactions
 
     //equal height rows
     $('.small').matchHeight();
@@ -491,13 +490,13 @@ $(function(){
         $("#renew-modal .accept-button").on('click', function(){
            var button = $(this);
           var quantity = $('#renew-modal #renew-quantity').val();
-          //var date = $('#renew-modal #renew-date').val();
+          var date = $('#renew-modal #renew-date').val();
 
            // Send to /items/renew-listing/
            $('#renew-modal').modal('hide');
 
             var url = baseURL + "/items/renew-listing";
-            var data = {listingID : listingID, quantity:quantity}//, useByDate: date};
+            var data = {listingID : listingID, quantity:quantity, useByDate: date};
             $.post(url, data, function(response){
                console.log(response);
                if(response >= 1){
