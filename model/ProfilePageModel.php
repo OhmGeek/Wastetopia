@@ -579,4 +579,26 @@ class ProfilePageModel
 	 $statement->execute();
 	 return True;
     }
+	
+
+    /**
+    * Replaces the user's profile picture with that at the given URL
+    * @param $url
+    * @return bool
+    */
+    function changeProfilePicture($url){
+	$userID = $this->getUserID();
+	
+	$statement = $this->db->prepare("
+		UPDATE `User`
+		SET `User`.`Picture_URL` = :url
+		WHERE `User`.`UserID` = :userId
+	");
+	    
+	$statement->bindValue(":url", $url, PDO::PARAM_STR);
+	$statement->bindValue(":userID", $userID, PDO::PARAM_INT);
+	    
+	$statement->execute();
+	return True;
+    }
 }
