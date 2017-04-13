@@ -110,7 +110,7 @@ class RecommendationController {
       $frequentTags = $this->model->getTagFrequenciesForListings();
       
         // Deal with if there are not enough tags    
-      if(count($frequentTags) < 3){
+      if(count($frequentTags) < 5){
           $recommendationList = array(); // Empty array
       }else{   
           // Extract 5 most frequent tags
@@ -177,5 +177,47 @@ class RecommendationController {
       
         return $template->render($output); // Render with cardDetails for listings that match most frequent tags
       }
+    
+// NEED TO FINISH THESE TWO PREDICTION/ADVICE FUNCTIONS    
+    /**
+    * Generates a list of the top 5 names that appear in items user gives away
+    */
+    function generatePredictionFromName(){
+        // Get itemNames along with frequencies of occurence in items user gives away
+        $nameFrequencies = $this->model->getTotalNameFrequenciesSending();
+        
+        $topGiven = array(); // Array of top 5 names of items user gives away
+        
+        for ($x = 0; $x < 5; $x++){
+            $itemDetails = $nameFrequencies[$x];  
+            $itemName = $itemDetails["Name"];
+            array_push($topGiven, $itemName);
+        }
+        
+    }
+    
+    /**
+    * Generates a bit of advice based on the top 5 most frequent Type tags are found on items user gives away
+    */
+    function generateAdviceFromTagsGiven(){
+        $frequentTags = $this->model->getTagFrequenciesForListings(array(1)); // 1 - only looks for type
+      
+        // Deal with if there are not enough tags    
+      if(count($frequentTags) < 5){
+          $recommendationList = array(); // Empty array
+      }else{   
+          // Extract 5 most frequent tags
+          $tags = array();
+          
+          for($x = 0; $x < 5; $x++){
+              $tagDetails = $frequentTags[$x];
+              $tagID = $tagDetails["TagID"];
+              array_push($tags, $tagID);
+          }
+          
+          // Do something with these to give some advice on what to stop buying
+          
+      }        
+    }
 }
 
