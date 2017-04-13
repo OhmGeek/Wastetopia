@@ -80,7 +80,7 @@ $(function () {
 
                 $('#temp-load > #content').children().css({
                     opacity: 0
-                }); 
+                });
 
                 var toAdd = $('#temp-load > #content').html();
 

@@ -37,15 +37,58 @@ $(function () {
     var item = $(this)
     var itemName = item.closest('.caption').find('h3').text()
     var itemQuantity = item.closest('.caption').find('.trans-info .quantity').text()
-    $("#complete-modal").modal({backdrop: "static"})
-    $("#complete-modal").on("shown.bs.modal", function () {
-             $(this).find('.item-name').html(itemName + '?')
-             $(this).find('.rate-user').html('Rate Mark Smith ')
-        }).modal('show');
-    $("#complete-modal #complete-ok").on('click', function(){
+
+    $('body').append(renewModal);
+
+    $("#renew-modal").modal({backdrop: "static"})
+
+    //fancy datetime picker
+    $('#renew-modal #renew-date').bootstrapMaterialDatePicker({ format : 'D MMMM, YYYY', weekStart : 0, time: false })
+
+    $("#renew-modal").on("shown.bs.modal", function () {
+      $(this).find('.item-name').html(itemName)
+    }).modal('show');
+
+    $("#renew-modal #justRenew").on('click', function(){
       remove(item)
     })
+    $('#renew-modal').on('hidden.bs.modal', function(){
+      console.log("hidden");
+      $('#renew-modal').remove();
+      $('.dtp').remove();
+    });
   });
+
+  // Requesting a listing (and renew)
+  var renewModal = '<div id="renew-modal" class="modal fade" role="dialog">'+
+                        '<div class="modal-dialog">'+
+                          '<div class="modal-content">'+
+                            '<div class="modal-header">'+
+                              '<button type="button" class="close" data-dismiss="modal">&times;</button>'+
+                            '</div>'+
+                            '<div class="modal-body">'+
+                            '<div class="modal-msg">Renew offer for </div>'+
+                            '<div class="item-name">'+
+                            '</div>'+
+                            '<div class="container-fluid">'+
+                              '<div class="form-group zero-padding request-quantity">'+
+                                '<label for="renew-quantity">Quantity</label>'+
+                                '<input type="number" class="form-control" id="renew-quantity" min="0">'+
+                              '</div>'+
+                              '<div class="form-group zero-padding request-quantity">'+
+                                '<label for="renew-date">Expiry Date</label>'+
+                                '<input type="text" class="form-control" id="renew-date">'+
+                              '</div>'+
+                            '</div>'+
+                          '</div>'+
+                          '<div class="modal-footer">'+
+                            '<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>'+
+                            '<button type="button" class="btn btn-primary accept-button" id="justRenew">Renew</button>'+
+                            '<button type="button" class="btn btn-default accept-button" id="renewEdit">Renew & Edit</button>'+
+                          '</div>'+
+                        '</div>'+
+                      '</div>'+
+                    '</div>';
 
   function remove(ele) {
     // remove clicked element (in a very skitchy way right now)

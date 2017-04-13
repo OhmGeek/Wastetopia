@@ -235,6 +235,7 @@
   <script src="plugins/wnumb-1.1.0/wNumb.js"></script>
 
   <script>
+  var $grid;
   $(function () {
     $.material.init();
 
@@ -277,7 +278,7 @@
       getFilters();
     });
 
-    var $grid = $('.grid').isotope({
+    $grid = $('.grid').isotope({
       itemSelector: '.grid-item',
       percentPosition: true,
       masonry: {
@@ -302,6 +303,64 @@
       }
       $(this).removeClass('dontClose');
     });
+  });
+
+  var itemsNum = 5;
+
+  $(window).scroll(function(){
+
+    var scrollTop = $(window).scrollTop();
+    var windowHeight = $(window).height();
+    var docuHeight = $(document).height();
+
+    if(scrollTop + windowHeight == docuHeight){
+
+      var card = '<div class="grid-item col-xs-12 col-sm-6 col-md-4">'+
+                  '<div class="thumbnail zero-padding">'+
+                    '<div class="caption">'+
+                      '<div class="centerAll">'+
+                        '<img src="flowery.jpg" class="user-image"/>'+
+                        '<div class="user-details">'+
+                          '<a class="user-name" href="#">'+
+                            'Mark Smith'+
+                          '</a>'+
+                          '<div class="added-date">'+
+                            '12 December, 2017'+
+                          '</div>'+
+                        '</div>'+
+                        '<div class="road-distance">'+
+                          '<i class="material-icons">place</i> 250m'+
+                        '</div>'+
+                      '</div>'+
+                    '</div>'+
+                    '<img src="food2.jpg" style="border-color: lightgrey;" />'+
+                    '<div class="caption">'+
+                      '<h3>Vegetables</h3>'+
+                      '<div class="trans-info">'+
+                        '<div><span>Quantity: </span> 5</div>'+
+                      '</div>'+
+                      '<div class="nav-btns">'+
+                        '<a href="#" class="btn btn-primary" role="button">View</a>'+
+                        '<a href="#" class="btn btn-default" role="button">Request</a>'+
+                        '<a href="#" role="button" class="btn-watch"><i class="material-icons">visibility</i></a>'+
+                      '</div>'+
+                    '</div>'+
+                  '</div>'+
+                '</div>';
+
+      var $items = [];
+
+      for (var i = 0; i < 30; i++) {
+        $items.push( card );
+      }
+
+      // append items to grid
+  $grid.append( $items )
+    // add and lay out newly appended items
+    .isotope( 'appended', $items );
+
+    }
+
   });
   </script>
 
