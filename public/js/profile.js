@@ -46,7 +46,7 @@ $(function () {
         }
     }
   
-  // Reload certain tabs
+  // Reload certain tabs - FIX ISSUE WITH LISTING AND HOME TABS
   $(document).on('click', 'a[data-toggle="tab"]', function(){
     console.log("Trying to reload");
     var userID = $('.user-name').attr("id");
