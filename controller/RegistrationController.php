@@ -155,7 +155,7 @@ class RegistrationController
         $to=$email;
         $subject="Activation Code For Wastetopia";
         $from = 'wastetopia@outlook.com'; 
-        $body='<p>Your Activation Code is '.$code.' Please Click On This link: </p> <a href='.$fullURL.'> https:'.$fullURL.' </a> <br> <p> to activate  your account. </p>';
+        $body='<p>Your Activation Code is '.$code.'. </p> <br> <p> Please Click On This link: </p> <a href='.$fullURL.'> https:'.$fullURL.' </a> <br> <p> to activate  your account. </p>';
         $altBody = "Please go to: https:".$fullURL;
 
         return $this->sendEmail($from, $subject, $body, $altBody, $email, $name);
@@ -171,19 +171,22 @@ class RegistrationController
     * @param $name
     * @return bool
     */
-    function sendEmail($from, $subject, $body, $altBody, $email, $name){
+    function sendEmail($from, $subject, $body, $altBody, $email, $name){	    
+	$CurrentConfig = new CurrentConfig();
+        $config = $CurrentConfig->getAll();
+	    
 	// PHPMailer code
 	$mail = new \PHPMailer(true); //true makes it give errors
         $mail->IsSMTP();                                      // set mailer to use SMTP
-        $mail->Host = "smtp-mail.outlook.com"; // For SSL, use mail3.gridhost.co.uk, else try mail.ohmgeek.co.uk
-        $mail->Port = 587; //25 for non-SSL, 465  for SSL, 587 for tls
+        $mail->Host = $config["EMAIL_HOST"]; // For SSL, use mail3.gridhost.co.uk, else try mail.ohmgeek.co.uk
+        $mail->Port = $config["EMAIL_PORT"]; //25 for non-SSL, 465  for SSL, 587 for tls
         
-        $mail->SMTPSecure = 'tls'; 
-        //$mail->SMTPDebug = 2;
+        $mail->SMTPSecure = $config["EMAIL_SECURITY]"; 
+  
         $mail->SMTPAuth = true;     // turn on SMTP authentiocation
         
-        $mail->Username = "wastetopia@outlook.com";  // SMTP username
-        $mail->Password = "HHrv4673"; // SMTP password (IHatePHP  or wyI4wwPRhHGk)
+        $mail->Username = $config["EMAIL_ADDRESS"];  // SMTP username
+        $mail->Password = $config["EMAIL_PASSWORD"]; // SMTP password (IHatePHP  or wyI4wwPRhHGk)
         $mail->From = $from;
         $mail->FromName = "Wastetopia";
         
