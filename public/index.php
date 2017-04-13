@@ -199,6 +199,13 @@ $klein->with("/profile", function() use ($klein) {
         return $controller->changeProfilePicture($url);
     });
    
+    //Needs testing
+    $klein->respond('POST', '/change-email', function($request, $response){
+        $oldEmail = $request->oldEmail;
+        $newEmail = $request->newEmail;
+        $controller = new ProfilePageController(1);
+        return $controller->changeEmail($oldEmail, $newEmail);
+    });
 });
 
 
