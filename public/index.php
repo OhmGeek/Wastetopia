@@ -2,10 +2,11 @@
 
 require_once '../vendor/autoload.php';
 
+
 use Klein\Klein;
 use Wastetopia\Config\CurrentConfig;
 use Wastetopia\Controller\ConversationListController;
-use Wastetopia\Controller\Login_Controller;
+use Wastetopia\Controller\LoginController;
 use Wastetopia\Controller\ProfilePageController;
 use Wastetopia\Controller\SearchController;
 use Wastetopia\Controller\MessageController;
@@ -22,7 +23,11 @@ use Wastetopia\Controller\RegistrationController;
 
 use Wastetopia\Model\RegistrationModel; // For verification
 
-require_once '../vendor/autoload.php';
+use Wastetopia\Controller\AddItemController;
+use Wastetopia\Controller\ViewItemController;
+
+use Wastetopia\Model\NotificationModel;
+
 
 
 // check if we should use production? Otherwise, use community.
@@ -30,14 +35,18 @@ $mode = $_ENV['MODE'];
 $config = new CurrentConfig();
 $config->loadConfig($mode);
 $base  = dirname($_SERVER['PHP_SELF']);
-// Update request when we have a subdirectory
+
+
+//// Update request when we have a subdirectory
 if(ltrim($base, '/')){
     $_SERVER['REQUEST_URI'] = substr($_SERVER['REQUEST_URI'], strlen($base));
 }
 // Dispatch as always
 $klein = new Klein();
-$klein->respond("GET", "/", function() {
-    return "HomePage";
+
+$klein->respond("GET", "/?", function() {
+  return "HomePage";
+
 });
 
 
@@ -78,9 +87,10 @@ $klein->respond('GET', '/search/[:search]?', function ($request, $response) {
 
 
 $klein->respond("GET", "/login", function($request, $response) {
-    $controller = new LoginController();
-    return $controller->index($response);
+  $controller = new LoginController();
+  return $controller->index($response);
 });
+
 
 
 $klein->with('/register', function() use ($klein){
@@ -113,6 +123,7 @@ $klein->with('/register', function() use ($klein){
             // Verirification worked, send them to login page??
             return "Verification successful: your account is now active";
         }
+
     });
     
     // Only for testing purposes
@@ -329,9 +340,9 @@ $klein->with('/api', function () use ($klein) {
 // todo authenticate on messages. Must be logged in to view correct messages.
 $klein->with('/messages', function () use ($klein) {
     $klein->respond('GET', '/?', function ($request, $response) {
-        // Show all conversations
-        $controller = new ConversationListController();
-        return $controller->generatePage();
+      // Show all conversations
+      $controller = new ConversationListController();
+      return $controller->generatePage();
     });
     // these are the API based messaging tasks
     // todo: error/failure in response.
@@ -347,30 +358,29 @@ $klein->with('/messages', function () use ($klein) {
         return "";
     });
     $klein->respond('POST', '/delete-conversation', function ($request, $response) {
-        $controller = new ConversationListController();
-        $conversationID = $request->conversationID;
-        $controller->deleteConversation($conversationID);
-        return "";
+      $controller = new ConversationListController();
+      $conversationID = $request->conversationID;
+      $controller->deleteConversation($conversationID);
+      return "";
     });
     $klein->respond('GET', '/poll-sending', function ($request, $response) {
-        $controller = new ConversationListController();
-        return $controller->generateSendingTabHTML();
+      $controller = new ConversationListController();
+      return $controller->generateSendingTabHTML();
     });
     $klein->respond('GET', '/poll-receiving', function ($request, $response) {
-        $controller = new ConversationListController();
-        return $controller->generateReceivingTabHTML();
+      $controller = new ConversationListController();
+      return $controller->generateReceivingTabHTML();
     });
     $klein->respond('GET', '/poll-messages/[:conversationID]', function ($request, $response) {
-        $conversationID = $request->conversationID;
-        $controller = new MessageController();
-        return $controller->generateMessageDisplay($conversationID);
+      $conversationID = $request->conversationID;
+      $controller = new MessageController();
+      return $controller->generateMessageDisplay($conversationID);
     });
 
     $klein->respond('GET', '/conversation/[:listingID]', function ($request, $response) {
         // view a specific conversation
         console.log("Getting conversation");
         $listingID = $request->listingID;
-
         $controller = new MessageController();
         return $controller->generatePageFromListing($listingID);
     });
@@ -378,20 +388,20 @@ $klein->with('/messages', function () use ($klein) {
 
 $klein->onHttpError(function ($code, $router) {
     switch ($code) {
-        case 404:
-            $router->response()->body(
-                'Y U so lost?!'
-            );
-            break;
-        case 405:
-            $router->response()->body(
-                'You can\'t do that!'
-            );
-            break;
-        default:
-            $router->response()->body(
-                'Oh no, a bad error happened that caused a '. $code
-            );
+      case 404:
+      $router->response()->body(
+        'Y U so lost?!'
+      );
+      break;
+      case 405:
+      $router->response()->body(
+        'You can\'t do that!'
+      );
+      break;
+      default:
+      $router->response()->body(
+        'Oh no, a bad error happened that caused a ' . $code
+      );
     }
 });
 $klein->dispatch();

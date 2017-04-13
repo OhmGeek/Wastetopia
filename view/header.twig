@@ -14,12 +14,12 @@
         <!-- Bootstrap JavaScript -->
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
         <!-- Bootstrap Material Design -->
-        <link href="{{config.ROOT_CSS}}/bootstrap-material-css/bootstrap-material-design.min.css" rel="stylesheet">
-        <link href="{{config.ROOT_CSS}}/bootstrap-material-css/ripples.min.css" rel="stylesheet">
+        <link href="{{config.ROOT_BASE}}/css/bootstrap-material-css/bootstrap-material-design.min.css" rel="stylesheet">
+        <link href="{{config.ROOT_BASE}}/css/bootstrap-material-css/ripples.min.css" rel="stylesheet">
         <!-- Wastopia Custom CSS -->
-        <link rel="stylesheet" href="{{config.ROOT_CSS}}/wastetopia-main.css"/>
+        <link rel="stylesheet" href="{{config.ROOT_BASE}}/css/wastetopia-main.css"/>
         {% for cssfile in csslist %}
-            <link rel="stylesheet" href="{{config.ROOT_CSS}}/{{cssfile}}"></link>
+            <link rel="stylesheet" href="{{config.ROOT_CSS}}/{{cssfile}}"></link
         {% endfor %}
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	</head>
@@ -28,6 +28,7 @@
 	    {% endblock %}
 	    {% block content %}
 	    {% endblock %}
+
         <script src="{{config.ROOT_JS}}/bootstrap-material-js/ripples.min.js"></script>
         <script src="{{config.ROOT_JS}}/bootstrap-material-js/material.js"></script>
         <script>
@@ -37,7 +38,7 @@
         </script>
         <!-- Wastopia Custom JS-->
         {% for jsfile in jslist %}
-            <script src="{{config.ROOT_JS}}/{{jsfile}}"></script>
+            <script src="{{config.ROOT_BASE}}/js/{{jsfile}}"></script>
         {% endfor %}
 	</body>
 </html>

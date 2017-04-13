@@ -7,7 +7,6 @@
  * Time: 14:59
  */
 namespace Wastetopia\Config;
-
 use Wastetopia\Config\AbstractConfig;
 class ProductionConfig extends AbstractConfig
 {
