@@ -81,7 +81,7 @@ class AnalysisModel
             // Bind all of the categoryIDs to the statement
             for($x = 0; $x < count($categoryID); $x ++){
                 $categoryID = $categoryIDArray[$x];
-                $statement->bindValue(":category"+$categoryID, $categoryID, PDO::PARAM_STR):
+                $statement->bindValue(":category"+$categoryID, $categoryID, PDO::PARAM_STR);
             }
             
         }
