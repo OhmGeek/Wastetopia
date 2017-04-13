@@ -42,7 +42,7 @@ class AnalysisModel
     function getTagFrequenciesForListings($categoryIDArray = array())
     {
         $userID = $this->getUserID();
-        $categorySQL = ($categoryID == -1) ? "" : "AND `Tag`.`FK_Category_Category_ID` = "+$categoryID;
+  
         $sql = "SELECT `Tag`.`Name`, `Tag`.`TagID`, COUNT(*) as `Count`
                 FROM `Tag` 
                 JOIN `ItemTag` ON `ItemTag`. `FK_Tag_TagID` = `Tag`.`TagID`
@@ -51,6 +51,8 @@ class AnalysisModel
                 JOIN `User` ON `UserID` = `Listing`.`FK_User_UserID`
                 WHERE `User`.`UserID` = :userID
                 ";
+        
+        print_r($sql);
         
         if(count($categoryIDArray) != 0){
             $sql += "AND ("; 
