@@ -447,7 +447,10 @@ class ProfilePageModel
     * @return bool
     */
     function setListingTransactionHiddenFlag($giverOrReceiver, $listingID,  $value){
-	
+	print_r("FROM MODEL");
+	print_r($giverOrReceiver);
+	print_r($listingID);
+	    
 	// PDO statement for setting the Giver_Viewed flag
 	$statementOption1 = $this->db->prepare("
             UPDATE `ListingTransaction`
@@ -465,6 +468,8 @@ class ProfilePageModel
 	// Choose which statement option to use    
 	$statement = $giverOrReceiver ? $statementOption1 : $statementOption2;
 		
+	print_r($statement);
+	    
         $statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);
         $statement->bindValue(":value", $value, PDO::PARAM_INT);
         $statement->execute();
