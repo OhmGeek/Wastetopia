@@ -285,15 +285,17 @@ $(function () {
     
     $("#change-modal .accept-button").on('click', function(){
           var button = $(this);
-          var oldPassword = "123";// Get from modal
-          var newPassword = "123";// Get from modal
-
+          var oldPassword = $(this).find('#old-password').val();// Get from modal
+          var newPassword = $(this).find('#new-password').val();// Get from modal
+        
            // Send to /items/renew-listing/
            $('#change-modal').modal('hide');
       
             var url = baseURL + "/change-password";
             var data = {oldPassword : oldPassword, newPassword : newPassword};
 
+            console.log(data);
+      
             return;
 
             $.post(url, data, function(response){
@@ -366,6 +368,16 @@ $(function () {
                         '</div>'+
                         '<div class="modal-body">'+
                           '<div class="modal-msg"></div>'+
+                          '<div class="container-fluid">'+
+                                '<div class="form-group zero-padding old-password">'+
+                                  '<label for="old-password">Current password: </label>'+
+                                  '<input type="text" class="form-control" id="old-password">'+
+                                '</div>'+
+                                '<div class="form-group zero-padding new-password">'+
+                                  '<label for="new-password">New password: </label>'+
+                                  '<input type="text" class="form-control" id="new-password">'+
+                                '</div>'+
+                            '</div>'+
                           '</div>'+
                           '<div class="modal-footer">'+
                             '<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>'+
