@@ -9,6 +9,8 @@ $(function(){
     //TODO: Let user know when a request is rejected
     //TODO: There is no formatting for the date on the renew modal: user doesn't know how to write it
 
+    //equal height rows
+    $('.small').matchHeight();
 
     var baseURL =  window.location.protocol + "//" + window.location.host;
 
