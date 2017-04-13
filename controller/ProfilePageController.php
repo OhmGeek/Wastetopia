@@ -634,7 +634,7 @@ class ProfilePageController
     * @return JSON with "error" or "success" message
     */
      function changePassword($oldPassword, $newPassword){
-        $userID = $this->getCurrentUser(); 
+        $userID = $this->getUserID(); 
 	    // Get password hash and salt from the database
          $passwordDetails = $this->model->getPasswordDetails($userID);
          $passwordHash = $passwordDetails["Password_Hash"];
@@ -659,6 +659,7 @@ class ProfilePageController
     * @return bool
     */
     function resetPassword(){
+	$userID = $this->getUserID();     
         $newPassword = $this->model->generateSalt(8, 10);
 	 
 	// Update the password    
