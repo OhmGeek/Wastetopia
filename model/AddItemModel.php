@@ -158,8 +158,9 @@ class AddItemModel
         $statement->bindValue(":useByDate", $useByDate, PDO::PARAM_STR);
 
         $statement->execute();
-       // return $this->getLastInsertID(); // replace with another query
-        return $this->getLastItemID($name, $useByDate, $description);
+        $lastItemID = $this->getLastItemID($name, $useByDate, $description);
+        error_log($lastItemID);
+        return $lastItemID;
     }
 
     /**
