@@ -266,7 +266,8 @@ $(function () {
       $("#update-picture-modal .accept-button").on('click', function(){
          var formdata = new FormData();
          formdata.append('image', $('#image-file').files[0]); // todo add all files
-
+        
+        console.log($('#image-file'));
          var url = baseURL + "/profile/change-profile-picture";
         
           //ADD FILE UPLOAD STUFF HERE
