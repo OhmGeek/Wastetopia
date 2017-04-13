@@ -16,6 +16,7 @@ use Twig_Environment;
 
 use Wastetopia\Model\RequestModel;
 
+
 class ProfilePageController
 {
     /**
@@ -623,4 +624,43 @@ class ProfilePageController
     function setListingTransactionViewedFlag($giverOrReceiver, $istingID, $value){
         return $this->model->setListingTransactionViewedFlag($giverOrReceiver, $listingID, $value);
     }
+    
+    
+    
+    /**
+    * Replaces the old password with the new password
+    * @param $oldPassword
+    * @param $newPassword
+    * @return JSON with "error" or "success" message
+    */
+     function changePassword($oldPassword, $newPassword){
+        $userID = $this->getCurrentUser(); 
+	    // Get password hash and salt from the database
+         $passwordDetails = $this->model->getPasswordDetails($userID);
+         $passwordHash = $passwordDetails["Password_Hash"];
+         $passwordSalt = $passwordDetails["Salt"];
+         
+         // hash old password with salt
+         $oldPasswordHash = hash('sha256',$passwordSalt.$oldPassword);
+        
+        // If it matches, change password
+         if($oldPasswordHash !== $passwordHash){
+            return $this->errorMessage("Old password was incorrect");   
+         }else{
+            $this->model->updatePassword($newPassword);
+            return $this->successMessage("Password changed"); 
+         }
+	    
+    }
+    
+    function errorMessage($e){
+        $errorArray = array("error" => $e);
+        return json_encode($errorArray);
+    }
+    
+    function successMessage($s){
+        $successArray = array("success" => $s);
+        return json_encode($successArray);
+    }
+    
 }
