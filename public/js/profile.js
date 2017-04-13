@@ -48,7 +48,7 @@ $(function () {
     }else{
       return;
     }
-   
+   console.log(subTabID);
     reloadTab(tabID, relativeURL, userID, subTabID);
 
   });
@@ -58,7 +58,7 @@ $(function () {
     var url = window.location.protocol + "//" + window.location.host + "/profile/" + relativeURL +"/" + userID;
     
     $.get(url, function(response){
-      console.log("Successful");
+      
        var div = $(tabID);
        div.replaceWith(response);
       
@@ -67,6 +67,7 @@ $(function () {
       if(!(subTabID === "" )){
          $(subTabID).addClass("in active"); // Make it visible?
        }
+      console.log("Successful");
       // re initialize isotope
        $grid = $('.grid').isotope({
           itemSelector: '.grid-item',
