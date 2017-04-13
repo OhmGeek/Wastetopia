@@ -1,3 +1,9 @@
+// setting the global variables
+var $grid;
+var maxItems = 30;
+// set the current number of items
+var itemsNum;
+
 $(function () {
   var radiusSlider = document.getElementById('radius');
   var radiusFormat = wNumb({ decimals: 0, postfix: 'km' })
@@ -38,7 +44,7 @@ $(function () {
     getFilters();
   });
 
-  var $grid = $('.grid').isotope({
+  $grid = $('.grid').isotope({
     itemSelector: '.grid-item',
     percentPosition: true,
     masonry: {
@@ -50,9 +56,6 @@ $(function () {
     $(this).closest('.btn-group').addClass('dontClose');
   })
 
-
-
-
     var searchBox = $('#searchBox')
     var searchTerm = $('#searchTerm').attr("data-searchTerm");
 
@@ -60,11 +63,6 @@ $(function () {
     {
         searchBox.val(searchTerm);
     }
-
-            
-
-
-
 
 
   function refreshPage() {
@@ -74,7 +72,7 @@ $(function () {
     var searchTerm = $('#searchTerm').attr("data-searchTerm");
     var lat = "";
     var long = "";
-    
+
 
     $('#filter-form *').filter('.tab').each(function(){
         var tab = $(this)
@@ -179,9 +177,6 @@ $(function () {
 
         $('.grid').html(html);
     }
-
-
-
   }
 
   $('#filter-form').change(function(){
@@ -189,31 +184,8 @@ $(function () {
   });
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   $checkboxes.change( function(e) {
-    getFilters();    
+    getFilters();
   });
 
   $('#filter-dropdown').on('hide.bs.dropdown', function(e) {
@@ -227,7 +199,62 @@ $(function () {
   });
 
   refreshPage();
+
+// for infinite scrolling
+// TODO add the ajax request
+  $(window).scroll(function(){
+
+    var scrollTop = $(window).scrollTop();
+    var windowHeight = $(window).height();
+    var docuHeight = $(document).height();
+
+    if(scrollTop + windowHeight == docuHeight){
+
+      var card = '<div class="grid-item col-xs-12 col-sm-6 col-md-4">'+
+                  '<div class="thumbnail zero-padding">'+
+                    '<div class="caption">'+
+                      '<div class="centerAll">'+
+                        '<img src="flowery.jpg" class="user-image"/>'+
+                        '<div class="user-details">'+
+                          '<a class="user-name" href="#">'+
+                            'Mark Smith'+
+                          '</a>'+
+                          '<div class="added-date">'+
+                            '12 December, 2017'+
+                          '</div>'+
+                        '</div>'+
+                        '<div class="road-distance">'+
+                          '<i class="material-icons">place</i> 250m'+
+                        '</div>'+
+                      '</div>'+
+                    '</div>'+
+                    '<img src="food2.jpg" style="border-color: lightgrey;" />'+
+                    '<div class="caption">'+
+                      '<h3>Vegetables</h3>'+
+                      '<div class="trans-info">'+
+                        '<div><span>Quantity: </span> 5</div>'+
+                      '</div>'+
+                      '<div class="nav-btns">'+
+                        '<a href="#" class="btn btn-primary" role="button">View</a>'+
+                        '<a href="#" class="btn btn-default" role="button">Request</a>'+
+                        '<a href="#" role="button" class="btn-watch"><i class="material-icons">visibility</i></a>'+
+                      '</div>'+
+                    '</div>'+
+                  '</div>'+
+                '</div>';
+
+      var $items = [];
+
+      for (var i = 0; i < 30; i++) {
+        $items.push( card );
+      }
+
+      // append items to grid
+  $grid.append( $items )
+    // add and lay out newly appended items
+    .isotope( 'appended', $items );
+
+    }
+
+  });
 });
-
-
-
