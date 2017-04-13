@@ -119,7 +119,6 @@ $(function () {
 
     function displayPage(result)
     {
-                console.log(result);
         var json = JSON.parse(result);
 
 
