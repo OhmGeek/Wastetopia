@@ -50,10 +50,10 @@ class AddItemModel
     {
         $statement = $this->db->prepare("
             SELECT `Item`.`ItemID`
-	    FROM `Item`
-	    WHERE `Item`.`Name` = :name
-	    AND `Item`.`Description` = :description
-	    ORDER BY `Item`.`ItemID` DESC;
+	      FROM `Item`
+	      WHERE `Item`.`Name` = :name
+	      AND `Item`.`Description` = :description
+	      ORDER BY `Item`.`ItemID` DESC;
          ");
 
 	$statement->bindValue(":name", $name, PDO::PARAM_STR);
@@ -366,8 +366,8 @@ class AddItemModel
             $this->addAllImages($itemID, $images); //Add the images and link to item
         }
         //Extract location information
-        $locationName = $location["locationName"];
-        $postCode = $location["postCode"];
+        $locationName = $location["firstLineAddr"];
+        $postCode = $location["secondLineAddr"];
 
         $locationID = $this->addToLocationTable($locationName, $postCode, $location['long'], $location['lat']); //Add the location to the database
 
