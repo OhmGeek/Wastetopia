@@ -1,4 +1,8 @@
 $(function () {
+  
+  // Get baseURL for the site
+  var baseURL = window.location.protocol + "//" + window.location.host;
+  
   // init Isotope
   var $grid = $('.grid').isotope({
     itemSelector: '.grid-item',
@@ -7,8 +11,35 @@ $(function () {
       columnWidth: '.grid-sizer'
     }
   });
+  
+    // Remove an element from the layout - ele is in the form $(element)
+  function remove(ele) {
+    // init Isotope
+   var $grid = $('.grid').isotope({
+      itemSelector: '.grid-item',
+      percentPosition: true,
+      masonry: {
+        columnWidth: '.grid-sizer'
+      }
+    });
+    // remove clicked element (in a very skitchy way right now)
+    $grid.isotope( 'remove', ele.closest('.grid-item'))
+    // layout remaining item elements
+    .isotope('layout');
+  };
 
-  // RELOADING IS NOT WORKING
+     // Given a sub tab (i.e "pending-3"), it updates the number by adding "value" to it (can be negative)
+    function changeSubTabCounter(counter, value){
+        if (!(counter == null)){
+            var html = counter.html();
+            var name = html.split("-")[0];
+            var count = html.split("-")[1];
+            var newCount = parseInt(count) + value;
+            counter.html(name+"- "+newCount);
+        }
+    }
+  
+  // Reload certain tabs
   $(document).on('click', 'a[data-toggle="tab"]', function(){
     console.log("Trying to reload");
     var userID = $('.user-name').attr("id");
@@ -74,7 +105,7 @@ $(function () {
   
   // Reloads the content of the given tab, for the given user, from the given relative URL
   function reloadTab(tabID, relativeURL, userID, subTabID, otherSubTab){
-    var url = window.location.protocol + "//" + window.location.host + "/profile/" + relativeURL +"/" + userID;
+    var url = baseURL + "/profile/" + relativeURL +"/" + userID;
     
     $.get(url, function(response){
       
@@ -139,5 +170,32 @@ $(function () {
       })
   });
 
+  $(document).on('click', 'a[href="#delete"]', function(event){
+      event.preventDefault();
+      var card = $(this).closest('.thumbnail');
+      var giverOrReceiver = $("#offers").hasClass("active");
+      var listingID = $(this).prevAll('a[href="#view"]').attr("id");
+      var url = baseURL + "/profile/set-listing-transaction-viewed';
+      $.post(url, data, function(response){
+        console.log("Done");
+        if(response){
+          // Remove card from screen
+          remove(card);
+          
+          // Get current sub tab
+          var subTabID = giverOrReceiver ? "#completed-transaction" : "#completed-request";
+          var counter = $('a[href="'+subTabID+'"]');
+          
+          // Take 1 off current completed tab
+          changeSubTabCounter(counter, - 1);
+        }
+      });
+  });
+  
+  
+//     $(document).on('click', '#addOffer', function(){
+//         // Send to add-item page
+//     });
   
 });
+
