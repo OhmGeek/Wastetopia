@@ -527,6 +527,7 @@ $(function(){
       $('#renew-modal').on('hidden.bs.modal', function(){
         console.log("hidden");
         $('#renew-modal').remove();
+        $('.dtp').remove();
       });
     });
 
