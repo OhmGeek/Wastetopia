@@ -129,12 +129,12 @@ $klein->with("/profile", function() use ($klein) {
        return $controller->setAllPendingAsViewed();
     });
     
-    $klein->respond('POST', '/set-listing-transaction-viewed', function($request, $response){
+    $klein->respond('POST', '/set-listing-transaction-hidden', function($request, $response){
        $giverOrReceiver = $request->giverOrReceiver;
         $listingID = $request->listingID;
         $value = 1;
         $controller = new ProfilePageController(1); // Own profile
-        return $controller-> setListingTransactionViewedFlag($giverOrReceiver, $listingID, $value);
+        return $controller-> setListingTransactionHiddenFlag($giverOrReceiver, $listingID, $value);
     });
    
 });
