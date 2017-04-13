@@ -694,6 +694,16 @@ class ProfilePageController
 	$registrationController->sendVerificationEmail($email, $email);
 	    
     }
+	
+    /**
+    * Replaces the user's profile picture with that at the given URL
+    * @param $url
+    * @return bool
+    */	
+    function changeProfilePicture($url){
+	return $this->model->changeProfilePicture($url);    
+	    
+    }
     
     function errorMessage($e){
         $errorArray = array("error" => $e);
