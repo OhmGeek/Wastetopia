@@ -88,7 +88,7 @@ class RecommendationController {
         
       $output = array(
             "config" => $config,
-            "section" => "recommmendation", 
+            "section" => "recommendation", 
             "recommendationList" => $recommendationList
       );
         
