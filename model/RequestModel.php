@@ -399,7 +399,8 @@ class RequestModel
 		print_r($pendingTransactions);
 		
 		// Reject each transaction
-		foreach($pendingTransactions as $transaction_id){
+		foreach($pendingTransactions as $transactionArray){
+	            $transaction_id = $transactionArray["TransactionID"];		
 		    print_r("Rejecting: ".$transaction_id);
 		    $this->rejectRequest($listing_id, $transaction_id);
 		}
