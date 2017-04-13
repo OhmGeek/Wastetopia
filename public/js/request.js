@@ -355,6 +355,7 @@ $(function(){
         $(this).find('.item-name').html(itemName)
         $(this).find('.item-quantity').html(' / ' + actualQuantity)
         $('#request-modal #request-quantity').attr("max", actualQuantity); // Don't allow user to request more than is available
+        $('#request-modal #request-quantity').val(1); // Set to 1 by default  
 
       }).modal('show');
 
