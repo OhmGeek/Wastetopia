@@ -91,7 +91,7 @@ class RequestModel
             SELECT `Item`.`ItemID`
 	    FROM `Item`
 	    WHERE `Item`.`Name` = :name
-	    AND `Item`.`Use_By` = :useBy
+	    AND `Item`.`Use_By` = STR_TO_DATE(:useBy, '%e %M, %Y')
 	    AND `Item`.`Description` = :description
 	    ORDER BY `Item`.`ItemID` DESC;
          ");
@@ -321,16 +321,20 @@ class RequestModel
 		
 		$description = $item_info["Description"];
 		
+		print_r($name);
+		print_r($description);
+		print_r($new_use_by_date);
+		
 		$statement0 = $this->db->prepare("
 			INSERT INTO Item(Name, Description,Use_By)
 			VALUES(:name, :description, STR_TO_DATE(:use_by, '%e %M, %Y'));
 		");
 		$statement0->bindValue(":name", $name, PDO::PARAM_STR);
 		$statement0->bindValue(":description", $description, PDO::PARAM_STR);
-		$statement0->bindValue(":use_by", $new_use_by, PDO::PARAM_STR);
+		$statement0->bindValue(":use_by", $new_use_by_date, PDO::PARAM_STR);
 		$statement0->execute();
 		
-		$new_item_id = $this->getLastItemID($name, $useBy, $description);
+		$new_item_id = $this->getLastItemID($name, $new_use_by_date, $description);
 		
 		//adding item tags
 		$statement01 = $this->db->prepare("
@@ -364,17 +368,16 @@ class RequestModel
 		$statement->bindValue(":new_quantity", $new_quantity);
 		$statement->execute();
 		
-		
-		
-		//make old listing inactive so that the new listing replaces it
-		$this->withdrawListing($listing_id);
-		
+
 		//print_r("Withdrawn old listing");
-		$new_listing_id = $this->getLastListingID($itemID, $listing_info["FK_Location_LocationID"], $listing_info["FK_User_UserID"]);
+		$new_listing_id = $this->getLastListingID($new_item_id, $listing_info["FK_Location_LocationID"], $listing_info["FK_User_UserID"]);
 	
 		//print_r("Migrating pending transaction");			   
 		// Move all pending transactions to new listing
-		$this->migratePendingTransactions($listing_id, $new_listing_id);			
+		$this->migratePendingTransactions($listing_id, $new_listing_id);
+		
+		//make old listing inactive so that the new listing replaces it
+		$this->withdrawListing($listing_id);
 	}
 	
 	/**
