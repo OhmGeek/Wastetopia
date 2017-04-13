@@ -569,6 +569,12 @@ class ProfilePageController
         $controller = new RecommendationController();
         return $controller->generateRecommendedSection();
     }
+    
+    /* Generates HTML for prediction section */
+    function generatePredictionHTML(){
+        $controller = new RecommendationController();
+        return $controller->generatePredictionSection();
+    }
 
 
     /* Returns true if $listingID is in the current user's watch list*/
