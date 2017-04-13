@@ -621,8 +621,8 @@ class ProfilePageController
     * @param $value
     * @return bool
     */
-    function setListingTransactionViewedFlag($giverOrReceiver, $istingID, $value){
-        return $this->model->setListingTransactionViewedFlag($giverOrReceiver, $listingID, $value);
+    function setListingTransactionHiddenFlag($giverOrReceiver, $istingID, $value){
+        return $this->model->setListingTransactionHiddenFlag($giverOrReceiver, $listingID, $value);
     }
     
     
