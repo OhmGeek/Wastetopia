@@ -17,6 +17,8 @@ use Twig_Environment;
 use Wastetopia\Model\RequestModel;
 use Wastetopia\Controller\RegistrationController;
 
+use Wastetopia\Model\AmazonS3;
+
 
 class ProfilePageController
 {
@@ -675,7 +677,12 @@ class ProfilePageController
     }
 	
 	
-	
+    /**
+    * Lets user change their email address in the DB
+    * @param $oldEmail
+    * @param $newEmail
+    * @return bool
+    */
     function changeEmail($oldEmail, $newEmail){
 	$userID = $this->getUserID();
 	$actualEmail = $this->model->getUserEmail($userID);
@@ -699,7 +706,8 @@ class ProfilePageController
 	    
 	// Send verification email    
 	$registrationController->sendVerificationEmail($email, $email);
-	    
+	
+	return True;
     }
 	
     /**
@@ -707,7 +715,10 @@ class ProfilePageController
     * @param $url
     * @return bool
     */	
-    function changeProfilePicture($url){
+    function changeProfilePicture($files){
+	$amazonModel = new AmazonS3();
+        $urls = $amazonModel->upload($files);
+        $url = $urls[0];
 	return $this->model->changeProfilePicture($url);    
 	    
     }
