@@ -141,6 +141,7 @@ function getLocationOfItem() {
   },
   function(results, status) {
     if (status == google.maps.GeocoderStatus.OK) {
+      console.log(results[0].geometry.location);
       return results[0].geometry.location;
     } else {
       alert("geocode of " + $('#postcode').val() + " failed:" + status);
