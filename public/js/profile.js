@@ -270,7 +270,7 @@ $(function () {
         console.log($('#image-file'));
         console.log($('#image-file').val());
         console.log($('#image-file')[0].files[0]);
-        console.log(formdata);
+        console.log(formdata.entries());
         
         var url = baseURL + "/profile/change-profile-picture";
         
