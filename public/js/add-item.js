@@ -133,7 +133,7 @@ function getLocationOfItem() {
   //can just use the postcode and country then make a request to google api to get the longitude, latitude
   //(need this for map search :p) and city < can make this as one of the option no need to use the api
   var geocoder = new google.maps.Geocoder();
-  return geocoder.geocode({
+  var latlng = geocoder.geocode({
     componentRestrictions: {
       country: $('#inputLocation1').val(),
       postalCode: $('#inputLocation2').val()
@@ -146,6 +146,13 @@ function getLocationOfItem() {
       alert("geocode of " + $('#postcode').val() + " failed:" + status);
     }
   });
+  // return a location object
+  return {
+      'firstLineAddr': $('#inputLocation1').val(),
+      'secondLineAddr': $('#inputLocation2').val(),
+      'lat': latlng['lat'],
+      'long': latlng['lng']
+  };
 }
 
 
