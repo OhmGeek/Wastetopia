@@ -188,7 +188,7 @@ class SearchModel
         {
             $statement->bindValue(":tag".$key, $tag, PDO::PARAM_INT);
         }
-        $statement->bindValue(":currentUser", $currentUserID, PDO::PARAM_INT)
+        $statement->bindValue(":currentUser", $currentUserID, PDO::PARAM_INT);
 
         $statement->execute();
 
