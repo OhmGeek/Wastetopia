@@ -2,6 +2,7 @@
 
 namespace Wastetopia\Controller;
 use Wastetopia\Model\ConversationListModel;
+use Wastetopia\Model\MessageModel;
 use Twig_Loader_Filesystem;
 use Twig_Environment;
 use Wastetopia\Config\CurrentConfig;
@@ -12,9 +13,12 @@ class ConversationListController
 	function __construct()
 	{		
 		
-	    //Create UserModel instance
+	    //Create ConversationModel instance
         $this->model = new ConversationListModel();
 
+        // Create MessageModel instance
+	$this->messageModel = new MessageModel();
+		
 	    //Create twig loader
         $loader = new Twig_Loader_Filesystem('../view/');
         $this->twig = new Twig_Environment($loader);
@@ -105,6 +109,7 @@ class ConversationListController
             $conversationID = $row['ConversationID'];
             $itemName = $row['Name'];
             $unread = $row['count']; 
+            $listingID = $row["ListingID"]; // Used instead of conversationID
 
             $conversation = array();
 	    $conversation["userImage"] = $userImage;
@@ -112,6 +117,7 @@ class ConversationListController
             $conversation['userName'] = $firstName." ".$lastName;
             $conversation['item'] = $itemName;
             $conversation['numUnread'] = $unread;
+            $conversation["listingID"] = $listingID;		
 
             array_push($results, $conversation);
         }
@@ -133,12 +139,13 @@ class ConversationListController
 
 
     /**
-     * Deletes a given conversation and it's associated messages
-     * @param $conversationID
+     * Deletes a conversation from the given listingID and it's associated messages
+     * @param $listingID
      */
-    function deleteConversation($conversationID)
+    function deleteConversation($listingID)
     {
-
+	    $conversationIDs = $this->model->getConversationIDFromListing($listingID);
+	    $conversationID = $conversationIDs[0];	
 	    $this->model->deleteConversation($conversationID);
     }
 	

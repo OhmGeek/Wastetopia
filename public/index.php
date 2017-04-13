@@ -14,6 +14,8 @@ use Wastetopia\Controller\RecommendationController;
 use Wastetopia\Model\RequestModel;
 use Wastetopia\Model\PopularityModel;
 
+use Wastetopia\Controller\SearchPageController;
+
 
 
 // check if we should use production? Otherwise, use community.
@@ -36,19 +38,38 @@ $klein->respond("GET", "/", function() {
 });
 
 
-$klein->with('/search', function () use ($klein) {
+$klein->with('/api', function () use ($klein) {
 
-    $klein->respond('GET', '/[**:param]', function ($request, $response) {
+    $klein->respond('GET', '/search/page/[**:param]', function ($request, $response) {
         $searchController = new SearchController();
         $paramArr = explode("/", $request->param);
         $lat = $paramArr[0];
         $long = $paramArr[1];
         $search = $paramArr[2];
         $tagsArr = explode("+",$paramArr[3]);
-        $pageNumber = $paramArr[4];
+        $notTagsArr = explode("+",$paramArr[4]);
+        $distanceLimit = $paramArr[5];
+        $pageNumber = $paramArr[6];
         $response->sendHeaders('Content-Type: application/jpg');
-        return $searchController->JSONSearch($lat, $long, $search, $tagsArr, $pageNumber);
+        return $searchController->JSONSearch($lat, $long, $search, $tagsArr, $notTagsArr, $distanceLimit, $pageNumber);
     });
+    $klein->respond('GET', '/search/map/[**:param]', function ($request, $response) {
+        $searchController = new SearchController();
+        $paramArr = explode("/", $request->param);
+        $lat = $paramArr[0];
+        $long = $paramArr[1];
+        $search = $paramArr[2];
+        $tagsArr = explode("+",$paramArr[3]);
+        $notTagsArr = explode("+",$paramArr[4]);
+        $distanceLimit = $paramArr[5];
+        $response->sendHeaders('Content-Type: application/jpg');
+        return $searchController->MAPSearch($lat, $long, $search, $tagsArr, $notTagsArr, $distanceLimit);
+    });
+});
+
+$klein->respond('GET', '/search/[:search]?', function ($request, $response) {
+    $controller = new SearchPageController();
+    return $controller->render($request->search);
 });
 
 $klein->respond("GET", "/login", function($request, $response) {
@@ -56,8 +77,23 @@ $klein->respond("GET", "/login", function($request, $response) {
     return $controller->index($response);
 });
 
-$klein->respond("GET", "/register", function() {
-   return "Registering page";
+$klein->with("/register", function() use ($klein){
+    $klein->respond("GET", "/?", function() {
+        $controller = new RegistrationController();
+        return $controller->generatePage();    
+    });
+    
+    $klein->respond("POST", "/add-user", function($request,$response){
+       $firstName = $request->firstName;
+        $lastName = $request->lastName;
+        $email = $request->email;
+        $password = $request->password;
+        $passwordConfirm = $request->passwordConfirm;
+        $pictureURL = $request->pictureURL;
+        
+        $controller = new RegistrationController();
+        return $controller->addUser($firstName, $lastName, $email, $password, $passwordConfirm, $pictureURL);
+    });
 });
 
 

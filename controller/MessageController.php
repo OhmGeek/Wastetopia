@@ -6,6 +6,7 @@ use Twig_Loader_Filesystem;
 use Twig_Environment;
 use Wastetopia\Config\CurrentConfig;
 use Wastetopia\Model\CardDetailsModel;
+use Wastetopia\Model\ConversationListModel;
 
 class MessageController
 {
@@ -37,6 +38,7 @@ class MessageController
 	   $conversationIDs = $this->model->getConversationIDFromListing($listingID);
 	   $conversationID = $conversationIDs[0];	
 	}
+	$conversationID = $conversationID["ConversationID"];  
 	return $this->generatePage($conversationID);    
     }
 
@@ -55,6 +57,7 @@ class MessageController
 
         //Get details of conversation (names)
         $details = $this->model->getConversationDetails($conversationID);
+	print_r($details);    
 	$details = $details[0];
         $userName = $details["Forename"]." ".$details["Surname"];
         $userID = $details["UserID"]; //ID of other user in conversation
@@ -62,8 +65,7 @@ class MessageController
         $senderName = $userName;//." - ".$itemName;
 	
 
-	$CurrentConfig = new CurrentConfig();
-	$CurrentConfig->loadConfig("production");    
+	$CurrentConfig = new CurrentConfig();  
 	$config = $CurrentConfig->getAll();    
         $output = array(
             "config" => $config,
@@ -94,7 +96,6 @@ class MessageController
 
         // Get the messages
         $messageResults = $this->model->getMessagesFromConversation($conversationID);
-
 
         //Do all the processing of variables here
 		$messages = array();

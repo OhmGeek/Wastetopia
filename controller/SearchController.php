@@ -3,20 +3,35 @@
 namespace Wastetopia\Controller;
 
 use Wastetopia\Model\SearchModel;
+use Wastetopia\Model\CardDetailsModel;
 
 class SearchController
 {
     public function __construct()
     {
         $this->searchModel = new SearchModel();
+        $this->cardDetailsModel = new CardDetailsModel();
+        $this->recommendationSearch(array(30));
     }
 
     public function recommendationSearch($tagsArr)
     {
-        $searchResults = $this->search("", "", "", $tagsArr);
-        return array_slice($searchResults, 0, 4);
+        $results = $this->searchModel->getReccomendationResults($tagsArr);
+        $ids = array_slice($results, 0, 4);
+
+        $searchResults = [];
+        foreach ($ids as $item) {
+            $result = $this->searchModel->getCardDetails($item["ListingID"])[0];
+            $result[] = $this->cardDetailsModel->getDefaultImage($item["ListingID"])[0];
+            $searchResults[] = $result;
+        }
+
+        return $searchResults;
     }
-    public function JSONSearch($lat, $long, $search, $tagsArr, $pageNumber)
+
+
+    //TODO add notTags and distance limit to search fucntion
+    public function JSONSearch($lat, $long, $search, $tagsArr, $notTagsArr, $distanceLimit, $pageNumber)
     {
         $offset = 30*$pageNumber;
         $limit = $offset + 30;
@@ -26,6 +41,12 @@ class SearchController
         return json_encode($pageResults);
     }
 
+    public function MAPSearch($lat, $long, $search, $tagsArr, $notTagsArr, $distanceLimit)
+    {
+        $searchResults = $this->search($lat, $long, $search, $tagsArr);
+
+        return json_encode($searchResults);
+    }
     /*lat = Latitude
       long = Longitude 
       $search = Search term
@@ -99,55 +120,11 @@ class SearchController
 
         $searchResults = [];
         foreach ($itemInformation as $item) {
-            $result = $this->searchModel->getCardDetails($item["ListingID"]);
-            $searchResults[] = $result[0];
+            $result = $this->searchModel->getCardDetails($item["ListingID"])[0];
+            $result[] = $this->cardDetailsModel->getDefaultImage($item["ListingID"])[0];
+            $searchResults[] = $result;
         }
         return $searchResults;
-    }
-
-    public function sampleSearch()
-    {
-        $var = '[{
-                    "lat": 54.767289,
-                    "long": -1.570361,
-                    "img": "flowers.jpg",
-                    "username": "Chen Hemsworth",
-                    "user_id": 101,
-                    "date_added": "29/03/17",
-                    "item_name": "Pina Collada",
-                    "item_id": 301
-                  },
-                  {
-                    "lat": 54.767672,
-                    "long": -1.570551,
-                    "img": "fruit.jpg",
-                    "username": "Bryan Collins",
-                    "user_id": 102,
-                    "date_added": "29/03/17",
-                    "item_name": "Strawberry Daquri",
-                    "item_id": 302
-                  },
-                  {
-                    "lat": 54.767441,
-                    "long": -1.57204,
-                    "img": "veg.jpg",
-                    "username": "Stephan Church",
-                    "user_id": 103,
-                    "date_added": "29/03/17",
-                    "item_name": "Mojito",
-                    "item_id": 303
-                  },
-                  {
-                    "lat": 54.767441,
-                    "long": -1.57204,
-                    "img": "donut.jpg",
-                    "username": "Stephan Church",
-                    "user_id": 103,
-                    "date_added": "29/03/17",
-                    "item_name": "Margharita",
-                    "item_id": 304
-                  }]';
-        return $var;
     }
 
     /*Calculate the distance between point 1 and 2 using the Haversine formula*/

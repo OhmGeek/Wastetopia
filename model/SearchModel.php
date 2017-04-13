@@ -24,7 +24,7 @@ class SearchModel
     {
         $this->db = DB::getDB();
     }
-    //DISPLAY FUNCTIONS HERE: RETURNS DETAILS NEEDED FOR DISPLAY GIVEN THE LISTING IDs
+
     /**
      * Returns the details needed for display on the search page given the listing ID
      *
@@ -33,10 +33,10 @@ class SearchModel
      */
     function getCardDetails($listingID){
         $statement = $this->db->prepare("
-            SELECT `Listing`.`ListingID`, `Listing`.`Quantity`, `Listing`.`Time_Of_Creation`,
+        SELECT `Listing`.`ListingID`, `Listing`.`Quantity`, `Listing`.`Time_Of_Creation`,
                 `Item`.`ItemID`, `Item`.`Name`, `Item`.`Description`, 
-                `Location`.`Post_Code`,
-                `User`.`UserID`, `User`.`Forename`, `User`.`Surname`
+                `Location`.`Post_Code`, `Location`.`Latitude`, `Location`.`Longitude`,
+                `User`.`UserID`, `User`.`Forename`, `User`.`Surname`, `User`.`Picture_URL`
         FROM `Listing`
         JOIN `User` ON `Listing`.`FK_User_UserID` = `User`.`UserID`
         JOIN `Location` ON `Listing`.`FK_Location_LocationID` = `Location`.`LocationID`
@@ -48,12 +48,7 @@ class SearchModel
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
     
-    /**
-     * Returns the default image for this listing (if there is one)
-     * @param $listingID
-     * @return mixed
-     */
-    function getItemImage($listingID){
+    function getDefaultImage($listingID){
         $statement = $this->db->prepare("
             SELECT `Image`.`Image_URL` 
             FROM `Image`
@@ -66,23 +61,7 @@ class SearchModel
         $statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);
         $statement->execute();
         $results = $statement->fetchAll(PDO::FETCH_ASSOC);
-        return $results[0]; 
-    }
-    /**
-     * Gets the profile picture of the given user (Possibly will be moved to another model)
-     * @param $userID
-     * @return URL
-     */
-    function getUserImage($userID)
-    {
-        $statement = $this->db->prepare("
-                                SELECT Picture_URL
-                                FROM `User`
-                                WHERE `User`.`UserID` = :userID
-                            ");
-        $statement->bindValue(':userID', $userID, PDO::PARAM_INT);
-        $statement->execute();
-        return $statement->fetchColumn();
+        return $results[0];
     }
 
     /*Distance searches will return listings only within 0.76 degrees of search location
@@ -162,6 +141,51 @@ class SearchModel
             $statement->bindValue(":search", strval('%'.$search.'%'), PDO::PARAM_STR);
         }
         
+        $statement->execute();
+
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
+
+    public function getReccomendationResults($tagsArray)
+    {
+
+        $tagCount = count($tagsArray);
+
+        $sql = "SELECT `TagCount`.`ListingID`
+                FROM (
+                    SELECT `Listing`.`ListingID`, COUNT(DISTINCT `ItemTag`.`FK_Tag_TagID`) AS `Count`
+                    FROM `Listing`
+                    JOIN `Item` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
+                    JOIN `ItemTag` ON `Item`.`ItemID` = `ItemTag`.`FK_Item_ItemID`
+                    WHERE `ItemTag`.`FK_Tag_TagID` IN (";
+
+        foreach ($tagsArray as $key => $tag) 
+        {
+            if ($key == ($tagCount-1))
+            {
+                $sql .= ":tag".$key;
+            }
+            else
+            {
+                $sql .= ":tag".$key.",";
+            }
+        }
+
+        $sql .=    ")
+                    GROUP BY `Listing`.`ListingID`
+                    ) as `TagCount`
+                ORDER BY `TagCount`.`Count` DESC;";
+
+        $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+        $statement = $this->db->prepare($sql);
+
+        foreach ($tagsArray as $key => $tag)
+        {
+            $statement->bindValue(":tag".$key, $tag, PDO::PARAM_INT);
+        }
+
         $statement->execute();
 
         return $statement->fetchAll(PDO::FETCH_ASSOC);
