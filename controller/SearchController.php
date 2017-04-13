@@ -20,8 +20,8 @@ class SearchController
 
         $searchResults = [];
         foreach ($ids as $item) {
-            $result = $this->searchModel->getCardDetails($item["ListingID"])[0];
-            $result[] = $this->cardDetailsModel->getDefaultImage($item["ListingID"])[0];
+            $result = $this->searchModel->getCardDetails($item["ListingID"]);
+            $result[] = $this->cardDetailsModel->getDefaultImage($item["ListingID"]);
             $searchResults[] = $result;
         }
 
@@ -119,8 +119,8 @@ class SearchController
 
         $searchResults = [];
         foreach ($itemInformation as $item) {
-            $result = $this->searchModel->getCardDetails($item["ListingID"])[0];
-            $result[] = $this->cardDetailsModel->getDefaultImage($item["ListingID"])[0];
+            $result = $this->searchModel->getCardDetails($item["ListingID"]);
+            $result = $this->searchModel->getDefaultImage($item["ListingID"]);
             $searchResults[] = $result;
         }
         return $searchResults;

@@ -45,10 +45,11 @@ class SearchModel
         ");
         $statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);
         $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $statement->fetchAll(PDO::FETCH_ASSOC)[0];
     }
     
-    function getDefaultImage($listingID){
+    function getDefaultImage($listingID)
+    {
         $statement = $this->db->prepare("
             SELECT `Image`.`Image_URL` 
             FROM `Image`
@@ -56,12 +57,12 @@ class SearchModel
             JOIN `Item` ON `ItemImage`.`FK_Item_ItemID` = `Item`.`ItemID`
             JOIN `Listing` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
             WHERE `Listing`.`ListingID` = :listingID
-            AND `ItemImage`.`Is_Default` = 1;
+            AND `ItemImage`.`Is_Default` = 1
+        ORDER BY `Image`.`ImageID` DESC;
         ");
         $statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);
-        $statement->execute();
-        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
-        return $results[0];
+        $statement->execute(); 
+        return $statement->fetchAll(PDO::FETCH_ASSOC)[0];
     }
 
     /*Distance searches will return listings only within 0.76 degrees of search location
@@ -181,7 +182,6 @@ class SearchModel
                     ) as `TagCount`
                 ORDER BY `TagCount`.`Count` DESC;";
 
-        $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
         $statement = $this->db->prepare($sql);
 
         foreach ($tagsArray as $key => $tag)
@@ -194,6 +194,9 @@ class SearchModel
 
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
+
+
+
 
 
 

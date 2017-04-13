@@ -104,7 +104,7 @@ $(function () {
     $.ajax({
         url: query,
         success: function(result){
-            if(result === "")
+            if(result === '[]')
             {
                 noResults();
             }
@@ -118,11 +118,11 @@ $(function () {
     function displayPage(result)
     {
         var json = JSON.parse(result);
+        console.log(result)
 
 
         var html = `<div class="grid-sizer col-xs-12 col-sm-6 col-md-4"></div>`;
         json.forEach(function(element){
-            console.log(element);
             var cardHTML = `
             <div class="grid-item col-xs-12 col-sm-6 col-md-4">
                 <div class="thumbnail zero-padding" id="`+ element.ListingID +`">
@@ -142,7 +142,7 @@ $(function () {
                       </div>
                     </div>
                   </div>
-                  <img src="`+ element.Default_Image_URL +`" style="border-color: lightgrey;" />
+                  <img src="`+ element.Image_URL +`" style="border-color: lightgrey;" />
                   <div class="caption">
                     <h3>`+ element.Name +`</h3>
                     <div class="trans-info">
@@ -171,9 +171,10 @@ $(function () {
 
     function noResults()
     {
-        var html = `<div class="grid-sizer col-xs-12 col-sm-6 col-md-4"></div>`;
+        console.log("hi")
+        var html = `<div class="grid-sizer col-xs-12"></div>`
 
-        html += `<h3>No Items Found</h3>`
+        html += `<h3 style="text-align:center;">No Items Found</h3>`
 
         $('.grid').html(html);
     }
