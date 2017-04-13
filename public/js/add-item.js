@@ -135,8 +135,8 @@ function getLocationOfItem() {
   var geocoder = new google.maps.Geocoder();
   geocoder.geocode({
     componentRestrictions: {
-      country: $('#country').val(),
-      postalCode: $('#postcode').val()
+      country: $('#inputLocation1').val(),
+      postalCode: $('#inputLocation2').val()
     }
   },
   function(results, status) {
