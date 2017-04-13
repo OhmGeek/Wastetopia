@@ -119,7 +119,9 @@ $(function () {
 
     function displayPage(result)
     {
+                console.log(result);
         var json = JSON.parse(result);
+
 
         var html = `<div class="grid-sizer col-xs-12 col-sm-6 col-md-4"></div>`;
         json.forEach(function(element){
@@ -172,7 +174,11 @@ $(function () {
 
     function noResults()
     {
-        
+        var html = `<div class="grid-sizer col-xs-12 col-sm-6 col-md-4"></div>`;
+
+        html += `<h3>No Items Found</h3>`
+
+        $('.grid').html(html);
     }
 
 
