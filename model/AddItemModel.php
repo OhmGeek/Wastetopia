@@ -352,7 +352,8 @@ class AddItemModel
             $useByDate = "1st January, 1970";
         }
         $itemID = $this->addToItemTable($itemName, $itemDescription, $useByDate); //Add the item
-
+        error_log("Item ID:");
+        error_log($itemID);
         if(isset($tags) && count($tags) > 0) {
             error_log("Add all tags");
             $this->addAllTags($itemID, $tags); //Add the tags and link to item
