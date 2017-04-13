@@ -30,7 +30,7 @@
                                                 <span>Requested by:</span>
                                                 <div class="user">
                                                     <img class="user-image" src="{{ item.userImg }}"/>
-                                                    <a class="user-name" href="#{{ item.userID }}">
+                                                    <a class="user-name" href="#{{ item.userID }}" id="{{item.userID}}">
                                                         {{ item.userName }}
                                                     </a>
                                                 </div>
@@ -70,7 +70,7 @@
                                                 <span>Requested by: </span>
                                                 <div class="user">
                                                     <img class="user-image" src="{{ item.userImg }}"/>
-                                                    <div class="user-name">{{ item.userName }}</div>
+                                                    <div class="user-name" href = "#{{item.userID}}" id="{{item.userID}}">{{ item.userName }}</div>
                                                 </div>
                                             </div>
                                             <div><span>Quantity: </span>{{ item.quantity }}</div>
