@@ -4,7 +4,7 @@ $(function () {
   var activeTab = localStorage.getItem('activeTab');
   console.log(activeTab);
   if(activeTab){
-       $('#myTab a[href="' + activeTab + '"]').trigger('click');
+       $('a[href="' + activeTab + '"]').trigger('click');
   }
   
   // Get baseURL for the site
