@@ -54,9 +54,13 @@ class RecommendationController {
           // get $results
           $searchController = new SearchController();
           $results = $searchController->recommendationSearch($tags);
-
+          
+          print_r("RECOMMENDATIONS");
+          print_r($results);
+          print_r("LISTINGS");
           $recommendationList = array();  
           foreach($results as $listing){
+              print_r($listing);
               $listingID = $listing["ListingID"];
               $userID = $listing["UserID"];
               $userImage = $this->cardDetailsModel->getUserImage($userID);//$listing[""]; // Needs adding
