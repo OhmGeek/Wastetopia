@@ -51,27 +51,28 @@ class AnalysisModel
                 JOIN `User` ON `UserID` = `Listing`.`FK_User_UserID`
                 WHERE `User`.`UserID` = :userID
                 ";
+        print_r(count($categoryIDArray));
         
         print_r($sql);
         
         if(count($categoryIDArray) != 0){
-            $sql += "AND ("; 
+            $sql .= "AND ("; 
             // Add the first CategoryID check
             $categoryID = $categoryIDArray[0];
-            $sql += "`Tag`.`FK_Category_Category_ID` = :category"+$categoryID;
+            $sql .= "`Tag`.`FK_Category_Category_ID` = :category"+$categoryID;
             
             // Add all of the CategoryIDs to the SQL statement
             for($x = 1; $x < count($categoryID); $x ++){
                 $categoryID = $categoryIDArray[$x];
                 // Add this with OR so it can match any of them
-                $sql += "OR `Tag`.`FK_Category_Category_ID` = :category"+$categoryID;
+                $sql .= "OR `Tag`.`FK_Category_Category_ID` = :category"+$categoryID;
             }
             
-            $sql += ")"; // End the category section
+            $sql .= ")"; // End the category section
         }
         
         // Group into Tag Name and order by count in descending order
-        $sql += "GROUP BY `Tag`.`Name`
+        $sql .= "GROUP BY `Tag`.`Name`
                 ORDER BY `Count` DESC;";
         print_r("SQL: ");
         print_r($sql);
