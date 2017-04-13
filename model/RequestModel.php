@@ -369,10 +369,10 @@ class RequestModel
 		//make old listing inactive so that the new listing replaces it
 		$this->withdrawListing($listing_id);
 		
-		print_r("Withdrawn old listing");
+		//print_r("Withdrawn old listing");
 		$new_listing_id = $this->getLastListingID($itemID, $listing_info["FK_Location_LocationID"], $listing_info["FK_User_UserID"]);
 	
-		print_r("Migrating pending transaction");			   
+		//print_r("Migrating pending transaction");			   
 		// Move all pending transactions to new listing
 		$this->migratePendingTransactions($listing_id, $new_listing_id);			
 	}
@@ -396,12 +396,12 @@ class RequestModel
 		
 		// Get all pending transactions for this listing
 		$pendingTransactions = $this->getPendingTransactionsForListing($listing_id);
-		print_r($pendingTransactions);
+		//print_r($pendingTransactions);
 		
 		// Reject each transaction
 		foreach($pendingTransactions as $transactionArray){
 	            $transaction_id = $transactionArray["TransactionID"];		
-		    print_r("Rejecting: ".$transaction_id);
+		    //print_r("Rejecting: ".$transaction_id);
 		    $this->rejectRequest($listing_id, $transaction_id);
 		}
 		return True;
