@@ -265,7 +265,7 @@ $(function () {
     
       $("#update-picture-modal .accept-button").on('click', function(){
          var formdata = new FormData();
-         formdata.append('image', $('#image-file')[0].files[0]); // todo add all files
+         formdata.append('image', $('#image-file')[0].files[0]); 
         
         console.log($('#image-file'));
         console.log($('#image-file').val());
@@ -280,7 +280,6 @@ $(function () {
         console.log(data);
          $('#update-picture-modal').modal('hide');
         
-          return;
           $.post(url, data, function(response){
                 if (response){
                     reloadTab("#home", "load-home-tab", userID, "", "");
