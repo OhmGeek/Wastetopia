@@ -63,6 +63,7 @@ $(function () {
        div.replaceWith(response);
       
       $(tabID).addClass("in active"); // Make it visible?
+      console.log(subTabID);
       if(!(subTabID === "" )){
          $(subTabID).addClass("in active"); // Make it visible?
        }
