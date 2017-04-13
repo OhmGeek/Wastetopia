@@ -643,7 +643,7 @@ class ProfilePageController
         
         // If it matches, change password
          if($oldPasswordHash !== $passwordHash){
-            return $this->errorMessage("Old password was incorrect");   
+            return $this->errorMessage("Current password is incorrect");   
          }else{
             $this->model->updatePassword($newPassword);
 	
