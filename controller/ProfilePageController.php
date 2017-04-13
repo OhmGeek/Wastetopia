@@ -772,7 +772,7 @@ class ProfilePageController
         $mail->Host = $config["EMAIL_HOST"]; // For SSL, use mail3.gridhost.co.uk, else try mail.ohmgeek.co.uk
         $mail->Port = $config["EMAIL_PORT"]; //25 for non-SSL, 465  for SSL, 587 for tls
         
-        $mail->SMTPSecure = $config["EMAIL_SECURITY]"; 
+        $mail->SMTPSecure = $config["EMAIL_SECURITY"]; 
   
         $mail->SMTPAuth = true;     // turn on SMTP authentiocation
         
