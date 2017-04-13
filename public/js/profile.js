@@ -194,7 +194,7 @@ $(function () {
   
   $(document).on('click', '.user-name', function(event){
     event.preventDefault();
-    var userID = $(this).attr("id");
+    var userID = $(this).closest('.thumbnail').attr("id");
     var url = baseURL + "/profile/user/" + userID;
     location.href = url;
   });
