@@ -118,13 +118,13 @@ $(document).ready(function(){
     function displayError(error){
 
         // Create warning div
-        $errorDiv = $("<div>").addClass("alert alert-danger fade in");
+        var errorDiv = $("<div>").addClass("alert alert-danger fade in");
     
         // Add error to the div
-        $errorDiv.html('<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'+ error)
+       errorDiv.html('<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'+ error)
         
         // Add alert to the alert div
-        $("#errorMessage").append($errorDiv);
+        $("#errorMessage").append(errorDiv);
      }
     
      // Displays an error message in the appropriate place
@@ -135,13 +135,13 @@ $(document).ready(function(){
 
         // OR using bootstrap alerts
         // Create warning div
-        $successDiv = $("<div>").addClass("alert alert-success fade in");
+        var successDiv = $("<div>").addClass("alert alert-success fade in");
     
         // Add error to the div
-        $successDiv.html('<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'+ message)
+        successDiv.html('<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'+ message)
         
         // Add alert to the alert div
-        $("#errorMessage").append($successDiv);
+        $("#errorMessage").append(successDiv);
      }
 
     $("#firstName, #lastName, #pwd, #pwdConfirm, #email").click(function(){
