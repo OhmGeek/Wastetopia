@@ -264,10 +264,10 @@ $(function () {
       }).modal('show');
     
       $("#update-picture-modal .accept-button").on('click', function(){
-         var file = "1280832"; // Get from modal
+         var file = $().val('#image-file'); // Get from modal
          var url = baseURL + "/profile/change-profile-picture";
           //ADD FILE UPLOAD STUFF HERE
-          //var data = ;// Some array of files (only contains one file)
+          var data = {files : [file]};// Some array of files (only contains one file)
           
          $('#update-picture-modal').modal('hide');
         
