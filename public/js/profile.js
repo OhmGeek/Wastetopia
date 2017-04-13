@@ -265,7 +265,7 @@ $(function () {
     
       $("#update-picture-modal .accept-button").on('click', function(){
          var formdata = new FormData();
-         formdata.append('image', $('#image-file')[0].files[0]); // todo add all files
+         formdata.push('image', $('#image-file')[0].files[0]); // todo add all files
         
         console.log($('#image-file'));
         console.log($('#image-file').val());
