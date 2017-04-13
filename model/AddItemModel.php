@@ -61,7 +61,7 @@ class AddItemModel
 	$statement->bindValue(":useBy", $useBy, PDO::PARAM_STR);
 	$statement->bindValue(":description", $description, PDO::PARAM_STR);
     $statement->execute();
-    $results = $statement->fetchAll(PDO::FETCH_ASSOC)["0"];
+    $results = $statement->fetchAll(PDO::FETCH_ASSOC)[0];
     error_log("Get Last ItemID:");
     error_log($results["ItemID"]);
 	return $results["ItemID"];
