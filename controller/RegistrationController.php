@@ -158,7 +158,7 @@ class RegistrationController
         $body='<p>Your Activation Code is '.$code.' Please Click On This link: </p> <a href='.$fullURL.'> https:'.$fullURL.' </a> <br> <p> to activate  your account. </p>';
         $altBody = "Please go to: https:".$fullURL;
 
-        $this->sendEmail($from, $subject, $body, $altBody, $email, $name);
+        return $this->sendEmail($from, $subject, $body, $altBody, $email, $name);
     }
     
     /**
