@@ -15,6 +15,7 @@ use Twig_Loader_Filesystem;
 use Twig_Environment;
 
 use Wastetopia\Model\RequestModel;
+use Wastetopia\Controller\RegistrationController;
 
 
 class ProfilePageController
@@ -671,6 +672,34 @@ class ProfilePageController
 	$this->sendPasswordEmail($email);   
 	    
 	return True;    
+    }
+	
+	
+	
+    function changeEmail($oldEmail, $newEmail){
+	$userID = $this->getUserID();
+	$actualEmail = $this->model->getUserEmail($userID);
+	    
+	if($actualEmail !== $oldEmail){
+	   return $this->errorMessage("Incorrect old email");	
+	}
+	$registrationController = new RegistrationController();    
+	if(!$registrationController->checkValidEmail($newEmail)){
+	   return $this->errorMessage("Email is not valid");	
+	}
+	
+	if(!$registrationController->checkAvailable($newEmail)){
+	    return $this->errorMessage("Email already in use");	
+	}
+	  
+	// Reset account  
+	$this->model->resetAccount($userID);    
+	    
+	// Log user out - NOT SURE ABOUT THIS
+	    
+	// Send verification email    
+	$registrationController->sendVerificationEmail($email, $email);
+	    
     }
     
     function errorMessage($e){
