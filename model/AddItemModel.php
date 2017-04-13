@@ -293,6 +293,7 @@ class AddItemModel
         $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
         $statement->bindValue(":quantity", $quantity, PDO::PARAM_INT);
         $statement->execute();
+        error_log(json_encode($statement->errorInfo()));
     }
 
 
