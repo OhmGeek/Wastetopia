@@ -36,7 +36,25 @@ Unit tests can be executed by installing phpunit globally, and then running:
 ```bash
 phpunit tests/
 ```
-Integration tests/selenium based tests are planned, but not currently implemented.
+Integration tests, are also available using the Nightwatch.js testing framework, using Selenium Web Driver. These currently aren't added to TravisCI (but they will be soon). These are found in the IntegrationTests subfolder of the tests/ directory. You need to have npm installed, along with the selenium web driver. You can install the web driver using the command:
+
+```bash
+npm install selenium-standalone -g
+selenium-standalone install
+```
+Then, you can run these tests by starting the Selenium server, and then running the test runner script. First navigate into the IntegrationTests folder.
+
+Start the server using:
+
+```bash
+selenium-standalone start
+```
+
+and then run tests using:
+
+```bash
+./tests.sh
+```
 
 ## License
 Wastetopia is developed under GPL-3.0. Feel free to use any part of this project in your own, but make sure you share it! :D
