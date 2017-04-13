@@ -364,8 +364,6 @@ class RequestModel
 		$statement->bindValue(":new_quantity", $new_quantity);
 		$statement->execute();
 		
-		// Get all pending transactionIDs for old listing
-		$this->migrateTransactions($listing_id, 
 		
 		
 		//make old listing inactive so that the new listing replaces it
