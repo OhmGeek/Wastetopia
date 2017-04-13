@@ -416,7 +416,7 @@ class RequestModel
 		$statement = $this->db->prepare("
 			SELECT `ListingTransaction`.`FK_Transaction_TransactionID` AS `TransactionID`
 			FROM `ListingTransaction`
-			WHERE `ListingTransaction`.`FK_Listing_ListingID` = :listingID
+			WHERE `ListingTransaction`.`FK_Listing_ListingID` = :listing_id
 			AND `ListingTransaction`.`Success` = 0
 		");
 		$statement->bindValue(":listing_id", $listing_id, PDO::PARAM_INT);
