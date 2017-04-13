@@ -102,7 +102,8 @@ class CardDetailsModel
         $statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);
         $statement->execute();
         $results = $statement->fetchAll(PDO::FETCH_ASSOC);
-        return $results[0];
+	$result = $results[0];    
+        return $result["Image_URL"];
     }
 
     /**
