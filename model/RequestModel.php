@@ -393,20 +393,42 @@ class RequestModel
 		$statement->bindValue(":listing_id", $listing_id, PDO::PARAM_INT);
 		$statement->execute();
 		
-		// REMOVE/REJECT ALL PENDING TRANSACTIONS FOR THIS LISTING
-		// Get all pending transactions for this listing
 		
+		// Get all pending transactions for this listing
+		$pendingTransactions = $this->getPendingTransactionsForListing($lising_id);
+		
+		// Reject each transaction
+		foreach($pendingTransactions as $transactionID){
+		    $this->rejectRequest($listing_id, $transaction_id);
+		}
 		return True;
 	}
 	
+					   
+	/**
+	* Gets all the pending transactions for a given listing
+	* @param $listing_id
+	* @return array of 'TransactionID's
+	*/
+	function getPendingTransactionsForListing($listing_id){
+		$statement = $this->db->prepare("
+			SELECT `ListingTransaction`.`FK_Transaction_TransactionID` AS `Transaction`
+			FROM `ListingTransaction`
+			WHERE `ListingTransaction`.`FK_Listing_ListingID` = :listingID
+			AND `ListingTransaction`.`Success` = 0
+		");
+		$statement->bindValue(":listing_id", $listing_id, PDO::PARAM_INT);
+		$statement->execute();
+		return $statement->fetchAll(PDO::FETCH_ASSOC);	
+	}
+
+					   
 	/**
 	 * Reject some request for an item
 	 * @return void
-	 */
-	
+	 */	
 	function rejectRequest($listing_id, $transaction_id){
-		print_r("LISTING: ".$listing_id);
-		print_r("TRANSACTION: ".$transaction_id);
+
 		$statement = $this->db->prepare("
 			UPDATE `ListingTransaction`
 			SET `ListingTransaction`.`Success` = 2
