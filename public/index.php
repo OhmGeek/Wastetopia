@@ -292,7 +292,7 @@ $klein->with('/items', function () use ($klein) {
     $klein->respond('POST', '/renew-listing/?', function($request, $response){
         $listingID = $request->listingID;
         $newQuantity = $request->quantity;
-        $useByDate = $request->useByDate;
+        $newUseByDate = $request->useByDate;
         $model = new RequestModel();
         return $model->renewListing($listingID, $newQuantity, $newUseByDate);
     });
