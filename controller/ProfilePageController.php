@@ -652,6 +652,25 @@ class ProfilePageController
          }
 	    
     }
+	
+    
+    /**
+    * Resets the password and sends it to user (not secure)
+    * @return bool
+    */
+    function resetPassword(){
+        $newPassword = $this->model->generateSalt(8, 10);
+	 
+	// Update the password    
+	$this->model->updatePassword($userID, $newPassword);
+	    
+	$email = $this->model->getUserEmail($userID);    
+	    
+	// Send it to user
+	$this->sendPasswordEmail($email);   
+	    
+	return True;    
+    }
     
     function errorMessage($e){
         $errorArray = array("error" => $e);
@@ -663,4 +682,73 @@ class ProfilePageController
         return json_encode($successArray);
     }
     
+	
+    /** 
+    * Sends an email to the user with their password in
+    * @param $email
+    * @param $password
+    */
+    function sendPasswordEmail($email, $password){
+        $CurrentConfig = new CurrentConfig();
+        $config = $CurrentConfig->getAll();
+            
+        $code = $this->model->getVerificationCode($email);
+        if($code == -1){
+            return False;   
+        }
+        
+        $root = $config["ROOT_BASE"]; // Base url for the website
+        $fullURL = $root."/register/verify/".$code; // Verification URL
+        
+        $to=$email;
+        $subject="Reset password";
+        $from = 'wastetopia@ohmgeek.co.uk'; 
+        $body= 'Your new password is '.$password;
+        $altBody = 'Your new password is '.$password;
+
+        $this->sendEmail($from, $subject, $body, $altBody, $email, $email); // Send the email
+        
+      
+    }
+	
+	
+    /**
+    * Main function to send an email
+    * @param $from
+    * @param $subject
+    * @param $body
+    * @param $altBody
+    * @param $email
+    * @param $name
+    * @return bool
+    */
+    function sendEmail($from, $subject, $body, $altBody, $email, $name){
+	// PHPMailer code
+	$mail = new \PHPMailer(true); //true makes it give errors
+        $mail->IsSMTP();                                      // set mailer to use SMTP
+        $mail->Host = "mail3.gridhost.co.uk"; // For SSL, use mail3.gridhost.co.uk, else try mail.ohmgeek.co.uk
+        $mail->Port = 465; //25 for non-SSL, 465  for SSL
+        
+        $mail->SMTPSecure = 'ssl'; 
+        $mail->SMTPDebug = 2;
+        $mail->SMTPAuth = true;     // turn off SMTP authentiocation
+        
+        $mail->Username = "wastetopia@ohmgeek.co.uk";  // SMTP username
+        $mail->Password = "wyI4wwPRhHGk"; // SMTP password (IHatePHP  or wyI4wwPRhHGk)
+        $mail->From = $from;
+        $mail->FromName = "Wastetopia";
+        
+        $mail->AddAddress($email, $name);
+       
+        $mail->WordWrap = 50;                                 // set word wrap to 50 characters
+        $mail->IsHTML(true);                                  // set email format to HTML
+        $mail->Subject = $subject;
+        $mail->Body    = $body;
+        $mail->AltBody = $altBody;
+        if(!$mail->Send())
+        {
+           return False;
+        }
+        return True;    
+    }
 }
