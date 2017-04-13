@@ -66,8 +66,7 @@ class RecommendationController {
           $quantity = $listing["Quantity"];
           $isRequesting = $this->profilePageModel->isRequesting($listingID, $this->getUserID());
           $isWatching = $this->profilePageModel->isWatching($listingID, $this->getUserID());
-          $item = array(
-            "section" => "recommmendation"  
+          $item = array( 
             "listingID" => $listingID,
             "userImg" => $userImage,
             "userID" => $userID,
@@ -89,6 +88,7 @@ class RecommendationController {
         
       $output = array(
             "config" => $config,
+            "section" => "recommmendation", 
             "recommendationList" => $recommendationList
       );
         
@@ -136,7 +136,6 @@ class RecommendationController {
           $isRequesting = $this->profilePageModel->isRequesting($listingID, $this->getUserID());
           $isWatching = $this->profilePageModel->isWatching($listingID, $this->getUserID());
           $item = array(
-            "section" => "prediction",  
             "listingID" => $listingID,
             "userImg" => $userImage,
             "userID" => $userID,
@@ -158,6 +157,7 @@ class RecommendationController {
         
       $output = array(
             "config" => $config,
+            "section" => "prediction",  
             "recommendationList" => $recommendationList
       );
         
