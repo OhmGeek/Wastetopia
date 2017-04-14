@@ -95,8 +95,23 @@ var scanBarcode = function() {
         var startIndex = data.indexOf("<");
         var htmlResponse = data.substring(startIndex);
         var html = $.parseHTML(htmlResponse);
+        console.log(htmlResponse);
         console.log("Barcode");
-        console.log($(html).find("pre")[0].text);
+        // use JQuery to get the barcode
+        var barcode = $(htmlResponse).find("pre")[0].innerText;
+
+        $.getJSON('https://world.openfoodfacts.org/api/v0/product/' + barcode + ".json", function (resp) {
+            var data = JSON.parse(resp);
+            console.log(data);
+            if(data.status === 1) {
+                return data.product;
+            }
+            else {
+                return {};
+            }
+        }).done(function(barcodeinfo) {
+            console.log(barcodeinfo);
+        });
 
     });
 };
