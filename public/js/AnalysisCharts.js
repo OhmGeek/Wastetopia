@@ -172,9 +172,14 @@ $(function() {
             });
 
             console.log(chart);
+            console.log(chart.config.data.datasets.data);
+            console.log(chart.config.data.labels);
             
-            chart.datasets.data = data; // Change the data
-            chart.labels = labels; // Change the labels
+            chart.config.data.datasets.data = data; // Change the data
+            chart.config.data.labels = labels; // Change the labels
+
+            console.log(chart.config.data.datasets.data);
+            console.log(chart.config.data.labels);
 
             chart.update(); // Redraw with new data
         });
