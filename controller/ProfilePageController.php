@@ -24,6 +24,15 @@ use Wastetopia\Model\AmazonS3;
 
 class ProfilePageController
 {
+    // If user is not logged in, getUserID will return "" or null
+    // so will fail all isUser tests so can ignore those.
+    // Only need to use isLoggedIn to remove all buttons (except View)
+    // from any cards that can be seen when isUser == 0.
+    // On profile page, that is only available listings on listings tab.
+    // For search page, it is every item.
+    // Should be added to every View Page
+
+
     /**
      * ProfilePageController constructor.
      * @param $ownProfile (1 if current logged in user is viewing their own profile)
@@ -63,6 +72,13 @@ class ProfilePageController
         return 6; // Usually 6
     }
 
+    /**
+     * Returns True if getUserID doesn't return "" or null
+     * @return bool True if user is logged in
+     */
+    function isUserLoggedIn(){
+        return $this->getUserID() !== "";
+    }
 
     function generatePage(){
         $profileContentHTML = $this->generateProfileContentHTML();
@@ -231,6 +247,8 @@ class ProfilePageController
 
     /* Generates HTML for Offers tab (transactions for user's items)*/
     function generateOffersSection(){
+        $isLoggedIn = $this->isUserLoggedIn(); // 1 if user is a logged in user
+
         //Get listings user has put up
         $userListingsSending = $this->model->getUserListings();
 

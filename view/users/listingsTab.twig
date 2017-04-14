@@ -34,22 +34,24 @@
                                         <div class="nav-btns">
                                             <a href="#view" class="btn btn-primary" role="button"
                                                id="{{ item.listingID }}">View</a>
-                                            {% if isUser %}
-                                                <a href="#edit" class="btn btn-default" role="button"
-                                                   id="{{item.listingID}}">Edit</a>
-                                            {% elseif item.isRequesting %}
-                                                <a href="#cancel-by-listing" class="btn btn-default" role="button"
-                                                   id=""{{item.listingID}}"">Cancel request</a>
-                                            {% else %}
-                                                <a href="#request" class="btn btn-default" role="button"
-                                                   id="{{item.listingID}}">Request</a>
-                                            {% endif %}
-                                            {% if isUser == 1 %}
-                                                <a href="#remove" role="button" class="btn-watch" id="{{item.listingID}}"><i
-                                                            class="material-icons">delete</i></a>
-                                            {% else %}
-                                                <a href="#watch" role="button" class="btn-watch lightgrey {% if item.isWatching %}watched{% endif %}" id="{{item.listingID}}"><i
-                                                            class="material-icons">visibility</i></a>
+                                            {% if isLoggedIn %}
+                                                {% if isUser %}
+                                                    <a href="#edit" class="btn btn-default" role="button"
+                                                       id="{{item.listingID}}">Edit</a>
+                                                {% elseif item.isRequesting %}
+                                                    <a href="#cancel-by-listing" class="btn btn-default" role="button"
+                                                       id=""{{item.listingID}}"">Cancel request</a>
+                                                {% else %}
+                                                    <a href="#request" class="btn btn-default" role="button"
+                                                       id="{{item.listingID}}">Request</a>
+                                                {% endif %}
+                                                {% if isUser == 1 %}
+                                                    <a href="#remove" role="button" class="btn-watch" id="{{item.listingID}}"><i
+                                                                class="material-icons">delete</i></a>
+                                                {% else %}
+                                                    <a href="#watch" role="button" class="btn-watch lightgrey {% if item.isWatching %}watched{% endif %}" id="{{item.listingID}}"><i
+                                                                class="material-icons">visibility</i></a>
+                                                {% endif %}
                                             {% endif %}
                                         </div>
                                     </div>
