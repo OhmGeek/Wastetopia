@@ -109,7 +109,7 @@ var scanBarcode = function() {
                 return {};
             }
         }).done(function(barcodeinfo) {
-            console.log(barcodeinfo);
+            alert(barcodeinfo);
         });
 
     });
