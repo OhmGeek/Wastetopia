@@ -10,14 +10,19 @@
             height: 100vh;
             margin-top: 60px;
         }
+
+        .chart-container{
+            width : 640px;
+            height : auto;
+        }
     </style>
     {% include 'navbar.twig' %}
 {% endblock %}
 
 {% block content %}
     <div id="charts" height="300px">
-        <div id = "requestChartsParent">
-            <canvas id="requestTagsChart" width="300" height="300"></canvas>
+        <div class = "chart-container" id = "request-chart-container">
+            <canvas id="requestTagsChart"></canvas>
         </div>
         <form id = "requestRadioButtons">
 
@@ -26,8 +31,9 @@
         <br>
         <br>
 
-        <div id = "sendingChartsParent" width="30%">
-            <canvas id="sendingTagsChart" width="300" height="300"></canvas>
+
+        <div class = "chart-container" id = "sending-chart-container">
+            <canvas id="sendingTagsChart"></canvas>
         </div>
         <form id = "sendingRadioButtons">
 
