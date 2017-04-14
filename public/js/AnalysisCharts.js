@@ -4,6 +4,8 @@
 // 6 colours for graph background
 $(function() {
     //Chart.defaults.global.maintainAspectRatio = false;
+    var myRequestChart;
+    var mySendingChart;
 
     var baseURL = window.location.protocol + "//" + window.location.host;
     var categoryID = 1; // Start with category 1
@@ -68,13 +70,12 @@ $(function() {
             // Get correct canvas
             var canvasID = requestsOrOffers ? "requestTagsChart" : "sendingTagsChart";
             var action = requestsOrOffers ? "request" : "give away";
+
             console.log(canvasID);
             var ctx = $("#"+canvasID); // Need to put this in the twig file
 
-            ctx.html(""); // Clear it before drawing new one
-
             // Use data to populate chart
-            var myChart = new Chart(ctx, {
+            myRequestChart = new Chart(ctx, {
                 type: 'pie',
                 data: {
                     labels: labels,
@@ -125,6 +126,7 @@ $(function() {
         var formID = form.attr('id');
         console.log(formID);
         if (formID === "requestRadioButtons"){
+          myRequestChart.destroy(); // Destroy so it can be redrawn
           createTagsChart(categoryValue, 1); // Create the requests tag chart
         }else{
             // Create sending tags chart
