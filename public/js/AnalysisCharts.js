@@ -149,7 +149,6 @@ $(function() {
         var relativeURL = requestsOrOffers ? "/analysis/get-request-tags/" : "/analysis/get-sending-tags/"
         var url = baseURL + relativeURL + categoryID;
 
-        console.log("updating");
 
         $.getJSON(url, function(json) {
             var labels = []; // Labels of bars
@@ -167,17 +166,11 @@ $(function() {
                 indexCounter = (indexCounter + 1) % 6; // Taken mod 6 to loop through available colours
             });
 
-            console.log(chart);
-            console.log(chart.config.data.datasets.data);
-            console.log(chart.config.data.labels);
 
             chart.config.data.datasets[0].data = data; // Change the data
             chart.config.data.labels = labels; // Change the labels
             chart.config.data.datasets[0].backgroundColor = chartBackgroundColours; // Change the data
             chart.config.data.datasets[0].borderColor = chartBorderColours; // Change the data
-
-            console.log(chart.config.data.datasets.data);
-            console.log(chart.config.data.labels);
 
             chart.update(); // Redraw with new data
         });
