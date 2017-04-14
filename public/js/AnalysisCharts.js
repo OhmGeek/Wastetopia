@@ -133,13 +133,50 @@ $(function() {
 
 
         if (formID === "requestRadioButtons"){
-          myRequestChart.destroy(); // Destroy so it can be redrawn
-          createTagsChart(categoryValue, 1); // Create the requests tag chart
+          // myRequestChart.destroy(); // Destroy so it can be redrawn
+          // createTagsChart(categoryValue, 1); // Create the requests tag chart
+            updateChart(myRequestChart, 1, categoryValue); // Try new function
         }else{
             // Create sending tags chart
             mySendingChart.destroy(); // Destroy so it can be redrawn
             createTagsChart(categoryValue, 0); // Create the sending tag chart
         }
     });
+
+
+    // Changes the values of the chart and redraws it
+    // Chart - chart to be updated
+    // requestsOrOffers - boolean (1 for requests, 0 for offers)
+    // categoryID - int, new category value to search for
+    function updateChart(chart, requestsOrOffers, categoryID){
+        // Get appropirate tags frequency data from the analysis controller
+        var relativeURL = requestsOrOffers ? "/analysis/get-request-tags/" : "/analysis/get-sending-tags/"
+        var url = baseURL + relativeURL + categoryID;
+
+
+
+        $.getJSON(url, function(json) {
+            var labels = []; // Labels of bars
+            var data = []; // Number for each bar
+            var indexCounter = 0; // index into colour arrays (taken mod 6 so it loops through colours)
+            var chartBackgroundColours = [];
+            var chartBorderColours = [];
+
+            // Extract details from JSON
+            $.each(json, function (key, value) {
+                labels.push(key);
+                data.push(value);
+                chartBackgroundColours.push(backgroundColours[indexCounter]); // Get background colour
+                chartBorderColours.push(borderColours[indexCounter]);   // Get border colour
+                indexCounter = (indexCounter + 1) % 6; // Taken mod 6 to loop through available colours
+            });
+
+            chart.datasets.data = data; // Change the data
+            chart.labels = labels; // Change the labels
+
+            chart.update(); // Redraw with new data
+        });
+
+    }
 });
 
