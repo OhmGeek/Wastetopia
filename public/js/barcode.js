@@ -66,7 +66,7 @@ var scanBarcode = function() {
         console.log(reader.result); // url
         Quagga.decodeSingle({
             decoder: {
-                readers: ["ean_reader"]
+                readers: ["upc_reader"]
             },
             locate: true, // try to locate the barcode in the image
             src: reader.result
