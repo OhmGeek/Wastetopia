@@ -75,7 +75,8 @@ class AnalysisController
 
         // Add any Tag Names from the category that weren't found in user's tags
         // Add them with frequency 0
-        foreach($tagNames as $tagName){
+        foreach($tagNames as $array){
+            $tagName = $array["Name"];
             if(!(array_key_exists($tagName, $results))){
                 $results[$tagName] = 0;
             }

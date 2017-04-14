@@ -14,6 +14,9 @@ $(function() {
     createTagsChart(categoryID, 1); // Create first Requests chart
     createChartButtons("requestOption", "requestRadioButtons"); // Create the radio buttons for the chart
 
+    // Create sending chart and add buttons
+    createTagsChart(categoryID, 0); // Create first sending chart
+    createChartButtons("sendingOption", "sendingRadioButtons"); // Create the radio buttons for the chart
 
     // NEED MORE DISTINCT COLOURS
     var backgroundColours = [
@@ -69,13 +72,13 @@ $(function() {
 
             // Get correct canvas
             var canvasID = requestsOrOffers ? "requestTagsChart" : "sendingTagsChart";
-            var action = requestsOrOffers ? "request" : "give away";
+            var action = requestsOrOffers ? "request" : "give away"; // Action to put in title
 
             console.log(canvasID);
             var ctx = $("#"+canvasID); // Need to put this in the twig file
 
             // Use data to populate chart
-            myRequestChart = new Chart(ctx, {
+            var myChart = new Chart(ctx, {
                 type: 'pie',
                 data: {
                     labels: labels,
@@ -88,6 +91,13 @@ $(function() {
                     }]
                 }
             });
+
+            // Pass reference to correct place
+            if(requestsOrOffers){
+                myRequestChart = myChart;
+            }else{
+                mySendingChart = myChart;
+            }
 
         });
     }
@@ -130,6 +140,8 @@ $(function() {
           createTagsChart(categoryValue, 1); // Create the requests tag chart
         }else{
             // Create sending tags chart
+            mySendingChart.destroy(); // Destroy so it can be redrawn
+            createTagsChart(categoryValue, 0); // Create the requests tag chart
         }
     });
 });
