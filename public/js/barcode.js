@@ -62,7 +62,7 @@ var scanBarcode = function() {
     var file = $('#barcode-upload').prop('files')[0];
     var reader = new FileReader();
     reader.readAsDataURL(file);
-    console.log(file);
+    console.log(reader.result);
     Quagga.decodeSingle({
         readers: ["code_128_reader"],
         locate: true, // try to locate the barcode in the image
