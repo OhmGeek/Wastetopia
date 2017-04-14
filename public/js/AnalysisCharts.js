@@ -94,7 +94,7 @@ $(function() {
             $.each(json, function(id, name){
                 console.log(id);
                 console.log(name);
-                var radioLabel = $("label");
+                var radioLabel = $("<label>");
                 radioLabel.addClass("radio-inline");
                 var html = "<input type='radio' name='requestOption' value = "+id+">"+name;
                 console.log(html);
@@ -109,27 +109,3 @@ $(function() {
     }
 });
 
-// Bar chart version
-// var myChart = new Chart(ctx, {
-//     type: 'bar',
-//     data: {
-//         labels: labels,
-//         datasets: [{
-//             label: '# of occurences',
-//             data: data,
-//             backgroundColor: chartBackgroundColours,
-//             borderColor: chartBorderColours,
-//             borderWidth: 1
-//         }]
-//     },
-//     options: {
-//         scales: {
-//             yAxes: [{
-//                 ticks: {
-//                     beginAtZero: true,
-//                     callback: function(value) {if (value % 1 === 0) {return value;}}
-//                 }
-//             }]
-//         }
-//     }
-// });
