@@ -57,29 +57,7 @@ function getBarcodeInfo(barcode) {
 }
 
 var scanBarcode = function() {
-    console.log("Run scan barcode");
-    // this is the callback called once decoding has occurred
-    var file = $('#barcode-upload').prop('files')[0];
-    var reader = new FileReader();
 
-    reader.addEventListener("load", function() {
-        console.log(reader.result); // url
-        Quagga.decodeSingle({
-            decoder: {
-                readers: ["upc_reader"]
-            },
-            locate: true, // try to locate the barcode in the image
-            src: reader.result
-        }, function(result){
-            console.log(result);
-            if(result.codeResult) {
-                console.log("result", result.codeResult.code);
-            } else {
-                console.log("not detected");
-            }
-        });
-    }, false);
-    reader.readAsDataURL(file);
 };
 
 $('#scan-barcode').on('click', scanBarcode);
