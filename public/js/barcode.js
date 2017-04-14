@@ -79,9 +79,8 @@ var scanBarcode = function() {
     //     });
     // }, false);
     // reader.readAsDataURL(file);
-
-    var formdata = new FormData();
-    formdata.append('file', $('#barcode-upload')[0].files[0]); // todo add all files
+    var formdata = new FormData($('#barcode-scanner')[0]);
+    formdata.push('image', $('#barcode-upload')[0].files[0]); // todo add all files
 
     $.ajax({
         url: 'https://wastetopia-pr-17.herokuapp.com/api/barcode/get',
@@ -95,7 +94,6 @@ var scanBarcode = function() {
             console.log(resp);
         }
     });
-
 };
 
 $('#scan-barcode').on('click', scanBarcode);
