@@ -199,6 +199,24 @@ $klein->with('/api', function () use ($klein) {
     });
 });
 
+$klein->respond('POST', '/api/barcode/get', function($request, $response) {
+    $curl = curl_init();
+    $timeout = 100;
+    $ret = "";
+    $url="https://zxing.org/w/decode";
+    curl_setopt ($curl, CURLOPT_URL, $url);
+    curl_setopt ($curl, CURLOPT_FOLLOWLOCATION, 1);
+    curl_setopt ($curl, CURLOPT_MAXREDIRS, 20);
+    curl_setopt ($curl, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($curl, CURLOPT_POST, 1);
+    curl_setopt ($curl, CURLOPT_POSTFIELDS, "f=".$request->f);
+    curl_setopt ($curl, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.9.0.5) Gecko/2008120122 Firefox/3.0.5");
+    curl_setopt ($curl, CURLOPT_CONNECTTIMEOUT, $timeout);
+    $text = curl_exec($curl);
+    curl_close($curl);
+    return $text;
+});
+
 $klein->onHttpError(function ($code, $router) {
     switch ($code) {
       case 404:

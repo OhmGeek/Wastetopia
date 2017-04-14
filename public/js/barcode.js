@@ -87,7 +87,7 @@ var scanBarcode = function() {
     reader.addEventListener("load", function() {
         var imageData = {f: reader.result};
 
-        $.post('http://zxing.org/w/decode', imageData, function(resp) {
+        $.post('https://wastetopia-pr-17.herokuapp.com/api/barcode/get', imageData, function(resp) {
             console.log("Response:");
             console.log(resp);
 
