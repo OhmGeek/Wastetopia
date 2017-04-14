@@ -202,10 +202,12 @@ $klein->with('/api', function () use ($klein) {
 $klein->respond('POST', '/api/barcode/get', function($request, $response) {
     // first of all, get the file we just posted.
     $file = $request->files()[0];
-    $data = $file['tmp_name'];
+    $filename = $file['tmp_name'];
     // now let's define the things we need to send the request:
     $headers = array("Content-Type:multipart/form-data"); // cURL headers for file uploading
-    $postfields = array("filedata" => "@$data", "filename" => $file['name']);
+    $postfields = array(
+        'f' => new \CURLFile($file['name'], mime_content_type($filename), $filename)
+    );
     $curl = curl_init();
     $timeout = 100;
     $ret = "";
