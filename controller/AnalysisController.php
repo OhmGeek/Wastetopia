@@ -102,6 +102,14 @@ class AnalysisController
     function getCategoryDetailsJSON(){
         $categories = $this->model->getCategoryNamesAndIDs();
 
-        return json_encode($categories);
+        $results = array();
+        foreach($categories as $categoryPair){
+            $name = $categoryPair["Category_Name"];
+            $id = $categoryPair["CategoryID"];
+
+            $results[$id] = $name;
+        }
+
+        return json_encode($results);
     }
 }
