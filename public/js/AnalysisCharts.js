@@ -7,7 +7,7 @@ $(function() {
     var categoryID = 1; // Start with category 1
 
     // Create request chart and add buttons
-    createRequestTagsChart(categoryID); // Create first Requests chart
+    createTagsChart(categoryID, 1); // Create first Requests chart
     createChartButtons("requestOption", "requestRadioButtons"); // Create the radio buttons for the chart
 
 
@@ -33,10 +33,15 @@ $(function() {
 
 // categoryIDs is array of categoryIDs to search for when getting tags
 // will only ever contain one categoryID
-    function createRequestTagsChart(categoryID) {
-        // Get request tags frequency data from the analysis controller
-        var url = baseURL + "/analysis/get-request-tags/" + categoryID;
+// requestsOrOffers - boolean (1 for request chart, 0 for Offers chart)
+    function createTagsChart(categoryID, requestsOrOffers) {
+
+        // Get appropirate tags frequency data from the analysis controller
+        var relativeURL = requestsOrOffers ? "/analysis/get-request-tags/" : "/analysis/get-sending-tags/"
+        var url = baseURL + relativeURL + categoryID;
+
         console.log(url);
+
         $.getJSON(url, function(json){
             console.log(json);
 
@@ -58,9 +63,11 @@ $(function() {
             console.log(labels);
             console.log(data);
 
-            // Use data to populate chart
-            var ctx = $("#requestTagsChart"); // Need to put this in the twig file
+            // Get correct canvas
+            var canvasID = requestsOrOffers ? "#requestsTagsChart" : "#sendingTagsChart";
+            var ctx = $(canvasID); // Need to put this in the twig file
 
+            // Use data to populate chart
             var myChart = new Chart(ctx, {
                 type: 'pie',
                 data: {
@@ -92,7 +99,7 @@ $(function() {
 
             // Put category data onto radio buttons
             $.each(json, function(id, name){
-                var html = "<input type='radio' name="+optionName+" value = "+id+"> <label>"+name + "</label>";
+                var html = "<input type='radio' name="+optionName+" value = "+id+"> <label class = 'radio-inline'>"+name + "</label>";
 
                 radioButtonsHTML += html;
             });
