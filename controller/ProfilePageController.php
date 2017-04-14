@@ -596,7 +596,24 @@ class ProfilePageController
      * @return string
      */
     function generateAdviceText(){
-        return "Advice here - click the arrow to the analysis for this";
+        $controller = new AnalysisController();
+        $name = $controller->getMostFrequentItemNameSent();
+        $tag = $controller->getMostFrequentTypeTagSent();
+
+        $advice = "";
+        if ($name == null &&  $tag == null){
+            $advice = "Not enough data to give advice, sorry!";
+        }elseif($name == null && $tag!==null){
+            $advice = "You have given away a lot of " +$tag+" products. Think about buying less of them, or using them more.";
+        }elseif($name !== null && $tag == null){
+            $advice = "You have given away " + $name + " a lot. If you're not using it, think about buying it less.";
+        }else{
+            $advice = "You have given away a lot of " +$tag+" products, and the item you've given away most is " +$name +
+                ". If you have a lot of waste like this, think about buying less of it, or using it more.";
+        }
+        
+        
+        return $advice;
 
     }
 
@@ -737,7 +754,7 @@ class ProfilePageController
 	// Log user out - NOT SURE ABOUT THIS
 	    
 	// Send verification email    
-	$registrationController->sendVerificationEmail($email, $email);
+	$registrationController->sendVerificationEmail($newEmail, $newEmail);
 	
 	return True;
     }

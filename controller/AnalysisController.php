@@ -220,4 +220,32 @@ class AnalysisController
 
         return json_encode($results);
     }
+
+
+    /**
+     * Gets the most frequent item name given away
+     * @return mixed
+     */
+    function getMostFrequentItemNameSent(){
+        $names = json_decode($this->getTotalNameFrequenciesSending());
+        if(count($names) == 0){
+            return null;
+        }
+        return array_keys($names)[0];
+    }
+
+
+    /**
+     * Gets the most frequent tag for Type category on items user gives away
+     * @return mixed
+     */
+    function getMostFrequentTypeTagSent(){
+        // Get most frequent Tags for the Type category
+        $tags = $this->getTagFrequenciesForListingsJSON(array(1));
+        if(count($tags) == 0){
+            return null;
+        }
+        arsort($tags); // Sort by tag frequency
+        return array_keys($tags)[0];
+    }
 }
