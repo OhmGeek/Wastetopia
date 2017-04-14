@@ -250,7 +250,7 @@ class AnalysisModel
             FROM Category;
         ");
 
-        $statement->exectute();
+        $statement->execute();
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 }
