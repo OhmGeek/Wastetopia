@@ -159,15 +159,11 @@ class AnalysisController
             $names[$name] = $frequency;
         }
 
-
         arsort($names);
         $limit = count($names) < 5 ? count($names) : 5;
 
-        print_r($names);
-
         $results = array_slice($names, 0, $limit, true);
 
-        print_r($results);
         return json_encode($results);
     }
 
@@ -179,8 +175,6 @@ class AnalysisController
     function getTotalNameFrequenciesReceiving(){
         $frequencies = $this->model->getTotalNameFrequenciesReceiving();
 
-        print_r($frequencies);
-
         $names = array();
 
         foreach($frequencies as $array){
@@ -191,17 +185,11 @@ class AnalysisController
             $names[$name] = $frequency;
         }
 
-        print_r($names);
-
         arsort($names);
-
-        print_r($names);
 
         $limit = count($names) < 5 ? count($names) : 5;
 
         $results = array_slice($names, 0, $limit, true);
-
-        print_r($results);
 
         return json_encode($results);
     }
