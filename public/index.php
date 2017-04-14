@@ -183,13 +183,13 @@ $klein->with("/analysis", function() use ($klein){
 
     $klein->respond('GET', '/get-request-names', function($request, $response){
         $controller = new AnalysisController();
-        return $this->getTotalNameFrequenciesReceiving();
+        return $controller->getTotalNameFrequenciesReceiving();
     });
 
 
     $klein->respond('GET', '/get-sending-names', function($request, $response){
         $controller = new AnalysisController();
-        return $this->getTotalNameFrequenciesSending();
+        return $controller->getTotalNameFrequenciesSending();
     });
 });
 
