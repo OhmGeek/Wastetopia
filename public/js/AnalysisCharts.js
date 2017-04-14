@@ -4,7 +4,7 @@
 
 $(function(){
     var baseURL = window.location.protocol + "//" + window.location.host;
-    var categoryIDs = [1]; // Start with category 1
+    var categoryID = 1; // Start with category 1
 
     // 6 colours for graph background
     var backgroundColours = [
@@ -32,10 +32,12 @@ $(function(){
 
     // categoryIDs is array of categoryIDs to search for when getting tags
     // will only ever contain one categoryID
-    function createRequestTagsChart(categoryIDs) {
+    function createRequestTagsChart(categoryID) {
         // Get request tags frequency data from the analysis controller
         var url = baseURL + "/analysis/get-request-tags";
-        var data = {categoryIDs : categoryIDs};
+        var data = {categoryID : categoryID};
+
+        console.log(data);
 
         $.getJSON(url, data, function(json){
             console.log(json);
