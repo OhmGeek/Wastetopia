@@ -174,14 +174,19 @@ class AnalysisController
     function getTotalNameFrequenciesReceiving(){
         $frequencies = $this->model->getTotalNameFrequenciesReceiving();
 
+        print_r($frequencies);
+
         $names = array();
 
         foreach($frequencies as $array){
+            print_r($array);
             $name = $array["Name"];
             $frequency = $array["Count"];
 
             $names[$name] = $frequency;
         }
+        
+        print_r($names);
 
         ksort($names);
         $limit = count($names) < 5 ? count($names) : 5;
