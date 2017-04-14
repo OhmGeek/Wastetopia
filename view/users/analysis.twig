@@ -15,9 +15,12 @@
             width : 320px;
             height : auto;
         }
+
+        
         #sending-chart-container{
-            float: left;
+            float:left;
         }
+
 
     </style>
     {% include 'navbar.twig' %}
@@ -25,23 +28,23 @@
 
 {% block content %}
     <div id="charts" height="300px">
-        <div class = "chart-container" id = "request-chart-container">
-            <canvas id="requestTagsChart"></canvas>
+        <div id = "request-chart">
+            <div class = "chart-container" id = "request-chart-container">
+                <canvas id="requestTagsChart"></canvas>
+            </div>
+            <form id = "requestRadioButtons">
+
+            </form>
         </div>
-        <form id = "requestRadioButtons">
-
-        </form>
-
-        <br>
-        <br>
 
 
-        <div class = "chart-container" id = "sending-chart-container">
-            <canvas id="sendingTagsChart"></canvas>
+        <div id = "sending-chart">
+            <div class = "chart-container" id = "sending-chart-container">
+                <canvas id="sendingTagsChart"></canvas>
+            </div>
+            <form id = "sendingRadioButtons">
+            </form>
         </div>
-        <form id = "sendingRadioButtons">
-
-        </form>
     </div>
 
     <div id="name-frequencies">
