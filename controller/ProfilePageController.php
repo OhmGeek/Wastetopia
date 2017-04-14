@@ -603,15 +603,13 @@ class ProfilePageController
 
         $advice = "";
         if ($name == "" &&  $tag == ""){
-            print_r("Both empty");
             $advice = "Not enough data to give advice, sorry!";
         }elseif($name == "" && $tag!= ""){
-            $advice = "You have given away a lot of " +$tag+" products. Think about buying less of them, or using them more.";
+            $advice = "You have given away a lot of ".$tag." products. Think about buying less of them, or using them more.";
         }elseif($name !== "" && $tag == ""){
-            $advice = "You have given away " + $name + " a lot. If you're not using it, think about buying it less.";
+            $advice = "You have given away " . $name . " a lot. If you're not using it, think about buying it less.";
         }else{
-            print_r("Both fine");
-            $advice = "You have given away a lot of " +$tag+" products, and the item you've given away most is " +$name +". If you have a lot of waste like this, think about buying less of it, or using it more.";
+            $advice = "You have given away a lot of " .$tag." products, and the item you've given away most is " .$name .". If you have a lot of waste like this, think about buying less of it, or using it more.";
         }
 
         return $advice;
