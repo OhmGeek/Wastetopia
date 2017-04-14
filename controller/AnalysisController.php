@@ -249,7 +249,7 @@ class AnalysisController
             return null;
         }
         arsort($tags); // Sort by tag frequency
-        
+
         return array_keys($tags)[0];
     }
 }

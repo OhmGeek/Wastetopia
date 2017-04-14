@@ -600,6 +600,9 @@ class ProfilePageController
         $name = $controller->getMostFrequentItemNameSent();
         $tag = $controller->getMostFrequentTypeTagSent();
 
+        print_r($name);
+        print_r($tag);
+
         $advice = "";
         if ($name == null &&  $tag == null){
             $advice = "Not enough data to give advice, sorry!";
