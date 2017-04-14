@@ -133,13 +133,9 @@ $(function() {
 
 
         if (formID === "requestRadioButtons"){
-          // myRequestChart.destroy(); // Destroy so it can be redrawn
-          // createTagsChart(categoryValue, 1); // Create the requests tag chart
             updateChart(myRequestChart, 1, categoryValue); // Try new function
         }else{
-            // Create sending tags chart
-            mySendingChart.destroy(); // Destroy so it can be redrawn
-            createTagsChart(categoryValue, 0); // Create the sending tag chart
+            updateChart(mySendingChart, 0, categoryValue);
         }
     });
 
@@ -174,9 +170,11 @@ $(function() {
             console.log(chart);
             console.log(chart.config.data.datasets.data);
             console.log(chart.config.data.labels);
-            
+
             chart.config.data.datasets.data = data; // Change the data
             chart.config.data.labels = labels; // Change the labels
+            chart.config.data.datasets.backgroundColor = chartBackgroundColours; // Change the data
+            chart.config.data.datasets.borderColor = chartBorderColours; // Change the data
 
             console.log(chart.config.data.datasets.data);
             console.log(chart.config.data.labels);
