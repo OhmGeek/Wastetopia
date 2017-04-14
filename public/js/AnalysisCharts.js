@@ -153,7 +153,7 @@ $(function() {
         var relativeURL = requestsOrOffers ? "/analysis/get-request-tags/" : "/analysis/get-sending-tags/"
         var url = baseURL + relativeURL + categoryID;
 
-
+        console.log("updating");
 
         $.getJSON(url, function(json) {
             var labels = []; // Labels of bars
