@@ -88,12 +88,16 @@ $(function() {
         var url = baseURL + "/analysis/categories";
 
         $.getJSON(url, function(json){
+            console.log("CATEGORIES");
             console.log(json);
             // Put category data onto radio buttons
             $.each(json, function(id, name){
+                console.log(id);
+                console.log(name);
                 var radioLabel = $("label");
                 radioLabel.addClass("radio-inline");
                 var html = "<input type='radio' name='requestOption' value = "+id+">"+name;
+                console.log(html);
                 radioLabel.html(html);
 
                 $("#requestRadioButtons").append(radioLabel);
