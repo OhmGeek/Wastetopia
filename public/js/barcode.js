@@ -80,7 +80,7 @@ var scanBarcode = function() {
     // }, false);
     // reader.readAsDataURL(file);
     var formdata = new FormData($('#barcode-scanner')[0]);
-    formdata.append('file', $('#barcode-upload')[0].files[0]); // todo add all files
+    formdata.append('file', $('#barcode-upload').prop('files')[0]); // todo add all files
 
     $.ajax({
         url: 'https://wastetopia-pr-17.herokuapp.com/api/barcode/get',
