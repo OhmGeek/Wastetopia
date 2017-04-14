@@ -111,5 +111,17 @@ $(function() {
         });
     }
 
+    $(document).on('click', 'input[type="radio"]', function(event){
+        var categoryValue = $(this).val();
+        console.log(categoryValue);
+        var form = $(this).parent('form');
+        var formID = form.attr('id');
+        console.log(formID);
+        if (formID === "requestRadioButtons"){
+          createTagsChart(categoryValue, 1); // Create the requests tag chart
+        }else{
+            // Create sending tags chart
+        }
+    });
 });
 
