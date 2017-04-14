@@ -100,8 +100,7 @@ var scanBarcode = function() {
         // use JQuery to get the barcode
         var barcode = $(htmlResponse).find("pre")[0].innerText;
 
-        $.getJSON('https://world.openfoodfacts.org/api/v0/product/' + barcode + ".json", function (resp) {
-            var data = JSON.parse(resp);
+        $.getJSON('https://world.openfoodfacts.org/api/v0/product/' + barcode + ".json", function (data) {
             console.log(data);
             if(data.status === 1) {
                 return data.product;
