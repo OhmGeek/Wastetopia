@@ -28,50 +28,11 @@ function autofill(data) {
             showUploadedItem(data.image_url, 0); // we don't use the id anymore
         }
 
-    } else {
-        // no autofill.
-        // provide some feedback saying it couldn't be detected.
-        alert("not detected");
-    }
-};
-
-
-function getBarcodeInfo(barcode) {
-    $.getJSON('https://world.openfoodfacts.org/api/v0/product/' + barcode + ".json", function (resp) {
-        var data = JSON.parse(resp);
-        console.log(data);
-        if(data.status === 1) {
-            return data.product;
-        }
-        else {
-            return {};
-        }
-    });
 }
 
+
+
 var scanBarcode = function() {
-    // first, get the image data as URL
-    // var file = $('#barcode-upload').prop('files')[0];
-    // var reader = new FileReader();
-    //
-    // reader.addEventListener("load", function() {
-    //     console.log(reader.result); // url
-    //     Quagga.decodeSingle({
-    //         decoder: {
-    //             readers: ["upc_reader"]
-    //         },
-    //         locate: true, // try to locate the barcode in the image
-    //         src: reader.result
-    //     }, function(result){
-    //         console.log(result);
-    //         if(result.codeResult) {
-    //             console.log("result", result.codeResult.code);
-    //         } else {
-    //             console.log("not detected");
-    //         }
-    //     });
-    // }, false);
-    // reader.readAsDataURL(file);
     var formdata = new FormData($('#barcode-scanner')[0]);
     formdata.append('file', $('#barcode-upload').prop('files')[0]); // todo add all files
 
