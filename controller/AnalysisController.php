@@ -10,6 +10,7 @@ namespace Wastetopia\Controller;
 use Twig_Environment;
 use Twig_Loader_Filesystem;
 use Wastetopia\Model\AnalysisModel;
+use Wastetopia\Config\CurrentConfig;
 
 
 class AnalysisController
