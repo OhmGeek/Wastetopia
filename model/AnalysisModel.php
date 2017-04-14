@@ -98,7 +98,6 @@ class AnalysisModel
      */
     function getTagFrequenciesForTransactions($categoryIDArray = array())
     {
-        print_r($categoryIDArray);
 
         $userID = $this->getUserID();
         
