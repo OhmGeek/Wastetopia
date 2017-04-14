@@ -82,11 +82,13 @@
             </div>
             <div >
                 {% if receivingNames|length > 0 %}
+                <div class = "center-elements">
                     <ul class = "list-group">
                         {% for name in receivingNames %}
                             <li class="list-group-item">{{ name.name }}  <span class="badge">{{ name.frequency }}</span></li>
                         {% endfor %}
                     </ul>
+                </div>
                 {% else %}
                     <p>
                        Not enough data, sorry!
@@ -102,11 +104,13 @@
             </div>
             <div>
                 {% if sendingNames|length > 0 %}
-                    <ul class = "list-group">
-                        {% for name in sendingNames %}
-                            <li class="list-group-item">{{ name.name }} <span class="badge">{{ name.frequency }}</span></li>
-                        {% endfor %}
-                    </ul>
+                    <div class = "center-elements">
+                        <ul class = "list-group">
+                            {% for name in sendingNames %}
+                                <li class="list-group-item">{{ name.name }} <span class="badge">{{ name.frequency }}</span></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
                 {% else %}
                     <p>
                         Not enough data, sorry!
