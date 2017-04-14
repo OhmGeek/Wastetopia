@@ -65,11 +65,36 @@ class SearchModel
         return $statement->fetchAll(PDO::FETCH_ASSOC)[0];
     }
 
-    function checkRequestingStatus($listingID, $userID)
-    {
+    function isRequesting($listingID, $userID){
         $statement = $this->db->prepare("
-
+            SELECT COUNT(*) AS `Count`
+        FROM `ListingTransaction`
+        JOIN `Transaction` ON `Transaction`.`TransactionID` = `ListingTransaction`.`FK_Transaction_TransactionID`
+        JOIN `Listing` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
+        WHERE `ListingTransaction`.`FK_Listing_ListingID` = :listingID
+        AND `Transaction`.`FK_User_UserID` = :userID
+        AND `ListingTransaction`.`Success` = 0;
         ");
+        $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
+        $statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);
+        $statement->execute();
+    
+        return $statement->fetchColumn() > 0;
+        
+    }
+  
+    function isWatching($listingID, $userID){
+    $statement = $this->db->prepare("
+            SELECT COUNT(*) AS `Count`
+        FROM `Watch`
+        WHERE `FK_User_UserID` = :userID
+        AND `FK_Listing_ListingID` = :listingID;
+        ");
+        $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
+        $statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);
+        $statement->execute();
+    
+        return $statement->fetchColumn() > 0;    
     }
 
     /*Distance searches will return listings only within 0.76 degrees of search location
