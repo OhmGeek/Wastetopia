@@ -3,7 +3,7 @@
  */
 
 $(function(){
-    var baseURL = window.location.protocol + "//" + window.location.host + "/";
+    var baseURL = window.location.protocol + "//" + window.location.host;
     var categoryIDs = [1]; // Start with category 1
 
     // 6 colours for graph background
