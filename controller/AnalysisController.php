@@ -185,7 +185,7 @@ class AnalysisController
 
             $names[$name] = $frequency;
         }
-        
+
         print_r($names);
 
         ksort($names);

@@ -30,7 +30,7 @@ class AnalysisModel
     {
         //$reader = new UserCookieReader();
         //return $reader->get_user_id();
-        return 2; //Hardcoded for now
+        return 6; //Hardcoded for now
     }
 
    
