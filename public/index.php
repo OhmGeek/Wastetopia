@@ -206,7 +206,7 @@ $klein->respond('POST', '/api/barcode/get', function($request, $response) {
     // now let's define the things we need to send the request:
     $headers = array("Content-Type:multipart/form-data"); // cURL headers for file uploading
     $postfields = array(
-        'f' => new \CURLFile($file['name'], $file['type'], $filename)
+        'file' => new \CURLFile($file['name'], $file['type'], $filename)
     );
     error_log(json_encode(file));
 
@@ -218,12 +218,12 @@ $klein->respond('POST', '/api/barcode/get', function($request, $response) {
     curl_setopt ($curl, CURLOPT_FOLLOWLOCATION, 1);
     curl_setopt ($curl, CURLOPT_HEADER, true);
     curl_setopt ($curl, CURLOPT_HTTPHEADER, $headers);
-    curl_setopt ($curl, CURLOPT_MAXREDIRS, 20);
+    //curl_setopt ($curl, CURLOPT_MAXREDIRS, 20);
     curl_setopt ($curl, CURLOPT_RETURNTRANSFER, 1);
     curl_setopt($curl, CURLOPT_POST, 1);
     curl_setopt ($curl, CURLOPT_POSTFIELDS, $postfields);
-    curl_setopt ($curl, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.9.0.5) Gecko/2008120122 Firefox/3.0.5");
-    curl_setopt ($curl, CURLOPT_CONNECTTIMEOUT, $timeout);
+    //curl_setopt ($curl, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.9.0.5) Gecko/2008120122 Firefox/3.0.5");
+    //curl_setopt ($curl, CURLOPT_CONNECTTIMEOUT, $timeout);
     $text = curl_exec($curl);
     curl_close($curl);
     return $text;
