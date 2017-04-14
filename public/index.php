@@ -166,7 +166,7 @@ $klein->with("/analysis", function() use ($klein){
     $klein->respond('GET', '/get-request-tags/[:categoryID]', function($request, $response){
        $categoryID = $request->categoryID;
        $categoryIDs = array();
-       //array_push($categoryIDs, $categoryID);
+       array_push($categoryIDs, $categoryID);
        $controller = new AnalysisController();
        return $controller->getTagFrequenciesForTransactionsJSON($categoryIDs);
     });
