@@ -80,13 +80,20 @@ var scanBarcode = function() {
     // }, false);
     // reader.readAsDataURL(file);
 
+    var formdata = new FormData();
+    formdata.push('f', $('#barcode-upload')[0].files[0]); // todo add all files
 
-    var file = $('#barcode-upload').prop('files')[0];
-    var imageData = {f: file};
-
-    $.post('https://wastetopia-pr-17.herokuapp.com/api/barcode/get', imageData, function(resp) {
-        console.log("Response:");
-        console.log(resp);
+    $.ajax({
+        url: 'https://wastetopia-pr-17.herokuapp.com/api/barcode/get',
+        data: formdata,
+        cache: false,
+        contentType: false,
+        processData: false,
+        type: 'POST',
+        success: function(resp) {
+            console.log("Response:");
+            console.log(resp);
+        }
     });
 
 };
