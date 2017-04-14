@@ -228,6 +228,7 @@ $klein->respond('POST', '/api/barcode/get', function($request, $response) {
     //curl_setopt ($curl, CURLOPT_CONNECTTIMEOUT, $timeout);
     $text = curl_exec($curl);
     error_log(curl_getinfo($curl,CURLINFO_HTTP_CODE));
+    error_log(curl_error($curl)); //get error
     curl_close($curl);
     error_log($text);
     return $text;
