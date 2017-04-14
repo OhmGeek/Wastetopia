@@ -106,30 +106,48 @@ class CardDetailsModel
         return $result["Image_URL"];
     }
 
-    /**
-    * Returns 1 if given user has an ongoing request for the given listing
-    * @param $userID
+        /** 
+    * Checks whether the given user has an ongoing request for the given listing
     * @param $listingID
-    * @return boolean
+    * @param $userID
+    * @return bool (True if user is requesting the listing)
     */
-    function isUserRequestingListing($userID, $listingID){
-	$statement = $this->db->prepare("
-		SELECT * 
-		FROM `ListingTransaction`
-		JOIN `Transaction` ON `Transaction`.`TransactionID` = `ListingTransaction`.`FK_TransactionID`
+    function isRequesting($listingID, $userID){
+        $statement = $this->db->prepare("
+            SELECT COUNT(*) AS `Count`
+	    FROM `ListingTransaction`
+	    JOIN `Transaction` ON `Transaction`.`TransactionID` = `ListingTransaction`.`FK_Transaction_TransactionID`
 		JOIN `Listing` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
-		JOIN `User` ON `User`.`UserID` = `Transaction`.`FK_User_UserID`
-		WHERE `ListingTransaction`.`Success` = 0
-		AND `Listing`.`ListingID` = :listingID
-		AND `User`.`UserID` = :userID
-	");
+	    WHERE `ListingTransaction`.`FK_Listing_ListingID` = :listingID
+	    AND `Transaction`.`FK_User_UserID` = :userID
+	    AND `ListingTransaction`.`Success` = 0;
+        ");
+        $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
+        $statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);
+        $statement->execute();
+	
+        return $statement->fetchColumn() > 0;
 	    
-	$statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);
-	$statement->bindValue(":userID", $userID, PDO::PARAM_INT);
-	    
-	$statement->execute();
-	$results = $statement->fetchAll(PDO::FETCH_ASSOC);
-	    
-	return (count($results) > 0);    
+    }
+	
+	
+    /** 
+    * Checks whether the given user has the listing in their watch list
+    * @param $listingID
+    * @param $userID
+    * @return bool (True if user is requesting the listing)
+    */	
+    function isWatching($listingID, $userID){
+	$statement = $this->db->prepare("
+            SELECT COUNT(*) AS `Count`
+	    FROM `Watch`
+	    WHERE `FK_User_UserID` = :userID
+	    AND `FK_Listing_ListingID` = :listingID;
+        ");
+        $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
+        $statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);
+        $statement->execute();
+	
+        return $statement->fetchColumn() > 0;	
     }
 }
