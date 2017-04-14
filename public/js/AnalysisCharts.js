@@ -100,7 +100,10 @@ $(function() {
                 console.log(html);
                 radioLabel.html(html);
 
+                console.log(radioLabel);
+
                 $("#requestRadioButtons").append(radioLabel);
+                console.log($("#requestRadioButtons").html());
             });
         });
     }
