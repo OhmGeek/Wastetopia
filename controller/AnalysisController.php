@@ -228,10 +228,12 @@ class AnalysisController
      */
     function getMostFrequentItemNameSent(){
         $names = json_decode($this->getTotalNameFrequenciesSending());
+        print_r("ITEM NAMES");
         print_r($names);
         if(count($names) == 0){
             return null;
         }
+        print_r("ARRAY_KEYS_NAMES");
         print_r(array_keys($names));
         return array_keys($names)[0];
     }
@@ -244,11 +246,14 @@ class AnalysisController
     function getMostFrequentTypeTagSent(){
         // Get most frequent Tags for the Type category
         $tags = $this->getTagFrequenciesForListingsJSON(array(1));
+        print_r("TAGS");
         print_r($tags);
         if(count($tags) == 0){
             return null;
         }
         arsort($tags); // Sort by tag frequency
+
+        print_r("ARRAY_KEYS_TAGS");
         print_r(array_keys($tags));
         return array_keys($tags)[0];
     }
