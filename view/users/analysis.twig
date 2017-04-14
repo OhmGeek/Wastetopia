@@ -1,125 +1,103 @@
-{% extends 'header.twig' %}
-
-{% block title %}
-    Analysis | Wastetopia
-{% endblock %}
-
-{% block navbar %}
-    <style>
-        body {
-            height: 100vh;
-            margin-top: 60px;
-        }
-
-        .chart-container{
-            width : 320px;
-            height : auto;
-
-        }
-
-        .center-elements{
-            display: flex;
-            justify-content: center;
-        }
-
-        form{
-            display: inline-flex;
-            justify-content: center;
-        }
-
-        .input-group{
-            margin: 5px;
-        }
-
-        .list-group{
-            display: block;
-            justify-content: center;
-            width: 60%;
-        }
-
-    </style>
-    {% include 'navbar.twig' %}
-{% endblock %}
-
-{% block content %}
-
-    <div id="charts" height="300px" class = "row">
-        <div id = "request-chart" class = "col-xs-6">
-            <div class="center-elements">
-                <div class = "chart-container" id = "request-chart-container">
-                    <canvas id="requestTagsChart"></canvas>
-                </div>
-            </div>
-            <div class="center-elements">
-                <form id = "requestRadioButtons">
-                </form>
-            </div>
-        </div>
-
-
-        <div id = "sending-chart" class = "col-xs-6">
-            <div class="center-elements">
-                <div class = "chart-container" id = "sending-chart-container">
-                    <canvas id="sendingTagsChart"></canvas>
-                </div>
-            </div>
-            <div class="center-elements">
-                <form id = "sendingRadioButtons">
-                </form>
-            </div>
+<div id="analysis" class="tab-pane fade">
+    <div class="header">
+        <div class="title">
+            <a role="button" data-toggle="tab" href="#home"><i class="material-icons">chevron_left</i></a>{% endif %}
+            Analysis
         </div>
     </div>
+    <div class="tab-content zero-padding" style="padding-top:10px; background-color:transparent;">
+        <div id="analysis-section" class="tab-pane fade in active">
+            <div class="container-fluid">
 
-    <br>
-    <br>
-
-    <div id="name-frequencies" class = "row">
-        <div id = "frequenciesReceiving" class = "col-xs-6">
-            <div class = "center-elements">
-                <h4>
-                    A list of the top 5 names of items you receive
-                </h4>
-            </div>
-            <div >
-                {% if receivingNames|length > 0 %}
-                <div class = "center-elements">
-                    <ul class = "list-group">
-                        {% for name in receivingNames %}
-                            <li class="list-group-item">{{ name.name }}  <span class="badge">{{ name.frequency }}</span></li>
-                        {% endfor %}
-                    </ul>
-                </div>
-                {% else %}
-                    <p>
-                       Not enough data, sorry!
-                    </p>
-                {% endif %}
-            </div>
-        </div>
-        <div id = "frequenciesSending" class = "col-xs-6">
-            <div class = "center-elements">
-                <h4>
-                    A list of the top 5 names of items you send
-                </h4>
-            </div>
-            <div>
-                {% if sendingNames|length > 0 %}
-                    <div class = "center-elements">
-                        <ul class = "list-group">
-                            {% for name in sendingNames %}
-                                <li class="list-group-item">{{ name.name }} <span class="badge">{{ name.frequency }}</span></li>
-                            {% endfor %}
-                        </ul>
+                <div id="charts" height="300px" class = "row">
+                    <div id = "request-chart" class = "col-xs-6">
+                        <div class="center-elements">
+                            <div class = "chart-container" id = "request-chart-container">
+                                <canvas id="requestTagsChart"></canvas>
+                            </div>
+                        </div>
+                        <div class="center-elements">
+                            <form id = "requestRadioButtons">
+                            </form>
+                        </div>
                     </div>
-                {% else %}
-                    <p>
-                        Not enough data, sorry!
-                    </p>
-                {% endif %}
+
+                    <!--Start of analysis HTML-->
+                    <div id = "sending-chart" class = "col-xs-6">
+                        <div class="center-elements">
+                            <div class = "chart-container" id = "sending-chart-container">
+                                <canvas id="sendingTagsChart"></canvas>
+                            </div>
+                        </div>
+                        <div class="center-elements">
+                            <form id = "sendingRadioButtons">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <br>
+                <br>
+
+                <div id="name-frequencies" class = "row">
+                    <div id = "frequenciesReceiving" class = "col-xs-6">
+                        <div class = "center-elements">
+                            <h4>
+                                A list of the top 5 names of items you receive
+                            </h4>
+                        </div>
+                        <div >
+                            {% if receivingNames|length > 0 %}
+                                <div class = "center-elements">
+                                    <ul class = "list-group">
+                                        {% for name in receivingNames %}
+                                            <li class="list-group-item">{{ name.name }}  <span class="badge">{{ name.frequency }}</span></li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            {% else %}
+                                <p>
+                                    Not enough data, sorry!
+                                </p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div id = "frequenciesSending" class = "col-xs-6">
+                        <div class = "center-elements">
+                            <h4>
+                                A list of the top 5 names of items you send
+                            </h4>
+                        </div>
+                        <div>
+                            {% if sendingNames|length > 0 %}
+                                <div class = "center-elements">
+                                    <ul class = "list-group">
+                                        {% for name in sendingNames %}
+                                            <li class="list-group-item">{{ name.name }} <span class="badge">{{ name.frequency }}</span></li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            {% else %}
+                                <p>
+                                    Not enough data, sorry!
+                                </p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <!--End of analysis HTML-->
+
             </div>
         </div>
     </div>
-{% endblock %}
+</div>
 
-{% set csslist = [] %}
-{% set jslist = ["AnalysisCharts.js"] %}
+
+
+
+
+
+
+
+
+

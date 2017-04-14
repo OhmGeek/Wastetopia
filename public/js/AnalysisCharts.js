@@ -12,13 +12,27 @@ $(function() {
     var baseURL = window.location.protocol + "//" + window.location.host;
     var categoryID = 1; // Start with category 1
 
-    // Create request chart and add buttons
-    createTagsChart(categoryID, 1); // Create first Requests chart
-    createChartButtons("requestOption", "requestRadioButtons"); // Create the radio buttons for the chart
 
-    // Create sending chart and add buttons
-    createTagsChart(categoryID, 0); // Create first sending chart
-    createChartButtons("sendingOption", "sendingRadioButtons"); // Create the radio buttons for the chart
+    // Only make the charts when the user clicks on the link
+    $(document).on('click', 'a[href="#analysis"]', function(event){
+        // Create request chart and add buttons
+        createTagsChart(categoryID, 1); // Create first Requests chart
+        createChartButtons("requestOption", "requestRadioButtons"); // Create the radio buttons for the chart
+
+        // Create sending chart and add buttons
+        createTagsChart(categoryID, 0); // Create first sending chart
+        createChartButtons("sendingOption", "sendingRadioButtons"); // Create the radio buttons for the chart
+    });
+
+    // Remove charts when not on this page
+    $(document).on('click', 'a[href="#home"]', function(event){
+       if($("#analysis").hasClass("active")){
+           // Remove the charts
+           mySendingChart.destroy();
+           myRequestChart.destroy();
+       }
+    });
+
 
     // NEED MORE DISTINCT COLOURS (Perhaps generate dynamically depending on size of group)
     var backgroundColours = [

@@ -10,6 +10,8 @@ namespace Wastetopia\Controller;
 use Wastetopia\Config\CurrentConfig;
 use Wastetopia\Model\ProfilePageModel;
 use Wastetopia\Model\CardDetailsModel;
+use Wastetopia\Controller\AnalysisController;
+
 use Wastetopia\Controller\RecommendationController;
 use Twig_Loader_Filesystem;
 use Twig_Environment;
@@ -86,6 +88,7 @@ class ProfilePageController
         $offersTabHTML = $this->generateOffersSection();
         $requestsTabHTML = $this->generateRequestsSection();
         $watchListTabHTML = $this->generateWatchListSection();
+        $analysisTabHTML = $this->generateAnalysisTabHTML();
 
         $output = array(
             "isUser" => $isCurrentUser,
@@ -97,12 +100,15 @@ class ProfilePageController
             "listingsTab" => $listingsTabHTML,
             "offersTab" => $offersTabHTML,
             "requestsTab" => $requestsTabHTML,
-            "watchlistTab" => $watchListTabHTML
+            "watchlistTab" => $watchListTabHTML,
+            "analysisTab" => $analysisTabHTML
         );
 
         $template = $this->twig->loadTemplate('users/profileContent.twig');
         return $template->render($output);
     }
+
+
     /* Generates the profile information for the website */
     function generateProfileSection()
     {
@@ -117,6 +123,7 @@ class ProfilePageController
         $userInformation["userimage"] = $userImage;
         return $userInformation;
     }
+
 
     /* Generates HTML for Home tab */
     function generateHomeSection()
@@ -196,12 +203,15 @@ class ProfilePageController
         // Get Recommendation HTML
         $recommendationHTML = $this->generateRecommendationHTML();
         $predictionHTML = $this->generatePredictionHTML();
-        
+
         $isCurrentUser = ($this->userID == $this->getUserID() ? 1 : 0);
         
         $sendingTransactionsCount = $sendingCompletedTransactionsCount + $sendingPendingTransactionsCount;
         $requestingCount = $pendingRequestingCount + $completedRequestingCount;
-        
+
+        // Get advice text
+        $adviceText = $this->generateAdviceText();
+
         $listingsInformation = array(
             "listingsCount" => $totalAvailabaleListings, // Total number of listings with quantity > 0
             "emptyListingsCount" => $totalEmptyListings, // Total number of listings with quantity <= 0
@@ -210,7 +220,8 @@ class ProfilePageController
             "watchListCount" => $watchListCount,
             "recommendationHTML" => $recommendationHTML,
             "predictionHTML" => $predictionHTML,
-            "isUser" => $isCurrentUser
+            "isUser" => $isCurrentUser,
+            "adviceText" => $adviceText
         );
 
         $template = $this->twig->loadTemplate("/users/homeTab.twig");
@@ -577,6 +588,27 @@ class ProfilePageController
     function generatePredictionHTML(){
         $controller = new RecommendationController();
         return $controller->generatePredictionSection();
+    }
+
+
+    /**
+     * Returns the text that goes on the Tile for analysis in the home tab
+     * @return string
+     */
+    function generateAdviceText(){
+        return "Advice here - click the arrow to the analysis for this";
+
+    }
+
+
+    /**
+     * Returns the HTML for the AnalysisTab on the profile page
+     * @return mixed
+     */
+    function generateAnalysisTabHTML(){
+        // Generate the HTML for the Analysis tab but don't load?
+        $controller = new AnalysisController();
+        return $controller -> generatePage();
     }
 
 
