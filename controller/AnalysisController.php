@@ -245,7 +245,7 @@ class AnalysisController
      */
     function getMostFrequentTypeTagSent(){
         // Get most frequent Tags for the Type category
-        $tags = $this->getTagFrequenciesForListingsJSON(array(1));
+        $tags = json_decode($this->getTagFrequenciesForListingsJSON(array(1)));
         print_r("TAGS");
         print_r($tags);
         if(count($tags) == 0){
