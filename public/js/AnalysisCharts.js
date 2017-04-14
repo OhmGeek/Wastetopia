@@ -27,6 +27,7 @@ $(function() {
     ];
 
     createRequestTagsChart(categoryID); // Create first Requests chart
+    createRequestChartButtons(); // Create the radio buttons for the chart
 
     // Get categories from /analysis/categories in JSON format
     // $.each(json, function(id, name){
@@ -87,11 +88,12 @@ $(function() {
         var url = baseURL + "/analysis/categories";
 
         $.getJSON(url, function(json){
+            console.log(json);
             // Put category data onto radio buttons
             $.each(json, function(id, name){
                 var radioDiv = $("div");
                 radioDiv.addClass("radio");
-                var html = "<label><input type='radio-inline' name='requestOption' value = "+id+">"+name+"</label>";
+                var html = "<label class='radio-inline'><input type='radio-inline' name='requestOption' value = "+id+">"+name+"</label>";
                 radioDiv.html(html);
 
                 $("#requestRadioButtons").append(radioDiv);
