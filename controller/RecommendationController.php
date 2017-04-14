@@ -34,7 +34,9 @@ class RecommendationController {
     */
     function generateRecommendedSection(){
       $frequentTags = $this->model->getTagFrequenciesForTransactions();
-        
+
+      print_r($frequentTags);
+      
       // Deal with if there are not enough tags    
       if(count($frequentTags) < 3){
           $recommendationList = array(); // Empty array
