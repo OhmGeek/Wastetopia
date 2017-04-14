@@ -82,18 +82,13 @@ var scanBarcode = function() {
 
 
     var file = $('#barcode-upload').prop('files')[0];
-    var reader = new FileReader();
-    // once the file has been loaded
-    reader.addEventListener("load", function() {
-        var imageData = {f: reader.result};
+    var imageData = {f: file};
 
-        $.post('https://wastetopia-pr-17.herokuapp.com/api/barcode/get', imageData, function(resp) {
-            console.log("Response:");
-            console.log(resp);
-
-        });
+    $.post('https://wastetopia-pr-17.herokuapp.com/api/barcode/get', imageData, function(resp) {
+        console.log("Response:");
+        console.log(resp);
     });
-    reader.readAsDataURL(file); //now actually read the image, and process it appropriately.
+
 };
 
 $('#scan-barcode').on('click', scanBarcode);
