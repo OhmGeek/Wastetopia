@@ -88,7 +88,8 @@ $(function() {
                     }],
                     options:{
                         title: {
-                            text: "Title test"
+                            display: true,
+                            text: 'Frequency of Tags for items you ' + action
                         }
                     }
                 }
