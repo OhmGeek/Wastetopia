@@ -15,6 +15,10 @@
             width : 320px;
             height : auto;
         }
+        #sending-chart-container{
+            float: left;
+        }
+
     </style>
     {% include 'navbar.twig' %}
 {% endblock %}
@@ -38,6 +42,20 @@
         <form id = "sendingRadioButtons">
 
         </form>
+    </div>
+
+    <div id="name-frequencies">
+        <div id = "frequenciesReceiving">
+            <p>
+                A list of the top 5 names of items you receive
+            </p>
+        </div>
+        <br>
+        <div id = "frequenciesSending">
+            <p>
+                A list of the top 5 names of items you give away
+            </p>
+        </div>
     </div>
 {% endblock %}
 

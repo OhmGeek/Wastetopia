@@ -107,8 +107,6 @@ $(function() {
         var url = baseURL + "/analysis/categories";
 
         $.getJSON(url, function(json){
-            console.log("CATEGORIES");
-            console.log(json);
             var radioButtonsHTML = "";
 
             // Put category data onto radio buttons
