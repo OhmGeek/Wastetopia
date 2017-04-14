@@ -8,7 +8,7 @@ $(function(){
           
           // Update relevant parts of the page
       });
-  });
+  }
   
   setInterval(updateNotifications, 3000);
   

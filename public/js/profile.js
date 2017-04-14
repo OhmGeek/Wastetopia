@@ -354,36 +354,64 @@ $(function () {
       });
   });
   
-//   // Let user change their email - NEEDS MODAL
-//     $(document).on('click', '#change-email', function(event){
-//     event.preventDefault();
+  // Let user change their email - NEEDS MODAL
+    $(document).on('click', '#change-email', function(event){
+    event.preventDefault();
     
-//     // Set up Modal with one input for old password, one input for new password
-    
-//     var oldEmail = ;// Get from modal
-//     var newEmail = ;// Get from modal
-    
-//     var url = baseURL + "/change-password";
-//     var data = {oldEmail : oldEmail, newEmail : newEmail};
-    
-//     $.post(url, data, function(response){
-//       var json = $.parseJSON(response);
-//       if(json.hasOwnProperty("error")){
-//                console.log("Error occurred");
-//                 displayError(json["error"]);
-//                 return;
-//            }else if(json.hasOwnProperty("success")){
-//                console.log("Successful");
-//                displaySuccess("Email changed");
-//                // Reload page (logged out so should take user to login page)  
-//                return;
-//             }else{
-//                displayError("WHAAAAT");
-//                console.log("Something really went wrong");
-//                return;
-//            }
-//     });
-//   });
+    // Set up Modal with one input for old password, one input for new password
+        $('body').append(changeModal);
+
+        $("#change-modal").modal({backdrop: "static"})
+
+        $("#change-modal").on("shown.bs.modal", function () {
+            $(this).find('.modal-msg').text("Please enter your current email and new email.");
+            $("#label1").val("Current email:");
+            $("#label2").val("New email: ");
+            $("#old-password").attr("type", "email");
+            $("#old-password").attr("id", "old-email");
+            $("#new-password").attr("type", "email");
+            $("#new-password").attr("id", "new-email");
+        }).modal('show');
+
+
+        $("#change-modal .accept-button").on('click', function(){
+            var button = $(this);
+            var oldEmail = $('#old-email').val();// Get from modal
+            var newEmail = $('#new-email').val();// Get from modal
+
+            // Send to /items/renew-listing/
+            $('#change-modal').modal('hide');
+
+            var url = baseURL + "/change-email";
+            var data = {oldEmail : oldEmail, newEmail : newEmail};
+
+            console.log(data);
+            return;
+            
+            $.post(url, data, function(response){
+                var json = $.parseJSON(response);
+                if(json.hasOwnProperty("error")){
+                    console.log("Error occurred");
+                    displayError("Couldn't change email: "+json["error"]);
+                    return;
+                }else if(json.hasOwnProperty("success")){
+                    console.log("Successful");
+                    displaySuccess("Email successfully changed");
+                    //Reload page (logged out so should take user to login page)
+                    return;
+                }else{
+                    displayError("WHAAAAT");
+                    console.log("Something really went wrong");
+                    return;
+                }
+            });
+        });
+
+        $('#change-modal').on('hidden.bs.modal', function(){
+            console.log("hidden");
+            $('#change-modal').remove();
+        });
+  });
   
   
 //     $(document).on('click', '#addOffer', function(){
@@ -401,11 +429,11 @@ $(function () {
                           '<div class="modal-msg"></div>'+
                           '<div class="container-fluid">'+
                                 '<div class="form-group zero-padding old-password">'+
-                                  '<label for="old-password">Current password: </label>'+
+                                  '<label id = "label1" for="old-password">Current password: </label>'+
                                   '<input type="text" class="form-control" id="old-password">'+
                                 '</div>'+
                                 '<div class="form-group zero-padding new-password">'+
-                                  '<label for="new-password">New password: </label>'+
+                                  '<label id = "label1" for="new-password">New password: </label>'+
                                   '<input type="text" class="form-control" id="new-password">'+
                                 '</div>'+
                             '</div>'+

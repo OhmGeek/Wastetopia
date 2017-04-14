@@ -137,9 +137,10 @@ class RegistrationController
     * NEED TO CHANGE THE LINK FOR PRODUCTION VERSION (use config)
     * Sends an email to the new user with the verification code
     * @param $email
+     * @param $reactivation (defaults to 0. 1 if this is sent as a result of user changing their email)
     * @return bool
     */
-    function sendVerificationEmail($email, $name){
+    function sendVerificationEmail($email, $name, $reactivation = 0){
         $CurrentConfig = new CurrentConfig();
         $config = $CurrentConfig->getAll();
             
@@ -154,9 +155,16 @@ class RegistrationController
         $message = "Your Activation Code is ".$code."";
         $to=$email;
         $subject="Activation Code For Wastetopia";
-        $from = 'wastetopia@outlook.com'; 
-        $body='<p>Your Activation Code is '.$code.'. </p> <br> <p> Please Click On This link: </p> <a href='.$fullURL.'> https:'.$fullURL.' </a> <br> <p> to activate  your account. </p>';
-        $altBody = "Please go to: https:".$fullURL;
+        $from = 'wastetopia@outlook.com';
+        $body = "";
+        $altBody = "";
+        // If reactivating new account, let user know why they have to do this again
+        if ($reactivation){
+            $body = '<p> This has been sent as a result of you changing your email. You must now reactivate your account. </p> <br>';
+            $altBody = "This has been sent as a result of you changing your email. You must now reactivate your account.";
+        }
+        $body.='<p>Your Activation Code is '.$code.'. </p> <br> <p> Please Click On This link: </p> <a href='.$fullURL.'> https:'.$fullURL.' </a> <br> <p> to activate  your account. </p>';
+        $altBody .= "Please go to: https:".$fullURL;
 
         return $this->sendEmail($from, $subject, $body, $altBody, $email, $name);
     }

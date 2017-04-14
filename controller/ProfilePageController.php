@@ -755,7 +755,7 @@ class ProfilePageController
 	// Send verification email    
 	$registrationController->sendVerificationEmail($newEmail, $newEmail);
 	
-	return True;
+	return $this->successMessage("New verification email sent to your specified email");
     }
 	
     /**
