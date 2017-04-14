@@ -230,7 +230,7 @@ class AnalysisController
         $names = json_decode($this->getTotalNameFrequenciesSending(), true);
 
         if(count($names) == 0){
-            return null;
+            return "";
         }
 
         return array_keys($names)[0];
@@ -246,7 +246,7 @@ class AnalysisController
         $tags = json_decode($this->getTagFrequenciesForListingsJSON(array(1)), true);
 
         if(count($tags) == 0){
-            return null;
+            return "";
         }
         arsort($tags); // Sort by tag frequency
 
