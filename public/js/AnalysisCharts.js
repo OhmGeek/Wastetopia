@@ -34,12 +34,9 @@ $(function(){
     // will only ever contain one categoryID
     function createRequestTagsChart(categoryID) {
         // Get request tags frequency data from the analysis controller
-        var url = baseURL + "/analysis/get-request-tags";
-        var data = {categoryID : categoryID};
+        var url = baseURL + "/analysis/get-request-tags/" + categoryID;
 
-        console.log(data);
-
-        $.getJSON(url, data, function(json){
+        $.getJSON(url, function(json){
             console.log(json);
 
             var labels = []; // Labels of bars
