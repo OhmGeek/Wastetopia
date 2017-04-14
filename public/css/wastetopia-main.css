@@ -806,7 +806,9 @@ a:link, a:hover, a:visited, a:active  {
 
 .tab-content {
   flex:1;
+
   background-color: #2658BC; /* Added from searching branch (not sure what it is for)*/
+
   padding-top: 2px;
   overflow: auto;
 }
