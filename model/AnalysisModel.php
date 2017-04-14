@@ -252,4 +252,21 @@ class AnalysisModel
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    /**
+     * Returns array of TagNames for the given category
+     * @param $categoryID
+     * @return array
+     */
+    function getTagNamesFromCategory($categoryID){
+        $statement = $this->db->prepare("
+            SELECT `Tag`.`Name`
+            FROM `Tag`
+            WHERE `Tag`.`FK_Category_Category_ID` = :categoryID;
+        ");
+
+        $statement->bindValue(":categoryID", $categoryID, PDO::PARAM_INT);
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

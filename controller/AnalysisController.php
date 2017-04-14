@@ -59,6 +59,10 @@ class AnalysisController
     {
         $frequencies =  $this->model->getTagFrequenciesForListings($categoryIDArray);
 
+        // Assuming this function will only be used for graphs with one categoryID!!
+        $categoryID = $categoryIDArray[0];
+        $tagNames = $this->model->getTagNamesFromCategory($categoryID);
+
         $results = array();
 
         // Extract TagID => Frequency pairs
@@ -67,6 +71,14 @@ class AnalysisController
             $frequency = $pair["Count"];
 
             $results[$tagName] = $frequency;
+        }
+
+        // Add any Tag Names from the category that weren't found in user's tags
+        // Add them with frequency 0
+        foreach($tagNames as $tagName){
+            if(!(array_key_exists($tagName, $results))){
+                $results[$tagName] = 0;
+            }
         }
 
         return json_encode($results);
@@ -81,6 +93,10 @@ class AnalysisController
     {
         $frequencies = $this->model->getTagFrequenciesForTransactions($categoryIDArray);
 
+        // Assuming this function will only be used for graphs with one categoryID!!
+        $categoryID = $categoryIDArray[0];
+        $tagNames = $this->model->getTagNamesFromCategory($categoryID);
+
         $results = array();
 
         // Extract TagID => Frequency pairs
@@ -90,6 +106,15 @@ class AnalysisController
 
             $results[$tagName] = $frequency;
         }
+
+        // Add any Tag Names from the category that weren't found in user's tags
+        // Add them with frequency 0
+        foreach($tagNames as $tagName){
+            if(!(array_key_exists($tagName, $results))){
+                $results[$tagName] = 0;
+            }
+        }
+
 
         return json_encode($results);
     }
