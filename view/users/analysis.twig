@@ -69,14 +69,36 @@
 
     <div id="name-frequencies" class = "row">
         <div id = "frequenciesReceiving" class = "col-xs-6 center-elements">
-            <p>
+            <h4>
                 A list of the top 5 names of items you receive
-            </p>
+            </h4>
+            {% if receiveNames|length > 0 %}
+                <ul>
+                    {% for name in receiveNames %}
+                        <li>{{ name.name }} - {{ name.frequency }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>
+                   Not enough data, sorry!
+                </p>
+            {% endif %}
         </div>
         <div id = "frequenciesSending" class = "col-xs-6 center-elements">
-            <p>
-                A list of the top 5 names of items you give away
-            </p>
+            <h4>
+                A list of the top 5 names of items you send
+            </h4>
+            {% if sendingNames|length > 0 %}
+                <ul>
+                    {% for name in sendingNames %}
+                        <li>{{ name.name }} - {{ name.frequency }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>
+                    Not enough data, sorry!
+                </p>
+            {% endif %}
         </div>
     </div>
 {% endblock %}

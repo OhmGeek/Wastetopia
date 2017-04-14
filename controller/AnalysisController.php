@@ -35,13 +35,41 @@ class AnalysisController
      * @return mixed
      */
     function generatePage(){
+        // Get sending frequencies
+        $sendingFrequencies = json_decode($this->getTotalNameFrequenciesSending());
+
+        $sendingNames = array();
+
+        foreach($sendingFrequencies as $key=>$value){
+            $details = array();
+            $details["name"] = $key;
+            $details["frequency"] = $value;
+
+            array_push($sendingNames, $details);
+        }
+
+        // Same for receiving
+        $receivingFrequencies = json_decode($this->getTotalNameFrequenciesReceiving());
+
+        $receivingNames = array();
+
+        foreach($receivingFrequencies as $key=>$value){
+            $details = array();
+            $details["name"] = $key;
+            $details["frequency"] = $value;
+
+            array_push($receivingNames, $details);
+        }
+
         // Get config
         $CurrentConfig = new CurrentConfig();
         $config = $CurrentConfig->getAll();
 
         //Create array for Twig file
         $output = array(
-            "config" => $config
+            "config" => $config,
+            "sendingNames"=>$sendingNames,
+            "receivingNames"=>$receivingNames
         );
 
         //Load template and print result
