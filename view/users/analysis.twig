@@ -68,37 +68,45 @@
     <br>
 
     <div id="name-frequencies" class = "row">
-        <div id = "frequenciesReceiving" class = "col-xs-6 center-elements">
-            <h4>
-                A list of the top 5 names of items you receive
-            </h4>
-            {% if receiveNames|length > 0 %}
-                <ul>
-                    {% for name in receiveNames %}
-                        <li>{{ name.name }} - {{ name.frequency }}</li>
-                    {% endfor %}
-                </ul>
-            {% else %}
-                <p>
-                   Not enough data, sorry!
-                </p>
-            {% endif %}
+        <div id = "frequenciesReceiving" class = "col-xs-6">
+            <div class = "center-elements">
+                <h4>
+                    A list of the top 5 names of items you receive
+                </h4>
+            </div>
+            <div class = "center-elements">
+                {% if receiveNames|length > 0 %}
+                    <ul>
+                        {% for name in receiveNames %}
+                            <li>{{ name.name }} - {{ name.frequency }}</li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>
+                       Not enough data, sorry!
+                    </p>
+                {% endif %}
+            </div>
         </div>
-        <div id = "frequenciesSending" class = "col-xs-6 center-elements">
-            <h4>
-                A list of the top 5 names of items you send
-            </h4>
-            {% if sendingNames|length > 0 %}
-                <ul>
-                    {% for name in sendingNames %}
-                        <li>{{ name.name }} - {{ name.frequency }}</li>
-                    {% endfor %}
-                </ul>
-            {% else %}
-                <p>
-                    Not enough data, sorry!
-                </p>
-            {% endif %}
+        <div id = "frequenciesSending" class = "col-xs-6">
+            <div class = "center-elements">
+                <h4>
+                    A list of the top 5 names of items you send
+                </h4>
+            </div>
+            <div class = "center-elements">
+                {% if sendingNames|length > 0 %}
+                    <ul>
+                        {% for name in sendingNames %}
+                            <li>{{ name.name }} - {{ name.frequency }}</li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>
+                        Not enough data, sorry!
+                    </p>
+                {% endif %}
+            </div>
         </div>
     </div>
 {% endblock %}

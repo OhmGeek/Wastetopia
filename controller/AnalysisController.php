@@ -206,7 +206,6 @@ class AnalysisController
         $names = array();
 
         foreach($frequencies as $array){
-            print_r($array);
             $name = $array["Name"];
             $frequency = $array["Count"];
 
