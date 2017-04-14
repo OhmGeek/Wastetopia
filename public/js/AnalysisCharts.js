@@ -13,7 +13,7 @@ $(function() {
     createChartButtons("requestOption", "requestRadioButtons"); // Create the radio buttons for the chart
 
 
-
+    // NEED MORE DISTINCT COLOURS
     var backgroundColours = [
         'rgba(255, 99, 132, 0.2)',
         'rgba(54, 162, 235, 0.2)',
@@ -71,6 +71,8 @@ $(function() {
             console.log(canvasID);
             var ctx = $("#"+canvasID); // Need to put this in the twig file
 
+            ctx.html(""); // Clear it before drawing new one
+
             // Use data to populate chart
             var myChart = new Chart(ctx, {
                 type: 'pie',
@@ -103,7 +105,11 @@ $(function() {
 
             // Put category data onto radio buttons
             $.each(json, function(id, name){
-                var html = "<input type='radio' name="+optionName+" value = "+id+">  <label>"+name + "</label> <br>";
+                if (id == 1){
+                    var html = "<input type='radio' name=" + optionName + " value = " + id + " checked>  <label>" + name + "</label> <br>";
+                }else {
+                    var html = "<input type='radio' name=" + optionName + " value = " + id + ">  <label>" + name + "</label> <br>";
+                }
 
                 radioButtonsHTML += html;
             });
