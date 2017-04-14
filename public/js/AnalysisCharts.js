@@ -64,8 +64,9 @@ $(function() {
             console.log(data);
 
             // Get correct canvas
-            var canvasID = requestsOrOffers ? "#requestsTagsChart" : "#sendingTagsChart";
-            var ctx = $(canvasID); // Need to put this in the twig file
+            var canvasID = requestsOrOffers ? "requestTagsChart" : "sendingTagsChart";
+            console.log(canvasID);
+            var ctx = $("#"+canvasID); // Need to put this in the twig file
 
             // Use data to populate chart
             var myChart = new Chart(ctx, {
@@ -99,7 +100,7 @@ $(function() {
 
             // Put category data onto radio buttons
             $.each(json, function(id, name){
-                var html = "<input type='radio' name="+optionName+" value = "+id+"> <label class = 'radio-inline'>"+name + "</label>";
+                var html = "<label class = 'radio-inline'><input type='radio' name="+optionName+" value = "+id+">"+name + "</label>";
 
                 radioButtonsHTML += html;
             });
