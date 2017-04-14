@@ -80,6 +80,24 @@ $(function() {
 
         });
     }
+
+
+    function createRequestChartButtons(){
+        // Get request tags frequency data from the analysis controller
+        var url = baseURL + "/analysis/categories";
+
+        $.getJSON(url, function(json){
+            // Put category data onto radio buttons
+            $.each(json, function(id, name){
+                var radioDiv = $("div");
+                radioDiv.addClass("radio");
+                var html = "<label><input type='radio-inline' name='requestOption' value = "+id+">"+name+"</label>";
+                radioDiv.html(html);
+
+                $("#requestRadioButtons").append(radioDiv);
+            });
+        });
+    }
 });
 
 // Bar chart version
