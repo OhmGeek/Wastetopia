@@ -27,7 +27,7 @@ $(function() {
     ];
 
     createRequestTagsChart(categoryID); // Create first Requests chart
-    createRequestChartButtons(); // Create the radio buttons for the chart
+    //createRequestChartButtons(); // Create the radio buttons for the chart
 
     // Get categories from /analysis/categories in JSON format
     // $.each(json, function(id, name){
