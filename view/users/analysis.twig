@@ -9,8 +9,13 @@
 {% endblock %}
 
 {% block content %}
-    <div id="charts" width="100" height="100">
-        <canvas id="requestTagsChart" width="100" height="100"></canvas>
+    <div id="charts" width="20" height="20">
+        <div id = "requestChartsParent">
+            <label for = "requestTagsChart">
+                Frequencies of Tags for Requests<br />
+            <canvas id="requestTagsChart"></canvas>
+            </label>
+        </div>
     </div>
 {% endblock %}
 
