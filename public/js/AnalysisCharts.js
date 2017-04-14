@@ -85,13 +85,7 @@ $(function() {
                         backgroundColor: chartBackgroundColours,
                         borderColor: chartBorderColours,
                         borderWidth: 1
-                    }],
-                    options:{
-                        title: {
-                            display: true,
-                            text: 'Frequency of Tags for items you ' + action
-                        }
-                    }
+                    }]
                 }
             });
 
