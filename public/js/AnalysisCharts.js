@@ -171,6 +171,8 @@ $(function() {
                 indexCounter = (indexCounter + 1) % 6; // Taken mod 6 to loop through available colours
             });
 
+            console.log(chart);
+            
             chart.datasets.data = data; // Change the data
             chart.labels = labels; // Change the labels
 
