@@ -65,12 +65,14 @@ $(function() {
 
             // Get correct canvas
             var canvasID = requestsOrOffers ? "requestTagsChart" : "sendingTagsChart";
+            var action = requestsOrOffers ? "request" : "give away";
             console.log(canvasID);
             var ctx = $("#"+canvasID); // Need to put this in the twig file
 
             // Use data to populate chart
             var myChart = new Chart(ctx, {
                 type: 'pie',
+                title: 'Frequencies of Tags in items you ' + action,
                 data: {
                     labels: labels,
                     datasets: [{
@@ -100,7 +102,7 @@ $(function() {
 
             // Put category data onto radio buttons
             $.each(json, function(id, name){
-                var html = "<label class = 'radio'><input type='radio' name="+optionName+" value = "+id+">"+name + "</label>";
+                var html = "<input type='radio' name="+optionName+" value = "+id+">  <label>"+name + "</label> <br>";
 
                 radioButtonsHTML += html;
             });
