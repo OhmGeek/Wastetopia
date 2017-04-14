@@ -80,6 +80,7 @@ $(function() {
             // Use data to populate chart
             var myChart = new Chart(ctx, {
                 type: 'pie',
+                title: 'Title',
                 data: {
                     labels: labels,
                     datasets: [{
