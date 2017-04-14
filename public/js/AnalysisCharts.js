@@ -26,7 +26,7 @@ $(function(){
         'rgba(255, 159, 64, 1)'
     ];
 
-    createRequestTagsChart(categoryIDs); // Create first Requests chart
+    createRequestTagsChart(categoryID); // Create first Requests chart
 
 
 
