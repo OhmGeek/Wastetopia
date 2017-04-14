@@ -95,8 +95,10 @@ class AnalysisController
 
         // Assuming this function will only be used for graphs with one categoryID!!
         $categoryID = $categoryIDArray[0];
-        $tagNames = $this->model->getTagNamesFromCategory($categoryID);
 
+        print_r($categoryID);
+        $tagNames = $this->model->getTagNamesFromCategory($categoryID);
+        print_r($tagNames);
         $results = array();
 
         // Extract TagID => Frequency pairs
@@ -110,6 +112,7 @@ class AnalysisController
         // Add any Tag Names from the category that weren't found in user's tags
         // Add them with frequency 0
         foreach($tagNames as $tagName){
+            print_r($tagName);
             if(!(array_key_exists($tagName, $results))){
                 $results[$tagName] = 0;
             }
