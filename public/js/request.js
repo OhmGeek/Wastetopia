@@ -1,11 +1,8 @@
 // JS file to deal with requestModel stuff on any page (if cardIDs are the same)
 $(function(){
 
-    //TODO: Test renew with date
     //TODO: Link to edit and messaging pages - When everything is merged to master
-    //TODO: Fix issue with requestedQuantity not showing on Modal for Marking as Complete
     //TODO: Let user know when a request is rejected
-    //TODO: There is no formatting for the date on the renew modal: user doesn't know how to write it
     //TODO: Test renewing switching transactions
 
     //equal height rows
@@ -26,7 +23,18 @@ $(function(){
         }
     }
 
+    // Displays an error message in the appropriate place - MUST HAVE A DIV WITH ID = "errorMessage"
+    function displayError(error){
 
+        // Create warning div
+        var errorDiv = $("<div>").addClass("alert alert-danger fade in");
+
+        // Add error to the div
+        errorDiv.html('<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'+ error)
+
+        // Add alert to the alert div
+        $("#errorMessage").html(errorDiv);
+    }
 
 
 
@@ -90,6 +98,7 @@ $(function(){
 
           }else{
             // Show error
+              // displayError("Could not remove listing");
           }
         });
       });
@@ -142,6 +151,7 @@ $(function(){
                     changeSubTabCounter(completedCounter, 1);
               }else{
                 // Show error
+                 // displayError("Could not mark the transaction as complete");
               }
             });
         });
@@ -199,7 +209,7 @@ $(function(){
                 changeSubTabCounter(pendingCounter, - 1);
 
            }else{
-               // Show error
+              // displayError("Could not reject listing");
            }
         });
       });
@@ -260,6 +270,7 @@ $(function(){
               // Take one off Requests Made counter and Pending counter
           }else{
             // Show error
+              // displayError("Could not cancel the request");
           }
         });
       });
@@ -320,6 +331,7 @@ $(function(){
 
           }else{
             // Show error
+             // displayError("Could not cancel the request");
           }
         });
       });
@@ -393,7 +405,7 @@ $(function(){
                var pendingCounter = $('a[href="#pending-request"]');
                changeSubTabCounter(pendingCounter, + 1);
              }else{
-               // Show error
+               //displayError("Could not request item");
              }
            });
          });
@@ -457,7 +469,7 @@ $(function(){
                // Remove rating buton from card
                button.remove();
              }else{
-               // Show error
+               //displayError("Could not rate user");
              }
            });
          });
@@ -527,7 +539,7 @@ $(function(){
 
 
                }else{
-                   // Show error
+                   //displayError("Could not renew listing");
                }
             });
           });
