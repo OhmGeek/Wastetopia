@@ -213,7 +213,7 @@ class AnalysisModel
     */
     function getTotalNameFrequenciesSending(){
        $userID = $this->getUserID();
-        print_r($userID);
+
         $statement = $this->db->prepare("
             SELECT `Item`.`ItemID`, `Item`.`Name`, (SUM(`Listing`.`Quantity`) + SUM(`Inner`.`Transactions_Quantity`)) AS `Count`
             FROM `Item`
@@ -234,8 +234,7 @@ class AnalysisModel
         $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
         $statement->execute();
 
-        print_r($statement->fetchAll(PDO::FETCH_ASSOC));
-        
+
         return $statement->fetchAll(PDO::FETCH_ASSOC); 
     }
 
