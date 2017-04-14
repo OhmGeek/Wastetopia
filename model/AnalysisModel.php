@@ -238,6 +238,30 @@ class AnalysisModel
     }
 
 
+
+    /**
+     * Returns the frequencies of Names of items user is giving away
+     * Frequncy calculated as SUM of quantities for successful transactions + SUM of current quantity left
+     * @return array
+     */
+    function getTotalNameFrequenciesReceiving(){
+        $userID = $this->getUserID();
+
+        $statement = $this->db->prepare("
+           SELECT `Item`.`ItemID`, `Item`.`Name`, SUM(`ListingTransaction`.`Quantity`) AS `Count`
+                FROM `ListingTransaction`
+                JOIN `Transaction` ON `Transaction`.`TransactionID` = `ListingTransaction`.`FK_Transaction_TransactionID`
+                JOIN `User` ON `User`.`UserID` = `Transaction`.`FK_User_UserID`
+                WHERE `ListingTransaction`.`Success` = 1;
+        ");
+
+        $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
+        $statement->execute();
+
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
     /**
      * Returns array of category names and IDs
      * @return array

@@ -171,7 +171,7 @@ $klein->with("/analysis", function() use ($klein){
        return $controller->getTagFrequenciesForTransactionsJSON($categoryIDs);
     });
 
-    // Needs testing
+
     $klein->respond('GET', '/get-sending-tags/[:categoryID]', function($request, $response){
         $categoryID = $request->categoryID;
         $categoryIDs = array();
@@ -180,6 +180,17 @@ $klein->with("/analysis", function() use ($klein){
         return $controller->getTagFrequenciesForListingsJSON($categoryIDs);
     });
 
+
+    $klein->respond('GET', '/get-request-names', function($request, $response){
+        $controller = new AnalysisController();
+        return $this->getTotalNameFrequenciesReceiving();
+    });
+
+
+    $klein->respond('GET', '/get-sending-names', function($request, $response){
+        $controller = new AnalysisController();
+        return $this->getTotalNameFrequenciesSending();
+    });
 });
 
 

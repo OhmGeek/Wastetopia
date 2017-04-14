@@ -81,7 +81,7 @@ class AnalysisController
                 $results[$tagName] = 0;
             }
         }
-        
+
         ksort($results);
         return json_encode($results);
     }
@@ -139,5 +139,55 @@ class AnalysisController
         }
 
         return json_encode($results);
+    }
+
+
+    /**
+     * Returns array of top 5 names on items user has given away
+     * @return array
+     */
+    function getTotalNameFrequenciesSending(){
+        $frequencies = $this->model->getTotalNameFrequenciesSending();
+
+        $names = array();
+
+        foreach($frequencies as $array){
+            $name = $array["Name"];
+            $frequency = $array["Count"];
+
+            $names[$name] = $frequency;
+        }
+
+        ksort($names);
+        $limit = count($names) < 5 ? count($names) : 5;
+
+        $results = array_splice($names, $limit);
+
+        return $results;
+    }
+
+
+    /**
+     * Returns array of top 5 names on items user has received
+     * @return array
+     */
+    function getTotalNameFrequenciesReceiving(){
+        $frequencies = $this->model->getTotalNameFrequenciesReceiving();
+
+        $names = array();
+
+        foreach($frequencies as $array){
+            $name = $array["Name"];
+            $frequency = $array["Count"];
+
+            $names[$name] = $frequency;
+        }
+
+        ksort($names);
+        $limit = count($names) < 5 ? count($names) : 5;
+
+        $results = array_splice($names, $limit);
+
+        return $results;
     }
 }
