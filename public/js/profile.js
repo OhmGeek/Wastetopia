@@ -365,8 +365,10 @@ $(function () {
 
         $("#change-modal").on("shown.bs.modal", function () {
             $(this).find('.modal-msg').text("Please enter your current email and new email.");
-            $("#label1").val("Current email:");
-            $("#label2").val("New email: ");
+            $("#label1").html("Current email:");
+            $("#label1").attr("for", "old-email");
+            $("#label2").html("New email: ");
+            $("#label2").attr("for", "new-email");
             $("#old-password").attr("type", "email");
             $("#old-password").attr("id", "old-email");
             $("#new-password").attr("type", "email");
