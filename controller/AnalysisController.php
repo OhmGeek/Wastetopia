@@ -153,7 +153,6 @@ class AnalysisController
         $names = array();
 
         foreach($frequencies as $array){
-            print_r($array);
             $name = $array["Name"];
             $frequency = $array["Count"];
 
@@ -189,12 +188,17 @@ class AnalysisController
             $names[$name] = $frequency;
         }
 
-  
+        print_r($names);
 
         arsort($names);
+
+        print_r($names);
+
         $limit = count($names) < 5 ? count($names) : 5;
 
         $results = array_splice($names, $limit);
+
+        print_r($results);
 
         return json_encode($results);
     }
