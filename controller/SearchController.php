@@ -21,8 +21,8 @@ class SearchController
         $searchResults = [];
         foreach ($ids as $item) {
             $result = $this->searchModel->getCardDetails($item["ListingID"]);
-            $result[] = $this->cardDetailsModel->getDefaultImage($item["ListingID"]);
-            $searchResults[] = $result;
+            $result2 = $this->searchModel->getDefaultImage($item["ListingID"]);
+            $searchResults[] = array_merge($result, $result2);
         }
 
         return $searchResults;
@@ -32,9 +32,22 @@ class SearchController
     //TODO add notTags and distance limit to search fucntion
     public function JSONSearch($lat, $long, $search, $tagsArr, $notTagsArr, $distanceLimit, $pageNumber)
     {
+        $reader = new UserCookieReader();
+        $userID = $reader->get_user_id();
+
         $offset = 30*$pageNumber;
         $limit = $offset + 30;
-        $searchResults = $this->search($lat, $long, $search, $tagsArr);
+        $itemInformation = $this->search($lat, $long, $search, $tagsArr);
+
+
+        $searchResults = [];
+        foreach ($itemInformation as $item)
+        {
+            $result = $this->searchModel->getCardDetails($item["ListingID"]);
+            $result2 = $this->searchModel->getDefaultImage(17);
+            $result3 = $this->searchModel->checkRequestingStatus($item["ListingID"], $userID);
+            $searchResults[] = array_merge($result, $result2);
+        }
 
         $pageResults = array_slice($searchResults, $offset, $limit);
         return json_encode($pageResults);
@@ -42,10 +55,19 @@ class SearchController
 
     public function MAPSearch($lat, $long, $search, $tagsArr, $notTagsArr, $distanceLimit)
     {
-        $searchResults = $this->search($lat, $long, $search, $tagsArr);
+        $itemInformation = $this->search($lat, $long, $search, $tagsArr);
+
+        $searchResults = [];
+        foreach ($itemInformation as $item)
+        {
+            $result = $this->searchModel->getCardDetails($item["ListingID"]);
+            $result2 = $this->searchModel->getDefaultImage(17);
+            $searchResults[] = array_merge($result, $result2);
+        }
 
         return json_encode($searchResults);
     }
+
     /*lat = Latitude
       long = Longitude 
       $search = Search term
@@ -116,14 +138,7 @@ class SearchController
             });
         }
         
-
-        $searchResults = [];
-        foreach ($itemInformation as $item) {
-            $result = $this->searchModel->getCardDetails($item["ListingID"]);
-            $result = $this->searchModel->getDefaultImage($item["ListingID"]);
-            $searchResults[] = $result;
-        }
-        return $searchResults;
+        return $itemInformation;
     }
 
     /*Calculate the distance between point 1 and 2 using the Haversine formula*/
