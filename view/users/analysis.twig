@@ -75,9 +75,9 @@
                 </h4>
             </div>
             <div class = "center-elements">
-                {% if receiveNames|length > 0 %}
+                {% if receivingNames|length > 0 %}
                     <ul>
-                        {% for name in receiveNames %}
+                        {% for name in receivingNames %}
                             <li>{{ name.name }} - {{ name.frequency }}</li>
                         {% endfor %}
                     </ul>
