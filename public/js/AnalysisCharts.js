@@ -92,7 +92,7 @@ $(function() {
 
             // Put category data onto radio buttons
             $.each(json, function(id, name){
-                var html = "<input type='radio' name="+optionName+" value = "+id+">"+name;
+                var html = "<input type='radio' name="+optionName+" value = "+id+"> <label>"+name + "</label>";
 
                 radioButtonsHTML += html;
             });
