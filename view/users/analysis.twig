@@ -31,6 +31,10 @@
             margin: 5px;
         }
 
+        .list-group{
+            width: 80%;
+        }
+
     </style>
     {% include 'navbar.twig' %}
 {% endblock %}
@@ -89,12 +93,12 @@
             </div>
         </div>
         <div id = "frequenciesSending" class = "col-xs-6">
-            <div  >
+            <div class = "center-elements">
                 <h4>
                     A list of the top 5 names of items you send
                 </h4>
             </div>
-            <div class = "center-elements">
+            <div>
                 {% if sendingNames|length > 0 %}
                     <ul class = "list-group">
                         {% for name in sendingNames %}
