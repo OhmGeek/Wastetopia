@@ -23,7 +23,7 @@ class MessageModel
 
 //        $reader = new UserCookieReader();
 //        return $reader->get_user_id();
-        return 20; //Hardcoded for now (6 or 20)
+        return 6; //Hardcoded for now (6 or 20)
     }
 
 	
@@ -200,7 +200,7 @@ class MessageModel
 
             SELECT `Item`.`Name` as ItemName, `Item`.`Use_By`,
             `Location`.`Name` as LocationName, `Location`.`Post_Code`,
-            `Listing`.`ListingID`
+            `Listing`.`ListingID`, `Listing`.`Active`
             FROM `Conversation`
             JOIN `Listing` ON `Listing`.`ListingID` = `Conversation`.`FK_Listing_ListingID`
             JOIN `Item` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
