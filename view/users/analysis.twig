@@ -1,0 +1,18 @@
+{% extends 'header.twig' %}
+
+{% block title %}
+    Analysis | Wastetopia
+{% endblock %}
+
+{% block navbar %}
+    {% include 'navbar.twig' %}
+{% endblock %}
+
+{% block content %}
+    <div id="charts">
+        <canvas id="requestTagsChart" width="400" height="400"></canvas>
+    </div>
+{% endblock %}
+
+{% set csslist = [] %}
+{% set jslist = ["AnalysisCharts.js","Charts.js"] %}

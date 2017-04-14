@@ -28,6 +28,8 @@ use Wastetopia\Controller\ViewItemController;
 
 use Wastetopia\Model\NotificationModel;
 
+use Wastetopia\Controller\AnalysisController;
+
 
 
 // check if we should use production? Otherwise, use community.
@@ -147,6 +149,23 @@ $klein->respond("GET", "/get-env", function() {
 });
 
 
+// Used for charts - needs testing
+$klein->with("/analysis", function() use ($klein){
+
+    $klein->respond('GET', '/?', function($request, $response){
+        $controller = new AnalysisController();
+        return $controller->generatePage();
+    });
+
+    // Needs testing
+    $klein->respond('GET', '/get-request-tags', function($request, $response){
+       $categoryIDs = $request->categoryIDs;
+       $controller = new AnalysisController();
+       return $controller->getTagFrequenciesForTransactionsJSON($categoryIDs);
+    });
+});
+
+
 $klein->with("/profile", function() use ($klein) {
 
    $klein->respond('GET', '/?', function($request, $response){
@@ -243,6 +262,7 @@ $klein->with("/profile", function() use ($klein) {
         $controller = new ProfilePageController(1);
         return $controller->changeEmail($oldEmail, $newEmail);
     });
+
 });
 
 

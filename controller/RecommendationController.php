@@ -177,7 +177,8 @@ class RecommendationController {
       
         return $template->render($output); // Render with cardDetails for listings that match most frequent tags
       }
-    
+
+
 // NEED TO FINISH THESE TWO PREDICTION/ADVICE FUNCTIONS    
     /**
     * Generates a list of the top 5 names that appear in items user gives away
@@ -195,7 +196,8 @@ class RecommendationController {
         }
         
     }
-    
+
+
     /**
     * Generates a bit of advice based on the top 5 most frequent Type tags are found on items user gives away
     */
