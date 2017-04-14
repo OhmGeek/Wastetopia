@@ -88,11 +88,16 @@ var scanBarcode = function() {
         cache: false,
         contentType: false,
         processData: false,
-        type: 'POST',
-        success: function(resp) {
-            console.log("Response:");
-            console.log(resp);
-        }
+        type: 'POST'
+
+    }).done(function(data) {
+        // now we need to strip out the barcode from the HTML response.
+        var startIndex = data.indexOf("<");
+        var htmlResponse = data.substring(startIndex);
+        var html = $.parseHTML(htmlResponse);
+        console.log("Barcode");
+        console.log($(html).find("pre")[0].text);
+
     });
 };
 
