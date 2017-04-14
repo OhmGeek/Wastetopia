@@ -63,8 +63,9 @@ $(function() {
 
             // Use data to populate chart
             var ctx = $("#requestTagsChart"); // Need to put this in the twig file
+
             var myChart = new Chart(ctx, {
-                type: 'bar',
+                type: 'pie',
                 data: {
                     labels: labels,
                     datasets: [{
@@ -75,18 +76,33 @@ $(function() {
                         borderWidth: 1
                     }]
                 },
-                options: {
-                    scales: {
-                        yAxes: [{
-                            ticks: {
-                                beginAtZero: true,
-                                callback: function(value) {if (value % 1 === 0) {return value;}}
-                            }
-                        }]
-                    }
-                }
             });
 
         });
     }
 });
+
+// Bar chart version
+// var myChart = new Chart(ctx, {
+//     type: 'bar',
+//     data: {
+//         labels: labels,
+//         datasets: [{
+//             label: '# of occurences',
+//             data: data,
+//             backgroundColor: chartBackgroundColours,
+//             borderColor: chartBorderColours,
+//             borderWidth: 1
+//         }]
+//     },
+//     options: {
+//         scales: {
+//             yAxes: [{
+//                 ticks: {
+//                     beginAtZero: true,
+//                     callback: function(value) {if (value % 1 === 0) {return value;}}
+//                 }
+//             }]
+//         }
+//     }
+// });
