@@ -93,6 +93,7 @@ var scanBarcode = function() {
 
         });
     });
+    reader.readAsDataURL(file); //now actually read the image, and process it appropriately.
 };
 
 $('#scan-barcode').on('click', scanBarcode);
