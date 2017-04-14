@@ -224,7 +224,7 @@ $klein->respond('POST', '/api/barcode/get', function($request, $response) {
     curl_setopt ($curl, CURLOPT_RETURNTRANSFER, 1);
     curl_setopt($curl, CURLOPT_POST, 1);
     curl_setopt ($curl, CURLOPT_POSTFIELDS, $postfields);
-    //curl_setopt ($curl, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.9.0.5) Gecko/2008120122 Firefox/3.0.5");
+    curl_setopt ($curl, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.9.0.5) Gecko/2008120122 Firefox/3.0.5");
     //curl_setopt ($curl, CURLOPT_CONNECTTIMEOUT, $timeout);
     $text = curl_exec($curl);
     curl_close($curl);
