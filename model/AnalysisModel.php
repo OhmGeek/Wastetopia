@@ -70,7 +70,7 @@ class AnalysisModel
         
         // Group into Tag Name and order by count in descending order
         $sql .= "GROUP BY `Tag`.`Name`
-                ORDER BY `Tag`.`TagID`;";
+                ORDER BY `Count` DESC;";
         
         //Prepare the SQL statement
         $statement = $this->db->prepare($sql); 
@@ -131,7 +131,7 @@ class AnalysisModel
         // Group into Tag Name and order by count in descending order
         $sql .= "AND `ListingTransaction`.`Success` = 1
                 GROUP BY `Tag`.`Name`
-                ORDER BY `Tag`.`TagID`;";
+                ORDER BY `Count` DESC;";
         
        
         //Prepare the SQL statement

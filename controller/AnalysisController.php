@@ -81,7 +81,8 @@ class AnalysisController
                 $results[$tagName] = 0;
             }
         }
-
+        
+        ksort($results);
         return json_encode($results);
     }
 
@@ -117,7 +118,7 @@ class AnalysisController
             }
         }
 
-
+        ksort($results);
         return json_encode($results);
     }
 
