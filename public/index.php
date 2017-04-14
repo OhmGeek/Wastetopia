@@ -208,7 +208,7 @@ $klein->respond('POST', '/api/barcode/get', function($request, $response) {
     $postfields = array(
         'file' => new \CURLFile($file['name'], $file['type'], $filename)
     );
-    error_log(json_encode(file));
+    error_log(json_encode($file));
 
     $curl = curl_init();
     $timeout = 1000;
