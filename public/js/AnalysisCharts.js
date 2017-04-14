@@ -173,8 +173,8 @@ $(function() {
 
             chart.config.data.datasets.data = data; // Change the data
             chart.config.data.labels = labels; // Change the labels
-            chart.config.data.datasets.backgroundColor = chartBackgroundColours; // Change the data
-            chart.config.data.datasets.borderColor = chartBorderColours; // Change the data
+            chart.config.data.datasets[0].backgroundColor = chartBackgroundColours; // Change the data
+            chart.config.data.datasets[0].borderColor = chartBorderColours; // Change the data
 
             console.log(chart.config.data.datasets.data);
             console.log(chart.config.data.labels);
