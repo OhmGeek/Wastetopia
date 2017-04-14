@@ -163,7 +163,7 @@ class AnalysisController
 
         $results = array_splice($names, $limit);
 
-        return $results;
+        return json_encode($results);
     }
 
 
@@ -188,6 +188,6 @@ class AnalysisController
 
         $results = array_splice($names, $limit);
 
-        return $results;
+        return json_encode($results);
     }
 }
