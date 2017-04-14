@@ -56,13 +56,13 @@ class AnalysisModel
             $sql .= "AND ("; 
             // Add the first CategoryID check
             $categoryID = $categoryIDArray[0];
-            $sql .= "`Tag`.`FK_Category_Category_ID` = :category"+$categoryID;
+            $sql .= "`Tag`.`FK_Category_Category_ID` = :category".$categoryID;
             
             // Add all of the CategoryIDs to the SQL statement
             for($x = 1; $x < count($categoryIDArray); $x ++){
                 $categoryID = $categoryIDArray[$x];
                 // Add this with OR so it can match any of them
-                $sql .= "OR `Tag`.`FK_Category_Category_ID` = :category"+$categoryID;
+                $sql .= "OR `Tag`.`FK_Category_Category_ID` = :category".$categoryID;
             }
             
             $sql .= ")"; // End the category section
@@ -81,7 +81,7 @@ class AnalysisModel
             // Bind all of the categoryIDs to the statement
             for($x = 0; $x < count($categoryIDArray); $x ++){
                 $categoryID = $categoryIDArray[$x];
-                $statement->bindValue(":category"+$categoryID, $categoryID, PDO::PARAM_STR);
+                $statement->bindValue(":category".$categoryID, $categoryID, PDO::PARAM_STR);
             }
             
         }
@@ -117,13 +117,13 @@ class AnalysisModel
             $sql .= "AND ("; 
             // Add the first CategoryID check
             $categoryID = $categoryIDArray[0];
-            $sql .= "`Tag`.`FK_Category_Category_ID` = :category"+$categoryID;
+            $sql .= "`Tag`.`FK_Category_Category_ID` = :category".$categoryID;
             
             // Add all of the CategoryIDs to the SQL statement
             for($x = 1; $x < count($categoryIDArray); $x ++){
                 $categoryID = $categoryIDArray[$x];
                 // Add this with OR so it can match any of them
-                $sql .= "OR `Tag`.`FK_Category_Category_ID` = :category"+$categoryID;
+                $sql .= "OR `Tag`.`FK_Category_Category_ID` = :category".$categoryID;
             }
             
             $sql .= ")"; // End the category section
@@ -144,7 +144,7 @@ class AnalysisModel
             // Bind all of the categoryIDs to the statement
             for($x = 0; $x < count($categoryIDArray); $x ++){
                 $categoryID = $categoryIDArray[$x];
-                $statement->bindValue(":category"+$categoryID, $categoryID, PDO::PARAM_STR);
+                $statement->bindValue(":category".$categoryID, $categoryID, PDO::PARAM_STR);
             }
             
         }
