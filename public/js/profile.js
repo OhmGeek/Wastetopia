@@ -174,7 +174,8 @@ $(function () {
   $(document).on('shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
     var tabHREF = $(e.target).attr('href');
     // If tab shown is one of the main ones
-    if(tabHREF == "#home" || tabHREF == "#listings" || tabHREF == "#offers" || tabHREF == "#requests" || tabHREF == "#watchList"){
+    if(tabHREF == "#home" || tabHREF == "#listings" || tabHREF == "#offers" || tabHREF == "#requests"
+        || tabHREF == "#watchList" || tabHREF == "#analysis"){
       // Store this being active in local storage
       localStorage.setItem('activeTab', $(e.target).attr('href'));
       console.log("Stored active tab");
