@@ -128,7 +128,7 @@ $(function() {
     $(document).on('click', 'input[type="radio"]', function(event){
         var categoryValue = $(this).val(); // Value of button clicked
 
-        var form = $(this).parent('form'); // Form it's in
+        var form = $(this).parent(".input-group").parent('form'); // Form it's in
         var formID = form.attr('id'); // ID of form (requestRadioButtons or sendingRadioButtons)
 
 
