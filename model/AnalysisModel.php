@@ -250,10 +250,15 @@ class AnalysisModel
 
         $statement = $this->db->prepare("
            SELECT `Item`.`ItemID`, `Item`.`Name`, SUM(`ListingTransaction`.`Quantity`) AS `Count`
-                FROM `ListingTransaction`
+                FROM `Item`
+				JOIN `Listing` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
+				JOIN `ListingTransaction` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
                 JOIN `Transaction` ON `Transaction`.`TransactionID` = `ListingTransaction`.`FK_Transaction_TransactionID`
                 JOIN `User` ON `User`.`UserID` = `Transaction`.`FK_User_UserID`
-                WHERE `ListingTransaction`.`Success` = 1;
+                WHERE `ListingTransaction`.`Success` = 1
+				AND `User`.`UserID` = :userID
+				GROUP BY `Item`.`Name`
+            ORDER BY `Count` DESC;
         ");
 
         $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
