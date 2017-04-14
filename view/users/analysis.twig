@@ -16,10 +16,6 @@
             height : auto;
         }
 
-        
-        #sending-chart-container{
-            float:left;
-        }
 
 
     </style>
@@ -27,8 +23,9 @@
 {% endblock %}
 
 {% block content %}
-    <div id="charts" height="300px">
-        <div id = "request-chart">
+
+    <div id="charts" height="300px" class = "row">
+        <div id = "request-chart" class = "col-xs-6">
             <div class = "chart-container" id = "request-chart-container">
                 <canvas id="requestTagsChart"></canvas>
             </div>
@@ -38,7 +35,7 @@
         </div>
 
 
-        <div id = "sending-chart">
+        <div id = "sending-chart" class = "col-xs-6">
             <div class = "chart-container" id = "sending-chart-container">
                 <canvas id="sendingTagsChart"></canvas>
             </div>
@@ -47,14 +44,14 @@
         </div>
     </div>
 
-    <div id="name-frequencies">
-        <div id = "frequenciesReceiving">
+    <div id="name-frequencies" class = "row">
+        <div id = "frequenciesReceiving" class = "col-xs-6">
             <p>
                 A list of the top 5 names of items you receive
             </p>
         </div>
         <br>
-        <div id = "frequenciesSending">
+        <div id = "frequenciesSending" class = "col-xs-6">
             <p>
                 A list of the top 5 names of items you give away
             </p>
