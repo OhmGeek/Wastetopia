@@ -157,6 +157,11 @@ $klein->with("/analysis", function() use ($klein){
         return $controller->generatePage();
     });
 
+    $klein->respond('GET', '/categories', function($request, $response){
+        $controller = new AnalysisController();
+        return $controller->getCategoryDetailsJSON();
+    });
+
     // Needs testing
     $klein->respond('GET', '/get-request-tags', function($request, $response){
        $categoryIDs = $request->categoryIDs;

@@ -235,4 +235,19 @@ class AnalysisModel
         
         return $statement->fetchAll(PDO::FETCH_ASSOC); 
     }
+
+
+    /**
+     * Returns array of category names and IDs
+     * @return array
+     */
+    function getCategoryNamesAndIDs()
+    {
+        $statement = $this->db->prepare("
+            SELECT *
+            FROM Category;
+        ");
+
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

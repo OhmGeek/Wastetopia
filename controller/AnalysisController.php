@@ -93,4 +93,15 @@ class AnalysisController
 
         return json_encode($results);
     }
+
+
+    /**
+     * Get category names and IDs in JSON format
+     * @return string
+     */
+    function getCategoryDetailsJSON(){
+        $categories = $this->model->getCategoryNamesAndIDs();
+
+        return json_encode($categories);
+    }
 }

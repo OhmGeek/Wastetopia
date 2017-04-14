@@ -36,7 +36,7 @@ $(function(){
         // Get request tags frequency data from the analysis controller
         var url = baseURL + "/analysis/get-request-tags";
         var data = {categoryIDs : categoryIDs};
-        
+
         $.getJSON(url, data, function(json){
             console.log(json);
 
