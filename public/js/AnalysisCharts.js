@@ -91,12 +91,12 @@ $(function() {
             console.log(json);
             // Put category data onto radio buttons
             $.each(json, function(id, name){
-                var radioDiv = $("div");
-                radioDiv.addClass("radio");
-                var html = "<label class='radio-inline'><input type='radio-inline' name='requestOption' value = "+id+">"+name+"</label>";
-                radioDiv.html(html);
+                var radioLabel = $("label");
+                radioLabel.addClass("radio-inline");
+                var html = "<input type='radio' name='requestOption' value = "+id+">"+name;
+                radioLabel.html(html);
 
-                $("#requestRadioButtons").append(radioDiv);
+                $("#requestRadioButtons").append(radioLabel);
             });
         });
     }
