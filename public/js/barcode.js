@@ -64,7 +64,9 @@ var scanBarcode = function() {
 
     reader.addEventListener("load", function() {
         Quagga.decodeSingle({
-            readers: ["code_128_reader"],
+            decoder: {
+                readers: ["code_128_reader"]
+            },
             locate: true, // try to locate the barcode in the image
             src: reader.result
         }, function(result){
