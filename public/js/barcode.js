@@ -57,7 +57,42 @@ function getBarcodeInfo(barcode) {
 }
 
 var scanBarcode = function() {
+    // first, get the image data as URL
+    // var file = $('#barcode-upload').prop('files')[0];
+    // var reader = new FileReader();
+    //
+    // reader.addEventListener("load", function() {
+    //     console.log(reader.result); // url
+    //     Quagga.decodeSingle({
+    //         decoder: {
+    //             readers: ["upc_reader"]
+    //         },
+    //         locate: true, // try to locate the barcode in the image
+    //         src: reader.result
+    //     }, function(result){
+    //         console.log(result);
+    //         if(result.codeResult) {
+    //             console.log("result", result.codeResult.code);
+    //         } else {
+    //             console.log("not detected");
+    //         }
+    //     });
+    // }, false);
+    // reader.readAsDataURL(file);
 
+
+    var file = $('#barcode-upload').prop('files')[0];
+    var reader = new FileReader();
+    // once the file has been loaded
+    reader.addEventListener("load", function() {
+        var imageData = {f: reader.result};
+
+        $.post('http://zxing.org/w/decode', imageData, function(resp) {
+            console.log("Response:");
+            console.log(resp);
+
+        });
+    });
 };
 
 $('#scan-barcode').on('click', scanBarcode);
