@@ -163,8 +163,11 @@ class AnalysisController
         arsort($names);
         $limit = count($names) < 5 ? count($names) : 5;
 
-        $results = array_splice($names, $limit);
+        print_r($names);
 
+        $results = array_slice($names, 0, $limit, true);
+
+        print_r($results);
         return json_encode($results);
     }
 
@@ -196,7 +199,7 @@ class AnalysisController
 
         $limit = count($names) < 5 ? count($names) : 5;
 
-        $results = array_splice($names, $limit);
+        $results = array_slice($names, 0, $limit, true);
 
         print_r($results);
 
