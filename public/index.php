@@ -168,7 +168,6 @@ $klein->with("/analysis", function() use ($klein){
        $categoryIDs = array();
        array_push($categoryIDs, $categoryID);
        $controller = new AnalysisController();
-       print_r($categoryIDs);
        return $controller->getTagFrequenciesForTransactionsJSON($categoryIDs);
     });
 });
