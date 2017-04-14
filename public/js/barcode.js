@@ -6,15 +6,8 @@
  * Created by ryan on 10/04/17.
 */
 
-function process(data) {
-    console.log("On Processed");
-    console.log(data);
-    if(data.codeResult) {
-        var barcode = data.codeResult.code;
-        console.log(barcode);
-        var data = getBarcodeInfo(barcode);
+function autofill(data) {
 
-        // item name
         if(data.product_name) {
             //auto fill item name
             $('#name').val(data.product_name);
@@ -38,7 +31,7 @@ function process(data) {
     } else {
         // no autofill.
         // provide some feedback saying it couldn't be detected.
-        console.log("not detected");
+        alert("not detected");
     }
 };
 
@@ -109,7 +102,7 @@ var scanBarcode = function() {
                 return {};
             }
         }).done(function(barcodeinfo) {
-            alert(barcodeinfo);
+            autofill(barcodeinfo);
         });
 
     });
