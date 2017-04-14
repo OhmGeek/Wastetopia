@@ -387,7 +387,7 @@ $(function () {
 
             console.log(data);
             return;
-            
+
             $.post(url, data, function(response){
                 var json = $.parseJSON(response);
                 if(json.hasOwnProperty("error")){
