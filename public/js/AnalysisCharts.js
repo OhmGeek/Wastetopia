@@ -3,7 +3,7 @@
  */
 // 6 colours for graph background
 $(function() {
-    Chart.defaults.global.maintainAspectRatio = false;
+    //Chart.defaults.global.maintainAspectRatio = false;
 
     var baseURL = window.location.protocol + "//" + window.location.host;
     var categoryID = 1; // Start with category 1
