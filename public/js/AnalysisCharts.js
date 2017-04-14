@@ -4,6 +4,8 @@
 // 6 colours for graph background
 $(function() {
     //Chart.defaults.global.maintainAspectRatio = false;
+    Chart.defaults.global.title.display = true; // Display the title
+
     var myRequestChart;
     var mySendingChart;
 
@@ -18,7 +20,7 @@ $(function() {
     createTagsChart(categoryID, 0); // Create first sending chart
     createChartButtons("sendingOption", "sendingRadioButtons"); // Create the radio buttons for the chart
 
-    // NEED MORE DISTINCT COLOURS
+    // NEED MORE DISTINCT COLOURS (Perhaps generate dynamically depending on size of group)
     var backgroundColours = [
         'rgba(255, 99, 132, 0.2)',
         'rgba(54, 162, 235, 0.2)',
@@ -47,14 +49,11 @@ $(function() {
         var relativeURL = requestsOrOffers ? "/analysis/get-request-tags/" : "/analysis/get-sending-tags/"
         var url = baseURL + relativeURL + categoryID;
 
-        console.log(url);
 
         $.getJSON(url, function(json){
-            console.log(json);
-
             var labels = []; // Labels of bars
             var data = []; // Number for each bar
-            var indexCounter = 0; // index into colour arrays (taken mod 6)
+            var indexCounter = 0; // index into colour arrays (taken mod 6 so it loops through colours)
             var chartBackgroundColours = [];
             var chartBorderColours = [];
 
@@ -62,25 +61,22 @@ $(function() {
             $.each(json, function (key, value) {
                 labels.push(key);
                 data.push(value);
-                chartBackgroundColours.push(backgroundColours[indexCounter]);
-                chartBorderColours.push(borderColours[indexCounter]);
+                chartBackgroundColours.push(backgroundColours[indexCounter]); // Get background colour
+                chartBorderColours.push(borderColours[indexCounter]);   // Get border colour
                 indexCounter = (indexCounter + 1) % 6; // Taken mod 6 to loop through available colours
             });
 
-            console.log(labels);
-            console.log(data);
+
 
             // Get correct canvas
             var canvasID = requestsOrOffers ? "requestTagsChart" : "sendingTagsChart";
             var action = requestsOrOffers ? "request" : "give away"; // Action to put in title
 
-            console.log(canvasID);
-            var ctx = $("#"+canvasID); // Need to put this in the twig file
+            var ctx = $("#"+canvasID); // Get correct canvas
 
             // Use data to populate chart
             var myChart = new Chart(ctx, {
                 type: 'pie',
-                title: 'Title',
                 data: {
                     labels: labels,
                     datasets: [{
@@ -89,7 +85,12 @@ $(function() {
                         backgroundColor: chartBackgroundColours,
                         borderColor: chartBorderColours,
                         borderWidth: 1
-                    }]
+                    }],
+                    options:{
+                        title: {
+                            text: "Title test"
+                        }
+                    }
                 }
             });
 
@@ -130,19 +131,21 @@ $(function() {
         });
     }
 
+    // Click handler for radio buttons
     $(document).on('click', 'input[type="radio"]', function(event){
-        var categoryValue = $(this).val();
-        console.log(categoryValue);
-        var form = $(this).parent('form');
-        var formID = form.attr('id');
-        console.log(formID);
+        var categoryValue = $(this).val(); // Value of button clicked
+
+        var form = $(this).parent('form'); // Form it's in
+        var formID = form.attr('id'); // ID of form (requestRadioButtons or sendingRadioButtons)
+
+
         if (formID === "requestRadioButtons"){
           myRequestChart.destroy(); // Destroy so it can be redrawn
           createTagsChart(categoryValue, 1); // Create the requests tag chart
         }else{
             // Create sending tags chart
             mySendingChart.destroy(); // Destroy so it can be redrawn
-            createTagsChart(categoryValue, 0); // Create the requests tag chart
+            createTagsChart(categoryValue, 0); // Create the sending tag chart
         }
     });
 });
