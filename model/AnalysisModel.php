@@ -98,6 +98,8 @@ class AnalysisModel
      */
     function getTagFrequenciesForTransactions($categoryIDArray = array())
     {
+        print_r($categoryIDArray);
+
         $userID = $this->getUserID();
         
         $sql = "SELECT `Tag`.`Name`,  `Tag`.`TagID`, SUM(`ListingTransaction`.`Quantity`) as `Count`
