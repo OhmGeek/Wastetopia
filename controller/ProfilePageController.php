@@ -600,8 +600,6 @@ class ProfilePageController
         $name = $controller->getMostFrequentItemNameSent();
         $tag = $controller->getMostFrequentTypeTagSent();
 
-        print_r($name);
-        print_r($tag);
 
         $advice = "";
         if ($name == null &&  $tag == null){
@@ -611,11 +609,9 @@ class ProfilePageController
         }elseif($name !== null && $tag == null){
             $advice = "You have given away " + $name + " a lot. If you're not using it, think about buying it less.";
         }else{
-            $advice = "You have given away a lot of " +$tag+" products, and the item you've given away most is " +$name +
-                ". If you have a lot of waste like this, think about buying less of it, or using it more.";
+            $advice = "You have given away a lot of " +$tag+" products, and the item you've given away most is " +$name +". If you have a lot of waste like this, think about buying less of it, or using it more.";
         }
-        
-        
+
         return $advice;
 
     }
