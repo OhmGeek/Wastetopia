@@ -55,34 +55,6 @@ function getBarcodeInfo(barcode) {
         }
     });
 }
-$(document).ready(function() {
-    Quagga.init({
-        inputStream : {
-            name : "Test",
-            type : "ImageStream",
-            length: 10,
-            size: 800
-        },
-        locate: true,
-        decoder : {
-            readers : [{
-                format: "ean_reader",
-                config: {
-                    supplements: [
-                        'ean_5_reader', 'ean_2_reader', 'ean_8_reader'
-                    ]
-                }
-            }, "code_128_reader"]
-        }
-    }, function(err) {
-        if (err) {
-            console.log(err);
-            return;
-        }
-        console.log("Initialization finished. Ready to start");
-        Quagga.start();
-    });
-});
 
 var scanBarcode = function() {
     console.log("Run scan barcode");
@@ -92,12 +64,11 @@ var scanBarcode = function() {
     reader.readAsDataURL(file);
     console.log(file);
     Quagga.decodeSingle({
-        decoder: {
-            readers: ["code_128_reader"] // List of active readers
-        },
+        readers: ["code_128_reader"],
         locate: true, // try to locate the barcode in the image
         src: reader.result
     }, function(result){
+        console.log(result);
         if(result.codeResult) {
             console.log("result", result.codeResult.code);
         } else {
