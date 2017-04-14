@@ -2,7 +2,7 @@
  * Created by Stephen on 14/04/2017.
  */
 
-$(function(){
+$(function() {
     var baseURL = window.location.protocol + "//" + window.location.host;
     var categoryID = 1; // Start with category 1
 
@@ -28,6 +28,10 @@ $(function(){
 
     createRequestTagsChart(categoryID); // Create first Requests chart
 
+    // Get categories from /analysis/categories in JSON format
+    // $.each(json, function(id, name){
+    //      // Add id and name to radio group of buttons #requestChartRadioButtons
+    // });
 
 
     // categoryIDs is array of categoryIDs to search for when getting tags
