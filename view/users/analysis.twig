@@ -17,15 +17,11 @@
 
         }
 
-        #request-chart{
+        .center-elements{
             display: flex;
             justify-content: center;
         }
 
-        #sending-chart{
-            display: flex;
-            justify-content: center;
-        }
 
 
 
@@ -38,9 +34,15 @@
 
     <div id="charts" height="300px" class = "row">
         <div id = "request-chart" class = "col-xs-6">
-            <canvas id="requestTagsChart"></canvas>
-            <form id = "requestRadioButtons">
-            </form>
+            <div class="center-elements">
+                <div class = "chart-container" id = "request-chart-container">
+                    <canvas id="requestTagsChart"></canvas>
+                </div>
+            </div>
+            <div class="center-elements">
+                <form id = "requestRadioButtons">
+                </form>
+            </div>
         </div>
 
 
