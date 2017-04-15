@@ -9,6 +9,10 @@ namespace Wastetopia\Model;
 use PDO;
 use Wastetopia\Model\DB;
 
+/**
+ * Class ProfilePageModel - Functions for anything on profile page
+ * @package Wastetopia\Model
+ */
 class ProfilePageModel
 {
     /**
@@ -51,6 +55,7 @@ class ProfilePageModel
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
+
     /**
      * Gets all the listings the current user is involved in transactions with (where they are the receiver)
      * Also gets the transactionID of those transactions
@@ -75,7 +80,7 @@ class ProfilePageModel
 	
    
 	
-    /*
+    /**
     * Gets the pending offers made for user's items which they haven't seen yet (notification)
     * @return mixed 
     */
@@ -97,7 +102,7 @@ class ProfilePageModel
     }
 	
 	
-    /*
+    /**
     * Gets the total number of pending offers made for user's items which they haven't seen yet (notification)
     * @returns integer (total)
     */
@@ -140,7 +145,8 @@ class ProfilePageModel
     }
 
 
-    /* Gets the name of the user requesting the transaction, and the quantity involved
+    /**
+     * Gets the name of the user requesting the transaction, and the quantity involved
      * @param $transactionID
      * @return mixed
      */
@@ -318,7 +324,6 @@ class ProfilePageModel
      * Set the request as having been viewed
      * @return void
      */
-
     function setViewed($listing_id, $transaction_id, $new_value=1){
         $statement = $this->db->prepare("
 			UPDATE ListingTransaction
@@ -356,6 +361,7 @@ class ProfilePageModel
     /**
      * Deletes a listing from user's watch list
      * @param $watchID
+     * @return bool
      */
     function deleteFromWatchList($listingID, $userID)
     {
@@ -371,9 +377,11 @@ class ProfilePageModel
         $statement->execute();
         return True;
     }
+
     /**
      * Adds a listing to a user's watch list
      * @param $listingID
+     * @return bool
      */
     function addToWatchList($listingID, $userID)
     {
@@ -386,7 +394,7 @@ class ProfilePageModel
         $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
         $statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);
         $statement->execute();
-        return;
+        return True;
     }
 	
 	
@@ -448,10 +456,7 @@ class ProfilePageModel
     * @return bool
     */
     function setListingTransactionHiddenFlag($giverOrReceiver, $transactionID,  $value){
-// 	print_r("FROM MODEL");
-// 	print_r($giverOrReceiver);
-// 	print_r($transactionID);
-	    
+
 	// PDO statement for setting the Giver_Viewed flag
 	$statementOption1 = $this->db->prepare("
             UPDATE `ListingTransaction`
@@ -589,18 +594,18 @@ class ProfilePageModel
     * @return bool
     */
     function changeProfilePicture($url){
-	$userID = $this->getUserID();
-	
-	$statement = $this->db->prepare("
-		UPDATE `User`
-		SET `User`.`Picture_URL` = :url
-		WHERE `User`.`UserID` = :userID
-	");
-	    
-	$statement->bindValue(":url", $url, PDO::PARAM_STR);
-	$statement->bindValue(":userID", $userID, PDO::PARAM_INT);
-	    
-	$statement->execute();
-	return True;
+        $userID = $this->getUserID();
+
+        $statement = $this->db->prepare("
+            UPDATE `User`
+            SET `User`.`Picture_URL` = :url
+            WHERE `User`.`UserID` = :userID
+        ");
+
+        $statement->bindValue(":url", $url, PDO::PARAM_STR);
+        $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
+
+        $statement->execute();
+        return True;
     }
 }

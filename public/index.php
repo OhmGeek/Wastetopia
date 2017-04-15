@@ -298,11 +298,11 @@ $klein->with("/profile", function() use ($klein) {
         return $controller->changePassword($oldPassword, $newPassword);    
     });
     
-    // Needs testing
-    $klein->respond('POST', '/reset-password', function($request, $response){
-       $controller = new ProfilePageController(1);
-       return $controller->resetPassword(); 
-    });
+//    // Needs testing
+//    $klein->respond('POST', '/reset-password', function($request, $response){
+//       $controller = new ProfilePageController(1);
+//       return $controller->resetPassword();
+//    });
     
     // Needs testing
     $klein->respond('POST', '/change-profile-picture', function($request, $response){

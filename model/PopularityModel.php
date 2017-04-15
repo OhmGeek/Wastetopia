@@ -11,6 +11,10 @@ namespace Wastetopia\Model;
 use Wastetopia\Model\DB;
 use PDO;
 
+/**
+ * Class PopularityModel - Used when a user rates a transaction
+ * @package Wastetopia\Model
+ */
 class PopularityModel
 {
     /**
@@ -103,7 +107,7 @@ class PopularityModel
     
     
     /**
-    * Gets the UserID of the User who put up the listing involved in the transaction
+    *  Gets the UserID of the User who put up the listing involved in the transaction
     *  @param $transactionID
     *  @return int (userID)
     */
@@ -128,6 +132,7 @@ class PopularityModel
      * Calculates and adds a new rating for a given user
      * @param $userID
      * @param $rating
+     * @return bool
      */
     function addNewRating($userID, $rating){
         //Get original details
@@ -155,16 +160,18 @@ class PopularityModel
         return True;
     }
 
-    
+
+    /**
+     * @param $transactionID
+     * @param $rating
+     * @return bool
+     */
     function rateTransaction($transactionID, $rating){
-        print_r($transactionID);
-        print_r($rating);
+
         $this->setListingTransactionRated($transactionID);
-        print_r("Set transaction as rated");
-        print_r("Get userID");
+
         $userID = $this->getUserIDFromTransactionID($transactionID);
-        print_r($userID);
-        print_r("Add rating");
+
         return $this->addNewRating($userID, $rating);
     }
 }

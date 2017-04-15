@@ -10,6 +10,10 @@ namespace Wastetopia\Model;
 use Wastetopia\Model\DB;
 use PDO;
 
+/**
+ * Class RegistrationModel - Used for Registration page
+ * @package Wastetopia\Model
+ */
 class RegistrationModel
 {
 
@@ -22,6 +26,12 @@ class RegistrationModel
     }
 
 
+    /**
+     * Deletes any user with the given name. ONLY FOR TESTING. REMOVE LATER.
+     * @param $firstName
+     * @param $lastName
+     * @return bool
+     */
     function deleteUserByName($firstName, $lastName){
         $statement = $this->db->prepare("
             DELETE FROM `User`
@@ -36,8 +46,14 @@ class RegistrationModel
         return True;
       
     }
-    
-     function deleteUser($email){
+
+
+    /**
+     * Deletes a user with the given email address
+     * @param $email
+     * @return bool
+     */
+    function deleteUser($email){
         $statement = $this->db->prepare("
             DELETE FROM `User`
                 WHERE `Email_Address` = :email
@@ -115,30 +131,6 @@ class RegistrationModel
     }
 
 
-//    /**
-//     * Adds a picture for a given user
-//     * @param $userID
-//     * @param $pictureURL
-//     * @return bool
-//     */
-//    function addUserPicture($userID, $pictureURL)
-//    {
-//        $statement = $this->db->prepare("
-//            UPDATE `User`
-//            SET `Picture_URL` = :url
-//            WHERE `User`.`UserID` = :userID
-//        ");
-//
-//        $statement->bindValue(":url", $pictureURL, PDO::PARAM_STR);
-//        $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
-//
-//
-//        $statement->execute();
-//
-//        return true;
-//
-//    }
-
 
     /**
      * Adds a user and then adds a picture for that user
@@ -160,21 +152,10 @@ class RegistrationModel
         $passwordHash = hash('sha256',$salt.$password);
 
         $verificationCode = $this->generateSalt(); // New random string for verification
- 
-      //  print_r("FROM MODEL");
-      //  print_r($forename);
-      //  print_r($surname);
-      //  print_r("EMAIL:: ".$email);
-      //  print_r("PASSWORD:: ".$password);
-      //  print_r($pictureURL);
-      //  print_r("SALT:: ".$salt);
-      //  print_r("HASH:: ".$passwordHash);
         
         //Add user's details
         $result= $this->addMainUserDetails($forename, $surname, $email, $passwordHash, $salt, $pictureURL, $verificationCode);
-        
-        
-        //$result = false;
+
         return $result;
     }
 
