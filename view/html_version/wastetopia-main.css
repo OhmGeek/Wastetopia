@@ -612,11 +612,11 @@ a:link, a:hover, a:visited, a:active  {
 }
 
 .item-frame {
-  height: 100%;
-  width: 100%;
+  height: 400px;
+  width: 250px;
+  overflow: auto;
   background-color: white;
-  padding-top: 60px;
-  border-left: 3px solid white;
+  padding: 5px;
 }
 
 
@@ -624,7 +624,7 @@ a:link, a:hover, a:visited, a:active  {
   width: 100%;
   position: absolute;
   top: 60px;
-  padding: 10px;
+  padding: 0 5px;
   background-color: #2658BC;
   border-bottom: 2px solid #31353D;
 }
@@ -727,8 +727,10 @@ a:link, a:hover, a:visited, a:active  {
 
 .default-pic {
   width: 100%;
-  padding: 40px 30px;
-  background-color: black;
+  height: 150px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
 }
 
 .item-pic{
@@ -762,7 +764,8 @@ a:link, a:hover, a:visited, a:active  {
 }
 
 .goToView{
-  padding: 20px 0;
+  display: flex;
+  justify-content: center;
 }
 
 /* conversation listing page */
@@ -931,10 +934,14 @@ a:link, a:hover, a:visited, a:active  {
 }
 
 .caption .nav-btns .btn-watch i{
+  color: darkgrey;
+}
+
+.caption .nav-btns .lightgrey i{
   color: lightgrey;
 }
 
-.caption .nav-btns .watched {
+.caption .nav-btns .watched i {
   color: green;
 }
 
@@ -988,4 +995,8 @@ a:link, a:hover, a:visited, a:active  {
 
 .modal .modal-body .request-quantity input {
   width: 50px;
+}
+
+.modal .modal-body .request-quantity #renew-date {
+  width: 100px;
 }

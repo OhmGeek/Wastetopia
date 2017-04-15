@@ -166,8 +166,8 @@
           <option value="user-pop">User Popularity</option>
         </select>
       </div>
-      <a class="search-view" role="button" data-toggle="tab" href="#map"><i class="material-icons">map</i></a>
-      <a class="search-view" role="button" data-toggle="tab" href="#grid"><i class="material-icons">view_module</i></a>
+      <a class="search-view" role="button" data-toggle="tab" href="#map" id="btn-map"><i class="material-icons">map</i></a>
+      <a class="search-view hide" role="button" data-toggle="tab" href="#grid" id="btn-grid"><i class="material-icons">view_module</i></a>
     </div>
   </div>
   <div id="filters-picked"></div>
@@ -303,9 +303,18 @@
       }
       $(this).removeClass('dontClose');
     });
-  });
 
   var itemsNum = 5;
+
+$('#btn-map').on('click', function(event){
+  $('#btn-grid').removeClass('hide')
+  $('#btn-map').addClass('hide')
+})
+
+$('#btn-grid').on('click', function(event){
+  $('#btn-map').removeClass('hide')
+  $('#btn-grid').addClass('hide')
+})
 
   $(window).scroll(function(){
 
@@ -362,6 +371,7 @@
     }
 
   });
+});
   </script>
 
 </body>

@@ -60,21 +60,50 @@
 	</nav>
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-xs-12 col-md-9 zero-padding page-height">
+			<div class="col-xs-12 zero-padding page-height">
 				<div class="coversation-frame">
 					<div id="conversation-header">
 						<div class="btn-group-sm centerAll">
-							<button type="button" id="goBack" class="btn btn-default btn-fab btn-nav"><i class="material-icons">arrow_back</i></button>
+							<button type="button" id="goBack" class="btn btn-default btn-nav"><i class="material-icons">arrow_back</i></button>
 							<div class="centerAll user">
 								<img src="flowery.jpg" class="user-image"/>
 								<div class="user-name">Mark Smith</div>
 								<div id="conversation_Id" style="display: none;">2</div>
 							</div>
-							<button type="button" id="viewItem" class="btn btn-default btn-fab"><i class="material-icons">restaurant</i></button>
+							<div class="btn-group">
+								<button id="viewItem" class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown"><i class="material-icons">restaurant</i></button>
+								<div class="item-frame dropdown-menu dropdown-menu-right" aria-multiselectable="true">
+									<div class="default-pic" style="background-image: url(flowery.jpg)">
+									</div>
+									<div class="basic-info">
+										<div class="item-name">
+											Sweet Potatoes
+										</div>
+										<div class="description">
+											<span class="info">Type: </span>fruit
+										</div>
+										<div class="description">
+											<span class="info">State: </span>fresh, unused
+										</div>
+										<div class="description">
+											<span class="info">Quantity: </span>1
+										</div>
+										<div class="description">
+											<span class="info">Expiry date: </span>25/11/2019
+										</div>
+										<div class="description">
+											<span class="info">Pick up location: </span>London, UK
+										</div>
+									</div>
+									<div class="goToView">
+										<button type="button" id="view" class="btn btn-raised btn-default btn-view">View</button>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 					<div id="message-location">
-						<div class="sender">
+						<div class="receiver">
 							<div class="content">
 								Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce viverra placerat suscipit. Fusce egestas mattis orci sed posuere. Integer sed velit ac elit interdum tempor. Ut nec tellus non libero congue luctus id eget mi. Vestibulum ac tempor eros, non egestas odio. Mauris condimentum sapien at dolor molestie lacinia.
 							</div>
@@ -82,7 +111,7 @@
 								2:00 pm
 							</div>
 						</div>
-						<div class="reciever">
+						<div class="sender">
 							<div class="content">
 								Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce viverra placerat suscipit. Fusce egestas mattis orci sed posuere. Integer sed velit ac elit interdum tempor. Ut nec tellus non libero congue luctus id eget mi. Vestibulum ac tempor eros, non egestas odio. Mauris condimentum sapien at dolor molestie lacinia.
 							</div>
@@ -111,38 +140,8 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-xs-12 col-md-3 zero-padding page-height">
-				<div class="item-frame">
-					<div class="default-pic">
-						<img src="flowery.jpg" class="item-pic">
-					</div>
-					<div class="basic-info">
-						<div class="item-name">
-							Sweet Potatoes
-						</div>
-						<div class="description">
-							<span class="info">Type: </span>fruit
-						</div>
-						<div class="description">
-							<span class="info">State: </span>fresh, unused
-						</div>
-						<div class="description">
-							<span class="info">Quantity: </span>1 
-						</div>
-						<div class="description">
-							<span class="info">Expiry date: </span>25/11/2019
-						</div>
-						<div class="description">
-							<span class="info">Pick up location: </span>London, UK
-						</div>
-					</div>
-					<div class="goToView">
-						<button type="button" id="view" class="btn btn-raised btn-default btn-view">View</button>
-					</div>
-				</div>
-			</div>
 		</div>
 	</div>
-	
+
 </body>
 </html>
