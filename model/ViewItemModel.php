@@ -166,7 +166,7 @@ class ViewItemModel
         array_push($itemSerialised, $this->getItemStatus($listingID));
         array_push($itemSerialised, $this->getImages($listingID));
         error_log(json_encode($itemSerialised));
-        return $itemSerialised;
+        return (object) $itemSerialised;
     }
 
 }
