@@ -12,6 +12,7 @@ $(document).ready(function(){
 //   window.location.href = url;
 // });
 
+// Delete a conversation
 $(document).on('click', '#deleteBtn', function(){
   var url = window.location.protocol + "//" + window.location.host + "/" + 'messages/delete-conversation';
   
@@ -22,15 +23,11 @@ $(document).on('click', '#deleteBtn', function(){
   });
 });
 
-$(document).on('click', '#goBack', function(){
-  var url = window.location.protocol + "//" + window.location.host + "/messages";
-  location.href = url;
-});
 
-//Polling to update People-list (in case of new conversations/messages)
-//setInterval(function(){
-//    loadUsers();
-//}, 3000);
+// Polling to update People-list (in case of new conversations/messages)
+setInterval(function(){
+   loadUsers();
+}, 3000);
 
 
 function loadUsers(){

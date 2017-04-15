@@ -1,20 +1,22 @@
 /**
  * Created by Stephen on 14/04/2017.
  */
-// 6 colours for graph background
-$(function() {
-    //Chart.defaults.global.maintainAspectRatio = false;
-    Chart.defaults.global.title.display = true; // Display the title
 
-    var myRequestChart;
-    var mySendingChart;
+$(function() {
+
+    //Chart.defaults.global.maintainAspectRatio = false;
+    //Chart.defaults.global.title.display = true; // Display the title
+
+    var myRequestChart; // Chart for tags on items user Requests
+    var mySendingChart; // Chart for tags on items user Gives away
 
     var baseURL = window.location.protocol + "//" + window.location.host;
-    var categoryID = 1; // Start with category 1
+    var categoryID = 1; // Start with category 1 by default
 
 
     // Only make the charts when the user clicks on the link
     $(document).on('click', 'a[href="#analysis"]', function(event){
+
         // Create request chart and add buttons
         createTagsChart(categoryID, 1); // Create first Requests chart
         createChartButtons("requestOption", "requestRadioButtons"); // Create the radio buttons for the chart
@@ -54,9 +56,11 @@ $(function() {
         'rgba(255, 159, 64, 1)'
     ];
 
-// categoryIDs is array of categoryIDs to search for when getting tags
-// will only ever contain one categoryID
-// requestsOrOffers - boolean (1 for request chart, 0 for Offers chart)
+
+    // Creates a pie chart
+    // categoryIDs is array of categoryIDs to search for when getting tags
+    // will only ever contain one categoryID
+    // requestsOrOffers - boolean (1 for request chart, 0 for Offers chart)
     function createTagsChart(categoryID, requestsOrOffers) {
 
         // Get appropirate tags frequency data from the analysis controller
@@ -113,8 +117,9 @@ $(function() {
         });
     }
 
-// optionName - name for the "name" parameter of radio buttons (requestOption) or (senderOption)
-// location - id of div for the buttons to go in
+    // Creates radio buttons underneath chart
+    // optionName - name for the "name" parameter of radio buttons (requestOption) or (senderOption)
+    // location - id of div for the buttons to go in
     function createChartButtons(optionName, location){
 
         // Get request tags frequency data from the analysis controller
@@ -145,7 +150,7 @@ $(function() {
         var form = $(this).parent(".input-group").parent('form'); // Form it's in
         var formID = form.attr('id'); // ID of form (requestRadioButtons or sendingRadioButtons)
 
-
+        // Update appropriate chart
         if (formID === "requestRadioButtons"){
             updateChart(myRequestChart, 1, categoryValue); // Try new function
         }else{
@@ -154,15 +159,15 @@ $(function() {
     });
 
 
-    // Changes the values of the chart and redraws it
-    // Chart - chart to be updated
+    // Updates the given chart
+    // Chart - chart to be updated (myRequestChart or mySendingChart)
     // requestsOrOffers - boolean (1 for requests, 0 for offers)
     // categoryID - int, new category value to search for
     function updateChart(chart, requestsOrOffers, categoryID){
+
         // Get appropirate tags frequency data from the analysis controller
         var relativeURL = requestsOrOffers ? "/analysis/get-request-tags/" : "/analysis/get-sending-tags/"
         var url = baseURL + relativeURL + categoryID;
-
 
         $.getJSON(url, function(json) {
             var labels = []; // Labels of bars
@@ -183,8 +188,8 @@ $(function() {
 
             chart.config.data.datasets[0].data = data; // Change the data
             chart.config.data.labels = labels; // Change the labels
-            chart.config.data.datasets[0].backgroundColor = chartBackgroundColours; // Change the data
-            chart.config.data.datasets[0].borderColor = chartBorderColours; // Change the data
+            chart.config.data.datasets[0].backgroundColor = chartBackgroundColours; // Change the colours
+            chart.config.data.datasets[0].borderColor = chartBorderColours; // Change the colours
 
             chart.update(); // Redraw with new data
         });

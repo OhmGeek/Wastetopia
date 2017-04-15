@@ -2,11 +2,10 @@
  * Created by Stephen on 09/04/2017.
  */
 $(document).ready(function(){
-    //TODO: Fix issue with password bars going green when they should be red
-    //TODO: fix issue with email section going green but then going red when you press submit
-    //TODO: fix issue with page reloading if eveything is filled in but passwords don't match
 
-
+    // Check all details are valid
+    // Then send to "/register/add-user
+    // Show error message or success message when done
     $("#submit").click(function(event){
         event.preventDefault();
 
@@ -68,11 +67,10 @@ $(document).ready(function(){
             return;
         }
 
-        // Get pictureURL from pictureDIV (put there by another controller when user uploads a picture??)
-        //var pictureURL = picture.val() == "" ? null : picture.val();
 
         // Create dictionary of data
         var data = {forename:firstName, surname:lastName, password:passwd, passwordConfirm: passwdConfirm, email:email};//, pictureURL: pictureURL};
+
         // Create url
         var url = window.location.protocol + "//" + window.location.host + "/register/add-user";
 
@@ -118,7 +116,6 @@ $(document).ready(function(){
 
     // Displays an error message in the appropriate place
     function displayError(error){
-
         // Create warning div
         var errorDiv = $("<div>").addClass("alert alert-danger fade in");
     
@@ -131,12 +128,6 @@ $(document).ready(function(){
     
      // Displays an error message in the appropriate place
     function displaySuccess(message){
-        // Change HTML in an existing DIV
-//         console.log("Displaying error message");
-//         $("#errorMessage").html("<p>"+error+"<p>");
-
-        // OR using bootstrap alerts
-        // Create warning div
         var successDiv = $("<div>").addClass("alert alert-success fade in");
     
         // Add error to the div
