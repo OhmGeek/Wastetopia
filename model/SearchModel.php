@@ -110,6 +110,7 @@ class SearchModel
             JOIN `Item` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
             JOIN `Location` ON `Listing`.`FK_Location_LocationID` = `Location`.`LocationID`
             WHERE `Listing`.`Quantity` > 0
+            AND `Listing`.`Active` = 1
             ";
         if (($userLat !== false) && ($userLong !== false))
         {
