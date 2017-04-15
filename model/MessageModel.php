@@ -6,10 +6,16 @@ use PDO;
 use Wastetopia\Model\DB;
 
 
-
+/**
+ * Class MessageModel - Details of messages within a conversation
+ * @package Wastetopia\Model
+ */
 class MessageModel
 {
-	function __construct()
+    /**
+     * MessageModel constructor.
+     */
+    function __construct()
 	{
 		$this->db = DB::getDB();
 	}
@@ -23,7 +29,7 @@ class MessageModel
 
 //        $reader = new UserCookieReader();
 //        return $reader->get_user_id();
-        return 20; //Hardcoded for now (6 or 20)
+        return 6; //Hardcoded for now (6 or 20)
     }
 
 	

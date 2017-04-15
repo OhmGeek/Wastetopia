@@ -6,9 +6,16 @@ use PDO;
 use Wastetopia\Model\DB;
 
 
+/**
+ * Class ConversationListModel - Details about general Conversations
+ * @package Wastetopia\Model
+ */
 class ConversationListModel
 {
-	function __construct()
+    /**
+     * ConversationListModel constructor.
+     */
+    function __construct()
 	{
 	    $this->db = DB::getDB();
 	}
@@ -28,7 +35,7 @@ class ConversationListModel
 
     /**
      * Gets all conversations (with users) in which you are receiving an item.
-     * @return mixed (Array of conversation details, including unread messages for notifications)
+     * @return mixed (Array of conversation details, including number of unread messages for notifications)
      */
     function getConversationsReceiving()
 	{

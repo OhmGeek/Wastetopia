@@ -11,6 +11,11 @@ namespace Wastetopia\Model;
 use Wastetopia\Model\DB;
 use PDO;
 
+
+/**
+ * Class AnalysisModel - Functions to get frequencies of Tags and Names
+ * @package Wastetopia\Model
+ */
 class AnalysisModel
 {
 
@@ -36,13 +41,17 @@ class AnalysisModel
    
     /**
      * Gets a list of Tag Names along with their frequencies for current user's listings (includes current quantity and transactions quantity)
-     * @param $categoryIDArray (Optional - defaults to empty array => checks all category IDs. Array of CategoryIDs to match)
-     * @return array
+     * @param $categoryIDArray - Array of CategoryIDs to match: Optional - defaults to empty array => checks all category IDs
+     * @return array - In Descending order by Frequency
      */
     function getTagFrequenciesForListings($categoryIDArray = array())
     {
         $userID = $this->getUserID();
-  
+
+        // Start sql query
+        // Inner table gets Tags with their quantity in successful transactions
+        // Outer table gets Tags with their current quantity in user's listing
+        // Join Tables to get total quantity for all time for each Tag
         $sql = "SELECT `Tag`.`Name`, `Tag`.`TagID`, (SUM(`Listing`.`Quantity`) + SUM(`Inner`.`Transactions_Quantity`)) AS `Count`
                 FROM `Tag` 
                 JOIN `ItemTag` ON `ItemTag`. `FK_Tag_TagID` = `Tag`.`TagID`
@@ -57,7 +66,9 @@ class AnalysisModel
                                         WHERE `ListingTransaction`.`Success` = 1) AS `Inner`
                 ON `Inner`.`ItemID` = `Item`.`ItemID`
                 WHERE `User`.`UserID` = :userID ";
-        
+
+        // Add TagID matches to Query
+        // Using OR so can match some of them
         if(count($categoryIDArray) != 0){
             $sql .= "AND ("; 
             // Add the first CategoryID check
@@ -100,7 +111,7 @@ class AnalysisModel
     /**
      * Gets a list of Tag Names along with their frequencies for items the user has received 
      * @param $categoryIDArray (Optional - defaults to empty array => checks all category IDs. Array of CategoryIDs to match)
-     * @return array
+     * @return array - In descending order by frequency
      */
     function getTagFrequenciesForTransactions($categoryIDArray = array())
     {
@@ -163,11 +174,15 @@ class AnalysisModel
     /**
     * Returns the frequencies of Names of items user is giving away
     * Frequncy calculated as SUM of quantities for successful transactions + SUM of current quantity left
-    * @return array
+    * @return array - In descending Order by frequency
     */
     function getTotalNameFrequenciesSending(){
        $userID = $this->getUserID();
 
+        // Inner table gets Items with their quantity in successful transactions
+        // Outer table gets Items with their current quantity in user's listing
+        // Join Tables to get total quantity for all time for each item
+        // Then grouped by Name and Ordered By Count
         $statement = $this->db->prepare("
             SELECT `Item`.`ItemID`, `Item`.`Name`, (SUM(`Listing`.`Quantity`) + SUM(`Inner`.`Transactions_Quantity`)) AS `Count`
             FROM `Item`
@@ -197,7 +212,7 @@ class AnalysisModel
     /**
      * Returns the frequencies of Names of items user is giving away
      * Frequncy calculated as SUM of quantities for successful transactions + SUM of current quantity left
-     * @return array
+     * @return array - In descending order by frequency
      */
     function getTotalNameFrequenciesReceiving(){
         $userID = $this->getUserID();

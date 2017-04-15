@@ -10,6 +10,10 @@ namespace Wastetopia\Model;
 use Wastetopia\Model\DB;
 use PDO;
 
+/**
+ * Class NotificationModel - Used for any notifications (Currently unread messages and unseen requests)
+ * @package Wastetopia\Model
+ */
 class NotificationModel
 {
 
@@ -58,7 +62,7 @@ class NotificationModel
 
 
     /**
-     * Returns the number of total unread messages this user has
+     * Returns the total number of unread messages this user has
      * @return integer
      */
     function messageNotifications()
