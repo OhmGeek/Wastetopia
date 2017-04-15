@@ -74,19 +74,18 @@ $klein->with('/items', function () use ($klein) {
   });
 
 
-  //    $klein->respond('GET', '/?', function ($request, $response) {
-  //        // Generic Items Page
-  //        return "Main Item Page";
-  //    });
-  //
-  //
-  //    $klein->respond('GET', '/[:id]', function ($request, $response) {
-  //        // Show a single user
-  //        $itemID = $request->id;
-  //        $controller = new ViewItemController();
-  //        return $controller->getListingPage($itemID);
-  //
-  //    });
+      $klein->respond('GET', '/view/[:id]', function ($request, $response) {
+          // Generic Items Page
+          $itemID = $request->id;
+          $controller = new ViewItemController();
+          return $controller->getListingPage($itemID);
+
+      });
+
+
+//      $klein->respond('GET', '/?', function ($request, $response) {
+//          return "Main Items";
+//      });
 
 });
 
@@ -155,8 +154,6 @@ $klein->with('/api', function () use ($klein) {
       $conversationID = $request->conversationID;
       $message = $request->message;
 
-      console.log($conversationID);
-      console.log($message);
       $controller = new MessageController();
       $controller->sendMessage($conversationID,$message);
       return "";
