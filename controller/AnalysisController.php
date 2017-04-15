@@ -168,7 +168,9 @@ class AnalysisController
             $name = $categoryPair["Category_Name"];
             $id = $categoryPair["CategoryID"];
 
-            $results[$id] = $name;
+            if($name !== "other"){
+                $results[$id] = $name;
+            }
         }
 
         return json_encode($results);
