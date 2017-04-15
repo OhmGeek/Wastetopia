@@ -38,9 +38,9 @@ class SearchController
 
         $offset = 30*intval($pageNumber);
         $limit = $offset + 30;
-        $itemInformation = $this->search($lat, $long, $search, $tagsArr);
 
-        var_dump($order);
+        $itemInformation = $this->search($lat, $long, $search, $tagsArr, $notTagsArr);
+
         switch ($order) {
             case 'D':
                 if (($lat !== "") && ($long !== ""))
@@ -110,27 +110,36 @@ class SearchController
     /*Limit and Offset are implemented in the wrapper functions
       As custom sorting is needed in the search controller it cannot be done in SQL*/
 
-    private function search($lat, $long, $search, $tagsArr)
+    private function search($lat, $long, $search, $tagsArr, $notTagsArr)
     {
-        $distanceSearch  = false;
+/*        $distanceSearch  = false;
         $nameSearch = false;
         $tagSearch = false;
+        $notTagSearch = false;*/
 
-        if(!empty($lat) && !empty($long))
+        if(empty($lat) || empty($long))
         {
-            $distanceSearch = true;
+            $lat = false;
+            $long = false;
         }
-        if (!empty($search))
+        if (empty($search))
         {
-            $nameSearch = true;
+            $search = false;
         }
-        if(!empty($tagsArr[0]))
+        if(empty($tagsArr[0]))
         {
-            $tagSearch = true;
+            $tagsArr = false;
+        }
+        if(empty($notTagsArr[0]))
+        {
+            $notTagsArr = false;
         }
 
-        if ($distanceSearch && $nameSearch && $tagSearch) {
-            $itemInformation = $this->searchModel->getSearchResults($lat, $long, $search, $tagsArr);  //Distance, Name and Tags
+
+        $itemInformation = $this->searchModel->getSearchResults($lat, $long, $search, $tagsArr, $notTagsArr);
+
+        /*if ($distanceSearch && $nameSearch && $tagSearch) {
+            $itemInformation = $this->searchModel->getSearchResults($lat, $long, $search, $tagsArr, $);  //Distance, Name and Tags
         }
         elseif ($distanceSearch && $nameSearch && !$tagSearch) {
             $itemInformation = $this->searchModel->getSearchResults($lat, $long, $search, false);      //Distance and Name
@@ -152,7 +161,7 @@ class SearchController
         }
         else {
             $itemInformation = $this->searchModel->getSearchResults(false, false, false, false);          //No filtering
-        }
+        }*/
                
         return $itemInformation;
     }

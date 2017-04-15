@@ -102,7 +102,7 @@ class SearchModel
       and returns results only within this area
       At the equator the width is roughly 77km, at London, 56km
       and at the UK Arctic Research Station, 30km*/
-    function getSearchResults($userLat, $userLong, $search, $tagsArray, $distanceLimit = 0.76)
+    function getSearchResults($userLat, $userLong, $search, $tagsArray, $notTagsArray, $distanceLimit = 0.76)
     {
 
         $sql = "SELECT `Listing`.`ListingID`, `Location`.`Latitude`, `Location`.`Longitude`, `Item`.`Name`
@@ -151,7 +151,38 @@ class SearchModel
                      GROUP BY `Listing`.`ListingID`
                          ) as `TagCount`
                      WHERE `TagCount`.`Count` = :tagCount)";
-        }                
+        } 
+        if ($notTagsArray !== false)
+        {
+            $notTagCount = count($notTagsArray);
+
+            $sql .= "AND `Listing`.`ListingID` IN (SELECT `TagCount`.`ListingID`
+                                 FROM (SELECT `Listing`.`ListingID`, COUNT(DISTINCT `ItemTag`.`FK_Tag_TagID`) AS `Count`
+                                       FROM `Listing`
+                                       JOIN `Item` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
+                                       JOIN `ItemTag` ON `Item`.`ItemID` = `ItemTag`.`FK_Item_ItemID`
+                                       WHERE `ItemTag`.`FK_Tag_TagID` IN (";
+
+            foreach ($notTagsArray as $key => $tag) 
+            {
+                if ($key == ($notTagCount-1))
+                {
+                    $sql .= ":notTag".$key;
+                }
+                else
+                {
+                    $sql .= ":notTag".$key.",";
+                }
+                
+            } 
+
+            $sql .= ")
+                     GROUP BY `Listing`.`ListingID`
+                         ) as `TagCount`
+                     WHERE `TagCount`.`Count` = :notTagCount)";
+        }
+
+                      
 
         $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
         $statement = $this->db->prepare($sql);
@@ -162,6 +193,14 @@ class SearchModel
                 $statement->bindValue(":tag".$key, $tag, PDO::PARAM_INT);
             }
             $statement->bindValue(":tagCount", strval($tagCount), PDO::PARAM_STR);
+        }
+        if ($notTagsArray !== false)
+        {
+            foreach ($notTagsArray as $key => $tag)
+            {
+                $statement->bindValue(":notTag".$key, $tag, PDO::PARAM_INT);
+            }
+            $statement->bindValue(":notTagCount", strval($notTagCount), PDO::PARAM_STR);
         }
         if (($userLat !== false) && ($userLong !== false))
         {
