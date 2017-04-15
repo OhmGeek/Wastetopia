@@ -124,7 +124,10 @@ class ViewItemModel
         $statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);
         $statement->execute();
         $results = $statement->fetchAll(PDO::FETCH_ASSOC);
-        return $results;
+        return array(
+            "expires" => $results[0]["Use_By"],
+            "id" => $results[0]["ListingID"]
+        );
     }
 
 
