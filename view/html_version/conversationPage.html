@@ -64,15 +64,16 @@
 				<div class="coversation-frame">
 					<div id="conversation-header">
 						<div class="btn-group-sm centerAll">
-							<button type="button" id="goBack" class="btn btn-default btn-nav"><i class="material-icons">arrow_back</i></button>
+							<a type="button" id="goBack"><i class="material-icons">arrow_back</i></a>
 							<div class="centerAll user">
 								<img src="flowery.jpg" class="user-image"/>
 								<div class="user-name">Mark Smith</div>
 								<div id="conversation_Id" style="display: none;">2</div>
 							</div>
 							<div class="btn-group">
-								<button id="viewItem" class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown"><i class="material-icons">restaurant</i></button>
+								<a id="viewItem" class="dropdown-toggle" role="button" data-toggle="dropdown"><i class="material-icons">info_outline</i></a>
 								<div class="item-frame dropdown-menu dropdown-menu-right" aria-multiselectable="true">
+									<div>The offer is </div>
 									<div class="default-pic" style="background-image: url(flowery.jpg)">
 									</div>
 									<div class="basic-info">
@@ -96,7 +97,7 @@
 										</div>
 									</div>
 									<div class="goToView">
-										<button type="button" id="view" class="btn btn-raised btn-default btn-view">View</button>
+										<button type="button" id="view" class="btn btn-default">View</button>
 									</div>
 								</div>
 							</div>
@@ -125,11 +126,11 @@
 							<fieldset>
 								<div class="form-group zero-padding">
 									<div class="container-fluid">
-										<div class="row row-eq-height">
-											<div class="col-xs-8 col-md-10 message-div zero-padding">
+										<div class="row">
+											<div class="col-xs-8 col-sm-10 message-div zero-padding">
 												<textarea id="message" rows="3" name="message"></textarea>
 											</div>
-											<div class="col-xs-4 col-md-2 btn-div zero-padding">
+											<div class="col-xs-4 col-sm-2 btn-div zero-padding">
 												<button type="submit" id="sendBtn" class="btn btn-raised btn-default btn-send-message">Send</button>
 											</div>
 										</div>
@@ -144,4 +145,13 @@
 	</div>
 
 </body>
+<script>
+	$(function(){
+		$(window).resize(function () {
+			var dropdownHeight = $(window).height() - $('#conversation-header').height() - $('.navbar').height()
+			console.log(dropdownHeight)
+			$('.item-frame').css({'max-height': dropdownHeight})
+		});
+	})
+</script>
 </html>

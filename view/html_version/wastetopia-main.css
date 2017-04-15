@@ -507,6 +507,7 @@ label.checkbox-inline input[type=checkbox]:checked + .checkbox-material .check:b
 
 a:link, a:hover, a:visited, a:active  {
   text-decoration: none;
+  cursor: pointer;
 }
 
 .tile {
@@ -596,133 +597,26 @@ a:link, a:hover, a:visited, a:active  {
 
 /* Messaging */
 /* Conversation page */
-.row .row-eq-height {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-}
-
 .coversation-frame{
   height: 100%;
   width: 100%;
-  padding-top: 120px;
-  padding-bottom: 110px;
+  padding-top: 95px;
+  padding-bottom: 90px;
   position: relative;
 }
 
 .item-frame {
-  height: 400px;
+  height: 450px;
+  min-height: 100px;
   width: 250px;
   overflow: auto;
   background-color: white;
-  padding: 5px;
 }
 
-
-#conversation-header{
-  width: 100%;
-  position: absolute;
-  top: 60px;
-  padding: 0 5px;
-  background-color: #2658BC;
-  border-bottom: 2px solid #31353D;
-}
-
-.centerAll {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-}
-
-.btn-nav {
-  display: flex;
-}
-
-.user {
-  display: flex;
-  justify-content: center;
-}
-
-.user .user-image {
-  height: 40px;
-  width: 40px;
-  overflow: hidden;
-  border-radius: 50%;
-  border: 2px solid white;
-}
-
-.user .user-name {
-  margin-left: 5px;
-  font-size: 24px;
-  font-weight: bold;
-  color: white;
-  display: inline;
-}
-
-#message-location, .user-stats {
-  overflow-y: auto;
-  height: 100%;
-}
-
-.sender{
-  width: 75%;
-  padding: 10px;
-  margin-left: auto;
-}
-
-.receiver {
-  padding: 10px;
-  width: 75%;
-}
-
-.content {
+.item-frame > div:first-child {
   font-size: 16px;
-  padding: 10px;
-  border-radius: 10px;
-  background-color: white;
-}
-
-.receiver .content {
-  background-color: #2658BC;
-  color: white;
-}
-
-.time-stamp {
-  margin-top: 5px;
-  font-size: 14px;
-  font-weight: bold;
-  color: grey;
-}
-
-#message-form {
-  width: 100%;
-  position: absolute;
-  bottom: 0;
-  background-color: #31353D;
-}
-.message-div {
-  padding: 20px 0px 20px 20px;
-}
-
-#message {
-  width: 100%;
-  height: 100%;
-}
-
-.btn-div {
-  padding-top: 20px;
-}
-
-.btn-send-message {
-  display: block;
-  margin: 0px auto;
-}
-
-.btn-view{
-  display: block;
-  margin: auto;
+  font-weight: bolder;
+  padding: 5px;
 }
 
 .default-pic {
@@ -731,6 +625,7 @@ a:link, a:hover, a:visited, a:active  {
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
+
 }
 
 .item-pic{
@@ -757,6 +652,124 @@ a:link, a:hover, a:visited, a:active  {
 .basic-info .info {
   font-weight: bold;
   color: #31353D;
+}
+
+.btn-group.open .dropdown-toggle {
+  box-shadow: 0 0 transparent;
+}
+
+#conversation-header{
+  width: 100%;
+  position: absolute;
+  top: 50px;
+  padding: 0 5px;
+  background-color: white;
+  border-bottom: 2px solid #31353D;
+}
+
+@media(min-width:1200px) {
+
+  .coversation-frame{
+    padding-top: 105px;
+  }
+
+  #conversation-header{
+    top: 60px;
+  }
+}
+
+.centerAll {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.btn-nav {
+  display: flex;
+}
+
+.user {
+  display: flex;
+  justify-content: center;
+}
+
+.user .user-image {
+  height: 25px;
+  width: 25px;
+  overflow: hidden;
+  border-radius: 50%;
+  border: 1px solid lightgrey;
+}
+
+.user .user-name {
+  margin-left: 5px;
+  font-size: 16px;
+  font-weight: bolder;
+}
+
+#message-location, .user-stats {
+  overflow-y: auto;
+  height: 100%;
+}
+
+.sender{
+  width: 75%;
+  padding: 10px;
+  margin-left: auto;
+}
+
+.receiver {
+  padding: 10px;
+  width: 75%;
+}
+
+.content {
+  font-size: 16px;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: white;
+}
+
+.receiver .content {
+  background-color: darkgrey;
+  color: white;
+}
+
+.time-stamp {
+  margin-top: 5px;
+  font-size: 14px;
+  font-weight: bold;
+  color: grey;
+}
+
+#message-form {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  background: #31353D;
+}
+.message-div {
+  padding: 10px;
+}
+
+#message {
+  width: 100%;
+  height: 100%;
+}
+
+.btn-div {
+  padding-top: 10px;
+}
+
+.btn-send-message {
+  display: block;
+  margin: 0px auto;
+}
+
+.btn-view{
+  display: block;
+  margin: auto;
 }
 
 .page-height{
