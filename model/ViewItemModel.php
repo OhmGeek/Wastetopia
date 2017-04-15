@@ -151,6 +151,7 @@ class ViewItemModel
                 "url" => $image["Image_URL"]
             ));
         }
+        error_log(json_encode($imageOutput));
         return $imageOutput;
     }
     /**
@@ -164,7 +165,7 @@ class ViewItemModel
         array_merge($itemSerialised, $this->getDetails($listingID));
         array_merge($itemSerialised, $this->getItemStatus($listingID));
         array_merge($itemSerialised, $this->getImages($listingID));
-
+        error_log(json_encode($itemSerialised));
         return $itemSerialised;
     }
 
