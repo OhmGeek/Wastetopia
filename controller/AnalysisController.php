@@ -168,7 +168,7 @@ class AnalysisController
             $name = $categoryPair["Category_Name"];
             $id = $categoryPair["CategoryID"];
 
-            if($name !== "other"){
+            if($name !== "Other"){
                 $results[$id] = $name;
             }
         }
@@ -238,8 +238,7 @@ class AnalysisController
         $names = json_decode($this->getTotalNameFrequenciesSending(), true);
 
         if(count($names) == 0){
-            return ""
-                ;
+            return "";
         }
 
         return array_keys($names)[0];
