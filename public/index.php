@@ -48,9 +48,7 @@ $klein = new Klein();
 
 $klein->respond("GET", "/?", function() {
   return "HomePage";
-
 });
-
 
 
 $klein->with('/api', function () use ($klein) {

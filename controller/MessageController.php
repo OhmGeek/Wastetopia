@@ -13,8 +13,18 @@ class MessageController
 	
 	function __construct()
 	{
-	// Card details model
-	$this->cardDetailsModel = new CardDetailsModel();
+		// Example of how redirection might be done
+		$CurrentConfig = new CurrentConfig();
+		$config = $CurrentConfig->getAll();
+		$baseURL = $config["ROOT_BASE"];
+		$redirectionURL = $baseURL."/login";
+		if(!($this->isUserLoggedIn())){
+			header('Location: '.$redirectionURL);
+			exit();
+		}
+
+		// Card details model
+		$this->cardDetailsModel = new CardDetailsModel();
 		
 	    //Create MessageModel instance
         $this->model = new MessageModel();
@@ -25,10 +35,17 @@ class MessageController
 
 	}
 
+    /**
+     * Returns True if getUserID doesn't return "" or null
+     * @return bool True if user is logged in
+     */
+    function isUserLoggedIn(){
+        return $this->getUserID() !== "";
+    }
 
     function generatePageFromListing($listingID){
 	$conversationIDs = $this->model->getConversationIDFromListing($listingID);
-	if (count($conversationsIDs) > 0){
+	if (count($conversationIDs) > 0){
 	    // Conversation already exists	
 	    $conversationID = $conversationIDs[0];
 	}else{
