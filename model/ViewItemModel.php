@@ -9,7 +9,7 @@
 namespace Wastetopia\Model;
 
 use PDO;
-
+use Wastetopia\Model\AddItemModel;
 class ViewItemModel
 {
 
@@ -19,43 +19,93 @@ class ViewItemModel
     public function __construct()
     {
         $this->db = DB::getDB();
+
     }
+
     /**
-     * Returns all details about images associated with the item in this listing
-     * @param $listingID
-     * @return mixed
+     * @param $listingID (The ListingID to get item details for)
+     * @return array (an array containing name, description, and expiry date)
      */
-    function getImages($listingID){
+    function getItemDetails($listingID) {
         $statement = $this->db->prepare("
-            SELECT `Image`.`ImageID`, `Image`.`Image_URL`
-            FROM `Image` 
-            JOIN `ItemImage` ON `ItemImage`.`FK_Image_ImageID` = `Image`.`ImageID`
-            JOIN `Item` ON `ItemImage`.`FK_Item_ItemID` = `Item`.`ItemID`
-            JOIN `Listing` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
-            WHERE `Listing`.`ListingID` = :listingID;
+            SELECT Description, Use_By, Name
+            FROM Item, Listing
+            WHERE Listing.ListingID = :listingID
+              AND Listing.FK_Item_ItemID = Item.ItemID
         ");
         $statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);
         $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_ASSOC);
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        // now return an array with the correct information.
+        if(count($results) == 0) {
+            return array();
+        }
+        return array(
+            "name" => $results[0]["Name"],
+            "description" => $results[0]["Description"],
+            "expires" => $results[0]["Use_By"]
+        );
     }
-    /**
-     * Returns all details about tags associated with the item in this listing
-     * @param $listingID
-     * @return mixed
-     */
-    function getTags($listingID){
+
+    function getItemStatus($listingID) {
         $statement = $this->db->prepare("
-            SELECT `Tag`.`Name`, `Tag`.`Description`, `Tag`.`FK_Category_Category_ID` as CategoryID
-            FROM `Tag` 
-            JOIN `ItemTag` ON `ItemTag`.`FK_Tag_TagID` = `Tag`.`TagID`
-            JOIN `Item` ON `Item`.`ItemID` = `ItemTag`.`FK_Item_ItemID`
-            JOIN `Listing` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
-            WHERE `Listing`.`ListingID` = :listingID;
+            SELECT Active
+            FROM Listing
+            WHERE ListingID = :listingID 
         ");
+
         $statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);
         $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_ASSOC);
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return array(
+            "active" => $results[0]["Active"]
+        );
     }
+
+    function getTagDetails($listingID) {
+            $statement = $this->db->prepare("
+            SELECT Tag.TagID, Tag.Name, Tag.FK_Category_Category_ID, Tag.Description
+            FROM Tag, ItemTag, Listing
+            WHERE ItemTag.FK_Item_ItemID = Listing.FK_Item_ItemID
+              AND ItemTag.FK_Tag_TagID = Tag.TagID
+              AND Listing.ListingID = :listingID
+            ORDER BY `Tag`.`Name`
+         ");
+
+            $statement->bindValue(':listingID',$listingID,PDO::PARAM_INT);
+            $statement->execute();
+            $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+            // here are the array fields to insert into based on Category
+            $field = array(
+                1 => "type",
+                2 => "state",
+                3 => "dietary",
+                4 => "contains",
+                5 => "other"
+            );
+            // this is the data we return
+            $data = array(
+                "type" => array(),
+                "state" => array(),
+                "dietary" => array(),
+                "contains" => array(),
+                "other" => array()
+
+            );
+            //process results
+            foreach($results as $tag) {
+                array_push($data[$field[$tag['FK_Category_Category_ID']]], array(
+                    "name" => $tag['Name'],
+                    "description" => $tag['Description']
+                ));
+            }
+            error_log(json_encode($results));
+            error_log(json_encode($data));
+            return $data;
+
+    }
+
     /**
      * Returns all general details about an item (location, item details and listing details)
      * @param $listingID
@@ -77,40 +127,42 @@ class ViewItemModel
         return $results;
     }
 
-    /**
-     * Returns the barcode of an item (if it exists)
-     * @param $listingID
-     * @return int (barcode)
-     */
-    function getBarcode($listingID){
+
+    function getImages($listingID) {
         $statement = $this->db->prepare("
-            SELECT * 
-            FROM `Barcode`
-            JOIN `Item` ON `Item`.`ItemID` = `Barcode`.`FK_Item_ItemID`
-            JOIN `Listing` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
-            WHERE `Listing`.`ListingID` = :listingID;
+            SELECT Image.ImageID, Image_URL
+            FROM Image, Listing, ItemImage
+            WHERE Image.ImageID = ItemImage.FK_Image_ImageID
+              AND ItemImage.FK_Item_ItemID = Listing.FK_Item_ItemID
+              AND Listing.ListingID = :listingID
         ");
+
         $statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);
         $statement->execute();
-        return $statement->fetchColumn();
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+        $imageOutput = array();
+        // we need to process results
+        foreach($results as $image) {
+            array_push($imageOutput, array(
+                "id" => $image["ImageID"],
+                "url" => $image["Image_URL"]
+            ));
+        }
+        return $imageOutput;
     }
-
-
     /**
      * Returns all details, images and tags relating to a given listing
      * @param $listingID
-     * @return array (in the form (["images"]=>images, ["tags"]=>tags, ["details"]=>generalDetails)
+     * @return array
      */
     function getAll($listingID){
-        $images = $this->getImages($listingID);
-        $tags = $this->getTags($listingID);
-        $generalDetails = $this->getDetails($listingID);
-        $barcode = $this->getBarcode($listingID);
+        $itemSerialised = array();
+        array_push($itemSerialised, $this->getTagDetails($listingID));
+        array_push($itemSerialised, $this->getDetails($listingID));
+        array_push($itemSerialised, $this->getItemStatus($listingID));
+        array_push($itemSerialised, $this->getImages($listingID));
 
-        return (array("images"=>$images,
-            "tags"=>$tags,
-            "details"=>$generalDetails,
-            "barcode"=>$barcode));
+        return $itemSerialised;
     }
 
 }
