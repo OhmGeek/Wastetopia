@@ -24,6 +24,7 @@ class CardDetailsModel
 
     function getUserID(){
         // Function from elsewhere
+        return 6;
     }
 
     /**

@@ -8,6 +8,7 @@
 namespace Wastetopia\Model;
 use PDO;
 use Wastetopia\Model\DB;
+
 class ProfilePageModel
 {
     /**
@@ -310,8 +311,28 @@ class ProfilePageModel
 			return false;
 		}
 		
-    }	
-    
+    }
+
+
+    /**
+     * Set the request as having been viewed
+     * @return void
+     */
+
+    function setViewed($listing_id, $transaction_id, $new_value=1){
+        $statement = $this->db->prepare("
+			UPDATE ListingTransaction
+			SET Viewed = :new_value
+			WHERE FK_Listing_ListingID = :listing_id
+			AND FK_Transaction_TransactionID = :transaction_id;
+		");
+        $statement->bindValue(":new_value", $new_value, PDO::PARAM_INT);
+        $statement->bindValue(":listing_id", $listing_id, PDO::PARAM_INT);
+        $statement->bindValue(":transaction_id", $transaction_id, PDO::PARAM_INT);
+        $statement->execute();
+    }
+
+
     /**
      * Gets all the listings the current user is watching
      * Can then use getStateOfListingTransactions() to check if the transaction should go in History or Currently Watching
@@ -393,27 +414,7 @@ class ProfilePageModel
         return $statement->fetchColumn() > 0;
 	    
     }
-	
-	
-    /** 
-    * Checks whether the given user has the listing in their watch list
-    * @param $listingID
-    * @param $userID
-    * @return bool (True if user is requesting the listing)
-    */	
-    function isWatching($listingID, $userID){
-	$statement = $this->db->prepare("
-            SELECT COUNT(*) AS `Count`
-	    FROM `Watch`
-	    WHERE `FK_User_UserID` = :userID
-	    AND `FK_Listing_ListingID` = :listingID;
-        ");
-        $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
-        $statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);
-        $statement->execute();
-	
-        return $statement->fetchColumn() > 0;	
-    }
+
 
 	
     /** 

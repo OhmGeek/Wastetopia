@@ -10,9 +10,16 @@ use Twig_Environment;
 use Wastetopia\Config\CurrentConfig;
 
 
+/**
+ * Class RegistrationController - Used to generate Registration page and handle all of its inputs
+ * @package Wastetopia\Controller
+ */
 class RegistrationController
 {
 
+    /**
+     * RegistrationController constructor.
+     */
     public function __construct()
     {
         $this->model = new RegistrationModel();
@@ -23,7 +30,7 @@ class RegistrationController
 
     /**
      * Generates the HTML for the Registration page
-     * @return mixed
+     * @return HTML
      */
     function generatePage()
     {
@@ -36,7 +43,7 @@ class RegistrationController
     }
 
 
-    /** Checks an email address using a Regex (NEEDS TESTING)
+    /** Checks an email address using a Regex
      * @param $email
      * @return bool (True if valid email)
      */
@@ -48,7 +55,7 @@ class RegistrationController
     /**
      * Checks if the given email already exists in the database
      * @param $email
-     * @return mixed
+     * @return bool
      */
     function checkAvailable($email){
         $temp = $this->model->checkEmailExists($email);
@@ -56,6 +63,7 @@ class RegistrationController
         // $temp will be True if the email exists, want to then return False
         return !$temp;
     }
+
 
     /**
      * Checks the two given passwords match
@@ -109,7 +117,6 @@ class RegistrationController
                 // Send verification email
                 $name = $forename." ".$surname;
                 $final = $this->sendVerificationEmail($email, $name);
-                //$final = True; // For testing
                 if (!($final)){
                     // Delete user so they can try again
                     $this->model->deleteUser($email);
@@ -122,11 +129,21 @@ class RegistrationController
         }
     }
 
+    /**
+     * JSON error message
+     * @param $e
+     * @return string
+     */
     function errorMessage($e){
         $errorArray = array("error" => $e);
         return json_encode($errorArray);
     }
 
+    /**
+     * JSON success message
+     * @param $s
+     * @return string
+     */
     function successMessage($s){
         $successArray = array("success" => $s);
         return json_encode($successArray);
@@ -134,7 +151,6 @@ class RegistrationController
     
     
     /**
-    * NEED TO CHANGE THE LINK FOR PRODUCTION VERSION (use config)
     * Sends an email to the new user with the verification code
     * @param $email
      * @param $reactivation (defaults to 0. 1 if this is sent as a result of user changing their email)
@@ -155,7 +171,7 @@ class RegistrationController
         $message = "Your Activation Code is ".$code."";
         $to=$email;
         $subject="Activation Code For Wastetopia";
-        $from = 'wastetopia@outlook.com';
+        $from = $config["EMAIL_ADDRESS"];
         $body = "";
         $altBody = "";
         // If reactivating new account, let user know why they have to do this again
@@ -180,31 +196,31 @@ class RegistrationController
     * @return bool
     */
     function sendEmail($from, $subject, $body, $altBody, $email, $name){	    
-	$CurrentConfig = new CurrentConfig();
+	    $CurrentConfig = new CurrentConfig();
         $config = $CurrentConfig->getAll();
 	    
-	// PHPMailer code
-	$mail = new \PHPMailer(true); //true makes it give errors
-        $mail->IsSMTP();                                      // set mailer to use SMTP
-        $mail->Host = $config["EMAIL_HOST"]; // For SSL, use mail3.gridhost.co.uk, else try mail.ohmgeek.co.uk
+	    // PHPMailer code
+	    $mail = new \PHPMailer(true); //true makes it give errors
+        $mail->IsSMTP();                           // set mailer to use SMTP
+        $mail->Host = $config["EMAIL_HOST"];
         $mail->Port = $config["EMAIL_PORT"]; //25 for non-SSL, 465  for SSL, 587 for tls
         
-        $mail->SMTPSecure = $config["EMAIL_SECURITY"]; 
+        $mail->SMTPSecure = $config["EMAIL_SECURITY"];  // ssl or tls
   
         $mail->SMTPAuth = true;     // turn on SMTP authentiocation
         
         $mail->Username = $config["EMAIL_ADDRESS"];  // SMTP username
-        $mail->Password = $config["EMAIL_PASSWORD"]; // SMTP password (IHatePHP  or wyI4wwPRhHGk)
+        $mail->Password = $config["EMAIL_PASSWORD"]; // SMTP password
         $mail->From = $from;
         $mail->FromName = "Wastetopia";
         
         $mail->AddAddress($email, $name);
        
-        $mail->WordWrap = 50;                                 // set word wrap to 50 characters
-        $mail->IsHTML(true);                                  // set email format to HTML
+        $mail->WordWrap = 50;               // set word wrap to 50 characters
+        $mail->IsHTML(true);                // set email format to HTML
         $mail->Subject = $subject;
         $mail->Body    = $body;
-        $mail->AltBody = $altBody;
+        $mail->AltBody = $altBody;          // altBody if email doesn't use HTML
         if(!$mail->Send())
         {
            return False;

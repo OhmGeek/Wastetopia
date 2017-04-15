@@ -13,6 +13,10 @@ use Wastetopia\Model\AnalysisModel;
 use Wastetopia\Config\CurrentConfig;
 
 
+/**
+ * Class AnalysisController - Used to analyse the user's listings and transactions
+ * @package Wastetopia\Controller
+ */
 class AnalysisController
 {
 
@@ -40,6 +44,7 @@ class AnalysisController
 
         $sendingNames = array();
 
+        // Extract name and frequency, place in associative array
         foreach($sendingFrequencies as $key=>$value){
             $details = array();
             $details["name"] = $key;
@@ -214,6 +219,7 @@ class AnalysisController
 
         arsort($names);
 
+        // Limit <= 5, can't exceed size of $names
         $limit = count($names) < 5 ? count($names) : 5;
 
         $results = array_slice($names, 0, $limit, true);
@@ -230,7 +236,8 @@ class AnalysisController
         $names = json_decode($this->getTotalNameFrequenciesSending(), true);
 
         if(count($names) == 0){
-            return "";
+            return ""
+                ;
         }
 
         return array_keys($names)[0];

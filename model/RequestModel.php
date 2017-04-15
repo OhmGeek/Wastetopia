@@ -288,24 +288,7 @@ class RequestModel
 		$statement->execute();
 		return $statement->fetchAll(PDO::FETCH_ASSOC);
 	}
-	
-	/**
-	 * Set the request as having been viewed
-	 * @return void
-	 */
-	
-	function setViewed($listing_id, $transaction_id, $new_value=1){
-		$statement = $this->db->prepare("
-			UPDATE ListingTransaction
-			SET Viewed = :new_value
-			WHERE FK_Listing_ListingID = :listing_id
-			AND FK_Transaction_TransactionID = :transaction_id;
-		");
-		$statement->bindValue(":new_value", $new_value, PDO::PARAM_INT);
-		$statement->bindValue(":listing_id", $listing_id, PDO::PARAM_INT);
-		$statement->bindValue(":transaction_id", $transaction_id, PDO::PARAM_INT);
-		$statement->execute();
-	}
+
 	
 	/**
 	 * Change the quantity of the item being offered

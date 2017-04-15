@@ -8,30 +8,25 @@
 //TODO: Split tabs into separate Twig files that can be separately loaded
 namespace Wastetopia\Controller;
 use Wastetopia\Config\CurrentConfig;
-use Wastetopia\Model\ProfilePageModel;
-use Wastetopia\Model\CardDetailsModel;
-use Wastetopia\Controller\AnalysisController;
-
-use Wastetopia\Controller\RecommendationController;
 use Twig_Loader_Filesystem;
 use Twig_Environment;
 
-use Wastetopia\Model\RequestModel;
-use Wastetopia\Controller\RegistrationController;
+use Wastetopia\Controller\RegistrationController; // For email verification functions
+use Wastetopia\Controller\AnalysisController;   // For Advice Tab
+use Wastetopia\Controller\RecommendationController; // For Recommendations and Predictions tab
 
-use Wastetopia\Model\AmazonS3;
+use Wastetopia\Model\ProfilePageModel;
+use Wastetopia\Model\CardDetailsModel;
+
+use Wastetopia\Model\AmazonS3; // Needed for uploading image for profile page
 
 
+/**
+ * Class ProfilePageController - Used to generate and handle inputs on the Profile Page
+ * @package Wastetopia\Controller
+ */
 class ProfilePageController
 {
-    // If user is not logged in, getUserID will return "" or null
-    // so will fail all isUser tests so can ignore those.
-    // Only need to use isLoggedIn to remove all buttons (except View)
-    // from any cards that can be seen when isUser == 0.
-    // On profile page, that is only available listings on listings tab.
-    // For search page, it is every item.
-    // Should be added to every View Page
-
 
     /**
      * ProfilePageController constructor.
@@ -40,6 +35,7 @@ class ProfilePageController
      */
     public function __construct($ownProfile, $userID = -1)
     {
+        // Sets userID to currentUser or specified user
         if ($ownProfile) {
             $this->userID = $this->getUserID();
         } else {
@@ -48,9 +44,6 @@ class ProfilePageController
 
         // Card details model
         $this->cardDetailsModel = new CardDetailsModel();
-        
-        // Request model
-        $this->requestModel = new RequestModel();
 
         // Profile page model
         $this->model = new ProfilePageModel($this->userID); //Need to include
@@ -80,6 +73,10 @@ class ProfilePageController
         return $this->getUserID() !== "";
     }
 
+    /**
+     * Generates HTML for the whole page
+     * @return HTML
+     */
     function generatePage(){
         $profileContentHTML = $this->generateProfileContentHTML();
 
@@ -94,6 +91,10 @@ class ProfilePageController
     }
 
 
+    /**
+     * Generates the main HTML part of the page (only the body)
+     * @return HTML
+     */
     function generateProfileContentHTML()
     {
         $userInformation = $this->generateProfileSection();
@@ -125,7 +126,11 @@ class ProfilePageController
     }
 
 
-    /* Generates the profile information for the website */
+
+    /**
+     * Generates array of profile information for the website (userimage, username etc)
+     * @return array
+     */
     function generateProfileSection()
     {
         //Get user details
@@ -141,7 +146,10 @@ class ProfilePageController
     }
 
 
-    /* Generates HTML for Home tab */
+    /**
+     * Generates HTML for Home tab
+     * @return HTML
+     */
     function generateHomeSection()
     {
         //Get listings user has put up
@@ -151,18 +159,16 @@ class ProfilePageController
         // Should this be changed to not include completed listings?? (i.e 0 quantity)
         $listingsCount = count($userListingsSending);
 
-        $sendingTransactionsCount = 0; // total number of transactions that have been made for user's listings
         $sendingPendingTransactionsCount = 0;
         $sendingCompletedTransactionsCount = 0;
-        $totalAvailabaleListings = 0; // total number of listings with quantity > 0
+        $totalAvailableListings = 0; // total number of listings with quantity > 0
         $totalEmptyListings = 0; // total number of listings with 0 quantity
 
         //Counts number of transactions, available listings, and out-of-stock listings
         foreach ($userListingsSending as $listing) {
             $listingID = $listing["ListingID"];
             $listingQuantity = $listing["Quantity"]; // Will be 0 if listing has run out
-            $active = $listing["Active"]; // Will be 0 if user no longer wants to see it
-            // Only process active listings
+            $active = $listing["Active"]; // Will be 0 if listing no longer available
 
             //Get details about the transactions involving this listing
             $stateDetails = $this->model->getStateOfListingTransaction($listingID);
@@ -171,7 +177,7 @@ class ProfilePageController
             if (count($stateDetails) > 0) {
                 foreach ($stateDetails as $transaction) {
                     $completed = $transaction["Success"]; //2-rejected. 1-completed. 0-pending
-                    $giverHide = $transaction["Sender_Hide"];; // Get from $transaction details
+                    $giverHide = $transaction["Sender_Hide"]; // 1 if Giver of item no longer wants to see transaction
                     if ($completed == 1 && !$giverHide) {
                         $sendingCompletedTransactionsCount += 1;
                     }elseif($completed == 0 && !$giverHide){
@@ -184,7 +190,7 @@ class ProfilePageController
             if ($active) {
                 // Check whether it has quantity or not
                 if ($listingQuantity > 0) {
-                    $totalAvailabaleListings += 1;
+                    $totalAvailableListings += 1;
                 } else {
                     $totalEmptyListings += 1;
                 }
@@ -202,7 +208,7 @@ class ProfilePageController
         //Counts number of transactions for listings user has put up
         foreach ($userListingsReceiving as $listing) {
             $completed = $listing["Success"]; // Transaction completed?
-            $receiverHide = $listing["Receiver_Hide"];; // Get from $listing  details
+            $receiverHide = $listing["Receiver_Hide"]; // 1 if receiver of item no longer wants to see it
             if ($completed == 1 && !$receiverHide) {
                 $completedRequestingCount += 1;
             }elseif($completed == 0 && !$receiverHide){
@@ -216,7 +222,7 @@ class ProfilePageController
         $watchedListings = $this->model->getWatchedListings($this->getUserID());
         $watchListCount = count($watchedListings);
 
-        // Get Recommendation HTML
+        // Get Recommendation and Prediction HTML
         $recommendationHTML = $this->generateRecommendationHTML();
         $predictionHTML = $this->generatePredictionHTML();
 
@@ -229,7 +235,7 @@ class ProfilePageController
         $adviceText = $this->generateAdviceText();
 
         $listingsInformation = array(
-            "listingsCount" => $totalAvailabaleListings, // Total number of listings with quantity > 0
+            "listingsCount" => $totalAvailableListings, // Total number of listings with quantity > 0
             "emptyListingsCount" => $totalEmptyListings, // Total number of listings with quantity <= 0
             "itemsOfferedCount" => $sendingTransactionsCount, // Total of all transactions for your items (can be greater than listings count)
             "requestsMadeCount" => $requestingCount, // Total of all transactions you're in for other user's items
@@ -245,7 +251,10 @@ class ProfilePageController
     }
 
 
-    /* Generates HTML for Offers tab (transactions for user's items)*/
+    /**
+     * Generates HTML for Offers tab (Requests for user's items)
+     * @return HTML
+     */
     function generateOffersSection(){
         $isLoggedIn = $this->isUserLoggedIn(); // 1 if user is a logged in user
 
@@ -355,7 +364,10 @@ class ProfilePageController
     }
 
 
-    /* Generates HTML for Requests tab*/
+    /**
+     * Generates HTML for Requests tab
+     * @return HTML
+     */
     function generateRequestsSection(){
         //Get listings user is receiving
         $userListingsReceiving = $this->model->getUserReceivingListings();
@@ -465,7 +477,10 @@ class ProfilePageController
     }
 
 
-    /* Generates HTML for Listings tab*/
+    /**
+     * Generates HTML for Listings tab
+     * @return HTML
+     */
     function generateListingsSection(){
         //Get listings user has put up
         $userListingsSending = $this->model->getUserListings();
@@ -547,7 +562,10 @@ class ProfilePageController
     }
 
 
-    /* Generates the information for the watch list section (Generates HTML?)*/
+    /**
+     * Generates the HTML for the watch list section
+     * @return HTML
+     */
     function generateWatchListSection()
     {
         //Get IDs of listings user is watching
@@ -578,7 +596,7 @@ class ProfilePageController
                 "userImg" => $userImage,
                 "userID" => $userID,
                 "userName" => $userName,
-		"quantity" => $quantity,
+		        "quantity" => $quantity,
                 "addedDate" => $addedDate,
                 "postCode" => $postCode,
                 "imgURL" => $defaultImage,
@@ -596,13 +614,20 @@ class ProfilePageController
     }
 
 
-    /* Generates HTML for recommendation section */
+    /**
+     * Generates HTML for recommendation section
+     * @return mixed
+     */
     function generateRecommendationHTML(){
         $controller = new RecommendationController();
         return $controller->generateRecommendedSection();
     }
     
-    /* Generates HTML for prediction section */
+
+    /**
+     * Generates HTML for prediction section
+     * @return mixed
+     */
     function generatePredictionHTML(){
         $controller = new RecommendationController();
         return $controller->generatePredictionSection();
@@ -615,11 +640,11 @@ class ProfilePageController
      */
     function generateAdviceText(){
         $controller = new AnalysisController();
+
+        // Get most frequent Name and Tag in Type category
         $name = $controller->getMostFrequentItemNameSent();
         $tag = $controller->getMostFrequentTypeTagSent();
 
-
-        $advice = "";
         if ($name == "" &&  $tag == ""){
             $advice = "Not enough data to give advice, sorry!";
         }elseif($name == "" && $tag!= ""){
@@ -647,12 +672,20 @@ class ProfilePageController
 
 
     /* Returns true if $listingID is in the current user's watch list*/
+    /**
+     * @param $listingID
+     * @return bool (1 if in user's watch list)
+     */
     function inWatchList($listingID){
-        return $this->model->isWatching($listingID, $this->getUserID());
+        return $this->cardDetailsModel->isWatching($listingID, $this->getUserID());
     }
 
 
-    /* Either adds or deletes a listing from the current user's watch list */
+    /**
+     * Either adds or deletes a listing from the current user's watch list
+     * @param $listingID
+     * @return int
+     */
     function toggleWatchListListing($listingID){
         $listingID = (int)$listingID;
         if ($this->inWatchList($listingID)){
@@ -674,16 +707,16 @@ class ProfilePageController
         foreach($listingTransactions as $listingTransaction){
             $transactionID = $listingTransaction["TransactionID"];
             $listingID = $listingTransaction["ListingID"];
-            $this->requestModel->setViewed($listingID, $transactionID);
+            $this->model->setViewed($listingID, $transactionID);
         }
         return True;
     }
     
     
-     /** 
-    * Sets the Giver_Viewed or Receiver_Viewed flag to the given value for the given listingID
-    * @pram $giverOrReceiver - 1 for Giver_Viewed, 0 for Receiver_Viewed
-    * @param $listingID
+    /**
+    * Sets the Sender_Hide or Receiver_Hide flag to the given value for the given transactionID
+    * @pram $giverOrReceiver - 1 for Giver_Hide, 0 for Receiver_Hide
+    * @param $transactionID
     * @param $value
     * @return bool
     */
@@ -750,50 +783,59 @@ class ProfilePageController
     * @return bool
     */
     function changeEmail($oldEmail, $newEmail){
-	$userID = $this->getUserID();
-	$actualEmail = $this->model->getUserEmail($userID);
-	    
-	if($actualEmail !== $oldEmail){
-	   return $this->errorMessage("Incorrect old email");	
-	}
-	$registrationController = new RegistrationController();    
-	if(!$registrationController->checkValidEmail($newEmail)){
-	   return $this->errorMessage("Email is not valid");	
-	}
-	
-	if(!$registrationController->checkAvailable($newEmail)){
-	    return $this->errorMessage("Email already in use");	
-	}
-	  
-	// Reset account  
-	$this->model->resetAccount($userID);    
-	    
-	// Log user out - NOT SURE ABOUT THIS
-	    
-	// Send verification email    
-	$registrationController->sendVerificationEmail($newEmail, $newEmail);
-	
-	return $this->successMessage("New verification email sent to your specified email");
+        $userID = $this->getUserID();
+        $actualEmail = $this->model->getUserEmail($userID);
+
+        if($actualEmail !== $oldEmail){
+           return $this->errorMessage("Incorrect old email");
+        }
+        $registrationController = new RegistrationController();
+        if(!$registrationController->checkValidEmail($newEmail)){
+           return $this->errorMessage("Email is not valid");
+        }
+
+        if(!$registrationController->checkAvailable($newEmail)){
+            return $this->errorMessage("Email already in use");
+        }
+
+        // Reset account
+        $this->model->resetAccount($userID);
+
+        // Log user out - NOT SURE ABOUT THIS
+
+        // Send verification email
+        $registrationController->sendVerificationEmail($newEmail, $newEmail);
+
+        return $this->successMessage("New verification email sent to your specified email");
     }
 	
     /**
     * Replaces the user's profile picture with that at the given URL
-    * @param $url
+    * @param $files - (from Javascripts FormData)
     * @return bool
     */	
     function changeProfilePicture($files){
-	$amazonModel = new AmazonS3();
+	    $amazonModel = new AmazonS3();
         $urls = $amazonModel->upload($files);
         $url = $urls[0];
-	return $this->model->changeProfilePicture($url);    
-	    
+	    return $this->model->changeProfilePicture($url);
     }
-    
+
+    /**
+     * Returns JSON enoding of error message - {"error": error}
+     * @param $e
+     * @return string
+     */
     function errorMessage($e){
         $errorArray = array("error" => $e);
         return json_encode($errorArray);
     }
-    
+
+    /**
+     * Returns JSON enoding of success message - {"success": success}
+     * @param $s
+     * @return string
+     */
     function successMessage($s){
         $successArray = array("success" => $s);
         return json_encode($successArray);
@@ -829,7 +871,7 @@ class ProfilePageController
     }
 	
 	
-        /**
+    /**
     * Main function to send an email
     * @param $from
     * @param $subject

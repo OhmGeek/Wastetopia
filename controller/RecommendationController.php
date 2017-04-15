@@ -1,20 +1,27 @@
 <?php
 namespace Wastetopia\Controller;
+use Wastetopia\Config\CurrentConfig;
 use Twig_Environment;
 use Twig_Loader_Filesystem;
-use Wastetopia\Model\AnalysisModel;
-use Wastetopia\Controller\SearchController;  
-use Wastetopia\Config\CurrentConfig;
-use Wastetopia\Model\CardDetailsModel;
-use Wastetopia\Model\ProfilePageModel;
 
+use Wastetopia\Model\AnalysisModel; // To analyse user's listings and requests
+use Wastetopia\Controller\SearchController;  // To search for similar itesm
+
+use Wastetopia\Model\CardDetailsModel; // Card details
+
+/**
+ * Class RecommendationController - Used to generate HTML sections for Recommendations and Predictions
+ * @package Wastetopia\Controller
+ */
 class RecommendationController {
-    
+
+    /**
+     * RecommendationController constructor.
+     */
     function __construct(){
       $this->model = new AnalysisModel();
       $this->cardDetailsModel = new CardDetailsModel();  
-      $this->profilePageModel = new ProfilePageModel($this->getUserID());
-        
+
       $loader = new Twig_Loader_Filesystem('../view/');
       $this->twig = new Twig_Environment($loader);
     }
@@ -33,10 +40,11 @@ class RecommendationController {
     * Generates the HTML for the cards in a recommended section
     */
     function generateRecommendedSection(){
+      // Most frequent tags in items user requests
       $frequentTags = $this->model->getTagFrequenciesForTransactions();
 
       // Deal with if there are not enough tags    
-      if(count($frequentTags) < 3){
+      if(count($frequentTags) < 5){
           $recommendationList = array(); // Empty array
       }else{        
           // Extract 5 most frequent tags
@@ -47,14 +55,10 @@ class RecommendationController {
               $tagID = $tagDetails["TagID"];
               array_push($tags, $tagID);
           }
-//           print_r("RECOMMENDATIONS");
-//           print_r($tags);
+
           // Use search query using $tags to find listings that match these tags
-          // Get user's lat/long 
-          // get $results
           $searchController = new SearchController();
           $results = $searchController->recommendationSearch($tags, $this->getUserID());
-          
 
           $recommendationList = array();  
           foreach($results as $listing){
@@ -68,8 +72,8 @@ class RecommendationController {
               $imgURL = $this->cardDetailsModel->getDefaultImage($listingID);//$listing[""]; // Add later
               $itemName = $listing["Name"];
               $quantity = $listing["Quantity"];
-              $isRequesting = $this->profilePageModel->isRequesting($listingID, $this->getUserID());
-              $isWatching = $this->profilePageModel->isWatching($listingID, $this->getUserID());
+              $isRequesting = $this->cardDetailsModel->isRequesting($listingID, $this->getUserID());
+              $isWatching = $this->cardDetailsModel->isWatching($listingID, $this->getUserID());
               $item = array( 
                 "listingID" => $listingID,
                 "userImg" => $userImage,
@@ -103,8 +107,9 @@ class RecommendationController {
       }
     
        
-      /**
+    /**
     * Generates the HTML for the cards in a prediction of similar items you may give away section
+     * @return HTML
     */
     function generatePredictionSection(){
       $frequentTags = $this->model->getTagFrequenciesForListings();
@@ -121,11 +126,8 @@ class RecommendationController {
               $tagID = $tagDetails["TagID"];
               array_push($tags, $tagID);
           }
-//           print_r("PREDICTIONS");
-//             print_r($tags);
+
           // Use search query using $tags to find listings that match these tags
-          // Get user's lat/long 
-          // get $results
           $searchController = new SearchController();
           $results = $searchController->recommendationSearch($tags, $this->getUserID());
             
@@ -144,8 +146,8 @@ class RecommendationController {
               $imgURL = $this->cardDetailsModel->getDefaultImage($listingID);//$listing[""]; // Add later
               $itemName = $listing["Name"];
               $quantity = $listing["Quantity"];
-              $isRequesting = $this->profilePageModel->isRequesting($listingID, $this->getUserID());
-              $isWatching = $this->profilePageModel->isWatching($listingID, $this->getUserID());
+              $isRequesting = $this->cardDetailsModel->isRequesting($listingID, $this->getUserID());
+              $isWatching = $this->cardDetailsModel->isWatching($listingID, $this->getUserID());
               $item = array(
                 "listingID" => $listingID,
                 "userImg" => $userImage,
@@ -179,47 +181,47 @@ class RecommendationController {
       }
 
 
-// NEED TO FINISH THESE TWO PREDICTION/ADVICE FUNCTIONS    
-    /**
-    * Generates a list of the top 5 names that appear in items user gives away
-    */
-    function generatePredictionFromName(){
-        // Get itemNames along with frequencies of occurence in items user gives away
-        $nameFrequencies = $this->model->getTotalNameFrequenciesSending();
-        
-        $topGiven = array(); // Array of top 5 names of items user gives away
-        
-        for ($x = 0; $x < 5; $x++){
-            $itemDetails = $nameFrequencies[$x];  
-            $itemName = $itemDetails["Name"];
-            array_push($topGiven, $itemName);
-        }
-        
-    }
-
-
-    /**
-    * Generates a bit of advice based on the top 5 most frequent Type tags are found on items user gives away
-    */
-    function generateAdviceFromTagsGiven(){
-        $frequentTags = $this->model->getTagFrequenciesForListings(array(1)); // 1 - only looks for type
-      
-        // Deal with if there are not enough tags    
-      if(count($frequentTags) < 5){
-          $recommendationList = array(); // Empty array
-      }else{   
-          // Extract 5 most frequent tags
-          $tags = array();
-          
-          for($x = 0; $x < 5; $x++){
-              $tagDetails = $frequentTags[$x];
-              $tagID = $tagDetails["TagID"];
-              array_push($tags, $tagID);
-          }
-          
-          // Do something with these to give some advice on what to stop buying
-          
-      }        
-    }
+//    /**
+//     *
+//    * Generates a list of the top 5 names that appear in items user gives away
+//    */
+//    function generatePredictionFromName(){
+//        // Get itemNames along with frequencies of occurence in items user gives away
+//        $nameFrequencies = $this->model->getTotalNameFrequenciesSending();
+//
+//        $topGiven = array(); // Array of top 5 names of items user gives away
+//
+//        for ($x = 0; $x < 5; $x++){
+//            $itemDetails = $nameFrequencies[$x];
+//            $itemName = $itemDetails["Name"];
+//            array_push($topGiven, $itemName);
+//        }
+//
+//    }
+//
+//
+//    /**
+//    * Generates a bit of advice based on the top 5 most frequent Type tags are found on items user gives away
+//    */
+//    function generateAdviceFromTagsGiven(){
+//        $frequentTags = $this->model->getTagFrequenciesForListings(array(1)); // 1 - only looks for type
+//
+//        // Deal with if there are not enough tags
+//      if(count($frequentTags) < 5){
+//          $recommendationList = array(); // Empty array
+//      }else{
+//          // Extract 5 most frequent tags
+//          $tags = array();
+//
+//          for($x = 0; $x < 5; $x++){
+//              $tagDetails = $frequentTags[$x];
+//              $tagID = $tagDetails["TagID"];
+//              array_push($tags, $tagID);
+//          }
+//
+//          // Do something with these to give some advice on what to stop buying
+//
+//      }
+//    }
 }
 
