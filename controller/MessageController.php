@@ -28,7 +28,7 @@ class MessageController
 
     function generatePageFromListing($listingID){
 	$conversationIDs = $this->model->getConversationIDFromListing($listingID);
-	if (count($conversationsIDs) > 0){
+	if (count($conversationIDs) > 0){
 	    // Conversation already exists	
 	    $conversationID = $conversationIDs[0];
 	}else{
@@ -57,16 +57,16 @@ class MessageController
 
         //Get details of conversation (names)
         $details = $this->model->getConversationDetails($conversationID);
-	print_r($details);    
-	$details = $details[0];
+
+		$details = $details[0];
         $userName = $details["Forename"]." ".$details["Surname"];
         $userID = $details["UserID"]; //ID of other user in conversation
         $senderImage = $this->cardDetailsModel->getUserImage($userID); //Profile picture of other user
         $senderName = $userName;//." - ".$itemName;
 	
 
-	$CurrentConfig = new CurrentConfig();  
-	$config = $CurrentConfig->getAll();    
+		$CurrentConfig = new CurrentConfig();
+		$config = $CurrentConfig->getAll();
         $output = array(
             "config" => $config,
             "senderName"=>$senderName,
@@ -138,9 +138,12 @@ class MessageController
     function generateItemViewPanel($conversationID)
     {
         $generalDetails = $this->model->getListingDetails($conversationID);
-	
+
         $listing = $generalDetails[0]; //ListingID, ItemName, Use_By_Date, LocationName, Post_Code
         $listingID = $listing["ListingID"];
+
+        $active = $listing["Active"];
+        if ($active) {
 
         $defaultImage = $this->cardDetailsModel->getDefaultImage($listingID);
         $itemName = $listing["ItemName"];
@@ -149,10 +152,14 @@ class MessageController
         $postCode = $listing["Post_Code"];
 
         //Generate array of details
-        $output = array("defaultImage" => $defaultImage,
-                        "itemName" => $itemName,
-                        "expiryDate"=> $expiryDate,
-                        "location" => $locationName.", ".$postCode);
+        $output = array("isActive" => $active,
+        	"defaultImage" => $defaultImage,
+            "itemName" => $itemName,
+            "expiryDate" => $expiryDate,
+            "location" => $locationName . ", " . $postCode);
+    	}else{
+        	$output = array("isActive"=>$active);
+		}
 
         return $output;
     }

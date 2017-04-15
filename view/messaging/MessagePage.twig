@@ -54,6 +54,7 @@
 
         <!--Item view side panel-->
         <div class="col-xs-12 col-md-3 zero-padding page-height">
+            {% if listingPanel.isActive %}
             <div class="item-frame">
                 <div class="default-pic">
                     <img src="{{listingPanel.defaultImage}}" class="item-pic">
@@ -73,6 +74,9 @@
                     <button type="button" id="view" class="btn btn-raised btn-default btn-view">View</button>
                 </div>
             </div>
+            {% else %}
+                <h4>This listing is no longer available</h4>
+            {% endif %}
         </div>
     </div>
 </div>
