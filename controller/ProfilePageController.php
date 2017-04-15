@@ -516,8 +516,8 @@ class ProfilePageController
             $timeOfCreation = $details["Time_Of_Creation"];
             $quantity = $details["Quantity"];
             $defaultImage = $this->cardDetailsModel->getDefaultImage($listingID);
-            $isRequesting = $this->model->isRequesting($listingID, $this->getUserID());
-            $isWatching = $this->model->isWatching($listingID, $this->getUserID());
+            $isRequesting = $this->cardDetailsModel->isRequesting($listingID, $this->getUserID());
+            $isWatching = $this->cardDetailsModel->isWatching($listingID, $this->getUserID());
             $item = array(
                 "listingID" => $listingID,
                 "itemName" => $itemName,
@@ -590,7 +590,7 @@ class ProfilePageController
             $userImage = $this->cardDetailsModel->getUserImage($userID);
             $userName = $details["Forename"] . " " . $details["Surname"];
 
-            $isRequesting = $this->model->isRequesting($listingID, $this->getUserID());
+            $isRequesting = $this->cardDetailsModel->isRequesting($listingID, $this->getUserID());
             $item = array(
                 "listingID" => $listingID,
                 "userImg" => $userImage,
