@@ -105,7 +105,7 @@ class SearchModel
     function getSearchResults($userLat, $userLong, $search, $tagsArray, $distanceLimit = 0.76)
     {
 
-        $sql = "SELECT `Listing`.`ListingID`, `Location`.`Latitude`, `Location`.`Longitude`
+        $sql = "SELECT `Listing`.`ListingID`, `Location`.`Latitude`, `Location`.`Longitude`, `Item`.`Name`
             FROM `Listing`
             JOIN `Item` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
             JOIN `Location` ON `Listing`.`FK_Location_LocationID` = `Location`.`LocationID`

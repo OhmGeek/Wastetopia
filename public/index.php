@@ -43,8 +43,9 @@ $klein->with('/api', function () use ($klein) {
         $notTagsArr = explode("+",$paramArr[4]);
         $distanceLimit = $paramArr[5];
         $pageNumber = $paramArr[6];
+        $order = $paramArr[7];
         $response->sendHeaders('Content-Type: application/jpg');
-        return $searchController->JSONSearch($lat, $long, $search, $tagsArr, $notTagsArr, $distanceLimit, $pageNumber);
+        return $searchController->JSONSearch($lat, $long, $search, $tagsArr, $notTagsArr, $distanceLimit, $pageNumber, $order);
     });
     $klein->respond('GET', '/search/map/[**:param]', function ($request, $response) {
         $searchController = new SearchController();

@@ -104,6 +104,7 @@ $(function () {
     $.ajax({
         url: query,
         success: function(result){
+            console.log(result)
             if(result === '[]')
             {
                 noResults();
@@ -147,14 +148,22 @@ $(function () {
                       <div><span>Quantity: </span>`+ element.Quantity +`</div>
                     </div>
                     <div class="nav-btns">
-                      <a href="#view" class="btn btn-primary" role="button" id="`+ element.ListingID +`">View</a>
-                      {% if isRequesting %}
-                        <a href="#cancel-by-listing" class="btn btn-default" role="button">Cancel request</a>
-                      {% else %}
-                        <a href="#request" class="btn btn-default" role="button">Request</a>
-                      {% endif %}
-                      <a href="#watch" role="button" class="btn-watch {% if isWatching %} watched {% endif %}" id="{{item.listingID}}"><i class="material-icons">visibility</i></a>
-                    </div>
+                      <a href="#view" class="btn btn-primary" role="button" id="`+ element.ListingID +`">View</a>`;
+
+                      if (element.isRequesting){
+                          html += `<a href="#cancel-by-listing" class="btn btn-default" role="button">Cancel request</a>`;
+                      }
+                      else {
+                          html += `<a href="#request" class="btn btn-default" role="button">Request</a>`;
+                      }
+                      if (element.isWatching){
+                          html += `<a href="#watch" role="button" class="btn-watch watched" id="`+ element.ListingID +`"><i class="material-icons">visibility</i></a>`;
+                      }
+                      else{
+                          html += `<a href="#watch" role="button" class="btn-watch" id="`+ element.ListingID +`"><i class="material-icons">visibility</i></a>`;
+                      }
+
+            html += `</div>
                   </div>
                 </div>
             </div>`;
@@ -163,13 +172,14 @@ $(function () {
 
         });
 
-    $('.grid').html(html);
+        console.log(html)
+
+        $('.grid').html(html);
 
     }
 
     function noResults()
     {
-        console.log("hi")
         var html = `<div class="grid-sizer col-xs-12"></div>`
 
         html += `<h3 style="text-align:center;">No Items Found</h3>`
