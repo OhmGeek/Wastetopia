@@ -157,10 +157,10 @@ class ViewItemModel
      */
     function getAll($listingID){
         $itemSerialised = array();
-        array_push($itemSerialised, $this->getTagDetails($listingID));
-        array_push($itemSerialised, $this->getDetails($listingID));
-        array_push($itemSerialised, $this->getItemStatus($listingID));
-        array_push($itemSerialised, $this->getImages($listingID));
+        array_merge($itemSerialised, $this->getTagDetails($listingID));
+        array_merge($itemSerialised, $this->getDetails($listingID));
+        array_merge($itemSerialised, $this->getItemStatus($listingID));
+        array_merge($itemSerialised, $this->getImages($listingID));
 
         return $itemSerialised;
     }
