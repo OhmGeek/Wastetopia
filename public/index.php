@@ -31,6 +31,36 @@ use Wastetopia\Model\NotificationModel;
 use Wastetopia\Controller\AnalysisController;
 
 
+/**
+ * Returns True if getUserID doesn't return "" or null
+ * @return bool True if user is logged in
+ */
+function isUserLoggedIn(){
+    //$reader = new UserCookieReader();
+    //$userID$reader->get_user_id();
+    $userID = 6; //Hardcoded for now
+    return $userID !== ""; // Assume get_user_id() returns "" or null if not logged in?
+}
+
+
+/**
+ * Function to be called at start of routing for any route where user must be logged in to access
+ * @return - Nothing, either redirects user to login page and exits or just returns to function that called it
+ */
+function mustBeLoggedIn(){
+    // Example of how redirection might be done
+    $CurrentConfig = new CurrentConfig();
+    $config = $CurrentConfig->getAll();
+    $baseURL = $config["ROOT_BASE"];
+    $redirectionURL = $baseURL."/login";
+    if(!($this->isUserLoggedIn())){
+        header('Location: '.$redirectionURL);
+        exit();
+    }else{
+        // DO - nothing, let program continue as normal
+    }
+}
+
 
 // check if we should use production? Otherwise, use community.
 $mode = $_ENV['MODE'];
