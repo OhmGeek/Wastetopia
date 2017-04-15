@@ -749,8 +749,9 @@ a:link, a:hover, a:visited, a:active  {
   bottom: 0;
   background: #31353D;
 }
+
 .message-div {
-  padding: 10px;
+  padding: 0 10px 10px 10px;
 }
 
 #message {
@@ -759,12 +760,13 @@ a:link, a:hover, a:visited, a:active  {
 }
 
 .btn-div {
-  padding-top: 10px;
+  display: flex;
+  justify-content: flex-end;
 }
 
-.btn-send-message {
-  display: block;
-  margin: 0px auto;
+#message-form .btn-send-message {
+  color: white;
+  margin: 0;
 }
 
 .btn-view{

@@ -125,15 +125,11 @@
 						<form>
 							<fieldset>
 								<div class="form-group zero-padding">
-									<div class="container-fluid">
-										<div class="row">
-											<div class="col-xs-8 col-sm-10 message-div zero-padding">
-												<textarea id="message" rows="3" name="message"></textarea>
-											</div>
-											<div class="col-xs-4 col-sm-2 btn-div zero-padding">
-												<button type="submit" id="sendBtn" class="btn btn-raised btn-default btn-send-message">Send</button>
-											</div>
-										</div>
+									<div class="btn-div">
+										<button type="submit" id="sendBtn" class="btn btn-default btn-send-message">Send</button>
+									</div>
+									<div class="message-div">
+										<textarea id="message" rows="3" name="message"></textarea>
 									</div>
 								</div>
 							</fieldset>
@@ -146,12 +142,12 @@
 
 </body>
 <script>
-	$(function(){
-		$(window).resize(function () {
-			var dropdownHeight = $(window).height() - $('#conversation-header').height() - $('.navbar').height()
-			console.log(dropdownHeight)
-			$('.item-frame').css({'max-height': dropdownHeight})
-		});
-	})
+$(function(){
+	$(window).resize(function () {
+		var dropdownHeight = $(window).height() - $('#conversation-header').height() - $('.navbar').height()
+		console.log(dropdownHeight)
+		$('.item-frame').css({'max-height': dropdownHeight})
+	});
+})
 </script>
 </html>
