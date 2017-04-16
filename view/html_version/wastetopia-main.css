@@ -822,7 +822,6 @@ a:link, a:hover, a:visited, a:active  {
 .conversation {
   display: flex;
   align-items: center;
-  height: 70px;
 }
 
 .conversation .conv-item {
@@ -915,6 +914,19 @@ a:link, a:hover, a:visited, a:active  {
   justify-content: flex-start;
 }
 
+.caption .nav-btns .extra {
+  margin-left: auto;
+  display: inherit;
+}
+
+.btn {
+  padding: 10px 15px;
+}
+
+.caption .nav-btns .extra a {
+  margin-left: 20px;
+}
+
 .caption .nav-btns .btn-watch {
   margin-left: auto;
 }
@@ -985,4 +997,43 @@ a:link, a:hover, a:visited, a:active  {
 
 .modal .modal-body .request-quantity #renew-date {
   width: 100px;
+}
+
+/* Isotope Transitions
+------------------------------- */
+.isotope,
+.isotope .grid-item {
+  -webkit-transition-duration: 0.8s;
+     -moz-transition-duration: 0.8s;
+      -ms-transition-duration: 0.8s;
+       -o-transition-duration: 0.8s;
+          transition-duration: 0.8s;
+}
+
+.isotope {
+  -webkit-transition-property: height, width;
+     -moz-transition-property: height, width;
+      -ms-transition-property: height, width;
+       -o-transition-property: height, width;
+          transition-property: height, width;
+}
+
+.isotope .grid-item {
+  -webkit-transition-property: -webkit-transform, opacity;
+     -moz-transition-property:    -moz-transform, opacity;
+      -ms-transition-property:     -ms-transform, opacity;
+       -o-transition-property:         top, left, opacity;
+          transition-property:         transform, opacity;
+}
+
+
+/* responsive media queries */
+
+@media (max-width: 768px) {
+  .isotope .grid-item {
+    position: static ! important;
+    -webkit-transform: translate(0px, 0px) ! important;
+       -moz-transform: translate(0px, 0px) ! important;
+            transform: translate(0px, 0px) ! important;
+  }
 }

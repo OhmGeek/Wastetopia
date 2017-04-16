@@ -174,10 +174,8 @@
   <div class="tab-content search-result">
     <div id="grid" class="tab-pane fade in active">
     <div class="container-fluid">
-      <div class="grid">
+      <div class="row" id="myGrid">
         <!-- need this for mosonry layout to work properly with bootstrap grid system -->
-        <div class="grid-sizer col-xs-12 col-sm-6 col-md-4"></div>
-
         <div class="grid-item col-xs-12 col-sm-6 col-md-4">
           <div class="thumbnail zero-padding">
             <div class="caption">
@@ -210,11 +208,110 @@
             </div>
           </div>
         </div>
+        <div class="grid-item col-xs-12 col-sm-6 col-md-4">
+          <div class="thumbnail zero-padding">
+            <div class="caption">
+              <div class="centerAll">
+                <img src="flowery.jpg" class="user-image"/>
+                <div class="user-details">
+                  <a class="user-name" href="#">
+                    Mark Smith
+                  </a>
+                  <div class="added-date">
+                    12 December, 2017
+                  </div>
+                </div>
+                <div class="road-distance">
+                  <i class="material-icons">place</i> 250m
+                </div>
+              </div>
+            </div>
+            <img src="food2.jpg" style="border-color: lightgrey;" />
+            <div class="caption">
+              <h3>Vegetables</h3>
+              <div class="trans-info">
+                <div><span>Quantity: </span> 5</div>
+              </div>
+              <div class="nav-btns">
+                <a href="#" class="btn btn-primary" role="button">View</a>
+                <a href="#" class="btn btn-default" role="button">Request</a>
+                <a href="#" role="button" class="btn-watch"><i class="material-icons">visibility</i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="grid-item col-xs-12 col-sm-6 col-md-4">
+          <div class="thumbnail zero-padding">
+            <div class="caption">
+              <div class="centerAll">
+                <img src="flowery.jpg" class="user-image"/>
+                <div class="user-details">
+                  <a class="user-name" href="#">
+                    Mark Smith
+                  </a>
+                  <div class="added-date">
+                    12 December, 2017
+                  </div>
+                </div>
+                <div class="road-distance">
+                  <i class="material-icons">place</i> 250m
+                </div>
+              </div>
+            </div>
+            <img src="food2.jpg" style="border-color: lightgrey;" />
+            <div class="caption">
+              <h3>Vegetables</h3>
+              <div class="trans-info">
+                <div><span>Quantity: </span> 5</div>
+              </div>
+              <div class="nav-btns">
+                <a href="#" class="btn btn-primary" role="button">View</a>
+                <a href="#" class="btn btn-default" role="button">Request</a>
+                <a href="#" role="button" class="btn-watch"><i class="material-icons">visibility</i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="grid-item col-xs-12 col-sm-6 col-md-4">
+          <div class="thumbnail zero-padding">
+            <div class="caption">
+              <div class="centerAll">
+                <img src="flowery.jpg" class="user-image"/>
+                <div class="user-details">
+                  <a class="user-name" href="#">
+                    Mark Smith
+                  </a>
+                  <div class="added-date">
+                    12 December, 2017
+                  </div>
+                </div>
+                <div class="road-distance">
+                  <i class="material-icons">place</i> 250m
+                </div>
+              </div>
+            </div>
+            <img src="food2.jpg" style="border-color: lightgrey;" />
+            <div class="caption">
+              <h3>Vegetables</h3>
+              <div class="trans-info">
+                <div><span>Quantity: </span> 5</div>
+              </div>
+              <div class="nav-btns">
+                <a href="#" class="btn btn-primary" role="button">View</a>
+                <a href="#" class="btn btn-default" role="button">Request</a>
+                <div class="extra">
+                  <a href="#" role="button" class="btn-watch"><i class="material-icons">visibility</i></a>
+                  <a href="#" role="button" class="btn-watch"><i class="material-icons">message</i></a>
+                <div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
   <div id="map" class="tab-pane fade">
-    <div class="container-fluid">
+    <!-- <div class="container-fluid">
       <div id="search-map"></div>
       <script src="mapSearch.js"></script>
       <script src="plugins/MarkerClusterer/markerclusterer.js">
@@ -222,20 +319,21 @@
       <script async defer
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCrh2cKWRAFifeLIkznE2Iw4Oblqlmyyt0&callback=initMap">
      </script>
-    </div>
+    </div> -->
   </div>
 </div>
 
   <!-- to have the fancy effects of material design bootstrap -->
   <script src="bootstrap-material-design-master/dist/js/ripples.min.js"></script>
   <script src="bootstrap-material-design-master/dist/js/material.min.js"></script>
-
+  <script src="plugins/imagesloaded/imagesloaded.pkgd.min.js"></script>
   <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.js"></script>
   <script src="plugins/noUiSlider/noUiSlider.min.js"></script>
   <script src="plugins/wnumb-1.1.0/wNumb.js"></script>
 
   <script>
   var $grid;
+
   $(function () {
     $.material.init();
 
@@ -278,13 +376,16 @@
       getFilters();
     });
 
-    $grid = $('.grid').isotope({
-      itemSelector: '.grid-item',
-      percentPosition: true,
-      masonry: {
-        columnWidth: '.grid-sizer'
-      }
-    });
+    $.getScript("plugins/isotope-docs/isotope.pkgd.js", function(){
+			$('#myGrid').imagesLoaded().progress( function() {
+				$grid = $('#myGrid').isotope({
+					itemSelector: '.grid-item',
+					percentPosition: true,
+					layoutMode: 'masonry'
+				});
+				$grid.isotope('layout');
+			});
+		})
 
     $('#filter-list').on('click', '.filter-category a', function(e){
       $(this).closest('.btn-group').addClass('dontClose');

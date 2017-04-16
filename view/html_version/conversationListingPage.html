@@ -70,8 +70,8 @@
 		</ul>
 		<div class="tab-content">
 			<div id="giving-tab" class="tab-pane fade in active">
-				<div class="container-fluid zero-padding">
-					<div class="grid">
+				<div class="container-fluid">
+					<div class="row" id="#myGrid">
 						<!-- need this for mosonry layout to work properly with bootstrap grid system -->
 						<div class="grid-item col-xs-12 col-sm-6">
 							<div class="grid-item-content">
@@ -203,20 +203,15 @@
 	<script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.js"></script>
 	<script src="plugins/imagesloaded/imagesloaded.pkgd.min.js"></script>
 	<script>
+	var $grid;
 	$(function(){
-		var $grid = $('.grid').isotope({
-			itemSelector: '.grid-item',
-			percentPosition: true,
-			layoutMode: 'masonry'
-		});
-
-		$grid.imagesLoaded().progress( function() {
+		$('#myGrid').imagesLoaded().progress( function() {
+			$grid = $('#myGrid').isotope({
+				itemSelector: '.grid-item',
+				percentPosition: true,
+				layoutMode: 'masonry'
+			});
 			$grid.isotope('layout');
-		});
-
-		$(window).resize(function () {
-			var height = $('.conversation').height() + 10
-			$('.conversation').css(height : height)
 		});
 	})
 	</script>
