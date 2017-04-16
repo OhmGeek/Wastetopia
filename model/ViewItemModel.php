@@ -172,6 +172,7 @@ class ViewItemModel
         if(count($barcodeDBResults) > 0) {
                 $barcode["barcode"] = $barcodeDBResults[0]["Barcode"];
         };
+        error_log(json_encode($barcode));
         return $barcode;
     }
 
