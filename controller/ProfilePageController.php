@@ -73,6 +73,7 @@ class ProfilePageController
         return $this->getUserID() !== "";
     }
 
+	
     /**
      * Generates HTML for the whole page
      * @return HTML
@@ -257,7 +258,7 @@ class ProfilePageController
      */
     function generateOffersSection(){
         $isLoggedIn = $this->isUserLoggedIn(); // 1 if user is a logged in user
-
+	    
         //Get listings user has put up
         $userListingsSending = $this->model->getUserListings();
 
@@ -356,7 +357,8 @@ class ProfilePageController
 
         $listingsInformation = array(
             "offers" => $offers, // Transactions for your items
-            "isUser" => $isCurrentUser
+            "isUser" => $isCurrentUser,
+	    "isLoggedIn" => $isLoggedIn
         );
 
         $template = $this->twig->loadTemplate("/users/offersTab.twig");
