@@ -11,10 +11,11 @@
 {% block content %}
     <div class="grid-body" style="padding-top: 60px;">
         <div class="container-fluid">
-            <div class="alert alert-dismissible alert-info">
-                <button type="button" class="close" data-dismiss="alert">×</button>
+            {% if not active %}
+            <div class="alert alert-info">
                 <strong>Sorry, this item is no longer active. Chances are, some students have already eaten it :/ </strong>
             </div>
+            {% endif %}
             <div class="row">
                 <div class="col-sm-12 col-md-6 zero-padding">
                     {% if images %}
