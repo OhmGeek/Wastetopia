@@ -146,13 +146,16 @@ class ViewItemModel
         $imageOutput = array();
         // we need to process results
         foreach($results as $image) {
-            array_push($imageOutput, array(
+            array_push($imageOutput, (object) array(
                 "id" => $image["ImageID"],
                 "url" => $image["Image_URL"]
             ));
         }
         error_log(json_encode($imageOutput));
-        return $imageOutput;
+        // return images
+        return array(
+            "images" => $imageOutput
+        );
     }
     /**
      * Returns all details, images and tags relating to a given listing
