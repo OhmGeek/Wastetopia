@@ -1,7 +1,5 @@
 
 <?php
-
-
 namespace Wastetopia\Model;
 use PDO;
 use Wastetopia\Model\DB;
