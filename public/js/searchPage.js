@@ -169,7 +169,7 @@ $(function () {
                           cardHTML += '<a href="#watch" role="button" class="btn-watch" id="'+ element.ListingID +'"><i class="material-icons">visibility</i></a>';
                       }
 
-            cardHTML += '@</div>'+
+            cardHTML += '</div>'+
                   '</div>'+
                 '</div>'+
             '</div>';
