@@ -171,6 +171,7 @@ class ViewItemModel
         $barcodeDBResults = $statement->fetchAll(PDO::FETCH_ASSOC);
         $barcode = array("barcode" => "");
         if(count($barcodeDBResults) > 0) {
+                error_log("This includes barcode");
                 $barcode["barcode"] = $barcodeDBResults[0]["Barcode"];
         };
         error_log(json_encode($barcodeDBResults));
