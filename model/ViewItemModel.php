@@ -167,6 +167,7 @@ class ViewItemModel
         ");
         $statement->bindValue(":listingID",$listingID, PDO::PARAM_INT);
         $statement->execute();
+        error_log(json_encode($statement->errorInfo()));
         $barcodeDBResults = $statement->fetchAll(PDO::FETCH_ASSOC);
         $barcode = array("barcode" => "");
         if(count($barcodeDBResults) > 0) {
