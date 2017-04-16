@@ -809,8 +809,10 @@ a:link, a:hover, a:visited, a:active  {
 }
 
 .conv-user {
-  margin-left: 10px;
   margin-right: auto;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
 }
 
 .conv-user .item {
@@ -820,16 +822,29 @@ a:link, a:hover, a:visited, a:active  {
 .conversation {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  flex-wrap: wrap;
+  height: 70px;
 }
 
 .conversation .conv-item {
   font-size: 12px;
+  margin-top: 5px;
+  width: auto;
 }
 
-.conversation .badge {
+.conv-btns {
+  padding: 10px 0;
+}
+
+.conv-btns, .conv-user .user{
+  display: flex;
+  align-items: center;
+}
+
+.conv-btns a {
   margin: 0 5px;
+}
+
+.conv-btns .badge {
   padding: 5px 10px;
   font-size: 14px;
   border-radius: 10px;

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html style="height: 100%;margin: 0;">
+<html style="height: 100%;margin: 0; overflow-y:scroll;">
 <head>
 	<meta charset="utf-8">
 	<title>Messaging - Conversation Page</title>
@@ -73,56 +73,32 @@
 				<div class="container-fluid zero-padding">
 					<div class="grid">
 						<!-- need this for mosonry layout to work properly with bootstrap grid system -->
-						<div class="grid-sizer col-xs-12 col-sm-6"></div>
-
 						<div class="grid-item col-xs-12 col-sm-6">
 							<div class="grid-item-content">
 								<div class="thumbnail">
 									<div class="caption conversation">
-										<img src="flowery.jpg" class="user-image"/>
 										<div class="conv-user">
-											<div class="user-name">
-												Mark Smith
+											<div class="user">
+												<img src="flowery.jpg" class="user-image"/>
+												<div class="user-name">
+													Mark Smith
+												</div>
 											</div>
 											<div class="conv-item">
 												requesting <span class="item">Apples for five people</span>
 											</div>
 										</div>
-										<a role="button" id="deleteBtn" class="btn-watch">
-											<i class="material-icons">delete</i>
-										</a>
-										<div class="btn-watch">
-											<span class="badge">30</span>
-										</div>
-										<a role="button" id="chatBtn" class="btn-watch">
-											<i class="material-icons">arrow_forward</i>
-										</a>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="grid-item col-xs-12 col-sm-6">
-							<div class="grid-item-content">
-								<div class="thumbnail">
-									<div class="caption conversation">
-										<img src="flowery.jpg" class="user-image"/>
-										<div class="conv-user">
-											<div class="user-name">
-												Mark Smith
+										<div class="conv-btns">
+											<a role="button" id="deleteBtn" class="btn-watch">
+												<i class="material-icons">delete</i>
+											</a>
+											<div class="btn-watch">
+												<span class="badge">30</span>
 											</div>
-											<div>
-												requesting <span class="item">Apples</span>
-											</div>
+											<a role="button" id="chatBtn" class="btn-watch">
+												<i class="material-icons">arrow_forward</i>
+											</a>
 										</div>
-										<a role="button" id="deleteBtn" class="btn-watch">
-											<i class="material-icons">delete</i>
-										</a>
-										<div class="btn-watch">
-											<span class="badge">30</span>
-										</div>
-										<a role="button" id="chatBtn" class="btn-watch">
-											<i class="material-icons">arrow_forward</i>
-										</a>
 									</div>
 								</div>
 							</div>
@@ -131,24 +107,85 @@
 							<div class="grid-item-content">
 								<div class="thumbnail">
 									<div class="caption conversation">
-										<img src="flowery.jpg" class="user-image"/>
 										<div class="conv-user">
-											<div class="user-name">
-												Mark Smith
+											<div class="user">
+												<img src="flowery.jpg" class="user-image"/>
+												<div class="user-name">
+													Mark Smith
+												</div>
 											</div>
-											<div>
-												requesting <span class="item">Apples</span>
+											<div class="conv-item">
+												requesting <span class="item">Apples for five people</span>
 											</div>
 										</div>
-										<a role="button" id="deleteBtn" class="btn-watch">
-											<i class="material-icons">delete</i>
-										</a>
-										<div class="btn-watch">
-											<span class="badge">30</span>
+										<div class="conv-btns">
+											<a role="button" id="deleteBtn" class="btn-watch">
+												<i class="material-icons">delete</i>
+											</a>
+											<div class="btn-watch">
+												<span class="badge">30</span>
+											</div>
+											<a role="button" id="chatBtn" class="btn-watch">
+												<i class="material-icons">arrow_forward</i>
+											</a>
 										</div>
-										<a role="button" id="chatBtn" class="btn-watch">
-											<i class="material-icons">arrow_forward</i>
-										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="grid-item col-xs-12 col-md-6">
+							<div class="grid-item-content">
+								<div class="thumbnail">
+									<div class="caption conversation">
+										<div class="conv-user">
+											<div class="user">
+												<img src="flowery.jpg" class="user-image"/>
+												<div class="user-name">
+													Mark Smith
+												</div>
+											</div>
+											<div class="conv-item">
+												requesting <span class="item">Apples for five people</span>
+											</div>
+										</div>
+										<div class="conv-btns">
+											<a role="button" id="deleteBtn" class="btn-watch">
+												<i class="material-icons">delete</i>
+											</a>
+											<div class="btn-watch">
+												<span class="badge">30</span>
+											</div>
+											<a role="button" id="chatBtn" class="btn-watch">
+												<i class="material-icons">arrow_forward</i>
+											</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="grid-item col-xs-12 col-md-6">
+							<div class="grid-item-content">
+								<div class="thumbnail">
+									<div class="caption conversation">
+										<div class="conv-user">
+											<div class="user">
+												<img src="flowery.jpg" class="user-image"/>
+												<div class="user-name">
+													Mark Smith
+												</div>
+											</div>
+											<div class="conv-item">
+												requesting <span class="item">Apples for five people</span>
+											</div>
+										</div>
+										<div class="conv-btns">
+											<a role="button" id="deleteBtn" class="btn-watch">
+												<i class="material-icons">delete</i>
+											</a>
+											<a role="button" id="chatBtn" class="btn-watch">
+												<i class="material-icons">arrow_forward</i>
+											</a>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -160,94 +197,28 @@
 				<div class="noMessage">
 					No messages to display.
 				</div>
-
-				<!--
-				<div class="conversation-list">
-				<div class="list-group">
-				<div class="conversation">
-				<a href="#" class="list-group-item active" style="padding: 0; margin: 0;">
-				<div class="btn-group-sm centerAll">
-				<img src="flowery.jpg" class="user-image"/>
-				<div class="conv-user">
-				<div class="user-name">
-				Mark Smith
 			</div>
-			<div>
-			offering <span class="item">Apples</span>
 		</div>
 	</div>
-	<button type="button" id="deleteBtn" class="btn-nav">
-	<i class="material-icons">delete</i>
-</button>
-<button type="button" id="chatBtn" class="btn-nav">
-<span class="badge">30</span>
-</button>
-</div>
-</a>
-</div>
-<div class="conversation">
-<a href="#" class="list-group-item active" style="padding: 0; margin: 0;">
-<div class="btn-group-sm centerAll">
-<img src="flowery.jpg" class="user-image"/>
-<div class="conv-user">
-<div class="user-name">
-Mark Smith
-</div>
-<div>
-offering <span class="item">Apples</span>
-</div>
-</div>
-<button type="button" id="deleteBtn" class="btn-nav">
-<i class="material-icons">delete</i>
-</button>
-<button type="button" id="chatBtn" class="btn-nav">
-<span class="badge">3</span>
-</button>
-</div>
-</a>
-</div>
-<div class="conversation">
-<a href="#" class="list-group-item active" style="padding: 0; margin: 0;">
-<div class="btn-group-sm centerAll">
-<img src="flowery.jpg" class="user-image"/>
-<div class="conv-user">
-<div class="user-name">
-Mark Smith
-</div>
-<div>
-offering <span class="item">Apples</span>
-</div>
-</div>
-<button type="button" id="deleteBtn" class="btn-nav">
-<i class="material-icons">delete</i>
-</button>
-<button type="button" id="chatBtn" class="btn-nav">
-<i class="material-icons">arrow_forward</i>
-</button>
-</div>
-</a>
-</div>
-</div>
-</div>
--->
-</div>
-</div>
-</div>
-<script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.js"></script>
-<script src="plugins/imagesloaded/imagesloaded.pkgd.min.js"></script>
-<script>
-$(function(){
-	var $grid = $('.grid').isotope({
-		itemSelector: '.grid-item',
-		percentPosition: false,
-		masonry: {
-			columnWidth: '.grid-sizer'
-		}
-	});
-	$grid.imagesLoaded().progress( function() {
-		$grid.isotope('layout');
-	});
-})
-</script>
+	<script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.js"></script>
+	<script src="plugins/imagesloaded/imagesloaded.pkgd.min.js"></script>
+	<script>
+	$(function(){
+		var $grid = $('.grid').isotope({
+			itemSelector: '.grid-item',
+			percentPosition: true,
+			layoutMode: 'masonry'
+		});
+
+		$grid.imagesLoaded().progress( function() {
+			$grid.isotope('layout');
+		});
+
+		$(window).resize(function () {
+			var height = $('.conversation').height() + 10
+			$('.conversation').css(height : height)
+		});
+	})
+	</script>
 </body>
 </html>
