@@ -121,6 +121,8 @@ class ConversationListModel
 	{
 
         $currentUser = $this->getUserID();
+	    print_r("Current: ".$currentUser);
+	    print_r("Listing creating: ".$listingID);
 
 		$statement = $this->db->prepare("INSERT INTO Conversation (FK_User_ReceiverID, FK_Listing_ListingID)
 									VALUES (:userID, :listingID)");
