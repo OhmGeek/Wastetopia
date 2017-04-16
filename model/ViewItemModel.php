@@ -146,7 +146,7 @@ class ViewItemModel
         $imageOutput = array();
         // we need to process results
         foreach($results as $image) {
-            array_push($imageOutput, (object) array(
+            array_push($imageOutput, array(
                 "id" => $image["ImageID"],
                 "url" => $image["Image_URL"]
             ));
