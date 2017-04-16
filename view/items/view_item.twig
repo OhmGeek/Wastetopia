@@ -78,7 +78,7 @@
 
                                         <!-- go through each of the category ids, getting the name, and then the type
                                         for the item !-->
-                                        {% if type %}
+                                        {% if classification %}
                                         <div class="col-xs-12 col-sm-6 zero-padding">
                                             <span class="info">Type:</span>
                                             {% for tag in classification %}
@@ -128,7 +128,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="item-nav-btn">
+                        <div class="item-nav-btn col-xs-12 col-sm-6 zero-padding">
                             <button type="button" class="item-btn">
                                 <span class="glyphicon glyphicon-send" aria-hidden="true"></span>
                                 <p class="btn-text" >Request</p>
