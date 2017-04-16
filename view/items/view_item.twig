@@ -128,8 +128,11 @@
                     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCrh2cKWRAFifeLIkznE2Iw4Oblqlmyyt0&callback=initMap">
                     </script>
                 </div>
+                    <div id="barcode-details-ajax" class="col-sm-12 col-md-12 zero-padding" data-barcode="{{ barcode }}">
+
+                    </div>
             </div>
         </div>
     </div>
 {% endblock %}
-{% set jslist = ["map.js"] %}
+{% set jslist = ["map.js", "view-item.js"] %}
