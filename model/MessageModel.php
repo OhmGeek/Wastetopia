@@ -40,6 +40,7 @@ class MessageModel
     */
     function getConversationIDFromListing($listingID){
 	$userID = $this->getUserID();
+
 	$statement = $this->db->prepare("
 		SELECT `Conversation`.`ConversationID`
 		FROM `Conversation`
@@ -54,7 +55,7 @@ class MessageModel
 
 		$statement->execute();
 
-		$results = $statement->fetchAll(PDO::FETCH_ASSOC);    
+		$results = $statement->fetchAll(PDO::FETCH_ASSOC);  
 	        return $results;
 	   
     }
@@ -206,7 +207,7 @@ class MessageModel
 
             SELECT `Item`.`Name` as ItemName, `Item`.`Use_By`,
             `Location`.`Name` as LocationName, `Location`.`Post_Code`,
-            `Listing`.`ListingID`
+            `Listing`.`ListingID`, `Listing`.`Active`
             FROM `Conversation`
             JOIN `Listing` ON `Listing`.`ListingID` = `Conversation`.`FK_Listing_ListingID`
             JOIN `Item` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
