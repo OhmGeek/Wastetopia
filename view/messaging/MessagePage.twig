@@ -22,10 +22,10 @@
                             <div id="conversation-id" style="display: none;">{{conversationID}}</div>
                         </div>
                         <div class="btn-group">
-                          {% if listingPanel.isActive %}
           								<a id="viewItem" class="dropdown-toggle" role="button" data-toggle="dropdown"><i class="material-icons">info_outline</i></a>
           								<div class="item-frame dropdown-menu dropdown-menu-right" aria-multiselectable="true">
-          									<div>The offer is </div>
+                            {% if listingPanel.isActive %}
+                            <div>The offer is </div>
           									<div class="default-pic" style="background-image: url({{listingPanel.defaultImage}})">
           									</div>
           									<div class="basic-info">
@@ -42,10 +42,10 @@
           									<div class="goToView">
           										<button type="button" id="view" class="btn btn-default">View</button>
           									</div>
+                            {% else %}
+                              <h4>This item is no longer available</h4>
+                            {% endif %}
           								</div>
-                          {% else %}
-                            <h4>This item is no longer available</h4>
-                          {% endif %}
           							</div>
                     </div>
                 </div>
