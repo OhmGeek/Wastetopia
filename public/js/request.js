@@ -630,13 +630,13 @@ $(function () {
 
 
     // View conversation
-    $('a[href="#message"]'.click(function(event){
+    $('a[href="#message"]').click(function(event){
         event.preventDefault();
         var listingID = $(this).attr("id");
        // Send to /messages/conversation/[:listingID]
     
         var url = baseURL + "/messages/conversation/"+listingID;
-        console.log(url);
+
     
         location.href = url;
     });
