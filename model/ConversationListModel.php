@@ -123,12 +123,8 @@ class ConversationListModel
      * @param $listingID
      */
     function createConversation($listingID)
-	{
-
-	
+	{	
         $currentUser = $this->getUserID();
-	    print_r("User: ".$currentUser);
-	    print_r("Listing: ".$listingID);
 		$statement = $this->db->prepare("INSERT INTO Conversation (FK_User_ReceiverID, FK_Listing_ListingID)
 									VALUES (:userID, :listingID)");
 
