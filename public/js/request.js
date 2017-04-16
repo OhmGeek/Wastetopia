@@ -636,6 +636,7 @@ $(function () {
        // Send to /messages/conversation/[:listingID]
     
         var url = baseURL + "/messages/conversation/"+listingID;
+        console.log(url);
     
         location.href = url;
     });
