@@ -211,7 +211,7 @@ class RegistrationController
         
         $mail->Username = $config["EMAIL_ADDRESS"];  // SMTP username
         $mail->Password = $config["EMAIL_PASSWORD"]; // SMTP password
-        $mail->From = $from;
+        $mail->From = $config["EMAIL_ADDRESS"];
         $mail->FromName = "Wastetopia";
         
         $mail->AddAddress($email, $name);
