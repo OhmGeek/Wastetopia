@@ -455,7 +455,7 @@ $klein->with('/messages', function () use ($klein) {
 
     $klein->respond('GET', '/conversation/[:listingID]', function ($request, $response) {
         // view a specific conversation
-        console.log("Getting conversation");
+        print_r("Getting conversation");
         $listingID = $request->listingID;
         $controller = new MessageController();
         return $controller->generatePageFromListing($listingID);
