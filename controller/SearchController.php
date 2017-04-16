@@ -89,7 +89,7 @@ class SearchController
 
     public function MAPSearch($lat, $long, $search, $tagsArr, $notTagsArr, $distanceLimit)
     {
-        $itemInformation = $this->search($lat, $long, $search, $tagsArr);
+        $itemInformation = $this->search($lat, $long, $search, $tagsArr, $notTagsArr);
 
         $searchResults = [];
         foreach ($itemInformation as $item)
@@ -112,10 +112,6 @@ class SearchController
 
     private function search($lat, $long, $search, $tagsArr, $notTagsArr)
     {
-/*        $distanceSearch  = false;
-        $nameSearch = false;
-        $tagSearch = false;
-        $notTagSearch = false;*/
 
         if(empty($lat) || empty($long))
         {
@@ -137,31 +133,6 @@ class SearchController
 
 
         $itemInformation = $this->searchModel->getSearchResults($lat, $long, $search, $tagsArr, $notTagsArr);
-
-        /*if ($distanceSearch && $nameSearch && $tagSearch) {
-            $itemInformation = $this->searchModel->getSearchResults($lat, $long, $search, $tagsArr, $);  //Distance, Name and Tags
-        }
-        elseif ($distanceSearch && $nameSearch && !$tagSearch) {
-            $itemInformation = $this->searchModel->getSearchResults($lat, $long, $search, false);      //Distance and Name
-        }
-        elseif ($distanceSearch && !$nameSearch && $tagSearch) {
-            $itemInformation = $this->searchModel->getSearchResults($lat, $long, false, $tagsArr);     //Distance and Tags
-        }
-        elseif (!$distanceSearch && $nameSearch && $tagSearch) {
-            $itemInformation = $this->searchModel->getSearchResults(false, false, $search, $tagsArr);   //Name and Tags
-        }
-        elseif ($distanceSearch && !$nameSearch && !$tagSearch) {
-            $itemInformation = $this->searchModel->getSearchResults($lat, $long, false, false);         //Distance only
-        }
-        elseif (!$distanceSearch && $nameSearch && !$tagSearch) {
-            $itemInformation = $this->searchModel->getSearchResults(false, false, $search, false);       //Name only
-        }
-        elseif (!$distanceSearch && !$nameSearch && $tagSearch) {
-            $itemInformation = $this->searchModel->getSearchResults(false, false, false, $tagsArr);      //Tags only
-        }
-        else {
-            $itemInformation = $this->searchModel->getSearchResults(false, false, false, false);          //No filtering
-        }*/
                
         return $itemInformation;
     }

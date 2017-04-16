@@ -58,6 +58,7 @@ class SearchModel
             JOIN `Listing` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
             WHERE `Listing`.`ListingID` = :listingID
             
+            
         ORDER BY `Image`.`ImageID` DESC;
         "); //AND `ItemImage`.`Is_Default` = 1
         $statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);

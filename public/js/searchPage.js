@@ -73,7 +73,7 @@ $(function () {
     var lat = "";
     var long = "";
 
-    $('.grid').html('<div class="grid-sizer col-xs-12"></div><div class="grid-item col-xs-12"><h3 style="text-align:center;">Loading</h3></div>');
+    $('.grid').html('<div class="grid-item col-xs-12"><h3 style="text-align:center;">Loading</h3></div>');
 
 
     $('#filter-form *').filter('.tab').each(function(){
@@ -122,7 +122,7 @@ $(function () {
     {
         var json = JSON.parse(result);
 
-        var html = `<div class="grid-sizer col-xs-12 col-sm-6 col-md-4"></div>`;
+        var html = ""
         json.forEach(function(element){
             var cardHTML = `
             <div class="grid-item col-xs-12 col-sm-6 col-md-4">
@@ -182,7 +182,7 @@ $(function () {
 
     function noResults()
     {
-        var html = `<div class="grid-sizer col-xs-12"></div><div class="grid-item col-xs-12"><h3 style="text-align:center;">No Items Found</h3></div>`
+        var html = '<div class="grid-item col-xs-12"><h3 style="text-align:center;">No Items Found</h3></div>'
 
 
         $('.grid').html(html);
