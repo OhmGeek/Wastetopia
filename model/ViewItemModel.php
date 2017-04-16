@@ -160,7 +160,7 @@ class ViewItemModel
 
     function getBarcode($listingID) {
         $statement = $this->db->prepare("
-            SELECT Barcode.Barcode
+            SELECT *
             FROM Barcode, Listing
             WHERE Listing.FK_Item_ItemID = Barcode.FK_Item_ItemID
               AND Listing.ListingID = :listingID
