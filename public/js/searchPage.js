@@ -153,19 +153,19 @@ $(function () {
                       <a href="#view" class="btn btn-primary" role="button" id="`+ element.ListingID +`">View</a>`;
 
                       if (element.isRequesting){
-                          html += `<a href="#cancel-by-listing" class="btn btn-default" role="button">Cancel request</a>`;
+                          cardHTML += `<a href="#cancel-by-listing" class="btn btn-default" role="button">Cancel request</a>`;
                       }
                       else {
-                          html += `<a href="#request" class="btn btn-default" role="button">Request</a>`;
+                          cardHTML += `<a href="#request" class="btn btn-default" role="button">Request</a>`;
                       }
                       if (element.isWatching){
-                          html += `<a href="#watch" role="button" class="btn-watch watched" id="`+ element.ListingID +`"><i class="material-icons">visibility</i></a>`;
+                          cardHTML += `<a href="#watch" role="button" class="btn-watch watched" id="`+ element.ListingID +`"><i class="material-icons">visibility</i></a>`;
                       }
                       else{
-                          html += `<a href="#watch" role="button" class="btn-watch" id="`+ element.ListingID +`"><i class="material-icons">visibility</i></a>`;
+                          cardHTML += `<a href="#watch" role="button" class="btn-watch" id="`+ element.ListingID +`"><i class="material-icons">visibility</i></a>`;
                       }
 
-            html += `</div>
+            cardHTML += `</div>
                   </div>
                 </div>
             </div>`;
