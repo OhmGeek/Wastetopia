@@ -1,3 +1,11 @@
+/* navbar */
+.nav .badge {
+  position: absolute;
+  top: -10px;
+  left: 10px;
+  font-family: "Roboto","Helvetica","Arial", sans-serif;
+}
+
 /* Main page */
 
 #log-reg-row{
@@ -533,10 +541,11 @@ a:link, a:hover, a:visited, a:active  {
   color: grey;
 }
 
-.user-stats .title {
+.title {
   padding: 0 10px;
   font-size: 30px;
   font-weight: bolder;
+  text-transform: uppercase;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -601,7 +610,7 @@ a:link, a:hover, a:visited, a:active  {
   height: 100%;
   width: 100%;
   padding-top: 95px;
-  padding-bottom: 90px;
+  padding-bottom: 115px;
   position: relative;
 }
 
@@ -784,58 +793,19 @@ a:link, a:hover, a:visited, a:active  {
 }
 
 /* conversation listing page */
-/* general style */
-.title {
-  padding: 80px 20px 10px 20px;
-  background-color: transparent;
-  font-size: 30px;
-  color: #1C1D21;
-  font-weight: bold;
+.page-padding {
+  padding-top: 50px;
 }
 
-.nav-tabs > li.active,
-.nav-tabs > li.active:hover,
-.nav-tabs > li.active:focus{
-  background-color: #2658BC;
-}
-
-.nav-tabs > li.active > a,
-.nav-tabs > li.active > a:hover,
-.nav-tabs > li.active > a:focus{
-  color: white !important;
-}
-
-.nav-tabs > li,
-.nav-tabs > li:hover,
-.nav-tabs > li:focus{
-  background-color: white;
-}
-
-.nav-tabs > li > a,
-.nav-tabs > li > a:hover,
-.nav-tabs > li > a:focus{
-  color: black !important;
+@media(min-width:1200px) {
+  .page-padding {
+    padding-top: 60px;
+  }
 }
 
 .tab-content {
-  flex:1;
   padding-top: 2px;
   overflow: auto;
-}
-
-/* list style */
-.conversation-list .user-image{
-  height: 60px;
-  width: 60px;
-  overflow: hidden;
-  border-radius: 50%;
-  border: 2px solid white;
-}
-
-.conversation {
-  padding: 10px;
-  border-bottom: 2px solid #2658BC;
-  background-color: rgba(0,0,0,0.3);
 }
 
 .conv-user {
@@ -843,45 +813,31 @@ a:link, a:hover, a:visited, a:active  {
   margin-right: auto;
 }
 
-.conv-user .user-name {
-  font-size: 20px;
-  font-weight: bold;
-}
-
 .conv-user .item {
-  font-weight: bold;
+  font-weight: bolder;
 }
 
-.conversation .btn-nav {
-  margin-left: 10px;
-  margin-right: 0;
-  background-color: transparent;
-  border: none;
-  padding: 0;
+.conversation {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
 }
 
-.conversation .btn-nav i {
-  font-size: 30px;
-  color: white;
-}
-
-.conversation #chatBtn {
-  text-decoration: none;
+.conversation .conv-item {
+  font-size: 12px;
 }
 
 .conversation .badge {
-  margin-right: 5px;
+  margin: 0 5px;
   padding: 5px 10px;
-  font-size: 16px;
-  background-color: white;
-  color: #2658BC;
+  font-size: 14px;
   border-radius: 10px;
 }
 
 .noMessage {
   padding: 10px;
   text-align: center;
-  color: white;
   font-weight: bold;
   font-size: 16px;
 }
