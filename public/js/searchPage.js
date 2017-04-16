@@ -124,51 +124,51 @@ $(function () {
 
         var html = ""
         json.forEach(function(element){
-            var cardHTML = `
-            <div class="grid-item col-xs-12 col-sm-6 col-md-4">
-                <div class="thumbnail zero-padding" id="`+ element.ListingID +`">
-                  <div class="caption">
-                    <div class="centerAll">
-                      <img src="`+ element.Picture_URL +`" class="user-image"/>
-                      <div class="user-details">
-                        <a class="user-name" href="#`+ element.UserID +`">
-                          `+ element.Forename + ` ` + element.Surname +`
-                        </a>
-                        <div class="added-date">
-                          `+ element.Time_Of_Creation +`
-                        </div>
-                      </div>
-                      <div class="road-distance">
-                        <i class="material-icons">place</i> `+ element.Post_Code +`
-                      </div>
-                    </div>
-                  </div>
-                  <img src="`+ element.Image_URL +`" style="border-color: lightgrey;" />
-                  <div class="caption">
-                    <h3>`+ element.Name +`</h3>
-                    <div class="trans-info">
-                      <div><span>Quantity: </span>`+ element.Quantity +`</div>
-                    </div>
-                    <div class="nav-btns">
-                      <a href="#view" class="btn btn-primary" role="button" id="`+ element.ListingID +`">View</a>`;
+            var cardHTML = '' +
+            '<div class="grid-item col-xs-12 col-sm-6 col-md-4">' +
+                '<div class="thumbnail zero-padding" id="'+ element.ListingID +'">' +
+                  '<div class="caption">' +
+                    '<div class="centerAll">' +
+                      '<img src="'+ element.Picture_URL +'" class="user-image"/>' +
+                      '<div class="user-details">' +
+                        '<a class="user-name" href="#'+ element.UserID +'">' +
+                          element.Forename + ' ' + element.Surname +
+                        '</a>' +
+                        '<div class="added-date">' +
+                           element.Time_Of_Creation +
+                        '</div>' +
+                      '</div>' +
+                      '<div class="road-distance">' +
+                        '<i class="material-icons">place</i> '+ element.Post_Code +
+                      '</div>' +
+                    '</div>' +
+                  '</div>' +
+                  '<img src="'+ element.Image_URL +'" style="border-color: lightgrey;" />' +
+                  '<div class="caption">' +
+                    '<h3>'+ element.Name +'</h3>' +
+                    '<div class="trans-info">' +
+                      '<div><span>Quantity: </span>'+ element.Quantity +'</div>' +
+                    '</div>' +
+                    '<div class="nav-btns">' +
+                      '<a href="#view" class="btn btn-primary" role="button" id="'+ element.ListingID +'">View</a>';
 
                       if (element.isRequesting){
-                          cardHTML += `<a href="#cancel-by-listing" class="btn btn-default" role="button">Cancel request</a>`;
+                          cardHTML += '<a href="#cancel-by-listing" class="btn btn-default" role="button">Cancel request</a>';
                       }
                       else {
-                          cardHTML += `<a href="#request" class="btn btn-default" role="button">Request</a>`;
+                          cardHTML += '<a href="#request" class="btn btn-default" role="button">Request</a>';
                       }
                       if (element.isWatching){
-                          cardHTML += `<a href="#watch" role="button" class="btn-watch watched" id="`+ element.ListingID +`"><i class="material-icons">visibility</i></a>`;
+                          cardHTML += '<a href="#watch" role="button" class="btn-watch watched" id="'+ element.ListingID +'"><i class="material-icons">visibility</i></a>';
                       }
                       else{
-                          cardHTML += `<a href="#watch" role="button" class="btn-watch" id="`+ element.ListingID +`"><i class="material-icons">visibility</i></a>`;
+                          cardHTML += '<a href="#watch" role="button" class="btn-watch" id="'+ element.ListingID +'"><i class="material-icons">visibility</i></a>';
                       }
 
-            cardHTML += `</div>
-                  </div>
-                </div>
-            </div>`;
+            cardHTML += '@</div>'+
+                  '</div>'+
+                '</div>'+
+            '</div>';
 
             html += cardHTML;
 
