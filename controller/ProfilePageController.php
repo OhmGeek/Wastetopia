@@ -257,9 +257,6 @@ class ProfilePageController
      * @return HTML
      */
     function generateOffersSection(){
-        $isLoggedIn = $this->isUserLoggedIn(); // 1 if user is a logged in user
-	    
-	    print_r("Logged in: ".$isLoggedIn);
 	    
         //Get listings user has put up
         $userListingsSending = $this->model->getUserListings();
@@ -360,7 +357,6 @@ class ProfilePageController
         $listingsInformation = array(
             "offers" => $offers, // Transactions for your items
             "isUser" => $isCurrentUser,
-	    "isLoggedIn" => $isLoggedIn
         );
 
         $template = $this->twig->loadTemplate("/users/offersTab.twig");
@@ -488,6 +484,7 @@ class ProfilePageController
     function generateListingsSection(){
         //Get listings user has put up
         $userListingsSending = $this->model->getUserListings();
+	$isLoggedIn = $this->isUserLoggedIn(); // 1 if user is a logged in user    
 
         $availableListingsSending = array();
         $emptyListingsSending = array();
@@ -558,7 +555,8 @@ class ProfilePageController
         $isCurrentUser = ($this->userID == $this->getUserID() ? 1 : 0);
         $listingsInformation = array(
             "userListings" => $userListings, // All your listings
-            "isUser" => $isCurrentUser
+            "isUser" => $isCurrentUser,
+	    "isLoggedIn" => $isLoggedIn
         );
 
         $template = $this->twig->loadTemplate("/users/listingsTab.twig");
