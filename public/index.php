@@ -58,7 +58,6 @@ function mustBeLoggedIn(){
     }
 }
 
->>>>>>> refs/remotes/origin/master
 
 // check if we should use production? Otherwise, use community.
 $mode = $_ENV['MODE'];
