@@ -70,9 +70,7 @@
                             {{ name }}
                         </div>
                         <div class="item-subTitle">
-                            {% for tag in tags %}
-                                <div class="tag-name">{{ tag.Name }}</div>
-                            {% endfor %}
+                            {{ description }}
                         </div>
                         <div class="item-description">
                             <div class="container-fluid">
@@ -81,36 +79,45 @@
                                         <!-- go through each of the category ids, getting the name, and then the type
                                         for the item !-->
 
-                                    {% for tag in dietary %}
                                         <div class="col-xs-12 col-sm-6 zero-padding">
-                                            <span class="info">{{ tag.name}}</span>
+                                            <span class="info">Type:</span>
+                                            {% for tag in dietary %}
+                                                {{ tag.name }}
+                                            {% endfor %}
                                         </div>
-                                    {% endfor %}
-                                    {% for tag in state %}
-                                        <div class="col-xs-12 col-sm-6 zero-padding">
-                                            <span class="info">{{ tag.name}}</span>
-                                        </div>
-                                    {% endfor %}
-                                    {% for tag in type %}
-                                        <div class="col-xs-12 col-sm-6 zero-padding">
-                                            <span class="info">{{ tag.name}}</span>
-                                        </div>
-                                    {% endfor %}
-                                    {% for tag in contains %}
-                                        <div class="col-xs-12 col-sm-6 zero-padding">
-                                            <span class="info">{{ tag.name}}</span>
-                                        </div>
-                                    {% endfor %}
-                                    {% for tag in other %}
-                                        <div class="col-xs-12 col-sm-6 zero-padding">
-                                            <span class="info">{{ tag.name}}</span>
-                                        </div>
-                                    {% endfor %}
-                                    <div class="col-sm-12 zero-padding">
-                                        <span class="info">Description:</span>
-                                        <br>
-                                            {{ description }}
+
+                                    <div class="col-xs-12 col-sm-6 zero-padding">
+                                        <span class="info">State:</span>
+                                        {% for tag in state %}
+                                            {{ tag.name }}
+                                        {% endfor %}
                                     </div>
+
+                                    <div class="col-xs-12 col-sm-6 zero-padding">
+                                        <span class="info">Expiry Date:</span>
+                                            {{ expires }}
+                                    </div>
+
+                                    <div class="col-xs-12 col-sm-6 zero-padding">
+                                        <span class="info">Location:</span>
+                                        TODO GET FROM API
+                                    </div>
+
+                                    <div class="col-xs-12 col-sm-6 zero-padding">
+                                        <span class="info">May Contains:</span>
+                                        {% for tag in contains %}
+                                            {{ tag.name }}
+                                        {% endfor %}
+                                    </div>
+
+                                    {#<div class="col-xs-12 col-sm-6 zero-padding">#}
+                                        {#<span class="info">Description:</span>#}
+                                        {#{% for tag in dietary %}#}
+                                            {#{{ tag.name }}#}
+                                        {#{% endfor %}#}
+                                    {#</div>#}
+                                    {##}
+
                                 </div>
                             </div>
                         </div>
