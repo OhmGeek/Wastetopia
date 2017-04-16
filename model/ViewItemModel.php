@@ -133,6 +133,30 @@ class ViewItemModel
         );
     }
 
+    function getLocation($listingID) {
+        $statement = $this->db->prepare("
+            SELECT Name, Post_Code, Longitude, Latitude, Country
+            FROM Location, Listing
+            WHERE Location.LocationID = Listing.FK_Location_LocationID
+              AND Listing.ListingID = :listingID
+        ");
+        $statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);
+
+        $statement->execute();
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        if(!isset($results) || count($results) <= 0) {
+            return array();
+        }
+        return array(
+            "location" => array(
+                "long" => $results[0]["Longitude"],
+                "lat" => $results[0]["Latitude"],
+                "postcode" => $results[0]["Post_Code"],
+                "name" => $results[0]["Name"]
+            )
+        );
+    }
 
     function getBarcode($listingID) {
         $statement = $this->db->prepare("
@@ -164,6 +188,8 @@ class ViewItemModel
         $itemSerialised = array_merge($itemSerialised, $this->getItemStatus($listingID));
         $itemSerialised = array_merge($itemSerialised, $this->getImages($listingID));
         $itemSerialised = array_merge($itemSerialised, $this->getBarcode($listingID));
+        $itemSerialised = array_merge($itemSerialised, $this->getLocation($listingID));
+
         error_log(json_encode($itemSerialised));
         return $itemSerialised;
     }
