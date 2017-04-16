@@ -62,7 +62,7 @@ $klein->with('/api', function () use ($klein) {
     });
 });
 
-$klein->respond('GET', '/search/[:search]?', function ($request, $response) {
+$klein->respond('GET', '/search/.[:search]?', function ($request, $response) {
     $controller = new SearchPageController();
     return $controller->render($request->search);
 });
