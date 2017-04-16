@@ -78,20 +78,32 @@
 
                                         <!-- go through each of the category ids, getting the name, and then the type
                                         for the item !-->
-
+                                        {% if type %}
                                         <div class="col-xs-12 col-sm-6 zero-padding">
                                             <span class="info">Type:</span>
+                                            {% for tag in classification %}
+                                                {{ tag.name }}
+                                            {% endfor %}
+                                        </div>
+                                        {% endif %}
+
+                                    {% if dietary %}
+                                        <div class="col-xs-12 col-sm-6 zero-padding">
+                                            <span class="info">Suitable for:</span>
                                             {% for tag in dietary %}
                                                 {{ tag.name }}
                                             {% endfor %}
                                         </div>
+                                    {% endif %}
 
+                                    {% if state %}
                                     <div class="col-xs-12 col-sm-6 zero-padding">
                                         <span class="info">State:</span>
                                         {% for tag in state %}
                                             {{ tag.name }}
                                         {% endfor %}
                                     </div>
+                                    {% endif %}
 
                                     <div class="col-xs-12 col-sm-6 zero-padding">
                                         <span class="info">Expiry Date:</span>
@@ -103,20 +115,15 @@
                                         TODO GET FROM API
                                     </div>
 
+                                    {% if contains %}
                                     <div class="col-xs-12 col-sm-6 zero-padding">
                                         <span class="info">May Contains:</span>
                                         {% for tag in contains %}
                                             {{ tag.name }}
                                         {% endfor %}
                                     </div>
+                                    {% endif %}
 
-                                    {#<div class="col-xs-12 col-sm-6 zero-padding">#}
-                                        {#<span class="info">Description:</span>#}
-                                        {#{% for tag in dietary %}#}
-                                            {#{{ tag.name }}#}
-                                        {#{% endfor %}#}
-                                    {#</div>#}
-                                    {##}
 
                                 </div>
                             </div>
