@@ -72,6 +72,8 @@ $(function () {
     var searchTerm = $('#searchTerm').attr("data-searchTerm");
     var lat = "";
     var long = "";
+    var sortOrder = $('#sort-options').val();
+    var distanceLimit = parseFloat(radiusSlider.noUiSlider.get());
 
     $('.grid').html('<div class="grid-item col-xs-12"><h3 style="text-align:center;">Loading</h3></div>');
 
@@ -101,7 +103,9 @@ $(function () {
     });
 
     var baseURL = $('#baseURL').attr('href');
-    var query = baseURL + '/api/search/page/' + lat + '/' + long + '/' + searchTerm + '/' + include.join('+') + '/' + exclude.join('+') + '/' + '0';
+    var query = baseURL + '/api/search/page/' + lat + '/' + long + '/' + searchTerm + '/' + include.join('+') + '/' + exclude.join('+') + '/' + distanceLimit + '/' + '0' + '/' + sortOrder;
+
+    console.log(query);
 
     $.ajax({
         url: query,
@@ -190,6 +194,13 @@ $(function () {
   }
 
   $('#filter-form').change(function(){
+      refreshPage();
+  });
+
+  $('#sort-options').change(function(){
+      refreshPage();
+  });
+  radiusSlider.noUiSlider.on('change', function(){
       refreshPage();
   });
 
