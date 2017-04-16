@@ -58,6 +58,7 @@ class MessageController
 	    	print_r($conversationID);
 		$conversationID = $conversationID["ConversationID"];
 		return $this->generatePage($conversationID);
+
     }
 
     /**
@@ -76,6 +77,7 @@ class MessageController
 
         //Get details of conversation (names)
         $details = $this->model->getConversationDetails($conversationID);
+
 		$details = $details[0];
         $userName = $details["Forename"]." ".$details["Surname"];
         $userID = $details["UserID"]; //ID of other user in conversation
@@ -154,9 +156,12 @@ class MessageController
     {
     	// Get details of listing/item
         $generalDetails = $this->model->getListingDetails($conversationID);
-	
+
         $listing = $generalDetails[0]; //ListingID, ItemName, Use_By_Date, LocationName, Post_Code
         $listingID = $listing["ListingID"];
+
+        $active = $listing["Active"];
+        if ($active) {
 
         $defaultImage = $this->cardDetailsModel->getDefaultImage($listingID);
         $itemName = $listing["ItemName"];
@@ -165,10 +170,14 @@ class MessageController
         $postCode = $listing["Post_Code"];
 
         //Generate array of details
-        $output = array("defaultImage" => $defaultImage,
-                        "itemName" => $itemName,
-                        "expiryDate"=> $expiryDate,
-                        "location" => $locationName.", ".$postCode);
+        $output = array("isActive" => $active,
+        	"defaultImage" => $defaultImage,
+            "itemName" => $itemName,
+            "expiryDate" => $expiryDate,
+            "location" => $locationName . ", " . $postCode);
+    	}else{
+        	$output = array("isActive"=>$active);
+		}
 
         return $output;
     }
