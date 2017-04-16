@@ -259,6 +259,8 @@ class ProfilePageController
     function generateOffersSection(){
         $isLoggedIn = $this->isUserLoggedIn(); // 1 if user is a logged in user
 	    
+	    print_r("Logged in: ".$isLoggedIn);
+	    
         //Get listings user has put up
         $userListingsSending = $this->model->getUserListings();
 
