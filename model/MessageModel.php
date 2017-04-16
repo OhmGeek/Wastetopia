@@ -39,7 +39,11 @@ class MessageModel
     * @return int ($conversationID)
     */
     function getConversationIDFromListing($listingID){
+	    print_r("FROM MODEL");
 	$userID = $this->getUserID();
+	    
+	    print_r($userID);
+	    print_r("Listing: ".$listingID);
 	$statement = $this->db->prepare("
 		SELECT `Conversation`.`ConversationID`
 		FROM `Conversation`
@@ -54,7 +58,8 @@ class MessageModel
 
 		$statement->execute();
 
-		$results = $statement->fetchAll(PDO::FETCH_ASSOC);    
+		$results = $statement->fetchAll(PDO::FETCH_ASSOC);  
+	    	print_r($results);
 	        return $results;
 	   
     }
