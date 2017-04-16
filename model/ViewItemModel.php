@@ -102,33 +102,33 @@ class ViewItemModel
             }
             error_log(json_encode($results));
             error_log(json_encode($data));
-            return (object) $data;
+            return $data;
 
     }
 
-    /**
-     * Returns all general details about an item (location, item details and listing details)
-     * @param $listingID
-     * @return mixed
-     */
-    function getDetails($listingID){
-        //todo also get the location details from this
-        $statement = $this->db->prepare("
-            SELECT `Use_By`, `ListingID`, `Quantity`, `Time_Of_Creation`
-            FROM `Image` 
-            JOIN `ItemImage` ON `ItemImage`.`FK_Image_ImageID` = `Image`.`ImageID`
-            JOIN `Item` ON `ItemImage`.`FK_Item_ItemID` = `Item`.`ItemID`
-            JOIN `Listing` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
-            WHERE `Listing`.`ListingID` = :listingID;
-        ");
-        $statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);
-        $statement->execute();
-        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
-        return array(
-            "expires" => $results[0]["Use_By"],
-            "id" => $results[0]["ListingID"]
-        );
-    }
+//    /**
+//     * Returns all general details about an item (location, item details and listing details)
+//     * @param $listingID
+//     * @return mixed
+//     */
+//    function getDetails($listingID){
+//        //todo also get the location details from this
+//        $statement = $this->db->prepare("
+//            SELECT `Use_By`, `ListingID`, `Quantity`, `Time_Of_Creation`
+//            FROM `Image`
+//            JOIN `ItemImage` ON `ItemImage`.`FK_Image_ImageID` = `Image`.`ImageID`
+//            JOIN `Item` ON `ItemImage`.`FK_Item_ItemID` = `Item`.`ItemID`
+//            JOIN `Listing` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
+//            WHERE `Listing`.`ListingID` = :listingID;
+//        ");
+//        $statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);
+//        $statement->execute();
+//        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+//        return array(
+//            "expires" => $results[0]["Use_By"],
+//            "id" => $results[0]["ListingID"]
+//        );
+//    }
 
 
     function getImages($listingID) {
@@ -162,11 +162,11 @@ class ViewItemModel
     function getAll($listingID){
         $itemSerialised = array();
         $itemSerialised = array_merge($itemSerialised, $this->getTagDetails($listingID));
-        $itemSerialised = array_merge($itemSerialised, $this->getDetails($listingID));
+        $itemSerialised = array_merge($itemSerialised, $this->getItemDetails($listingID));
         $itemSerialised = array_merge($itemSerialised, $this->getItemStatus($listingID));
         $itemSerialised = array_merge($itemSerialised, $this->getImages($listingID));
         error_log(json_encode($itemSerialised));
-        return (object) $itemSerialised;
+        return $itemSerialised;
     }
 
 }
