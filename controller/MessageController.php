@@ -42,16 +42,21 @@ class MessageController
      */
     function generatePageFromListing($listingID){
 		$conversationIDs = $this->model->getConversationIDFromListing($listingID);
+	    	print_r("Generating Page From Listing");
+	    	print_r($conversationIDs);
 		if (count($conversationIDs) > 0){
 			// Conversation already exists
 			$conversationID = $conversationIDs[0];
 		}else{
 		   // Create the conversation
+		   print_r("Creating a conversation");
 		   $conversationModel = new ConversationListModel();
 		   $conversationModel->createConversation($listingID);
 		   $conversationIDs = $this->model->getConversationIDFromListing($listingID);
 		   $conversationID = $conversationIDs[0];
 		}
+	    	print_r("Conversation ID: ");
+	    	print_r($conversationID);
 		$conversationID = $conversationID["ConversationID"];
 		return $this->generatePage($conversationID);
 
