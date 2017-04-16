@@ -2,7 +2,7 @@
  * Created by Stephen on 04/03/2017.
  */
 $(document).ready(function(){
-  var url = window.location.protocol + "//" + window.location.host + "/" + "plugins/isotope/isotope.pkgd.js"
+  var url = window.location.protocol + "//" + window.location.host + "/" + "plugins/isotope/isotope.pkgd.min.js"
   $.getScript(url , function(){
     $('#messages').imagesLoaded().progress( function() {
       $grid = $('#messages').isotope({
