@@ -5,6 +5,12 @@ $(function () {
   console.log("ready");
   //Set scroll bar to bottom
 
+  $(window).resize(function () {
+		var dropdownHeight = $(window).height() - $('#conversation-header').height() - $('.navbar').height()
+		console.log(dropdownHeight)
+		$('.item-frame').css({'max-height': dropdownHeight})
+	});
+
   scrollToBottom();
 
   function scrollToBottom(){

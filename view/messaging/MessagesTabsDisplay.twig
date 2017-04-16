@@ -3,30 +3,41 @@
 	No messages to display.
 </div>
 {% else %}
-<div class="conversation-list">
-	<div class="list-group">
+<div class="container-fluid">
+	<div class="row" id="messages">
 	{% for conversation in conversationList %}
-		<div class="conversation">
-			<div class="list-group-item active" style="padding: 0; margin: 0;">
-				<div class="btn-group-sm centerAll">
-					<img src="{{conversation.userImage}}" class="user-image"/>
+	<div class="grid-item col-xs-12 col-sm-6">
+		<div class="grid-item-content">
+			<div class="thumbnail">
+				<div class="caption conversation">
 					<div class="conv-user">
-						<div class="user-name">
-							{{conversation.userName}}
+						<div class="user">
+							<img src="{{conversation.userImage}}" class="user-image"/>
+							<div class="user-name">
+								{{conversation.userName}}
+							</div>
 						</div>
-						<div>
-							{% if giving == 1 %}requesting {% else %}offering {% endif %}<span class="item">{{conversation.item}}</span>
+						<div class="conv-item">
+							{% if giving == 1 %}requesting {% else %}offering {% endif %} <span class="item">{{conversation.item}}</span>
 						</div>
 					</div>
-					<button type="button" id="deleteBtn" class="btn-nav">
-						<i class="material-icons">delete</i>
-					</button>
-					<a role="button" id="{{conversation.listingID}}" class="btn-nav chatBtn" href="{{ config.ROOT_BASE }}/messages/conversation/{{conversation.listingID}}" >
-						{% if conversation.numUnread == 0 %}<i class="material-icons">arrow_forward</i>{% else %}<span class="badge">{{conversation.numUnread}}</span>{% endif %}
-					</a>
+					<div class="conv-btns">
+						<a role="button" id="deleteBtn" class="btn-watch">
+							<i class="material-icons">delete</i>
+						</a>
+						{% if conversation.numUnread != 0 %}
+						<div class="btn-watch">
+							<span class="badge">{{conversation.numUnread}}</span>
+						</div>
+						{% endif %}
+						<a role="button" id="{{conversation.listingID}}" class="btn-watch" href="{{ config.ROOT_BASE }}/messages/conversation/{{conversation.listingID}}">
+							<i class="material-icons">arrow_forward</i>
+						</a>
+					</div>
 				</div>
 			</div>
 		</div>
+	</div>
 	{% endfor %}
 	</div>
 </div>

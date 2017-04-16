@@ -2,6 +2,17 @@
  * Created by Stephen on 04/03/2017.
  */
 $(document).ready(function(){
+  var url = window.location.protocol + "//" + window.location.host + "/" + "plugins/isotope/isotope.pkgd.js"
+  $.getScript(url , function(){
+    $('#messages').imagesLoaded().progress( function() {
+      $grid = $('#messages').isotope({
+        itemSelector: '.grid-item',
+        percentPosition: true,
+        layoutMode: 'masonry'
+      });
+      $grid.isotope('layout');
+    });
+  })
 });
 
 //Takes user to MessagePage for this conversation
@@ -15,7 +26,7 @@ $(document).ready(function(){
 // Delete a conversation
 $(document).on('click', '#deleteBtn', function(){
   var url = window.location.protocol + "//" + window.location.host + "/" + 'messages/delete-conversation';
-  
+
   var listingID = $(this).val();
   var data = {listingID: listingID}
   $.get(url, data, function(response){
@@ -37,7 +48,5 @@ function loadUsers(){
     var givingURL = window.location.protocol + "//" + window.location.host + "/" + "messages/poll-sending";
     var receivingURL = window.location.protocol + "//" + window.location.host + "/" + "messages/poll-receiving";
     givingTab.load(givingURL);
-    receivingTab.load(receivingURL); 
+    receivingTab.load(receivingURL);
 }
-
-
