@@ -157,12 +157,11 @@ class SearchModel
         {
             $notTagCount = count($notTagsArray);
 
-            $sql .= "AND `Listing`.`ListingID` IN (SELECT `TagCount`.`ListingID`
-                                 FROM (SELECT `Listing`.`ListingID`, COUNT(DISTINCT `ItemTag`.`FK_Tag_TagID`) AS `Count`
-                                       FROM `Listing`
-                                       JOIN `Item` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
-                                       JOIN `ItemTag` ON `Item`.`ItemID` = `ItemTag`.`FK_Item_ItemID`
-                                       WHERE `ItemTag`.`FK_Tag_TagID` IN (";
+            $sql .= "AND `Listing`.`ListingID` IN (SELECT `Listing`.`ListingID`
+                                                   FROM `Listing`
+                                                   JOIN `Item` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
+                                                   JOIN `ItemTag` ON `Item`.`ItemID` = `ItemTag`.`FK_Item_ItemID`
+                                                   WHERE `ItemTag`.`FK_Tag_TagID` NOT IN (";
 
             foreach ($notTagsArray as $key => $tag) 
             {
@@ -177,10 +176,7 @@ class SearchModel
                 
             } 
 
-            $sql .= ")
-                     GROUP BY `Listing`.`ListingID`
-                         ) as `TagCount`
-                     WHERE `TagCount`.`Count` = :notTagCount)";
+            $sql .= "));";
         }
 
                       
@@ -201,7 +197,6 @@ class SearchModel
             {
                 $statement->bindValue(":notTag".$key, $tag, PDO::PARAM_INT);
             }
-            $statement->bindValue(":notTagCount", strval($notTagCount), PDO::PARAM_STR);
         }
         if (($userLat !== false) && ($userLong !== false))
         {
