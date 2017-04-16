@@ -6,10 +6,16 @@ use PDO;
 use Wastetopia\Model\DB;
 
 
-
+/**
+ * Class MessageModel - Details of messages within a conversation
+ * @package Wastetopia\Model
+ */
 class MessageModel
 {
-	function __construct()
+    /**
+     * MessageModel constructor.
+     */
+    function __construct()
 	{
 		$this->db = DB::getDB();
 	}
@@ -34,6 +40,7 @@ class MessageModel
     */
     function getConversationIDFromListing($listingID){
 	$userID = $this->getUserID();
+
 	$statement = $this->db->prepare("
 		SELECT `Conversation`.`ConversationID`
 		FROM `Conversation`
@@ -48,7 +55,7 @@ class MessageModel
 
 		$statement->execute();
 
-		$results = $statement->fetchAll(PDO::FETCH_ASSOC);    
+		$results = $statement->fetchAll(PDO::FETCH_ASSOC);  
 	        return $results;
 	   
     }

@@ -10,28 +10,38 @@ namespace Wastetopia\Model;
 use Wastetopia\Model\DB;
 use PDO;
 
+/**
+ * Class CardDetailsModel - Used to get Display information for the Cards
+ * @package Wastetopia\Model
+ */
 class CardDetailsModel
 {
 
 
     /**
-     * CardDisplayModel constructor.
+     * CardDetailsModel constructor.
      */
     public function __construct()
     {
         $this->db = DB::getDB();
     }
 
-    function getUserID(){
-        // Function from elsewhere
-    }
 
     /**
-     * Gets all detail from the User table for this user
+     * Gets current user who's logged in
+     * @return int
+     */
+    function getUserID(){
+        // Function from elsewhere
+        return 6;
+    }
+
+
+    /**
+     * Gets all details from the User table for the given user
      * @return mixed
      */
-    function getCurrentUserDetails(){
-        $userID = $this->getUserID();
+    function getUserDetails($userID){
         $statement = $this->db->prepare("
         SELECT * 
         FROM `User` 
@@ -44,7 +54,7 @@ class CardDetailsModel
     }
 
     /**
-     * Gets the profile picture of the given user (Possibly will be moved to another model)
+     * Gets the profile picture of the given user
      * @param $userID
      * @return URL
      */
@@ -62,7 +72,6 @@ class CardDetailsModel
 
     /**
      * Returns the details needed for display on the profile page given the listing ID
-     *
      * @param $listingID
      * @return mixed
      */
@@ -87,7 +96,7 @@ class CardDetailsModel
     /**
      * Returns the default image for this listing (if there is one)
      * @param $listingID
-     * @return mixed
+     * @return String - Image URL or empty string if no default image found
      */
     function getDefaultImage($listingID){
         $statement = $this->db->prepare("
@@ -103,7 +112,58 @@ class CardDetailsModel
         $statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);
         $statement->execute();
         $results = $statement->fetchAll(PDO::FETCH_ASSOC);
-        return $results[0];
+
+        if (count($results) == 0){
+            return "";
+        }
+
+	    $result = $results[0];
+        return $result["Image_URL"];
     }
 
+
+    /**
+    * Checks whether the given user has an ongoing request for the given listing
+    * @param $listingID
+    * @param $userID
+    * @return bool (True if user is requesting the listing)
+    */
+    function isRequesting($listingID, $userID){
+        $statement = $this->db->prepare("
+            SELECT COUNT(*) AS `Count`
+	    FROM `ListingTransaction`
+	    JOIN `Transaction` ON `Transaction`.`TransactionID` = `ListingTransaction`.`FK_Transaction_TransactionID`
+		JOIN `Listing` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
+	    WHERE `ListingTransaction`.`FK_Listing_ListingID` = :listingID
+	    AND `Transaction`.`FK_User_UserID` = :userID
+	    AND `ListingTransaction`.`Success` = 0;
+        ");
+        $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
+        $statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);
+        $statement->execute();
+	
+        return $statement->fetchColumn() > 0;
+	    
+    }
+	
+	
+    /** 
+    * Checks whether the given user has the listing in their watch list
+    * @param $listingID
+    * @param $userID
+    * @return bool (True if user is requesting the listing)
+    */	
+    function isWatching($listingID, $userID){
+	$statement = $this->db->prepare("
+            SELECT COUNT(*) AS `Count`
+	    FROM `Watch`
+	    WHERE `FK_User_UserID` = :userID
+	    AND `FK_Listing_ListingID` = :listingID;
+        ");
+        $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
+        $statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);
+        $statement->execute();
+	
+        return $statement->fetchColumn() > 0;	
+    }
 }

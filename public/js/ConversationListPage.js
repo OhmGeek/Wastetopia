@@ -2,6 +2,17 @@
  * Created by Stephen on 04/03/2017.
  */
 $(document).ready(function(){
+  var url = window.location.protocol + "//" + window.location.host + "/" + "js/plugins/isotope/isotope.pkgd.min.js"
+  $.getScript(url , function(){
+    $('#messages').imagesLoaded().progress( function() {
+      $grid = $('#messages').isotope({
+        itemSelector: '.grid-item',
+        percentPosition: true,
+        layoutMode: 'masonry'
+      });
+      $grid.isotope('layout');
+    });
+  })
 });
 
 //Takes user to MessagePage for this conversation
@@ -12,25 +23,23 @@ $(document).ready(function(){
 //   window.location.href = url;
 // });
 
+// Delete a conversation
 $(document).on('click', '#deleteBtn', function(){
   var url = window.location.protocol + "//" + window.location.host + "/" + 'messages/delete-conversation';
-  
-  var listingID = $(this).val();
+
+  var listingID = $(this).closest('thumbnail').attr('id');
+  console.log(listingID)
   var data = {listingID: listingID}
   $.get(url, data, function(response){
       loadUsers();
   });
 });
 
-$(document).on('click', '#goBack', function(){
-  var url = window.location.protocol + "//" + window.location.host + "/messages";
-  location.href = url;
-});
 
-//Polling to update People-list (in case of new conversations/messages)
-//setInterval(function(){
-//    loadUsers();
-//}, 3000);
+// Polling to update People-list (in case of new conversations/messages)
+setInterval(function(){
+   loadUsers();
+}, 3000);
 
 
 function loadUsers(){
@@ -40,7 +49,5 @@ function loadUsers(){
     var givingURL = window.location.protocol + "//" + window.location.host + "/" + "messages/poll-sending";
     var receivingURL = window.location.protocol + "//" + window.location.host + "/" + "messages/poll-receiving";
     givingTab.load(givingURL);
-    receivingTab.load(receivingURL); 
+    receivingTab.load(receivingURL);
 }
-
-

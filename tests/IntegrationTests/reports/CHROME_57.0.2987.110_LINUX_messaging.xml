@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites errors="0"
+            failures="0"
+            tests="1">
+
+  <testsuite name="messaging"
+    errors="0" failures="0" hostname="" id="" package="messaging" skipped="0"
+    tests="1" time="3.184" timestamp="Wed, 12 Apr 2017 23:26:18 GMT">
+  
+    <testcase name="Test Receiving Tab Opens" classname="messaging" time="3.184" assertions="4">
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+  
+  </testsuite>
+</testsuites>

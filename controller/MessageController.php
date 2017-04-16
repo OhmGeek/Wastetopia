@@ -1,20 +1,28 @@
 <?php
 
 namespace Wastetopia\Controller;
-use Wastetopia\Model\MessageModel;
 use Twig_Loader_Filesystem;
 use Twig_Environment;
 use Wastetopia\Config\CurrentConfig;
+use Wastetopia\Model\MessageModel;
 use Wastetopia\Model\CardDetailsModel;
 use Wastetopia\Model\ConversationListModel;
 
+/**
+ * Class MessageController - Used for generating and handling input on the Messaging page
+ * @package Wastetopia\Controller
+ */
 class MessageController
 {
-	
-	function __construct()
+
+    /**
+     * MessageController constructor.
+     */
+    function __construct()
 	{
-	// Card details model
-	$this->cardDetailsModel = new CardDetailsModel();
+
+		// Card details model
+		$this->cardDetailsModel = new CardDetailsModel();
 		
 	    //Create MessageModel instance
         $this->model = new MessageModel();
@@ -26,25 +34,34 @@ class MessageController
 	}
 
 
+    /**
+	 * Creates the whole page based ona listingID (using the current logged in user)
+	 * Based on principle that user can only have one request for a given listing at any given time
+     * @param $listingID
+     * @return HTML
+     */
     function generatePageFromListing($listingID){
-	$conversationIDs = $this->model->getConversationIDFromListing($listingID);
-	if (count($conversationIDs) > 0){
-	    // Conversation already exists	
-	    $conversationID = $conversationIDs[0];
-	}else{
-	   // Create the conversation 	
-	   $conversationModel = new ConversationListModel();
-	   $conversationModel->createConversation($listingID);
-	   $conversationIDs = $this->model->getConversationIDFromListing($listingID);
-	   $conversationID = $conversationIDs[0];	
-	}
-	$conversationID = $conversationID["ConversationID"];  
-	return $this->generatePage($conversationID);    
+		$conversationIDs = $this->model->getConversationIDFromListing($listingID);
+
+		if (count($conversationIDs) > 0){
+			// Conversation already exists
+			$conversationID = $conversationIDs[0];
+		}else{
+		   // Create the conversation
+		   $conversationModel = new ConversationListModel();
+		   $conversationModel->createConversation($listingID);
+		   $conversationIDs = $this->model->getConversationIDFromListing($listingID);
+		   $conversationID = $conversationIDs[0];
+		}
+		$conversationID = $conversationID["ConversationID"];
+		return $this->generatePage($conversationID);
+
     }
 
     /**
      * Generates (and prints) HTML for messaging page with initial conversation loaded
      * @param $conversationID
+	 * @return HTML
      */
     function generatePage($conversationID)
     {
@@ -91,7 +108,7 @@ class MessageController
 
 	    $currentUser = $this->model->getUserID();
 
-		// Set them as read
+		// Set messages as read
 		$confirm = $this->model->setMessagesAsRead($conversationID);
 
         // Get the messages
@@ -112,19 +129,16 @@ class MessageController
 			
 
 			$message['sender'] = ($messageSenderID == $currentUser); //1 if current user sent the message
-            		$message['timeStamp'] = $messageTimeStamp;
-			
-			
+			$message['timeStamp'] = $messageTimeStamp;
+
 			array_push($messages, $message);
 		}
 
 		$output = array("messages" => $messages);
 
-
-		//MessageDisplay.twig
+		//Load twig templace
 		$template = $this->twig->loadTemplate('/messaging/MessageDisplay.twig');
 
-		//print_r(json_encode($output));
 		return $template->render($output);
 		
 	}
@@ -137,6 +151,7 @@ class MessageController
      */
     function generateItemViewPanel($conversationID)
     {
+    	// Get details of listing/item
         $generalDetails = $this->model->getListingDetails($conversationID);
 
         $listing = $generalDetails[0]; //ListingID, ItemName, Use_By_Date, LocationName, Post_Code
@@ -173,13 +188,10 @@ class MessageController
      */
     function sendMessage($conversationID, $message)
 	{
-		
+		// Giver or Receiver of the listing
 		$giverOrReceiver = $this->model->checkIfReceiver($conversationID);
 		
 		$result = $this->model->sendMessage($conversationID, $message, $giverOrReceiver);
-		
-		//For option 2 in messages.js
-        //$html = $this->generatePage($conversationID);
 		
 		return $result;
 	}
