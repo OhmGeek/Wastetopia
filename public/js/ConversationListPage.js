@@ -22,6 +22,11 @@ $(document).on('click', '#deleteBtn', function(){
   });
 });
 
+$(document).on('click', '#goBack', function(){
+  var url = window.location.protocol + "//" + window.location.host + "/messages";
+  location.href = url;
+});
+
 //Polling to update People-list (in case of new conversations/messages)
 //setInterval(function(){
 //    loadUsers();

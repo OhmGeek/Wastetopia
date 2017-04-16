@@ -9,6 +9,7 @@ use Wastetopia\Controller\Login_Controller;
 use Wastetopia\Controller\SearchController;
 use Wastetopia\Controller\MessageController;
 use Wastetopia\Controller\SearchPageController;
+use Wastetopia\Model\NotificationModel;
 
 
 // check if we should use production? Otherwise, use community.
@@ -189,6 +190,11 @@ $klein->with('/messages', function () use ($klein) {
     });
 });
 
+
+$klein->respond('GET', '/notifications/update', function($request, $response){
+        $model = new NotificationModel();
+        return $model->getAll(1); // getAll in JSON format
+});
 
 $klein->onHttpError(function ($code, $router) {
     switch ($code) {
