@@ -6,6 +6,74 @@
   font-family: "Roboto","Helvetica","Arial", sans-serif;
 }
 
+.navbar .search-form {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-top: 10px;
+}
+
+.navbar .search-group {
+  display: flex;
+  align-items: center;
+  height: 30px;
+  background: white;
+  border-radius: 20px;
+}
+
+.navbar .search-form .search input{
+  border-radius: 20px;
+  border: none;
+  height: 30px;
+  color: black;
+  width: 150px;
+  font-size: 12px;
+  padding: 5px 0 5px 10px;
+}
+
+.navbar .search-group .btn-search {
+  background: none;
+    color: black;
+    border-radius: 20px;
+    font-size: 12px;
+    border: none;
+    height: 30px;
+    width: 25px;
+    padding: 2px ;
+}
+
+.navbar .search-form .postcode input{
+  border: none;
+  background: none;
+  text-transform: uppercase;
+  margin-left: 5px;
+  height: 30px;
+  width: 75px;
+  font-size: 12px;
+  font-weight: bold;
+  color: white;
+}
+
+@media (max-width: 370px) {
+  .navbar .search-form .search input{
+    width: 100px;
+  }
+}
+
+@media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+
+}
+
+@media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+
+}
+
+@media (min-width:1200px) {
+  .navbar .search-form {
+    margin-top: 15px;
+  }
+}
+
 /* Main page */
 
 #log-reg-row{
