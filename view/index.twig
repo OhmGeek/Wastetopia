@@ -51,10 +51,10 @@ WasteTopia
             <select id="{{itemFilter.id}}" class="js-example-basic-multiple form-control" multiple="multiple" style="width: 100%;">
               {% for option in itemFilter.options %}
               <option value="{{option.value}}" id="{{option.id}}">{{option.value}}</option>
-              {% end for %}
+              {% endfor %}
             </select>
           </div>
-          {% end for %}
+          {% endfor %}
         </div>
         <div class="btn-search-div col-xs-12 col-sm-8">
           <button type="submit" value="Submit" class="btn btn-primary btn-search">
