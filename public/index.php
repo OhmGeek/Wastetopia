@@ -17,7 +17,7 @@ use Wastetopia\Model\RequestModel;
 use Wastetopia\Model\PopularityModel;
 
 use Wastetopia\Controller\SearchPageController;
-
+use Wastetopia\Controller\IndexPageController;
 
 use Wastetopia\Controller\RegistrationController;
 
@@ -77,7 +77,8 @@ if(ltrim($base, '/')){
 $klein = new Klein();
 
 $klein->respond("GET", "/?", function() {
-  return "HomePage";
+  $indexController = new IndexPageController();
+  return $indexController->renderIndexPage();
 });
 
 
@@ -124,12 +125,12 @@ $klein->respond("GET", "/login", function($request, $response) {
 
 
 $klein->with('/register', function() use ($klein){
-  
+
   $klein->respond("GET", "/?", function($request, $response) {
     $controller = new RegistrationController();
     return $controller->generatePage();
   });
-  
+
   $klein->respond("POST", "/add-user", function($request, $response){
       $forename = $request->forename;
       $surname = $request->surname;
@@ -137,11 +138,11 @@ $klein->with('/register', function() use ($klein){
       $password = $request->password;
       $passwordConfirm = $request->passwordConfirm;
       $pictureURL = $request->pictureURL;
-      
+
       $controller = new RegistrationController();
       return $controller->addUser($forename, $surname, $email, $password, $passwordConfirm, $pictureURL);
   });
-    
+
     $klein->respond("GET","/verify/[:verificationCode]", function($request, $response){
         $verificationCode = $request->verificationCode;
         $model = new RegistrationModel(); // Put function in controller?
@@ -155,7 +156,7 @@ $klein->with('/register', function() use ($klein){
         }
 
     });
-    
+
     // Only for testing purposes
     $klein->respond("GET", "/delete/[:firstName]/[:lastName]", function($request, $response){
        $firstName = $request->firstName;
@@ -163,7 +164,7 @@ $klein->with('/register', function() use ($klein){
         $model = new RegistrationModel();
         return $model->deleteUserByName($firstName, $lastName);
     });
-  
+
 });
 
 
@@ -228,60 +229,60 @@ $klein->with("/profile", function() use ($klein) {
         $controller = new ProfilePageController(1); //View own profile
         return $controller->generatePage();
     });
-    
+
     $klein->respond('GET', '/user/[:userID]', function($request, $response){
         $controller = new ProfilePageController(0, $request->userID); //View other user's profile
         return $controller->generatePage();
     });
-    
+
     $klein->respond('GET', '/update/[:userID]', function($request, $response){
        $controller = new ProfilePageController(0, $request->userID);
-       return $controller->generateProfileContentHTML(); 
+       return $controller->generateProfileContentHTML();
     });
-    
+
     $klein->respond('GET', '/load-home-tab/[:userID]', function($request, $response){
         $controller = new ProfilePageController(0, $request->userID);
-        return $controller->generateHomeSection(); 
+        return $controller->generateHomeSection();
     });
-                    
+
     $klein->respond('GET', '/load-listings-tab/[:userID]', function($request, $response){
         $controller = new ProfilePageController(0, $request->userID);
-        return $controller->generateListingsSection(); 
+        return $controller->generateListingsSection();
     });
-    
+
     $klein->respond('GET', '/load-offers-tab/[:userID]', function($request, $response){
         $controller = new ProfilePageController(0, $request->userID);
-        return $controller->generateOffersSection(); 
+        return $controller->generateOffersSection();
     });
-    
+
     $klein->respond('GET', '/load-requests-tab/[:userID]', function($request, $response){
         $controller = new ProfilePageController(0, $request->userID);
-        return $controller->generateRequestsSection(); 
+        return $controller->generateRequestsSection();
     });
-    
+
     $klein->respond('GET', '/load-watchlist-tab/[:userID]', function($request, $response){
         $controller = new ProfilePageController(0, $request->userID);
-        return $controller->generateWatchListSection(); 
+        return $controller->generateWatchListSection();
     });
-    
+
     $klein->respond('POST', '/toggle-watch-list/?', function($request, $response){
        $controller = new ProfilePageController(1);
        $response = $controller->toggleWatchListListing($request->listingID);
        return $response;
     });
-    
+
     $klein->respond('GET', '/recommended', function($request, $response){
         $controller = new RecommendationController();
         return $controller->generateRecommendedSection();
     });
-    
+
     // Needs testing
     $klein->respond('POST', '/set-pending-viewed', function($request, $response){
        $controller = new ProfilePageController(1);
        return $controller->setAllPendingAsViewed();
     });
-    
-    
+
+
     $klein->respond('POST', '/set-listing-transaction-hidden', function($request, $response){
        $giverOrReceiver = $request->giverOrReceiver;
         $transactionID = $request->transactionID;
@@ -289,28 +290,28 @@ $klein->with("/profile", function() use ($klein) {
         $controller = new ProfilePageController(1); // Own profile
         return $controller-> setListingTransactionHiddenFlag($giverOrReceiver, $transactionID, $value);
     });
-    
+
     // Needs testing
     $klein->respond('POST', '/change-password', function($request, $response){
         $oldPassword = $request->oldPassword;
         $newPassword = $request->newPassword;
         $controller= new ProfilePageController(1);
-        return $controller->changePassword($oldPassword, $newPassword);    
+        return $controller->changePassword($oldPassword, $newPassword);
     });
-    
+
 //    // Needs testing
 //    $klein->respond('POST', '/reset-password', function($request, $response){
 //       $controller = new ProfilePageController(1);
 //       return $controller->resetPassword();
 //    });
-    
+
     // Needs testing
     $klein->respond('POST', '/change-profile-picture', function($request, $response){
-        $files = $request->files();        
+        $files = $request->files();
         $controller = new ProfilePageController(1);
         return $controller->changeProfilePicture($files);
     });
-   
+
     //Needs testing
     $klein->respond('POST', '/change-email', function($request, $response){
         $oldEmail = $request->oldEmail;
@@ -329,13 +330,13 @@ $klein->with('/items', function () use ($klein) {
         // Generic Items Page
         return "Main Item Page";
     });
-    
+
     $klein->respond('GET', '/view/[:id]', function($request, $response){
         $itemID = $request->id;
         return "Show item ".$itemID;
     });
 
-    
+
     $klein->respond('POST', '/request/?', function ($request, $response) {
         // Show a single user
         $listingID = $request->listingID;
@@ -343,7 +344,7 @@ $klein->with('/items', function () use ($klein) {
         $model = new RequestModel();
         return $model->requestItem($listingID, $quantity);
     });
-    
+
     $klein->respond('POST', '/confirm-request/?', function($request, $response){
         $listingID = $request->listingID; // Might not have this information
         $transactionID = $request->transactionID; // Can use this to get listingID
@@ -351,28 +352,28 @@ $klein->with('/items', function () use ($klein) {
         $model = new RequestModel();
         return $model->confirmRequest($listingID, $transactionID, $quantity);
     });
-    
+
     $klein->respond('POST', '/reject-request/?', function($request, $response){
         $listingID = $request->listingID; // Might not have this information
         $transactionID = $request->transactionID; // Can use this to get listingID
         $model = new RequestModel();
         return $model->rejectRequest($listingID, $transactionID);
     });
-    
+
     $klein->respond('POST', '/cancel-request/?', function($request, $response){
         $transactionID = $request->transactionID; // Can use this to get listingID
         print_r($transactionID);
         $model = new RequestModel();
         return $model->withdrawRequest($transactionID);
     });
-    
+
     $klein->respond('POST', '/cancel-request-listing/?', function($request, $response){
         $listingID = $request->listingID;
         $model = new RequestModel();
         $transactionID = $model->getTransactionIDFromListingID($listingID);
         return $model->withdrawRequest($transactionID);
     });
-    
+
     $klein->respond('POST', '/renew-listing/?', function($request, $response){
         $listingID = $request->listingID;
         $newQuantity = $request->quantity;
@@ -380,13 +381,13 @@ $klein->with('/items', function () use ($klein) {
         $model = new RequestModel();
         return $model->renewListing($listingID, $newQuantity, $newUseByDate);
     });
-    
+
     $klein->respond('POST', '/remove-listing/?', function($request, $response){
         $listingID = $request->listingID;
         $model = new RequestModel();
         return $model->withdrawListing($listingID);
     });
-    
+
     // Not sure whether to move this to profile page as this will be where it is used
     $klein->respond('POST', '/rate-user/?', function($request, $response){
         $transactionID = $request->transactionID;
@@ -394,7 +395,7 @@ $klein->with('/items', function () use ($klein) {
         $model = new PopularityModel();
         return $model->rateTransaction($transactionID, $rating);
     });
-    
+
 });
 
 
