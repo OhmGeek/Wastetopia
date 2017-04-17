@@ -26,7 +26,7 @@ class LoginController {
         else {
             // redirect to the base website
             // todo redirect to dest | website base
-            $response->redirect($_ENV['ROOT_BASE']);
+            $response->redirect($_ENV['ROOT_BASE'] . $dest);
         }
         //todo return a 'click here to return to the main site page'
         return true; // we can return true otherwise, as we will forward people.
@@ -42,11 +42,13 @@ class LoginController {
             // forward the person to the destination/home
             if(isset($dest)) {
                 //forward to the destination uri
-                header('Location: ' . $dest);
+                $response->redirect($_ENV['ROOT_BASE'] . $dest);
                 exit();
             }
             //forward home
-            $response->redirect($_ENV['ROOT_BASE']);
+            else {
+                $response->redirect($_ENV['ROOT_BASE']);
+            }
         }
         else {
             // incorrect details
