@@ -17,6 +17,8 @@ class UserCookieWriter {
     public function write() {
         if(!$this->finalised) {
             $json_data = json_encode($this->cookie_data);
+            error_log("Writing cookie now");
+            error_log($json_data);
             setcookie("gpwastetopiadata", $json_data, time() + $this->TIME_OFFSET);
         }
     }
