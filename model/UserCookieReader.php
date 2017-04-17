@@ -13,7 +13,7 @@ class UserCookieReader {
         $this->user_cookie = json_decode($this->user_cookie, true);
     }
     public function get_auth_token() {
-        return $this->user_cookie['auth_token'];
+        return urldecode($this->user_cookie['auth_token']);
     }
     public function get_user_id() {
         return $this->user_cookie['user_id'];
