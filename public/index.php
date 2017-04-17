@@ -118,7 +118,7 @@ $klein->respond("GET", "/login", function($request, $response) {
 
 $klein->respond("GET", "/logout", function($request, $response) {
     header("Cache-Control: no-store, must-revalidate, max-age=0");
-    $_COOKIE['gpwastetopiadata'] = null; // set the cookie to be null
+    setcookie("gpwastetopiadata", null);
     return "You have been logged out. You can now close the browser.";
 });
 
