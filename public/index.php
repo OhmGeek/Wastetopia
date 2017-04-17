@@ -102,7 +102,7 @@ $klein->respond('GET', '/search/[:search]?', function ($request, $response) {
 $klein->respond("GET", "/login", function($request, $response) {
   header("Cache-Control: no-store, must-revalidate, max-age=0");
   $controller = new LoginController();
-  return $controller->index($response);
+  return $controller->index($response, $request->dest);
 });
 
 $klein->respond("GET", "/logout", function($request, $response) {

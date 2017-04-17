@@ -8,7 +8,7 @@ use Wastetopia\Controller\TokenManager;
 use Wastetopia\Controller\Authenticator;
 use Klein\Klein;
 class LoginController {
-    public function index($response) {
+    public function index($response, $dest) {
         //todo dest parameter with default value
         // this is the static index page (allowing the user to login)
         $loader  = new Twig_Loader_Filesystem(__DIR__.'/../view/');
@@ -20,6 +20,7 @@ class LoginController {
             return $template->render(array(
                 "title" => "Login",
                 "intro" => "Please login to access Wastetopia",
+                "dest" => urldecode($dest)
             ));
         }
         else {
@@ -41,7 +42,7 @@ class LoginController {
             // forward the person to the destination/home
             if(isset($dest)) {
                 //forward to the destination uri
-                header('Location: ' . $dest);
+                header('Location: ' . $_ENV['ROOT_BASE'] . $dest);
                 exit();
             }
             //forward home
