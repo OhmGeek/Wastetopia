@@ -1,14 +1,12 @@
 /**
  * Created by Stephen on 14/04/2017.
  */
-
+ var myRequestChart; // Chart for tags on items user Requests
+ var mySendingChart; // Chart for tags on items user Gives away
 $(function() {
 
     //Chart.defaults.global.maintainAspectRatio = false;
     //Chart.defaults.global.title.display = true; // Display the title
-
-    var myRequestChart; // Chart for tags on items user Requests
-    var mySendingChart; // Chart for tags on items user Gives away
 
     var baseURL = window.location.protocol + "//" + window.location.host;
     var categoryID = 1; // Start with category 1 by default
@@ -196,4 +194,3 @@ $(function() {
 
     }
 });
-
