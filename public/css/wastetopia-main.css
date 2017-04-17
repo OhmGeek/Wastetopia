@@ -75,25 +75,24 @@
 }
 
 /* Main page */
-
-#log-reg-row{
-  width: 100%;
-  padding: 0px;
-  margin: 0px;
+.main-search-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-#login{
-  width: 100%;
-  height: 400px;
-  background-color: red;
-  padding: 20px;
+.normal-search, .btn-search-div{
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
-#register{
-  width: 100%;
-  height: 400px;
-  background-color: green;
-  padding: 10px;
+.main-search-form .btn-search {
+  align-self: flex-end;
+}
+
+.btn-search-div {
+  flex-direction: column;
 }
 
 /* registration page */
@@ -502,12 +501,19 @@ label.checkbox-inline input[type=checkbox]:checked + .checkbox-material .check:b
   border-bottom: 2px solid #31353D !important;
 }
 
+
 .select2-container--default .select2-selection--multiple {
+  padding-top: 7px !important;
+  margin-bottom: 7px !important;
   border-top: none !important;
   border-right: none !important;
   border-left: none !important;
   border-bottom: 1px solid #D2D2D2 !important;
   border-radius: 0 !important;
+}
+
+.select2-dropdown {
+  margin-top: -7px !important;
 }
 
 .img-box {
