@@ -11,7 +11,7 @@ class LoginController {
     public function index($response) {
         //todo dest parameter with default value
         // this is the static index page (allowing the user to login)
-        $loader  = new Twig_Loader_Filesystem(__DIR__.'/../view/');
+        $loader  = new Twig_Loader_Filesystem(__DIR__.'/../view/users/');
 	    $twig = new Twig_Environment($loader);
         $template = $twig->loadTemplate('login_form.twig');
 
