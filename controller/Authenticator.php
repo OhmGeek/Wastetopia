@@ -24,6 +24,8 @@ class Authenticator {
         }
         else {
             error_log("Not verified");
+            error_log($auth_token);
+            error_log($user_id);
             return false;
         }
     }
