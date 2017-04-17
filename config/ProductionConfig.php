@@ -30,7 +30,7 @@ class ProductionConfig extends AbstractConfig
             'ROOT_CSS' => '//wastetopia.herokuapp.com/css',
 
             'ROOT_IMG' => '//wastetopia.herokuapp.com/img',
-            'ROOT_BASE' => '//wastetest.xyxthris.xyz/public/',
+            'ROOT_BASE' => '//wastetest.xyxthris.xyz/public',
            
             'EMAIL_HOST' => 'smtp-mail.outlook.com',
             'EMAIL_ADDRESS' => 'wastetopia@outlook.com',

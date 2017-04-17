@@ -22,6 +22,16 @@ class SearchPageController
         $currentConfig = new CurrentConfig();
         $config = $currentConfig->getAll();
 
+        $filters = $this->getSearchFilters();        
+
+        $template = $twig->loadTemplate("search/search.twig");
+        return $template->render(array('config' => $config,
+                                       'filters' => $filters,
+                                       'searchTerm' => $escapedSearch
+                                      ));
+    }
+    function getSearchFilters()
+    {
         $filters = array(array('id'=>'0', 'optionsCategory'=>'Allergens', 'type' => 'negative',
                                'options' => array(array('value' => 'Nut Free', 'id' => '1'),
                                                   array('value' => 'Gluten Free', 'id' => '2'),
@@ -57,11 +67,6 @@ class SearchPageController
                                                   array('value'=>'Halal', 'id'=>'25'),
                                                   array('value'=>'Vegetarian', 'id'=>'26'),
                                                   array('value'=>'Vegan', 'id'=>'27'))));
-
-        $template = $twig->loadTemplate("search/search.twig");
-        return $template->render(array('config' => $config,
-                                       'filters' => $filters,
-                                       'searchTerm' => $escapedSearch
-                                      ));
+        return $filters;
     }
 }
