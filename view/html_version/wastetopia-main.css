@@ -1,9 +1,44 @@
 /* navbar */
 .nav .badge {
   position: absolute;
-  top: -10px;
-  left: 10px;
+  top: 8px;
+  left: 27px;
   font-family: "Roboto","Helvetica","Arial", sans-serif;
+}
+
+.navbar .search-form {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.navbar .search-form .search input{
+  border-radius: 20px;
+  border: none;
+  height: 30px;
+  min-width: 120px;
+  color: black;
+  padding: 5px 10px;
+}
+
+.navbar .search-form .postcode input{
+  border: none;
+  background: none;
+  margin-left: 5px;
+  height: 30px;
+  width: 100px;
+  min-width: 50px;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+}
+
+@media (min-width:1200px) {
+  .navbar .search-form {
+    margin-top: 15px;
+  }
 }
 
 /* Main page */
@@ -610,7 +645,7 @@ a:link, a:hover, a:visited, a:active  {
   height: 100%;
   width: 100%;
   padding-top: 95px;
-  padding-bottom: 115px;
+  padding-bottom: 118px;
   position: relative;
 }
 

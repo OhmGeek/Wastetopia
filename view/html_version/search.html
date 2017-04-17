@@ -24,7 +24,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body style="height: 100vh;">
-  <nav class="navbar navbar-default navbar-fixed-top">
+  <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
     <div class="container-fluid">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
@@ -32,14 +32,18 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="javascript:void(0)">Wastetopia</a>
-      </div>
-      <div class="navbar-collapse collapse navbar-responsive-collapse">
-        <form class="navbar-form navbar-left">
-          <div class="form-group">
-            <input type="text" class="form-control col-sm-8" placeholder="Search">
+        <a class="navbar-brand hidden-xs" href="javascript:void(0)">Wastetopia</a>
+        <a class="navbar-brand hidden-sm hidden-md hidden-lg" href="javascript:void(0)">WT</a>
+        <form class="search-form">
+          <div class="search">
+            <input type="text" placeholder="Search">
+          </div>
+          <div class="postcode">
+            <input type="text" placeholder="Postcode">
           </div>
         </form>
+      </div>
+      <div class="navbar-collapse collapse navbar-responsive-collapse">
         <ul class="nav navbar-nav navbar-right">
           <li><a href="javascript:void(0)"><span class="glyphicon glyphicon-envelope"/></a></li>
           <li><a href="javascript:void(0)"><span class="glyphicon glyphicon-shopping-cart"/></a></li>
@@ -302,7 +306,7 @@
                 <div class="extra">
                   <a href="#" role="button" class="btn-watch"><i class="material-icons">visibility</i></a>
                   <a href="#" role="button" class="btn-watch"><i class="material-icons">message</i></a>
-                <div>
+                </div>
               </div>
             </div>
           </div>
