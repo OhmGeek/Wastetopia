@@ -81,7 +81,7 @@
     align-items: center;
 }
 
-.normal-search, .advance-search, .btn-search-div{
+.normal-search, .btn-search-div{
   display: flex;
   align-items: center;
   flex-wrap: wrap;
@@ -91,7 +91,7 @@
   align-self: flex-end;
 }
 
-.advance-search, .btn-search-div {
+.btn-search-div {
   flex-direction: column;
 }
 
