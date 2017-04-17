@@ -41,7 +41,7 @@ class LoginController {
             // forward the person to the destination/home
             if(isset($dest)) {
                 //forward to the destination uri
-                header('Location: $dest');
+                header('Location: ' . $dest);
                 exit();
             }
             //forward home

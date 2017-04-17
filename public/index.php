@@ -49,16 +49,10 @@ function isUserLoggedIn(){
  */
 function mustBeLoggedIn(){
     // Example of how redirection might be done
-    $CurrentConfig = new CurrentConfig();
-    $config = $CurrentConfig->getAll();
-    $baseURL = $config["ROOT_BASE"];
-    $redirectionURL = $baseURL."/login";
-    if(!($this->isUserLoggedIn())){
-        header('Location: '.$redirectionURL);
-        exit();
-    }else{
-        // DO - nothing, let program continue as normal
+    if(\Wastetopia\Controller\Authenticator::isAuthenticated()) {
+        return true;
     }
+    return false;
 }
 
 
