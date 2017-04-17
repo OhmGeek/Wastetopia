@@ -39,9 +39,9 @@
             <div class="search">
               <input type="text" placeholder="Search">
             </div>
-  					<button type="submit" value="Submit" class="btn-search">
-							<i class="material-icons">search</i>
-						</button>
+            <button type="submit" value="Submit" class="btn-search">
+              <i class="material-icons">search</i>
+            </button>
           </div>
           <div class="postcode">
             <input type="text" placeholder="Postcode">
@@ -65,5 +65,48 @@
       </div>
     </div>
   </nav>
-  </body>
-  </html>
+  <div class="page-padding">
+    <div class="container-fluid">
+      <div class="jumbotron" >
+        <h1>Welcome to <span>Wastetopia</span></h1>
+
+        <p>This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+
+        <p>
+          <a class="btn btn-lg">Login</a>
+          <a class="btn btn-primary btn-lg">Register now</a>
+        </p>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <form class="main-search-form">
+          <div class="normal-search">
+            <div class="form-group search col-xs-12 col-sm-8">
+              <label class="control-label" for="search">Search term</label>
+              <input class="form-control" id="search" type="text">
+            </div>
+            <div class="form-group postcode col-xs-12 col-sm-4">
+              <label class="control-label" for="postcode">Postcode</label>
+              <input class="form-control" id="postcode" type="text">
+            </div>
+          </div>
+          <button type="submit" value="Submit" class="btn btn-search">
+            <i class="material-icons">search</i> SEARCH
+          </button>
+          <div class="advance-search">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="bootstrap-material-design-master/dist/js/ripples.min.js"></script>
+  <script src="bootstrap-material-design-master/dist/js/material.min.js"></script>
+  <script>
+    $(function () {
+      $.material.init();
+    });
+  </script>
+</body>
+</html>
