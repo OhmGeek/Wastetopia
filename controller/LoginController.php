@@ -39,11 +39,11 @@ class LoginController {
         if($outcome['status'] === 'verified') {
             // login success
             // forward the person to the destination/home
-//            if(isset($dest)) {
-//                //forward to the destination uri
-//                header('Location: $dest');
-//                exit();
-//            }
+            if(isset($dest)) {
+                //forward to the destination uri
+                header('Location: $dest');
+                exit();
+            }
             //forward home
             $response->redirect($_ENV['ROOT_BASE']);
         }
