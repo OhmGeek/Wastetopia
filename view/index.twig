@@ -1,104 +1,72 @@
 {% extends 'header.twig' %}
 
 {% block title %}
-    Your page title goes here! Please only put plain text here
+WasteTopia
 {% endblock %}
 
 {% block navbar %}
-    {% include 'navbar.twig' %}
+{% include 'navbar.twig' %}
 {% endblock %}
 
 {% block content %}
-    <div class="well bs-component">
-      <form id="search" class="form-horizontal">
-          <div class="row">
-              <div class="col-xs-10 col-md-11">
-          <input class="form-control" type="text" placeholder="Search"></input>
+<div class="page-padding">
+  <div class="container-fluid">
+    <div class="jumbotron" >
+      <h1>Welcome to <span>Wastetopia</span></h1>
+
+      <p>This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+
+      <p>
+        <a class="btn btn-lg">Login</a>
+        <a class="btn btn-primary btn-lg">Register now</a>
+      </p>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <form class="main-search-form">
+        <div class="normal-search col-xs-12 col-sm-8">
+          <div class="form-group search col-xs-12 col-sm-8">
+            <label class="control-label" for="search">Search term</label>
+            <input class="form-control" id="search" type="text">
           </div>
-          <div class="col-xs-2 col-md-1">
-        <button type="submit" class="btn btn-default">
-            <span class="glyphicon glyphicon-search"/>
-        </button>
+          <div class="form-group postcode col-xs-12 col-sm-4">
+            <label class="control-label" for="postcode">Postcode</label>
+            <input class="form-control" id="postcode" type="text">
           </div>
-            </div>
+        </div>
+        <a class="btn btn-link btn-advanceS" data-toggle="collapse" href="#advanced-options" aria-expanded="false" aria-controls="advanced-options">advanced search</a>
+        <div id="advanced-options" class="col-xs-12 col-sm-8 collapse">
+          <div class="form-group search col-xs-12 col-sm-3">
+            <label class="control-label" for="quantity">Quantity</label>
+            <input class="form-control" id="quantity" type="number" min="0" max="50">
+          </div>
+          <div class="form-group search col-xs-12 col-sm-3">
+            <label class="control-label" for="distance">Distance</label>
+            <input class="form-control" id="distance" type="number" min="0" max="50">
+          </div>
+          {% for itemFilter in filters %}
+          <div class="form-group search col-xs-12 col-sm-6">
+            <label class="control-label" for="{{itemFilter.id}}">{{itemFilter.optionsCategory}}</label>
+            <select id="{{itemFilter.id}}" class="js-example-basic-multiple form-control" multiple="multiple" style="width: 100%;">
+              {% for option in itemFilter.options %}
+              <option value="{{option.value}}" id="{{option.id}}">{{option.value}}</option>
+              {% end for %}
+            </select>
+          </div>
+          {% end for %}
+        </div>
+        <div class="btn-search-div col-xs-12 col-sm-8">
+          <button type="submit" value="Submit" class="btn btn-primary btn-search">
+            <i class="material-icons">search</i> SEARCH
+          </button>
+        </div>
       </form>
+    </div>
+  </div>
 </div>
-<div class="jumbotron">
-    <h1>Jumbotron</h1>
-
-    <p>This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
-
-    <p><a class="btn btn-primary btn-lg">Learn more</a></p>
-</div>
-
-      <div class="panel panel-default">
-        <div class="panel-heading">Recommended</div>
-        <div class="panel-body">
-        <!-- Create the individual sections -->
-            <div>
-                <!-- todo: improve this to make scrollable thumbnails that look pretty -->
-                {% for element in recommendedList %}
-                <a href="{{element.href}}">
-                    <img src="{{element.picSource}}" width=150 height=150>
-                </a>  
-                {% endfor %}
-            </div>
-        </div>
-      </div>
-      
-      <!-- New Section -->
-            <div class="panel panel-default">
-        <div class="panel-heading">New</div>
-        <div class="panel-body">
-        <!-- Create the individual sections -->
-            <div>
-                <!-- todo: improve this to make scrollable thumbnails that look pretty -->
-                {% for element in newList %}
-                <a href="{{element.href}}">
-                    <img src="{{element.picSource}}" width=150 height=150>
-                </a>  
-                {% endfor %}
-            </div>
-        </div>
-      </div>
-      
-      <!-- Popular -->
-            <div class="panel panel-default">
-        <div class="panel-heading">Popular</div>
-        <div class="panel-body">
-        <!-- Create the individual sections -->
-            <div>
-                <!-- todo: improve this to make scrollable thumbnails that look pretty -->
-                {% for element in popularList %}
-                <a href="{{element.href}}">
-                    <img src="{{element.picSource}}" width=150 height=150>
-                </a>  
-                {% endfor %}
-            </div>
-        </div>
-      </div>
-      
-      <!-- Subscribers -->
-            <div class="panel panel-default">
-        <div class="panel-heading">Subscribers</div>
-        <div class="panel-body">
-        <!-- Create the individual sections -->
-            <div>
-                <!-- todo: improve this to make scrollable thumbnails that look pretty -->
-                {% for element in subscriberList %}
-                <a href="{{element.href}}">
-                    <img src="{{element.picSource}}" width=150 height=150>
-                </a>  
-                {% endfor %}
-            </div>
-        </div>
-      </div>
-      
-      <!-- Footer, because without one it looks slightly strange -->
-      <div class="panel-footer">
-        <div class="panel-body">Copyright Team 4, 2016.</div>
-      </div>
 {% endblock %}
 
-{% set jslist = ["name your","custom js","files here"] %}
+{% set jslist = ["plugins/select2-4.0.3/select2.min.js"] %}
 
+{% set csslist = ["plugins/select2-4.0.3/select2.min.css"] %}
