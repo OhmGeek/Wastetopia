@@ -1,0 +1,82 @@
+<div id="home" class="tab-pane fade in active">
+    <div class="container-fluid">
+        <div class="row">
+            <a class="col-sm-3 col-xs-12" role="button" data-toggle="tab" href="#listings">
+                <div class="tile small">
+                    <div class="stat">
+                        <div class="count">{{ listingsCount }}</div>
+                        <h4 class="zero-padding">Items Offered</h4>
+                    </div>
+                    <div class="icon">
+                        <i class="material-icons">chevron_right</i>
+                    </div>
+                </div>
+            </a>
+            <a class="col-sm-3 col-xs-12" role="button" data-toggle="tab" href="#offers">
+                <div class="tile small">
+                    <div class="stat">
+                        <div class="count">{{ itemsOfferedCount }}</div>
+                        <h4 class="zero-padding">Requests Received</h4>
+                    </div>
+                    <div class="icon">
+                        <i class="material-icons">chevron_right</i>
+                    </div>
+                </div>
+            </a>
+            <a class="col-sm-3 col-xs-12" role="button" data-toggle="tab" href="#requests">
+                <div class="tile small">
+                    <div class="stat">
+                        <div class="count">{{ requestsMadeCount }}</div>
+                        <h4 class="zero-padding">Requests Made</h4>
+                    </div>
+                    <div class="icon">
+                        <i class="material-icons">chevron_right</i>
+                    </div>
+                </div>
+            </a>
+            <a class="col-sm-3 col-xs-12" role="button" data-toggle="tab" href="#watchList">
+                <div class="tile small">
+                    <div class="stat">
+                        <div class="count">{{ watchListCount }}</div>
+                        <h4 class="zero-padding">Items in WatchList</h4>
+                    </div>
+                    <div class="icon">
+                        <i class="material-icons">chevron_right</i>
+                    </div>
+                </div>
+            </a>
+            {#<div class="col-sm-6 col-xs-12">#}
+                {#<div class="tile">#}
+                    {#<!-- add graph here, you can refer to the profile folder it contains a template of examples -->#}
+                {#</div>#}
+            {#</div>#}
+            {#<div class="col-sm-6 col-xs-12">#}
+                {#<div class="tile">#}
+                    {#<!-- add another graph here, you can refer to the profile folder it contains a template of examples -->#}
+                {#</div>#}
+            {#</div>#}
+            <div class="col-xs-12 recommendation-section">
+                {{recommendationHTML | raw}}
+            </div>
+            <div class="col-xs-12">
+                {{predictionHTML | raw}}
+            </div>
+
+            <div class = "col-xs-12 recommendation-section">
+                {#{{ adviceHTML | raw }}#}
+                <a class="col-xs-12" role="button" data-toggle="tab" href="#analysis">
+                    <div class="tile">
+                        <div class="stat">
+                            <h4 class="zero-padding"><strong>Advice: </strong></h4>
+                            <p>{{ adviceText }}</p>
+                            <p>Click the arrow to see more in depth analysis</p>
+                        </div>
+                        <div class="icon">
+                            <i class="material-icons">chevron_right</i>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

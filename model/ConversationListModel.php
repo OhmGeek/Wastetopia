@@ -1,14 +1,19 @@
 <?php
-
-
 namespace Wastetopia\Model;
 use PDO;
 use Wastetopia\Model\DB;
 
 
+/**
+ * Class ConversationListModel - Details about general Conversations
+ * @package Wastetopia\Model
+ */
 class ConversationListModel
 {
-	function __construct()
+    /**
+     * ConversationListModel constructor.
+     */
+    function __construct()
 	{
 	    $this->db = DB::getDB();
 	}
@@ -22,13 +27,13 @@ class ConversationListModel
     {
         //$reader = new UserCookieReader();
         //return $reader->get_user_id();
-	return 20; //Hardcoded for now
+	return 6; //Hardcoded for now
     }
 
 
     /**
      * Gets all conversations (with users) in which you are receiving an item.
-     * @return mixed (Array of conversation details, including unread messages for notifications)
+     * @return mixed (Array of conversation details, including number of unread messages for notifications)
      */
     function getConversationsReceiving()
 	{
@@ -118,10 +123,8 @@ class ConversationListModel
      * @param $listingID
      */
     function createConversation($listingID)
-	{
-
+	{	
         $currentUser = $this->getUserID();
-
 		$statement = $this->db->prepare("INSERT INTO Conversation (FK_User_ReceiverID, FK_Listing_ListingID)
 									VALUES (:userID, :listingID)");
 
@@ -177,3 +180,4 @@ class ConversationListModel
 }
 
 ?>
+

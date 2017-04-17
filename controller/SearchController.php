@@ -4,28 +4,116 @@ namespace Wastetopia\Controller;
 
 use Wastetopia\Model\SearchModel;
 use Wastetopia\Model\CardDetailsModel;
+use Wastetopia\Model\UserCookieReader;
 
 class SearchController
 {
     public function __construct()
     {
         $this->searchModel = new SearchModel();
-        $this->CardDetailsModel = new CardDetailsModel();
+        $this->cardDetailsModel = new CardDetailsModel();
     }
 
-    public function recommendationSearch($tagsArr)
+    public function recommendationSearch($tagsArr, $currentUserID)
     {
-        $searchResults = $this->search("", "", "", $tagsArr);
-        return array_slice($searchResults, 0, 4);
+        $results = $this->searchModel->getReccomendationResults($tagsArr, $currentUserID);
+        $ids = array_slice($results, 0, 4);
+
+        $searchResults = [];
+        foreach ($ids as $item) {
+            $result = $this->searchModel->getCardDetails($item["ListingID"]);
+            $result2 = $this->searchModel->getDefaultImage($item["ListingID"]);
+            $searchResults[] = array_merge($result, $result2);
+        }
+
+        return $searchResults;
     }
-    public function JSONSearch($lat, $long, $search, $tagsArr, $pageNumber)
+
+
+    //TODO add notTags and distance limit to search fucntion
+    public function JSONSearch($lat, $long, $search, $tagsArr, $notTagsArr, $distanceLimit, $pageNumber, $order)
     {
-        $offset = 30*$pageNumber;
+        $reader = new UserCookieReader();
+        $userID = $reader->get_user_id();
+
+        $offset = 30*intval($pageNumber);
         $limit = $offset + 30;
-        $searchResults = $this->search($lat, $long, $search, $tagsArr);
+
+        $distance = $distanceLimit * 1000; /*Convert Km in m*/
+
+        $itemInformation = $this->search($lat, $long, $search, $tagsArr, $notTagsArr);
+
+        /*Remove items based on distance limit*/
+        $newItemInformation = array();
+        $userLoc = array('lat' => $lat, 'long' => $long);
+        foreach ($itemInformation as $key => $item) {
+            $itemLoc = array($item['lat'], $item['long']);
+            if($this->haversineDistance($userLoc, $itemLoc) < $distance)
+            {
+                $newItemInformation['key'] = $item;      
+            }
+        }
+        $itemInformation = $newItemInformation;
+
+        switch ($order) {
+            case 'D':
+                if (($lat !== "") && ($long !== ""))
+                {
+                    $sortedInformation = $this->distanceSort($itemInformation, $lat, $long);
+                }
+                else
+                {
+                    $sortedInformation = $itemInformation;
+                }
+                break;
+
+            case 'AZ':
+                $sortedInformation = $this->alphabetSort($itemInformation);
+                break;
+            
+            case 'ZA':
+                $sortedInformation = $this->reverseAlphabetSort($itemInformation);
+                break;
+
+            case 'UR':
+                $sortedInformation = $this->userPopularitySort($itemInformation);
+                break;
+            
+            default:
+                $sortedInformation = $itemInformation;
+                break;
+        }
+        
+        
+
+
+        $searchResults = [];
+        foreach ($sortedInformation as $item)
+        {
+            $result = $this->searchModel->getCardDetails($item["ListingID"]);
+            $result2 = $this->searchModel->getDefaultImage(17);
+            $result['isRequesting'] = $this->searchModel->isRequesting($item["ListingID"], $userID);
+            $result['isWatching'] = $this->searchModel->isWatching($item["ListingID"], $userID);
+            $searchResults[] = array_merge($result, $result2);
+        }
 
         $pageResults = array_slice($searchResults, $offset, $limit);
         return json_encode($pageResults);
+    }
+
+    public function MAPSearch($lat, $long, $search, $tagsArr, $notTagsArr, $distanceLimit)
+    {
+        $itemInformation = $this->search($lat, $long, $search, $tagsArr, $notTagsArr);
+
+        $searchResults = [];
+        foreach ($itemInformation as $item)
+        {
+            $result = $this->searchModel->getCardDetails($item["ListingID"]);
+            $result2 = $this->searchModel->getDefaultImage(17);
+            $searchResults[] = array_merge($result, $result2);
+        }
+
+        return json_encode($searchResults);
     }
 
     /*lat = Latitude
@@ -36,76 +124,80 @@ class SearchController
     /*Limit and Offset are implemented in the wrapper functions
       As custom sorting is needed in the search controller it cannot be done in SQL*/
 
-    private function search($lat, $long, $search, $tagsArr)
+    private function search($lat, $long, $search, $tagsArr, $notTagsArr)
     {
-        $distanceSearch  = false;
-        $nameSearch = false;
-        $tagSearch = false;
 
-        if(!empty($lat) && !empty($long))
+        if(empty($lat) || empty($long))
         {
-            $distanceSearch = true;
+            $lat = false;
+            $long = false;
         }
-        if (!empty($search))
+        if (empty($search))
         {
-            $nameSearch = true;
+            $search = false;
         }
-        if(!empty($tagsArr[0]))
+        if(empty($tagsArr[0]))
         {
-            $tagSearch = true;
+            $tagsArr = false;
+        }
+        if(empty($notTagsArr[0]))
+        {
+            $notTagsArr = false;
         }
 
-        if ($distanceSearch && $nameSearch && $tagSearch) {
-            $itemInformation = $this->searchModel->getSearchResults($lat, $long, $search, $tagsArr);  //Distance, Name and Tags
-        }
-        elseif ($distanceSearch && $nameSearch && !$tagSearch) {
-            $itemInformation = $this->searchModel->getSearchResults($lat, $long, $search, false);      //Distance and Name
-        }
-        elseif ($distanceSearch && !$nameSearch && $tagSearch) {
-            $itemInformation = $this->searchModel->getSearchResults($lat, $long, false, $tagsArr);     //Distance and Tags
-        }
-        elseif (!$distanceSearch && $nameSearch && $tagSearch) {
-            $itemInformation = $this->searchModel->getSearchResults(false, false, $search, $tagsArr);   //Name and Tags
-        }
-        elseif ($distanceSearch && !$nameSearch && !$tagSearch) {
-            $itemInformation = $this->searchModel->getSearchResults($lat, $long, false, false);         //Distance only
-        }
-        elseif (!$distanceSearch && $nameSearch && !$tagSearch) {
-            $itemInformation = $this->searchModel->getSearchResults(false, false, $search, false);       //Name only
-        }
-        elseif (!$distanceSearch && !$nameSearch && $tagSearch) {
-            $itemInformation = $this->searchModel->getSearchResults(false, false, false, $tagsArr);      //Tags only
-        }
-        else {
-            $itemInformation = $this->searchModel->getSearchResults(false, false, false, false);          //No filtering
-        }
-        
-        if($distanceSearch)
-        {
-            $userLocation = array('lat' => $lat,'long' => $long);
-            foreach ($itemInformation as $key => $item)
-            {
-                $itemLocation = array('lat' => $item['Latitude'], 'long' => $item['Longitude']);
-                $distance = $this->haversineDistance($userLocation, $itemLocation);
-                $itemInformation[$key]['distance'] = $distance;           
-            }
 
-            usort($itemInformation, function($a, $b)
-            {
-                if ($a['distance'] < $b['distance']) {return 1;}
-                elseif ($a['distance'] > $b['distance']) {return -1;}
-                else {return 0;}
-            });
-        }
-        
-
-        $searchResults = [];
-        foreach ($itemInformation as $item) {
-            $result = $this->CardDetailsModel->getCardDetails($item["ListingID"]);
-            $searchResults[] = $result[0];
-        }
-        return $searchResults;
+        $itemInformation = $this->searchModel->getSearchResults($lat, $long, $search, $tagsArr, $notTagsArr);
+               
+        return $itemInformation;
     }
+
+    function distanceSort($itemList, $latitude, $longitude){
+
+        $userLocation = array('lat' => $latitude, 'long' => $longitude);
+
+        foreach ($itemList as $key => $item)
+        {
+            $itemLocation = array('lat' => $item['Latitude'], 'long' => $item['Longitude']);
+            $distance = $this->haversineDistance($userLocation, $itemLocation);
+            $itemList[$key]['distance'] = $distance;           
+        }
+
+        usort($itemList, function($a, $b)
+        {
+            if ($a['distance'] < $b['distance']) {return 1;}
+            elseif ($a['distance'] > $b['distance']) {return -1;}
+            else {return 0;}
+        });
+
+        return $itemList;
+    }
+    function alphabetSort($itemList){
+
+        usort($itemList, function($a, $b)
+        {
+            return strcasecmp($a['Name'], $b['Name']);
+        });
+
+        return $itemList;
+    }
+    function reverseAlphabetSort($itemList){
+
+        usort($itemList, function($a, $b)
+        {
+            $bool = strcasecmp($a['Name'], $b['Name']);
+
+            if($bool < 0) {return 1;}
+            elseif($bool > 0) {return -1;}
+            else{return 0;} 
+        });
+
+        return $itemList;
+    }
+    function userPopularitySort($itemList){
+        return $itemList;
+    }
+
+
 
     /*Calculate the distance between point 1 and 2 using the Haversine formula*/
     function haversineDistance($latLong1, $latLong2)

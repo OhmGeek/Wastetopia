@@ -2,19 +2,30 @@
 
 namespace Wastetopia\Controller;
 use Wastetopia\Model\ConversationListModel;
+use Wastetopia\Model\MessageModel;
 use Twig_Loader_Filesystem;
 use Twig_Environment;
 use Wastetopia\Config\CurrentConfig;
 
+/**
+ * Class ConversationListController - Used to generate and handle inputs on the ConversationListPage
+ * @package Wastetopia\Controller
+ */
 class ConversationListController
 {
-	
-	function __construct()
+
+    /**
+     * ConversationListController constructor.
+     */
+    function __construct()
 	{		
 		
-	    //Create UserModel instance
+	    //Create ConversationModel instance
         $this->model = new ConversationListModel();
 
+        // Create MessageModel instance
+	$this->messageModel = new MessageModel();
+		
 	    //Create twig loader
         $loader = new Twig_Loader_Filesystem('../view/');
         $this->twig = new Twig_Environment($loader);
@@ -28,7 +39,8 @@ class ConversationListController
      */
     function generatePage()
 	{
-		
+
+	    // Generate HTML for tabs
 		$receivingTabHTML = $this->generateReceivingTabHTML();
 		$sendingTabHTML = $this->generateSendingTabHTML();
 
@@ -57,6 +69,7 @@ class ConversationListController
      */
     function generateReceivingTabHTML()
     {
+        // Get all conversations for items user is requesting
         $receivingResults = $this->model->getConversationsReceiving();
 		
         //Create arrays of conversation details from results
@@ -76,11 +89,12 @@ class ConversationListController
      */
     function generateSendingTabHTML()
     {
+        // Get all conversations for items user is offering
         $sendingResults = $this->model->getConversationsSending();
 
         //Create arrays of conversation details from results
         $sending = $this->createConversationArray($sendingResults);
-	$isEmpty = (count($sending) == 0);
+	    $isEmpty = (count($sending) == 0);
 	    
         $template = $this->twig->loadTemplate('messaging/MessagesTabsDisplay.twig');
 
@@ -99,19 +113,21 @@ class ConversationListController
         foreach($conversations as $row)
         {
             $otherUser = $row['UserID'];
-	    $userImage = $this->model->getUserImage($otherUser);
+	        $userImage = $this->model->getUserImage($otherUser);
             $firstName = $row['Forename'];
             $lastName = $row['Surname'];
             $conversationID = $row['ConversationID'];
             $itemName = $row['Name'];
             $unread = $row['count']; 
+            $listingID = $row["ListingID"]; // Used instead of conversationID
 
             $conversation = array();
-	    $conversation["userImage"] = $userImage;
+	        $conversation["userImage"] = $userImage;
             $conversation['conversationID'] = $conversationID;
             $conversation['userName'] = $firstName." ".$lastName;
             $conversation['item'] = $itemName;
             $conversation['numUnread'] = $unread;
+            $conversation["listingID"] = $listingID;		
 
             array_push($results, $conversation);
         }
@@ -133,12 +149,13 @@ class ConversationListController
 
 
     /**
-     * Deletes a given conversation and it's associated messages
-     * @param $conversationID
+     * Deletes a conversation from the given listingID and it's associated messages
+     * @param $listingID
      */
-    function deleteConversation($conversationID)
+    function deleteConversation($listingID)
     {
-
+	    $conversationIDs = $this->model->getConversationIDFromListing($listingID);
+	    $conversationID = $conversationIDs[0];	
 	    $this->model->deleteConversation($conversationID);
     }
 	

@@ -6,10 +6,16 @@ use PDO;
 use Wastetopia\Model\DB;
 
 
-
+/**
+ * Class MessageModel - Details of messages within a conversation
+ * @package Wastetopia\Model
+ */
 class MessageModel
 {
-	function __construct()
+    /**
+     * MessageModel constructor.
+     */
+    function __construct()
 	{
 		$this->db = DB::getDB();
 	}
@@ -23,7 +29,7 @@ class MessageModel
 
 //        $reader = new UserCookieReader();
 //        return $reader->get_user_id();
-        return 6; //Hardcoded for now
+        return 6; //Hardcoded for now (6 or 20)
     }
 
 	
@@ -34,6 +40,7 @@ class MessageModel
     */
     function getConversationIDFromListing($listingID){
 	$userID = $this->getUserID();
+
 	$statement = $this->db->prepare("
 		SELECT `Conversation`.`ConversationID`
 		FROM `Conversation`
@@ -48,7 +55,7 @@ class MessageModel
 
 		$statement->execute();
 
-		$results = $statement->fetchAll(PDO::FETCH_ASSOC);    
+		$results = $statement->fetchAll(PDO::FETCH_ASSOC);  
 	        return $results;
 	   
     }
@@ -200,7 +207,7 @@ class MessageModel
 
             SELECT `Item`.`Name` as ItemName, `Item`.`Use_By`,
             `Location`.`Name` as LocationName, `Location`.`Post_Code`,
-            `Listing`.`ListingID`
+            `Listing`.`ListingID`, `Listing`.`Active`
             FROM `Conversation`
             JOIN `Listing` ON `Listing`.`ListingID` = `Conversation`.`FK_Listing_ListingID`
             JOIN `Item` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`

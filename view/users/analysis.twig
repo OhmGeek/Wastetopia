@@ -1,0 +1,103 @@
+<div id="analysis" class="tab-pane fade">
+    <div class="header">
+        <div class="title">
+            <a role="button" data-toggle="tab" href="#home"><i class="material-icons">chevron_left</i></a>
+            Analysis
+        </div>
+    </div>
+    <div class="tab-content zero-padding" style="padding-top:10px; background-color:transparent;">
+        <div id="analysis-section" class="tab-pane fade in active">
+            <div class="container-fluid">
+
+                <div id="charts" height="300px" class = "row">
+                    <div id = "request-chart" class = "col-xs-6">
+                        <div class="center-elements">
+                            <div class = "chart-container" id = "request-chart-container">
+                                <canvas id="requestTagsChart"></canvas>
+                            </div>
+                        </div>
+                        <div class="center-elements">
+                            <form id = "requestRadioButtons">
+                            </form>
+                        </div>
+                    </div>
+
+                    <!--Start of analysis HTML-->
+                    <div id = "sending-chart" class = "col-xs-6">
+                        <div class="center-elements">
+                            <div class = "chart-container" id = "sending-chart-container">
+                                <canvas id="sendingTagsChart"></canvas>
+                            </div>
+                        </div>
+                        <div class="center-elements">
+                            <form id = "sendingRadioButtons">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <br>
+                <br>
+
+                <div id="name-frequencies" class = "row">
+                    <div id = "frequenciesReceiving" class = "col-xs-6">
+                        <div class = "center-elements">
+                            <h4>
+                                Top 5 items you receive
+                            </h4>
+                        </div>
+                        <div >
+                            {% if receivingNames|length > 0 %}
+                                <div class = "center-elements">
+                                    <ul class = "list-group">
+                                        {% for name in receivingNames %}
+                                            <li class="list-group-item">{{ name.name }}  <span class="badge">{{ name.frequency }}</span></li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            {% else %}
+                                <p>
+                                    Not enough data, sorry!
+                                </p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div id = "frequenciesSending" class = "col-xs-6">
+                        <div class = "center-elements">
+                            <h4>
+                                Top 5 items you give away
+                            </h4>
+                        </div>
+                        <div>
+                            {% if sendingNames|length > 0 %}
+                                <div class = "center-elements">
+                                    <ul class = "list-group">
+                                        {% for name in sendingNames %}
+                                            <li class="list-group-item">{{ name.name }} <span class="badge">{{ name.frequency }}</span></li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            {% else %}
+                                <p>
+                                    Not enough data, sorry!
+                                </p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <!--End of analysis HTML-->
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+

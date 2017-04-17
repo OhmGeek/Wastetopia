@@ -1,0 +1,271 @@
+<?php
+
+/**
+ * Created by PhpStorm.
+ * User: Stephen
+ * Date: 13/03/2017
+ * Time: 15:06
+ */
+
+namespace Wastetopia\Model;
+use Wastetopia\Model\DB;
+use PDO;
+
+
+/**
+ * Class AnalysisModel - Functions to get frequencies of Tags and Names
+ * @package Wastetopia\Model
+ */
+class AnalysisModel
+{
+
+    /**
+     * AnalysisModel constructor.
+     */
+    public function __construct()
+    {
+        $this->db = DB::getDB();
+    }
+
+    /**
+     * Returns the ID of the user currently logged in
+     * @return string
+     */
+    private function getUserID()
+    {
+        //$reader = new UserCookieReader();
+        //return $reader->get_user_id();
+        return 6; //Hardcoded for now
+    }
+
+   
+    /**
+     * Gets a list of Tag Names along with their frequencies for current user's listings (includes current quantity and transactions quantity)
+     * @param $categoryIDArray - Array of CategoryIDs to match: Optional - defaults to empty array => checks all category IDs
+     * @return array - In Descending order by Frequency
+     */
+    function getTagFrequenciesForListings($categoryIDArray = array())
+    {
+        $userID = $this->getUserID();
+
+        // Start sql query
+        // Inner table gets Tags with their quantity in successful transactions
+        // Outer table gets Tags with their current quantity in user's listing
+        // Join Tables to get total quantity for all time for each Tag
+        $sql = "SELECT `Tag`.`Name`, `Tag`.`TagID`, (SUM(`Listing`.`Quantity`) + SUM(`Inner`.`Transactions_Quantity`)) AS `Count`
+                FROM `Tag` 
+                JOIN `ItemTag` ON `ItemTag`. `FK_Tag_TagID` = `Tag`.`TagID`
+                JOIN `Item` ON `Item`.`ItemID` = `ItemTag`.`FK_Item_ItemID`
+                JOIN `Listing` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
+                JOIN `User` ON `UserID` = `Listing`.`FK_User_UserID`
+                JOIN (SELECT `Item`.`ItemID`, `Item`.`Name`, `ListingTransaction`.`Quantity` AS `Transactions_Quantity`
+                                        FROM `ListingTransaction`
+                                        JOIN `Listing` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
+                                        JOIN `User` ON `User`.`UserID` = `Listing`.`FK_User_UserID`
+                                        JOIN `Item` ON `Item`.`ItemID` = `Listing`.`FK_Item_ItemID`
+                                        WHERE `ListingTransaction`.`Success` = 1) AS `Inner`
+                ON `Inner`.`ItemID` = `Item`.`ItemID`
+                WHERE `User`.`UserID` = :userID ";
+
+        // Add TagID matches to Query
+        // Using OR so can match some of them
+        if(count($categoryIDArray) != 0){
+            $sql .= "AND ("; 
+            // Add the first CategoryID check
+            $categoryID = $categoryIDArray[0];
+            $sql .= "`Tag`.`FK_Category_Category_ID` = :category".$categoryID;
+            
+            // Add all of the CategoryIDs to the SQL statement
+            for($x = 1; $x < count($categoryIDArray); $x ++){
+                $categoryID = $categoryIDArray[$x];
+                // Add this with OR so it can match any of them
+                $sql .= "OR `Tag`.`FK_Category_Category_ID` = :category".$categoryID;
+            }
+            
+            $sql .= ")"; // End the category section
+        }
+        
+        // Group into Tag Name and order by count in descending order
+        $sql .= "GROUP BY `Tag`.`Name`
+                ORDER BY `Count` DESC;";
+        
+        //Prepare the SQL statement
+        $statement = $this->db->prepare($sql); 
+
+        $statement->bindValue(":userID", $userID, PDO::PARAM_STR);
+        
+        if(count($categoryIDArray) != 0){
+            // Bind all of the categoryIDs to the statement
+            for($x = 0; $x < count($categoryIDArray); $x ++){
+                $categoryID = $categoryIDArray[$x];
+                $statement->bindValue(":category".$categoryID, $categoryID, PDO::PARAM_STR);
+            }
+            
+        }
+        
+        $statement->execute();
+
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+}
+    
+    /**
+     * Gets a list of Tag Names along with their frequencies for items the user has received 
+     * @param $categoryIDArray (Optional - defaults to empty array => checks all category IDs. Array of CategoryIDs to match)
+     * @return array - In descending order by frequency
+     */
+    function getTagFrequenciesForTransactions($categoryIDArray = array())
+    {
+
+        $userID = $this->getUserID();
+        
+        $sql = "SELECT `Tag`.`Name`,  `Tag`.`TagID`, SUM(`ListingTransaction`.`Quantity`) as `Count`
+                FROM `Tag` 
+                JOIN `ItemTag` ON `ItemTag`. `FK_Tag_TagID` = `Tag`.`TagID`
+                JOIN `Item` ON `Item`.`ItemID` = `ItemTag`.`FK_Item_ItemID`
+                JOIN `Listing` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
+                JOIN `ListingTransaction` ON `ListingTransaction`.`FK_Listing_ListingID` = `Listing`.`ListingID`
+                JOIN `Transaction` ON `Transaction`.`TransactionID` = `ListingTransaction`.`FK_Transaction_TransactionID`
+                JOIN `User` ON `UserID` = `Transaction`.`FK_User_UserID`
+                WHERE `User`.`UserID` = :userID
+                ";
+        
+        if(count($categoryIDArray) != 0){
+            $sql .= "AND ("; 
+            // Add the first CategoryID check
+            $categoryID = $categoryIDArray[0];
+            $sql .= "`Tag`.`FK_Category_Category_ID` = :category".$categoryID;
+            
+            // Add all of the CategoryIDs to the SQL statement
+            for($x = 1; $x < count($categoryIDArray); $x ++){
+                $categoryID = $categoryIDArray[$x];
+                // Add this with OR so it can match any of them
+                $sql .= "OR `Tag`.`FK_Category_Category_ID` = :category".$categoryID;
+            }
+            
+            $sql .= ")"; // End the category section
+        }
+        
+        // Group into Tag Name and order by count in descending order
+        $sql .= "AND `ListingTransaction`.`Success` = 1
+                GROUP BY `Tag`.`Name`
+                ORDER BY `Count` DESC;";
+        
+       
+        //Prepare the SQL statement
+        $statement = $this->db->prepare($sql); 
+
+        $statement->bindValue(":userID", $userID, PDO::PARAM_STR);
+        
+        if(count($categoryIDArray) != 0){
+            // Bind all of the categoryIDs to the statement
+            for($x = 0; $x < count($categoryIDArray); $x ++){
+                $categoryID = $categoryIDArray[$x];
+                $statement->bindValue(":category".$categoryID, $categoryID, PDO::PARAM_STR);
+            }
+            
+        }
+        
+        $statement->execute();
+
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+    }
+    
+
+    /**
+    * Returns the frequencies of Names of items user is giving away
+    * Frequncy calculated as SUM of quantities for successful transactions + SUM of current quantity left
+    * @return array - In descending Order by frequency
+    */
+    function getTotalNameFrequenciesSending(){
+       $userID = $this->getUserID();
+
+        // Inner table gets Items with their quantity in successful transactions
+        // Outer table gets Items with their current quantity in user's listing
+        // Join Tables to get total quantity for all time for each item
+        // Then grouped by Name and Ordered By Count
+        $statement = $this->db->prepare("
+            SELECT `Item`.`ItemID`, `Item`.`Name`, (SUM(`Listing`.`Quantity`) + SUM(`Inner`.`Transactions_Quantity`)) AS `Count`
+            FROM `Item`
+            JOIN `Listing` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
+            JOIN  `User` ON `Listing`.`FK_User_UserID` = `User`.`UserID`
+            LEFT JOIN (SELECT `Item`.`ItemID`, `Item`.`Name`, `ListingTransaction`.`Quantity` AS `Transactions_Quantity`
+                        FROM `ListingTransaction`
+                        JOIN `Listing` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
+                        JOIN `User` ON `User`.`UserID` = `Listing`.`FK_User_UserID`
+                        JOIN `Item` ON `Item`.`ItemID` = `Listing`.`FK_Item_ItemID`
+                        WHERE `ListingTransaction`.`Success` = 1) AS `Inner` 
+                ON `Inner`.`ItemID` = `Item`.`ItemID`
+            WHERE `User`.`UserID` = :userID
+            GROUP BY `Item`.`Name`
+            ORDER BY `Count` DESC;
+        ");
+        
+        $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
+        $statement->execute();
+
+
+        return $statement->fetchAll(PDO::FETCH_ASSOC); 
+    }
+
+
+
+    /**
+     * Returns the frequencies of Names of items user is giving away
+     * Frequncy calculated as SUM of quantities for successful transactions + SUM of current quantity left
+     * @return array - In descending order by frequency
+     */
+    function getTotalNameFrequenciesReceiving(){
+        $userID = $this->getUserID();
+
+        $statement = $this->db->prepare("
+           SELECT `Item`.`ItemID`, `Item`.`Name`, SUM(`ListingTransaction`.`Quantity`) AS `Count`
+                FROM `Item`
+				JOIN `Listing` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
+				JOIN `ListingTransaction` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
+                JOIN `Transaction` ON `Transaction`.`TransactionID` = `ListingTransaction`.`FK_Transaction_TransactionID`
+                JOIN `User` ON `User`.`UserID` = `Transaction`.`FK_User_UserID`
+                WHERE `ListingTransaction`.`Success` = 1
+				AND `User`.`UserID` = :userID
+				GROUP BY `Item`.`Name`
+            ORDER BY `Count` DESC;
+        ");
+
+        $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
+        $statement->execute();
+
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
+    /**
+     * Returns array of category names and IDs
+     * @return array
+     */
+    function getCategoryNamesAndIDs()
+    {
+        $statement = $this->db->prepare("
+            SELECT *
+            FROM Category;
+        ");
+
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * Returns array of TagNames for the given category
+     * @param $categoryID
+     * @return array
+     */
+    function getTagNamesFromCategory($categoryID){
+        $statement = $this->db->prepare("
+            SELECT `Tag`.`Name`
+            FROM `Tag`
+            WHERE `Tag`.`FK_Category_Category_ID` = :categoryID;
+        ");
+
+        $statement->bindValue(":categoryID", $categoryID, PDO::PARAM_INT);
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+    }
+}
