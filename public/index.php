@@ -116,7 +116,11 @@ $klein->respond("GET", "/login", function($request, $response) {
   return $controller->index($response);
 });
 
-
+$klein->respond("GET", "/logout", function($request, $response) {
+    header("Cache-Control: no-store, must-revalidate, max-age=0");
+    $_COOKIE['gpwastetopia'] = null; // set the cookie to be null
+    return "You have been logged out. You can now close the browser.";
+});
 
 $klein->with('/register', function() use ($klein){
   
