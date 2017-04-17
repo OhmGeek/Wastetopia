@@ -13,6 +13,6 @@ class Token {
 
     public static function verify_token($auth_token, $user_id) {
         $expected_token = self::generate_token($user_id);
-	    return ($expected_token === $auth_token);
+	    return ($expected_token == $auth_token);
     }
 }
