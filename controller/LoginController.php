@@ -43,7 +43,6 @@ class LoginController {
             if(isset($dest)) {
                 //forward to the destination uri
                 $response->redirect($_ENV['ROOT_BASE'] . $dest);
-                exit();
             }
             //forward home
             else {
