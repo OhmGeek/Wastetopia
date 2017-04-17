@@ -117,15 +117,12 @@ Search
   <div id="map" class="tab-pane fade">
     <div class="container-fluid">
       <div id="search-map"></div>
-      <!-- <script src="mapSearch.js"></script>
-      <script src="plugins/MarkerClusterer/markerclusterer.js">
-         </script>
       <script async defer
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCrh2cKWRAFifeLIkznE2Iw4Oblqlmyyt0&callback=initMap">
-     </script> -->
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCrh2cKWRAFifeLIkznE2Iw4Oblqlmyyt0">
+     </script>
     </div>
   </div>
 </div>
 {% endblock %}
 
-{% set jslist = ["plugins/isotope/isotope.pkgd.min.js", "plugins/noUiSlider/nouislider.min.js", "plugins/wnumb-1.1.0/wNumb.js", "searchPage.js", "search.js"] %}
+{% set jslist = ["plugins/isotope/isotope.pkgd.min.js", "plugins/MarkerClusterer/markerclusterer.js","plugins/noUiSlider/nouislider.min.js", "plugins/wnumb-1.1.0/wNumb.js", "searchPage.js", "search.js", "mapSearch.js"] %}
