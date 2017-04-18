@@ -9,6 +9,7 @@ class User {
     public static function verify_credentials($username, $password) {
 	    print_r("Username: ".$username);
 	    print_r("Password: ".$password);
+	    print_r("Password length: ".strlen($password));
         $db = DB::getDB();
 
         $statement = $db->prepare("SELECT Password_Hash, Salt
