@@ -52,6 +52,7 @@ function initMap() {
     google.maps.event.trigger(map, "resize");
 
   setTimeout(function() {
+    console.log(bounds.getCenter())
       map.setCenter(bounds.getCenter());
   }, 100)
   }
