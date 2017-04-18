@@ -4,13 +4,15 @@ var lat = 54.774759
 var long = -1.570329
 var searchTerm = 'b'
 
-var url = window.location.protocol + "//" + window.location.host + '/api/search/map///' + searchTerm + '////';
+var url = window.location.protocol + "//" + window.location.host + '/api/search/map/'+ lat +'/' + long + '/' + searchTerm + '////';
 
 
 var geocoder;
 var map;
 var bounds;
 var markerIcon;
+var markerPinURL = window.location.protocol + "//" + window.location.host + "/js/icons/placePin.png"
+var markerCloseURL = window.location.protocol + "//" + window.location.host + "/js/icons/close.png"
 
 function initMap() {
   console.log("i'm in initMap")
@@ -23,7 +25,7 @@ function initMap() {
     console.log(map)
     bounds = new google.maps.LatLngBounds();
     markerIcon = {
-      url: 'icons/placePin.png',
+      url: markerPinURL,
       scaledSize: new google.maps.Size(30, 30),
       origin: new google.maps.Point(0, 0),
       anchor: new google.maps.Point(15, 30)
@@ -121,7 +123,7 @@ function initMap() {
         iwCloseBtn.css({opacity: '1', right: '55px', top: '20px','box-shadow': '0', width: '25px', height: '25px'});
 
         // Change the default close-icon
-        var iwCloseImg = iwCloseBtn.children(':nth-child(1)').attr('src','icons/close.png');
+        var iwCloseImg = iwCloseBtn.children(':nth-child(1)').attr('src',markerCloseURL);
         iwCloseImg.css({width: '100%', height : '100%', position: 'relative', top:'0',left:'0'})
       });
       iw.open(map, marker);
