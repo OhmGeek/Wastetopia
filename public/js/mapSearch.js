@@ -51,11 +51,10 @@ function initMap() {
   }
 
   function containPosition(pos){
-    var posString = JSON.stringify(pos)
-    for (var position in positions) {
+    for (var i in positions) {
       console.log(JSON.stringify(pos))
-      console.log(JSON.stringify(position))
-      if (posString.localeCompare(JSON.stringify(position))) {
+      console.log(JSON.stringify(positions[i]))
+      if (JSON.stringify(pos) == JSON.stringify(positions[i])) {
         console.log('true')
         return true;
       }
