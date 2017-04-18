@@ -31,35 +31,11 @@ use Wastetopia\Model\NotificationModel;
 use Wastetopia\Controller\AnalysisController;
 
 
-/**
- * Returns True if getUserID doesn't return "" or null
- * @return bool True if user is logged in
- */
-function isUserLoggedIn(){
-    //$reader = new UserCookieReader();
-    //$userID$reader->get_user_id();
-    $userID = 6; //Hardcoded for now
-    return $userID !== ""; // Assume get_user_id() returns "" or null if not logged in?
-}
-
 
 /**
  * Function to be called at start of routing for any route where user must be logged in to access
  * @return - Nothing, either redirects user to login page and exits or just returns to function that called it
  */
-function mustBeLoggedIn(){
-    // Example of how redirection might be done
-    $CurrentConfig = new CurrentConfig();
-    $config = $CurrentConfig->getAll();
-    $baseURL = $config["ROOT_BASE"];
-    $redirectionURL = $baseURL."/login";
-    if(!($this->isUserLoggedIn())){
-        header('Location: '.$redirectionURL);
-        exit();
-    }else{
-        // DO - nothing, let program continue as normal
-    }
-}
 
 
 // check if we should use production? Otherwise, use community.
@@ -68,7 +44,14 @@ $config = new CurrentConfig();
 $config->loadConfig($mode);
 $base  = dirname($_SERVER['PHP_SELF']);
 
-
+function forceLogin($destRoute) {
+    if(!\Wastetopia\Controller\Authenticator::isAuthenticated()) {
+        //redirect to the current route
+        header("Location: " . $_ENV['ROOT_BASE'] . '/login?dest='. urlencode($_SERVER['REQUEST_URI']));
+        exit();
+    }
+    return true;
+}
 //// Update request when we have a subdirectory
 if(ltrim($base, '/')){
     $_SERVER['REQUEST_URI'] = substr($_SERVER['REQUEST_URI'], strlen($base));
@@ -117,11 +100,17 @@ $klein->respond('GET', '/search/[:search]?', function ($request, $response) {
 
 
 $klein->respond("GET", "/login", function($request, $response) {
+  header("Cache-Control: no-store, must-revalidate, max-age=0");
+  error_log($request->dest);
   $controller = new LoginController();
-  return $controller->index($response);
+  return $controller->index($response, urldecode($request->dest));
 });
 
-
+$klein->respond("GET", "/logout", function($request, $response) {
+    header("Cache-Control: no-store, must-revalidate, max-age=0");
+    setcookie("gpwastetopiadata", null);
+    return "You have been logged out. You can now close the browser.";
+});
 
 $klein->with('/register', function() use ($klein){
   
@@ -167,31 +156,25 @@ $klein->with('/register', function() use ($klein){
 });
 
 
-$klein->respond("GET", "/get-env", function() {
-   $envStr = "DB Host: " . $_ENV['DB_HOST'] . "\n";
-    $envStr .= "DB_NAME " . $_ENV['DB_NAME'] . "\n";
-    $envStr .= "DB_USER " . $_ENV['DB_USER'] . "\n";
-    $envStr .= "DB_PASS " . $_ENV['DB_PASS'] . "\n";
-    echo "Printing stuff now \n";
-    return $envStr;
-});
-
 
 // Used for charts - needs testing
 $klein->with("/analysis", function() use ($klein){
 
     $klein->respond('GET', '/?', function($request, $response){
+        forceLogin($request->uri());
         $controller = new AnalysisController();
         return $controller->generatePage();
     });
 
     $klein->respond('GET', '/categories', function($request, $response){
+        forceLogin($request->uri());
         $controller = new AnalysisController();
         return $controller->getCategoryDetailsJSON();
     });
 
 
     $klein->respond('GET', '/get-request-tags/[:categoryID]', function($request, $response){
+        forceLogin($request->uri());
        $categoryID = $request->categoryID;
        $categoryIDs = array();
        array_push($categoryIDs, $categoryID);
@@ -201,6 +184,7 @@ $klein->with("/analysis", function() use ($klein){
 
 
     $klein->respond('GET', '/get-sending-tags/[:categoryID]', function($request, $response){
+        forceLogin($request->uri());
         $categoryID = $request->categoryID;
         $categoryIDs = array();
         array_push($categoryIDs, $categoryID);
@@ -210,12 +194,14 @@ $klein->with("/analysis", function() use ($klein){
 
 
     $klein->respond('GET', '/get-request-names', function($request, $response){
+        forceLogin($request->uri());
         $controller = new AnalysisController();
         return $controller->getTotalNameFrequenciesReceiving();
     });
 
 
     $klein->respond('GET', '/get-sending-names', function($request, $response){
+        forceLogin($request->uri());
         $controller = new AnalysisController();
         return $controller->getTotalNameFrequenciesSending();
     });
@@ -225,6 +211,7 @@ $klein->with("/analysis", function() use ($klein){
 $klein->with("/profile", function() use ($klein) {
 
    $klein->respond('GET', '/?', function($request, $response){
+       forceLogin($request->uri());
         $controller = new ProfilePageController(1); //View own profile
         return $controller->generatePage();
     });
@@ -235,11 +222,14 @@ $klein->with("/profile", function() use ($klein) {
     });
     
     $klein->respond('GET', '/update/[:userID]', function($request, $response){
+        forceLogin($request->uri());
        $controller = new ProfilePageController(0, $request->userID);
        return $controller->generateProfileContentHTML(); 
     });
     
     $klein->respond('GET', '/load-home-tab/[:userID]', function($request, $response){
+
+        forceLogin("/profile/load-home-tab/" . $request->userID);
         $controller = new ProfilePageController(0, $request->userID);
         return $controller->generateHomeSection(); 
     });
@@ -292,6 +282,7 @@ $klein->with("/profile", function() use ($klein) {
     
     // Needs testing
     $klein->respond('POST', '/change-password', function($request, $response){
+        forceLogin($request->uri());
         $oldPassword = $request->oldPassword;
         $newPassword = $request->newPassword;
         $controller= new ProfilePageController(1);
@@ -306,6 +297,7 @@ $klein->with("/profile", function() use ($klein) {
     
     // Needs testing
     $klein->respond('POST', '/change-profile-picture', function($request, $response){
+        forceLogin($request->uri());
         $files = $request->files();        
         $controller = new ProfilePageController(1);
         return $controller->changeProfilePicture($files);
@@ -313,6 +305,7 @@ $klein->with("/profile", function() use ($klein) {
    
     //Needs testing
     $klein->respond('POST', '/change-email', function($request, $response){
+        forceLogin($request->uri());
         $oldEmail = $request->oldEmail;
         $newEmail = $request->newEmail;
         $controller = new ProfilePageController(1);
@@ -337,6 +330,7 @@ $klein->with('/items', function () use ($klein) {
 
     
     $klein->respond('POST', '/request/?', function ($request, $response) {
+        forceLogin($request->uri());
         // Show a single user
         $listingID = $request->listingID;
         $quantity = $request->quantity;
@@ -345,6 +339,7 @@ $klein->with('/items', function () use ($klein) {
     });
     
     $klein->respond('POST', '/confirm-request/?', function($request, $response){
+        forceLogin($request->uri());
         $listingID = $request->listingID; // Might not have this information
         $transactionID = $request->transactionID; // Can use this to get listingID
         $quantity = $request->quantity; // Assume it is given by default
@@ -353,6 +348,7 @@ $klein->with('/items', function () use ($klein) {
     });
     
     $klein->respond('POST', '/reject-request/?', function($request, $response){
+        forceLogin($request->uri());
         $listingID = $request->listingID; // Might not have this information
         $transactionID = $request->transactionID; // Can use this to get listingID
         $model = new RequestModel();
@@ -360,6 +356,7 @@ $klein->with('/items', function () use ($klein) {
     });
     
     $klein->respond('POST', '/cancel-request/?', function($request, $response){
+        forceLogin($request->uri());
         $transactionID = $request->transactionID; // Can use this to get listingID
         print_r($transactionID);
         $model = new RequestModel();
@@ -367,6 +364,7 @@ $klein->with('/items', function () use ($klein) {
     });
     
     $klein->respond('POST', '/cancel-request-listing/?', function($request, $response){
+        forceLogin($request->uri());
         $listingID = $request->listingID;
         $model = new RequestModel();
         $transactionID = $model->getTransactionIDFromListingID($listingID);
@@ -374,6 +372,7 @@ $klein->with('/items', function () use ($klein) {
     });
     
     $klein->respond('POST', '/renew-listing/?', function($request, $response){
+        forceLogin($request->uri());
         $listingID = $request->listingID;
         $newQuantity = $request->quantity;
         $newUseByDate = $request->useByDate;
@@ -382,6 +381,7 @@ $klein->with('/items', function () use ($klein) {
     });
     
     $klein->respond('POST', '/remove-listing/?', function($request, $response){
+        forceLogin($request->uri());
         $listingID = $request->listingID;
         $model = new RequestModel();
         return $model->withdrawListing($listingID);
@@ -389,6 +389,7 @@ $klein->with('/items', function () use ($klein) {
     
     // Not sure whether to move this to profile page as this will be where it is used
     $klein->respond('POST', '/rate-user/?', function($request, $response){
+        forceLogin($request->uri());
         $transactionID = $request->transactionID;
         $rating = $request->rating;
         $model = new PopularityModel();
@@ -404,18 +405,14 @@ $klein->with('/api', function () use ($klein) {
         $controller = new LoginController();
         $username = $request->email;
         $password = $request->password;
-        $dest = $_ENV['ROOT_BASE'];
+        $dest = $request->dest;
         return $controller->login($username, $password, $dest, $response);
-    });
-    $klein->respond('GET', '/[:id]', function ($request, $response) {
-        // Show a single user
-        $itemID = $request->id;
-        return "Show Item " . $itemID;
     });
 });
 // todo authenticate on messages. Must be logged in to view correct messages.
 $klein->with('/messages', function () use ($klein) {
     $klein->respond('GET', '/?', function ($request, $response) {
+        forceLogin($request->uri());
       // Show all conversations
       $controller = new ConversationListController();
       return $controller->generatePage();
@@ -423,6 +420,7 @@ $klein->with('/messages', function () use ($klein) {
     // these are the API based messaging tasks
     // todo: error/failure in response.
     $klein->respond('POST', '/send', function ($request, $response) {
+        forceLogin($request->uri());
         //send a message
         //we need the conversationID and the message.
         $conversationID = $request->conversationID;
@@ -434,26 +432,31 @@ $klein->with('/messages', function () use ($klein) {
         return "";
     });
     $klein->respond('POST', '/delete-conversation', function ($request, $response) {
+        forceLogin($request->uri());
       $controller = new ConversationListController();
       $conversationID = $request->conversationID;
       $controller->deleteConversation($conversationID);
       return "";
     });
     $klein->respond('GET', '/poll-sending', function ($request, $response) {
+        forceLogin($request->uri());
       $controller = new ConversationListController();
       return $controller->generateSendingTabHTML();
     });
     $klein->respond('GET', '/poll-receiving', function ($request, $response) {
+        forceLogin($request->uri());
       $controller = new ConversationListController();
       return $controller->generateReceivingTabHTML();
     });
     $klein->respond('GET', '/poll-messages/[:conversationID]', function ($request, $response) {
+        forceLogin($request->uri());
       $conversationID = $request->conversationID;
       $controller = new MessageController();
       return $controller->generateMessageDisplay($conversationID);
     });
 
     $klein->respond('GET', '/conversation/[:listingID]', function ($request, $response) {
+        forceLogin($request->uri());
         // view a specific conversation
         $listingID = $request->listingID;
         $controller = new MessageController();

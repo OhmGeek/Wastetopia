@@ -2,6 +2,8 @@
 
 namespace Wastetopia\Model;
 
+use PDO;
+
 class User {
 
     public static function verify_credentials($username, $password) {
@@ -17,9 +19,11 @@ class User {
 
         $calculated_hash = hash('sha256', $pwd_deets[0]['Salt'].$password);
 
-        if($calculated_hash == $pwd_deets[0]['Password_Hash']) {
+        if($calculated_hash === $pwd_deets[0]['Password_Hash']) {
+            error_log("User verified");
             return true;
         }
+        error_log("User not verified");
         return false;
     }
     public static function get_id_from_username($username) {

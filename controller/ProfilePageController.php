@@ -14,7 +14,7 @@ use Twig_Environment;
 use Wastetopia\Controller\RegistrationController; // For email verification functions
 use Wastetopia\Controller\AnalysisController;   // For Advice Tab
 use Wastetopia\Controller\RecommendationController; // For Recommendations and Predictions tab
-
+use Wastetopia\Model\UserCookieReader;
 use Wastetopia\Model\ProfilePageModel;
 use Wastetopia\Model\CardDetailsModel;
 
@@ -60,9 +60,8 @@ class ProfilePageController
      */
     private function getUserID()
     {
-        // $reader = new UserCookieReader();
-        // return $reader->get_user_id();
-        return 6; // Usually 6
+         $reader = new UserCookieReader();
+         return $reader->get_user_id();
     }
 
     /**
