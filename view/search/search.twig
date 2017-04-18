@@ -10,8 +10,8 @@ Search
 
 {% block content %}
 <!-- Create the search results window -->
-<div id="searchTerm" data-searchTerm="{{searchTerm}}">testytestytest</div>
-<div class="search-advance" style="padding-top:65px;">
+<div class="search-header">
+<div class="search-options">
   <div class="btn-group zero-padding" id="filter-dropdown">
     <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Filter
       <span class="caret"></span></button>
@@ -67,6 +67,7 @@ Search
   </div>
 </div>
 <div id="filters-picked"></div>
+</div>
 <div class="tab-content search-result">
   <div id="grid" class="tab-pane fade in active">
     <div class="container-fluid">
