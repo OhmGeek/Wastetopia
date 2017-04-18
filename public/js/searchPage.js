@@ -282,7 +282,6 @@ $(function () {
   $('#btn-map').on('click', function(event){
     $('#btn-grid').removeClass('hide')
     $('#btn-map').addClass('hide')
-    new google.maps.event.trigger(map, 'resize'); 
   })
 
   $('#btn-grid').on('click', function(event){

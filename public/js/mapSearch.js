@@ -130,14 +130,13 @@ function initMap() {
       iw.open(map, marker);
     });
   }
-
-  new google.maps.event.addListener(map, "idle", function(){
-        new google.maps.event.trigger(map, 'resize');
 });
-
-  map.setZoom( map.getZoom() - 1);
-  map.setZoom( map.getZoom() + 1);
 
 $(function(){
   initMap()
+  google.maps.event.addListener(map, "idle", function(){
+        google.maps.event.trigger(map, 'resize');
+  }
+  map.setZoom( map.getZoom() - 1);
+  map.setZoom( map.getZoom() + 1);
 })
