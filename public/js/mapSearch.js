@@ -17,7 +17,7 @@ var latAdd = 0.0001, latSub = 0.0001, longAdd = 0.0001, longSub = 0.0001
 
 function initMap() {
   map = new google.maps.Map(
-    document.getElementById("map"), {
+    document.getElementById("search-map"), {
       center: new google.maps.LatLng(lat, long),
       minZoom: 5,
       mapTypeId: google.maps.MapTypeId.ROADMAP
