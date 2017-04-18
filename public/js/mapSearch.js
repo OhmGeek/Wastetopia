@@ -3,7 +3,8 @@ var searchTerm = 'apple'
 // var url = window.location.protocol + "//" + window.location.host + "/" + 'search/json/' + searchTerm
 // the proper link for the search wastetopia.herokuapp.com/api/search/map/<user latitude>/<user longitude>/<search term>/<tag+ids+split+by+signs>/<tags+to+disclude>/
 
-var url = 'https://wastetopia-pr-25.herokuapp.com/search/JSON/' + searchTerm
+var url = window.location.protocol + "//" + window.location.host + '/api/search/map/' + lat + '/' + long + '/' + searchTerm + '///';
+
 
 var geocoder;
 var map;
