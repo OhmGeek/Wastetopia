@@ -24,10 +24,9 @@ class RequestModel
      * @return string
      */
     function getUserID()
-    {
-//        $reader = new UserCookieReader();
-//        return $reader->get_user_id();
-        return 6; //Hardcoded for now
+    {	
+        $reader = new UserCookieReader();
+         return $reader->get_user_id();
     }
 
 	
