@@ -329,7 +329,10 @@ $(function () {
             var url = baseURL + "/profile/change-password";
             var data = {oldPassword: oldPassword, newPassword: newPassword};
 
+            console.log(data);
+            console.log(url);
             $.post(url, data, function (response) {
+                console.log(response);
                 var json = $.parseJSON(response);
                 if (json.hasOwnProperty("error")) {
                     console.log("Error occurred");
