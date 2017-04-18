@@ -64,6 +64,8 @@ function initMap() {
 
   function infoWindow(marker, map, item) {
     google.maps.event.addListener(marker, 'click', function() {
+      console.log(parseFloat(item.Latitude))
+      console.log(parseFloat(item.Longitude))
       var contentString = '<div class="iw-container">'+
       '<div class="iw-header">'+
       '<img class="user-image" src="flowery.jpg"/>' +
