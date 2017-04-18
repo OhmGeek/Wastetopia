@@ -573,6 +573,7 @@ class ProfilePageModel
     function resetAccount($userID){
 	// Change verification code
 	$newVerificationCode = $this->generateSalt(); 
+	    error_log("New code: ".$newVerificationCode);
 	    
 	$statement = $this->db->prepare("
 		UPDATE 	`User`
