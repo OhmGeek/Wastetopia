@@ -150,7 +150,7 @@ class RegistrationModel
 //         }
         
         print_r("Password: ".$password);
-        
+        print_r("  Password length: ".strlen($password));
         
         $salt = $this->generateSalt();
         $passwordHash = hash('sha256',$salt.$password);
