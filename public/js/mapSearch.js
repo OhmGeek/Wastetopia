@@ -39,7 +39,6 @@ function initMap() {
         geocodeAddress(items[i]);
       }
     })
-    google.maps.event.trigger(map, 'resize'); 
   }
 
   function geocodeAddress(item) {
@@ -131,3 +130,7 @@ function initMap() {
       iw.open(map, marker);
     });
   }
+
+$(function(){
+  initMap()
+})
