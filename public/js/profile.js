@@ -34,7 +34,7 @@ $(function () {
 
 
     // Displays an error message in the appropriate place
-    function displaySucces(message) {
+    function displaySuccess(message) {
         var successDiv = $("<div>").addClass("alert alert-success fade in");
 
         // Add error to the div
