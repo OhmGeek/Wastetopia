@@ -55,7 +55,8 @@ function initMap() {
       lat : parseFloat(item.Latitude),
       long : parseFloat(item.Longitude)
     }
-    var latAdd = 0.000001, latSub = 0.000001, longAdd = 0.000001, longSub = 0.000001.
+    
+    var latAdd = 0.000001, latSub = 0.000001, longAdd = 0.000001, longSub = 0.000001
 
     if (positions.indexOf(position) == -1){
       positions.push(position)
