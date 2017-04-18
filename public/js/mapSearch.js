@@ -40,7 +40,7 @@ function initMap() {
         {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
 
         var lastCenter = map.getCenter();
-        console.log(lastCenter)
+        console.log(lastCenter.lat)
         google.maps.event.trigger(document.getElementById("map"), 'resize');
         map.setCenter(lastCenter);
       })
