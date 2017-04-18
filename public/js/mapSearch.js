@@ -4,7 +4,7 @@ var lat = 54.774759
 var long = -1.570329
 var searchTerm = 'b'
 
-var url = 'https://wastetopia-pr-25.herokuapp.com/api/search/map///' + searchTerm + '////';
+var url = window.location.protocol + "//" + window.location.host + '/api/search/map///' + searchTerm + '////';
 
 
 var positions = [];
@@ -29,7 +29,6 @@ function initMap() {
       origin: new google.maps.Point(0, 0),
       anchor: new google.maps.Point(15, 30)
     };
-    geocoder = new google.maps.Geocoder();
     $.getJSON(url, function(items){
       var markers = items.map(function(item) {
         return addMarker(item)
@@ -39,7 +38,6 @@ function initMap() {
       var markerCluster = new MarkerClusterer(map, markers,
           {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
     })
-
   }
 
   function containPosition(pos){

@@ -349,7 +349,11 @@
   margin: 0px;
 }
 
-#map {
+/*#map {
+  height: 100px;
+}*/
+
+html, body {
   height: 100%;
 }
 
