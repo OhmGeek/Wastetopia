@@ -41,6 +41,7 @@ function initMap() {
     })
 
     var lastCenter = map.getCenter();
+    console.log(lastCenter)
     google.maps.event.trigger(document.getElementById("map"), 'resize');
     map.setCenter(lastCenter);
   }
