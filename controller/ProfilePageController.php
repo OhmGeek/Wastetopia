@@ -795,6 +795,11 @@ class ProfilePageController
         if($actualEmail !== $oldEmail){
            return $this->errorMessage("Incorrect old email");
         }
+	error_log("UserID: ".$userID);    
+	error_log("oldEmail: ".$oldEmail);
+	    error_log("newEmail: ".$newEmail);
+	    error_log("ActualEmail: ".$actualEmail);
+	    
         $registrationController = new RegistrationController();
         if(!$registrationController->checkValidEmail($newEmail)){
            return $this->errorMessage("Email is not valid");
