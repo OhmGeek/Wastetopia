@@ -13,6 +13,7 @@ var bounds;
 var markerIcon;
 var markerPinURL = window.location.protocol + "//" + window.location.host + "/js/icons/placePin.png"
 var markerCloseURL = window.location.protocol + "//" + window.location.host + "/js/icons/close.png"
+var latAdd = 0.000001, latSub = 0.000001, longAdd = 0.000001, longSub = 0.000001
 
 function initMap() {
   map = new google.maps.Map(
@@ -39,7 +40,6 @@ function initMap() {
           return addMarker(item)
         });
 
-        console.log(positions)
         // Add a marker clusterer to manage the markers.
         var markerCluster = new MarkerClusterer(map, markers,
             {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
@@ -52,7 +52,7 @@ function initMap() {
 
   function containPosition(pos){
     for (var position in positions) {
-      if (pos.lat == position.lat && pos.long == position.long) {
+      if (JSON.stringify(pos) == JSON.stringify(position)) {
         return true;
       }
     }
@@ -66,7 +66,7 @@ function initMap() {
       long : parseFloat(item.Longitude)
     }
 
-    var latAdd = 0.000001, latSub = 0.000001, longAdd = 0.000001, longSub = 0.000001
+    console.log(positions)
 
     if (!containPosition(position)){
       positions.push(position)
