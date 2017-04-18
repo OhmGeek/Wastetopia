@@ -80,7 +80,7 @@ var Fill = function(data) {
 };
 function fillInTheGaps() {
     var listingID = $('.grid-body').data('listingID');
-    $.getJSON('https://wastetopia-pr-17.herokuapp.com/api/items/view/', data)
+    $.getJSON('https://wastetopia-pr-17.herokuapp.com/api/items/view/' + listingID)
         .done(function(data) {
             var filler = new Fill(data);
             filler.fillType();
