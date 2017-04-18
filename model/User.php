@@ -16,8 +16,11 @@ class User {
         $statement->bindValue(':email', $username,PDO::PARAM_STR);
 	    $statement->execute();
         $pwd_deets = $statement->fetchAll(PDO::FETCH_ASSOC);
-
+	
+	    print_r($pwd_deets);
         $calculated_hash = hash('sha256', $pwd_deets[0]['Salt'].$password);
+	    
+	    print_r($calculate_hash);
 
         if($calculated_hash === $pwd_deets[0]['Password_Hash']) {
             error_log("User verified");
