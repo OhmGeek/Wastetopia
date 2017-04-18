@@ -211,6 +211,6 @@ class RegistrationModel
 
         $statement->bindValue(":code", $verificationCode, PDO::PARAM_STR);
         $result = $statement->execute();
-        return $result       
+        return $result;    
     }
 }
