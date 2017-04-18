@@ -111,6 +111,7 @@ class RegistrationModel
      */
     function addMainUserDetails($forename, $surname, $email, $passwordHash, $salt, $pictureURL, $verificationCode)
     {
+       
         //Need to add PictureURL when we have default
         $statement = $this->db->prepare("
             INSERT INTO `User` (`Forename`, `Surname`, `Email_Address`, `Password_Hash`, `Salt`, `Verification_Code`)
@@ -147,9 +148,15 @@ class RegistrationModel
 //         if ($pictureURL == NULL) {
 //             // $pictureURL = DEFAULT_IMAGE;
 //         }
-
+        
+        print_r("Password: ".$password);
+        
+        
         $salt = $this->generateSalt();
         $passwordHash = hash('sha256',$salt.$password);
+        
+        print_r("Salt: ".$salt);
+        print_r("Password hash".$passwordHash);
 
         $verificationCode = $this->generateSalt(); // New random string for verification
         
