@@ -288,4 +288,9 @@ $(function () {
     $('#btn-map').removeClass('hide')
     $('#btn-grid').addClass('hide')
   })
+
+  $('#map-tab').on('shown.bs.tab', function(e){
+      console.log('map part appeared')
+      initMap();
+    });
 });

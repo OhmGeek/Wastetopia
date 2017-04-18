@@ -178,10 +178,3 @@ function initMap() {
       iw.open(map, marker);
     });
   }
-
-$(function(){
-  $('#map-tab').on('shown.bs.tab', function(e){
-      console.log('map part appeared')
-        initMap();
-    });
-})
