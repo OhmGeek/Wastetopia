@@ -128,7 +128,3 @@ function initMap() {
       iw.open(map, marker);
     });
   }
-
-  $(function(){
-    initMap();
-  })

@@ -11,63 +11,62 @@ Search
 {% block content %}
 <!-- Create the search results window -->
 <div class="search-header">
-<div class="search-options">
-  <div class="btn-group zero-padding" id="filter-dropdown">
-    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Filter
-      <span class="caret"></span></button>
-      <ul id="filter-list" class="dropdown-menu" role="tablist" aria-multiselectable="true">
-        <li role="tab">
-          <div class="filter-category" id="radius-category">
-            Search Radius
-            <a role="button" data-toggle="collapse" data-parent="#filter-list" href="#radius-options" aria-expanded="false" aria-controls="radius-options"><i class="material-icons"></i></a>
-          </div>
-          <div class="filter-options collapse" id="radius-options" role="tabpanel" aria-labelledby="radius-category">
-            <div class="container-fluid">
-              <div class="slider shor" id="radius"></div>
-              <div id="radius-output"></div>
+  <div class="search-options">
+    <div class="btn-group zero-padding" id="filter-dropdown">
+      <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Filter
+        <span class="caret"></span></button>
+        <ul id="filter-list" class="dropdown-menu" role="tablist" aria-multiselectable="true">
+          <li role="tab">
+            <div class="filter-category" id="radius-category">
+              Search Radius
+              <a role="button" data-toggle="collapse" data-parent="#filter-list" href="#radius-options" aria-expanded="false" aria-controls="radius-options"><i class="material-icons"></i></a>
             </div>
-          </div>
-        </li>
-        <form id='filter-form'>
-          {% for itemFilter in filters %}
-          <li role="tab" class="tab">
-            <div class="filter-category" id="{{itemFilter.id}}-category" data-filtertype="{{itemFilter.type}}">
-              {{itemFilter.optionsCategory}}
-              <a role="button" data-toggle="collapse" data-parent="#filter-list" href="#{{itemFilter.id}}-options" aria-expanded="false" aria-controls="{{itemFilter.id}}-options"><i class="material-icons"></i></a>
+            <div class="filter-options collapse" id="radius-options" role="tabpanel" aria-labelledby="radius-category">
+              <div class="container-fluid">
+                <div class="slider shor" id="radius"></div>
+                <div id="radius-output"></div>
+              </div>
             </div>
-            <ul class="filter-options collapse" id="{{itemFilter.id}}-options" role="tabpanel" aria-labelledby="{{itemFilter.id}}-category">
-              {% for option in itemFilter.options %}
-              <li>
-                <div class="form-group zero-padding">
-                  <div class="checkbox">
-                    <label>
-                      <input type="checkbox" value="{{option.value}}" id="{{option.id}}"> {{option.value}}
-                    </label>
-                  </div>
-                </div>
-              </li>
-              {% endfor %}
-            </ul>
           </li>
-          {% endfor %}
-        </form>
-      </ul>
+          <form id='filter-form'>
+            {% for itemFilter in filters %}
+            <li role="tab" class="tab">
+              <div class="filter-category" id="{{itemFilter.id}}-category" data-filtertype="{{itemFilter.type}}">
+                {{itemFilter.optionsCategory}}
+                <a role="button" data-toggle="collapse" data-parent="#filter-list" href="#{{itemFilter.id}}-options" aria-expanded="false" aria-controls="{{itemFilter.id}}-options"><i class="material-icons"></i></a>
+              </div>
+              <ul class="filter-options collapse" id="{{itemFilter.id}}-options" role="tabpanel" aria-labelledby="{{itemFilter.id}}-category">
+                {% for option in itemFilter.options %}
+                <li>
+                  <div class="form-group zero-padding">
+                    <div class="checkbox">
+                      <label>
+                        <input type="checkbox" value="{{option.value}}" id="{{option.id}}"> {{option.value}}
+                      </label>
+                    </div>
+                  </div>
+                </li>
+                {% endfor %}
+              </ul>
+            </li>
+            {% endfor %}
+          </form>
+        </ul>
+      </div>
+      <div class="form-group zero-padding" id="sort-select">
+        <label for="sort-options">Sort by</label>
+        <select id="sort-options" class="form-control">
+          <option value="D">Distance</option>
+          <option value="AZ">A-Z</option>
+          <option value="ZA">Z-A</option>
+          <option value="UR">User Popularity</option>
+        </select>
+      </div>
+      <a class="search-view" role="button" data-toggle="tab" href="#map-tab" id="btn-map"><i class="material-icons">map</i></a>
+      <a class="search-view hide" role="button" data-toggle="tab" href="#grid" id="btn-grid"><i class="material-icons">view_module</i></a>
     </div>
-    <div class="form-group zero-padding" id="sort-select">
-      <label for="sort-options">Sort by</label>
-      <select id="sort-options" class="form-control">
-        <option value="D">Distance</option>
-        <option value="AZ">A-Z</option>
-        <option value="ZA">Z-A</option>
-        <option value="UR">User Popularity</option>
-      </select>
-    </div>
-    <a class="search-view" role="button" data-toggle="tab" href="#map-tab" id="btn-map"><i class="material-icons">map</i></a>
-    <a class="search-view hide" role="button" data-toggle="tab" href="#grid" id="btn-grid"><i class="material-icons">view_module</i></a>
+    <div id="filters-picked"></div>
   </div>
-</div>
-<div id="filters-picked"></div>
-</div>
 <div class="tab-content search-result">
   <div id="grid" class="tab-pane fade in active">
     <div class="container-fluid">
@@ -116,12 +115,10 @@ Search
     </div>
   </div>
   <div id="map-tab" class="tab-pane fade">
-    <div class="container-fluid">
-      <div id="search-map"></div>
-      <script
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCrh2cKWRAFifeLIkznE2Iw4Oblqlmyyt0">
-     </script>
-    </div>
+    <div id="search-map"></div>
+    <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCrh2cKWRAFifeLIkznE2Iw4Oblqlmyyt0">
+    </script>
   </div>
 </div>
 {% endblock %}

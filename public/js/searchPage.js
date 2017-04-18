@@ -282,6 +282,7 @@ $(function () {
   $('#btn-map').on('click', function(event){
     $('#btn-grid').removeClass('hide')
     $('#btn-map').addClass('hide')
+    initMap()
   })
 
   $('#btn-grid').on('click', function(event){
