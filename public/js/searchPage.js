@@ -56,22 +56,59 @@ $(function () {
     $(this).closest('.btn-group').addClass('dontClose');
   })
 
-    var searchBox = $('#searchBox')
-    var searchTerm = $('#searchTerm').attr("data-searchTerm");
+
+  $checkboxes.change( function(e) {
+    getFilters();
+  });
+
+  $('#filter-dropdown').on('hide.bs.dropdown', function(e) {
+    if ( $(this).hasClass('dontClose') ){
+      e.preventDefault();
+      $('#filter-dropdown > button').addClass('white')
+    } else {
+      $('#filter-dropdown > button').removeClass('white')
+    }
+    $(this).removeClass('dontClose');
+  });
+
+  /*RESET SEARCH BOX VALUES*/
+
+    var searchBox = $('#searchBox');
+    var postBox = $('#postcodeBox');
+
+    var searchDetails = JSON.parse($('#searchTerm').attr("data-searchTerm"));
+    var searchTerm = searchDetails.search;
+    var postcode = searchDetails.postcode;
 
     if(searchTerm !== "")
     {
         searchBox.val(searchTerm);
     }
+    if(postcode !== "")
+    {
+        postBox.val(postcode);
+    }
+
+
 
 
   function refreshPage() {
 
     var include = [];
     var exclude = [];
-    var searchTerm = $('#searchTerm').attr("data-searchTerm");
-    var lat = "";
-    var long = "";
+    var lat = 54.7754719;
+    var long = -1.57694200;
+    
+
+    var search = JSON.parse($('#searchTerm').attr("data-searchTerm"));
+    console.log($('#searchTerm').attr("data-searchTerm"))
+    if((search.lat !== '') && (search.long !== ''))
+    {
+        var lat = search.lat;
+        var long = search.long;
+    }
+
+    
     var sortOrder = $('#sort-options').val();
     var distanceLimit = parseFloat(radiusSlider.noUiSlider.get());
 
@@ -204,22 +241,11 @@ $(function () {
       refreshPage();
   });
 
-
-  $checkboxes.change( function(e) {
-    getFilters();
-  });
-
-  $('#filter-dropdown').on('hide.bs.dropdown', function(e) {
-    if ( $(this).hasClass('dontClose') ){
-      e.preventDefault();
-      $('#filter-dropdown > button').addClass('white')
-    } else {
-      $('#filter-dropdown > button').removeClass('white')
-    }
-    $(this).removeClass('dontClose');
-  });
-
   refreshPage();
+
+
+/*INFINITE SCROLLING*/
+
 
 // for infinite scrolling
 // TODO add the ajax request
