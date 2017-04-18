@@ -129,5 +129,6 @@ function initMap() {
   }
 
   $(function(){
+    console.log("i'm in search map js")
     initMap();
   })
