@@ -23,7 +23,7 @@ var Fill = function(data) {
 
   this.fillState = function() {
         //go through all possible checkboxes, and select if they are in the list
-      $('#type option').each(function(index, elem) {
+      $('#state option').each(function(index, elem) {
           var selected = false;
           for(var i = 0; i < data.state.length; i++) {
               if(data.state[i].name === elem.text()) {
@@ -51,7 +51,7 @@ var Fill = function(data) {
   };
 
   this.fillContains = function() {
-      $('#type option').each(function(index, elem) {
+      $('#content option').each(function(index, elem) {
           var selected = false;
           for(var i = 0; i < data.contains.length; i++) {
               if(data.contains[i].name === elem.text()) {
@@ -87,7 +87,7 @@ function fillInTheGaps() {
             filler.fillContains();
             filler.fillDietary();
             filler.fillState();
-            filler.fillOther();
+            //filler.fillOther();
         });
 }
 
