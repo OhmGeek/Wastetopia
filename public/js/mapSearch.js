@@ -16,6 +16,7 @@ var bounds;
 var markerIcon;
 
 function initMap() {
+  console.log("i'm in initMap")
   map = new google.maps.Map(
     document.getElementById("search-map"), {
       zoom: 13,
@@ -129,6 +130,5 @@ function initMap() {
   }
 
   $(function(){
-    console.log("i'm in search map js")
     initMap();
   })
