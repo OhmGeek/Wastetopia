@@ -37,14 +37,14 @@ function initMap() {
 
       // Add a marker clusterer to manage the markers.
       var markerCluster = new MarkerClusterer(map, markers,
-          {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
-    })
+        {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
 
-    var lastCenter = map.getCenter();
-    console.log(lastCenter)
-    google.maps.event.trigger(document.getElementById("map"), 'resize');
-    map.setCenter(lastCenter);
-  }
+        var lastCenter = map.getCenter();
+        console.log(lastCenter)
+        google.maps.event.trigger(document.getElementById("map"), 'resize');
+        map.setCenter(lastCenter);
+      })
+    }
 
   function containPosition(pos){
     for (var i in positions) {
