@@ -19,6 +19,7 @@ class EditItemController
     public function __construct($listingID)
     {
         $this->model = new EditItemModel($listingID);
+        $this->listingID = $listingID;
     }
 
     /**
@@ -31,7 +32,8 @@ class EditItemController
         $template = $twig->loadTemplate('items/edit_items.twig');
         return $template->render(array(
             'tags' => $this->getListOfTagsForView(),
-            'mode' => 'edit'
+            'mode' => 'edit',
+            'listingID' => $this->listingID
         )); // todo add required details here.
     }
 
