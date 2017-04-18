@@ -810,7 +810,7 @@ class ProfilePageController
         }
 
         // Reset account
-        $this->model->resetAccount($userID);
+        $this->model->resetAccount($userID, $newEmail);
 
         // Log user out - NOT SURE ABOUT THIS
 
