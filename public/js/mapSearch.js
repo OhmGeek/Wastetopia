@@ -50,6 +50,15 @@ function initMap() {
     })
   }
 
+  function containPosition(pos){
+    for (var position in positions) {
+      if (pos.lat == position.lat && pos.long == position.long) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   function addMarker(item) {
     console.log(item)
     var position = {
@@ -59,7 +68,7 @@ function initMap() {
 
     var latAdd = 0.000001, latSub = 0.000001, longAdd = 0.000001, longSub = 0.000001
 
-    if (positions.indexOf(position) == -1){
+    if (!containPosition(position)){
       positions.push(position)
       console.log('not a duplicated position')
     } else {
@@ -166,5 +175,5 @@ function initMap() {
 
   $(function(){
     initMap()
-    setTimeout(function(){google.maps.event.trigger(map, 'resize');}, 100);
+    setTimeout(function(){google.maps.event.trigger(map, 'resize'); console.log('timeout')}, 3000);
   })
