@@ -217,7 +217,7 @@ class RegistrationController
   
         $mail->SMTPAuth = true;     // turn on SMTP authentiocation
 
-        $mail->SMTPDebug = 2; // Print debug log for testing
+        //$mail->SMTPDebug = 2; // Print debug log for testing
 
         $mail->Username = $config["EMAIL_ADDRESS"];  // SMTP username
         $mail->Password = $config["EMAIL_PASSWORD"]; // SMTP password
