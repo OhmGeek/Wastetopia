@@ -20,7 +20,7 @@ class LoginController {
             return $template->render(array(
                 "title" => "Login",
                 "intro" => "Please login to access Wastetopia",
-                "dest" => urldecode($dest)
+                "dest" => $dest
             ));
         }
         else {

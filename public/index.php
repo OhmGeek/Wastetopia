@@ -405,7 +405,7 @@ $klein->with('/api', function () use ($klein) {
         $controller = new LoginController();
         $username = $request->email;
         $password = $request->password;
-        $dest = $_ENV['ROOT_BASE'];
+        $dest = $request->dest;
         return $controller->login($username, $password, $dest, $response);
     });
 });
