@@ -3,7 +3,7 @@
 	<head>
         <meta charset="utf-8">
         <title>{% block title %}{% endblock %}</title>
-        <base href="{{config.ROOT_BASE}}">
+        <base href="{{config.ROOT_BASE}}" id="baseURL">
         <!-- Material Design fonts -->
         <link href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css" rel="stylesheet">
         <link href="//fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -19,7 +19,7 @@
         <!-- Wastopia Custom CSS -->
         <link rel="stylesheet" href="{{config.ROOT_BASE}}/css/wastetopia-main.css"/>
         {% for cssfile in csslist %}
-            <link rel="stylesheet" href="{{config.ROOT_BASE}}/css/{{cssfile}}">
+            <link rel="stylesheet" href="{{config.ROOT_BASE}}/css/{{cssfile}}"></link>
         {% endfor %}
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	</head>
@@ -28,13 +28,18 @@
 	    {% endblock %}
 	    {% block content %}
 	    {% endblock %}
+
         <script src="{{config.ROOT_BASE}}/js/bootstrap-material-js/ripples.min.js"></script>
-        <script src="{{config.ROOT_BASE}}/js/bootstrap-material-js/material.min.js"></script>
+        <script src="{{config.ROOT_BASE}}/js/bootstrap-material-js/material.js"></script>
         <script>
           $(function () {
             $.material.init();
           });
         </script>
+
+        <!-- Chart.js code-->
+        <!-- <script src ="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.js"></script> -->
+
         <!-- Wastopia Custom JS-->
         {% for jsfile in jslist %}
             <script src="{{config.ROOT_BASE}}/js/{{jsfile}}"></script>

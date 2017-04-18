@@ -8,24 +8,25 @@ use Wastetopia\Controller\TokenManager;
 use Wastetopia\Controller\Authenticator;
 use Klein\Klein;
 class LoginController {
-    public function index($response) {
+    public function index($response, $dest) {
         //todo dest parameter with default value
         // this is the static index page (allowing the user to login)
         $loader  = new Twig_Loader_Filesystem(__DIR__.'/../view/');
 	    $twig = new Twig_Environment($loader);
-        $template = $twig->loadTemplate('login_form.twig');
+        $template = $twig->loadTemplate('users/login_form.twig');
 
         // if logged in, don't bother
         if(!Authenticator::isAuthenticated()) {
             return $template->render(array(
                 "title" => "Login",
                 "intro" => "Please login to access Wastetopia",
+                "dest" => $dest
             ));
         }
         else {
             // redirect to the base website
             // todo redirect to dest | website base
-            $response->redirect($_ENV['ROOT_BASE']);
+            $response->redirect($_ENV['ROOT_BASE'] . $dest);
         }
         //todo return a 'click here to return to the main site page'
         return true; // we can return true otherwise, as we will forward people.
@@ -39,13 +40,14 @@ class LoginController {
         if($outcome['status'] === 'verified') {
             // login success
             // forward the person to the destination/home
-//            if(isset($dest)) {
-//                //forward to the destination uri
-//                header('Location: $dest');
-//                exit();
-//            }
+            if(isset($dest)) {
+                //forward to the destination uri
+                $response->redirect($dest);
+            }
             //forward home
-            $response->redirect($_ENV['ROOT_BASE']);
+            else {
+                $response->redirect($_ENV['ROOT_BASE']);
+            }
         }
         else {
             // incorrect details

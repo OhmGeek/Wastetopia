@@ -6,19 +6,28 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="{{ config.ROOT_BASE }}">Wastetopia</a>
-		</div>
-		<div class="navbar-collapse collapse navbar-responsive-collapse">
-			<form class="navbar-form navbar-left">
-				<div class="form-group">
-					<input type="text" class="form-control col-sm-8" placeholder="Search">
+			<a class="navbar-brand hidden-xs" href="{{ config.ROOT_BASE }}">Wastetopia</a>
+			<a class="navbar-brand visible-xs" href="{{ config.ROOT_BASE }}">WT</a>
+			<form class="search-form navbar-left">
+				<div class="search-group">
+					<div class="search">
+						<input type="text" placeholder="Search" id="searchBox">
+					</div>
+					<button type="submit" value="Submit" class="btn-search">
+						<i class="material-icons">search</i>
+					</button>
+				</div>
+				<div class="postcode">
+					<input type="text" placeholder="Postcode" id="postcodeBox">
 				</div>
 			</form>
+		</div>
+		<div class="navbar-collapse collapse navbar-responsive-collapse">
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="{{ config.ROOT_BASE }}/messages"><span class="glyphicon glyphicon-envelope"/></a></li>
-				<li><a href="javascript:void(0)"><span class="glyphicon glyphicon-shopping-cart"/></a></li>
+				<li><a href="{{ config.ROOT_BASE }}/messages"><i class="material-icons">message</i><span class="badge" id="messageNotifications"></span></a></li>
+				<li><a href="javascript:void(0)"><i class="material-icons">notifications</i><span class="badge" id="requestNotifications"></span></a></li>
 				<li class="dropdown">
-					<a href="#" data-target="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"/><span class="caret"/></a>
+					<a href="#" data-target="#" class="dropdown-toggle" data-toggle="dropdown"><i class="material-icons">person</i><span class="caret"/></a>
 					<ul class="dropdown-menu">
 					  <li><a href="{{config.ROOT_BASE}}">View Profile</a></li>
 					  <li><a href="{{config.ROOT_BASE}}">Order History</a></li>

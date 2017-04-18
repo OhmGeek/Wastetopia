@@ -5,6 +5,12 @@ $(function () {
   console.log("ready");
   //Set scroll bar to bottom
 
+  $(window).resize(function () {
+		var dropdownHeight = $(window).height() - $('#conversation-header').height() - $('.navbar').height()
+		console.log(dropdownHeight)
+		$('.item-frame').css({'max-height': dropdownHeight})
+	});
+
   scrollToBottom();
 
   function scrollToBottom(){
@@ -20,12 +26,9 @@ $(function () {
     var conversationID = conversationIDDiv.html();
 
     var content = $("#message").val();     //Get the message content
-    $("#message").val("");                      //Reset textarea content to empty
+    $("#message").val("");                 //Reset textarea content to empty
 
-    //Option 1: Add this message to display client-side, and send the message to the database without reloading messages
-
-    //Option 2: Send the message to the database, and send back the html for the whole conversation
-    //Send message
+    // Send message and reload all messages
     var url = window.location.protocol + "//" + window.location.host + "/" + 'messages/send';
     var data = {conversationID:conversationID, message:content};
 
@@ -39,13 +42,18 @@ $(function () {
 
   });
 
+    // Go back to conversations page
+    $(document).on('click', '#goBack', function(){
+        var url = window.location.protocol + "//" + window.location.host + "/messages";
+        location.href = url;
+    });
 
   //Polling for messages in the current conversation
   setInterval(function(){
     loadMessages();
   }, 3000);
 
-  //GOES ON MESSAGES PAGE
+  // Load messages from the conversation into the message box display
   function loadMessages(){
 
     //Extract conversation ID from the page

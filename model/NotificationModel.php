@@ -10,6 +10,10 @@ namespace Wastetopia\Model;
 use Wastetopia\Model\DB;
 use PDO;
 
+/**
+ * Class NotificationModel - Used for any notifications (Currently unread messages and unseen requests)
+ * @package Wastetopia\Model
+ */
 class NotificationModel
 {
 
@@ -27,9 +31,8 @@ class NotificationModel
      */
     private function getUserID()
     {
-        //$reader = new UserCookieReader();
-        //return $reader->get_user_id();
-        return 6; // Usually 6
+        $reader = new UserCookieReader();
+        return $reader->get_user_id();
     }
 
 
@@ -58,7 +61,7 @@ class NotificationModel
 
 
     /**
-     * Returns the number of total unread messages this user has
+     * Returns the total number of unread messages this user has
      * @return integer
      */
     function messageNotifications()
@@ -72,7 +75,7 @@ class NotificationModel
             WHERE ((`Conversation`.`FK_User_ReceiverID` = :userID       
                 AND `Message`.`Giver_Or_Receiver` = 0)            
                 OR (NOT(`Conversation`.`FK_User_ReceiverID` = :userID2) 
-                    AND `Message`.`Giver_Or_Receiver`= 1)))      
+                    AND `Message`.`Giver_Or_Receiver`= 1))      
             AND `Message`.`Read` = 0;   
         ");
 

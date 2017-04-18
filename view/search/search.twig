@@ -10,6 +10,7 @@
 
 {% block content %}
 <!-- Create the search results window -->
+<div id="searchTerm" data-searchTerm="{{searchTerm}}">testytestytest</div>
 <div class="search-advance" style="padding-top:65px;">
   <div class="btn-group zero-padding" id="filter-dropdown">
     <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Filter
@@ -27,27 +28,29 @@
             </div>
           </div>
         </li>
-        {% for itemFilter in filters %}
-        <li role="tab">
-          <div class="filter-category" id="{{itemFilter.id}}-category">
-            {{itemFilter.optionsCategory}}
-            <a role="button" data-toggle="collapse" data-parent="#filter-list" href="#{{itemFilter.id}}-options" aria-expanded="true" aria-controls="{{itemFilter.id}}-options"><i class="material-icons"></i></a>
-          </div>
-          <ul class="filter-options collapse in" id="{{itemFilter.id}}-options" role="tabpanel" aria-labelledby="{{itemFilter.id}}-category">
-            {% for option in itemFilter.options %}
-            <li>
-              <div class="form-group zero-padding">
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox" value="{{option.value}}" id="{{option.id}}"> {{option.value}}
-                  </label>
-                </div>
-              </div>
-            </li>
-            {% end for %}
-          </ul>
-        </li>
-        {% end for %}
+            <form id='filter-form'>
+                {% for itemFilter in filters %}
+                <li role="tab" class="tab">
+                  <div class="filter-category" id="{{itemFilter.id}}-category" data-filtertype="{{itemFilter.type}}">
+                    {{itemFilter.optionsCategory}}
+                    <a role="button" data-toggle="collapse" data-parent="#filter-list" href="#{{itemFilter.id}}-options" aria-expanded="true" aria-controls="{{itemFilter.id}}-options"><i class="material-icons"></i></a>
+                  </div>
+                  <ul class="filter-options collapse in" id="{{itemFilter.id}}-options" role="tabpanel" aria-labelledby="{{itemFilter.id}}-category">
+                    {% for option in itemFilter.options %}
+                    <li>
+                      <div class="form-group zero-padding">
+                        <div class="checkbox">
+                          <label>
+                            <input type="checkbox" value="{{option.value}}" id="{{option.id}}"> {{option.value}}
+                          </label>
+                        </div>
+                      </div>
+                    </li>
+                    {% endfor %}
+                  </ul>
+                </li>
+                {% endfor %}
+          </form>
       </ul>
     </div>
     <div class="form-group zero-padding" id="sort-select">
@@ -69,7 +72,7 @@
           <div class="grid-sizer col-xs-12 col-sm-6 col-md-4"></div>
           {% for item in itemList %}
           <div class="grid-item col-xs-12 col-sm-6 col-md-4">
-            <div class="thumbnail zero-padding" id="{{listing.ID}}">
+            <div class="thumbnail zero-padding" id="{{item.listingID}}">
               <div class="caption">
                 <div class="centerAll">
                   <img src="{{item.userImg}}" class="user-image"/>
@@ -93,9 +96,13 @@
                   <div><span>Quantity: </span> {{ item.quantity }}</div>
                 </div>
                 <div class="nav-btns">
-                  <a href="#" class="btn btn-primary" role="button" id="{{item.ID}}">View</a>
-                  <a href="#" class="btn btn-default" role="button">Request</a>
-                  <a href="#" role="button" class="btn-watch" id="watch"><i class="material-icons">visibility</i></a>
+                  <a href="#view" class="btn btn-primary" role="button" id="{{item.listingID}}">View</a>
+                  {% if isRequesting %}
+                    <a href="#cancel-by-listing" class="btn btn-default" role="button">Cancel request</a>
+                  {% else %}
+                    <a href="#request" class="btn btn-default" role="button">Request</a>
+                  {% endif %}
+                  <a href="#watch" role="button" class="btn-watch {% if isWatching %} watched {% endif %}" id="{{item.listingID}}"><i class="material-icons">visibility</i></a>
                 </div>
               </div>
             </div>
@@ -107,4 +114,4 @@
 </div>
 {% endblock %}
 
-{% set jslist = ["plugins/noUiSlider/noUiSlider.min.js", "plugins/wnumb-1.1.0/wNumb.js", "search.js"] %}
+{% set jslist = ["plugins/isotope/isotope.pkgd.min.js", "plugins/noUiSlider/nouislider.min.js", "plugins/wnumb-1.1.0/wNumb.js", "searchPage.js", "search.js"] %}

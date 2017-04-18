@@ -7,10 +7,17 @@ use Twig_Loader_Filesystem;
 use Twig_Environment;
 use Wastetopia\Config\CurrentConfig;
 
+/**
+ * Class ConversationListController - Used to generate and handle inputs on the ConversationListPage
+ * @package Wastetopia\Controller
+ */
 class ConversationListController
 {
-	
-	function __construct()
+
+    /**
+     * ConversationListController constructor.
+     */
+    function __construct()
 	{		
 		
 	    //Create ConversationModel instance
@@ -32,7 +39,8 @@ class ConversationListController
      */
     function generatePage()
 	{
-		
+
+	    // Generate HTML for tabs
 		$receivingTabHTML = $this->generateReceivingTabHTML();
 		$sendingTabHTML = $this->generateSendingTabHTML();
 
@@ -61,6 +69,7 @@ class ConversationListController
      */
     function generateReceivingTabHTML()
     {
+        // Get all conversations for items user is requesting
         $receivingResults = $this->model->getConversationsReceiving();
 		
         //Create arrays of conversation details from results
@@ -80,11 +89,12 @@ class ConversationListController
      */
     function generateSendingTabHTML()
     {
+        // Get all conversations for items user is offering
         $sendingResults = $this->model->getConversationsSending();
 
         //Create arrays of conversation details from results
         $sending = $this->createConversationArray($sendingResults);
-	$isEmpty = (count($sending) == 0);
+	    $isEmpty = (count($sending) == 0);
 	    
         $template = $this->twig->loadTemplate('messaging/MessagesTabsDisplay.twig');
 
@@ -103,7 +113,7 @@ class ConversationListController
         foreach($conversations as $row)
         {
             $otherUser = $row['UserID'];
-	    $userImage = $this->model->getUserImage($otherUser);
+	        $userImage = $this->model->getUserImage($otherUser);
             $firstName = $row['Forename'];
             $lastName = $row['Surname'];
             $conversationID = $row['ConversationID'];
@@ -112,7 +122,7 @@ class ConversationListController
             $listingID = $row["ListingID"]; // Used instead of conversationID
 
             $conversation = array();
-	    $conversation["userImage"] = $userImage;
+	        $conversation["userImage"] = $userImage;
             $conversation['conversationID'] = $conversationID;
             $conversation['userName'] = $firstName." ".$lastName;
             $conversation['item'] = $itemName;

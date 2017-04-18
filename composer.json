@@ -32,14 +32,15 @@
   "require": {
     "twig/twig": "1.27.*",
     "klein/klein": "^2.1",
-    "aws/aws-sdk-php": "3.24.7"
+    "aws/aws-sdk-php": "3.24.7",
+    "phpmailer/phpmailer": "^5.2"
   },
   "autoload": {
-	"psr-4": {
-		"Wastetopia\\Model\\": "model/",
-		"Wastetopia\\Controller\\": "controller/",
-		"Wastetopia\\Tests\\": "tests/",
-        "Wastetopia\\Config\\": "config/"
-	}
+    "psr-4": {
+      "Wastetopia\\Model\\": "model/",
+      "Wastetopia\\Controller\\": "controller/",
+      "Wastetopia\\Tests\\": "tests/",
+      "Wastetopia\\Config\\": "config/"
+    }
   }
 }
