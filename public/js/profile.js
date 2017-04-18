@@ -440,7 +440,7 @@ $(function () {
         '<input type="text" class="form-control" id="old-password">' +
         '</div>' +
         '<div class="form-group zero-padding new-password">' +
-        '<label id = "label1" for="new-password">New password: </label>' +
+        '<label id = "label2" for="new-password">New password: </label>' +
         '<input type="text" class="form-control" id="new-password">' +
         '</div>' +
         '</div>' +
