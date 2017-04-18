@@ -12,9 +12,10 @@ use PDO;
 class EditItemModel
 {
 
-    function __construct()
+    function __construct($listingID)
     {
         $this->db = DB::getDB();
+        $this->listingID = $listingID;
     }
 
 
@@ -171,6 +172,8 @@ class EditItemModel
         $statement->bindValue(":name", $name, PDO::PARAM_STR);
         $statement->bindValue(":description", $description, PDO::PARAM_STR);
         $statement->bindValue(":useByDate", $useByDate, PDO::PARAM_STR);
+        $statement->bindValue(":listingID", $this->listingID, PDO::PARAM_INT);
+
 
         $statement->execute();
         error_log(json_encode($statement->errorInfo()));
@@ -195,6 +198,8 @@ class EditItemModel
 
         $statement->bindValue(":itemID", $itemID, PDO::PARAM_INT);
         $statement->bindValue(":tagID", $tagID, PDO::PARAM_INT);
+        $statement->bindValue(":listingID", $this->listingID, PDO::PARAM_INT);
+
         $statement->execute();
     }
 
@@ -216,6 +221,8 @@ class EditItemModel
 
         //$statement->bindValue(":fileType", $fileType, PDO::PARAM_STR);
         $statement->bindValue(":imageURL", $imageURL, PDO::PARAM_STR);
+        $statement->bindValue(":listingID", $this->listingID, PDO::PARAM_INT);
+
         $statement->execute();
 
         //return $this->getLastInsertID(); // Need to change to another sql query
@@ -243,6 +250,8 @@ class EditItemModel
         $statement->bindValue(":itemID", $itemID, PDO::PARAM_INT);
         $statement->bindValue(":isDefault", $isDefault, PDO::PARAM_INT);
         $statement->bindValue(":imageID", $imageID, PDO::PARAM_INT);
+        $statement->bindValue(":listingID", $this->listingID, PDO::PARAM_INT);
+
         $statement->execute();
     }
 
@@ -265,6 +274,8 @@ class EditItemModel
         $statement->bindValue(":barcode", $barcode, PDO::PARAM_INT);
         $statement->bindValue(":barcodeType", $barcodeType, PDO::PARAM_STR);
         $statement->bindValue(":itemID", $itemID, PDO::PARAM_INT);
+        $statement->bindValue(":listingID", $this->listingID, PDO::PARAM_INT);
+
         $statement->execute();
     }
 
@@ -288,6 +299,8 @@ class EditItemModel
         $statement->bindValue(":postCode", $postCode, PDO::PARAM_STR);
         $statement->bindValue(":long", $long, PDO::PARAM_STR);
         $statement->bindValue(":lat", $lat, PDO::PARAM_STR);
+        $statement->bindValue(":listingID", $this->listingID, PDO::PARAM_INT);
+
         $statement->execute();
         return $this->getLastLocationID($name,$postCode,$long, $lat); // Changed from getLastInsertID()
     }
@@ -320,6 +333,8 @@ class EditItemModel
         $statement->bindValue(":itemID", $itemID, PDO::PARAM_INT);
         $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
         $statement->bindValue(":quantity", $quantity, PDO::PARAM_INT);
+        $statement->bindValue(":listingID", $this->listingID, PDO::PARAM_INT);
+
         $statement->execute();
         error_log(json_encode($statement->errorInfo()));
     }

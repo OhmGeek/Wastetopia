@@ -4,6 +4,7 @@ require_once '../vendor/autoload.php';
 use Klein\Klein;
 use Wastetopia\Controller\AddItemController;
 use Wastetopia\Controller\ConversationListController;
+use Wastetopia\Controller\EditItemController;
 use Wastetopia\Controller\LoginController;
 use Wastetopia\Controller\ViewItemController;
 use Wastetopia\Config\CurrentConfig;
@@ -73,8 +74,13 @@ $klein->with('/items', function () use ($klein) {
     return $control->renderAddPage();
   });
 
+  $klein->respond('GET', '/edit/[:id]', function($request, $response) {
+        $control = new EditItemController($request->id);
+        return $control->renderEditPage();
+    });
 
-      $klein->respond('GET', '/view/[:id]', function ($request, $response) {
+
+    $klein->respond('GET', '/view/[:id]', function ($request, $response) {
           // Generic Items Page
           $itemID = $request->id;
           $controller = new ViewItemController();

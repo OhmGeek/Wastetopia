@@ -16,9 +16,9 @@ use Wastetopia\Model\EditItemModel;
 
 class EditItemController
 {
-    public function __construct()
+    public function __construct($listingID)
     {
-        $this->model = new EditItemModel();
+        $this->model = new EditItemModel($listingID);
     }
 
     /**
