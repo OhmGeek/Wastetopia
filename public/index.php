@@ -64,6 +64,11 @@ $klein->respond("GET", "/?", function() {
 });
 
 
+$klein->respond("GET", "/notifications/update", function($request, $response){
+   $model = new NotificationModel();
+   return $model->getAll(1); // Get as JSON
+});
+
 $klein->with('/api', function () use ($klein) {
 
     $klein->respond('GET', '/search/page/[**:param]', function ($request, $response) {
