@@ -14,7 +14,7 @@ use Twig_Environment;
 use Wastetopia\Controller\RegistrationController; // For email verification functions
 use Wastetopia\Controller\AnalysisController;   // For Advice Tab
 use Wastetopia\Controller\RecommendationController; // For Recommendations and Predictions tab
-
+use Wastetopia\Model\UserCookieReader;
 use Wastetopia\Model\ProfilePageModel;
 use Wastetopia\Model\CardDetailsModel;
 
