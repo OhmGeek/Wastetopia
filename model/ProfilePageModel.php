@@ -570,19 +570,20 @@ class ProfilePageModel
    * @param $email
    * @return bool
    */
-    function resetAccount($userID){
+    function resetAccount($userID, $email){
 	// Change verification code
 	$newVerificationCode = $this->generateSalt(); 
 	    error_log("New code: ".$newVerificationCode);
 	    
 	$statement = $this->db->prepare("
 		UPDATE 	`User`
-		SET `Verification_Code` = :code, `Active` = 0
+		SET `Verification_Code` = :code, `Active` = 0, `Email_Address` = :email
 		WHERE `UserID` = :userID
 	");
 	    
 	 $statement->bindValue(":code", $newVerificationCode, PDO::PARAM_INT);
 	 $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
+	 $statement->bindValue(":email", $email, PDO::PARAM_STR);
 	    
 	 $statement->execute();
 	 return True;
