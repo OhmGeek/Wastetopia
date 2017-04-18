@@ -166,9 +166,5 @@ function initMap() {
 
   $(function(){
     initMap()
-    google.maps.event.addListener(map, "idle", function(){
-      google.maps.event.trigger(map, 'resize');
-    })
-    map.setZoom( map.getZoom() - 1);
-    map.setZoom( map.getZoom() + 1);
+    setTimeout(function(){google.maps.event.trigger(map, 'resize');}, 100);
   })
