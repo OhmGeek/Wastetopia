@@ -1,7 +1,7 @@
 {% extends 'header.twig' %}
 
 {% block title %}
-Add/Edit Items
+{% if mode='edit' %} Edit {% else %} Add {% endif %}Items | Wastetopia
 {% endblock %}
 
 {% block navbar %}
@@ -9,7 +9,7 @@ Add/Edit Items
 {% endblock %}
 
 {% block content %}
-<div class="grid-body" style="padding-top: 60px;">
+<div data-mode = "{{ mode }}" class="grid-body" style="padding-top: 60px;">
   <div class="container-fluid">
     <div class="row">
       <form id="barcode-scanner" enctype="multipart/form-data">
@@ -126,7 +126,7 @@ Add/Edit Items
           </div>
           <div class="col-xs-12 col-sm-6 zero-padding">
             <div id="item-map-section"></div>
-            <script async defer
+            <script
             src="//maps.googleapis.com/maps/api/js?key=AIzaSyCrh2cKWRAFifeLIkznE2Iw4Oblqlmyyt0&callback=initMap">
             </script>
           </div>
@@ -165,6 +165,6 @@ Add/Edit Items
 
 {% set jslist = ["plugins/isotope/isotope.pkgd.min.js","plugins/moments/moment-with-locales.min.js","plugins/jquery-match-height/jquery.matchHeight.js",
 "plugins/select2-4.0.3/select2.min.js","plugins/bootstrap-material-datetimepicker-gh-pages/bootstrap-material-datetimepicker.js",
-"plugins/image-upload/jquery.upload.js","add-item.js", "barcode.js"] %}
+"plugins/image-upload/jquery.upload.js","add-item.js", "barcode.js", "edit-item.js"] %}
 
 {% set csslist = ["plugins/select2-4.0.3/select2.min.css","plugins/bootstrap-material-datetimepicker-gh-pages/bootstrap-material-datetimepicker.css"] %}
