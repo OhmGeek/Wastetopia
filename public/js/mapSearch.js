@@ -18,6 +18,7 @@ var latAdd = 0.0001, latSub = 0.0001, longAdd = 0.0001, longSub = 0.0001
 function initMap() {
   map = new google.maps.Map(
     document.getElementById("search-map"), {
+      center: new google.maps.LatLng(lat, long),
       minZoom: 5,
       maxZoom: 15
     });
@@ -157,7 +158,7 @@ function initMap() {
         content: contentString,
         maxWidth: 300
       });
-      
+
       iw.addListener('domready', function() {
 
         // Reference to the DIV which receives the contents of the infowindow using jQuery
