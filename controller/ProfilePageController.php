@@ -815,7 +815,7 @@ class ProfilePageController
         // Log user out - NOT SURE ABOUT THIS
 
         // Send verification email
-        $registrationController->sendVerificationEmail($newEmail, $newEmail);
+        $registrationController->sendVerificationEmail($newEmail, $newEmail, 1);
 
         return $this->successMessage("New verification email sent to your specified email");
     }
