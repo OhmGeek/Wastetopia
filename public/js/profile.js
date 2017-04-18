@@ -313,6 +313,8 @@ $(function () {
 
         $("#change-modal").on("shown.bs.modal", function () {
             $(this).find('.modal-msg').text("Please enter your current password and new password.");
+            $("#old-password").attr("type", "password");
+            $("#new-password").attr("type", "password");
         }).modal('show');
 
 
