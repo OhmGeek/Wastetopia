@@ -13,9 +13,9 @@ var bounds;
 var markerIcon;
 var markerPinURL = window.location.protocol + "//" + window.location.host + "/js/icons/placePin.png"
 var markerCloseURL = window.location.protocol + "//" + window.location.host + "/js/icons/close.png"
+var
 
 function initMap() {
-  console.log("i'm in initMap")
   map = new google.maps.Map(
     document.getElementById("search-map"), {
       zoom: 13,
@@ -32,10 +32,21 @@ function initMap() {
     console.log(markerIcon)
     geocoder = new google.maps.Geocoder();
     $.getJSON(url, function(items){
-      for (var i in items) {
-        console.log(items[i])
-        addMarker(items[i]);
-      }
+      // Add some markers to the map.
+        // Note: The code uses the JavaScript Array.prototype.map() method to
+        // create an array of markers based on a given "locations" array.
+        // The map() method here has nothing to do with the Google Maps API.
+        var markers = items.map(function(item) {
+          return addMarker
+        });
+
+        // Add a marker clusterer to manage the markers.
+        var markerCluster = new MarkerClusterer(map, markers,
+            {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
+      // for (var i in items) {
+      //   console.log(items[i])
+      //   addMarker(items[i]);
+      // }
     })
   }
 
@@ -49,10 +60,11 @@ function initMap() {
     infoWindow(marker, map, item);
     bounds.extend(marker.getPosition());
     map.fitBounds(bounds);
+    return marker
   }
 
   function infoWindow(marker, map, item) {
-    google.maps.event.addListener(marker, 'click', function() {
+
       var contentString = '<div class="iw-container">'+
       '<div class="iw-header">'+
       '<img class="user-image" src="flowery.jpg"/>' +
@@ -112,6 +124,7 @@ function initMap() {
         var iwCloseImg = iwCloseBtn.children(':nth-child(1)').attr('src',markerCloseURL);
         iwCloseImg.css({width: '100%', height : '100%', position: 'relative', top:'0',left:'0'})
       });
+      google.maps.event.addListener(marker, 'click', function() {
       iw.open(map, marker);
     });
   }
