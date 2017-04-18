@@ -69,7 +69,7 @@ class ProfilePageController
      * @return bool True if user is logged in
      */
     function isUserLoggedIn(){
-        return $this->getUserID() !== "";
+        return \Wastetopia\Controller\Authenticator::isAuthenticated();
     }
 
 	
