@@ -133,4 +133,5 @@ function initMap() {
 
 $(function(){
   initMap()
+   google.maps.event.trigger(map, 'resize'); 
 })
