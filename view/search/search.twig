@@ -19,9 +19,9 @@ Search
         <li role="tab">
           <div class="filter-category" id="radius-category">
             Search Radius
-            <a role="button" data-toggle="collapse" data-parent="#filter-list" href="#radius-options" aria-expanded="true" aria-controls="radius-options"><i class="material-icons"></i></a>
+            <a role="button" data-toggle="collapse" data-parent="#filter-list" href="#radius-options" aria-expanded="false" aria-controls="radius-options"><i class="material-icons"></i></a>
           </div>
-          <div class="filter-options collapse in" id="radius-options" role="tabpanel" aria-labelledby="dietary-category">
+          <div class="filter-options collapse" id="radius-options" role="tabpanel" aria-labelledby="radius-category">
             <div class="container-fluid">
               <div class="slider shor" id="radius"></div>
               <div id="radius-output"></div>
@@ -33,9 +33,9 @@ Search
           <li role="tab" class="tab">
             <div class="filter-category" id="{{itemFilter.id}}-category" data-filtertype="{{itemFilter.type}}">
               {{itemFilter.optionsCategory}}
-              <a role="button" data-toggle="collapse" data-parent="#filter-list" href="#{{itemFilter.id}}-options" aria-expanded="true" aria-controls="{{itemFilter.id}}-options"><i class="material-icons"></i></a>
+              <a role="button" data-toggle="collapse" data-parent="#filter-list" href="#{{itemFilter.id}}-options" aria-expanded="false" aria-controls="{{itemFilter.id}}-options"><i class="material-icons"></i></a>
             </div>
-            <ul class="filter-options collapse in" id="{{itemFilter.id}}-options" role="tabpanel" aria-labelledby="{{itemFilter.id}}-category">
+            <ul class="filter-options collapse" id="{{itemFilter.id}}-options" role="tabpanel" aria-labelledby="{{itemFilter.id}}-category">
               {% for option in itemFilter.options %}
               <li>
                 <div class="form-group zero-padding">

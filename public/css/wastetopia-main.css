@@ -146,6 +146,7 @@
   position: absolute;
   top: 60px;
   width: 100%;
+  z-index: 100;
 }
 
 .search-options{
