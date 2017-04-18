@@ -149,14 +149,9 @@ class RegistrationModel
 //             // $pictureURL = DEFAULT_IMAGE;
 //         }
         
-        print_r("Password: ".$password);
-        print_r("  Password length: ".strlen($password));
-        
         $salt = $this->generateSalt();
         $passwordHash = hash('sha256',$salt.$password);
         
-        print_r("Salt: ".$salt);
-        print_r("Password hash".$passwordHash);
 
         $verificationCode = $this->generateSalt(); // New random string for verification
         
@@ -199,7 +194,7 @@ class RegistrationModel
      * @return string
      */
     function generateSalt(){
-        $salt = random_bytes(mt_rand(30, 40));
+        $salt = random_bytes(mt_rand(20, 30));
         return bin2hex($salt);
     }
     
