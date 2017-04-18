@@ -289,8 +289,8 @@ $(function () {
     $('#btn-grid').addClass('hide')
   })
 
-  $('#map-tab').on('shown.bs.tab', function(e){
-      console.log('map part appeared')
-      initMap();
+  $('#btn-map').on('shown.bs.tab', function(event){
+    console.log('map part appeared')
+    initMap();
     });
 });
