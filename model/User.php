@@ -12,11 +12,16 @@ class User {
         $statement = $db->prepare("SELECT Password_Hash, Salt
                                     FROM User
                                     WHERE Email_Address=:email
+				    AND `Active` = 1
                                  ");
         $statement->bindValue(':email', $username,PDO::PARAM_STR);
 	    $statement->execute();
         $pwd_deets = $statement->fetchAll(PDO::FETCH_ASSOC);
-
+	
+	 if (count($pwd_deets) == 0){
+		return false;	 
+	 }
+	    
         $calculated_hash = hash('sha256', $pwd_deets[0]['Salt'].$password);
 	    
 
