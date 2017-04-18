@@ -78,7 +78,7 @@ function initMap() {
       console.log(random)
       if (random < 0.25) {
         position.lat += latAdd
-        latAdd += 0.00001
+        latAdd += 0.0001
         console.log('add lat')
       } else if (random < 0.5) {
         position.long -= longSub
@@ -86,7 +86,7 @@ function initMap() {
         console.log('sub long')
       } else if (random < 0.75) {
         position.lat -= latSub
-        latSub += 0.00001
+        latSub += 0.0001
         console.log('sub lat')
       } else {
         position.lat += longAdd
