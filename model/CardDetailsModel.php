@@ -32,8 +32,8 @@ class CardDetailsModel
      * @return int
      */
     function getUserID(){
-        // Function from elsewhere
-        return 6;
+        $reader = new UserCookieReader();
+         return $reader->get_user_id();
     }
 
 
