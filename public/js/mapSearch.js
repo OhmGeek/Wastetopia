@@ -53,6 +53,7 @@ function initMap() {
   function containPosition(pos){
     for (var position in positions) {
       if (JSON.stringify(pos) == JSON.stringify(position)) {
+        console.log('true')
         return true;
       }
     }
