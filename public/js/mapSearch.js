@@ -175,5 +175,4 @@ function initMap() {
 
   $(function(){
     initMap()
-    setTimeout(function(){google.maps.event.trigger(map, 'resize'); console.log('timeout')}, 3000);
   })
