@@ -4,7 +4,7 @@ var lat = 54.774759
 var long = -1.570329
 var searchTerm = 'b'
 
-var url = 'https://wastetopia-pr-25.herokuapp.com/api/search/map///' + searchTerm + '////';
+var url = window.location.protocol + "//" + window.location.host + '/api/search/map///' + searchTerm + '////';
 
 
 var positions = [];
@@ -17,41 +17,31 @@ var latAdd = 0.0001, latSub = 0.0001, longAdd = 0.0001, longSub = 0.0001
 
 function initMap() {
   map = new google.maps.Map(
-    document.getElementById("search-map"), {
+    document.getElementById("map"), {
+      center: new google.maps.LatLng(lat, long),
       zoomControl: false,
       scrollwheel: false,
-      minZoom: 5,
-      maxZoom: 15
+      maxZoom: 15,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
     });
-    console.log('Google Maps API version: ' + google.maps.version);
-    // bounds = new google.maps.LatLngBounds();
+    bounds = new google.maps.LatLngBounds();
     markerIcon = {
-      url: markerPinURL,
+      url: 'icons/placePin.png',
       scaledSize: new google.maps.Size(30, 30),
       origin: new google.maps.Point(0, 0),
       anchor: new google.maps.Point(15, 30)
     };
+    geocoder = new google.maps.Geocoder();
     $.getJSON(url, function(items){
-      // Add some markers to the map.
-        // Note: The code uses the JavaScript Array.prototype.map() method to
-        // create an array of markers based on a given "locations" array.
-        // The map() method here has nothing to do with the Google Maps API.
-        var markers = items.map(function(item) {
-          return addMarker(item)
-        });
+      var markers = items.map(function(item) {
+        return addMarker(item)
+      });
 
-        // Add a marker clusterer to manage the markers.
-        var markerCluster = new MarkerClusterer(map, markers,
-            {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
-      // for (var i in items) {
-      //   console.log(items[i])
-      //   addMarker(items[i]);
-      // }
+      // Add a marker clusterer to manage the markers.
+      var markerCluster = new MarkerClusterer(map, markers,
+          {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
     })
 
-    // var lastCenter = map.getCenter();
-    // google.maps.event.trigger(map, 'resize');
-    // map.setCenter(lastCenter);
   }
 
   function containPosition(pos){
@@ -64,76 +54,55 @@ function initMap() {
   }
 
   function addMarker(item) {
-    console.log(item)
-
-    var position = {
+    var pos = {
       lat : parseFloat(item.Latitude),
-      long : parseFloat(item.Longitude)
+      lng : parseFloat(item.Longitude)
     }
-
-    console.log(positions)
-
-    if (!containPosition(position)){
-      positions.push(position)
+    if (!containPosition(pos)){
+      positions.push(pos)
       console.log('not a duplicated position')
     } else {
       console.log('found a duplicated position')
       var random = Math.random();
       console.log(random)
       if (random < 0.25) {
-        position.lat += latAdd
+        pos.lat += latAdd
         latAdd += 0.0001
         console.log('add lat')
       } else if (random < 0.5) {
-        position.long -= longSub
+        pos.long -= longSub
         longSub += 0.0001
         console.log('sub long')
       } else if (random < 0.75) {
-        position.lat -= latSub
+        pos.lat -= latSub
         latSub += 0.0001
         console.log('sub lat')
       } else {
-        position.long += longAdd
+        pos.long += longAdd
         longAdd += 0.0001
         console.log('add long')
       }
-      positions.push(position)
+      positions.push(pos)
     }
-
-    var marker = new google.maps.Marker({
-      icon: markerIcon,
-      map: map,
-      position: new google.maps.LatLng(position.lat, position.long),
-      animation: google.maps.Animation.DROP,
-    })
-    infoWindow(marker, map, item);
-    // bounds.extend(marker.getPosition());
-    // map.fitBounds(bounds);
-    // map.setCenter(bounds.getCenter());
-    return marker
+        var marker = new google.maps.Marker({
+          icon: markerIcon,
+          map: map,
+          position: pos,
+          animation: google.maps.Animation.DROP,
+        })
+        infoWindow(marker, map, item);
+        bounds.extend(marker.getPosition());
+        map.fitBounds(bounds);
+        return marker
   }
 
   function infoWindow(marker, map, item) {
     google.maps.event.addListener(marker, 'click', function() {
-
-      var watch = ""
-      var request = "request"
-      var cancel = ""
-
-      if (item.isWatching){
-        watch = "watched"
-      }
-
-      if (item.isRequesting){
-        request = "cancel-by-listing"
-        cancel = "Cancel "
-      }
-
       var contentString = '<div class="iw-container">'+
       '<div class="iw-header">'+
       '<img class="user-image" src="flowery.jpg"/>' +
       '<div class="user-details">'+
-      '<a class="user-name" id="' + item.UserID + '">'+
+      '<a class="user-name" href="#' + item.UserID + '">'+
       item.Forename + ' ' + item.Surname  +
       '</a>'+
       '<span class="is-offering">'+
@@ -149,21 +118,16 @@ function initMap() {
       '<div><span>Quantity:</span>' + item.Quantity + '</div>'+
       '</div>'+
       '<div class="nav-btns">'+
-      '<a href="#view" id="'+ item.ListingID + '" class="btn btn-primary" role="button">View</a>'+
-      '<a href="#' + request + '" class="btn btn-default" role="button" id="' + item.ListingID + '">' + cancel + 'Request</a>'+
-      '<div class="extra">'+
-      '<a href="#watch" role="button" class="btn-watch lightgrey ' + watch + '" id="' + item.ListingID + '"><i class="material-icons">visibility</i></a>'+
-        '<a href="#message" role="button" class="btn-watch" id="'+ item.ListingID +'"><i class="material-icons">message</i></a>'+
-      '</div>' +
+      '<a href="#'+ item.ListingID + '" class="btn btn-primary" role="button">View</a>'+
+      '<a class="btn btn-default" role="button">Request</a>'+
+      '<a role="button" class="btn-watch" id="watch"><i class="material-icons">visibility</i></a>'+
       '</div>'+
       '</div>'+
       '</div>';
-
       iw = new google.maps.InfoWindow({
         content: contentString,
         maxWidth: 300
       });
-
       iw.addListener('domready', function() {
 
         // Reference to the DIV which receives the contents of the infowindow using jQuery
@@ -190,7 +154,7 @@ function initMap() {
         iwCloseBtn.css({opacity: '1', right: '55px', top: '20px','box-shadow': '0', width: '25px', height: '25px'});
 
         // Change the default close-icon
-        var iwCloseImg = iwCloseBtn.children(':nth-child(1)').attr('src',markerCloseURL);
+        var iwCloseImg = iwCloseBtn.children(':nth-child(1)').attr('src','icons/close.png');
         iwCloseImg.css({width: '100%', height : '100%', position: 'relative', top:'0',left:'0'})
       });
       iw.open(map, marker);

@@ -16,9 +16,7 @@ function initMap() {
   map = new google.maps.Map(
     document.getElementById("map"), {
       center: new google.maps.LatLng(lat, long),
-      zoomControl: false,
-      scrollwheel: false,
-      maxZoom: 15,
+      minZoom: 5,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     });
     bounds = new google.maps.LatLngBounds();
@@ -67,7 +65,7 @@ function initMap() {
         latAdd += 0.0001
         console.log('add lat')
       } else if (random < 0.5) {
-        pos.long -= longSub
+        pos.lng -= longSub
         longSub += 0.0001
         console.log('sub long')
       } else if (random < 0.75) {
@@ -75,12 +73,15 @@ function initMap() {
         latSub += 0.0001
         console.log('sub lat')
       } else {
-        pos.long += longAdd
+        pos.lng += longAdd
         longAdd += 0.0001
         console.log('add long')
       }
       positions.push(pos)
     }
+
+    console.log(pos)
+
         var marker = new google.maps.Marker({
           icon: markerIcon,
           map: map,
@@ -90,6 +91,7 @@ function initMap() {
         infoWindow(marker, map, item);
         bounds.extend(marker.getPosition());
         map.fitBounds(bounds);
+        return marker
   }
 
   function infoWindow(marker, map, item) {
