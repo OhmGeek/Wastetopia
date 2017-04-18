@@ -7,9 +7,6 @@ use PDO;
 class User {
 
     public static function verify_credentials($username, $password) {
-	    print_r("Username: ".$username);
-	    print_r("Password: ".$password);
-	    print_r("Password length: ".strlen($password));
         $db = DB::getDB();
 
         $statement = $db->prepare("SELECT Password_Hash, Salt
@@ -19,11 +16,9 @@ class User {
         $statement->bindValue(':email', $username,PDO::PARAM_STR);
 	    $statement->execute();
         $pwd_deets = $statement->fetchAll(PDO::FETCH_ASSOC);
-	
-	    print_r($pwd_deets);
+
         $calculated_hash = hash('sha256', $pwd_deets[0]['Salt'].$password);
 	    
-	    print_r($calculated_hash);
 
         if($calculated_hash == $pwd_deets[0]['Password_Hash']) {
             error_log("User verified");
