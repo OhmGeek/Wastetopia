@@ -194,6 +194,12 @@ function initMap() {
     });
   }
 
+  google.maps.event.trigger(map, "resize");
+
+setTimeout(function() {
+    map.setCenter(bounds.getCenter());
+}, 100)
+
   $(function(){
     initMap()
   })
