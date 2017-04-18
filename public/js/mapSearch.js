@@ -63,7 +63,7 @@ function initMap() {
   }
 
   function infoWindow(marker, map, item) {
-
+    google.maps.event.addListener(marker, 'click', function() {
       var contentString = '<div class="iw-container">'+
       '<div class="iw-header">'+
       '<img class="user-image" src="flowery.jpg"/>' +
@@ -123,7 +123,6 @@ function initMap() {
         var iwCloseImg = iwCloseBtn.children(':nth-child(1)').attr('src',markerCloseURL);
         iwCloseImg.css({width: '100%', height : '100%', position: 'relative', top:'0',left:'0'})
       });
-      google.maps.event.addListener(marker, 'click', function() {
       iw.open(map, marker);
     });
   }
