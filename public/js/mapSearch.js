@@ -18,11 +18,8 @@ var latAdd = 0.0001, latSub = 0.0001, longAdd = 0.0001, longSub = 0.0001
 function initMap() {
   map = new google.maps.Map(
     document.getElementById("search-map"), {
-      zoom: 13,
-      center: new google.maps.LatLng(lat, long),
       minZoom: 5,
-      maxZoom: 15,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
+      maxZoom: 15
     });
     console.log('Google Maps API version: ' + google.maps.version);
     bounds = new google.maps.LatLngBounds();
@@ -112,8 +109,6 @@ function initMap() {
 
   function infoWindow(marker, map, item) {
     google.maps.event.addListener(marker, 'click', function() {
-      console.log(parseFloat(item.Latitude))
-      console.log(parseFloat(item.Longitude))
 
       var watch = ""
       var request = "request"
@@ -157,10 +152,12 @@ function initMap() {
       '</div>'+
       '</div>'+
       '</div>';
+
       iw = new google.maps.InfoWindow({
         content: contentString,
         maxWidth: 300
       });
+      
       iw.addListener('domready', function() {
 
         // Reference to the DIV which receives the contents of the infowindow using jQuery
