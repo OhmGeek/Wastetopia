@@ -104,7 +104,9 @@ class AnalysisModel
         
         $statement->execute();
 
-        return $statement->fetchAll(PDO::FETCH_ASSOC);
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+	    print_r($results);
+	    return $results;
 }
     
     /**
@@ -203,8 +205,6 @@ class AnalysisModel
         $statement->execute();
 
 	 $results = $statement->fetchAll(PDO::FETCH_ASSOC);
-	    
-	 print_r($results);
 
         return $statement->fetchAll(PDO::FETCH_ASSOC); 
     }
