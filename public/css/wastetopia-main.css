@@ -142,12 +142,14 @@
 /* search page */
 
 /*This is an edited version of the sidebar made by David Miller*/
-.search-advance{
+.search-header{
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 5px;
+  position: absolute;
+  margin-top: 60px;
 }
 
 .no-padding {
