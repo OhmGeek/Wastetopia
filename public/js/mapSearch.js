@@ -7,7 +7,7 @@ var searchTerm = 'b'
 var url = window.location.protocol + "//" + window.location.host + '/api/search/map///' + searchTerm + '////';
 
 
-var geocoder;
+var positions;
 var map;
 var bounds;
 var markerIcon;
@@ -51,10 +51,36 @@ function initMap() {
 
   function addMarker(item) {
     console.log(item)
+    var position = {
+      lat : parseFloat(item.Latitude),
+      long : parseFloat(item.Longitude)
+    }
+    var latAdd = 0.000001, latSub = 0.000001, longAdd = 0.000001, longSub = 0.000001.
+
+    if (positions.indexOf(position) == -1){
+      positions.push(position)
+    } else {
+      var random = Math.random();
+      if (random < 0.25) {
+        position.lat += latAdd
+        latAdd += 0.000001
+      } else if (random < 0.5) {
+        position.long -= longSub
+        longSub += 0.000001
+      } else if (random < 0.75) {
+        position.lat -= latSub
+        latSub += 0.000001
+      } else {
+        position.lat += longAdd
+        longAdd += 0.000001
+      }
+      positions.push(position)
+    }
+
     var marker = new google.maps.Marker({
       icon: markerIcon,
       map: map,
-      position: new google.maps.LatLng(parseFloat(item.Latitude), parseFloat(item.Longitude)),
+      position: new google.maps.LatLng(position.lat, position.long),
       animation: google.maps.Animation.DROP,
     })
     infoWindow(marker, map, item);
