@@ -49,6 +49,11 @@ function initMap() {
       //   addMarker(items[i]);
       // }
     })
+    google.maps.event.trigger(map, "resize");
+
+  setTimeout(function() {
+      map.setCenter(bounds.getCenter());
+  }, 100)
   }
 
   function containPosition(pos){
@@ -193,12 +198,6 @@ function initMap() {
       iw.open(map, marker);
     });
   }
-
-  google.maps.event.trigger(map, "resize");
-
-setTimeout(function() {
-    map.setCenter(bounds.getCenter());
-}, 100)
 
   $(function(){
     initMap()
