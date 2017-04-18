@@ -196,7 +196,7 @@ class AnalysisController
 
         arsort($names);
         $limit = count($names) < 5 ? count($names) : 5;
-
+        
         $results = array_slice($names, 0, $limit, true);
 
         return json_encode($results);
@@ -258,6 +258,13 @@ class AnalysisController
         }
         arsort($tags); // Sort by tag frequency
 
-        return array_keys($tags)[0];
+        $mostFrequent = array_keys($tags)[0];
+        
+        if($tags[$mostFrequent] > 0){
+            return $mostFrequent;
+        }else{
+            return "";
+        }
+        
     }
 }
