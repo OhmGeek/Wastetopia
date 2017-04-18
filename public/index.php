@@ -216,7 +216,6 @@ $klein->with("/analysis", function() use ($klein){
 $klein->with("/profile", function() use ($klein) {
 
    $klein->respond('GET', '/?', function($request, $response){
-       forceLogin($request->uri());
         $controller = new ProfilePageController(1); //View own profile
         return $controller->generatePage();
     });
@@ -227,14 +226,11 @@ $klein->with("/profile", function() use ($klein) {
     });
     
     $klein->respond('GET', '/update/[:userID]', function($request, $response){
-        forceLogin($request->uri());
        $controller = new ProfilePageController(0, $request->userID);
        return $controller->generateProfileContentHTML(); 
     });
     
     $klein->respond('GET', '/load-home-tab/[:userID]', function($request, $response){
-
-        forceLogin("/profile/load-home-tab/" . $request->userID);
         $controller = new ProfilePageController(0, $request->userID);
         return $controller->generateHomeSection(); 
     });
@@ -287,7 +283,6 @@ $klein->with("/profile", function() use ($klein) {
     
     // Needs testing
     $klein->respond('POST', '/change-password', function($request, $response){
-        forceLogin($request->uri());
         $oldPassword = $request->oldPassword;
         $newPassword = $request->newPassword;
         $controller= new ProfilePageController(1);
@@ -302,7 +297,7 @@ $klein->with("/profile", function() use ($klein) {
     
     // Needs testing
     $klein->respond('POST', '/change-profile-picture', function($request, $response){
-        forceLogin($request->uri());
+
         $files = $request->files();        
         $controller = new ProfilePageController(1);
         return $controller->changeProfilePicture($files);
@@ -310,7 +305,7 @@ $klein->with("/profile", function() use ($klein) {
    
     //Needs testing
     $klein->respond('POST', '/change-email', function($request, $response){
-        forceLogin($request->uri());
+
         $oldEmail = $request->oldEmail;
         $newEmail = $request->newEmail;
         $controller = new ProfilePageController(1);
