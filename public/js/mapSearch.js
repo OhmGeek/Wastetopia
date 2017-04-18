@@ -20,6 +20,8 @@ function initMap() {
     document.getElementById("search-map"), {
       zoom: 13,
       center: new google.maps.LatLng(lat, long),
+      minZoom: 5,
+      maxZoom: 15,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     });
     console.log('Google Maps API version: ' + google.maps.version);
