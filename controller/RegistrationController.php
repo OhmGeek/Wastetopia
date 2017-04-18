@@ -157,6 +157,8 @@ class RegistrationController
     * @return bool
     */
     function sendVerificationEmail($email, $name, $reactivation = 0){
+	    error_log("Email: ".$email);
+	    error_log("Name: ".$name);
         $CurrentConfig = new CurrentConfig();
         $config = $CurrentConfig->getAll();
             
