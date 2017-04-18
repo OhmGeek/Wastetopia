@@ -112,12 +112,13 @@
                   </div>
                   <div class="form-group col-xs-12">
                     <label class="control-label" for="date">Expiry date</label>
-                    <input type="text" class="form-control" id="date" name="expirydate">
+                    <input type="text" class="form-control" id="date" name="expirydate"
+                           {% if mode=='edit' %} value="{{ item.expires }}" {% endif %} >
                   </div>
                   <div class="form-group col-xs-12">
                     <label for="description" class="control-label">Enter Description :</label>
                     <div>
-                      <textarea class="form-control" rows="3" id="description" name="description"></textarea>
+                      <textarea class="form-control" rows="3" id="description" name="description">{% if mode=='edit' %}{{ item.description }}{% endif %}</textarea>
                       <span class="help-block">Max 500 character.</span>
                     </div>
                   </div>
