@@ -16,6 +16,7 @@ var markerCloseURL = window.location.protocol + "//" + window.location.host + "/
 var latAdd = 0.0001, latSub = 0.0001, longAdd = 0.0001, longSub = 0.0001
 
 function initMap() {
+  console.log('initializing the map now')
   map = new google.maps.Map(
     document.getElementById("map"), {
       center: new google.maps.LatLng(lat, long),
@@ -180,6 +181,7 @@ function initMap() {
 
 $(function(){
   $('#map-tab').on('shown.bs.tab', function(e){
+      console.log('map part appeared')
         initMap();
     });
 })
