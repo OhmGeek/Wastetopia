@@ -10,21 +10,33 @@ class IndexPageController
 {
     function __construct()
     {
-    }
-
-    function renderIndexPage()
-    {
+        // New instance of SearchPageController
+        $controller = new SearchPageController();
+        
+        // Set up twig stuff
         $loader = new Twig_Loader_Filesystem('../view/');
         $twig = new Twig_Environment($loader);
 
-        $controller = new SearchPageController();
+    }
 
+    
+    /**
+    * Generates HTML for the main home page
+    * @return HTML
+    */
+    function renderIndexPage()
+    {
+        
         $currentConfig = new CurrentConfig();
         $config = $currentConfig->getAll();
 
-        $filters = $controller->getSearchFilters();
+        // Get possible search filters 
+        $filters = $this->controller->getSearchFilters();
 
-        $template = $twig->loadTemplate("index.twig");
+        // Load template
+        $template = $this->twig->loadTemplate("index.twig");
+
+        // Generate HTML
         return $template->render(array('config' => $config,
                                        'filters' => $filters
                                      ));
