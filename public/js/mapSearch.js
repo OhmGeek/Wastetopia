@@ -13,7 +13,7 @@ var bounds;
 var markerIcon;
 var markerPinURL = window.location.protocol + "//" + window.location.host + "/js/icons/placePin.png"
 var markerCloseURL = window.location.protocol + "//" + window.location.host + "/js/icons/close.png"
-var latAdd = 0.0001, latSub = 0.0001, longAdd = 0.00001, longSub = 0.00001
+var latAdd = 0.0001, latSub = 0.0001, longAdd = 0.0001, longSub = 0.0001
 
 function initMap() {
   map = new google.maps.Map(
@@ -82,7 +82,7 @@ function initMap() {
         console.log('add lat')
       } else if (random < 0.5) {
         position.long -= longSub
-        longSub += 0.00001
+        longSub += 0.0001
         console.log('sub long')
       } else if (random < 0.75) {
         position.lat -= latSub
@@ -90,7 +90,7 @@ function initMap() {
         console.log('sub lat')
       } else {
         position.long += longAdd
-        longAdd += 0.00001
+        longAdd += 0.0001
         console.log('add long')
       }
       positions.push(position)
