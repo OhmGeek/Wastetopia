@@ -280,12 +280,7 @@ $(function () {
   });
 
   function resizeMap() {
-    console.log('resize map')
-    var zoomBefore = map.getZoom();
-    var centerBefore = map.getCenter();
     google.maps.event.trigger(map, 'resize');
-    map.setZoom(zoomBefore);
-    map.setCenter(centerBefore);
   };
 
   $('#btn-map').on('click', function(event){
