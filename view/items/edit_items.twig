@@ -138,8 +138,10 @@
                 <label for="inputLocation" class="col-md-2 control-label">Address</label>
 
                 <div class="col-md-10">
-                  <input type="text" class="form-control" id="inputLocation1" placeholder="Location : eg.4 The Sidings">
-                  <input type="text" class="form-control" id="inputLocation2" placeholder="PostCode : eg.dh1 1hs">
+                  <input type="text" class="form-control" id="inputLocation1" placeholder="Location : eg.4 The Sidings"
+                         {% if mode=='edit' %}value="{{ item.location.name }}" {% endif %}>
+                  <input type="text" class="form-control" id="inputLocation2" placeholder="PostCode : eg.dh1 1hs"
+                         {% if mode=='edit' %}value="{{ item.location.postcode }}" {% endif %}>
                 </div>
               </div>
             </div>
