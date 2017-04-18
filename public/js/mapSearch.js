@@ -36,7 +36,7 @@ function initMap() {
         // create an array of markers based on a given "locations" array.
         // The map() method here has nothing to do with the Google Maps API.
         var markers = items.map(function(item) {
-          return addMarker
+          return addMarker(item)
         });
 
         // Add a marker clusterer to manage the markers.
