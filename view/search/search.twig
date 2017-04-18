@@ -105,7 +105,10 @@ Search
                 {% else %}
                 <a href="#request" class="btn btn-default" role="button">Request</a>
                 {% endif %}
-                <a href="#watch" role="button" class="btn-watch {% if isWatching %} watched {% endif %}" id="{{item.listingID}}"><i class="material-icons">visibility</i></a>
+                <div class="extra">
+                  <a href="#watch" role="button" class="btn-watch {% if isWatching %} watched {% endif %}" id="{{item.listingID}}"><i class="material-icons">visibility</i></a>
+                  <a href="#message" role="button" class="btn-watch" id="{{item.listingID}}"><i class="material-icons">message</i></a>
+                </div>
               </div>
             </div>
           </div>
@@ -115,7 +118,7 @@ Search
     </div>
   </div>
   <div id="map-tab" class="tab-pane fade">
-    <div id="search-map"></div> 
+    <div id="search-map"></div>
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCrh2cKWRAFifeLIkznE2Iw4Oblqlmyyt0">
     </script>

@@ -89,7 +89,11 @@ function initMap() {
       '<div class="nav-btns">'+
       '<a href="#'+ item.ListingID + '" class="btn btn-primary" role="button">View</a>'+
       '<a class="btn btn-default" role="button">Request</a>'+
-      '<a role="button" class="btn-watch" id="watch"><i class="material-icons">visibility</i></a>'+
+      '<div class="extra">'+
+      '<a href="#watch" role="button" class="btn-watch lightgrey watched"><i'+
+                  'class="material-icons">visibility</i></a>'+
+        '<a href="#message" role="button" class="btn-watch" id="'+ item.ListingID +'"><i class="material-icons">message</i></a>'+
+      '</div>' +
       '</div>'+
       '</div>'+
       '</div>';
