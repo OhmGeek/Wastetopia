@@ -49,9 +49,9 @@ function initMap() {
       // }
     })
 
-    var lastCenter = map.getCenter();
-    google.maps.event.trigger(map, 'resize');
-    map.setCenter(lastCenter);
+    // var lastCenter = map.getCenter();
+    // google.maps.event.trigger(map, 'resize');
+    // map.setCenter(lastCenter);
   }
 
   function containPosition(pos){
