@@ -13,7 +13,7 @@ var bounds;
 var markerIcon;
 var markerPinURL = window.location.protocol + "//" + window.location.host + "/js/icons/placePin.png"
 var markerCloseURL = window.location.protocol + "//" + window.location.host + "/js/icons/close.png"
-var latAdd = 0.000001, latSub = 0.000001, longAdd = 0.000001, longSub = 0.000001
+var latAdd = 0.0001, latSub = 0.0001, longAdd = 0.00001, longSub = 0.00001
 
 function initMap() {
   map = new google.maps.Map(
