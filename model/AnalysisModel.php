@@ -51,7 +51,7 @@ class AnalysisModel
         // Inner table gets Tags with their quantity in successful transactions
         // Outer table gets Tags with their current quantity in user's listing
         // Join Tables to get total quantity for all time for each Tag
-        $sql = "SELECT `Tag`.`Name`, `Tag`.`TagID`, (SUM(`Listing`.`Quantity`) + SUM(`Inner`.`Transactions_Quantity`)) AS `Count`
+        $sql = "SELECT `Tag`.`Name`, `Tag`.`TagID`, (SUM(COALESCE(`Listing`.`Quantity`,0)) + SUM(COALESCE(`Inner`.`Transactions_Quantity`,0))) AS `Count`
                 FROM `Tag` 
                 JOIN `ItemTag` ON `ItemTag`. `FK_Tag_TagID` = `Tag`.`TagID`
                 JOIN `Item` ON `Item`.`ItemID` = `ItemTag`.`FK_Item_ItemID`
@@ -183,7 +183,7 @@ class AnalysisModel
         // Join Tables to get total quantity for all time for each item
         // Then grouped by Name and Ordered By Count
         $statement = $this->db->prepare("
-            SELECT `Item`.`ItemID`, `Item`.`Name`, (SUM(`Listing`.`Quantity`) + SUM(`Inner`.`Transactions_Quantity`)) AS `Count`
+            SELECT `Item`.`ItemID`, `Item`.`Name`, (SUM(COALESCE(`Listing`.`Quantity`, 0)) + SUM(COALESCE(`Inner`.`Transactions_Quantity`,0))) AS `Count`
             FROM `Item`
             JOIN `Listing` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
             JOIN  `User` ON `Listing`.`FK_User_UserID` = `User`.`UserID`
@@ -196,7 +196,7 @@ class AnalysisModel
                 ON `Inner`.`ItemID` = `Item`.`ItemID`
             WHERE `User`.`UserID` = :userID
             GROUP BY `Item`.`Name`
-            ORDER BY `Count` DESC;
+	    ORDER BY `Count` DESC;
         ");
         
         $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
@@ -217,10 +217,10 @@ class AnalysisModel
         $userID = $this->getUserID();
 
         $statement = $this->db->prepare("
-           SELECT `Item`.`ItemID`, `Item`.`Name`, SUM(`ListingTransaction`.`Quantity`) AS `Count`
+           SELECT `Item`.`ItemID`, `Item`.`Name`, COALESCE(SUM(`ListingTransaction`.`Quantity`), 0) AS `Count`
                 FROM `Item`
-				JOIN `Listing` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
-				JOIN `ListingTransaction` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
+		JOIN `Listing` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
+		JOIN `ListingTransaction` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
                 JOIN `Transaction` ON `Transaction`.`TransactionID` = `ListingTransaction`.`FK_Transaction_TransactionID`
                 JOIN `User` ON `User`.`UserID` = `Transaction`.`FK_User_UserID`
                 WHERE `ListingTransaction`.`Success` = 1
