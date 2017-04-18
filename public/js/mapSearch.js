@@ -60,8 +60,9 @@ function initMap() {
 
     if (positions.indexOf(position) == -1){
       positions.push(position)
+      console.log('not a duplicated position')
     } else {
-      console.log('found a duplicate position')
+      console.log('found a duplicated position')
       var random = Math.random();
       if (random < 0.25) {
         position.lat += latAdd
