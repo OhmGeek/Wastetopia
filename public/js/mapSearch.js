@@ -7,7 +7,7 @@ var searchTerm = 'b'
 var url = window.location.protocol + "//" + window.location.host + '/api/search/map///' + searchTerm + '////';
 
 
-var positions;
+var positions = [];
 var map;
 var bounds;
 var markerIcon;
@@ -55,7 +55,7 @@ function initMap() {
       lat : parseFloat(item.Latitude),
       long : parseFloat(item.Longitude)
     }
-    
+
     var latAdd = 0.000001, latSub = 0.000001, longAdd = 0.000001, longSub = 0.000001
 
     if (positions.indexOf(position) == -1){
