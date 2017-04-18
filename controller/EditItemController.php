@@ -10,9 +10,9 @@ namespace Wastetopia\Controller;
 
 use Twig_Loader_Filesystem;
 use Twig_Environment;
-use Wastetopia\Model\AddItemModel;
 use Wastetopia\Model\AmazonS3;
 use Wastetopia\Model\EditItemModel;
+use Wastetopia\Model\ViewItemModel;
 
 class EditItemController
 {
@@ -29,11 +29,14 @@ class EditItemController
 
         $loader  = new Twig_Loader_Filesystem(__DIR__.'/../view/');
         $twig = new Twig_Environment($loader);
+        $viewItem = new ViewItemModel();
+        $itemDetails = $viewItem->getAll($this->listingID);
         $template = $twig->loadTemplate('items/edit_items.twig');
         return $template->render(array(
             'tags' => $this->getListOfTagsForView(),
             'mode' => 'edit',
-            'listingID' => $this->listingID
+            'listingID' => $this->listingID,
+            'item' => $itemDetails
         )); // todo add required details here.
     }
 
