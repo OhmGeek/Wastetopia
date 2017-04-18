@@ -50,6 +50,7 @@ function initMap() {
   }
 
   function addMarker(item) {
+    console.log(item)
     var marker = new google.maps.Marker({
       icon: markerIcon,
       map: map,
