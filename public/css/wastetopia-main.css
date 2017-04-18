@@ -254,7 +254,7 @@
   border-left: 2px solid black;
 }
 
-.search-result #map {
+.search-result #map-tab {
   height: 100vh;
   width: 100%;
   background-color: black;
