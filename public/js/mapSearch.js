@@ -22,6 +22,7 @@ function initMap() {
       zoom: 13,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     });
+    console.log(map)
     bounds = new google.maps.LatLngBounds();
     markerIcon = {
       url: 'icons/placePin.png',
@@ -29,6 +30,7 @@ function initMap() {
       origin: new google.maps.Point(0, 0),
       anchor: new google.maps.Point(15, 30)
     };
+    console.log(markerIcon)
     geocoder = new google.maps.Geocoder();
     $.getJSON(url, function(items){
       for (var i in items) {
