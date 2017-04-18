@@ -19,7 +19,6 @@ function initMap() {
   map = new google.maps.Map(
     document.getElementById("search-map"), {
       zoom: 13,
-      center:new google.maps.LatLng(lat,long),
       mapTypeId: google.maps.MapTypeId.ROADMAP
     });
     console.log(map)
@@ -35,34 +34,21 @@ function initMap() {
     $.getJSON(url, function(items){
       for (var i in items) {
         console.log(items[i])
-        geocodeAddress(items[i]);
+        addMarker(items[i]);
       }
     })
   }
 
-  function geocodeAddress(item) {
-    geocoder.geocode({
-      componentRestrictions: {
-        country: 'GB',
-        postalCode: item.Post_Code
-      }
-    },
-
-    function(results, status) {
-      if (status == google.maps.GeocoderStatus.OK) {
-        var marker = new google.maps.Marker({
-          icon: markerIcon,
-          map: map,
-          position: results[0].geometry.location,
-          animation: google.maps.Animation.DROP,
-        })
-        infoWindow(marker, map, item);
-        bounds.extend(marker.getPosition());
-        map.fitBounds(bounds);
-      } else {
-        alert("geocode of " + item.Post_Code + " failed:" + status);
-      }
-    });
+  function addMarker(item) {
+    var marker = new google.maps.Marker({
+      icon: markerIcon,
+      map: map,
+      position: new google.maps.LatLng(item.Latitude, item.Longitude),
+      animation: google.maps.Animation.DROP,
+    })
+    infoWindow(marker, map, item);
+    bounds.extend(marker.getPosition());
+    map.fitBounds(bounds);
   }
 
   function infoWindow(marker, map, item) {
@@ -130,11 +116,11 @@ function initMap() {
     });
   }
 
-$(function(){
-  initMap()
-  google.maps.event.addListener(map, "idle", function(){
-    google.maps.event.trigger(map, 'resize');
+  $(function(){
+    initMap()
+    google.maps.event.addListener(map, "idle", function(){
+      google.maps.event.trigger(map, 'resize');
+    })
+    map.setZoom( map.getZoom() - 1);
+    map.setZoom( map.getZoom() + 1);
   })
-  map.setZoom( map.getZoom() - 1);
-  map.setZoom( map.getZoom() + 1);
-})
