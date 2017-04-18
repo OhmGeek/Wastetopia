@@ -1,6 +1,3 @@
-var searchTerm = 'apple'
-
-// var url = window.location.protocol + "//" + window.location.host + "/" + 'search/json/' + searchTerm
 // the proper link for the search wastetopia.herokuapp.com/api/search/map/<user latitude>/<user longitude>/<search term>/<tag+ids+split+by+signs>/<tags+to+disclude>/
 
 var lat = 54.774759
@@ -130,12 +127,11 @@ function initMap() {
       iw.open(map, marker);
     });
   }
-});
 
 $(function(){
   initMap()
   google.maps.event.addListener(map, "idle", function(){
-        google.maps.event.trigger(map, 'resize');
+    google.maps.event.trigger(map, 'resize');
   }
   map.setZoom( map.getZoom() - 1);
   map.setZoom( map.getZoom() + 1);
