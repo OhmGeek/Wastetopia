@@ -24,14 +24,13 @@ function initMap() {
       maxZoom: 15
     });
     console.log('Google Maps API version: ' + google.maps.version);
-    bounds = new google.maps.LatLngBounds();
+    // bounds = new google.maps.LatLngBounds();
     markerIcon = {
       url: markerPinURL,
       scaledSize: new google.maps.Size(30, 30),
       origin: new google.maps.Point(0, 0),
       anchor: new google.maps.Point(15, 30)
     };
-    geocoder = new google.maps.Geocoder();
     $.getJSON(url, function(items){
       // Add some markers to the map.
         // Note: The code uses the JavaScript Array.prototype.map() method to
@@ -49,7 +48,7 @@ function initMap() {
       //   addMarker(items[i]);
       // }
     })
-    
+
     var lastCenter = map.getCenter();
     google.maps.event.trigger(map, 'resize');
     map.setCenter(lastCenter);
@@ -108,9 +107,9 @@ function initMap() {
       animation: google.maps.Animation.DROP,
     })
     infoWindow(marker, map, item);
-    bounds.extend(marker.getPosition());
-    map.fitBounds(bounds);
-    map.setCenter(bounds.getCenter());
+    // bounds.extend(marker.getPosition());
+    // map.fitBounds(bounds);
+    // map.setCenter(bounds.getCenter());
     return marker
   }
 
