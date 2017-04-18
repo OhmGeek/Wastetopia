@@ -279,14 +279,9 @@ $(function () {
 
   });
 
-  function resizeMap() {
-    google.maps.event.trigger(map, 'resize');
-  };
-
   $('#btn-map').on('click', function(event){
     $('#btn-grid').removeClass('hide')
     $('#btn-map').addClass('hide')
-    resizeMap()
   })
 
   $('#btn-grid').on('click', function(event){

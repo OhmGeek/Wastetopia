@@ -18,7 +18,8 @@ var latAdd = 0.0001, latSub = 0.0001, longAdd = 0.0001, longSub = 0.0001
 function initMap() {
   map = new google.maps.Map(
     document.getElementById("search-map"), {
-      center: new google.maps.LatLng(lat, long),
+      zoomControl: false,
+      scrollwheel: false,
       minZoom: 5,
       maxZoom: 15
     });
@@ -105,6 +106,7 @@ function initMap() {
     infoWindow(marker, map, item);
     bounds.extend(marker.getPosition());
     map.fitBounds(bounds);
+    map.setCenter(bounds.getCenter());
     return marker
   }
 
