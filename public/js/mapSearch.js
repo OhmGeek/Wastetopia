@@ -177,4 +177,7 @@ function initMap() {
       });
       iw.open(map, marker);
     });
+    google.maps.event.addListener(map, 'click', function(){
+      iw.close();
+    })
   }
