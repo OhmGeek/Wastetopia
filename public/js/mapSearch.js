@@ -52,6 +52,8 @@ function initMap() {
 
   function containPosition(pos){
     for (var position in positions) {
+      console.log(JSON.stringify(pos))
+      console.log(JSON.stringify(position))
       if (JSON.stringify(pos) == JSON.stringify(position)) {
         console.log('true')
         return true;
@@ -107,11 +109,25 @@ function initMap() {
     google.maps.event.addListener(marker, 'click', function() {
       console.log(parseFloat(item.Latitude))
       console.log(parseFloat(item.Longitude))
+
+      var watch = ""
+      var request = "request"
+      var cancel = ""
+
+      if (item.isWatching){
+        watch = "watched"
+      }
+
+      if (item.isRequesting){
+        request = "cancel-by-listing"
+        cancel = "Cancel "
+      }
+
       var contentString = '<div class="iw-container">'+
       '<div class="iw-header">'+
       '<img class="user-image" src="flowery.jpg"/>' +
       '<div class="user-details">'+
-      '<a class="user-name" href="#' + item.UserID + '">'+
+      '<a class="user-name" id="' + item.UserID + '">'+
       item.Forename + ' ' + item.Surname  +
       '</a>'+
       '<span class="is-offering">'+
@@ -127,10 +143,10 @@ function initMap() {
       '<div><span>Quantity:</span>' + item.Quantity + '</div>'+
       '</div>'+
       '<div class="nav-btns">'+
-      '<a href="#'+ item.ListingID + '" class="btn btn-primary" role="button">View</a>'+
-      '<a class="btn btn-default" role="button">Request</a>'+
+      '<a href="#view" id="'+ item.ListingID + '" class="btn btn-primary" role="button">View</a>'+
+      '<a href="#' + request + '" class="btn btn-default" role="button" id="' + item.ListingID + '">' + cancel + 'Request</a>'
       '<div class="extra">'+
-      '<a href="#watch" role="button" class="btn-watch lightgrey watched"><i'+
+      '<a href="#watch" role="button" class="btn-watch lightgrey ' + watch + '" id="' + item.ListingID + '"><i'+
                   'class="material-icons">visibility</i></a>'+
         '<a href="#message" role="button" class="btn-watch" id="'+ item.ListingID +'"><i class="material-icons">message</i></a>'+
       '</div>' +
