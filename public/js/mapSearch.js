@@ -89,7 +89,7 @@ function initMap() {
         latSub += 0.0001
         console.log('sub lat')
       } else {
-        position.lat += longAdd
+        position.long += longAdd
         longAdd += 0.00001
         console.log('add long')
       }
