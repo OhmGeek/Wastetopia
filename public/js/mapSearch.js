@@ -131,7 +131,13 @@ function initMap() {
     });
   }
 
+  google.maps.event.addListener(map, "idle", function(){
+        google.maps.event.trigger(map, 'resize');
+});
+
+this.map.setZoom( this.map.getZoom() - 1);
+this.map.setZoom( this.map.getZoom() + 1); 
+
 $(function(){
   initMap()
-   google.maps.event.trigger(map, 'resize'); 
 })
