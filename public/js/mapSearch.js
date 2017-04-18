@@ -49,12 +49,10 @@ function initMap() {
       //   addMarker(items[i]);
       // }
     })
-    google.maps.event.trigger(map, "resize");
-
-  setTimeout(function() {
-    console.log(bounds.getCenter())
-      map.setCenter(bounds.getCenter());
-  }, 100)
+    
+    var lastCenter = map.getCenter();
+    google.maps.event.trigger(map, 'resize');
+    map.setCenter(lastCenter);
   }
 
   function containPosition(pos){
