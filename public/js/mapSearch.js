@@ -39,7 +39,7 @@ function initMap() {
         geocodeAddress(items[i]);
       }
     })
-
+    google.maps.event.trigger(map, 'resize'); 
   }
 
   function geocodeAddress(item) {

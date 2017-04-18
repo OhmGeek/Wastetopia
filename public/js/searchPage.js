@@ -283,7 +283,6 @@ $(function () {
     $('#btn-grid').removeClass('hide')
     $('#btn-map').addClass('hide')
     initMap()
-    google.maps.event.trigger(map, 'resize'); 
   })
 
   $('#btn-grid').on('click', function(event){
