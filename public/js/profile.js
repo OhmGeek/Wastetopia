@@ -389,7 +389,7 @@ $(function () {
             // Send to /items/renew-listing/
             $('#change-modal').modal('hide');
 
-            var url = baseURL + "/change-email";
+            var url = baseURL + "/profile/change-email";
             var data = {oldEmail: oldEmail, newEmail: newEmail};
 
 
