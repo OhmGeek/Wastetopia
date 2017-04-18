@@ -53,7 +53,7 @@ function initMap() {
     var marker = new google.maps.Marker({
       icon: markerIcon,
       map: map,
-      position: new google.maps.LatLng(item.Latitude, item.Longitude),
+      position: new google.maps.LatLng(parseFloat(item.Latitude), parseFloat(item.Longitude)),
       animation: google.maps.Animation.DROP,
     })
     infoWindow(marker, map, item);
