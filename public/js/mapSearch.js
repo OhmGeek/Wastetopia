@@ -52,10 +52,7 @@ function initMap() {
 
   function containPosition(pos){
     for (var i in positions) {
-      console.log(JSON.stringify(pos))
-      console.log(JSON.stringify(positions[i]))
       if (JSON.stringify(pos) == JSON.stringify(positions[i])) {
-        console.log('true')
         return true;
       }
     }
@@ -64,6 +61,7 @@ function initMap() {
 
   function addMarker(item) {
     console.log(item)
+
     var position = {
       lat : parseFloat(item.Latitude),
       long : parseFloat(item.Longitude)
@@ -77,18 +75,23 @@ function initMap() {
     } else {
       console.log('found a duplicated position')
       var random = Math.random();
+      console.log(random)
       if (random < 0.25) {
         position.lat += latAdd
         latAdd += 0.00001
+        console.log('add lat')
       } else if (random < 0.5) {
         position.long -= longSub
         longSub += 0.00001
+        console.log('sub long')
       } else if (random < 0.75) {
         position.lat -= latSub
         latSub += 0.00001
+        console.log('sub lat')
       } else {
         position.lat += longAdd
         longAdd += 0.00001
+        console.log('add long')
       }
       positions.push(position)
     }
