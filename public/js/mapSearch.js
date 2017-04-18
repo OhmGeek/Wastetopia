@@ -7,7 +7,7 @@ var lat = 54.774759
 var long = -1.570329
 var searchTerm = 'b'
 
-var url = window.location.protocol + "//" + window.location.host + '/api/search/map/' + lat + '/' + long + '/' + searchTerm + '///';
+var url = window.location.protocol + "//" + window.location.host + '/api/search/map///' + searchTerm + '////';
 
 
 var geocoder;
