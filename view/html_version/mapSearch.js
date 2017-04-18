@@ -1,18 +1,15 @@
-// the proper link for the search wastetopia.herokuapp.com/api/search/map/<user latitude>/<user longitude>/<search term>/<tag+ids+split+by+signs>/<tags+to+disclude>/
-
 var lat = 54.774759
 var long = -1.570329
 var searchTerm = 'b'
 
-var url = window.location.protocol + "//" + window.location.host + '/api/search/map///' + searchTerm + '////';
+// var url = window.location.protocol + "//" + window.location.host + "/" + 'search/json/' + searchTerm
 
+var url = 'https://wastetopia-pr-25.herokuapp.com/api/search/map///' + searchTerm + '////';
 
 var positions = [];
 var map;
 var bounds;
 var markerIcon;
-var markerPinURL = window.location.protocol + "//" + window.location.host + "/js/icons/placePin.png"
-var markerCloseURL = window.location.protocol + "//" + window.location.host + "/js/icons/close.png"
 var latAdd = 0.0001, latSub = 0.0001, longAdd = 0.0001, longSub = 0.0001
 
 function initMap() {
@@ -24,7 +21,7 @@ function initMap() {
     });
     bounds = new google.maps.LatLngBounds();
     markerIcon = {
-      url: markerPinURL,
+      url: 'icons/placePin.png',
       scaledSize: new google.maps.Size(30, 30),
       origin: new google.maps.Point(0, 0),
       anchor: new google.maps.Point(15, 30)
@@ -99,24 +96,11 @@ function initMap() {
 
   function infoWindow(marker, map, item) {
     google.maps.event.addListener(marker, 'click', function() {
-      var watch = ""
-      var request = "request"
-      var cancel = ""
-
-      if (item.isWatching){
-        watch = "watched"
-      }
-
-      if (item.isRequesting){
-        request = "cancel-by-listing"
-        cancel = "Cancel "
-      }
-
       var contentString = '<div class="iw-container">'+
       '<div class="iw-header">'+
       '<img class="user-image" src="flowery.jpg"/>' +
       '<div class="user-details">'+
-      '<a class="user-name" id="' + item.UserID + '">'+
+      '<a class="user-name" href="#' + item.UserID + '">'+
       item.Forename + ' ' + item.Surname  +
       '</a>'+
       '<span class="is-offering">'+
@@ -132,12 +116,9 @@ function initMap() {
       '<div><span>Quantity:</span>' + item.Quantity + '</div>'+
       '</div>'+
       '<div class="nav-btns">'+
-      '<a href="#view" id="'+ item.ListingID + '" class="btn btn-primary" role="button">View</a>'+
-      '<a href="#' + request + '" class="btn btn-default" role="button" id="' + item.ListingID + '">' + cancel + 'Request</a>'+
-      '<div class="extra">'+
-      '<a href="#watch" role="button" class="btn-watch lightgrey ' + watch + '" id="' + item.ListingID + '"><i class="material-icons">visibility</i></a>'+
-        '<a href="#message" role="button" class="btn-watch" id="'+ item.ListingID +'"><i class="material-icons">message</i></a>'+
-      '</div>' +
+      '<a href="#'+ item.ListingID + '" class="btn btn-primary" role="button">View</a>'+
+      '<a class="btn btn-default" role="button">Request</a>'+
+      '<a role="button" class="btn-watch" id="watch"><i class="material-icons">visibility</i></a>'+
       '</div>'+
       '</div>'+
       '</div>';
@@ -171,7 +152,7 @@ function initMap() {
         iwCloseBtn.css({opacity: '1', right: '55px', top: '20px','box-shadow': '0', width: '25px', height: '25px'});
 
         // Change the default close-icon
-        var iwCloseImg = iwCloseBtn.children(':nth-child(1)').attr('src',markerCloseURL);
+        var iwCloseImg = iwCloseBtn.children(':nth-child(1)').attr('src','icons/close.png');
         iwCloseImg.css({width: '100%', height : '100%', position: 'relative', top:'0',left:'0'})
       });
       iw.open(map, marker);
