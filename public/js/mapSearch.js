@@ -19,6 +19,7 @@ function initMap() {
   map = new google.maps.Map(
     document.getElementById("search-map"), {
       zoom: 13,
+      center: new google.maps.LatLng(lat, long),
       mapTypeId: google.maps.MapTypeId.ROADMAP
     });
     console.log(map)
