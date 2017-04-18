@@ -735,8 +735,13 @@ class ProfilePageController
     */
      function changePassword($oldPassword, $newPassword){
         $userID = $this->getUserID(); 
+	print_r("User: ".$userID);
+	     print_r("Old: ".$oldPassword);
+	     print_r("New: ".$newPassword);
+	     
 	    // Get password hash and salt from the database
          $passwordDetails = $this->model->getPasswordDetails($userID);
+	 print_r("Details: ".$passwordDetails);
          $passwordHash = $passwordDetails["Password_Hash"];
          $passwordSalt = $passwordDetails["Salt"];
          
