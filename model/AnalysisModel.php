@@ -202,6 +202,9 @@ class AnalysisModel
         $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
         $statement->execute();
 
+	 $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+	    
+	 print_r($results);
 
         return $statement->fetchAll(PDO::FETCH_ASSOC); 
     }
