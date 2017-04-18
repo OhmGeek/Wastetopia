@@ -76,7 +76,7 @@ class NotificationModel
             WHERE ((`Conversation`.`FK_User_ReceiverID` = :userID       
                 AND `Message`.`Giver_Or_Receiver` = 0)            
                 OR (NOT(`Conversation`.`FK_User_ReceiverID` = :userID2) 
-                    AND `Message`.`Giver_Or_Receiver`= 1)))      
+                    AND `Message`.`Giver_Or_Receiver`= 1))      
             AND `Message`.`Read` = 0;   
         ");
 
