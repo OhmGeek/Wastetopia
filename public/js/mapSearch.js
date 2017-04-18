@@ -178,6 +178,8 @@ function initMap() {
     });
   }
 
+$(function(){
   $('#map-tab').on('shown.bs.tab', function(e){
         initMap();
     });
+})
