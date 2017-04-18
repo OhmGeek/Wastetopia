@@ -22,6 +22,7 @@ function initMap() {
       minZoom: 5,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     });
+    google.maps.event.trigger(map, 'resize');
     bounds = new google.maps.LatLngBounds();
     markerIcon = {
       url: markerPinURL,
@@ -38,11 +39,6 @@ function initMap() {
       // Add a marker clusterer to manage the markers.
       var markerCluster = new MarkerClusterer(map, markers,
         {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
-
-        var lastCenter = map.getCenter();
-        console.log(lastCenter.lat)
-        google.maps.event.trigger(document.getElementById("map"), 'resize');
-        map.setCenter(lastCenter);
       })
     }
 
@@ -181,3 +177,7 @@ function initMap() {
       iw.open(map, marker);
     });
   }
+
+  $('#map-tab').on('shown.bs.tab', function(e){
+        initMap();
+    });
