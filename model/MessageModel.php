@@ -27,9 +27,8 @@ class MessageModel
     function getUserID()
     {
 
-//        $reader = new UserCookieReader();
-//        return $reader->get_user_id();
-        return 6; //Hardcoded for now (6 or 20)
+	$reader = new UserCookieReader();
+         return $reader->get_user_id();
     }
 
 	
