@@ -216,6 +216,7 @@ $klein->with("/analysis", function() use ($klein){
 $klein->with("/profile", function() use ($klein) {
 
    $klein->respond('GET', '/?', function($request, $response){
+       forceLogin($request->uri());
         $controller = new ProfilePageController(1); //View own profile
         return $controller->generatePage();
     });
