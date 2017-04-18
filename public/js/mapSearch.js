@@ -4,7 +4,7 @@ var lat = 54.774759
 var long = -1.570329
 var searchTerm = 'b'
 
-var url = window.location.protocol + "//" + window.location.host + '/api/search/map///' + searchTerm + '////';
+var url = 'https://wastetopia-pr-25.herokuapp.com/api/search/map///' + searchTerm + '////';
 
 
 var positions = [];
