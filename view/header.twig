@@ -44,5 +44,8 @@
         {% for jsfile in jslist %}
             <script src="{{config.ROOT_BASE}}/js/{{jsfile}}"></script>
         {% endfor %}
+				<script async defer
+			  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCrh2cKWRAFifeLIkznE2Iw4Oblqlmyyt0&callback=initMap">
+			 </script>
 	</body>
 </html>
