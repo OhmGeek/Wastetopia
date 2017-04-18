@@ -61,19 +61,20 @@ function initMap() {
     if (positions.indexOf(position) == -1){
       positions.push(position)
     } else {
+      console.log('found a duplicate position')
       var random = Math.random();
       if (random < 0.25) {
         position.lat += latAdd
-        latAdd += 0.000001
+        latAdd += 0.00001
       } else if (random < 0.5) {
         position.long -= longSub
-        longSub += 0.000001
+        longSub += 0.00001
       } else if (random < 0.75) {
         position.lat -= latSub
-        latSub += 0.000001
+        latSub += 0.00001
       } else {
         position.lat += longAdd
-        longAdd += 0.000001
+        longAdd += 0.00001
       }
       positions.push(position)
     }
