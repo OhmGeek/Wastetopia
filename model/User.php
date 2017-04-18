@@ -24,7 +24,7 @@ class User {
 	    
 	    print_r($calculated_hash);
 
-        if($calculated_hash === $pwd_deets[0]['Password_Hash']) {
+        if($calculated_hash == $pwd_deets[0]['Password_Hash']) {
             error_log("User verified");
             return true;
         }
