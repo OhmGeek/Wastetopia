@@ -149,8 +149,7 @@ function initMap() {
       '<a href="#view" id="'+ item.ListingID + '" class="btn btn-primary" role="button">View</a>'+
       '<a href="#' + request + '" class="btn btn-default" role="button" id="' + item.ListingID + '">' + cancel + 'Request</a>'+
       '<div class="extra">'+
-      '<a href="#watch" role="button" class="btn-watch lightgrey ' + watch + '" id="' + item.ListingID + '"><i'+
-                  'class="material-icons">visibility</i></a>'+
+      '<a href="#watch" role="button" class="btn-watch lightgrey ' + watch + '" id="' + item.ListingID + '"><i class="material-icons">visibility</i></a>'+
         '<a href="#message" role="button" class="btn-watch" id="'+ item.ListingID +'"><i class="material-icons">message</i></a>'+
       '</div>' +
       '</div>'+
