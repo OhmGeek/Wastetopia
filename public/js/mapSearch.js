@@ -195,7 +195,3 @@ function initMap() {
   $(function(){
     initMap()
   })
-
-  $(document).on('pageshow', '#map-tab', function(e, data){
-                initMap();
-            });
