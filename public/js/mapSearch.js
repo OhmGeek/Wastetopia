@@ -29,6 +29,7 @@ function initMap() {
       origin: new google.maps.Point(0, 0),
       anchor: new google.maps.Point(15, 30)
     };
+
     $.getJSON(url, function(items){
       var markers = items.map(function(item) {
         return addMarker(item)
@@ -38,6 +39,10 @@ function initMap() {
       var markerCluster = new MarkerClusterer(map, markers,
           {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
     })
+
+    var lastCenter = map.getCenter();
+    google.maps.event.trigger(document.getElementById("map"), 'resize');
+    map.setCenter(lastCenter);
   }
 
   function containPosition(pos){
