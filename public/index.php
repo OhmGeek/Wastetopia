@@ -47,7 +47,7 @@ $base  = dirname($_SERVER['PHP_SELF']);
 function forceLogin($destRoute) {
     if(!\Wastetopia\Controller\Authenticator::isAuthenticated()) {
         //redirect to the current route
-        header("Location: " . $_ENV['ROOT_BASE'] . '/login?dest='. urlencode($destRoute));
+        header("Location: " . $_ENV['ROOT_BASE'] . '/login?dest='. urlencode($_SERVER['REQUEST_URI']));
         exit();
     }
     return true;
@@ -101,8 +101,9 @@ $klein->respond('GET', '/search/[:search]?', function ($request, $response) {
 
 $klein->respond("GET", "/login", function($request, $response) {
   header("Cache-Control: no-store, must-revalidate, max-age=0");
+  error_log($request->dest);
   $controller = new LoginController();
-  return $controller->index($response, $request->dest);
+  return $controller->index($response, urldecode($request->dest));
 });
 
 $klein->respond("GET", "/logout", function($request, $response) {
