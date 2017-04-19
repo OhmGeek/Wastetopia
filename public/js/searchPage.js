@@ -166,7 +166,7 @@ $(function () {
         var html = ""
         json.forEach(function(element){
             var cardHTML = '' +
-            '<div class="grid-item col-xs-12 col-sm-6 col-md-4">' +
+            '<div class="grid-item col-xs-12 col-sm-4 col-md-4 col-lg-3">' +
                 '<div class="thumbnail zero-padding" id="'+ element.ListingID +'">' +
                   '<div class="caption">' +
                     '<div class="centerAll">' +

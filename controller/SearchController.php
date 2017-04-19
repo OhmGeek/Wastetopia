@@ -39,7 +39,7 @@ class SearchController
         $offset = 30*intval($pageNumber);
         $limit = $offset + 30;
 
-        $distance = $distanceLimit * 1000; /*Convert Km in m*/
+        $distance = $distanceLimit * 1000.0; /*Convert Km in m*/
 
         $itemInformation = $this->search($lat, $long, $search, $tagsArr, $notTagsArr);
 
@@ -47,10 +47,10 @@ class SearchController
         $newItemInformation = array();
         $userLoc = array('lat' => $lat, 'long' => $long);
         foreach ($itemInformation as $key => $item) {
-            $itemLoc = array($item['lat'], $item['long']);
+            $itemLoc = array('lat' => $item['Latitude'], 'long' => $item['Longitude']);
             if($this->haversineDistance($userLoc, $itemLoc) < $distance)
             {
-                $newItemInformation['key'] = $item;      
+                $newItemInformation[] = $item;      
             }
         }
         $itemInformation = $newItemInformation;
