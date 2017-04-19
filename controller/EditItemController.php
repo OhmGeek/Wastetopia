@@ -71,7 +71,7 @@ class EditItemController
             if (is_array($details[$prop]) || is_object($details[$prop])) {
                 foreach ($details[$prop] as $t) {
                     $dietTag = $this->model->getTagDetails($t);
-                    if (isset($dietTag)) {
+                    if (isset($dietTag) && $dietTag['name'] != null) {
                         array_push($listOfTags, $dietTag);
                     }
                 }
@@ -114,7 +114,8 @@ class EditItemController
             ),
             'images' => $this->getImageArray($details),
             'tags' => $this->generateTags($details),
-            'location' => $details['location']
+            'location' => $details['location'],
+            'barcode' => $details['barcode']
             );
 
         error_log('Now for the Serialized Item after changes:');
@@ -138,10 +139,12 @@ class EditItemController
         foreach($urls as $url) {
             $id = $this->model->addToImageTable('img', $url);
             // now let's create an object inside
+
             $image = array(
                 "id" => $id,
                 "url" => $url
             );
+            error_log("This is addItemImage: url, then files");
             error_log($id);
             error_log($url);
             array_push($uploadedImages,$image);
