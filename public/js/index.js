@@ -53,7 +53,8 @@ $(function(){
       if (status === google.maps.GeocoderStatus.OK) {
           // return a location object
           var latlng = results[0].geometry.location;
-          lat = latlng.lat(),
+          console.log(latlng.lat());
+          lat = latlng.lat()
           lng = latlng.lng()
       } else {
         alert("geocode of " + $('#postcode').val() + " failed:" + status);
