@@ -493,4 +493,18 @@ class EditItemModel
         $statement->execute();
     }
 
+    private function getLocationIDFromListing()
+    {
+        $statement = $this->db->prepare("
+            SELECT FK_Location_LocationID
+            FROM Listing
+            WHERE ListingID = :listingID
+        ");
+        $statement->bindValue(":listingID", $this->listingID, PDO::PARAM_INT);
+        $statement->execute();
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        return $results[0]['FK_Location_LocationID'];
+    }
+
 }
