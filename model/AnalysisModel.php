@@ -183,6 +183,7 @@ class AnalysisModel
         if ($userID == null) {
             $userID = $this->getUserID();
         }
+        error_log("User: ".$userID);
 
         // Inner table gets Items with their quantity in successful transactions
         // Outer table gets Items with their current quantity in user's listing

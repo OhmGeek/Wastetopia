@@ -185,6 +185,7 @@ class AnalysisController
      * @return array
      */
     function getTotalNameFrequenciesSending($userID = null){
+        error_log("User: ".$userID);
         $frequencies = $this->model->getTotalNameFrequenciesSending($userID);
 
 
