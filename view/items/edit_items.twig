@@ -66,7 +66,13 @@
                     <label class="control-label" for="type">Type</label>
                     <select id="type" name="itemType" class="form-control">
                         {% for tag in tags.type %}
-                          <option>{{ tag }}</option>
+                            {% set selected = 0 %}
+                            {% for tagCompare in items.type %}
+                                {% if tagCompare.name == tag %}
+                                    {% set selected = 1 %}
+                                {% endif %}
+                            {% endfor %}
+                              <option {% if selected = 1 %} selected {% endif %}>{{ tag }}</option>
                         {% endfor %}
                     </select>
                   </div>
