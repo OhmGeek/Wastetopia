@@ -316,7 +316,10 @@ class AddItemModel
      */
     function addAllTags($itemID, $tags)
     {
-
+        error_log("Add all tags methdo");
+        error_log(json_encode($tags));
+        error_log("That was the list of tags. What is the itemID?");
+        error_log($itemID);
         foreach ($tags as $tag) {
 //            $tagName = $tag["name"];
 //            $tagCategoryId = $tag["categoryID"];
