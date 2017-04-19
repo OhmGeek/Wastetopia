@@ -554,6 +554,7 @@ class ProfilePageController
         $isCurrentUser = ($this->userID == $this->getUserID() ? 1 : 0);
 
         $predictionHTML = "";
+        $predictionNames = array();
         if(!($isCurrentUser)){
             $predictionHTML = $this->generatePredictionHTML();
             $predictionNames = $this->generatePredictionNames();
@@ -650,8 +651,10 @@ class ProfilePageController
     function generatePredictionNames(){
         $controller = new AnalysisController();
         $names = $controller->getTotalNameFrequenciesSending($this->userID);
+        error_log("Names: ");
         $results = array();
         foreach($names as $name=>$frequency){
+            error_log("Name: ".$name);
             array_push($names, $name);
         }
         return $results;
