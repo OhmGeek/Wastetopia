@@ -68,8 +68,7 @@ function imageUpload() {
       items.forEach(function(item) {
         showUploadedItem(item.url, item.id);
       });
-    },
-      error: function()
+    }
   });
 
 }
