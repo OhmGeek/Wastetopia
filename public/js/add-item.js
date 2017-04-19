@@ -176,6 +176,16 @@ function serializeAndSendItem(location) {
   //todo: process expiry date (need more research into this). Think it's just .val, but not fully sure.
   // todo: process item type properly.
   // todo: check errors in images/date/location
+    var mode = $('.grid-body').data('mode');
+    console.log(mode);
+    var url = "";
+    if(mode == "edit") {
+        url = "https://wastetopia-pr-17.herokuapp.com/api/items/edititem";
+    }
+    else {
+        url = "https://wastetopia-pr-17.herokuapp.com/api/items/additem";
+    }
+
   console.log("Start serializing and sending item");
   var itemData = {
     "name": $('#name').val(),
@@ -193,7 +203,7 @@ function serializeAndSendItem(location) {
     if(isValid(itemData)) {
         // submit using AJAX
         var jsonData = JSON.stringify(itemData);
-        $.post('https://wastetopia-pr-17.herokuapp.com/api/items/additem', jsonData, function(response) {
+        $.post(url, jsonData, function(response) {
             console.log("Sent AJAX");
             console.log(response);
         }, 'json');
@@ -206,12 +216,6 @@ function serializeAndSendItem(location) {
 function isValid(itemData) {
   return true;
 }
-$(document).ready(function() {
-    $('#main-form').on('submit', function(event) {
-
-    });
-});
-
 function submit() {
     console.log( "Handler for .submit() called." );
 

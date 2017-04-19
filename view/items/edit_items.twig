@@ -72,7 +72,6 @@
                                     {% set selected = 1 %}
                                 {% endif %}
                             {% endfor %}
-                              {{ selected }}
                               <option {% if selected %} selected {% endif %}>{{ tag }}</option>
                         {% endfor %}
                     </select>
@@ -105,7 +104,13 @@
                     <label class="control-label" for="state">State</label>
                     <select id="state" name="state" class="js-example-basic-multiple form-control" multiple="multiple" style="width: 100%;">
                         {% for tag in tags.state %}
-                          <option>{{ tag }}</option>
+                            {% set selected = 0 %}
+                            {% for tagCompare in item.state %}
+                                {% if tagCompare.name == tag %}
+                                    {% set selected = 1 %}
+                                {% endif %}
+                            {% endfor %}
+                          <option {% if selected %} selected {% endif %}>{{ tag }}</option>
                         {% endfor %}
                     </select>
                     <div class="form-group">
@@ -166,7 +171,7 @@
               <div class="form-group zero-padding">
                 <div class="btns">
                   <button type="button" class="btn btn-default">Cancel</button>
-                  <button id="#submit-item" type="submit" class="btn btn-primary">Save</button>
+                  <button id="#submit-item" type="submit" class="btn btn-primary" onclick="submit()">Save</button>
                 </div>
               </div>
             </div>
