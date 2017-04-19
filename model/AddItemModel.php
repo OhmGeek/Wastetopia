@@ -200,11 +200,11 @@ class AddItemModel
     function addToImageTable($fileType, $imageURL)
     {
         $statement = $this->db->prepare("
-            INSERT INTO `Image` (`File_Type`, `Image_URL`)
-            VALUES (:fileType, :imageURL);
+            INSERT INTO `Image` (`Image_URL`)
+            VALUES (:imageURL);
          ");
 
-        $statement->bindValue(":fileType", $fileType, PDO::PARAM_STR);
+
         $statement->bindValue(":imageURL", $imageURL, PDO::PARAM_STR);
         $statement->execute();
         error_log(json_encode($statement->errorInfo()));
