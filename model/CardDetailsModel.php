@@ -77,7 +77,7 @@ class CardDetailsModel
 	    
 	if(!$result){
 		// No image, add default
-		$result = $this->config["ROOT_IMG"]."/PCI.png"; // Default image
+		$result = $this->config["ROOT_IMG"]."/USR.png"; // Default image
 	}
 	    
 	    return $result;
