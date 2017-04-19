@@ -9,6 +9,7 @@
 
 namespace Wastetopia\Model;
 use Wastetopia\Model\DB;
+use Wastetopia\Model\UserCookieReader;
 use PDO;
 
 
@@ -33,9 +34,8 @@ class AnalysisModel
      */
     private function getUserID()
     {
-        //$reader = new UserCookieReader();
-        //return $reader->get_user_id();
-        return 6; //Hardcoded for now
+       $reader = new UserCookieReader();
+        return $reader->get_user_id();
     }
 
    
@@ -44,15 +44,17 @@ class AnalysisModel
      * @param $categoryIDArray - Array of CategoryIDs to match: Optional - defaults to empty array => checks all category IDs
      * @return array - In Descending order by Frequency
      */
-    function getTagFrequenciesForListings($categoryIDArray = array())
+    function getTagFrequenciesForListings($userID = null, $categoryIDArray = array())
     {
-        $userID = $this->getUserID();
+        if($userID == null) {
+            $userID = $this->getUserID();
+        }
 
         // Start sql query
         // Inner table gets Tags with their quantity in successful transactions
         // Outer table gets Tags with their current quantity in user's listing
         // Join Tables to get total quantity for all time for each Tag
-        $sql = "SELECT `Tag`.`Name`, `Tag`.`TagID`, (SUM(`Listing`.`Quantity`) + SUM(`Inner`.`Transactions_Quantity`)) AS `Count`
+        $sql = "SELECT `Tag`.`Name`, `Tag`.`TagID`, (SUM(COALESCE(`Listing`.`Quantity`,0)) + SUM(COALESCE(`Inner`.`Transactions_Quantity`,0))) AS `Count`
                 FROM `Tag` 
                 JOIN `ItemTag` ON `ItemTag`. `FK_Tag_TagID` = `Tag`.`TagID`
                 JOIN `Item` ON `Item`.`ItemID` = `ItemTag`.`FK_Item_ItemID`
@@ -105,7 +107,8 @@ class AnalysisModel
         
         $statement->execute();
 
-        return $statement->fetchAll(PDO::FETCH_ASSOC);
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+	    return $results;
 }
     
     /**
@@ -118,7 +121,7 @@ class AnalysisModel
 
         $userID = $this->getUserID();
         
-        $sql = "SELECT `Tag`.`Name`,  `Tag`.`TagID`, SUM(`ListingTransaction`.`Quantity`) as `Count`
+        $sql = "SELECT `Tag`.`Name`,  `Tag`.`TagID`, SUM(COALESCE(`ListingTransaction`.`Quantity`), 0) as `Count`
                 FROM `Tag` 
                 JOIN `ItemTag` ON `ItemTag`. `FK_Tag_TagID` = `Tag`.`TagID`
                 JOIN `Item` ON `Item`.`ItemID` = `ItemTag`.`FK_Item_ItemID`
@@ -176,15 +179,17 @@ class AnalysisModel
     * Frequncy calculated as SUM of quantities for successful transactions + SUM of current quantity left
     * @return array - In descending Order by frequency
     */
-    function getTotalNameFrequenciesSending(){
-       $userID = $this->getUserID();
+    function getTotalNameFrequenciesSending($userID = null){
+        if ($userID == null) {
+            $userID = $this->getUserID();
+        }
 
         // Inner table gets Items with their quantity in successful transactions
         // Outer table gets Items with their current quantity in user's listing
         // Join Tables to get total quantity for all time for each item
         // Then grouped by Name and Ordered By Count
         $statement = $this->db->prepare("
-            SELECT `Item`.`ItemID`, `Item`.`Name`, (SUM(`Listing`.`Quantity`) + SUM(`Inner`.`Transactions_Quantity`)) AS `Count`
+            SELECT `Item`.`ItemID`, `Item`.`Name`, (SUM(COALESCE(`Listing`.`Quantity`, 0)) + SUM(COALESCE(`Inner`.`Transactions_Quantity`,0))) AS `Count`
             FROM `Item`
             JOIN `Listing` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
             JOIN  `User` ON `Listing`.`FK_User_UserID` = `User`.`UserID`
@@ -197,14 +202,15 @@ class AnalysisModel
                 ON `Inner`.`ItemID` = `Item`.`ItemID`
             WHERE `User`.`UserID` = :userID
             GROUP BY `Item`.`Name`
-            ORDER BY `Count` DESC;
+	    ORDER BY `Count` DESC;
         ");
         
         $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
         $statement->execute();
 
+	   $results = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-        return $statement->fetchAll(PDO::FETCH_ASSOC); 
+        return $results;
     }
 
 
@@ -218,10 +224,10 @@ class AnalysisModel
         $userID = $this->getUserID();
 
         $statement = $this->db->prepare("
-           SELECT `Item`.`ItemID`, `Item`.`Name`, SUM(`ListingTransaction`.`Quantity`) AS `Count`
+           SELECT `Item`.`ItemID`, `Item`.`Name`, SUM(COALESCE(`ListingTransaction`.`Quantity`, 0)) AS `Count`
                 FROM `Item`
-				JOIN `Listing` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
-				JOIN `ListingTransaction` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
+		        JOIN `Listing` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
+		        JOIN `ListingTransaction` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
                 JOIN `Transaction` ON `Transaction`.`TransactionID` = `ListingTransaction`.`FK_Transaction_TransactionID`
                 JOIN `User` ON `User`.`UserID` = `Transaction`.`FK_User_UserID`
                 WHERE `ListingTransaction`.`Success` = 1
@@ -233,7 +239,8 @@ class AnalysisModel
         $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
         $statement->execute();
 
-        return $statement->fetchAll(PDO::FETCH_ASSOC);
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $results;
     }
 
 
@@ -268,4 +275,157 @@ class AnalysisModel
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
+
+
+    /**
+     * Gets the total number of completed listings the user has given
+     * If neither year nor month are specified then all completed listings are evaluated, regardless of date
+     * @param $year The subject year.
+     * @param $month The subject month
+     * @param $timespan How many months to evaluate, default 1
+     * @return Integer
+     */
+    function getNumberOfCompletedGiving($year = -1, $month = -1, $timespan = 1)
+    {
+        $userID = $this->getUserID();
+        $end_year = $year;
+        $end_month = $month;
+        if($year == -1 && $month == -1){
+            $statement = $this->db->prepare("
+				SELECT COUNT(*) as `Count`
+				FROM `Listing`
+				JOIN `ListingTransaction` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
+				JOIN `Transaction` ON `Transaction`.`TransactionID` = `ListingTransaction`.`FK_Transaction_TransactionID`
+				JOIN `User` ON `User`.`UserID` = `Listing`.`FK_User_UserID`
+				WHERE `User`.`UserID` = :userID
+				AND `ListingTransaction`.`Success` = 1;
+			");
+            $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
+            $statement->execute();
+            return $statement->fetchColumn();
+        }
+        else if($year != -1 && $month != -1){
+            if($month + $timespan >= 13){
+                while($timespan >= 1){
+                    if($end_month == 12){
+                        $end_month = 1;
+                        $end_year = $end_year + 1;
+                        $timespan = $timespan - 1;
+                    }
+                    else{
+                        $end_month = $end_month + 1;
+                        $timespan = $timespan - 1;
+                    }
+                }
+            }
+            else{
+                $end_month = $end_month + $timespan;
+            }
+
+            $month = sprintf("%02d", $month);
+            $end_month = sprintf("%02d", $end_month);
+
+            $statement = $this->db->prepare("
+				SELECT COUNT(*) as `Count`
+				FROM `Listing`
+				JOIN `ListingTransaction` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
+				JOIN `Transaction` ON `Transaction`.`TransactionID` = `ListingTransaction`.`FK_Transaction_TransactionID`
+				JOIN `User` ON `User`.`UserID` = `Listing`.`FK_User_UserID`
+				WHERE `User`.`UserID` = :user_id
+				AND `ListingTransaction`.`Success` = 1
+				AND Time_Of_Acceptance >= :start_date
+				AND Time_Of_Acceptance < :end_date;
+			");
+
+            $statement->bindValue(":user_id", $userID);
+            $start_date = "" . $year . "-" . $month . "-01 00:00:00";
+            $end_date = "" . $end_year . "-" . $end_month . "-01 00:00:00";
+            $statement->bindValue(":start_date", $start_date, PDO::PARAM_STR);
+            $statement->bindValue(":end_date", $end_date, PDO::PARAM_STR);
+
+            $statement->execute();
+            $errors = $statement->errorInfo();
+            return $statement->fetchColumn() . " + errors: " . $errors[0] . $errors[1] . $errors[2] . "start_date: " . $start_date . "end_date: " . $end_date;
+        }
+        else{
+            error_log("Received failed");
+            return false;
+        }
+
+    }
+
+    /**
+     * Gets the total number of completed listings the user has received
+     * If neither year nor month are specified then all completed listings are evaluated, regardless of date
+     * @param $year The subject year
+     * @param $month The subject month
+     * @param $timespan How many months to evaluate, default 1
+     * @return Integer
+     */
+    function getNumberOfCompletedReceived($year = -1, $month = -1, $timespan = 1)
+    {
+        $userID = $this->getUserID();
+        $end_year = $year;
+        $end_month = $month;
+        if($year == -1 && $month == -1){
+            $statement = $this->db->prepare("
+				SELECT COUNT(*) as `Count`
+				FROM `Listing`
+				JOIN `ListingTransaction` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
+				JOIN `Transaction` ON `Transaction`.`TransactionID` = `ListingTransaction`.`FK_Transaction_TransactionID`
+				WHERE `Transaction`.`FK_User_UserID` = :userID
+				AND `ListingTransaction`.`Success` = 1;
+			");
+            $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
+            $statement->execute();
+            return $statement->fetchColumn();
+        }
+        else if($year > -1 && $month > -1){
+            if($month + $timespan >= 13){
+                while($timespan >= 1){
+                    if($end_month == 12){
+                        $end_month = 1;
+                        $end_year = $end_year + 1;
+                        $timespan = $timespan - 1;
+                    }
+                    else{
+                        $end_month = $end_month + 1;
+                        $timespan = $timespan - 1;
+                    }
+                }
+            }
+            else{
+                $end_month = $end_month + $timespan;
+            }
+            $month = sprintf("%02d", $month);
+            $end_month = sprintf("%02d", $end_month);
+            $statement = $this->db->prepare("
+				SELECT COUNT(*) as `Count`
+				FROM `Listing`
+				JOIN `ListingTransaction` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
+				JOIN `Transaction` ON `Transaction`.`TransactionID` = `ListingTransaction`.`FK_Transaction_TransactionID`
+				WHERE `Transaction`.`FK_User_UserID` = :user_id
+				AND `ListingTransaction`.`Success` = 1
+				AND Time_Of_Acceptance >= :start_date
+				AND Time_Of_Acceptance < :end_date;
+			");
+
+            $statement->bindValue(":user_id", $userID);
+            $start_date = "" . $year . "-" . $month . "-01 00:00:00";
+            $end_date = "" . $end_year . "-" . $end_month . "-01 00:00:00";
+            $statement->bindValue(":start_date", $start_date, PDO::PARAM_STR);
+            $statement->bindValue(":end_date", $end_date, PDO::PARAM_STR);
+
+            $statement->execute();
+            $errors = $statement->errorInfo();
+            return $statement->fetchColumn() . " + errors: " . $errors[0] . $errors[1] . $errors[2] . "start_date: " . $start_date . "end_date: " . $end_date;
+        }
+        else{
+            return "Neither $year nor $month were equal to -1 and were not >= -1";
+            $error_log("Received failed");
+            return false;
+        }
+
+    }
+
 }

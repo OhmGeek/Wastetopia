@@ -63,7 +63,7 @@ class SearchPageController
                                                   array('value' => 'Confectionary', 'id' => '18'),
                                                   array('value' => 'Bread', 'id' => '23'),
                                                   array('value' => 'Alcohol', 'id' => '34'),
-                                                  array('value' => 'Dairy', 'id' => '37'))),
+         array('value' => 'Dairy', 'id' => '37'))),
                          array('id'=>'2', 'optionsCategory' => 'Other', 'type' => 'positive',
                                'options' => array(array('value' => 'Chilled', 'id' => '21'),
                                                   array('value' => 'Frozen', 'id' => '22'),
@@ -72,6 +72,7 @@ class SearchPageController
                                                   array('value' => 'No use by date', 'id'=>'30'),
                                                   array('value' => 'Large Item', 'id'=>'31'))),
                          array('id'=>'3', 'optionsCategory' => 'Dietary Requirements', 'type' => 'positive',
+
                                'options' => array(array('value'=>'Kosher', 'id'=>'24'),
                                                   array('value'=>'Halal', 'id'=>'25'),
                                                   array('value'=>'Vegetarian', 'id'=>'26'),

@@ -8,6 +8,8 @@
 
 namespace Wastetopia\Model;
 use Wastetopia\Model\DB;
+use Wastetopia\Model\UserCookieReader;
+use Wastetopia\Config\CurrentConfig;
 use PDO;
 
 /**
@@ -24,6 +26,10 @@ class CardDetailsModel
     public function __construct()
     {
         $this->db = DB::getDB();
+	    
+	// Get config details    
+	$currentConfig = new CurrentConfig();
+	$this->config = $currentConfig->getAll();
     }
 
 
@@ -32,8 +38,8 @@ class CardDetailsModel
      * @return int
      */
     function getUserID(){
-        // Function from elsewhere
-        return 6;
+        $reader = new UserCookieReader();
+         return $reader->get_user_id();
     }
 
 
@@ -67,7 +73,14 @@ class CardDetailsModel
 							");
         $statement->bindValue(':userID', $userID, PDO::PARAM_INT);
         $statement->execute();
-        return $statement->fetchColumn();
+        $result = $statement->fetchColumn();
+	    
+	if(!$result){
+		// No image, add default
+		$result = $this->config["ROOT_IMG"]."/PCI.png"; // Default image
+	}
+	    
+	    return $result;
     }
 
     /**
@@ -114,7 +127,7 @@ class CardDetailsModel
         $results = $statement->fetchAll(PDO::FETCH_ASSOC);
 
         if (count($results) == 0){
-            return "";
+            return $this->config["ROOT_IMG"]."/PCI.png";
         }
 
 	    $result = $results[0];

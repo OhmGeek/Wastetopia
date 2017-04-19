@@ -5,8 +5,6 @@ $(function () {
     //TODO: Let user know when a request is rejected??
     //TODO: Test renewing switching transactions
 
-    //equal height rows
-    $('.small').matchHeight();
 
     var baseURL = window.location.protocol + "//" + window.location.host;
 
