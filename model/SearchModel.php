@@ -148,7 +148,7 @@ class SearchModel
 
 
 
-    public function getReccomendationResults($tagsArray, $currentUserID)
+    public function getReccomendationResults($tagsArray, $currentUserID = null)
     {
 
         $tagCount = count($tagsArray);
@@ -173,13 +173,15 @@ class SearchModel
             }
         }
 
-        $sql .=    ")
-                    AND NOT(`Listing`.`FK_User_UserID` = :currentUser)
-                    AND `Listing`.`Active` = 1
-                    AND `Listing`.`Quantity` > 0
-                    GROUP BY `Listing`.`ListingID`
-                    ) as `TagCount`
-                ORDER BY `TagCount`.`Count` DESC;";
+        $sql .=    ")";
+        if($currentUserID != null){
+            $sql.="AND NOT(`Listing`.`FK_User_UserID` = :currentUser)";
+        }
+        $sql.= "AND `Listing`.`Active` = 1
+                AND `Listing`.`Quantity` > 0
+                GROUP BY `Listing`.`ListingID`
+                ) as `TagCount`
+            ORDER BY `TagCount`.`Count` DESC;";
 
         $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
         $statement = $this->db->prepare($sql);

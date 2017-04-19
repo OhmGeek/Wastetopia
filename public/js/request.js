@@ -5,8 +5,6 @@ $(function () {
     //TODO: Let user know when a request is rejected??
     //TODO: Test renewing switching transactions
 
-    //equal height rows
-    $('.small').matchHeight();
 
     var baseURL = window.location.protocol + "//" + window.location.host;
 
@@ -598,23 +596,7 @@ $(function () {
         });
     });
 
-
-
-    // Edit listing - ADD URL FROM RYAN'S PAGES
-    $(document).on('click', 'a[href="#edit"]', function (event) {
-        event.preventDefault();
-
-        // Extract listingID
-        var listingID = $(this).prevAll('a[href="#view"]').attr("id");
-
-        // Send to /items/request
-        var url = baseURL + "/items/edit"; // REPLACE WITH  CORRECT URL
-        var data = {listingID: listingID};
-        //location.href = "EDIT_PAGE_URL";
-        return;
-    });
-
-
+    
     // View listing - THIS WORKS
     $(document).on('click', 'a[href="#view"]', function (event) {
         event.preventDefault();
@@ -627,6 +609,23 @@ $(function () {
 
         location.href = url;
     });
+
+
+    // Edit listing - ADD URL FROM RYAN'S PAGES
+    $(document).on('click', 'a[href="#edit"]', function (event) {
+        event.preventDefault();
+
+        // Extract listingID
+        var listingID = $(this).prevAll('a[href="#view"]').attr("id");
+
+        // Send to /items/request
+        var url = baseURL + "/items/edit/" + listingID; // REPLACE WITH  CORRECT URL
+        
+        //location.href = "EDIT_PAGE_URL";
+        return;
+    });
+
+
 
 
     // View conversation

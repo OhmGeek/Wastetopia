@@ -17,9 +17,11 @@ class Authenticator {
 
         //verify
         if(TokenManager::verify($auth_token,$user_id)) {
+            error_log("Login verified");
             return true;
         }
         else {
+            error_log("Not verified");
             return false;
         }
     }

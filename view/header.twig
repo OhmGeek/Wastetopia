@@ -19,7 +19,7 @@
         <!-- Wastopia Custom CSS -->
         <link rel="stylesheet" href="{{config.ROOT_BASE}}/css/wastetopia-main.css"/>
         {% for cssfile in csslist %}
-            <link rel="stylesheet" href="{{config.ROOT_CSS}}/{{cssfile}}"></link>
+            <link rel="stylesheet" href="{{config.ROOT_BASE}}/css/{{cssfile}}"></link>
         {% endfor %}
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	</head>
@@ -29,8 +29,8 @@
 	    {% block content %}
 	    {% endblock %}
 
-        <script src="{{config.ROOT_JS}}/bootstrap-material-js/ripples.min.js"></script>
-        <script src="{{config.ROOT_JS}}/bootstrap-material-js/material.js"></script>
+        <script src="{{config.ROOT_BASE}}/js/bootstrap-material-js/ripples.min.js"></script>
+        <script src="{{config.ROOT_BASE}}/js/bootstrap-material-js/material.js"></script>
         <script>
           $(function () {
             $.material.init();

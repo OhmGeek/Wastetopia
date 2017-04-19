@@ -157,6 +157,8 @@ class RegistrationController
     * @return bool
     */
     function sendVerificationEmail($email, $name, $reactivation = 0){
+	    error_log("Email: ".$email);
+	    error_log("Name: ".$name);
         $CurrentConfig = new CurrentConfig();
         $config = $CurrentConfig->getAll();
             
@@ -195,7 +197,13 @@ class RegistrationController
     * @param $name
     * @return bool
     */
-    function sendEmail($from, $subject, $body, $altBody, $email, $name){	    
+    function sendEmail($from, $subject, $body, $altBody, $email, $name){	 
+	    error_log("From: ".$from);
+	    error_log("Subject: ".$subject);
+	    error_log("Body: ".$body);
+	    error_log("Email: ".$email);
+	    error_log("Name: ".$name);
+	    
 	    $CurrentConfig = new CurrentConfig();
         $config = $CurrentConfig->getAll();
 	    

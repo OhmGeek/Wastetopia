@@ -2,6 +2,8 @@
 
 namespace Wastetopia\Model;
 
+use PDO;
+
 class User {
 
     public static function verify_credentials($username, $password) {
@@ -10,16 +12,24 @@ class User {
         $statement = $db->prepare("SELECT Password_Hash, Salt
                                     FROM User
                                     WHERE Email_Address=:email
+				    AND `Active` = 1
                                  ");
         $statement->bindValue(':email', $username,PDO::PARAM_STR);
 	    $statement->execute();
         $pwd_deets = $statement->fetchAll(PDO::FETCH_ASSOC);
-
+	
+	 if (count($pwd_deets) == 0){
+		return false;	 
+	 }
+	    
         $calculated_hash = hash('sha256', $pwd_deets[0]['Salt'].$password);
+	    
 
         if($calculated_hash == $pwd_deets[0]['Password_Hash']) {
+            error_log("User verified");
             return true;
         }
+        error_log("User not verified");
         return false;
     }
     public static function get_id_from_username($username) {
