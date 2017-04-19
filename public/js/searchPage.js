@@ -44,13 +44,17 @@ $(function () {
     getFilters();
   });
 
-  $grid = $('.grid').isotope({
-    itemSelector: '.grid-item',
-    percentPosition: true,
-    masonry: {
-      columnWidth: '.grid-sizer'
-    }
-  });
+  var url = window.location.protocol + "//" + window.location.host + "/" + "js/plugins/isotope/isotope.pkgd.min.js"
+  $.getScript(url , function(){
+    $('.grid').imagesLoaded().progress( function() {
+      $grid = $('.grid').isotope({
+        itemSelector: '.grid-item',
+        percentPosition: true,
+        layoutMode: 'packery'
+      });
+      $grid.isotope('layout');
+    });
+  })
 
   $('#filter-list').on('click', '.filter-category a', function(e){
     $(this).closest('.btn-group').addClass('dontClose');
