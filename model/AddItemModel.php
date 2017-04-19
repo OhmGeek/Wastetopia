@@ -321,6 +321,7 @@ class AddItemModel
 //            $tagDescription = $tag["description"];
             //$tagID = $this->addToTagTable($tagName, $tagCategoryId, $tagDescription); //Add the tag
             $tagID = $tag["tagID"];
+            error_log("Add image with tag " . $tagID);
             $this->addToItemTagTable($itemID, $tagID); //Link tag to item
         }
     }
@@ -364,14 +365,10 @@ class AddItemModel
         $itemID = $this->addToItemTable($itemName, $itemDescription, $useByDate); //Add the item
         error_log("Item ID:");
         error_log($itemID);
-        if(isset($tags) && count($tags) > 0) {
             error_log("Add all tags");
             $this->addAllTags($itemID, $tags); //Add the tags and link to item
-        }
 
-        if(isset($images) && count($images) > 0) {
             $this->addAllImages($itemID, $images); //Add the images and link to item
-        }
         //Extract location information
         $locationName = $location["firstLineAddr"];
         $postCode = $location["secondLineAddr"];
@@ -413,7 +410,7 @@ class AddItemModel
         $statement->execute();
         // return the ID, or nothing if none is found.
         $results = $statement->fetchAll(PDO::FETCH_ASSOC);
-
+        error_log("Get tag details model function results:");
         // now we have the results, create a tag and return it.
         error_log(json_encode($results));
         return array(

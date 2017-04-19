@@ -81,6 +81,7 @@ class AddItemController
         // we are given a list of urls
         // we need just to add the filetype to the array
         $imageArray = array();
+        error_log("Get image array from user, then all the urls");
         error_log(json_encode($details['image']));
         foreach($details['images'] as $img) {
             $obj = array(
@@ -88,6 +89,7 @@ class AddItemController
                 'url' => $img,
                 'isDefault' => 0
             );
+            error_log($img);
             array_push($imageArray, $obj);
         }
         return $imageArray;
