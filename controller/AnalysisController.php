@@ -202,8 +202,8 @@ class AnalysisController
         $limit = count($names) < 5 ? count($names) : 5;
         
         $results = array_slice($names, 0, $limit, true);
-        error_log("Results: ".$results);
-        
+        error_log("Results: ".json_encode($results));
+
         return json_encode($results);
     }
 
