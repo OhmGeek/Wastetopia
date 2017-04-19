@@ -64,7 +64,7 @@ class AddItemController
             if (is_array($details[$prop]) || is_object($details[$prop])) {
                 foreach ($details[$prop] as $t) {
                     $dietTag = $this->model->getTagDetails($t);
-                    if (isset($dietTag)) {
+                    if (isset($dietTag) && $dietTag['name'] != null) {
                         array_push($listOfTags, $dietTag);
                     }
                 }
