@@ -76,11 +76,10 @@ class AddItemModel
         $statement = $this->db->prepare("
             SELECT Image.ImageID
             FROM Image
-            WHERE File_Type = :fileType
-            AND Image_URL = :imageURL
+            WHERE Image_URL = :imageURL
          ");
 
-        $statement->bindValue(":fileType", $fileType, PDO::PARAM_STR);
+        //$statement->bindValue(":fileType", $fileType, PDO::PARAM_STR);
         $statement->bindValue(":imageURL", $imageURL, PDO::PARAM_STR);
         $statement->execute();
 
