@@ -74,9 +74,9 @@
             <div class="col-xs-12">
                 <h4>Items the user gives away most:</h4>
                 {% if names|length > 0 %}
-                    <ul>
+                    <ul class = "list-group">
                         {% for name in names %}
-                        <li>{{ name }}</li>
+                        <li class="list-group-item">{{ name }}</li>
                         {% endfor %}
                     </ul>
                 {% else %}
