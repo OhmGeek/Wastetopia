@@ -643,6 +643,10 @@ class ProfilePageController
     }
 
 
+    /**
+     * Gets the top 3 names of items the user gives away
+     * @return array
+     */
     function generatePredictionNames(){
         $controller = new AnalysisController();
         $names = json_decode($controller->getTotalNameFrequenciesSending($this->userID), true);
@@ -651,6 +655,9 @@ class ProfilePageController
         foreach(array_keys($names) as $name){
             array_push($results, $name);
         }
+
+        $limit = count($results) < 3 ? count($results) : 3;
+        $results = array_slice($results, 0, $limit, true);
         return $results;
     }
 
