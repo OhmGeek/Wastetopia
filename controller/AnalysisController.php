@@ -40,7 +40,7 @@ class AnalysisController
      */
     function generatePage(){
         // Get sending frequencies
-        $sendingFrequencies = json_decode($this->getTotalNameFrequenciesSending());
+        $sendingFrequencies = json_decode($this->getTotalNameFrequenciesSending(),true);
 
         print_r("Sending: ".$sendingFrequencies);
 
@@ -56,7 +56,7 @@ class AnalysisController
         }
 
         // Same for receiving
-        $receivingFrequencies = json_decode($this->getTotalNameFrequenciesReceiving());
+        $receivingFrequencies = json_decode($this->getTotalNameFrequenciesReceiving(),true);
 
         print_r("Receiving: ".$receivingFrequencies);
 
