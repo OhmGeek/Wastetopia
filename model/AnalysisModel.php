@@ -184,6 +184,8 @@ class AnalysisModel
             $userID = $this->getUserID();
         }
 
+        print_r("Sending user: ".$userID);
+
         // Inner table gets Items with their quantity in successful transactions
         // Outer table gets Items with their current quantity in user's listing
         // Join Tables to get total quantity for all time for each item
@@ -210,6 +212,7 @@ class AnalysisModel
 
 	   $results = $statement->fetchAll(PDO::FETCH_ASSOC);
 
+	   print_r("Sending names: ".$results);
         return $statement->fetchAll(PDO::FETCH_ASSOC); 
     }
 
@@ -226,7 +229,7 @@ class AnalysisModel
         print_r("User receiving: ".$userID);
 
         $statement = $this->db->prepare("
-           SELECT `Item`.`ItemID`, `Item`.`Name`, SUM(COALESCE(`ListingTransaction`.`Quantity`, 0) AS `Count`
+           SELECT `Item`.`ItemID`, `Item`.`Name`, SUM(COALESCE(`ListingTransaction`.`Quantity`, 0)) AS `Count`
                 FROM `Item`
 		        JOIN `Listing` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
 		        JOIN `ListingTransaction` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
