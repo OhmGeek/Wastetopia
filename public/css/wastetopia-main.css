@@ -48,7 +48,7 @@
   text-transform: uppercase;
   margin-left: 5px;
   height: 30px;
-  width: 75px;
+  width: 78px;
   font-size: 12px;
   padding: 5px 10px;
   color: black;
@@ -1051,6 +1051,10 @@ a:link, a:hover, a:visited, a:active  {
 
 .pending {
   background-color: orange;
+}
+
+.thumbnail img {
+  max-height: 190px;
 }
 
 /* modals design */
