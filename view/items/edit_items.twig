@@ -72,7 +72,7 @@
                                     {% set selected = 1 %}
                                 {% endif %}
                             {% endfor %}
-                              <option {% if selected = 1 %} selected {% endif %}>{{ tag }}</option>
+                              <option {% if selected == 1 %} selected {% endif %}>{{ tag }}</option>
                         {% endfor %}
                     </select>
                   </div>
