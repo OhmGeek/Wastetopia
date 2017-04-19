@@ -116,7 +116,6 @@ class RecommendationController {
       $frequentTags = $this->model->getTagFrequenciesForListings($userID);
       $isUser = ($userID == $this->getUserID());
 
-
         // Deal with if there are not enough tags    
       if(count($frequentTags) < 5){
           $recommendationList = array(); // Empty array
@@ -163,8 +162,7 @@ class RecommendationController {
                 "itemName" => $itemName,
                 "quantity" => $quantity,
                 "isRequesting" => $isRequesting,
-                "isWatching" => $isWatching,
-                "isUser" => $isUser
+                "isWatching" => $isWatching
               );
 
               array_push($recommendationList, $item);
@@ -177,7 +175,8 @@ class RecommendationController {
       $output = array(
             "config" => $config,
             "section" => "prediction",  
-            "recommendationList" => $recommendationList
+            "recommendationList" => $recommendationList,
+          "isUser" => $isUser
       );
         
         $template = $this->twig->loadTemplate('/items/recommendations.twig');
