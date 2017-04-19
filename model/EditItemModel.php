@@ -162,6 +162,7 @@ class EditItemModel
     {
         $statement = $this->db->prepare("
             UPDATE Item
+            FROM Item, Listing
             SET Name = :name, Description = :description, Use_By = STR_TO_DATE(:useByDate, '%e %M, %Y')
             WHERE Listing.ListingID = :listingID
               AND Listing.FK_Item_ItemID = Item.ItemID
@@ -191,6 +192,7 @@ class EditItemModel
     {
         $statement = $this->db->prepare("
             UPDATE ItemTag
+            FROM ItemTag, Listing
             SET FK_Item_ItemID = :itemID, FK_Tag_TagID = :tagID
             WHERE Listing.ListingID = :listingID
               AND Listing.FK_Item_ItemID = Item.ItemID
@@ -214,6 +216,7 @@ class EditItemModel
     {
         $statement = $this->db->prepare("
             UPDATE Image
+            FROM Image, Listing
             SET Image_URL = :imageURL
             WHERE Listing.ListingID = :listingID
               AND Listing.FK_Item_ItemID = Item.ItemID
@@ -242,6 +245,7 @@ class EditItemModel
     {
         $statement = $this->db->prepare("
             UPDATE ItemImage
+            FROM ItemImage, Listing
             SET FK_Item_ItemID = :itemID, Is_Default = :isDefault, FK_Image_ImageID = :imageID
             WHERE Listing.ListingID = :listingID
               AND Listing.FK_Item_ItemID = Item.ItemID
@@ -266,6 +270,7 @@ class EditItemModel
     {
         $statement = $this->db->prepare("
             UPDATE Barcode
+            FROM Barcode, Listing
             SET Barcode = :barcode, Barcode_Type = :barcodeType, FK_Item_ItemID = :itemID
             WHERE Listing.ListingID = :listingID
               AND Listing.FK_Item_ItemID = Item.ItemID
@@ -290,6 +295,7 @@ class EditItemModel
     {
         $statement = $this->db->prepare("           
             UPDATE Location
+            FROM Location, Listing
             SET Name = :name, Post_Code = :postCode, Longitude = :long, Latitude = :lat
             WHERE Listing.ListingID = :listingID
               AND Listing.FK_Item_ItemID = Item.ItemID
@@ -320,13 +326,14 @@ class EditItemModel
 
         $statement = $this->db->prepare("
             UPDATE Listing
+            FROM Listing
             SET FK_Location_LocationID = :locationID,
               FK_Item_ItemID = :itemID,
               FK_User_UserID = :userID,
               Quantity = :quantity,
               ACTIVE = 1
             WHERE Listing.ListingID = :listingID
-              AND Listing.FK_Item_ItemID = Item.ItemID
+              AND Listing.FK_Item_ItemID = :itemID
          ");
 
         $statement->bindValue(":locationID", $locationID, PDO::PARAM_INT);
