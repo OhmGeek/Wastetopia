@@ -144,12 +144,9 @@ $(function () {
     var baseURL = $('#baseURL').attr('href');
     var query = baseURL + '/api/search/page/' + lat + '/' + long + '/' + searchTerm + '/' + include.join('+') + '/' + exclude.join('+') + '/' + distanceLimit + '/' + pageNumber + '/' + sortOrder;
 
-    console.log(query);
-
     $.ajax({
         url: query,
         success: function(result){
-            console.log(result)
             if(result === '[]')
             {
                 noResults();
@@ -198,25 +195,19 @@ $(function () {
             var baseURL = $('#baseURL').attr('href');
             var query = baseURL + '/api/search/page/' + lat + '/' + long + '/' + searchTerm + '/' + include.join('+') + '/' + exclude.join('+') + '/' + distanceLimit + '/' + pageNumber + '/' + sortOrder;
 
-            console.log(query);
-
             $.ajax({
                 url: query,
                 success: function(result){
-                    console.log(result)
                     if(result === '[]'){}
                     else
                     {
                         var count = addPage(result);
-                        console.log(count);
                         if (count === 30) {
                             infiniteScrollingEnabled = true;
                         }
                     }
                 }
             });
-           
-
         }
     }
 

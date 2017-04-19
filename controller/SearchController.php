@@ -21,10 +21,23 @@ class SearchController
         $ids = array_slice($results, 0, 4);
 
         $searchResults = [];
-        foreach ($ids as $item) {
+        foreach ($ids as $item)
+        {
             $result = $this->searchModel->getCardDetails($item["ListingID"]);
-            $result2 = $this->searchModel->getDefaultImage($item["ListingID"]);
-            $searchResults[] = array_merge($result, $result2);
+            $result['isRequesting'] = $this->searchModel->isRequesting($item["ListingID"], $userID);
+            $result['isWatching'] = $this->searchModel->isWatching($item["ListingID"], $userID);
+
+            $image = $this->searchModel->getDefaultImage($item["ListingID"]);
+            if(empty($image))
+            {
+                $config = new CurrentConfig();
+                $result['Image_URL'] = $config->getProperty('ROOT_IMG') . '/PCI.png';
+            }
+            else
+            {
+                $result['Image_URL'] = $image['Image_URL'];
+            }
+            $searchResults[] = $result;
         }
 
         return $searchResults;
@@ -117,11 +130,23 @@ class SearchController
         $itemInformation = $this->search($lat, $long, $search, $tagsArr, $notTagsArr);
 
         $searchResults = [];
-        foreach ($itemInformation as $item)
+        foreach ($sortedInformation as $item)
         {
             $result = $this->searchModel->getCardDetails($item["ListingID"]);
-            $result2 = $this->searchModel->getDefaultImage(17);
-            $searchResults[] = array_merge($result, $result2);
+            $result['isRequesting'] = $this->searchModel->isRequesting($item["ListingID"], $userID);
+            $result['isWatching'] = $this->searchModel->isWatching($item["ListingID"], $userID);
+
+            $image = $this->searchModel->getDefaultImage($item["ListingID"]);
+            if(empty($image))
+            {
+                $config = new CurrentConfig();
+                $result['Image_URL'] = $config->getProperty('ROOT_IMG') . '/PCI.png';
+            }
+            else
+            {
+                $result['Image_URL'] = $image['Image_URL'];
+            }
+            $searchResults[] = $result;
         }
 
         return json_encode($searchResults);
