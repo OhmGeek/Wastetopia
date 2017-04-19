@@ -162,10 +162,9 @@ class EditItemModel
     {
         $statement = $this->db->prepare("
             UPDATE Item
-            FROM Item, Listing
             SET Name = :name, Description = :description, Use_By = STR_TO_DATE(:useByDate, '%e %M, %Y')
+            FROM Item JOIN Listing ON Item.ItemID = Listing.FK_Item_ItemID
             WHERE Listing.ListingID = :listingID
-              AND Listing.FK_Item_ItemID = Item.ItemID
          ");
         error_log("Name:");
         error_log($name);
@@ -192,10 +191,9 @@ class EditItemModel
     {
         $statement = $this->db->prepare("
             UPDATE ItemTag
-            FROM ItemTag, Listing
             SET FK_Item_ItemID = :itemID, FK_Tag_TagID = :tagID
+            FROM ItemTag JOIN Listing ON ItemTag.FK_Item_ItemID = Listing.FK_Item_ItemID
             WHERE Listing.ListingID = :listingID
-              AND Listing.FK_Item_ItemID = Item.ItemID
          ");
 
         $statement->bindValue(":itemID", $itemID, PDO::PARAM_INT);
@@ -215,17 +213,12 @@ class EditItemModel
     function addToImageTable($fileType, $imageURL)
     {
         $statement = $this->db->prepare("
-            UPDATE Image
-            FROM Image, Listing
-            SET Image_URL = :imageURL
-            WHERE Listing.ListingID = :listingID
-              AND Listing.FK_Item_ItemID = Item.ItemID
+            INSERT INTO `Image` (`File_Type`, `Image_URL`)
+            VALUES (:fileType, :imageURL);
          ");
 
-        //$statement->bindValue(":fileType", $fileType, PDO::PARAM_STR);
+        $statement->bindValue(":fileType", $fileType, PDO::PARAM_STR);
         $statement->bindValue(":imageURL", $imageURL, PDO::PARAM_STR);
-        $statement->bindValue(":listingID", $this->listingID, PDO::PARAM_INT);
-
         $statement->execute();
 
         //return $this->getLastInsertID(); // Need to change to another sql query
@@ -243,9 +236,11 @@ class EditItemModel
      */
     function addToItemImageTable($imageID, $itemID, $isDefault)
     {
+        // delete all itemimage links
+
+        // then recreate them.
         $statement = $this->db->prepare("
             UPDATE ItemImage
-            FROM ItemImage, Listing
             SET FK_Item_ItemID = :itemID, Is_Default = :isDefault, FK_Image_ImageID = :imageID
             WHERE Listing.ListingID = :listingID
               AND Listing.FK_Item_ItemID = Item.ItemID
@@ -270,10 +265,9 @@ class EditItemModel
     {
         $statement = $this->db->prepare("
             UPDATE Barcode
-            FROM Barcode, Listing
             SET Barcode = :barcode, Barcode_Type = :barcodeType, FK_Item_ItemID = :itemID
+            FROM Barcode JOIN Listing ON Barcode.FK_Item_ItemID = Listing.FK_Item_ItemID
             WHERE Listing.ListingID = :listingID
-              AND Listing.FK_Item_ItemID = Item.ItemID
          ");
 
         $statement->bindValue(":barcode", $barcode, PDO::PARAM_INT);
@@ -295,10 +289,9 @@ class EditItemModel
     {
         $statement = $this->db->prepare("           
             UPDATE Location
-            FROM Location, Listing
             SET Name = :name, Post_Code = :postCode, Longitude = :long, Latitude = :lat
+            FROM Location JOIN Listing ON Location.FK_Item_ItemID = Listing.FK_Item_ItemID
             WHERE Listing.ListingID = :listingID
-              AND Listing.FK_Item_ItemID = Item.ItemID
          ");
 
         $statement->bindValue(":name", $name, PDO::PARAM_STR);
