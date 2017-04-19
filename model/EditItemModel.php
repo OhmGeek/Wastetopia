@@ -97,15 +97,13 @@ class EditItemModel
         $statement = $this->db->prepare("
             SELECT Image.ImageID
             FROM Image
-            WHERE File_Type = :fileType
-            AND Image_URL = :imageURL
+            WHERE Image_URL = :imageURL
          ");
 
-        $statement->bindValue(":fileType", $fileType, PDO::PARAM_STR);
         $statement->bindValue(":imageURL", $imageURL, PDO::PARAM_STR);
         $statement->execute();
 
-        return $statement->fetchColumn();
+        return $statement->fetchAll(PDO::FETCH_ASSOC)[0]['ImageID'];
     }
 
     /**
@@ -226,11 +224,10 @@ class EditItemModel
     function addToImageTable($fileType, $imageURL)
     {
         $statement = $this->db->prepare("
-            INSERT INTO `Image` (`File_Type`, `Image_URL`)
-            VALUES (:fileType, :imageURL);
+            INSERT INTO `Image` (`Image_URL`)
+            VALUES (:imageURL);
          ");
 
-        $statement->bindValue(":fileType", $fileType, PDO::PARAM_STR);
         $statement->bindValue(":imageURL", $imageURL, PDO::PARAM_STR);
         $statement->execute();
 
@@ -383,7 +380,11 @@ class EditItemModel
         foreach ($images as $image) {
             $imageURL = $image["url"];
             $imageID = $this->getImageIDFromURL($imageURL); //Add to image table
-            $this->addToItemImageTable($imageID, $isDefault, $itemID); //Link image to item
+            if(is_null($imageID)) {
+                $imageID = $this->addToImageTable("img",$imageURL);
+                error_log("Null, so we fetched something...");
+            }
+            $this->addToItemImageTable($imageID, $itemID, 0); //Link image to item
             $isDefault = 0; // first image is default, others aren't.
         }
     }
@@ -410,14 +411,9 @@ class EditItemModel
         $itemID = $this->addToItemTable($itemName, $itemDescription, $useByDate); //Add the item
         error_log("Item ID:");
         error_log($itemID);
-        if(isset($tags) && count($tags) > 0) {
-            error_log("Add all tags");
-            $this->addAllTags($itemID, $tags); //Add the tags and link to item
-        }
-
-        if(isset($images) && count($images) > 0) {
-            $this->addAllImages($itemID, $images); //Add the images and link to item
-        }
+        error_log("Add all tags");
+        $this->addAllTags($itemID, $tags); //Add the tags and link to item
+        $this->addAllImages($itemID, $images); //Add the images and link to item
         //Extract location information
         $locationName = $location["firstLineAddr"];
         $postCode = $location["secondLineAddr"];
@@ -463,6 +459,7 @@ class EditItemModel
         // now we have the results, create a tag and return it.
         error_log(json_encode($results));
         return array(
+            'tagID' => $results[0]['TagID'],
             'name' => $results[0]['Name'],
             'categoryID' => $results[0]['FK_Category_Category_ID'],
             'description' => $results[0]['Description']
