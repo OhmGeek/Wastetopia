@@ -22,11 +22,11 @@
                 </div>
                 <div class="container-fluid">
                     {% if names|length > 0 %}
-                        <ul class = "list-group">
+                        <div class="top-items">
                             {% for name in names %}
-                                <li class="list-group-item">{{ name }}</li>
+                                <span class="label label-primary">{{ name }}</span>
                             {% endfor %}
-                        </ul>
+                        </div>
                     {% else %}
                         <p>Not enough data, sorry!</p>
                     {% endif %}
