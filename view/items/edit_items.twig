@@ -51,7 +51,7 @@
           </div>
         </fieldset>
       </form>
-      <form id="main-form" method="post">
+      <form id="main-form" method="post" action="javascript:submit()">
         <fieldset>
           <div class="col-sm-12 zero-padding">
             <div class="item-details-section">
@@ -60,7 +60,7 @@
                   <div class="form-group col-md-8">
                     <label class="control-label" for="name">Name</label>
                     <input type="text" class="form-control" name="itemname" id="name"
-                    {% if mode=='edit' %}value="{{ item.name }}" {% endif %} }>
+                    {% if mode=='edit' %}value="{{ item.name }}" {% endif %} required>
                   </div>
                   <div class="form-group col-md-4">
                     <label class="control-label" for="type">Type</label>
@@ -159,9 +159,9 @@
 
                 <div class="col-md-10">
                   <input type="text" class="form-control" id="inputLocation1" placeholder="Location : eg.4 The Sidings"
-                         {% if mode=='edit' %}value="{{ item.location.name }}" {% endif %}>
+                         {% if mode=='edit' %}value="{{ item.location.name }}" {% endif %} required>
                   <input type="text" class="form-control" id="inputLocation2" placeholder="PostCode : eg.dh1 1hs"
-                         {% if mode=='edit' %}value="{{ item.location.postcode }}" {% endif %}>
+                         {% if mode=='edit' %}value="{{ item.location.postcode }}" {% endif %} required>
                 </div>
               </div>
             </div>
@@ -171,7 +171,7 @@
               <div class="form-group zero-padding">
                 <div class="btns">
                   <button type="button" class="btn btn-default">Cancel</button>
-                  <button id="#submit-item" type="submit" class="btn btn-primary" onclick="submit()">Save</button>
+                  <button id="#submit-item" type="submit" class="btn btn-primary">Save</button>
                 </div>
               </div>
             </div>
