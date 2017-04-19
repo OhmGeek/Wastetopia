@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/OhmGeek/Wastetopia.svg?branch=master)](https://travis-ci.org/OhmGeek/Wastetopia)
-+[![Code Climate](https://codeclimate.com/github/OhmGeek/Wastetopia.png)](https://codeclimate.com/github/OhmGeek/Wastetopia)
+[![Code Climate](https://codeclimate.com/github/OhmGeek/Wastetopia.png)](https://codeclimate.com/github/OhmGeek/Wastetopia)
 
 
 # Wastetopia
