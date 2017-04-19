@@ -8,6 +8,7 @@
 
 namespace Wastetopia\Model;
 use Wastetopia\Model\DB;
+use Wastetopia\Model\UserCookieReader;
 use PDO;
 
 /**

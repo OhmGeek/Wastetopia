@@ -2,6 +2,7 @@
 namespace Wastetopia\Model;
 use PDO;
 use Wastetopia\Model\DB;
+use Wastetopia\Model\UserCookieReader;
 
 
 /**

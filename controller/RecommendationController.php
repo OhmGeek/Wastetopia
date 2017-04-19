@@ -6,7 +6,7 @@ use Twig_Loader_Filesystem;
 
 use Wastetopia\Model\AnalysisModel; // To analyse user's listings and requests
 use Wastetopia\Controller\SearchController;  // To search for similar itesm
-
+use Wastetopia\Model\UserCookieReader;
 use Wastetopia\Model\CardDetailsModel; // Card details
 
 /**
