@@ -177,10 +177,11 @@ function serializeAndSendItem(location) {
   // todo: process item type properly.
   // todo: check errors in images/date/location
     var mode = $('.grid-body').data('mode');
+    var listingID = $('.grid-body').data('listingid');
     console.log(mode);
     var url = "";
     if(mode == "edit") {
-        url = "https://wastetopia-pr-17.herokuapp.com/api/items/edititem";
+        url = "https://wastetopia-pr-17.herokuapp.com/api/items/edititem/" + listingID;
     }
     else {
         url = "https://wastetopia-pr-17.herokuapp.com/api/items/additem";
