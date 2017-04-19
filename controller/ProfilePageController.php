@@ -556,13 +556,15 @@ class ProfilePageController
         $predictionHTML = "";
         if(!($isCurrentUser)){
             $predictionHTML = $this->generatePredictionHTML();
+            $predictionNames = $this->generatePredictionNames();
         }
 
         $listingsInformation = array(
             "userListings" => $userListings, // All your listings
             "isUser" => $isCurrentUser,
 	        "isLoggedIn" => $isLoggedIn,
-            "predictionHTML" => $predictionHTML
+            "predictionHTML" => $predictionHTML,
+            "names" => $predictionNames
         );
 
         $template = $this->twig->loadTemplate("/users/listingsTab.twig");
@@ -639,6 +641,18 @@ class ProfilePageController
     function generatePredictionHTML(){
         $controller = new RecommendationController();
         return $controller->generatePredictionSection($this->userID);
+    }
+
+
+    function generatePredictionNames(){
+        $controller = new AnalysisController();
+        $names = $controller->getTotalNameFrequenciesSending($this->userID);
+
+        $results = array();
+        foreach(array_keys($names) as $name){
+            array_push($results, $name);
+        }
+        return $results;
     }
 
 

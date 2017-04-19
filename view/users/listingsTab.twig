@@ -71,6 +71,18 @@
             <div class="col-xs-12">
                 {{predictionHTML | raw}}
             </div>
+            <div class="col-xs-12">
+                <h4>Items the user gives away most:</h4>
+                {% if names|length >0 %}
+                    <ul>
+                        {% for name in names %}
+                        <li>{{ name }}</li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>Not enough data, sorry!</p>
+                {% endif %}
+            </div>
         {% endif %}
         {% if isUser == 1 %}
             <div id="out-of-stock-listing" class="tab-pane fade">
