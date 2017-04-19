@@ -77,13 +77,14 @@ class AddItemModel
             SELECT Image.ImageID
             FROM Image
             WHERE Image_URL = :imageURL
+            ORDER BY Image.ImageID DESC;
          ");
 
         //$statement->bindValue(":fileType", $fileType, PDO::PARAM_STR);
         $statement->bindValue(":imageURL", $imageURL, PDO::PARAM_STR);
         $statement->execute();
 
-        return $statement->fetchColumn();
+        return $statement->fetchAll(PDO::FETCH_ASSOC)[0]['ImageID'];
     }
 
     /**
