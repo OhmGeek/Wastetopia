@@ -48,7 +48,6 @@ $(function () {
     });
   }
 
-  setCheckbox('Chilled')
   getFilters();
 
   radiusSlider.noUiSlider.on('update', function (e) {
