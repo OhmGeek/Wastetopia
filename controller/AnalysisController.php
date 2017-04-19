@@ -120,6 +120,37 @@ class AnalysisController
     }
 
     /**
+     * The two funcitons below return arrays of number of items given and recived in the last 4 months
+     */
+    function get4MonthSendArray(){
+        $year = date('Y');
+        $month1 = date('n');
+        $month2 = date('n')-1;
+        $month3 = date('n')-2;
+        $month4 = date('n')-3;
+        $send1 = $this->model->getNumberOfCompletedGiving($year, $month1, 1);
+        $send2 = $this->model->getNumberOfCompletedGiving($year, $month2, 1);
+        $send3 = $this->model->getNumberOfCompletedGiving($year, $month3, 1);
+        $send4 = $this->model->getNumberOfCompletedGiving($year, $month4, 1);
+        $final = array($send1,$send2,$send3,$send4);
+        return $final;
+    }
+    
+    function get4MonthRecieveArray(){
+        $year = date('Y');
+        $month1 = date('n');
+        $month2 = date('n')-1;
+        $month3 = date('n')-2;
+        $month4 = date('n')-3;
+        $send1 = $this->model->getNumberOfCompletedReceived($year, $month1, 1);
+        $send2 = $this->model->getNumberOfCompletedReceived($year, $month2, 1);
+        $send3 = $this->model->getNumberOfCompletedReceived($year, $month3, 1);
+        $send4 = $this->model->getNumberOfCompletedReceived($year, $month4, 1);
+        $final = array($send1,$send2,$send3,$send4);
+        return $final;
+    }
+    
+    /**
      * Gets a list of Tag Names along with their frequencies for items the user has received in JSON format
      * @param $categoryIDArray (Optional - defaults to empty array => checks all category IDs. Array of CategoryIDs to match)
      * @return JSON
