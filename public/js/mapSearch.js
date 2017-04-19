@@ -99,7 +99,11 @@ function initMap() {
   }
 
   function infoWindow(marker, map, item) {
+    iw = new google.maps.InfoWindow({
+      maxWidth: 300
+    });
     google.maps.event.addListener(marker, 'click', function() {
+      iw.close()
       var watch = ""
       var request = "request"
       var cancel = ""
@@ -142,10 +146,6 @@ function initMap() {
       '</div>'+
       '</div>'+
       '</div>';
-      iw = new google.maps.InfoWindow({
-        content: contentString,
-        maxWidth: 300
-      });
       iw.addListener('domready', function() {
 
         // Reference to the DIV which receives the contents of the infowindow using jQuery
@@ -174,10 +174,8 @@ function initMap() {
         // Change the default close-icon
         var iwCloseImg = iwCloseBtn.children(':nth-child(1)').attr('src',markerCloseURL);
         iwCloseImg.css({width: '100%', height : '100%', position: 'relative', top:'0',left:'0'})
-        google.maps.event.addListener(iwCloseImg, 'click', function(){
-          iw.close();
-        })
       });
+      iw.setContent(contentString)
       iw.open(map, marker);
     });
     google.maps.event.addListener(map, 'click', function(){
