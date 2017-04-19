@@ -675,7 +675,7 @@ class ProfilePageController
     function generateAnalysisTabHTML(){
         // Generate the HTML for the Analysis tab but don't load?
         $controller = new AnalysisController();
-        return $controller -> generatePage();
+        return $controller -> generatePage($this->userID);
     }
 
 

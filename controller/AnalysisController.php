@@ -42,6 +42,9 @@ class AnalysisController
         // Get sending frequencies
         $sendingFrequencies = json_decode($this->getTotalNameFrequenciesSending(),true);
 
+        print_r("Sending: ");
+        print_r($sendingFrequencies);
+        
         $sendingNames = array();
 
         // Extract name and frequency, place in associative array
