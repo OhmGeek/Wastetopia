@@ -246,21 +246,16 @@ class EditItemModel
      */
     function addToItemImageTable($imageID, $itemID, $isDefault)
     {
-        // then recreate them.
         $statement = $this->db->prepare("
-            UPDATE ItemImage
-            SET FK_Item_ItemID = :itemID, Is_Default = :isDefault, FK_Image_ImageID = :imageID
-            WHERE Listing.ListingID = :listingID
-              AND Listing.FK_Item_ItemID = Item.ItemID
+            INSERT INTO `ItemImage` (`FK_Item_ItemID`, `Is_Default`, `FK_Image_ImageID`)
+            VALUES (:itemID, :isDefault, :imageID);
          ");
 
         $statement->bindValue(":itemID", $itemID, PDO::PARAM_INT);
         $statement->bindValue(":isDefault", $isDefault, PDO::PARAM_INT);
         $statement->bindValue(":imageID", $imageID, PDO::PARAM_INT);
-        $statement->bindValue(":listingID", $this->listingID, PDO::PARAM_INT);
-
-        $statement->execute();
         error_log(json_encode($statement->errorInfo()));
+        $statement->execute();
     }
 
 
