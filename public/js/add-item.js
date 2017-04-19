@@ -31,7 +31,7 @@ $('#deleteBtn').on( 'click', function() {
   $checkboxes.each( function( i, elem ) {
     // if checkbox, use value if checked
     if ( elem.checked ) {
-      remove(elem)
+      remove(elem);
     }
   });
 });
@@ -80,7 +80,7 @@ $('#form-image').change(function() {
 function getImagesFromDOM() {
   var imageList = [];
   $('.upload-pic img').each(function(index, elem) {
-    imageList.push(elem.href); //todo check this - we want to get the href of the image tag
+    imageList.push(elem.src); //todo check this - we want to get the href of the image tag
   });
   return imageList;
 }
@@ -88,7 +88,7 @@ function getImagesFromDOM() {
 function getSelectedDietaryReqs() {
   var requirementsList = [];
   // todo use filter to get this working nicely.
-  $('.dietary-req option:selected').each(function(index, elem) {
+  $('.dietary-req input:checked').each(function(index, elem) {
     // if the selected checkbox is actually selected, add the item
     // to the requirements list. Otherwise, move to the next one.
     if(elem.text) {
