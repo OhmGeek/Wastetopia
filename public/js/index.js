@@ -7,6 +7,7 @@ $(function(){
     var search = $('#search').val().trim()
     var postcode = $('#postcode').val().trim()
     var position = getLatLng(postcode)
+    console.log(position)
     var quantity = $('#quantity').val().trim()
     var distance = $('#distance').val().trim()
     var exclude = []
@@ -48,7 +49,6 @@ $(function(){
     },
     function(results, status) {
       if (status === google.maps.GeocoderStatus.OK) {
-        console.log(results[0].geometry.location);
           // return a location object
           var latlng = results[0].geometry.location;
           var locationFinal = {
