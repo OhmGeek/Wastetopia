@@ -5,30 +5,28 @@ require_once '../vendor/autoload.php';
 
 use Klein\Klein;
 use Wastetopia\Config\CurrentConfig;
+
+
 use Wastetopia\Controller\ConversationListController;
 use Wastetopia\Controller\LoginController;
 use Wastetopia\Controller\ProfilePageController;
 use Wastetopia\Controller\SearchController;
 use Wastetopia\Controller\MessageController;
-
 use Wastetopia\Controller\RecommendationController;
+use Wastetopia\Controller\SearchPageController;
+use Wastetopia\Controller\IndexPageController;
+use Wastetopia\Controller\RegistrationController;
+use Wastetopia\Controller\AddItemController;
+use Wastetopia\Controller\ViewItemController;
+use Wastetopia\Controller\AnalysisController;
+
 
 use Wastetopia\Model\RequestModel;
 use Wastetopia\Model\PopularityModel;
-
-use Wastetopia\Controller\SearchPageController;
-use Wastetopia\Controller\IndexPageController;
-
-use Wastetopia\Controller\RegistrationController;
-
+use Wastetopia\Model\NotificationModel;
 use Wastetopia\Model\RegistrationModel; // For verification
 
-use Wastetopia\Controller\AddItemController;
-use Wastetopia\Controller\ViewItemController;
 
-use Wastetopia\Model\NotificationModel;
-
-use Wastetopia\Controller\AnalysisController;
 
 
 
@@ -83,8 +81,9 @@ $klein->with('/api', function () use ($klein) {
         $notTagsArr = explode("+",$paramArr[4]);
         $distanceLimit = $paramArr[5];
         $pageNumber = $paramArr[6];
+        $order = $paramArr[7];
         $response->sendHeaders('Content-Type: application/jpg');
-        return $searchController->JSONSearch($lat, $long, $search, $tagsArr, $notTagsArr, $distanceLimit, $pageNumber);
+        return $searchController->JSONSearch($lat, $long, $search, $tagsArr, $notTagsArr, $distanceLimit, $pageNumber, $order);
     });
     $klein->respond('GET', '/search/map/[**:param]', function ($request, $response) {
         $searchController = new SearchController();
@@ -100,9 +99,10 @@ $klein->with('/api', function () use ($klein) {
     });
 });
 
-$klein->respond('GET', '/search/[:search]?', function ($request, $response) {
+$klein->respond('GET', '/search/[**:param]?', function ($request, $response) {
     $controller = new SearchPageController();
-    return $controller->render($request->search);
+
+    return $controller->render(explode('/', $request->param));
 });
 
 

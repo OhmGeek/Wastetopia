@@ -68,5 +68,6 @@ typings/
 .env
 
 # Reports from the testing framework
+
 *.xml
 
