@@ -163,8 +163,8 @@ class EditItemModel
         $statement = $this->db->prepare("
             UPDATE Item
             SET Name = :name, Description = :description, Use_By = STR_TO_DATE(:useByDate, '%e %M, %Y')
-            FROM Item JOIN Listing ON Item.ItemID = Listing.FK_Item_ItemID
-            WHERE Listing.ListingID = :listingID
+            JOIN `Listing` ON `ItemID` = `Listing`.`FK_Item_ItemID`
+            WHERE ItemID = :itemID
          ");
         error_log("Name:");
         error_log($name);
@@ -172,7 +172,7 @@ class EditItemModel
         $statement->bindValue(":name", $name, PDO::PARAM_STR);
         $statement->bindValue(":description", $description, PDO::PARAM_STR);
         $statement->bindValue(":useByDate", $useByDate, PDO::PARAM_STR);
-        $statement->bindValue(":listingID", $this->listingID, PDO::PARAM_INT);
+        $statement->bindValue(":itemID", $this->getItemID(), PDO::PARAM_INT);
 
 
         $statement->execute();
@@ -192,7 +192,7 @@ class EditItemModel
         $statement = $this->db->prepare("
             UPDATE ItemTag
             SET FK_Item_ItemID = :itemID, FK_Tag_TagID = :tagID
-            FROM ItemTag JOIN Listing ON ItemTag.FK_Item_ItemID = Listing.FK_Item_ItemID
+            JOIN `Listing` ON `FK_Item_ItemID` = `Listing`.`FK_Item_ItemID`
             WHERE Listing.ListingID = :listingID
          ");
 
@@ -266,7 +266,7 @@ class EditItemModel
         $statement = $this->db->prepare("
             UPDATE Barcode
             SET Barcode = :barcode, Barcode_Type = :barcodeType, FK_Item_ItemID = :itemID
-            FROM Barcode JOIN Listing ON Barcode.FK_Item_ItemID = Listing.FK_Item_ItemID
+            JOIN `Listing` ON `FK_Item_ItemID` = `Listing`.`FK_Item_ItemID`
             WHERE Listing.ListingID = :listingID
          ");
 
@@ -290,7 +290,7 @@ class EditItemModel
         $statement = $this->db->prepare("           
             UPDATE Location
             SET Name = :name, Post_Code = :postCode, Longitude = :long, Latitude = :lat
-            FROM Location JOIN Listing ON Location.FK_Item_ItemID = Listing.FK_Item_ItemID
+            JOIN `Listing` ON `Location.FK_Item_ItemID` = `Listing`.`FK_Item_ItemID`
             WHERE Listing.ListingID = :listingID
          ");
 
@@ -459,6 +459,7 @@ class EditItemModel
             'description' => $results[0]['Description']
         );
     }
+
 
 
 
