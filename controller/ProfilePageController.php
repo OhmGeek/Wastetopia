@@ -646,7 +646,7 @@ class ProfilePageController
 
     function generatePredictionNames(){
         $controller = new AnalysisController();
-        $names = $controller->getTotalNameFrequenciesSending($this->userID);
+        $names = json_decode($controller->getTotalNameFrequenciesSending($this->userID), true);
 
         $results = array();
         foreach(array_keys($names) as $name){
