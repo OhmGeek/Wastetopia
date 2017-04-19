@@ -32,7 +32,15 @@ class AnalysisController
         $loader = new Twig_Loader_Filesystem('../view/');
         $this->twig = new Twig_Environment($loader);
     }
+    public function __construct()
+    {
+        // Create instance of AnalysisModel
+        $this->model = new AnalysisModel();
 
+        //Create twig loader
+        $loader = new Twig_Loader_Filesystem('../view/');
+        $this->twig = new Twig_Environment($loader);
+    }
 
     /**
      * Generates the HTML for the analysis page
