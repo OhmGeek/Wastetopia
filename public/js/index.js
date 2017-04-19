@@ -16,14 +16,14 @@ $(function(){
       var formGroup = $(this)
       console.log(formGroup)
       if ( formGroup.find('.filter-label').data('filtertype') === 'negative' ) {
-        formGroup.find('select option').each(function(){
+        formGroup.find('select option:selected').each(function(){
           var input = $(this)
           console.log(input.val())
           console.log('exclude')
           exclude.push(input.attr('id'))
         });
       } else {
-        formGroup.find('select option').each(function(){
+        formGroup.find('select option:selected').each(function(){
           var input = $(this)
           console.log(input.val())
           console.log('include')
