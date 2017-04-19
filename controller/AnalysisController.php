@@ -185,9 +185,9 @@ class AnalysisController
      * @return array
      */
     function getTotalNameFrequenciesSending($userID = null){
-        error_log("User: ".$userID);
+        print_r("User: ".$userID);
         $frequencies = $this->model->getTotalNameFrequenciesSending($userID);
-        error_log("Frequencies: ".json_encode($frequencies));
+        print_r("Frequencies: ".json_encode($frequencies));
 
         $names = array();
 
@@ -202,7 +202,7 @@ class AnalysisController
         $limit = count($names) < 5 ? count($names) : 5;
         
         $results = array_slice($names, 0, $limit, true);
-        error_log("Results: ".json_encode($results));
+        print_r("Results: ".json_encode($results));
 
         return json_encode($results);
     }
