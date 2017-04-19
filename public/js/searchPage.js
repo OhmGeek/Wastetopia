@@ -43,7 +43,7 @@ $(function () {
       // if checkbox, use value if checked
       console.log(elem.value)
       if ( elem.value === val ) {
-        elem.prop('checked', true)
+        $(elem).prop('checked', true)
       }
     });
   }
