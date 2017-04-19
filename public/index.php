@@ -3,6 +3,7 @@ require_once '../vendor/autoload.php';
 use Klein\Klein;
 use Wastetopia\Config\CurrentConfig;
 use Wastetopia\Controller\ConversationListController;
+use Wastetopia\Controller\EditItemController;
 use Wastetopia\Controller\LoginController;
 use Wastetopia\Controller\ProfilePageController;
 use Wastetopia\Controller\SearchController;
