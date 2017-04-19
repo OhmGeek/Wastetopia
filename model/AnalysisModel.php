@@ -212,7 +212,8 @@ class AnalysisModel
 
 	   $results = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-	   print_r("Sending names: ".$results);
+	   print_r("Sending names: ");
+	   print_r($results);
         return $statement->fetchAll(PDO::FETCH_ASSOC); 
     }
 
