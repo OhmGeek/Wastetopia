@@ -43,9 +43,11 @@ class AnalysisModel
      * @param $categoryIDArray - Array of CategoryIDs to match: Optional - defaults to empty array => checks all category IDs
      * @return array - In Descending order by Frequency
      */
-    function getTagFrequenciesForListings($categoryIDArray = array())
+    function getTagFrequenciesForListings($userID = null, $categoryIDArray = array())
     {
-        $userID = $this->getUserID();
+        if($userID == null) {
+            $userID = $this->getUserID();
+        }
 
         // Start sql query
         // Inner table gets Tags with their quantity in successful transactions

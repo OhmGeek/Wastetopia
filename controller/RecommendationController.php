@@ -112,8 +112,8 @@ class RecommendationController {
     * Generates the HTML for the cards in a prediction of similar items you may give away section
      * @return HTML
     */
-    function generatePredictionSection(){
-      $frequentTags = $this->model->getTagFrequenciesForListings();
+    function generatePredictionSection($userID){
+      $frequentTags = $this->model->getTagFrequenciesForListings($userID);
       
         // Deal with if there are not enough tags    
       if(count($frequentTags) < 5){
@@ -134,7 +134,8 @@ class RecommendationController {
             
 //           print_r("Search results: ");
 //           print_r($results);
-          
+          $isUser = ($userID == $this->getUserID());
+
           $recommendationList = array();  
           foreach($results as $listing){
               $listingID = $listing["ListingID"];
@@ -160,7 +161,8 @@ class RecommendationController {
                 "itemName" => $itemName,
                 "quantity" => $quantity,
                 "isRequesting" => $isRequesting,
-                "isWatching" => $isWatching  
+                "isWatching" => $isWatching,
+                "isUser" => $isUser
               );
 
               array_push($recommendationList, $item);

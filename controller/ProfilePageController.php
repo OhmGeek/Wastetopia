@@ -552,10 +552,17 @@ class ProfilePageController
         $userListings = array("available" => $allAvailableListings, "outOfStock" => $allEmptyListings);
 
         $isCurrentUser = ($this->userID == $this->getUserID() ? 1 : 0);
+
+        $predictionHTML = "";
+        if(!($isCurrentUser)){
+            $predictionHTML = $this->generatePredictionHTML();
+        }
+
         $listingsInformation = array(
             "userListings" => $userListings, // All your listings
             "isUser" => $isCurrentUser,
-	    "isLoggedIn" => $isLoggedIn
+	    "isLoggedIn" => $isLoggedIn,
+            "predictionHTML" => $predictionHTML
         );
 
         $template = $this->twig->loadTemplate("/users/listingsTab.twig");
@@ -631,7 +638,7 @@ class ProfilePageController
      */
     function generatePredictionHTML(){
         $controller = new RecommendationController();
-        return $controller->generatePredictionSection();
+        return $controller->generatePredictionSection($this->userID);
     }
 
 
