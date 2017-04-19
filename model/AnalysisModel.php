@@ -226,7 +226,7 @@ class AnalysisModel
         print_r("User receiving: ".$userID);
 
         $statement = $this->db->prepare("
-           SELECT `Item`.`ItemID`, `Item`.`Name`, SUM(COALESCE(`ListingTransaction`.`Quantity`), 0) AS `Count`
+           SELECT `Item`.`ItemID`, `Item`.`Name`, SUM(COALESCE(`ListingTransaction`.`Quantity`, 0) AS `Count`
                 FROM `Item`
 		        JOIN `Listing` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
 		        JOIN `ListingTransaction` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
