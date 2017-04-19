@@ -184,8 +184,6 @@ class AnalysisModel
             $userID = $this->getUserID();
         }
 
-        print_r("User sending: ".$userID);
-
         // Inner table gets Items with their quantity in successful transactions
         // Outer table gets Items with their current quantity in user's listing
         // Join Tables to get total quantity for all time for each item
@@ -243,7 +241,8 @@ class AnalysisModel
         $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
         $statement->execute();
 
-        print_r("Receiving names: ".$statement->fetchAll(PDO::FETCH_ASSOC));
+        print_r("Receiving names: ");
+        print_r($statement->fetchAll(PDO::FETCH_ASSOC));
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
