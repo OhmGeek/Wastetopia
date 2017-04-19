@@ -102,7 +102,7 @@ class EditItemModel
 
         $statement->bindValue(":imageURL", $imageURL, PDO::PARAM_STR);
         $statement->execute();
-
+        error_log(json_encode($statement->errorInfo()));
         return $statement->fetchAll(PDO::FETCH_ASSOC)[0]['ImageID'];
     }
 
@@ -230,7 +230,7 @@ class EditItemModel
 
         $statement->bindValue(":imageURL", $imageURL, PDO::PARAM_STR);
         $statement->execute();
-
+        error_log(json_encode($statement->errorInfo()));
         //return $this->getLastInsertID(); // Need to change to another sql query
         return $this->getLastImageID($fileType, $imageURL);
     }
@@ -260,6 +260,7 @@ class EditItemModel
         $statement->bindValue(":listingID", $this->listingID, PDO::PARAM_INT);
 
         $statement->execute();
+        error_log(json_encode($statement->errorInfo()));
     }
 
 
@@ -439,6 +440,7 @@ class EditItemModel
 
         $statement->bindValue(":url", $imageURL,PDO::PARAM_STR);
         $statement->execute();
+        error_log(json_encode($statement->errorInfo()));
         // return the ID, or nothing if none is found.
         return $statement->fetchColumn(0);
     }
@@ -458,6 +460,7 @@ class EditItemModel
 
         // now we have the results, create a tag and return it.
         error_log(json_encode($results));
+        error_log(json_encode($statement->errorInfo()));
         return array(
             'tagID' => $results[0]['TagID'],
             'name' => $results[0]['Name'],
@@ -477,6 +480,7 @@ class EditItemModel
         $statement->bindValue(":listingID", $this->listingID);
         $statement->execute();
         $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+        error_log(json_encode($statement->errorInfo()));
         return $results[0]['ItemID'];
     }
 
@@ -488,6 +492,7 @@ class EditItemModel
         ");
         $statement->bindValue(":itemID", $itemID, PDO::PARAM_INT);
         $statement->execute();
+        error_log(json_encode($statement->errorInfo()));
     }
 
     private function getLocationIDFromListing()
