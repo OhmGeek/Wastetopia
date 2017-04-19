@@ -428,7 +428,7 @@ class AddItemModel
         // now we have the results, create a tag and return it.
         error_log(json_encode($results));
         return array(
-            'id' => $results[0]['TagID'],
+            'tagID' => $results[0]['TagID'],
             'name' => $results[0]['Name'],
             'categoryID' => $results[0]['FK_Category_Category_ID'],
             'description' => $results[0]['Description']
