@@ -164,7 +164,7 @@ class EditItemModel
             UPDATE Item
             SET Name = :name, Description = :description, Use_By = STR_TO_DATE(:useByDate, '%e %M, %Y')
             JOIN `Listing` ON `ItemID` = `Listing`.`FK_Item_ItemID`
-            WHERE ItemID = :itemID
+            WHERE Listing.ListingID = :listingID
          ");
         error_log("Name:");
         error_log($name);
@@ -172,7 +172,7 @@ class EditItemModel
         $statement->bindValue(":name", $name, PDO::PARAM_STR);
         $statement->bindValue(":description", $description, PDO::PARAM_STR);
         $statement->bindValue(":useByDate", $useByDate, PDO::PARAM_STR);
-        $statement->bindValue(":itemID", $this->getItemID(), PDO::PARAM_INT);
+        $statement->bindValue(":listingID", $this->listingID, PDO::PARAM_INT);
 
 
         $statement->execute();
