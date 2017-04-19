@@ -5,6 +5,7 @@ namespace Wastetopia\Controller;
 use Wastetopia\Model\SearchModel;
 use Wastetopia\Model\CardDetailsModel;
 use Wastetopia\Model\UserCookieReader;
+use Wastetopia\Config\CurrentConfig;
 
 class SearchController
 {
@@ -91,10 +92,20 @@ class SearchController
         foreach ($sortedInformation as $item)
         {
             $result = $this->searchModel->getCardDetails($item["ListingID"]);
-            $result2 = $this->searchModel->getDefaultImage(17);
             $result['isRequesting'] = $this->searchModel->isRequesting($item["ListingID"], $userID);
             $result['isWatching'] = $this->searchModel->isWatching($item["ListingID"], $userID);
-            $searchResults[] = array_merge($result, $result2);
+
+            $image = $this->searchModel->getDefaultImage($item["ListingID"]);
+            if(empty($image))
+            {
+                $config = new CurrentConfig();
+                $result['Image_URL'] = $config->getProperty('ROOT_IMG') . '/PCI.png';
+            }
+            else
+            {
+                $result['Image_URL'] = $image['Image_URL'];
+            }
+            $searchResults[] = $result;
         }
 
         $pageResults = array_slice($searchResults, $offset, $limit);

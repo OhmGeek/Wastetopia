@@ -57,10 +57,10 @@ class SearchModel
             JOIN `Item` ON `ItemImage`.`FK_Item_ItemID` = `Item`.`ItemID`
             JOIN `Listing` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
             WHERE `Listing`.`ListingID` = :listingID
-            
+            AND `ItemImage`.`Is_Default` = 1
             
         ORDER BY `Image`.`ImageID` DESC;
-        "); //AND `ItemImage`.`Is_Default` = 1
+        "); //
         $statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);
         $statement->execute(); 
         return $statement->fetchAll(PDO::FETCH_ASSOC)[0];
