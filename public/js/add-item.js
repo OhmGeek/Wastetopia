@@ -191,7 +191,7 @@ function serializeAndSendItem(location) {
   var itemData = {
     "name": $('#name').val(),
     "images": getImagesFromDOM(),
-    "classification": $("#type option:selected").text(), //get the text of the selected option
+    "classification": [$("#type option:selected").text()], //get the text of the selected option
     "dietary": getSelectedDietaryReqs(), //dietary requirement
     "contains": getMayContainsDetails(), //allergy tags
     "state": getStateDetails(),
@@ -203,7 +203,7 @@ function serializeAndSendItem(location) {
     console.log(itemData);
     if(isValid(itemData)) {
         // submit using AJAX
-        var jsonData = JSON.stringify(itemData);
+        var jsonData = {'item': JSON.stringify(itemData)};
         $.post(url, jsonData, function(response) {
             console.log("Sent AJAX");
             console.log(response);

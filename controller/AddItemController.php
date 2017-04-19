@@ -107,7 +107,8 @@ class AddItemController
             ),
             'images' => $this->getImageArray($details),
             'tags' => $this->generateTags($details),
-            'location' => $details['location']
+            'location' => $details['location'],
+            'barcode' => $details['barcode']
             );
 
         error_log('Now for the Serialized Item after changes:');

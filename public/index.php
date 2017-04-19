@@ -367,7 +367,7 @@ $klein->with('/api', function () use ($klein) {
         // Take in a JSON of things needed to add items
         // make a post request to add this item, and return whether it was successful or not (TODO return success from DB).
         $control = new AddItemController();
-        $item = json_decode($request->body(),true);
+        $item = json_decode($request->item,true);
         $control->addItem($item);
     });
     $klein->respond('POST', '/items/addimage', function($request,$response) {
@@ -386,7 +386,7 @@ $klein->with('/api', function () use ($klein) {
         // Take in a JSON of things needed to add items
         // make a post request to add this item, and return whether it was successful or not (TODO return success from DB).
         $control = new EditItemController($request->listingID);
-        $item = json_decode($request->body(),true);
+        $item = json_decode($request->item,true);
         $control->addItem($item);
     });
 });
