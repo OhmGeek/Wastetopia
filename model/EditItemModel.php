@@ -30,6 +30,22 @@ class EditItemModel
 //        return $reader->get_user_id();
     }
 
+    /**
+     * @param $itemID
+     * @return \PDOStatement
+     */
+    public function deleteItemTags($itemID)
+    {
+// delete all the current tags
+        $statement = $this->db->prepare("
+            DELETE FROM ItemTag
+            WHERE FK_Item_ItemID = :itemID
+        ");
+        $statement->bindValue(':itemID', $itemID, PDO::PARAM_INT);
+        $statement->execute();
+        return $statement;
+    }
+
 
     /**
      * Returns the ID of the last thing inserted in the database
@@ -163,8 +179,7 @@ class EditItemModel
         $statement = $this->db->prepare("
             UPDATE Item
             SET Name = :name, Description = :description, Use_By = STR_TO_DATE(:useByDate, '%e %M, %Y')
-            JOIN `Listing` ON `ItemID` = `Listing`.`FK_Item_ItemID`
-            WHERE Listing.ListingID = :listingID
+            WHERE ItemID = :itemID
          ");
         error_log("Name:");
         error_log($name);
@@ -172,7 +187,7 @@ class EditItemModel
         $statement->bindValue(":name", $name, PDO::PARAM_STR);
         $statement->bindValue(":description", $description, PDO::PARAM_STR);
         $statement->bindValue(":useByDate", $useByDate, PDO::PARAM_STR);
-        $statement->bindValue(":listingID", $this->listingID, PDO::PARAM_INT);
+        $statement->bindValue(":itemID", $this->getItemIDFromListing(), PDO::PARAM_INT);
 
 
         $statement->execute();
@@ -189,16 +204,14 @@ class EditItemModel
      */
     function addToItemTagTable($itemID, $tagID)
     {
+        //todo make add
         $statement = $this->db->prepare("
-            UPDATE ItemTag
-            SET FK_Item_ItemID = :itemID, FK_Tag_TagID = :tagID
-            JOIN `Listing` ON `FK_Item_ItemID` = `Listing`.`FK_Item_ItemID`
-            WHERE Listing.ListingID = :listingID
+            INSERT INTO `ItemTag` (`FK_Item_ItemID`, `FK_Tag_TagID`)
+            VALUES (:itemID, :tagID);
          ");
 
         $statement->bindValue(":itemID", $itemID, PDO::PARAM_INT);
         $statement->bindValue(":tagID", $tagID, PDO::PARAM_INT);
-        $statement->bindValue(":listingID", $this->listingID, PDO::PARAM_INT);
 
         $statement->execute();
     }
@@ -236,8 +249,6 @@ class EditItemModel
      */
     function addToItemImageTable($imageID, $itemID, $isDefault)
     {
-        // delete all itemimage links
-
         // then recreate them.
         $statement = $this->db->prepare("
             UPDATE ItemImage
@@ -266,14 +277,13 @@ class EditItemModel
         $statement = $this->db->prepare("
             UPDATE Barcode
             SET Barcode = :barcode, Barcode_Type = :barcodeType, FK_Item_ItemID = :itemID
-            JOIN `Listing` ON `FK_Item_ItemID` = `Listing`.`FK_Item_ItemID`
-            WHERE Listing.ListingID = :listingID
+            WHERE BarcodeID = :barcodeID
          ");
 
         $statement->bindValue(":barcode", $barcode, PDO::PARAM_INT);
         $statement->bindValue(":barcodeType", $barcodeType, PDO::PARAM_STR);
         $statement->bindValue(":itemID", $itemID, PDO::PARAM_INT);
-        $statement->bindValue(":listingID", $this->listingID, PDO::PARAM_INT);
+        $statement->bindValue(":barcodeID", $this->getBarcodeIDFromListing(), PDO::PARAM_INT);
 
         $statement->execute();
     }
@@ -290,15 +300,14 @@ class EditItemModel
         $statement = $this->db->prepare("           
             UPDATE Location
             SET Name = :name, Post_Code = :postCode, Longitude = :long, Latitude = :lat
-            JOIN `Listing` ON `Location.FK_Item_ItemID` = `Listing`.`FK_Item_ItemID`
-            WHERE Listing.ListingID = :listingID
+            WHERE LocationID = :locationID
          ");
 
         $statement->bindValue(":name", $name, PDO::PARAM_STR);
         $statement->bindValue(":postCode", $postCode, PDO::PARAM_STR);
         $statement->bindValue(":long", $long, PDO::PARAM_STR);
         $statement->bindValue(":lat", $lat, PDO::PARAM_STR);
-        $statement->bindValue(":listingID", $this->listingID, PDO::PARAM_INT);
+        $statement->bindValue(":locationID", $this->getLocationIDFromListing(), PDO::PARAM_INT);
 
         $statement->execute();
         return $this->getLastLocationID($name,$postCode,$long, $lat); // Changed from getLastInsertID()
@@ -319,7 +328,6 @@ class EditItemModel
 
         $statement = $this->db->prepare("
             UPDATE Listing
-            FROM Listing
             SET FK_Location_LocationID = :locationID,
               FK_Item_ItemID = :itemID,
               FK_User_UserID = :userID,
@@ -351,7 +359,7 @@ class EditItemModel
      */
     function addAllTags($itemID, $tags)
     {
-
+        $this->deleteItemTags($itemID);
         foreach ($tags as $tag) {
 //            $tagName = $tag["name"];
 //            $tagCategoryId = $tag["categoryID"];
@@ -370,6 +378,7 @@ class EditItemModel
      */
     function addAllImages($itemID, $images)
     {
+        $this->deleteImages($itemID);
         $isDefault = 1;
         foreach ($images as $image) {
             $imageURL = $image["url"];
@@ -460,203 +469,28 @@ class EditItemModel
         );
     }
 
+    private function getItemIDFromListing()
+    {
+        $statement = $this->db->prepare("
+            SELECT Item.ItemID
+            FROM Item, Listing
+            WHERE Item.ItemID = Listing.FK_Item_ItemID
+              AND Listing.ListingID = :listingID
+        ");
+        $statement->bindValue(":listingID", $this->listingID);
+        $statement->execute();
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $results[0]['ItemID'];
+    }
 
-
-
-
-
-//
-//    /**
-//     * Changes the name of the Item in the given listing
-//     * @param $listingID
-//     * @param $name (New name)
-//     */
-//    function editItemName($listingID, $name){
-//        $statement = $this->db->prepare("
-//            UPDATE `Item`
-//            JOIN `Listing` ON `ItemID` = `Listing`.`FK_Item_ItemID`
-//            SET `Name` = :name;
-//            WHERE ListingID = :listingID;
-//         ");
-//
-//        $statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);
-//        $statement->bindValue(":name", $name, PDO::PARAM_STR);
-//        $statement->execute();
-//    }
-//
-//
-//    /**
-//     * Changes the description of the Item in the given listing
-//     * @param $listingID
-//     * @param $description
-//     */
-//    function editItemDescription($listingID, $description){
-//        $statement = $this->db->prepare("
-//            UPDATE `Item`
-//            JOIN `Listing` ON `ItemID` = `Listing`.`FK_Item_ItemID`
-//            SET `Description` = :description
-//            WHERE ListingID = :listingID;
-//
-//         ");
-//
-//        $statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);
-//        $statement->bindValue(":description", $description, PDO::PARAM_STR);
-//        $statement->execute();
-//    }
-//
-//
-//    /**
-//     * Changes the Use-by-date of the Item in the given listing
-//     * @param $listingID
-//     * @param $useByDate
-//     */
-//    function editItemUseByDate($listingID, $useByDate){
-//        $statement = $this->db->prepare("
-//            UPDATE `Item`
-//            JOIN `Listing` ON `ItemID` = `Listing`.`FK_Item_ItemID`
-//            SET `Use_By` = :useByDate
-//            WHERE ListingID = :listingID;
-//
-//         ");
-//
-//        $statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);
-//        $statement->bindValue("useByDate", $useByDate, PDO::PARAM_STR);
-//        $statement->execute();
-//    }
-//
-//
-//    /**
-//     * Changes the quantity of the Items in the given listing
-//     * @param $listingID
-//     * @param $quantity
-//     */
-//    function editItemQuantity($listingID, $quantity){
-//        $statement = $this->db->prepare("
-//            UPDATE `Listing`
-//            SET `Quantity` = :quantity
-//            WHERE`ListingID` = :listingID;
-//
-//         ");
-//
-//        $statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);
-//        $statement->bindValue(":quantity", $quantity, PDO::PARAM_INT);
-//        $statement->execute();
-//    }
-//
-//
-//    /**
-//     * Changes the bacode number of the item in the given listing
-//     * @param $listingID
-//     * @param $barcodeNumber
-//     */
-//    function editItemBarcodeNumber($listingID, $barcodeNumber){
-//        $statement = $this->db->prepare("
-//            UPDATE `Barcode`
-//            JOIN `Item` ON `ItemID` = `Barcode`.`FK_Item_ItemID`
-//            JOIN `Listing` ON `ItemID` = `Listing`.`FK_Item_ItemID`
-//            SET `Barcode`.`Barcode` = :barcodeNumber
-//            WHERE`ListingID` = :listingID;
-//         ");
-//
-//        $statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);
-//        $statement->bindValue(":barcodeNumber", $barcodeNumber, PDO::PARAM_INT);
-//        $statement->execute();
-//    }
-//
-//
-//    /**
-//     * Changes the barcode type of the item in the given listing
-//     * @param $listingID
-//     * @param $barcodeType
-//     */
-//    function editItemBarcodeType($listingID, $barcodeType){
-//        $statement = $this->db->prepare("
-//            UPDATE `Barcode`
-//            JOIN `Item` ON `ItemID` = `Barcode`.`FK_Item_ItemID`
-//            JOIN `Listing` ON `ItemID` = `Listing`.`FK_Item_ItemID`
-//            SET `Barcode_Type` = :barcodeType
-//            WHERE`ListingID` = :listingID;
-//         ");
-//
-//        $statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);
-//        $statement->bindValue(":barcodeType", $barcodeType, PDO::PARAM_STR);
-//        $statement->execute();
-//    }
-//
-//
-//    /**
-//     * Changes the location name of the given listing
-//     * @param $listingID
-//     * @param $locationName
-//     */
-//    function editLocationName($listingID, $locationName){
-//        $statement = $this->db->prepare("
-//            UPDATE `Location`
-//            JOIN `Listing` ON `LocationID` = `Listing`.`FK_Location_LocationID`
-//            SET `Location`.`Name` = :locationName
-//            WHERE`ListingID` = :listingID;
-//         ");
-//
-//        $statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);
-//        $statement->bindValue(":locationName", $locationName, PDO::PARAM_STR);
-//        $statement->execute();
-//    }
-//
-//
-//    /**
-//     * Changes the post code location of the given listing
-//     * @param $listingID
-//     * @param $postCode (String format)
-//     */
-//    function editLocationPostCode($listingID, $postCode){
-//        $statement = $this->db->prepare("
-//            UPDATE `Location`
-//            JOIN `Listing` ON `LocationID` = `Listing`.`FK_Location_LocationID`
-//            SET `Location`.`Post_Code` = :postCode
-//            WHERE`ListingID` = :listingID;
-//         ");
-//
-//        $statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);
-//        $statement->bindValue(":postCode", $postCode, PDO::PARAM_STR);
-//        $statement->execute();
-//    }
-//
-//
-//    function editDefaultImageFlag($imageID, $value)
-//    {
-//        $statement = $this->db->prepare("
-//            UPDATE `ItemImage`
-//            JOIN `Image` ON `ImageID` = `ItemImage`.`FK_Image_ImageID`
-//            SET `ItemImage`.`Is_Default` = :value
-//            WHERE `Image`.`ImageID` = :imageID;
-//         ");
-//
-//        $statement->bindValue(":imageID", $imageID, PDO::PARAM_INT);
-//        $statement->bindValue(":value", $value, PDO::PARAM_INT);
-//        $statement->execute();
-//    }
-//
-//    //UNSURE WHAT THESE FUNCTIONS WILL DO (IF ANYTHING)
-////
-////    /**
-////     * Changes the name and description of a given tag
-////     * @param $listingID
-////     * @param $categoryID
-////     * @param $categoryName
-////     * @param $description
-////     */
-////    function editTags($listingID, $categoryID, $categoryName, $description){
-////
-////    }
-////
-////    //Not needed as will just delete images and upload new ones?
-////    /**
-////     * Currently does nothing
-////     */
-////    function editImages(){
-////
-////    }
-
-
+    private function deleteImages($itemID)
+    {
+        $statement = $this->db->prepare("
+            DELETE FROM ItemImage
+            WHERE FK_Item_ItemID = :itemID
+        ");
+        $statement->bindValue(":itemID", $itemID, PDO::PARAM_INT);
+        $statement->execute();
+    }
 
 }
