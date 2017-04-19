@@ -68,21 +68,21 @@
             </div>
         </div>
         {% if isUser != 1 %}
-            {#<div class="col-xs-12">#}
-                {#{{predictionHTML | raw}}#}
-            {#</div>#}
             <div class="col-xs-12">
-                <h4>Items the user gives away most:</h4>
-                {% if names|length > 0 %}
-                    <ul class = "list-group">
-                        {% for name in names %}
-                        <li class="list-group-item">{{ name }}</li>
-                        {% endfor %}
-                    </ul>
-                {% else %}
-                    <p>Not enough data, sorry!</p>
-                {% endif %}
+                {{predictionHTML | raw}}
             </div>
+            {#<div class="col-xs-12">#}
+                {#<h4>Items the user gives away most:</h4>#}
+                {#{% if names|length > 0 %}#}
+                    {#<ul class = "list-group">#}
+                        {#{% for name in names %}#}
+                        {#<li class="list-group-item">{{ name }}</li>#}
+                        {#{% endfor %}#}
+                    {#</ul>#}
+                {#{% else %}#}
+                    {#<p>Not enough data, sorry!</p>#}
+                {#{% endif %}#}
+            {#</div>#}
         {% endif %}
         {% if isUser == 1 %}
             <div id="out-of-stock-listing" class="tab-pane fade">
