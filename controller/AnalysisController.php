@@ -42,9 +42,6 @@ class AnalysisController
         // Get sending frequencies
         $sendingFrequencies = json_decode($this->getTotalNameFrequenciesSending(),true);
 
-        print_r("Sending: ");
-        print_r($sendingFrequencies);
-
         $sendingNames = array();
 
         // Extract name and frequency, place in associative array
@@ -58,9 +55,6 @@ class AnalysisController
 
         // Same for receiving
         $receivingFrequencies = json_decode($this->getTotalNameFrequenciesReceiving(),true);
-
-        print_r("Receiving: ");
-        print_r($receivingFrequencies);
 
         $receivingNames = array();
 

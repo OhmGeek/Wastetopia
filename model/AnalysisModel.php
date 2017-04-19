@@ -184,8 +184,6 @@ class AnalysisModel
             $userID = $this->getUserID();
         }
 
-        print_r("Sending user: ".$userID);
-
         // Inner table gets Items with their quantity in successful transactions
         // Outer table gets Items with their current quantity in user's listing
         // Join Tables to get total quantity for all time for each item
@@ -225,8 +223,6 @@ class AnalysisModel
     function getTotalNameFrequenciesReceiving(){
         $userID = $this->getUserID();
 
-        print_r("User receiving: ".$userID);
-
         $statement = $this->db->prepare("
            SELECT `Item`.`ItemID`, `Item`.`Name`, SUM(COALESCE(`ListingTransaction`.`Quantity`, 0)) AS `Count`
                 FROM `Item`
@@ -243,9 +239,8 @@ class AnalysisModel
         $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
         $statement->execute();
 
-        print_r("Receiving names: ");
-        print_r($statement->fetchAll(PDO::FETCH_ASSOC));
-        return $statement->fetchAll(PDO::FETCH_ASSOC);
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $results;
     }
 
 
