@@ -35,7 +35,8 @@ $(function(){
       }
     });
 
-    var url =
+    var baseURL = $('#baseURL').attr('href');
+    var searchURL = baseURL + '/search/' + search + '/' + postcode + '/' + lat + '/' + long;
 
     $.post()
 
@@ -50,14 +51,16 @@ $(function(){
       }
     },
     function(results, status) {
-      if (status === google.maps.GeocoderStatus.OK) {
-          // return a location object
-          var latlng = results[0].geometry.location;
-          console.log(latlng.lat());
-          lat = latlng.lat()
-          lng = latlng.lng()
-      } else {
-        alert("geocode of " + $('#postcode').val() + " failed:" + status);
+      if(status === google.maps.GeocoderStatus.OK){
+        lat = results[0].geometry.location.lat();
+        console.log(lat)
+        lng = results[0].geometry.location.lng();
+      }
+      else if (status === google.maps.GeocoderStatus.ZERO_RESULTS){
+        window.alert("Could not find postcode");
+      }
+      else{
+        window.alert("There was an error processing your request. \n Please try again later");
       }
     });
   }
