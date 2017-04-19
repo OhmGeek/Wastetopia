@@ -653,7 +653,7 @@ class ProfilePageController
         $names = $controller->getTotalNameFrequenciesSending($this->userID);
         error_log("Names: ");
         $results = array();
-        foreach($names as $name=>$frequency){
+        foreach(array_keys($names) as $name){
             error_log("Name: ".$name);
             array_push($names, $name);
         }
