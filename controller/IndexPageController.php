@@ -19,6 +19,13 @@ class IndexPageController
 
     }
 
+    /**
+     * Returns True if getUserID doesn't return "" or null
+     * @return bool True if user is logged in
+     */
+    function isUserLoggedIn(){
+        return \Wastetopia\Controller\Authenticator::isAuthenticated();
+    }
     
     /**
     * Generates HTML for the main home page
@@ -35,9 +42,12 @@ class IndexPageController
 
         // Load template
         $template = $this->twig->loadTemplate("index.twig");
+        
+        $isLoggedIn = $this->isUserLoggedIn();
 
         // Generate HTML
         return $template->render(array('config' => $config,
+                                       'isLoggedIn' => $isLoggedIn,
                                        'filters' => $filters
                                      ));
     }
