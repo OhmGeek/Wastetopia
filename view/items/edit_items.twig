@@ -68,7 +68,7 @@
                         {% for tag in tags.type %}
                             {% set selected = 0 %}
                             {% for tagCompare in items.type %}
-                                {% if tagCompare.name == tag %}
+                                {% if tagCompare.name in tag %}
                                     {% set selected = 1 %}
                                 {% endif %}
                             {% endfor %}
