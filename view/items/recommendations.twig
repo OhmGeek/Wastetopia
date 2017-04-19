@@ -41,13 +41,15 @@
             </div>
             <div class="nav-btns">
               <a href="#view" class="btn btn-primary" role="button" id="{{item.listingID}}">View</a>
-              {% if item.isRequesting %}
-                <a href="#cancel-by-listing" class="btn btn-default" role="button" id="{{item.listingID}}">Cancel request</a>
-              {% else %}
-                <a href="#request" class="btn btn-default" role="button" id="{{item.listingID}}">Request</a>
-              {% endif %}
+              {% if isLoggedIn %}
+                {% if item.isRequesting %}
+                  <a href="#cancel-by-listing" class="btn btn-default" role="button" id="{{item.listingID}}">Cancel request</a>
+                {% else %}
+                  <a href="#request" class="btn btn-default" role="button" id="{{item.listingID}}">Request</a>
+                {% endif %}
 
-              <a href="#watch" role="button" class="btn-watch lightgrey {% if item.isWatching %} watched {% endif %}" id="{{item.listingID}}"><i class="material-icons">visibility</i></a>
+                <a href="#watch" role="button" class="btn-watch lightgrey {% if item.isWatching %} watched {% endif %}" id="{{item.listingID}}"><i class="material-icons">visibility</i></a>
+              {% endif %}
             </div>
           </div>
         </div>

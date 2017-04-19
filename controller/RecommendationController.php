@@ -35,8 +35,17 @@ class RecommendationController {
         $reader = new UserCookieReader();
          return $reader->get_user_id();
     }
-    
-    
+
+    /**
+     * Returns True if getUserID doesn't return "" or null
+     * @return bool True if user is logged in
+     */
+    function isUserLoggedIn(){
+        return \Wastetopia\Controller\Authenticator::isAuthenticated();
+    }
+
+
+
     /**
     * Generates the HTML for the cards in a recommended section
     */
@@ -94,8 +103,9 @@ class RecommendationController {
       }
         
       $currentConfig = new CurrentConfig();
-      $config = $currentConfig->getAll();  
-        
+      $config = $currentConfig->getAll();
+
+
       $output = array(
             "config" => $config,
             "section" => "recommendation", 
@@ -170,13 +180,15 @@ class RecommendationController {
       }
         
       $currentConfig = new CurrentConfig();
-      $config = $currentConfig->getAll();  
-        
+      $config = $currentConfig->getAll();
+
+      $isLoggedIn = $this->isUserLoggedIn();
       $output = array(
             "config" => $config,
             "section" => "prediction",  
             "recommendationList" => $recommendationList,
-          "isUser" => $isUser
+          "isUser" => $isUser,
+          "isLoggedIn" => $isLoggedIn
       );
         
         $template = $this->twig->loadTemplate('/items/recommendations.twig');
