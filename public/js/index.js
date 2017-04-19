@@ -1,3 +1,5 @@
+var lat = NaN;
+var lng = NaN;
 $(function(){
   //fancy select
   $(".js-example-basic-multiple").select2();
@@ -6,8 +8,8 @@ $(function(){
     e.preventDefault();
     var search = $('#search').val().trim()
     var postcode = $('#postcode').val().trim()
-    var position = getLatLng(postcode)
-    console.log(position)
+    getLatLng(postcode)
+    console.log(lat)
     var quantity = $('#quantity').val().trim()
     var distance = $('#distance').val().trim()
     var exclude = []
@@ -41,7 +43,7 @@ $(function(){
 
   function getLatLng(postcode) {
     var geocoder = new google.maps.Geocoder();
-    var latlng = geocoder.geocode({
+    geocoder.geocode({
       componentRestrictions: {
         country: 'GB',
         postalCode: postcode
@@ -51,16 +53,12 @@ $(function(){
       if (status === google.maps.GeocoderStatus.OK) {
           // return a location object
           var latlng = results[0].geometry.location;
-          var locationFinal = {
-              'lat': latlng.lat(),
-              'long': latlng.lng()
-          };
-        return locationFinal;
+          lat = latlng.lat(),
+          lng = latlng.lng()
       } else {
         alert("geocode of " + $('#postcode').val() + " failed:" + status);
       }
     });
-    return latlng;
   }
 
 })
