@@ -13,7 +13,7 @@ class SearchController
         $this->cardDetailsModel = new CardDetailsModel();
     }
 
-    public function recommendationSearch($tagsArr, $currentUserID)
+    public function recommendationSearch($tagsArr, $currentUserID = null)
     {
         $results = $this->searchModel->getReccomendationResults($tagsArr, $currentUserID);
         $ids = array_slice($results, 0, 4);
