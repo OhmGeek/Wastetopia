@@ -381,11 +381,11 @@ $klein->with('/api', function () use ($klein) {
         $controller = new ViewItemController();
         return $controller->getListingDetailsAsJSON($itemID);
     });
-    $klein->respond('POST', '/items/edititem', function ($request, $response, $service, $app) {
+    $klein->respond('POST', '/items/edititem/[:listingID]', function ($request, $response, $service, $app) {
         // todo validate each field server side (and return false if not with an error message
         // Take in a JSON of things needed to add items
         // make a post request to add this item, and return whether it was successful or not (TODO return success from DB).
-        $control = new EditItemController();
+        $control = new EditItemController($request->listingID);
         $item = json_decode($request->body(),true);
         $control->addItem($item);
     });
