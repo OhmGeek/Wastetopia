@@ -34,7 +34,7 @@ $(function(){
         var lng = results[0].geometry.location.lng();
         var baseURL = $('#baseURL').attr('href');
         var searchURL = baseURL + '/search/' + search + '/' + postcode + '/' + lat + '/' + lng;
-        $.post(searchURL, { filter : selectedFilters.join('+'), sort : sortBy}, function(event, status){
+        $.post(searchURL, { filter : selectedFilters.join('+'), sort : sortBy, distance: distance, quantity: quantity}, function(event, status){
           if (status === "success") {
             location.href = searchURL
           }else {
