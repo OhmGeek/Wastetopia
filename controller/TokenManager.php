@@ -15,9 +15,15 @@ class TokenManager {
             // get the user id
             $user_id = User::get_id_from_username($username);
 
+            error_log("Loggin in");
+            error_log("User ID: ".$user_id);
+            error_log("Generating token");
+
             // generate the token using our token generator
             $token = Token::generate_token($user_id);
 
+            error_log("Token: ".$token);
+            
             // now write user_id and token itself to a cookie
             $cookie = new UserCookieWriter();
             $cookie->set_user_id($user_id);
