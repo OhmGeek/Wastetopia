@@ -3,7 +3,7 @@ var $grid;
 var maxItems = 30;
 // set the current number of items
 var itemsNum;
-
+var mapURL;
 $(function () {
   var radiusSlider = document.getElementById('radius');
   var radiusFormat = wNumb({ decimals: 0, postfix: 'km' })
@@ -41,13 +41,14 @@ $(function () {
   function setCheckbox(val){
     $checkboxes.each( function( i, elem ) {
       // if checkbox, use value if checked
+      console.log(elem.value)
       if ( elem.value === val ) {
         elem.prop('checked', true)
       }
     });
   }
 
-  setCheckbox('Fruit')
+  setCheckbox('Chilled')
   getFilters();
 
   radiusSlider.noUiSlider.on('update', function (e) {
