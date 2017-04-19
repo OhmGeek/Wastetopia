@@ -648,11 +648,11 @@ class ProfilePageController
      * @return array
      */
     function generatePredictionNames(){
-        $controller = new RecommendationController();
+        $controller = new AnalysisController();
         $names = $controller->getTotalNameFrequenciesSending($this->userID);
         $results = array();
         foreach($names as $name=>$frequency){
-            array_push($name);
+            array_push($names, $name);
         }
         return $results;
     }
