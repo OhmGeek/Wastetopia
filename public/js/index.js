@@ -14,17 +14,14 @@ $('.main-search-form').submit(function(e){
   $('.main-search-form *').filter('.form-group').each(function(){
     var formGroup = $(this)
     console.log(formGroup)
-    if ( formGroup.find('.filter-label').data('filtertype') === 'negative' )
-    {
+    if ( formGroup.find('.filter-label').data('filtertype') === 'negative' ) {
       formGroup.find('select').val().each(function(){
         var input = $(this)
         console.log(input.val())
         console.log('exclude')
         exclude.push(input.attr('id'))
       });
-    }
-    else
-    {
+    } else {
       formGroup.find('select').val().each(function(){
         var input = $(this)
         console.log(input.val())
