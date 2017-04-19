@@ -187,7 +187,7 @@ class AnalysisController
     function getTotalNameFrequenciesSending($userID = null){
         print_r("User: ".$userID);
         $frequencies = $this->model->getTotalNameFrequenciesSending($userID);
-        print_r("Frequencies: ".json_encode($frequencies));
+        print_r("Frequencies: ".$frequencies);
 
         $names = array();
 

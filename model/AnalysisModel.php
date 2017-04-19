@@ -210,7 +210,7 @@ class AnalysisModel
         $statement->execute();
 
 	   $results = $statement->fetchAll(PDO::FETCH_ASSOC);
-
+        print_r("Model results: ".$results);
         return $statement->fetchAll(PDO::FETCH_ASSOC); 
     }
 
