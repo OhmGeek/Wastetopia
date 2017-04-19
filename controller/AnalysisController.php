@@ -44,7 +44,7 @@ class AnalysisController
 
         print_r("Sending: ");
         print_r($sendingFrequencies);
-        
+
         $sendingNames = array();
 
         // Extract name and frequency, place in associative array
