@@ -553,9 +553,9 @@ class ProfilePageController
 
         $isCurrentUser = ($this->userID == $this->getUserID() ? 1 : 0);
 
-        $predictionHTML = "";
+        $predictionNames = array();
         if(!($isCurrentUser)){
-            $predictionHTML = $this->generatePredictionHTML();
+
             $predictionNames = $this->generatePredictionNames();
         }
 
@@ -563,7 +563,6 @@ class ProfilePageController
             "userListings" => $userListings, // All your listings
             "isUser" => $isCurrentUser,
 	        "isLoggedIn" => $isLoggedIn,
-            "predictionHTML" => $predictionHTML,
             "names" => $predictionNames
         );
 

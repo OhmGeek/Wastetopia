@@ -33,7 +33,7 @@ class RecommendationController {
     private function getUserID()
     {
         $reader = new UserCookieReader();
-         return $reader->get_user_id();
+        return $reader->get_user_id();
     }
 
     /**
