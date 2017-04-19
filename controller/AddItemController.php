@@ -134,10 +134,12 @@ class AddItemController
         foreach($urls as $url) {
             $id = $this->model->addToImageTable('img', $url);
             // now let's create an object inside
+
             $image = array(
                 "id" => $id,
                 "url" => $url
             );
+            error_log("This is addItemImage: url, then files");
             error_log($id);
             error_log($url);
             array_push($uploadedImages,$image);

@@ -323,7 +323,7 @@ class AddItemModel
 //            $tagDescription = $tag["description"];
             //$tagID = $this->addToTagTable($tagName, $tagCategoryId, $tagDescription); //Add the tag
             $tagID = $tag["tagID"];
-            error_log("Add image with tag " . $tagID);
+            error_log("Add data with tag " . $tagID);
 
             $this->addToItemTagTable($itemID, $tagID); //Link tag to item
         }
@@ -340,7 +340,15 @@ class AddItemModel
         $isDefault = 1;
         foreach ($images as $image) {
             $imageURL = $image["url"];
+            error_log("Add all images function with url:");
+            error_log($imageURL);
             $imageID = $this->getImageIDFromURL($imageURL); //Add to image table
+            error_log("Image ID");
+            if(is_null($imageID)) {
+                $imageID = $this->addToImageTable("img",$imageURL);
+                error_log("Null, so we fetched something...");
+            }
+            error_log($imageID);
             $this->addToItemImageTable($imageID, $isDefault, $itemID); //Link image to item
             $isDefault = 0; // first image is default, others aren't.
         }
@@ -368,9 +376,9 @@ class AddItemModel
         $itemID = $this->addToItemTable($itemName, $itemDescription, $useByDate); //Add the item
         error_log("Item ID:");
         error_log($itemID);
-            error_log("Add all tags");
-            $this->addAllTags($itemID, $tags); //Add the tags and link to item
-
+        error_log("Add all tags");
+        $this->addAllTags($itemID, $tags); //Add the tags and link to item
+        error_log("Add all images");
             $this->addAllImages($itemID, $images); //Add the images and link to item
         //Extract location information
         $locationName = $location["firstLineAddr"];
