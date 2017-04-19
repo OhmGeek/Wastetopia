@@ -20,6 +20,8 @@ WasteTopia
       {% if isLoggedIn != 1 %}
         <a class="btn btn-lg">Login</a>
         <a class="btn btn-primary btn-lg">Register now</a>
+      {% else %}
+        <a class="btn" href = "{{config.ROOT_BASE}}/profile"> View profile </a>
       {% endif %}
       </p>
     </div>
