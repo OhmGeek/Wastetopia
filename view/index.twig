@@ -17,8 +17,10 @@ WasteTopia
       <p>This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
 
       <p>
+      {% if isLoggedIn != 1 %}
         <a class="btn btn-lg">Login</a>
         <a class="btn btn-primary btn-lg">Register now</a>
+      {% endif %}
       </p>
     </div>
   </div>
