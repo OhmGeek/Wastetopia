@@ -188,6 +188,7 @@ class AddItemModel
         $statement->bindValue(":itemID", $itemID, PDO::PARAM_INT);
         $statement->bindValue(":tagID", $tagID, PDO::PARAM_INT);
         $statement->execute();
+        error_log(json_encode($statement->errorInfo()));
     }
 
 
@@ -207,7 +208,7 @@ class AddItemModel
         $statement->bindValue(":fileType", $fileType, PDO::PARAM_STR);
         $statement->bindValue(":imageURL", $imageURL, PDO::PARAM_STR);
         $statement->execute();
-
+        error_log(json_encode($statement->errorInfo()));
         //return $this->getLastInsertID(); // Need to change to another sql query
         return $this->getLastImageID($fileType, $imageURL);
     }
@@ -231,6 +232,7 @@ class AddItemModel
         $statement->bindValue(":itemID", $itemID, PDO::PARAM_INT);
         $statement->bindValue(":isDefault", $isDefault, PDO::PARAM_INT);
         $statement->bindValue(":imageID", $imageID, PDO::PARAM_INT);
+        error_log(json_encode($statement->errorInfo()));
         $statement->execute();
     }
 
@@ -322,6 +324,7 @@ class AddItemModel
             //$tagID = $this->addToTagTable($tagName, $tagCategoryId, $tagDescription); //Add the tag
             $tagID = $tag["tagID"];
             error_log("Add image with tag " . $tagID);
+
             $this->addToItemTagTable($itemID, $tagID); //Link tag to item
         }
     }
