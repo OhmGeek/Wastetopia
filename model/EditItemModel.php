@@ -190,9 +190,7 @@ class EditItemModel
 
         $statement->execute();
         error_log(json_encode($statement->errorInfo()));
-        $lastItemID = $this->getLastItemID($name, $useByDate, $description);
-        error_log($lastItemID);
-        return $lastItemID;
+        return $this->getItemIDFromListing();
     }
 
     /**
@@ -303,7 +301,7 @@ class EditItemModel
         $statement->bindValue(":locationID", $this->getLocationIDFromListing(), PDO::PARAM_INT);
 
         $statement->execute();
-        return $this->getLastLocationID($name,$postCode,$long, $lat); // Changed from getLastInsertID()
+        return $this->getLocationIDFromListing();// Changed from getLastInsertID()
     }
 
 
@@ -371,15 +369,20 @@ class EditItemModel
      */
     function addAllImages($itemID, $images)
     {
+        error_log("ADD ALL IMAGES!");
         $this->deleteImages($itemID);
         $isDefault = 1;
         foreach ($images as $image) {
             $imageURL = $image["url"];
             $imageID = $this->getImageIDFromURL($imageURL); //Add to image table
+            error_log("Image ID is");
+            error_log($imageID);
             if(is_null($imageID)) {
                 $imageID = $this->addToImageTable("img",$imageURL);
                 error_log("Null, so we fetched something...");
             }
+            error_log("Image ID is now:");
+            error_log($imageID);
             $this->addToItemImageTable($imageID, $itemID, 0); //Link image to item
             $isDefault = 0; // first image is default, others aren't.
         }
