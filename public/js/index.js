@@ -60,6 +60,7 @@ $(function(){
         alert("geocode of " + $('#postcode').val() + " failed:" + status);
       }
     });
+    return latlng;
   }
 
 })
