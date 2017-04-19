@@ -52,7 +52,7 @@ WasteTopia
             <input class="form-control" id="distance" type="number" min="0" max="50">
           </div>
           {% for itemFilter in filters %}
-          <div class="form-group search col-xs-12 col-sm-6">
+          <div class="form-group search col-xs-12 col-sm-6 selects">
             <label class="control-label filter-label" for="{{itemFilter.id}}" data-filtertype="{{itemFilter.type}}">{{itemFilter.optionsCategory}}</label>
             <select id="{{itemFilter.id}}" class="js-example-basic-multiple form-control" multiple="multiple" style="width: 100%;">
               {% for option in itemFilter.options %}

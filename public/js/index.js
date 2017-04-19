@@ -11,7 +11,7 @@ $('.main-search-form').submit(function(e){
   var exclude = []
   var include = []
 
-  $('.main-search-form *').filter('.form-group').each(function(){
+  $('.main-search-form *').filter('.selects').each(function(){
     var formGroup = $(this)
     console.log(formGroup)
     if ( formGroup.find('.filter-label').data('filtertype') === 'negative' ) {
