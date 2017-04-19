@@ -5,7 +5,7 @@ $(function(){
 $('.main-search-form').submit(function(e){
   e.preventDefault();
   var search = $('#search').val().trim()
-  var postcode = $('#postocode').val().trim()
+  var postcode = $('#postcode').val().trim()
   var quantity = $('#quantity').val().trim()
   var distance = $('#distance').val().trim()
   var exclude = []
