@@ -128,7 +128,7 @@ class RecommendationController {
 
       print_r("Tags: ");
       print_r($frequentTags);
-      
+
         // Deal with if there are not enough tags    
       if(count($frequentTags) < 5){
           $recommendationList = array(); // Empty array
@@ -142,6 +142,11 @@ class RecommendationController {
               array_push($tags, $tagID);
           }
 
+          print_r("Searching tags: ");
+          print_r($tags);
+
+          print_r("User: ".$this->getUserID());
+          
           // Use search query using $tags to find listings that match these tags
           $searchController = new SearchController();
           $results = $searchController->recommendationSearch($tags, $this->getUserID());
