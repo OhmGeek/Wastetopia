@@ -183,7 +183,6 @@ class AnalysisModel
         if ($userID == null) {
             $userID = $this->getUserID();
         }
-        error_log("User: ".$userID);
 
         // Inner table gets Items with their quantity in successful transactions
         // Outer table gets Items with their current quantity in user's listing
@@ -210,7 +209,7 @@ class AnalysisModel
         $statement->execute();
 
 	   $results = $statement->fetchAll(PDO::FETCH_ASSOC);
-        print_r("Model results: ".$results);
+
         return $statement->fetchAll(PDO::FETCH_ASSOC); 
     }
 
