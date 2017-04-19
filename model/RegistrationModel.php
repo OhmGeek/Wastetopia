@@ -191,13 +191,14 @@ class RegistrationModel
     
     /**
      * Generates a random Salt string (in Hexadecimal) between 30 and 40 bytes in length
+     * @param $min (default 30)
+     * @param $max (default 40)
      * @return string
      */
-    function generateSalt(){
-        $salt = random_bytes(mt_rand(20, 30));
+    function generateSalt($min = 20, $max = 30){
+        $salt = random_bytes(mt_rand($min, $max));
         return bin2hex($salt);
-    }
-    
+    }	
     
     /** Changes the Active flag for user with the given verification code
     * @param $verificationCode
