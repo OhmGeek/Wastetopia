@@ -100,6 +100,7 @@ class ViewItemModel
                     "description" => $tag['Description']
                 ));
             }
+            error_log("This is the getTagDetails in the view model");
             error_log(json_encode($results));
             error_log(json_encode($data));
             return $data;
@@ -121,7 +122,7 @@ class ViewItemModel
         $imageOutput = array();
         // we need to process results
         foreach($results as $image) {
-            array_push($imageOutput, (object) array(
+            array_push($imageOutput, array(
                 "id" => $image["ImageID"],
                 "url" => $image["Image_URL"]
             ));
