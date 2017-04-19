@@ -179,8 +179,10 @@ class AnalysisModel
     * Frequncy calculated as SUM of quantities for successful transactions + SUM of current quantity left
     * @return array - In descending Order by frequency
     */
-    function getTotalNameFrequenciesSending(){
-       $userID = $this->getUserID();
+    function getTotalNameFrequenciesSending($userID = null){
+        if ($userID == null) {
+            $userID = $this->getUserID();
+        }
 
         // Inner table gets Items with their quantity in successful transactions
         // Outer table gets Items with their current quantity in user's listing

@@ -556,13 +556,15 @@ class ProfilePageController
         $predictionHTML = "";
         if(!($isCurrentUser)){
             $predictionHTML = $this->generatePredictionHTML();
+            $predictionNames = $this->generatePredictionNames();
         }
 
         $listingsInformation = array(
             "userListings" => $userListings, // All your listings
             "isUser" => $isCurrentUser,
 	    "isLoggedIn" => $isLoggedIn,
-            "predictionHTML" => $predictionHTML
+            "predictionHTML" => $predictionHTML,
+            "names" => $predictionNames
         );
 
         $template = $this->twig->loadTemplate("/users/listingsTab.twig");
@@ -641,6 +643,19 @@ class ProfilePageController
         return $controller->generatePredictionSection($this->userID);
     }
 
+    /**
+     * Generates a list of names the given user is most likely to give away
+     * @return array
+     */
+    function generatePredictionNames(){
+        $controller = new RecommendationController();
+        $names = $controller->getTotalNameFrequenciesSending($this->userID);
+        $results = array();
+        foreach($names as $name=>$frequency){
+            array_push($name);
+        }
+        return $results;
+    }
 
     /**
      * Returns the text that goes on the Tile for analysis in the home tab

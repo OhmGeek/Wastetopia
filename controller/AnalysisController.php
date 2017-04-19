@@ -184,8 +184,8 @@ class AnalysisController
      * Returns array of top 5 names on items user has given away
      * @return array
      */
-    function getTotalNameFrequenciesSending(){
-        $frequencies = $this->model->getTotalNameFrequenciesSending();
+    function getTotalNameFrequenciesSending($userID = null){
+        $frequencies = $this->model->getTotalNameFrequenciesSending($userID);
 
 
         $names = array();
