@@ -346,13 +346,14 @@ class AddItemModel
             error_log("Add all images function with url:");
             error_log($imageURL);
             $imageID = $this->getImageIDFromURL($imageURL); //Add to image table
-            error_log("Image ID");
+            error_log("The image ID for this is Image ID");
             if(is_null($imageID)) {
                 $imageID = $this->addToImageTable("img",$imageURL);
                 error_log("Null, so we fetched something...");
             }
+            error_log("ID is:");
             error_log($imageID);
-            $this->addToItemImageTable($imageID, $isDefault, $itemID); //Link image to item
+            $this->addToItemImageTable($imageID, $itemID, 0); //Link image to item
             $isDefault = 0; // first image is default, others aren't.
         }
     }
