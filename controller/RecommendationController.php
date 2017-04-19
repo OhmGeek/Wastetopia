@@ -135,7 +135,10 @@ class RecommendationController {
 //           print_r("Search results: ");
 //           print_r($results);
           $isUser = ($userID == $this->getUserID());
-
+            error_log("User ID: ".$userID);
+            error_log("Logged in user: ".$this->getUserID());
+            error_log("Is user: ".$isUser);
+            
           $recommendationList = array();  
           foreach($results as $listing){
               $listingID = $listing["ListingID"];
