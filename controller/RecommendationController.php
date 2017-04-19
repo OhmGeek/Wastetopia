@@ -149,8 +149,8 @@ class RecommendationController {
 
           // Use search query using $tags to find listings that match these tags
           $searchController = new SearchController();
-          //$results = $searchController->recommendationSearch($tags, $this->getUserID());
-          $results = $searchController->recommendationSearch($tags, 6);
+          $results = $searchController->recommendationSearch($tags, $this->getUserID());
+          //$results = $searchController->recommendationSearch($tags, 6);
 
            print_r("Search results: ");
            print_r($results);
