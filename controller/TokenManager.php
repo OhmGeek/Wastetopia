@@ -40,9 +40,6 @@ class TokenManager {
         }
     }
     public static function verify($auth_token,$user_id) {
-            error_log("Auth token: ".$auth_token);
-            error_log("User ID: ".$user_id);
-            error_log("Send to Token model");
             //return true if token is correct, false if not correct
             return Token::verify_token($auth_token,$user_id);
     }

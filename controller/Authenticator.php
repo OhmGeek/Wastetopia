@@ -14,10 +14,7 @@ class Authenticator {
         //extract information from the cookie
         $auth_token = $cookie->get_auth_token();
         $user_id = $cookie->get_user_id();
-        error_log("Quick, verify the login");
-        error_log("User's auth token: ".$auth_token);
-        error_log("User's ID: ".$user_id);
-        error_log("Send to token manager");
+
         //verify
         if(TokenManager::verify($auth_token,$user_id)) {
             error_log("Login verified");
