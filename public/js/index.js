@@ -9,7 +9,6 @@ $(function(){
     var search = $('#search').val().trim()
     var postcode = $('#postcode').val().trim()
     getLatLng(postcode)
-    console.log(lat)
     var quantity = $('#quantity').val().trim()
     var distance = $('#distance').val().trim()
     var exclude = []
@@ -36,8 +35,10 @@ $(function(){
     });
 
     var baseURL = $('#baseURL').attr('href');
-    var searchURL = baseURL + '/search/' + search + '/' + postcode + '/' + lat + '/' + long;
+    var searchURL = baseURL + '/search/' + search + '/' + postcode + '/' + lat + '/' + lng;
 
+    console.log(lat)
+    
     $.post()
 
   })
@@ -53,7 +54,6 @@ $(function(){
     function(results, status) {
       if(status === google.maps.GeocoderStatus.OK){
         lat = results[0].geometry.location.lat();
-        console.log(lat)
         lng = results[0].geometry.location.lng();
       }
       else if (status === google.maps.GeocoderStatus.ZERO_RESULTS){
