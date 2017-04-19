@@ -2,8 +2,8 @@
 namespace Wastetopia\Model;
 
 class Token {
-    private $before_salt = "Dr.Pr0jectWA5t0Pia";
-    private $after_salt = "EndSalt11!!!1";
+    private static $before_salt = "Dr.Pr0jectWA5t0Pia";
+    private static $after_salt = "EndSalt11!!!1";
 
     public static function generate_token($user_id) {
         error_log("Before salt: ".self::$before_salt);
