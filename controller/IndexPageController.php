@@ -11,11 +11,11 @@ class IndexPageController
     function __construct()
     {
         // New instance of SearchPageController
-        $controller = new SearchPageController();
+        $this->controller = new SearchPageController();
         
         // Set up twig stuff
         $loader = new Twig_Loader_Filesystem('../view/');
-        $twig = new Twig_Environment($loader);
+        $this->twig = new Twig_Environment($loader);
 
     }
 
