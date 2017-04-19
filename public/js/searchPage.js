@@ -38,6 +38,16 @@ $(function () {
     $('#filters-picked').html(filters);
   }
 
+  function setCheckbox(val){
+    $checkboxes.each( function( i, elem ) {
+      // if checkbox, use value if checked
+      if ( elem.value === val ) {
+        elem.prop('checked', true)
+      }
+    });
+  }
+
+  setCheckbox('Fruit')
   getFilters();
 
   radiusSlider.noUiSlider.on('update', function (e) {
@@ -56,13 +66,13 @@ $(function () {
     $(this).closest('.btn-group').addClass('dontClose');
   })
 
-    var searchBox = $('#searchBox')
-    var searchTerm = $('#searchTerm').attr("data-searchTerm");
+  var searchBox = $('#searchBox')
+  var searchTerm = $('#searchTerm').attr("data-searchTerm");
 
-    if(searchTerm !== "")
-    {
-        searchBox.val(searchTerm);
-    }
+  if(searchTerm !== "")
+  {
+    searchBox.val(searchTerm);
+  }
 
 
   function refreshPage() {
@@ -79,27 +89,27 @@ $(function () {
 
 
     $('#filter-form *').filter('.tab').each(function(){
-        var tab = $(this)
-        if ( tab.find('.filter-category').data('filtertype') === 'negative' )
-        {
-            tab.find('.filter-options *').filter(':input').each(function(){
-                var input = $(this)
-                if (input.prop('checked') === true)
-                {
-                    exclude.push(input.attr('id'))
-                }
-            });
-        }
-        else
-        {
-            tab.find('.filter-options *').filter(':input').each(function(){
-                var input = $(this)
-                if (input.prop('checked') === true)
-                {
-                    include.push(input.attr('id'))
-                }
-            });
-        }
+      var tab = $(this)
+      if ( tab.find('.filter-category').data('filtertype') === 'negative' )
+      {
+        tab.find('.filter-options *').filter(':input').each(function(){
+          var input = $(this)
+          if (input.prop('checked') === true)
+          {
+            exclude.push(input.attr('id'))
+          }
+        });
+      }
+      else
+      {
+        tab.find('.filter-options *').filter(':input').each(function(){
+          var input = $(this)
+          if (input.prop('checked') === true)
+          {
+            include.push(input.attr('id'))
+          }
+        });
+      }
     });
 
     var baseURL = $('#baseURL').attr('href');
@@ -108,100 +118,101 @@ $(function () {
     console.log(query);
 
     $.ajax({
-        url: query,
-        success: function(result){
-            console.log(result)
-            if(result === '[]')
-            {
-                noResults();
-            }
-            else
-            {
-                displayPage(result);
-            }
+      url: query,
+      success: function(result){
+        console.log(result)
+        if(result === '[]')
+        {
+          noResults();
         }
+        else
+        {
+          displayPage(result);
+        }
+      }
     });
 
     function displayPage(result)
     {
-        var json = JSON.parse(result);
+      var json = JSON.parse(result);
 
-        var html = ""
-        json.forEach(function(element){
-            var cardHTML = '' +
-            '<div class="grid-item col-xs-12 col-sm-6 col-md-4">' +
-                '<div class="thumbnail zero-padding" id="'+ element.ListingID +'">' +
-                  '<div class="caption">' +
-                    '<div class="centerAll">' +
-                      '<img src="'+ element.Picture_URL +'" class="user-image"/>' +
-                      '<div class="user-details">' +
-                        '<a class="user-name" href="#'+ element.UserID +'">' +
-                          element.Forename + ' ' + element.Surname +
-                        '</a>' +
-                        '<div class="added-date">' +
-                           element.Time_Of_Creation +
-                        '</div>' +
-                      '</div>' +
-                      '<div class="road-distance">' +
-                        '<i class="material-icons">place</i> '+ element.Post_Code +
-                      '</div>' +
-                    '</div>' +
-                  '</div>' +
-                  '<img src="'+ element.Image_URL +'" style="border-color: lightgrey;" />' +
-                  '<div class="caption">' +
-                    '<h3>'+ element.Name +'</h3>' +
-                    '<div class="trans-info">' +
-                      '<div><span>Quantity: </span>'+ element.Quantity +'</div>' +
-                    '</div>' +
-                    '<div class="nav-btns">' +
-                      '<a href="#view" class="btn btn-primary" role="button" id="'+ element.ListingID +'">View</a>';
+      var html = ""
+      json.forEach(function(element){
+        var cardHTML = '' +
+        '<div class="grid-item col-xs-12 col-sm-6 col-md-4">' +
+        '<div class="thumbnail zero-padding" id="'+ element.ListingID +'">' +
+        '<div class="caption">' +
+        '<div class="centerAll">' +
+        '<img src="'+ element.Picture_URL +'" class="user-image"/>' +
+        '<div class="user-details">' +
+        '<a class="user-name" href="#'+ element.UserID +'">' +
+        element.Forename + ' ' + element.Surname +
+        '</a>' +
+        '<div class="added-date">' +
+        element.Time_Of_Creation +
+        '</div>' +
+        '</div>' +
+        '<div class="road-distance">' +
+        '<i class="material-icons">place</i> '+ element.Post_Code +
+        '</div>' +
+        '</div>' +
+        '</div>' +
+        '<img src="'+ element.Image_URL +'" style="border-color: lightgrey;" />' +
+        '<div class="caption">' +
+        '<h3>'+ element.Name +'</h3>' +
+        '<div class="trans-info">' +
+        '<div><span>Quantity: </span>'+ element.Quantity +'</div>' +
+        '</div>' +
+        '<div class="nav-btns">' +
+        '<a href="#view" class="btn btn-primary" role="button" id="'+ element.ListingID +'">View</a>';
 
-                      if (element.isRequesting){
-                          cardHTML += '<a href="#cancel-by-listing" class="btn btn-default" role="button">Cancel request</a>';
-                      }
-                      else {
-                          cardHTML += '<a href="#request" class="btn btn-default" role="button">Request</a>';
-                      }
-                      if (element.isWatching){
-                          cardHTML += '<a href="#watch" role="button" class="btn-watch watched" id="'+ element.ListingID +'"><i class="material-icons">visibility</i></a>';
-                      }
-                      else{
-                          cardHTML += '<a href="#watch" role="button" class="btn-watch" id="'+ element.ListingID +'"><i class="material-icons">visibility</i></a>';
-                      }
+        if (element.isRequesting){
+          cardHTML += '<a href="#cancel-by-listing" class="btn btn-default" role="button">Cancel request</a>';
+        }
+        else {
+          cardHTML += '<a href="#request" class="btn btn-default" role="button">Request</a>';
+        }
+        if (element.isWatching){
+          cardHTML += '<a href="#watch" role="button" class="btn-watch watched" id="'+ element.ListingID +'"><i class="material-icons">visibility</i></a>';
+        }
+        else{
+          cardHTML += '<a href="#watch" role="button" class="btn-watch" id="'+ element.ListingID +'"><i class="material-icons">visibility</i></a>';
+        }
 
-            cardHTML += '</div>'+
-                  '</div>'+
-                '</div>'+
-            '</div>';
+        cardHTML += '</div>'+
+        '</div>'+
+        '</div>'+
+        '</div>';
 
-            html += cardHTML;
+        html += cardHTML;
 
-        });
+      });
 
-        console.log(html)
+      console.log(html)
 
-        $('.grid').html(html);
+      $('.grid').html(html);
 
     }
 
     function noResults()
     {
-        var html = '<div class="grid-item col-xs-12"><h3 style="text-align:center;">No Items Found</h3></div>'
+      var html = '<div class="grid-item col-xs-12"><h3 style="text-align:center;">No Items Found</h3></div>'
 
 
-        $('.grid').html(html);
+      $('.grid').html(html);
     }
   }
 
   $('#filter-form').change(function(){
-      refreshPage();
+    refreshPage();
   });
 
   $('#sort-options').change(function(){
-      refreshPage();
+    refreshPage();
   });
+
   radiusSlider.noUiSlider.on('change', function(){
-      refreshPage();
+    refreshPage();
   });
 
 
@@ -221,8 +232,8 @@ $(function () {
 
   refreshPage();
 
-// for infinite scrolling
-// TODO add the ajax request
+  // for infinite scrolling
+  // TODO add the ajax request
   $(window).scroll(function(){
 
     var scrollTop = $(window).scrollTop();
@@ -232,37 +243,37 @@ $(function () {
     if(scrollTop + windowHeight == docuHeight){
 
       var card = '<div class="grid-item col-xs-12 col-sm-6 col-md-4">'+
-                  '<div class="thumbnail zero-padding">'+
-                    '<div class="caption">'+
-                      '<div class="centerAll">'+
-                        '<img src="flowery.jpg" class="user-image"/>'+
-                        '<div class="user-details">'+
-                          '<a class="user-name" href="#">'+
-                            'Mark Smith'+
-                          '</a>'+
-                          '<div class="added-date">'+
-                            '12 December, 2017'+
-                          '</div>'+
-                        '</div>'+
-                        '<div class="road-distance">'+
-                          '<i class="material-icons">place</i> 250m'+
-                        '</div>'+
-                      '</div>'+
-                    '</div>'+
-                    '<img src="food2.jpg" style="border-color: lightgrey;" />'+
-                    '<div class="caption">'+
-                      '<h3>Vegetables</h3>'+
-                      '<div class="trans-info">'+
-                        '<div><span>Quantity: </span> 5</div>'+
-                      '</div>'+
-                      '<div class="nav-btns">'+
-                        '<a href="#" class="btn btn-primary" role="button">View</a>'+
-                        '<a href="#" class="btn btn-default" role="button">Request</a>'+
-                        '<a href="#" role="button" class="btn-watch"><i class="material-icons">visibility</i></a>'+
-                      '</div>'+
-                    '</div>'+
-                  '</div>'+
-                '</div>';
+      '<div class="thumbnail zero-padding">'+
+      '<div class="caption">'+
+      '<div class="centerAll">'+
+      '<img src="flowery.jpg" class="user-image"/>'+
+      '<div class="user-details">'+
+      '<a class="user-name" href="#">'+
+      'Mark Smith'+
+      '</a>'+
+      '<div class="added-date">'+
+      '12 December, 2017'+
+      '</div>'+
+      '</div>'+
+      '<div class="road-distance">'+
+      '<i class="material-icons">place</i> 250m'+
+      '</div>'+
+      '</div>'+
+      '</div>'+
+      '<img src="food2.jpg" style="border-color: lightgrey;" />'+
+      '<div class="caption">'+
+      '<h3>Vegetables</h3>'+
+      '<div class="trans-info">'+
+      '<div><span>Quantity: </span> 5</div>'+
+      '</div>'+
+      '<div class="nav-btns">'+
+      '<a href="#" class="btn btn-primary" role="button">View</a>'+
+      '<a href="#" class="btn btn-default" role="button">Request</a>'+
+      '<a href="#" role="button" class="btn-watch"><i class="material-icons">visibility</i></a>'+
+      '</div>'+
+      '</div>'+
+      '</div>'+
+      '</div>';
 
       var $items = [];
 
@@ -271,9 +282,9 @@ $(function () {
       }
 
       // append items to grid
-  $grid.append( $items )
-    // add and lay out newly appended items
-    .isotope( 'appended', $items );
+      $grid.append( $items )
+      // add and lay out newly appended items
+      .isotope( 'appended', $items );
 
     }
 
@@ -292,5 +303,5 @@ $(function () {
   $('#btn-map').on('shown.bs.tab', function(event){
     console.log('map part appeared')
     initMap();
-    });
+  });
 });
