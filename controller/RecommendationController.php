@@ -114,7 +114,9 @@ class RecommendationController {
     */
     function generatePredictionSection($userID){
       $frequentTags = $this->model->getTagFrequenciesForListings($userID);
-      
+      $isUser = ($userID == $this->getUserID());
+
+
         // Deal with if there are not enough tags    
       if(count($frequentTags) < 5){
           $recommendationList = array(); // Empty array
@@ -134,11 +136,8 @@ class RecommendationController {
             
 //           print_r("Search results: ");
 //           print_r($results);
-          $isUser = ($userID == $this->getUserID());
-            error_log("User ID: ".$userID);
-            error_log("Logged in user: ".$this->getUserID());
-            error_log("Is user: ".$isUser);
-            
+
+
           $recommendationList = array();  
           foreach($results as $listing){
               $listingID = $listing["ListingID"];
