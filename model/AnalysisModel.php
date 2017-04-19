@@ -184,6 +184,8 @@ class AnalysisModel
             $userID = $this->getUserID();
         }
 
+        print_r("User sending: ".$userID);
+
         // Inner table gets Items with their quantity in successful transactions
         // Outer table gets Items with their current quantity in user's listing
         // Join Tables to get total quantity for all time for each item
@@ -223,11 +225,13 @@ class AnalysisModel
     function getTotalNameFrequenciesReceiving(){
         $userID = $this->getUserID();
 
+        print_r("User receiving: ".$userID);
+
         $statement = $this->db->prepare("
            SELECT `Item`.`ItemID`, `Item`.`Name`, SUM(COALESCE(`ListingTransaction`.`Quantity`), 0) AS `Count`
                 FROM `Item`
-		JOIN `Listing` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
-		JOIN `ListingTransaction` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
+		        JOIN `Listing` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
+		        JOIN `ListingTransaction` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
                 JOIN `Transaction` ON `Transaction`.`TransactionID` = `ListingTransaction`.`FK_Transaction_TransactionID`
                 JOIN `User` ON `User`.`UserID` = `Transaction`.`FK_User_UserID`
                 WHERE `ListingTransaction`.`Success` = 1
