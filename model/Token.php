@@ -12,7 +12,7 @@ class Token {
         error_log("Remote address: ".$_SERVER['REMOTE_ADDR']);
         error_log("Host name: ".gethostname());
 
-        $token_data = self::$before_salt. date("Y-m-d") . $_SERVER['REMOTE_ADDR'] . gethostname() . $user_id . self::$after_salt;
+        $token_data = self::$before_salt. date("Y-m-d") . gethostname() . $user_id . self::$after_salt;
         $token = hash("sha256", $token_data);
         return $token;
     }
