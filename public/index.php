@@ -65,6 +65,7 @@ $klein->respond("GET", "/?", function() {
 
 
 $klein->respond("GET", "/notifications/update", function($request, $response){
+    //forceLogin($request->uri());
    $model = new NotificationModel();
    return $model->getAll(1); // Get as JSON
 });
@@ -166,20 +167,20 @@ $klein->with('/register', function() use ($klein){
 $klein->with("/analysis", function() use ($klein){
 
     $klein->respond('GET', '/?', function($request, $response){
-        //forceLogin($request->uri());
+        forceLogin($request->uri());
         $controller = new AnalysisController();
         return $controller->generatePage();
     });
 
     $klein->respond('GET', '/categories', function($request, $response){
-        //forceLogin($request->uri());
+        forceLogin($request->uri());
         $controller = new AnalysisController();
         return $controller->getCategoryDetailsJSON();
     });
 
 
     $klein->respond('GET', '/get-request-tags/[:categoryID]', function($request, $response){
-       // forceLogin($request->uri());
+       forceLogin($request->uri());
        $categoryID = $request->categoryID;
        $categoryIDs = array();
        array_push($categoryIDs, $categoryID);
@@ -189,7 +190,7 @@ $klein->with("/analysis", function() use ($klein){
 
 
     $klein->respond('GET', '/get-sending-tags/[:categoryID]', function($request, $response){
-       // forceLogin($request->uri());
+        forceLogin($request->uri());
         $categoryID = $request->categoryID;
         $categoryIDs = array();
         array_push($categoryIDs, $categoryID);
@@ -199,14 +200,14 @@ $klein->with("/analysis", function() use ($klein){
 
 
     $klein->respond('GET', '/get-request-names', function($request, $response){
-       // forceLogin($request->uri());
+        forceLogin($request->uri());
         $controller = new AnalysisController();
         return $controller->getTotalNameFrequenciesReceiving();
     });
 
 
     $klein->respond('GET', '/get-sending-names', function($request, $response){
-      //  forceLogin($request->uri());
+        forceLogin($request->uri());
         $controller = new AnalysisController();
         return $controller->getTotalNameFrequenciesSending();
     });
@@ -216,7 +217,7 @@ $klein->with("/analysis", function() use ($klein){
 $klein->with("/profile", function() use ($klein) {
 
    $klein->respond('GET', '/?', function($request, $response){
-       forceLogin($request->uri());
+        forceLogin($request->uri());
         $controller = new ProfilePageController(1); //View own profile
         return $controller->generatePage();
     });
@@ -227,54 +228,64 @@ $klein->with("/profile", function() use ($klein) {
     });
     
     $klein->respond('GET', '/update/[:userID]', function($request, $response){
+        forceLogin($request->uri());
        $controller = new ProfilePageController(0, $request->userID);
        return $controller->generateProfileContentHTML(); 
     });
     
     $klein->respond('GET', '/load-home-tab/[:userID]', function($request, $response){
+        forceLogin($request->uri());
         $controller = new ProfilePageController(0, $request->userID);
         return $controller->generateHomeSection(); 
     });
                     
     $klein->respond('GET', '/load-listings-tab/[:userID]', function($request, $response){
+        forceLogin($request->uri());
         $controller = new ProfilePageController(0, $request->userID);
         return $controller->generateListingsSection(); 
     });
     
     $klein->respond('GET', '/load-offers-tab/[:userID]', function($request, $response){
+        forceLogin($request->uri());
         $controller = new ProfilePageController(0, $request->userID);
         return $controller->generateOffersSection(); 
     });
     
     $klein->respond('GET', '/load-requests-tab/[:userID]', function($request, $response){
+        forceLogin($request->uri());
         $controller = new ProfilePageController(0, $request->userID);
         return $controller->generateRequestsSection(); 
     });
     
     $klein->respond('GET', '/load-watchlist-tab/[:userID]', function($request, $response){
+        forceLogin($request->uri());
         $controller = new ProfilePageController(0, $request->userID);
         return $controller->generateWatchListSection(); 
     });
     
     $klein->respond('POST', '/toggle-watch-list/?', function($request, $response){
+        forceLogin($request->uri());
        $controller = new ProfilePageController(1);
        $response = $controller->toggleWatchListListing($request->listingID);
        return $response;
     });
     
     $klein->respond('GET', '/recommended', function($request, $response){
+        forceLogin($request->uri());
         $controller = new RecommendationController();
         return $controller->generateRecommendedSection();
     });
     
     // Needs testing
     $klein->respond('POST', '/set-pending-viewed', function($request, $response){
+        forceLogin($request->uri());
        $controller = new ProfilePageController(1);
        return $controller->setAllPendingAsViewed();
     });
     
     
     $klein->respond('POST', '/set-listing-transaction-hidden', function($request, $response){
+        forceLogin($request->uri());
        $giverOrReceiver = $request->giverOrReceiver;
         $transactionID = $request->transactionID;
         $value = 1;
@@ -284,6 +295,7 @@ $klein->with("/profile", function() use ($klein) {
     
     // Needs testing
     $klein->respond('POST', '/change-password', function($request, $response){
+        forceLogin($request->uri());
         $oldPassword = $request->oldPassword;
         $newPassword = $request->newPassword;
         $controller= new ProfilePageController(1);
@@ -298,7 +310,7 @@ $klein->with("/profile", function() use ($klein) {
     
     // Needs testing
     $klein->respond('POST', '/change-profile-picture', function($request, $response){
-
+        forceLogin($request->uri());
         $files = $request->files();        
         $controller = new ProfilePageController(1);
         return $controller->changeProfilePicture($files);
@@ -306,7 +318,7 @@ $klein->with("/profile", function() use ($klein) {
    
     //Needs testing
     $klein->respond('POST', '/change-email', function($request, $response){
-
+        forceLogin($request->uri());
         $oldEmail = $request->oldEmail;
         $newEmail = $request->newEmail;
         $controller = new ProfilePageController(1);
