@@ -342,7 +342,7 @@ class AnalysisModel
             return $statement->fetchColumn() . " + errors: " . $errors[0] . $errors[1] . $errors[2] . "start_date: " . $start_date . "end_date: " . $end_date;
         }
         else{
-            $error_log("Received failed");
+            error_log("Received failed");
             return false;
         }
 

@@ -166,20 +166,20 @@ $klein->with('/register', function() use ($klein){
 $klein->with("/analysis", function() use ($klein){
 
     $klein->respond('GET', '/?', function($request, $response){
-        forceLogin($request->uri());
+        //forceLogin($request->uri());
         $controller = new AnalysisController();
         return $controller->generatePage();
     });
 
     $klein->respond('GET', '/categories', function($request, $response){
-        forceLogin($request->uri());
+        //forceLogin($request->uri());
         $controller = new AnalysisController();
         return $controller->getCategoryDetailsJSON();
     });
 
 
     $klein->respond('GET', '/get-request-tags/[:categoryID]', function($request, $response){
-        forceLogin($request->uri());
+       // forceLogin($request->uri());
        $categoryID = $request->categoryID;
        $categoryIDs = array();
        array_push($categoryIDs, $categoryID);
@@ -189,7 +189,7 @@ $klein->with("/analysis", function() use ($klein){
 
 
     $klein->respond('GET', '/get-sending-tags/[:categoryID]', function($request, $response){
-        forceLogin($request->uri());
+       // forceLogin($request->uri());
         $categoryID = $request->categoryID;
         $categoryIDs = array();
         array_push($categoryIDs, $categoryID);
@@ -199,14 +199,14 @@ $klein->with("/analysis", function() use ($klein){
 
 
     $klein->respond('GET', '/get-request-names', function($request, $response){
-        forceLogin($request->uri());
+       // forceLogin($request->uri());
         $controller = new AnalysisController();
         return $controller->getTotalNameFrequenciesReceiving();
     });
 
 
     $klein->respond('GET', '/get-sending-names', function($request, $response){
-        forceLogin($request->uri());
+      //  forceLogin($request->uri());
         $controller = new AnalysisController();
         return $controller->getTotalNameFrequenciesSending();
     });
