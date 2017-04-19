@@ -15,14 +15,14 @@ $('.main-search-form').submit(function(e){
     var formGroup = $(this)
     console.log(formGroup)
     if ( formGroup.find('.filter-label').data('filtertype') === 'negative' ) {
-      formGroup.find('select').val().each(function(){
+      formGroup.find('.form-control').val().each(function(){
         var input = $(this)
         console.log(input.val())
         console.log('exclude')
         exclude.push(input.attr('id'))
       });
     } else {
-      formGroup.find('select').val().each(function(){
+      formGroup.find('.form-control').val().each(function(){
         var input = $(this)
         console.log(input.val())
         console.log('include')
