@@ -188,11 +188,11 @@ $(function () {
         }
 
         console.log($(e.target).attr("href"));
-        var width = 150;
-        var height = 150;
-        var nameSize = 25;
-        var iconSize = 35;
-        var topPadding = 230;
+        var width = $('.user-profile .user-img').outerWidth(false);
+        var height = $('.user-profile .user-img').outerHeight(false);
+        var nameSize = $('.user-profile .user-name').css('font-size');
+        var iconSize = $('.user-profile .user-name').css('font-size');
+        var topPadding = $('#profileContentWrapper').css('padding-top');
         if (tabHREF != '#home') {
             width = 50;
             height = 50;

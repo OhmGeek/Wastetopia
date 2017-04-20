@@ -60,14 +60,6 @@
   }
 }
 
-@media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
-
-}
-
-@media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
-
-}
-
 @media (min-width:1200px) {
   .navbar .search-form {
     margin-top: 15px;
@@ -357,10 +349,6 @@ html, body{
   height: 100vh;
 }
 
-.tab-pane, .grid {
-  height: 100%;
-}
-
 #search-map {
   height: 400px;
 }
@@ -585,8 +573,8 @@ label.checkbox-inline input[type=checkbox]:checked + .checkbox-material .check:b
 
 .user-profile .user-img {
   border-radius: 0;
-  width: 150px;
-  height: 150px;
+  width: 50px;
+  height: 50px;
   overflow: hidden;
   background-repeat: no-repeat;
   background-size: cover;
@@ -595,15 +583,48 @@ label.checkbox-inline input[type=checkbox]:checked + .checkbox-material .check:b
 }
 
 .user-profile .user-name{
-  font-size: 25px;
+  font-size: 16px;
 }
 
 .user-profile .popularity {
-  font-size: 35px;
+  font-size: 20px;
 }
 
 .user-profile .popularity i {
-  font-size: 35px;
+  font-size: 20px;
+}
+
+@media (min-width: 768px) {
+  .user-profile .user-img {
+    width: 100px;
+    height: 100px;
+  }
+
+  .user-profile .user-name {
+    font-size: 25px;
+  }
+
+  .user-profile .popularity {
+    font-size: 35px;
+  }
+
+  .user-profile .popularity i {
+    font-size: 35px;
+  }
+}
+
+@media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+
+}
+
+@media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+
+}
+
+@media (min-width:1200px) {
+  .navbar .search-form {
+    margin-top: 15px;
+  }
 }
 
 a:link, a:hover, a:visited, a:active  {
