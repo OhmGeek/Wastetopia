@@ -346,7 +346,7 @@ class AddItemModel
             error_log($imageURL);
             $imageID = $this->getImageIDFromURL($imageURL); //Add to image table
             error_log("The image ID for this is Image ID");
-            if(is_null($imageID) || !isset($imageID)) {
+            if(is_null($imageID) || $imageID == "") {
                 $imageID = $this->addToImageTable("img",$imageURL);
                 error_log("Null, so we fetched something...");
             }
