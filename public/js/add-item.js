@@ -135,7 +135,7 @@ function getLocationOfItem(callbackToSubmit) {
   var geocoder = new google.maps.Geocoder();
   var latlng = geocoder.geocode({
     componentRestrictions: {
-      country: $('#inputLocation1').val(),
+      country: "UK",
       postalCode: $('#inputLocation2').val()
     }
   },
