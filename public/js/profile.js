@@ -21,7 +21,7 @@ $(function () {
         $grid = $('.grid').isotope({
           itemSelector: '.grid-item',
           percentPosition: true,
-          layoutMode: 'packery'
+          layoutMode: 'masonry'
         });
         $grid.isotope('layout');
       });
@@ -183,7 +183,7 @@ $(function () {
             $grid = $('.grid').isotope({
                 itemSelector: '.grid-item',
                 percentPosition: true,
-                layoutMode: 'packery'
+                layoutMode: 'masonry'
             });
             $grid.isotope('layout');
         });
