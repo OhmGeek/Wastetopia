@@ -1,4 +1,5 @@
 var $grid;
+var isotopeURL;
 $(function () {
 
     //equal height rows
@@ -15,8 +16,8 @@ $(function () {
     var baseURL = window.location.protocol + "//" + window.location.host;
 
     // init Isotope
-    var url = window.location.protocol + "//" + window.location.host + "/" + "js/plugins/isotope/isotope.pkgd.min.js"
-    $.getScript(url , function(){
+    isotopeURL = window.location.protocol + "//" + window.location.host + "/" + "js/plugins/isotope/isotope.pkgd.min.js"
+    $.getScript(isotopeURL , function(){
       $('.grid').imagesLoaded().progress( function() {
         $grid = $('.grid').isotope({
           itemSelector: '.grid-item',
@@ -80,7 +81,7 @@ $(function () {
     }
 
     $(window).resize(function () {
-      var neededPadding = $('.navbar-fixed-top').height() + $('.user-profile').height()
+      var neededPadding = $('.navbar-fixed-top').height() + $('.user-profile').height() + 10
       $('#profileContentWrapper').css({'padding-top': neededPadding})
       $('.user-profile').css({'top': $('.navbar').height()})
     })
@@ -171,14 +172,6 @@ $(function () {
                 $(otherSubTab).removeClass("active");
                 $('a[href="' + otherSubTab + '"]').parent("li").removeClass("active");
             }
-
-            // re initialize isotope
-            $grid = $('.grid').isotope({
-                itemSelector: '.grid-item',
-                percentPosition: true,
-                layoutMode: 'masonry'
-            });
-            $grid.isotope('layout');
         });
     }
 
@@ -195,19 +188,28 @@ $(function () {
         }
 
         console.log($(e.target).attr("href"));
-        var width = 150;
-        var height = 150;
-        var nameSize = 25;
-        var iconSize = 35;
-        var topPadding = 230;
+        var width = $('.user-profile .user-img').outerWidth(false);
+        var height = $('.user-profile .user-img').outerHeight(false);
+        var nameSize = $('.user-profile .user-name').css('font-size');
+        var iconSize = $('.user-profile .user-name').css('font-size');
+        var topPadding = $('#profileContentWrapper').css('padding-top');
         if (tabHREF != '#home') {
             width = 50;
             height = 50;
             nameSize = 16;
             iconSize = 20;
             topPadding = 130;
-            $grid.isotope('layout');
         }
+
+        $('.grid').imagesLoaded().progress( function() {
+            $grid = $('.grid').isotope({
+              itemSelector: '.grid-item',
+              percentPosition: true,
+              layoutMode: 'masonry'
+            });
+            $grid.isotope('layout');
+          });
+
         $('.user-profile .user-img').css('width', width);
         $('.user-profile .user-img').css('height', height);
         $('.user-profile .user-name').css('font-size', nameSize);
