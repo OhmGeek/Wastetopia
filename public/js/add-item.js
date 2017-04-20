@@ -57,7 +57,7 @@ function imageUpload() {
   var formdata = new FormData($('#form-image')[0]);
   formdata.append('image', $('#upload').prop('files')[0]); // todo add all files
   $.ajax({
-    url: 'https://wastetopia-pr-17.herokuapp.com/api/items/addimage',
+    url: 'https://wastetopia.herokuapp.com/api/items/addimage',
     type: "POST",
     data: formdata,
     cache: false,
@@ -181,10 +181,10 @@ function serializeAndSendItem(location) {
     console.log(mode);
     var url = "";
     if(mode == "edit") {
-        url = "https://wastetopia-pr-17.herokuapp.com/api/items/edititem/" + listingID;
+        url = "https://wastetopia.herokuapp.com/api/items/edititem/" + listingID;
     }
     else {
-        url = "https://wastetopia-pr-17.herokuapp.com/api/items/additem";
+        url = "https://wastetopia.herokuapp.com/api/items/additem";
     }
 
   console.log("Start serializing and sending item");
@@ -207,7 +207,7 @@ function serializeAndSendItem(location) {
         $.post(url, jsonData, function(resp) {
             console.log("Sent AJAX");
             var listingID = resp.listingID;
-            window.location.replace("https://wastetopia-pr-17.herokuapp.com/items/view/" + listingID);
+            window.location.replace("https://wastetopia.herokuapp.com/items/view/" + listingID);
         }, 'json');
     }
     else {
