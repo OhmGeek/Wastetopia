@@ -87,7 +87,7 @@
                                         <div class="col-xs-12 col-sm-6 zero-padding">
                                             <span class="info">Type:</span>
                                             {% for tag in classification %}
-                                                {{ tag.name }}
+                                                <span class="label label-info">{{ tag.name }}</span>
                                             {% endfor %}
                                         </div>
                                         {% endif %}
@@ -96,7 +96,7 @@
                                         <div class="col-xs-12 col-sm-6 zero-padding">
                                             <span class="info">Suitable for:</span>
                                             {% for tag in dietary %}
-                                                {{ tag.name }}
+                                                <span class="label label-info">{{ tag.name }}</span>
                                             {% endfor %}
                                         </div>
                                     {% endif %}
@@ -105,7 +105,7 @@
                                     <div class="col-xs-12 col-sm-6 zero-padding">
                                         <span class="info">State:</span>
                                         {% for tag in state %}
-                                            {{ tag.name }}
+                                            <span class="label label-info">{{ tag.name }}</span>
                                         {% endfor %}
                                     </div>
                                     {% endif %}
@@ -124,7 +124,7 @@
                                     <div class="col-xs-12 col-sm-6 zero-padding">
                                         <span class="info">May Contains:</span>
                                         {% for tag in contains %}
-                                            {{ tag.name }}
+                                            <span class="label label-danger">{{ tag.name }}</span>
                                         {% endfor %}
                                     </div>
                                     {% endif %}
