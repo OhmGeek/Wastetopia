@@ -44,7 +44,8 @@ class ViewItemModel
         return array(
             "name" => $results[0]["Name"],
             "description" => $results[0]["Description"],
-            "expires" => $results[0]["Use_By"]
+            "expires" => $results[0]["Use_By"],
+            "listingID" => $listingID
         );
     }
 
