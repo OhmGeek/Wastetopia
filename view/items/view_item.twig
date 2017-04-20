@@ -142,7 +142,7 @@
                                 <span class="glyphicon glyphicon-send" aria-hidden="true"></span>
                                 <a class="btn-text" href="#request">Request</a>
                             </button>
-                            {% if owner == true %}
+                            {% if isOwner == true %}
                             <button type="button" class="item-btn">
                                 <span class="glyphicon glyphicon-send" aria-hidden="true"></span>
                                 <a class="btn-text" href="{{ config.ROOT_BASE }}/items/edit/{{ listingID }}">Edit</a>
