@@ -1,26 +1,31 @@
+var $grid;
 $(function () {
 
     //equal height rows
     $('.small').matchHeight();
-    
+
     // Get last active tab and make it active if it's set (so user can relaod and come back to same place)
     var activeTab = localStorage.getItem('activeTab');
     console.log(activeTab);
     if (activeTab) {
-        $('a[href="' + activeTab + '"]').trigger('click');
+      $('a[href="' + activeTab + '"]').trigger('click');
     }
 
     // Get baseURL for the site
     var baseURL = window.location.protocol + "//" + window.location.host;
 
     // init Isotope
-    var $grid = $('.grid').isotope({
-        itemSelector: '.grid-item',
-        percentPosition: true,
-        masonry: {
-            columnWidth: '.grid-sizer'
-        }
-    });
+    var url = window.location.protocol + "//" + window.location.host + "/" + "js/plugins/isotope/isotope.pkgd.min.js"
+    $.getScript(url , function(){
+      $('.grid').imagesLoaded().progress( function() {
+        $grid = $('.grid').isotope({
+          itemSelector: '.grid-item',
+          percentPosition: true,
+          layoutMode: 'packery'
+        });
+        $grid.isotope('layout');
+      });
+    })
 
     // Displays an error message in the appropriate place
     function displayError(error) {
@@ -49,14 +54,14 @@ $(function () {
 
     // Remove an element from the layout - ele is in the form $(element)
     function remove(ele) {
-        // init Isotope
-        var $grid = $('.grid').isotope({
-            itemSelector: '.grid-item',
-            percentPosition: true,
-            masonry: {
-                columnWidth: '.grid-sizer'
-            }
-        });
+        // // init Isotope
+        // var $grid = $('.grid').isotope({
+        //     itemSelector: '.grid-item',
+        //     percentPosition: true,
+        //     masonry: {
+        //         columnWidth: '.grid-sizer'
+        //     }
+        // });
         // remove clicked element (in a very skitchy way right now)
         $grid.isotope('remove', ele.closest('.grid-item'))
         // layout remaining item elements
@@ -73,6 +78,11 @@ $(function () {
             counter.html(name + "- " + newCount);
         }
     }
+
+    $(window).resize(function () {
+      var neededPadding = $('.navbar').height() + $('.user-profile').height()
+      $('#profileContentWrapper').css({'padding-top': neededPadding})
+    })
 
     // Reload data in tabs when clicked - keeps everything up to date without reloading
     $(document).on('click', 'a[data-toggle="tab"]', function () {
@@ -165,9 +175,7 @@ $(function () {
             $grid = $('.grid').isotope({
                 itemSelector: '.grid-item',
                 percentPosition: true,
-                masonry: {
-                    columnWidth: '.grid-sizer'
-                }
+                layoutMode: 'packery'
             });
         });
     }
@@ -480,4 +488,3 @@ $(function () {
         '</div>';
 
 });
-

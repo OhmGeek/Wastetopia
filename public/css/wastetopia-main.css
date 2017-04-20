@@ -698,6 +698,32 @@ a:link, a:hover, a:visited, a:active  {
   font-size: 16px;
 }
 
+/* charts css */
+.chart-container{
+    width : 320px;
+    height : auto;
+}
+
+.center-elements{
+    display: flex;
+    justify-content: center;
+}
+
+#charts form{
+    display: inline-flex;
+    justify-content: center;
+}
+
+#charts .input-group{
+    margin: 5px;
+}
+
+#name-frequencies .list-group{
+    display: block;
+    justify-content: center;
+    width: 60%;
+}
+
 /* Messaging */
 /* Conversation page */
 .coversation-frame{
