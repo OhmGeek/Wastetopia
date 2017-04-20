@@ -82,6 +82,7 @@ $(function () {
     function setPadding() {
       var neededPadding = $('.navbar').height() + $('.user-profile').height()
       $('#profileContentWrapper').css({'padding-top': neededPadding})
+      console.log(neededPadding)
     }
 
     setPadding()
