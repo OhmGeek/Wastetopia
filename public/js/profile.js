@@ -15,9 +15,9 @@ $(function () {
     // Get baseURL for the site
     var baseURL = window.location.protocol + "//" + window.location.host;
 
-    // init Isotope
-    isotopeURL = window.location.protocol + "//" + window.location.host + "/" + "js/plugins/isotope/isotope.pkgd.min.js"
-    $.getScript(isotopeURL , function(){
+    // // init Isotope
+    // isotopeURL = window.location.protocol + "//" + window.location.host + "/" + "js/plugins/isotope/isotope.pkgd.min.js"
+    // $.getScript(isotopeURL , function(){
       $('.grid').imagesLoaded().progress( function() {
         $grid = $('.grid').isotope({
           itemSelector: '.grid-item',
@@ -26,7 +26,7 @@ $(function () {
         });
         $grid.isotope('layout');
       });
-    })
+    // })
 
     // Displays an error message in the appropriate place
     function displayError(error) {
@@ -55,15 +55,6 @@ $(function () {
 
     // Remove an element from the layout - ele is in the form $(element)
     function remove(ele) {
-        // // init Isotope
-        // var $grid = $('.grid').isotope({
-        //     itemSelector: '.grid-item',
-        //     percentPosition: true,
-        //     masonry: {
-        //         columnWidth: '.grid-sizer'
-        //     }
-        // });
-        // remove clicked element (in a very skitchy way right now)
         $grid.isotope('remove', ele.closest('.grid-item'))
         // layout remaining item elements
             .isotope('layout');
@@ -79,12 +70,6 @@ $(function () {
             counter.html(name + "- " + newCount);
         }
     }
-
-    $(window).resize(function () {
-      var neededPadding = $('.navbar-fixed-top').height() + $('.user-profile').height() + 10
-      $('#profileContentWrapper').css({'padding-top': neededPadding})
-      $('.user-profile').css({'top': $('.navbar').height()})
-    })
 
     // Reload data in tabs when clicked - keeps everything up to date without reloading
     $(document).on('click', 'a[data-toggle="tab"]', function () {
@@ -188,18 +173,6 @@ $(function () {
         }
 
         console.log($(e.target).attr("href"));
-        var width = $('.user-profile .user-img').outerWidth(false);
-        var height = $('.user-profile .user-img').outerHeight(false);
-        var nameSize = $('.user-profile .user-name').css('font-size');
-        var iconSize = $('.user-profile .user-name').css('font-size');
-        var topPadding = $('#profileContentWrapper').css('padding-top');
-        if (tabHREF != '#home') {
-            width = 50;
-            height = 50;
-            nameSize = 16;
-            iconSize = 20;
-            topPadding = 130;
-        }
 
         $('.grid').imagesLoaded().progress( function() {
             $grid = $('.grid').isotope({
@@ -209,14 +182,7 @@ $(function () {
             });
             $grid.isotope('layout');
           });
-
-        $('.user-profile .user-img').css('width', width);
-        $('.user-profile .user-img').css('height', height);
-        $('.user-profile .user-name').css('font-size', nameSize);
-        $('.user-profile .popularity i').css('font-size', iconSize);
-        $('.user-profile .popularity').css('font-size', iconSize);
-        $('.page-height').css('padding-top', topPadding);
-
+          $grid.isotope('layout');
     });
 
 

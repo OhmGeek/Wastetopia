@@ -558,6 +558,10 @@ label.checkbox-inline input[type=checkbox]:checked + .checkbox-material .check:b
 }
 
 /* profile page styles */
+#profileContentWrapper {
+    padding-top: 120px;
+}
+
 .user-profile {
   width: 100%;
   background-color: white;
@@ -567,7 +571,7 @@ label.checkbox-inline input[type=checkbox]:checked + .checkbox-material .check:b
   align-items: flex-end;
   flex-wrap: wrap;
   position: absolute;
-  top: 60px;
+  top: 50px;
   z-index: 2;
 }
 
@@ -594,7 +598,15 @@ label.checkbox-inline input[type=checkbox]:checked + .checkbox-material .check:b
   font-size: 20px;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1200px) {
+  #profileContentWrapper {
+      padding-top: 180px;
+  }
+
+  .user-profile {
+    top: 60px;
+  }
+
   .user-profile .user-img {
     width: 100px;
     height: 100px;
@@ -610,20 +622,6 @@ label.checkbox-inline input[type=checkbox]:checked + .checkbox-material .check:b
 
   .user-profile .popularity i {
     font-size: 35px;
-  }
-}
-
-@media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
-
-}
-
-@media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
-
-}
-
-@media (min-width:1200px) {
-  .navbar .search-form {
-    margin-top: 15px;
   }
 }
 
