@@ -4,20 +4,6 @@
 
 $(document).ready(function() {
     // first we need to make a request to the API to get the item images.
-    var listingID = $('')
-    $.getJSON('https://wastetopia-pr-17.herokuapp.com/api/items/view/' + listingID);
-
-
-
-
-
-
-
-
-
-
-
-
 
    var barcodeStr = $('#barcode-details-ajax').attr("barcode");
    var barcode = parseInt(barcodeStr);
