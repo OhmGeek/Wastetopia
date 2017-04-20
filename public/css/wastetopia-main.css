@@ -598,7 +598,7 @@ label.checkbox-inline input[type=checkbox]:checked + .checkbox-material .check:b
   font-size: 20px;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1200px) {
   #profileContentWrapper {
       padding-top: 130px;
   }
