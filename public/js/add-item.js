@@ -204,9 +204,10 @@ function serializeAndSendItem(location) {
     if(isValid(itemData)) {
         // submit using AJAX
         var jsonData = {'item': JSON.stringify(itemData)};
-        $.post(url, jsonData, function(response) {
+        $.post(url, jsonData, function(resp) {
             console.log("Sent AJAX");
-            console.log(response);
+            var listingID = resp.listingID;
+            window.location.replace("https://wastetopia-pr-17.herokuapp.com/items/view/" + listingID);
         }, 'json');
     }
     else {
