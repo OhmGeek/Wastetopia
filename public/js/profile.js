@@ -173,8 +173,7 @@ $(function () {
                 $('a[href="' + otherSubTab + '"]').parent("li").removeClass("active");
             }
 
-            $.getScript(isotopeURL , function(){
-              $('.grid').imagesLoaded().progress( function() {
+            $('.grid').imagesLoaded().progress( function() {
                 $grid = $('.grid').isotope({
                   itemSelector: '.grid-item',
                   percentPosition: true,
@@ -182,7 +181,6 @@ $(function () {
                 });
                 $grid.isotope('layout');
               });
-            })
         });
     }
 
