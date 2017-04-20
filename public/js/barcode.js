@@ -41,7 +41,7 @@ var scanBarcode = function() {
     formdata.append('file', $('#barcode-upload').prop('files')[0]); // todo add all files
 
     $.ajax({
-        url: 'https://wastetopia.herokuapp.com/api/barcode/get',
+        url: $('base').attr('href') + '/api/barcode/get',
         data: formdata,
         cache: false,
         contentType: false,
