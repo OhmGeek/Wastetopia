@@ -182,6 +182,7 @@ $(function () {
             });
             $grid.isotope('layout');
           });
+          $grid.isotope('layout');
     });
 
 
