@@ -80,8 +80,6 @@ $(function () {
         }
     }
 
-    $('.tab-pane').css({height : $(window).height()})
-
     $(window).resize(function () {
       var neededPadding = $('.navbar-fixed-top').height() + $('.user-profile').height() + 10
       $('#profileContentWrapper').css({'padding-top': neededPadding})
@@ -202,7 +200,7 @@ $(function () {
             iconSize = 20;
             topPadding = 130;
         }
-        
+
         $('.grid').imagesLoaded().progress( function() {
             $grid = $('.grid').isotope({
               itemSelector: '.grid-item',
