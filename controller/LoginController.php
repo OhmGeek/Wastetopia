@@ -51,7 +51,7 @@ class LoginController {
             }
             //forward home
             else {
-                $response->redirect($_ENV['ROOT_BASE']);
+                $response->redirect(CurrentConfig::getProperty("ROOT_BASE"));
             }
         }
         else {
