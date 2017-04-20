@@ -79,9 +79,16 @@ $(function () {
         }
     }
 
-    $(window).resize(function () {
+    function setPadding() {
       var neededPadding = $('.navbar').height() + $('.user-profile').height()
       $('#profileContentWrapper').css({'padding-top': neededPadding})
+    }
+
+    setPadding()
+
+    $(window).resize(function () {
+      setPadding()
+      $grid.isotope('layout');
     })
 
     // Reload data in tabs when clicked - keeps everything up to date without reloading
@@ -177,6 +184,7 @@ $(function () {
                 percentPosition: true,
                 layoutMode: 'packery'
             });
+            $grid.isotope('layout');
         });
     }
 
