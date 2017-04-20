@@ -80,7 +80,7 @@ $(function () {
         }
     }
 
-
+    $('.tab-pane').css({height : $(window).height()})
 
     $(window).resize(function () {
       var neededPadding = $('.navbar-fixed-top').height() + $('.user-profile').height() + 10
