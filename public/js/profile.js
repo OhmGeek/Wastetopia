@@ -66,7 +66,7 @@ $(function () {
         // remove clicked element (in a very skitchy way right now)
         console.log(ele.closest('.grid-item'))
         $grid.isotope('remove', ele.closest('.grid-item'),function(){
-          $("#content").prepend($(data)).isotope( 'reloadItems' )
+          $grid.isotope( 'reloadItems' )
         })
     };
 
