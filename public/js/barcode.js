@@ -7,9 +7,11 @@
 */
 
 function autofill(data) {
-
+        console.log("Start autofilling");
         if(data.product_name) {
             //auto fill item name
+            console.log("Try autofilling name with:");
+            console.log(data.product_name);
             $('#name').val(data.product_name);
         }
 
@@ -19,6 +21,8 @@ function autofill(data) {
 
         if(data.generic_name) {
             // auto fill the description
+            console.log("Try autofilling description with:");
+            console.log(data.generic_name);
             $('#description').val(data.generic_name);
         }
 
@@ -63,7 +67,7 @@ var scanBarcode = function() {
                 return {};
             }
         }).done(function(barcodeinfo) {
-            autofill(barcodeinfo);
+            autofill(barcodeinfo.product);
         });
 
     });
