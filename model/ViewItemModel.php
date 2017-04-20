@@ -9,6 +9,7 @@
 namespace Wastetopia\Model;
 
 use PDO;
+use Wastetopia\Controller\Authenticator;
 use Wastetopia\Model\AddItemModel;
 class ViewItemModel
 {
@@ -51,7 +52,8 @@ class ViewItemModel
             "description" => $results[0]["Description"],
             "expires" => $results[0]["Use_By"],
             "listingID" => $listingID,
-            "isOwner" => ($results[0]["FK_User_UserID"] == $this->getUserID())
+            "isOwner" => ($results[0]["FK_User_UserID"] == $this->getUserID()),
+            "isLoggedIn" => Authenticator::isAuthenticated()
         );
     }
 

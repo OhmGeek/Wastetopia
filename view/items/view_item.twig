@@ -138,10 +138,15 @@
                 </div>
                     <div class="col-sm-12 col-md-12 zero-padding">
                         <div class="item-nav-btn col-xs-12 col-sm-12 zero-padding">
+                            <!-- If they are logged in, and not the owner, they can request -->
+                            {% if isOwner != 1 and isLoggedIn == 1 %}
                             <button type="button" class="item-btn">
                                 <span class="glyphicon glyphicon-send" aria-hidden="true"></span>
                                 <a class="btn-text" href="#request">Request</a>
                             </button>
+                            {% endif %}
+
+                            <!-- If they own it, they can edit it -->
                             {% if isOwner == 1 %}
                             <button type="button" class="item-btn">
                                 <span class="glyphicon glyphicon-send" aria-hidden="true"></span>
