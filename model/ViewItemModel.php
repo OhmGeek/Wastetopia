@@ -22,13 +22,17 @@ class ViewItemModel
 
     }
 
+    function getUserID() {
+        $cookieModel = new UserCookieReader();
+        return $cookieModel->get_user_id();
+    }
     /**
      * @param $listingID (The ListingID to get item details for)
      * @return array (an array containing name, description, and expiry date)
      */
     function getItemDetails($listingID) {
         $statement = $this->db->prepare("
-            SELECT Description, Use_By, Name
+            SELECT Description, Use_By, Name, FK_User_UserID
             FROM Item, Listing
             WHERE Listing.ListingID = :listingID
               AND Listing.FK_Item_ItemID = Item.ItemID
@@ -36,6 +40,7 @@ class ViewItemModel
         $statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);
         $statement->execute();
         $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+
 
         // now return an array with the correct information.
         if(count($results) == 0) {
@@ -45,7 +50,8 @@ class ViewItemModel
             "name" => $results[0]["Name"],
             "description" => $results[0]["Description"],
             "expires" => $results[0]["Use_By"],
-            "listingID" => $listingID
+            "listingID" => $listingID,
+            "isOwner" => ($results[0]["FK_User_UserID"] == $this->getUserID())
         );
     }
 
