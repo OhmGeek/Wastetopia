@@ -43,7 +43,7 @@ function showUploadedItem(url, id) {
   '</div>'+
   '<div data-mh="my-group" class="upload-pic">'+
   '<img src="'+ url +'" data-imgid="' + id + '"</div>'+
-  '</div>'+
+  //'</div>'+
   '</div>');
 
   // prepend items to grid
