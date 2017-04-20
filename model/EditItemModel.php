@@ -376,7 +376,7 @@ class EditItemModel
             $imageID = $this->getImageIDFromURL($imageURL); //Add to image table
             error_log("Image ID is");
             error_log($imageID);
-            if(is_null($imageID)) {
+            if(is_null($imageID) || $imageID == "") {
                 $imageID = $this->addToImageTable("img",$imageURL);
                 error_log("Null, so we fetched something...");
             }
