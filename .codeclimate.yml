@@ -1,3 +1,27 @@
+engines:
+  phpmd:
+    enabled: true
+    config:
+      file_extensions: 
+        - php
+        - inc
+  csslint:
+    enabled: true
+  eslint:
+    enabled: true
+  duplication:
+    enabled: true
+    config:
+      languages:
+      - javascript:
+      - php:
+  fixme:
+    enabled: true
+ ratings:
+    paths:
+      - "**.css"
+      - "**.php"
+      - "**.js"
 exclude_paths:
 - "public/PHPMailer_5.2.0"
 - "public/css/bootstrap-material-css"
