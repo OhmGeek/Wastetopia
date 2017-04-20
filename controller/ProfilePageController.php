@@ -11,9 +11,11 @@ use Wastetopia\Config\CurrentConfig;
 use Twig_Loader_Filesystem;
 use Twig_Environment;
 
+use Wastetopia\Controller\Authenticator;
 use Wastetopia\Controller\RegistrationController; // For email verification functions
 use Wastetopia\Controller\AnalysisController;   // For Advice Tab
 use Wastetopia\Controller\RecommendationController; // For Recommendations and Predictions tab
+use Wastetopia\Model\HeaderInfo;
 use Wastetopia\Model\UserCookieReader;
 use Wastetopia\Model\ProfilePageModel;
 use Wastetopia\Model\CardDetailsModel;
@@ -69,13 +71,13 @@ class ProfilePageController
      * @return bool True if user is logged in
      */
     function isUserLoggedIn(){
-        return \Wastetopia\Controller\Authenticator::isAuthenticated();
+        return Authenticator::isAuthenticated();
     }
 
 	
     /**
      * Generates HTML for the whole page
-     * @return HTML
+     * @return string
      */
     function generatePage(){
         $profileContentHTML = $this->generateProfileContentHTML();
@@ -84,6 +86,7 @@ class ProfilePageController
         $config = $CurrentConfig->getAll();
         $output =  array(
             "config" => $config,
+            "header" => HeaderInfo::get(),
             "profileContent" => $profileContentHTML
         );
         $template = $this->twig->loadTemplate("/users/profile.twig");
@@ -93,7 +96,7 @@ class ProfilePageController
 
     /**
      * Generates the main HTML part of the page (only the body)
-     * @return HTML
+     * @return string
      */
     function generateProfileContentHTML()
     {
@@ -148,7 +151,7 @@ class ProfilePageController
 
     /**
      * Generates HTML for Home tab
-     * @return HTML
+     * @return string
      */
     function generateHomeSection()
     {

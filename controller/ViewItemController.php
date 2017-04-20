@@ -11,6 +11,7 @@ namespace Wastetopia\Controller;
 
 use Twig_Environment;
 use Twig_Loader_Filesystem;
+use Wastetopia\Model\HeaderInfo;
 use Wastetopia\Model\ListingModel;
 use Wastetopia\Model\UserCookieReader;
 use Wastetopia\Model\ViewItemModel;
@@ -38,7 +39,7 @@ class ViewItemController
         $loader  = new Twig_Loader_Filesystem(__DIR__.'/../view/');
         $twig = new Twig_Environment($loader);
         $template = $twig->loadTemplate('items/view_item.twig');
-
+        $details = array_merge($details, array(HeaderInfo::get()));
         return $template->render($details);
     }
 

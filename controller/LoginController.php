@@ -4,9 +4,12 @@ namespace Wastetopia\Controller;
 
 use Twig_Environment;
 use Twig_Loader_Filesystem;
+use Wastetopia\Config\CurrentConfig;
 use Wastetopia\Controller\TokenManager;
 use Wastetopia\Controller\Authenticator;
 use Klein\Klein;
+use Wastetopia\Model\HeaderInfo;
+
 class LoginController {
     public function index($response, $dest) {
         //todo dest parameter with default value
@@ -20,7 +23,9 @@ class LoginController {
             return $template->render(array(
                 "title" => "Login",
                 "intro" => "Please login to access Wastetopia",
-                "dest" => $dest
+                "dest" => $dest,
+                "config" => CurrentConfig::getAll(),
+                "header" => HeaderInfo::get()
             ));
         }
         else {
