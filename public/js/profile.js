@@ -80,12 +80,6 @@ $(function () {
         }
     }
 
-    $(window).resize(function () {
-      var neededPadding = $('.navbar-fixed-top').height() + $('.user-profile').height() + 10
-      $('#profileContentWrapper').css({'padding-top': neededPadding})
-      $('.user-profile').css({'top': $('.navbar').height()})
-    })
-
     // Reload data in tabs when clicked - keeps everything up to date without reloading
     $(document).on('click', 'a[data-toggle="tab"]', function () {
         console.log("Trying to reload");
@@ -188,18 +182,6 @@ $(function () {
         }
 
         console.log($(e.target).attr("href"));
-        var width = $('.user-profile .user-img').outerWidth(false);
-        var height = $('.user-profile .user-img').outerHeight(false);
-        var nameSize = $('.user-profile .user-name').css('font-size');
-        var iconSize = $('.user-profile .user-name').css('font-size');
-        var topPadding = $('#profileContentWrapper').css('padding-top');
-        if (tabHREF != '#home') {
-            width = 50;
-            height = 50;
-            nameSize = 16;
-            iconSize = 20;
-            topPadding = 130;
-        }
 
         $('.grid').imagesLoaded().progress( function() {
             $grid = $('.grid').isotope({
@@ -209,14 +191,6 @@ $(function () {
             });
             $grid.isotope('layout');
           });
-
-        $('.user-profile .user-img').css('width', width);
-        $('.user-profile .user-img').css('height', height);
-        $('.user-profile .user-name').css('font-size', nameSize);
-        $('.user-profile .popularity i').css('font-size', iconSize);
-        $('.user-profile .popularity').css('font-size', iconSize);
-        $('.page-height').css('padding-top', topPadding);
-
     });
 
 
