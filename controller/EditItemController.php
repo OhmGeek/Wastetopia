@@ -10,8 +10,10 @@ namespace Wastetopia\Controller;
 
 use Twig_Loader_Filesystem;
 use Twig_Environment;
+use Wastetopia\Config\CurrentConfig;
 use Wastetopia\Model\AmazonS3;
 use Wastetopia\Model\EditItemModel;
+use Wastetopia\Model\HeaderInfo;
 use Wastetopia\Model\ListingModel;
 use Wastetopia\Model\UserCookieReader;
 use Wastetopia\Model\ViewItemModel;
@@ -53,7 +55,10 @@ class EditItemController
             )); // todo add required details here.
         }
         $template = $twig->loadTemplate('items/no_edit.twig');
-        return $template->render(array());
+        return $template->render(array(
+            "config" => CurrentConfig::getAll(),
+            "header" => HeaderInfo::get()
+        ));
     }
 
 

@@ -2,6 +2,7 @@
 
 namespace Wastetopia\Controller;
 use Wastetopia\Model\ConversationListModel;
+use Wastetopia\Model\HeaderInfo;
 use Wastetopia\Model\MessageModel;
 use Twig_Loader_Filesystem;
 use Twig_Environment;
@@ -54,7 +55,8 @@ class ConversationListController
 		$output = array(
 		        "config" => $config,
 				"receivingList" => $receivingTabHTML,
-				"givingList" => $sendingTabHTML
+				"givingList" => $sendingTabHTML,
+                "header" => HeaderInfo::get()
 			);
 
 		//Load template and print result

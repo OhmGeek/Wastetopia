@@ -32,7 +32,11 @@
 					  <li><a href="{{config.ROOT_BASE}}/profile">View Profile</a></li>
 					  <li><a href="{{config.ROOT_BASE}}">Order History</a></li>
 					  <li><a href="{{config.ROOT_BASE}}">Supplies</a></li>
-					  <li><a href="{{config.ROOT_BASE}}/logout">Logout</a></li>
+					  {% if header.isLoggedIn == 1 %}
+							<li><a href="{{config.ROOT_BASE}}/logout">Logout</a></li>
+						{% else %}
+							<li><a href="{{config.ROOT_BASE}}/login">Login</a></li>
+						{% endif %}
 					</ul>
 				</li>
 			</ul>
