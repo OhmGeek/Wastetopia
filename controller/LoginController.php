@@ -56,4 +56,15 @@ class LoginController {
         }
         return true; // later return a page that has a link to the main site.
     }
+
+    public function logout() {
+        header("Cache-Control: no-store, must-revalidate, max-age=0");
+        setcookie("gpwastetopiadata", null);
+
+        $loader  = new Twig_Loader_Filesystem(__DIR__.'/../view/');
+        $twig = new Twig_Environment($loader);
+        $template = $twig->loadTemplate('users/logout.twig');
+
+        return $template->render(array());
+    }
 }

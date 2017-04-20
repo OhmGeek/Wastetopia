@@ -87,9 +87,8 @@ $klein->respond("GET", "/login", function($request, $response) {
     return $controller->index($response, urldecode($request->dest));
 });
 $klein->respond("GET", "/logout", function($request, $response) {
-    header("Cache-Control: no-store, must-revalidate, max-age=0");
-    setcookie("gpwastetopiadata", null);
-    return "You have been logged out. You can now close the browser.";
+    $controller = new LoginController();
+    return $controller->logout();
 });
 $klein->with('/register', function() use ($klein){
 
