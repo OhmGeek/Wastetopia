@@ -89,7 +89,6 @@ $(function () {
 
     $(window).resize(function () {
       setPadding()
-      $grid.isotope('layout');
     })
 
     // Reload data in tabs when clicked - keeps everything up to date without reloading
