@@ -427,6 +427,7 @@ class EditItemModel
         }
         //Add the whole listing                       quantity=1
         $this->addToListingTable($locationID, $itemID, 1);
+        return $this->listingID;
     }
 
     private function getImageIDFromURL($imageURL)

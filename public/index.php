@@ -368,7 +368,8 @@ $klein->with('/api', function () use ($klein) {
         // make a post request to add this item, and return whether it was successful or not (TODO return success from DB).
         $control = new AddItemController();
         $item = json_decode($request->item,true);
-        $control->addItem($item);
+        $result = $control->addItem($item);
+        return json_encode($result);
     });
     $klein->respond('POST', '/items/addimage', function($request,$response) {
         $files = $request->files();
@@ -387,7 +388,8 @@ $klein->with('/api', function () use ($klein) {
         // make a post request to add this item, and return whether it was successful or not (TODO return success from DB).
         $control = new EditItemController($request->listingID);
         $item = json_decode($request->item,true);
-        $control->addItem($item);
+        $result = $control->addItem($item);
+        return json_encode($result);
     });
 });
 // todo authenticate on messages. Must be logged in to view correct messages.

@@ -398,6 +398,7 @@ class AddItemModel
         }
         //Add the whole listing                       quantity=1
         $this->addToListingTable($locationID, $itemID, 1);
+        return $this->getFinalListingID($locationID, $itemID, 1);
     }
 
     private function getImageIDFromURL($imageURL)
@@ -434,5 +435,25 @@ class AddItemModel
             'categoryID' => $results[0]['FK_Category_Category_ID'],
             'description' => $results[0]['Description']
         );
+    }
+
+    private function getFinalListingID($locationID, $itemID, $quantity)
+    {
+        $statement = $this->db->prepare("
+            SELECT ListingID
+            FROM Listing
+            WHERE FK_Location_LocationID = :locationID
+              AND FK_Item_ItemID = :itemID
+              AND FK_User_UserID = :userID
+              AND Quantity = :quantity
+        ");
+        $statement->bindValue(":locationID", $locationID, PDO::PARAM_INT);
+        $statement->bindValue(":itemID", $itemID, PDO::PARAM_INT);
+        $statement->bindValue(":userID", $this->getUserID(), PDO::PARAM_INT);
+        $statement->bindValue(":quantity", $quantity, PDO::PARAM_INT);
+
+        $statement->execute();
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $results[0]['ListingID'];
     }
 }

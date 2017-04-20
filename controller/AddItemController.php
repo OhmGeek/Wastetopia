@@ -115,13 +115,14 @@ class AddItemController
 
         error_log('Now for the Serialized Item after changes:');
         error_log(json_encode($info));
-        $this->model->mainAddItemFunction(
+        $listingID = $this->model->mainAddItemFunction(
             $info['item'],
             $info['tags'],
             $info['images'],
             $info['barcode'],
             $info['location']
         );
+        return array("listingID" => $listingID);
     }
 
     public function addItemImage($files) {
