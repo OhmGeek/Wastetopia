@@ -7,13 +7,17 @@
 
 var listingID = $('#main-container').data("listingid");
 var mode = $('#main-container').data("mode");
+console.log(listingID);
+console.log(mode);
 
 // only autofill images if we can edit items
 if(mode == "edit") {
     $.getJSON('https://wastetopia-pr-17.herokuapp.com/api/items/view/' + listingID)
         .done(function (data) {
+            console.log(data);
             // iterate through all images, getting the url, and adding them
             data.images.forEach(function (elem) {
+                console.log(elem);
                 showUploadedItem(elem.url, null);
             });
         });
