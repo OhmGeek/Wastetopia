@@ -174,15 +174,6 @@ $(function () {
                 $(otherSubTab).removeClass("active");
                 $('a[href="' + otherSubTab + '"]').parent("li").removeClass("active");
             }
-
-            $('.grid').imagesLoaded().progress( function() {
-                $grid = $('.grid').isotope({
-                  itemSelector: '.grid-item',
-                  percentPosition: true,
-                  layoutMode: 'masonry'
-                });
-                $grid.isotope('layout');
-              });
         });
     }
 
@@ -211,6 +202,14 @@ $(function () {
             iconSize = 20;
             topPadding = 130;
         }
+        $('.grid').imagesLoaded().progress( function() {
+            $grid = $('.grid').isotope({
+              itemSelector: '.grid-item',
+              percentPosition: true,
+              layoutMode: 'masonry'
+            });
+            $grid.isotope('layout');
+          });
         $('.user-profile .user-img').css('width', width);
         $('.user-profile .user-img').css('height', height);
         $('.user-profile .user-name').css('font-size', nameSize);
