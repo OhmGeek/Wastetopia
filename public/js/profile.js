@@ -79,20 +79,10 @@ $(function () {
         }
     }
 
-    function setPadding() {
-      var neededPadding = $('.navbar').height() + $('.user-profile').height()
-      $('#profileContentWrapper').css({'padding-top': neededPadding})
-      $('.user-profile').css({'padding-top': $('.navbar').height()})
-      console.log(neededPadding)
-      console.log($('.navbar').height())
-      console.log($('.user-profile').height())
-    }
-
-    setPadding()
-
     $(window).resize(function () {
-      setPadding()
-      $grid.isotope('layout');
+      var neededPadding = $('.navbar-fixed-top').height() + $('.user-profile').height()
+      $('#profileContentWrapper').css({'padding-top': neededPadding})
+      $('.user-profile').css({'top': $('.navbar').height()})
     })
 
     // Reload data in tabs when clicked - keeps everything up to date without reloading
