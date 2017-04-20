@@ -11,6 +11,8 @@ namespace Wastetopia\Controller;
 
 use Twig_Environment;
 use Twig_Loader_Filesystem;
+use Wastetopia\Model\ListingModel;
+use Wastetopia\Model\UserCookieReader;
 use Wastetopia\Model\ViewItemModel;
 
 class ViewItemController
@@ -19,6 +21,8 @@ class ViewItemController
     {
 
     }
+
+
 
     /**
      * @param $listingID
