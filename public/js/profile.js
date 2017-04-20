@@ -55,19 +55,9 @@ $(function () {
 
     // Remove an element from the layout - ele is in the form $(element)
     function remove(ele) {
-        // // init Isotope
-        // var $grid = $('.grid').isotope({
-        //     itemSelector: '.grid-item',
-        //     percentPosition: true,
-        //     masonry: {
-        //         columnWidth: '.grid-sizer'
-        //     }
-        // });
-        // remove clicked element (in a very skitchy way right now)
-        console.log(ele.closest('.grid-item'))
-        $grid.isotope('remove', ele.closest('.grid-item'),function(){
-          $grid.isotope( 'reloadItems' )
-        })
+        $grid.isotope('remove', ele.closest('.grid-item'))
+        // layout remaining item elements
+            .isotope('layout');
     };
 
     // Given a sub tab (i.e "pending-3"), it updates the number by adding "value" to it (can be negative)
