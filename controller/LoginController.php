@@ -47,10 +47,12 @@ class LoginController {
             // forward the person to the destination/home
             if(isset($dest)) {
                 //forward to the destination uri
+                error_log($dest);
                 $response->redirect($dest);
             }
             //forward home
             else {
+                error_log("Not set. Direct them");
                 $response->redirect(CurrentConfig::getProperty("ROOT_BASE"));
             }
         }
