@@ -57,6 +57,10 @@ and then run tests using:
 ```bash
 ./tests.sh
 ```
+## Heroku Deployment
+When deploying to Heroku, setup ClearDB as a MySQL database, and use the demo database provided in the repo to start you off.
+
+You will need to provide a Production Configuration (which can read from environment variables), to allow the system to run. Also, in the environment variables, put the AWS_BUCKET name along with the mode, so that the correct config will be loaded.
 
 ## License
 Wastetopia is developed under GPL-3.0. Feel free to use any part of this project in your own, but make sure you share it! :D
