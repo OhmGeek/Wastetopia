@@ -12,7 +12,7 @@ console.log(mode);
 
 // only autofill images if we can edit items
 if(mode == "edit") {
-    $.getJSON('https://wastetopia.herokuapp.com/api/items/view/' + listingID)
+    $.getJSON($('base').attr('href') + '/api/items/view/' + listingID)
         .done(function (data) {
             console.log(data);
             // iterate through all images, getting the url, and adding them
