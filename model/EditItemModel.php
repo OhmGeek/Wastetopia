@@ -45,20 +45,6 @@ class EditItemModel
         return $statement;
     }
 
-
-    /**
-     * Returns the ID of the last thing inserted in the database
-     * @return int
-     */
-    private function getLastInsertID()
-    {
-        $statement = $this->db->prepare("
-            SELECT LAST_INSERT_ID()
-         ");
-        $statement->execute();
-        return $statement->fetchColumn();
-    }
-
     /**
      * Returns the ID of the last item inserted with the given parameters
      * @param $name
