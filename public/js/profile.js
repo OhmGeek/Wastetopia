@@ -80,8 +80,10 @@ $(function () {
         }
     }
 
+
+
     $(window).resize(function () {
-      var neededPadding = $('.navbar-fixed-top').height() + $('.user-profile').height()
+      var neededPadding = $('.navbar-fixed-top').height() + $('.user-profile').height() + 10
       $('#profileContentWrapper').css({'padding-top': neededPadding})
       $('.user-profile').css({'top': $('.navbar').height()})
     })
@@ -208,7 +210,6 @@ $(function () {
             nameSize = 16;
             iconSize = 20;
             topPadding = 130;
-            $grid.isotope('layout');
         }
         $('.user-profile .user-img').css('width', width);
         $('.user-profile .user-img').css('height', height);
