@@ -1,4 +1,5 @@
 var $grid;
+var isotopeURL;
 $(function () {
 
     //equal height rows
@@ -15,8 +16,8 @@ $(function () {
     var baseURL = window.location.protocol + "//" + window.location.host;
 
     // init Isotope
-    var url = window.location.protocol + "//" + window.location.host + "/" + "js/plugins/isotope/isotope.pkgd.min.js"
-    $.getScript(url , function(){
+    isotopeURL = window.location.protocol + "//" + window.location.host + "/" + "js/plugins/isotope/isotope.pkgd.min.js"
+    $.getScript(isotopeURL , function(){
       $('.grid').imagesLoaded().progress( function() {
         $grid = $('.grid').isotope({
           itemSelector: '.grid-item',
@@ -172,13 +173,16 @@ $(function () {
                 $('a[href="' + otherSubTab + '"]').parent("li").removeClass("active");
             }
 
-            // re initialize isotope
-            $grid = $('.grid').isotope({
-                itemSelector: '.grid-item',
-                percentPosition: true,
-                layoutMode: 'masonry'
-            });
-            $grid.isotope('layout');
+            $.getScript(isotopeURL , function(){
+              $('.grid').imagesLoaded().progress( function() {
+                $grid = $('.grid').isotope({
+                  itemSelector: '.grid-item',
+                  percentPosition: true,
+                  layoutMode: 'masonry'
+                });
+                $grid.isotope('layout');
+              });
+            })
         });
     }
 
