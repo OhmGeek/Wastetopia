@@ -6,7 +6,7 @@ use Twig_Loader_Filesystem;
 
 use Wastetopia\Model\AnalysisModel; // To analyse user's listings and requests
 use Wastetopia\Controller\SearchController;  // To search for similar itesm
-
+use Wastetopia\Model\UserCookieReader;
 use Wastetopia\Model\CardDetailsModel; // Card details
 
 /**
@@ -33,10 +33,19 @@ class RecommendationController {
     private function getUserID()
     {
         $reader = new UserCookieReader();
-         return $reader->get_user_id();
+        return $reader->get_user_id();
     }
-    
-    
+
+    /**
+     * Returns True if getUserID doesn't return "" or null
+     * @return bool True if user is logged in
+     */
+    function isUserLoggedIn(){
+        return \Wastetopia\Controller\Authenticator::isAuthenticated();
+    }
+
+
+
     /**
     * Generates the HTML for the cards in a recommended section
     */
@@ -94,8 +103,9 @@ class RecommendationController {
       }
         
       $currentConfig = new CurrentConfig();
-      $config = $currentConfig->getAll();  
-        
+      $config = $currentConfig->getAll();
+
+
       $output = array(
             "config" => $config,
             "section" => "recommendation", 
@@ -112,9 +122,10 @@ class RecommendationController {
     * Generates the HTML for the cards in a prediction of similar items you may give away section
      * @return HTML
     */
-    function generatePredictionSection(){
-      $frequentTags = $this->model->getTagFrequenciesForListings();
-      
+    function generatePredictionSection($userID){
+      $frequentTags = $this->model->getTagFrequenciesForListings($userID);
+      $isUser = ($userID == $this->getUserID());
+
         // Deal with if there are not enough tags    
       if(count($frequentTags) < 5){
           $recommendationList = array(); // Empty array
@@ -131,10 +142,8 @@ class RecommendationController {
           // Use search query using $tags to find listings that match these tags
           $searchController = new SearchController();
           $results = $searchController->recommendationSearch($tags, $this->getUserID());
-            
-//           print_r("Search results: ");
-//           print_r($results);
-          
+          //$results = $searchController->recommendationSearch($tags, 6);
+
           $recommendationList = array();  
           foreach($results as $listing){
               $listingID = $listing["ListingID"];
@@ -160,7 +169,7 @@ class RecommendationController {
                 "itemName" => $itemName,
                 "quantity" => $quantity,
                 "isRequesting" => $isRequesting,
-                "isWatching" => $isWatching  
+                "isWatching" => $isWatching
               );
 
               array_push($recommendationList, $item);
@@ -168,12 +177,15 @@ class RecommendationController {
       }
         
       $currentConfig = new CurrentConfig();
-      $config = $currentConfig->getAll();  
-        
+      $config = $currentConfig->getAll();
+
+      $isLoggedIn = $this->isUserLoggedIn();
       $output = array(
             "config" => $config,
             "section" => "prediction",  
-            "recommendationList" => $recommendationList
+            "recommendationList" => $recommendationList,
+          "isUser" => $isUser,
+          "isLoggedIn" => $isLoggedIn
       );
         
         $template = $this->twig->loadTemplate('/items/recommendations.twig');

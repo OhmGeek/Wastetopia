@@ -14,18 +14,14 @@ class Authenticator {
         //extract information from the cookie
         $auth_token = $cookie->get_auth_token();
         $user_id = $cookie->get_user_id();
-        error_log("Quick, verify the login");
+
         //verify
         if(TokenManager::verify($auth_token,$user_id)) {
             error_log("Login verified");
-            error_log($auth_token);
-            error_log($user_id);
             return true;
         }
         else {
             error_log("Not verified");
-            error_log($auth_token);
-            error_log($user_id);
             return false;
         }
     }

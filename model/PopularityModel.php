@@ -10,6 +10,7 @@
 namespace Wastetopia\Model;
 use Wastetopia\Model\DB;
 use PDO;
+use Wastetopia\Model\UserCookieReader;
 
 /**
  * Class PopularityModel - Used when a user rates a transaction

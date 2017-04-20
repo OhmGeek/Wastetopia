@@ -9,6 +9,7 @@
 namespace Wastetopia\Model;
 use Wastetopia\Model\DB;
 use PDO;
+use Wastetopia\Model\UserCookieReader;
 
 /**
  * Class NotificationModel - Used for any notifications (Currently unread messages and unseen requests)

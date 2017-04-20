@@ -40,7 +40,7 @@ class AnalysisController
      */
     function generatePage(){
         // Get sending frequencies
-        $sendingFrequencies = json_decode($this->getTotalNameFrequenciesSending());
+        $sendingFrequencies = json_decode($this->getTotalNameFrequenciesSending(),true);
 
         $sendingNames = array();
 
@@ -54,7 +54,7 @@ class AnalysisController
         }
 
         // Same for receiving
-        $receivingFrequencies = json_decode($this->getTotalNameFrequenciesReceiving());
+        $receivingFrequencies = json_decode($this->getTotalNameFrequenciesReceiving(),true);
 
         $receivingNames = array();
 
@@ -90,7 +90,7 @@ class AnalysisController
      */
     function getTagFrequenciesForListingsJSON($categoryIDArray = array())
     {
-        $frequencies =  $this->model->getTagFrequenciesForListings($categoryIDArray);
+        $frequencies =  $this->model->getTagFrequenciesForListings(null, $categoryIDArray);
 
         // Assuming this function will only be used for graphs with one categoryID!!
         $categoryID = $categoryIDArray[0];
@@ -184,8 +184,8 @@ class AnalysisController
      * Returns array of top 5 names on items user has given away
      * @return array
      */
-    function getTotalNameFrequenciesSending(){
-        $frequencies = $this->model->getTotalNameFrequenciesSending();
+    function getTotalNameFrequenciesSending($userID = null){
+        $frequencies = $this->model->getTotalNameFrequenciesSending($userID);
 
 
         $names = array();

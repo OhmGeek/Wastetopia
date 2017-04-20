@@ -1,5 +1,8 @@
 $(function () {
 
+    //equal height rows
+    $('.small').matchHeight();
+    
     // Get last active tab and make it active if it's set (so user can relaod and come back to same place)
     var activeTab = localStorage.getItem('activeTab');
     console.log(activeTab);

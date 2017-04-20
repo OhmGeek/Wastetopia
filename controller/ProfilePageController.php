@@ -552,10 +552,18 @@ class ProfilePageController
         $userListings = array("available" => $allAvailableListings, "outOfStock" => $allEmptyListings);
 
         $isCurrentUser = ($this->userID == $this->getUserID() ? 1 : 0);
+
+        $predictionNames = array();
+        if(!($isCurrentUser)){
+
+            $predictionNames = $this->generatePredictionNames();
+        }
+
         $listingsInformation = array(
             "userListings" => $userListings, // All your listings
             "isUser" => $isCurrentUser,
-	    "isLoggedIn" => $isLoggedIn
+	        "isLoggedIn" => $isLoggedIn,
+            "names" => $predictionNames
         );
 
         $template = $this->twig->loadTemplate("/users/listingsTab.twig");
@@ -631,7 +639,26 @@ class ProfilePageController
      */
     function generatePredictionHTML(){
         $controller = new RecommendationController();
-        return $controller->generatePredictionSection();
+        return $controller->generatePredictionSection($this->userID);
+    }
+
+
+    /**
+     * Gets the top 3 names of items the user gives away
+     * @return array
+     */
+    function generatePredictionNames(){
+        $controller = new AnalysisController();
+        $names = json_decode($controller->getTotalNameFrequenciesSending($this->userID), true);
+
+        $results = array();
+        foreach(array_keys($names) as $name){
+            array_push($results, $name);
+        }
+
+        $limit = count($results) < 3 ? count($results) : 3;
+        $results = array_slice($results, 0, $limit, true);
+        return $results;
     }
 
 
@@ -668,7 +695,7 @@ class ProfilePageController
     function generateAnalysisTabHTML(){
         // Generate the HTML for the Analysis tab but don't load?
         $controller = new AnalysisController();
-        return $controller -> generatePage();
+        return $controller -> generatePage($this->userID);
     }
 
 
