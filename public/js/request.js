@@ -52,7 +52,7 @@ $(function () {
             .isotope('layout');
     };
 
-    
+
     // Toggle listings in the watch list
     $(document).on('click', 'a[href="#watch"]', function (event) {
         event.preventDefault();
@@ -486,7 +486,7 @@ $(function () {
             $.post(url, data, function (response) {
                 console.log(response);
                 if (response) {
-
+                  console.log('remove')
                     // Remove card from screen
                     remove(card);
 
@@ -596,7 +596,7 @@ $(function () {
         });
     });
 
-    
+
     // View listing - THIS WORKS
     $(document).on('click', 'a[href="#view"]', function (event) {
         event.preventDefault();
@@ -620,7 +620,7 @@ $(function () {
 
         // Send to /items/request
         var url = baseURL + "/items/edit/" + listingID; // REPLACE WITH  CORRECT URL
-        
+
         //location.href = "EDIT_PAGE_URL";
         return;
     });
@@ -633,10 +633,10 @@ $(function () {
         event.preventDefault();
         var listingID = $(this).attr("id");
        // Send to /messages/conversation/[:listingID]
-    
+
         var url = baseURL + "/messages/conversation/"+listingID;
 
-    
+
         location.href = url;
     });
 
