@@ -600,7 +600,7 @@ label.checkbox-inline input[type=checkbox]:checked + .checkbox-material .check:b
 
 @media (min-width: 1200px) {
   #profileContentWrapper {
-      padding-top: 170px;
+      padding-top: 180px;
   }
 
   .user-profile {

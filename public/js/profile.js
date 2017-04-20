@@ -64,9 +64,10 @@ $(function () {
         //     }
         // });
         // remove clicked element (in a very skitchy way right now)
-        $grid.isotope('remove', ele.closest('.grid-item'))
-        // layout remaining item elements
-            .isotope('layout');
+        console.log(ele.closest('.grid-item'))
+        $grid.isotope('remove', ele.closest('.grid-item'),function(){
+          $("#content").prepend($(data)).isotope( 'reloadItems' )
+        })
     };
 
     // Given a sub tab (i.e "pending-3"), it updates the number by adding "value" to it (can be negative)
