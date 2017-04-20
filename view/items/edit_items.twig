@@ -1,7 +1,7 @@
 {% extends 'header.twig' %}
 
 {% block title %}
-Add/Edit Items
+{% if mode == 'edit' %}Edit{% else %}Add{% endif %}Items | Wastetopia
 {% endblock %}
 
 {% block navbar %}
@@ -9,7 +9,7 @@ Add/Edit Items
 {% endblock %}
 
 {% block content %}
-<div class="grid-body" style="padding-top: 60px;">
+<div id="main-container" data-mode = "{{ mode }}" class="grid-body" data-listingid="{{ listingID }}" style="padding-top: 60px;">
   <div class="container-fluid">
     <div class="row">
       <form id="barcode-scanner" enctype="multipart/form-data">
@@ -32,6 +32,7 @@ Add/Edit Items
                   <div class="grid-sizer col-xs-4 col-sm-2"></div>
                   <div class="grid-item col-xs-4 col-sm-2 zero-padding">
                     <div class="form-group zero-padding">
+                      <!-- this is the add button -->
                       <div data-mh="my-group" class="upload-pic">
                         <div class="img-box">
                           <i class="material-icons">add</i>
@@ -51,7 +52,7 @@ Add/Edit Items
           </div>
         </fieldset>
       </form>
-      <form id="main-form" method="post">
+      <form id="main-form" method="post" action="javascript:submit()">
         <fieldset>
           <div class="col-sm-12 zero-padding">
             <div class="item-details-section">
@@ -59,13 +60,20 @@ Add/Edit Items
                 <div class="row">
                   <div class="form-group col-md-8">
                     <label class="control-label" for="name">Name</label>
-                    <input type="text" class="form-control" name="itemname" id="name">
+                    <input type="text" class="form-control" name="itemname" id="name"
+                    {% if mode=='edit' %}value="{{ item.name }}" {% endif %} required>
                   </div>
                   <div class="form-group col-md-4">
                     <label class="control-label" for="type">Type</label>
                     <select id="type" name="itemType" class="form-control">
                         {% for tag in tags.type %}
-                          <option>{{ tag }}</option>
+                            {% set selected = 0 %}
+                            {% for tagCompare in item.type %}
+                                {% if tagCompare.name == tag %}
+                                    {% set selected = 1 %}
+                                {% endif %}
+                            {% endfor %}
+                              <option {% if selected %} selected {% endif %}>{{ tag }}</option>
                         {% endfor %}
                     </select>
                   </div>
@@ -73,11 +81,19 @@ Add/Edit Items
                     <label class="control-label" for="type">Type</label>
                     <div>
                       <div class="checkbox">
-                        {% for tag in tags.classification %}
-                        <label class="col-xs-12 col-md-3">
-                          <input class="dietary-req" type="checkbox"> {{ tag }}
-                        </label>
-                        {% endfor %}
+
+                          {% for tag in tags.classification %}
+                              {% set selected = 0 %}
+                              {% for tagCompare in item.classification %}
+                                  {% if tagCompare.name == tag %}
+                                      {% set selected = 1 %}
+                                  {% endif %}
+                              {% endfor %}
+
+                            <label class="col-xs-12 col-md-3">
+                              <input class="dietary-req" type="checkbox" {% if selected %} checked{% endif %}> {{ tag }}
+                            </label>
+                          {% endfor %}
                       </div>
                     </div>
                   </div>
@@ -89,7 +105,13 @@ Add/Edit Items
                     <label class="control-label" for="state">State</label>
                     <select id="state" name="state" class="js-example-basic-multiple form-control" multiple="multiple" style="width: 100%;">
                         {% for tag in tags.state %}
-                          <option>{{ tag }}</option>
+                            {% set selected = 0 %}
+                            {% for tagCompare in item.state %}
+                                {% if tagCompare.name == tag %}
+                                    {% set selected = 1 %}
+                                {% endif %}
+                            {% endfor %}
+                          <option {% if selected %} selected {% endif %}>{{ tag }}</option>
                         {% endfor %}
                     </select>
                     <div class="form-group">
@@ -98,10 +120,10 @@ Add/Edit Items
                     </div>
                   </div>
                   <div class="form-group col-xs-12 col-md-6">
-                    <label class="control-label" for="content">May conatins</label>
+                    <label class="control-label" for="content">May contains</label>
                     <select id="content" name="content" class="js-example-basic-multiple form-control may-contains-select" multiple="multiple" style="width: 100%;">
                       {% for tag in tags.contains %}
-                      <option>{{ tag }}</option>
+                      <option class="may-contains-option">{{ tag }}</option>
                       {% endfor %}
                     </select>
                     <div class="form-group">
@@ -111,12 +133,13 @@ Add/Edit Items
                   </div>
                   <div class="form-group col-xs-12">
                     <label class="control-label" for="date">Expiry date</label>
-                    <input type="text" class="form-control" id="date" name="expirydate">
+                    <input type="text" class="form-control" id="date" name="expirydate"
+                           {% if mode=='edit' %} value="{{ item.expires }}" {% endif %} >
                   </div>
                   <div class="form-group col-xs-12">
                     <label for="description" class="control-label">Enter Description :</label>
                     <div>
-                      <textarea class="form-control" rows="3" id="description" name="description"></textarea>
+                      <textarea class="form-control" rows="3" id="description" name="description">{% if mode=='edit' %}{{ item.description }}{% endif %}</textarea>
                       <span class="help-block">Max 500 character.</span>
                     </div>
                   </div>
@@ -126,8 +149,8 @@ Add/Edit Items
           </div>
           <div class="col-xs-12 col-sm-6 zero-padding">
             <div id="item-map-section"></div>
-            <script async defer
-            src="//maps.googleapis.com/maps/api/js?key=AIzaSyCrh2cKWRAFifeLIkznE2Iw4Oblqlmyyt0&callback=initMap">
+            <script
+            src="//maps.googleapis.com/maps/api/js?key=AIzaSyCq2dSqMknX1KUfTk7ZnAwhBx_q_I_rbUU&callback=initMap">
             </script>
           </div>
           <div class="col-xs-12 col-sm-6 zero-padding">
@@ -136,8 +159,10 @@ Add/Edit Items
                 <label for="inputLocation" class="col-md-2 control-label">Address</label>
 
                 <div class="col-md-10">
-                  <input type="text" class="form-control" id="inputLocation1" placeholder="Location : eg.4 The Sidings">
-                  <input type="text" class="form-control" id="inputLocation2" placeholder="PostCode : eg.dh1 1hs">
+                  <input type="text" class="form-control" id="inputLocation1" placeholder="Location : eg.4 The Sidings"
+                         {% if mode=='edit' %}value="{{ item.location.name }}" {% endif %} required>
+                  <input type="text" class="form-control" id="inputLocation2" placeholder="PostCode : eg.dh1 1hs"
+                         {% if mode=='edit' %}value="{{ item.location.postcode }}" {% endif %} required>
                 </div>
               </div>
             </div>
@@ -146,8 +171,8 @@ Add/Edit Items
             <div class="item-btns-section">
               <div class="form-group zero-padding">
                 <div class="btns">
-                  <button type="button" class="btn btn-default">Cancel</button>
-                  <button id="#submit-item" type="submit" class="btn btn-primary">Save</button>
+                  <button type="button" class="btn btn-default" onclick="window.history.back()">Cancel</button>
+                  <button id="#submit-item" type="submit" class="btn btn-primary">{% if mode=='edit' %}Update{% else %}Add{% endif %}</button>
                 </div>
               </div>
             </div>
@@ -158,13 +183,12 @@ Add/Edit Items
     </div>
   </div>
 </div>
-  <script async defer
-          src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMWP9iC-OW_pO7U9VmkAbZf7uqJAJ4GQE">
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMWP9iC-OW_pO7U9VmkAbZf7uqJAJ4GQE">
   </script>
 {% endblock %}
 
 {% set jslist = ["plugins/isotope/isotope.pkgd.min.js","plugins/moments/moment-with-locales.min.js","plugins/jquery-match-height/jquery.matchHeight.js",
 "plugins/select2-4.0.3/select2.min.js","plugins/bootstrap-material-datetimepicker-gh-pages/bootstrap-material-datetimepicker.js",
-"plugins/image-upload/jquery.upload.js","add-item.js", "plugins/barcode/quagga.min.js", "barcode.js"] %}
+"plugins/image-upload/jquery.upload.js","add-item.js", "barcode.js", "edit-item.js"] %}
 
 {% set csslist = ["plugins/select2-4.0.3/select2.min.css","plugins/bootstrap-material-datetimepicker-gh-pages/bootstrap-material-datetimepicker.css"] %}

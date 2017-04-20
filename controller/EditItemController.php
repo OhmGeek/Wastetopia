@@ -10,26 +10,33 @@ namespace Wastetopia\Controller;
 
 use Twig_Loader_Filesystem;
 use Twig_Environment;
-use Wastetopia\Model\AddItemModel;
 use Wastetopia\Model\AmazonS3;
+use Wastetopia\Model\EditItemModel;
+use Wastetopia\Model\ViewItemModel;
 
-class AddItemController
+class EditItemController
 {
-    public function __construct()
+    public function __construct($listingID)
     {
-        $this->model = new AddItemModel();
+        $this->model = new EditItemModel($listingID);
+        $this->listingID = $listingID;
     }
 
     /**
      * @return string (HTML for the add item page)
      */
-    public function renderAddPage() {
+    public function renderEditPage() {
 
         $loader  = new Twig_Loader_Filesystem(__DIR__.'/../view/');
         $twig = new Twig_Environment($loader);
+        $viewItem = new ViewItemModel();
+        $itemDetails = $viewItem->getAll($this->listingID);
         $template = $twig->loadTemplate('items/edit_items.twig');
         return $template->render(array(
-            'tags' => $this->getListOfTagsForView()
+            'tags' => $this->getListOfTagsForView(),
+            'mode' => 'edit',
+            'listingID' => $this->listingID,
+            'item' => $itemDetails
         )); // todo add required details here.
     }
 
@@ -81,7 +88,6 @@ class AddItemController
         // we are given a list of urls
         // we need just to add the filetype to the array
         $imageArray = array();
-        error_log("Get image array from user, then all the urls");
         error_log(json_encode($details['image']));
         foreach($details['images'] as $img) {
             $obj = array(
@@ -89,7 +95,6 @@ class AddItemController
                 'url' => $img,
                 'isDefault' => 0
             );
-            error_log($img);
             array_push($imageArray, $obj);
         }
         return $imageArray;
@@ -147,6 +152,7 @@ class AddItemController
         }
         error_log("Test");
         error_log(json_encode($uploadedImages));
+
         return json_encode($uploadedImages); //encode the image output as json.
     }
 

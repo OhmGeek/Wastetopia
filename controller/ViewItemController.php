@@ -43,6 +43,6 @@ class ViewItemController
         $model = new ViewItemModel();
         $details = $model->getAll($listingID);
         // process it
-        return json_encode($details, true);
+        return json_encode($details);
     }
 }

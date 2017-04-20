@@ -31,7 +31,7 @@ $('#deleteBtn').on( 'click', function() {
   $checkboxes.each( function( i, elem ) {
     // if checkbox, use value if checked
     if ( elem.checked ) {
-      remove(elem)
+      remove(elem);
     }
   });
 });
@@ -43,7 +43,7 @@ function showUploadedItem(url, id) {
   '</div>'+
   '<div data-mh="my-group" class="upload-pic">'+
   '<img src="'+ url +'" data-imgid="' + id + '"</div>'+
-  '</div>'+
+  //'</div>'+
   '</div>');
 
   // prepend items to grid
@@ -55,7 +55,7 @@ function showUploadedItem(url, id) {
 function imageUpload() {
   // go through and get the images
   var formdata = new FormData($('#form-image')[0]);
-  formdata.push('image', $('input[type=file]')[0].files[0]); // todo add all files
+  formdata.append('image', $('#upload').prop('files')[0]); // todo add all files
   $.ajax({
     url: 'https://wastetopia-pr-17.herokuapp.com/api/items/addimage',
     type: "POST",
@@ -80,7 +80,7 @@ $('#form-image').change(function() {
 function getImagesFromDOM() {
   var imageList = [];
   $('.upload-pic img').each(function(index, elem) {
-    imageList.push(elem.href); //todo check this - we want to get the href of the image tag
+    imageList.push(elem.src); //todo check this - we want to get the href of the image tag
   });
   return imageList;
 }
@@ -88,7 +88,7 @@ function getImagesFromDOM() {
 function getSelectedDietaryReqs() {
   var requirementsList = [];
   // todo use filter to get this working nicely.
-  $('.dietary-req option:selected').each(function(index, elem) {
+  $('.dietary-req input:checked').each(function(index, elem) {
     // if the selected checkbox is actually selected, add the item
     // to the requirements list. Otherwise, move to the next one.
     if(elem.text) {
@@ -176,11 +176,22 @@ function serializeAndSendItem(location) {
   //todo: process expiry date (need more research into this). Think it's just .val, but not fully sure.
   // todo: process item type properly.
   // todo: check errors in images/date/location
+    var mode = $('.grid-body').data('mode');
+    var listingID = $('.grid-body').data('listingid');
+    console.log(mode);
+    var url = "";
+    if(mode == "edit") {
+        url = "https://wastetopia-pr-17.herokuapp.com/api/items/edititem/" + listingID;
+    }
+    else {
+        url = "https://wastetopia-pr-17.herokuapp.com/api/items/additem";
+    }
+
   console.log("Start serializing and sending item");
   var itemData = {
     "name": $('#name').val(),
     "images": getImagesFromDOM(),
-    "classification": $("#type option:selected").text(), //get the text of the selected option
+    "classification": [$("#type option:selected").text()], //get the text of the selected option
     "dietary": getSelectedDietaryReqs(), //dietary requirement
     "contains": getMayContainsDetails(), //allergy tags
     "state": getStateDetails(),
@@ -192,10 +203,11 @@ function serializeAndSendItem(location) {
     console.log(itemData);
     if(isValid(itemData)) {
         // submit using AJAX
-        var jsonData = JSON.stringify(itemData);
-        $.post('https://wastetopia-pr-17.herokuapp.com/api/items/additem', jsonData, function(response) {
+        var jsonData = {'item': JSON.stringify(itemData)};
+        $.post(url, jsonData, function(resp) {
             console.log("Sent AJAX");
-            console.log(response);
+            var listingID = resp.listingID;
+            window.location.replace("https://wastetopia-pr-17.herokuapp.com/items/view/" + listingID);
         }, 'json');
     }
     else {
@@ -206,12 +218,6 @@ function serializeAndSendItem(location) {
 function isValid(itemData) {
   return true;
 }
-$(document).ready(function() {
-    $('#main-form').on('submit', function(event) {
-
-    });
-});
-
 function submit() {
     console.log( "Handler for .submit() called." );
 
