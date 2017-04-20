@@ -3,6 +3,22 @@
  */
 
 $(document).ready(function() {
+    // first we need to make a request to the API to get the item images.
+    var listingID = $('')
+    $.getJSON('https://wastetopia-pr-17.herokuapp.com/api/items/view/' + listingID);
+
+
+
+
+
+
+
+
+
+
+
+
+
    var barcodeStr = $('#barcode-details-ajax').attr("barcode");
    var barcode = parseInt(barcodeStr);
    console.log(barcodeStr);
@@ -24,6 +40,22 @@ $(document).ready(function() {
    }
 
 });
+
+function showUploadedItem(url, id) {
+    var $item = $('<div class="grid-item col-xs-4 col-sm-2 zero-padding">'+
+        '<div class="row-action-primary checkbox img-checkbox">'+
+        '<label><input type="checkbox"></label>'+
+        '</div>'+
+        '<div data-mh="my-group" class="upload-pic">'+
+        '<img src="'+ url +'" data-imgid="' + id + '"</div>'+
+        //'</div>'+
+        '</div>');
+
+    // prepend items to grid
+    $grid.prepend( $item )
+    // add and lay out newly prepended items
+        .isotope( 'prepended', $item );
+}
 
 function loadInDetails(info) {
     /*
