@@ -79,16 +79,10 @@ $(function () {
         }
     }
 
-    function setPadding() {
+    $(window).resize(function () {
       var neededPadding = $('.navbar-fixed-top').height() + $('.user-profile').height()
       $('#profileContentWrapper').css({'padding-top': neededPadding})
       $('.user-profile').css({'top': $('.navbar').height()})
-    }
-
-    setPadding()
-
-    $(window).resize(function () {
-      setPadding()
     })
 
     // Reload data in tabs when clicked - keeps everything up to date without reloading
