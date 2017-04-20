@@ -80,11 +80,11 @@ $(function () {
     }
 
     function setPadding() {
-      var neededPadding = $('.navbar').height() + $('.user-profile').height()
+      var neededPadding = $('.navbar-fixed-top').height() + $('.user-profile').height()
       $('#profileContentWrapper').css({'padding-top': neededPadding})
-      $('.user-profile').css({'padding-top': $('.navbar').height()})
+      $('.user-profile').css({'top': $('.navbar').height()})
       console.log(neededPadding)
-      console.log($('.navbar').height())
+      console.log($('.navbar-fixed-top').height())
       console.log($('.user-profile').height())
     }
 
