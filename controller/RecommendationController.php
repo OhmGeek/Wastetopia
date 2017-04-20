@@ -4,6 +4,7 @@ use Wastetopia\Config\CurrentConfig;
 use Twig_Environment;
 use Twig_Loader_Filesystem;
 
+use Wastetopia\Controller\Authenticator;
 use Wastetopia\Model\AnalysisModel; // To analyse user's listings and requests
 use Wastetopia\Controller\SearchController;  // To search for similar itesm
 use Wastetopia\Model\UserCookieReader;
@@ -41,7 +42,7 @@ class RecommendationController {
      * @return bool True if user is logged in
      */
     function isUserLoggedIn(){
-        return \Wastetopia\Controller\Authenticator::isAuthenticated();
+        return Authenticator::isAuthenticated();
     }
 
 

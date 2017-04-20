@@ -10,8 +10,10 @@ namespace Wastetopia\Controller;
 
 use Twig_Loader_Filesystem;
 use Twig_Environment;
+use Wastetopia\Config\CurrentConfig;
 use Wastetopia\Model\AddItemModel;
 use Wastetopia\Model\AmazonS3;
+use Wastetopia\Model\HeaderInfo;
 
 class AddItemController
 {
@@ -29,7 +31,9 @@ class AddItemController
         $twig = new Twig_Environment($loader);
         $template = $twig->loadTemplate('items/edit_items.twig');
         return $template->render(array(
-            'tags' => $this->getListOfTagsForView()
+            'tags' => $this->getListOfTagsForView(),
+            "config" => CurrentConfig::getAll(),
+            "header" => HeaderInfo::get()
         )); // todo add required details here.
     }
 

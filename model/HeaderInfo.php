@@ -14,10 +14,6 @@ use Wastetopia\Controller\Authenticator;
 class HeaderInfo
 {
 
-    private static function getUserID() {
-        $userReader = new UserCookieReader();
-        return $userReader->get_user_id();
-    }
     public static function get() {
         return array(
             "header" => array(
