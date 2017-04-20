@@ -669,6 +669,7 @@ a:link, a:hover, a:visited, a:active  {
 }
 
 .thumbnail {
+  height: 400px;
   margin-bottom: 15px;
 }
 
