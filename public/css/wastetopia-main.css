@@ -353,8 +353,12 @@
   height: 100px;
 }*/
 
-html, body {
+html, body{
   height: 100vh;
+}
+
+.tab-pane, .grid {
+  height: 100%;
 }
 
 #search-map {
