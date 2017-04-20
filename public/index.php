@@ -283,10 +283,12 @@ $klein->with("/profile", function() use ($klein) {
 });
 $klein->with('/items', function () use ($klein) {
     $klein->respond('GET', '/add/?', function($request, $response) {
+        forceLogin($request->uri());
         $control = new AddItemController();
         return $control->renderAddPage();
     });
     $klein->respond('GET', '/edit/[:id]', function($request, $response) {
+        forceLogin($request->uri());
         $control = new EditItemController($request->id);
         return $control->renderEditPage();
     });

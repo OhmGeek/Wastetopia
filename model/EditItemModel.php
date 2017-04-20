@@ -25,9 +25,8 @@ class EditItemModel
      */
     private function getUserID()
     {
-        return 1; //for now, return 1 for testing.
-//        $reader = new UserCookieReader();
-//        return $reader->get_user_id();
+        $reader = new UserCookieReader();
+        return $reader->get_user_id();
     }
 
     /**
