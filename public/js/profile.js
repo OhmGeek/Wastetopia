@@ -15,9 +15,9 @@ $(function () {
     // Get baseURL for the site
     var baseURL = window.location.protocol + "//" + window.location.host;
 
-    // init Isotope
-    isotopeURL = window.location.protocol + "//" + window.location.host + "/" + "js/plugins/isotope/isotope.pkgd.min.js"
-    $.getScript(isotopeURL , function(){
+    // // init Isotope
+    // isotopeURL = window.location.protocol + "//" + window.location.host + "/" + "js/plugins/isotope/isotope.pkgd.min.js"
+    // $.getScript(isotopeURL , function(){
       $('.grid').imagesLoaded().progress( function() {
         $grid = $('.grid').isotope({
           itemSelector: '.grid-item',
@@ -26,7 +26,7 @@ $(function () {
         });
         $grid.isotope('layout');
       });
-    })
+    // })
 
     // Displays an error message in the appropriate place
     function displayError(error) {
