@@ -42,5 +42,8 @@
       "Wastetopia\\Tests\\": "tests/",
       "Wastetopia\\Config\\": "config/"
     }
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^6.1"
   }
 }

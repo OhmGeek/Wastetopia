@@ -12,6 +12,8 @@ use Twig_Loader_Filesystem;
 use Twig_Environment;
 use Wastetopia\Model\AmazonS3;
 use Wastetopia\Model\EditItemModel;
+use Wastetopia\Model\ListingModel;
+use Wastetopia\Model\UserCookieReader;
 use Wastetopia\Model\ViewItemModel;
 
 class EditItemController
@@ -21,6 +23,16 @@ class EditItemController
         $this->model = new EditItemModel($listingID);
         $this->listingID = $listingID;
     }
+    private function isOwner() {
+        $listing = new ListingModel();
+        $results = $listing->getListingInfo($this->listingID);
+        $cookieReader = new UserCookieReader();
+        $user = $cookieReader->get_user_id();
+        if($results[0]['FK_User_UserID'] == $user) {
+            return true;
+        }
+        return false;
+    }
 
     /**
      * @return string (HTML for the add item page)
@@ -29,15 +41,19 @@ class EditItemController
 
         $loader  = new Twig_Loader_Filesystem(__DIR__.'/../view/');
         $twig = new Twig_Environment($loader);
-        $viewItem = new ViewItemModel();
-        $itemDetails = $viewItem->getAll($this->listingID);
-        $template = $twig->loadTemplate('items/edit_items.twig');
-        return $template->render(array(
-            'tags' => $this->getListOfTagsForView(),
-            'mode' => 'edit',
-            'listingID' => $this->listingID,
-            'item' => $itemDetails
-        )); // todo add required details here.
+        if($this->isOwner()) {
+            $viewItem = new ViewItemModel();
+            $itemDetails = $viewItem->getAll($this->listingID);
+            $template = $twig->loadTemplate('items/edit_items.twig');
+            return $template->render(array(
+                'tags' => $this->getListOfTagsForView(),
+                'mode' => 'edit',
+                'listingID' => $this->listingID,
+                'item' => $itemDetails
+            )); // todo add required details here.
+        }
+        $template = $twig->loadTemplate('items/no_edit.twig');
+        return $template->render(array());
     }
 
 
