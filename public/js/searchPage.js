@@ -6,10 +6,15 @@ var itemsNum;
 var mapURL;
 $(function () {
 
-  $('#map-tab .warning').css({'top': $('.search-header').outerHeight()})
+  function warningTop(){
+    var height = $('.search-header').outerHeight() + 60
+    $('#map-tab .warning').css({'top': height})
+  }
+
+  warningTop();
 
   $('.search-header').on('resize', function(event){
-    $('#map-tab .warning').css({'top': $('.search-header').outerHeight()})
+    warningTop();
   })
 
   var radiusSlider = document.getElementById('radius');
