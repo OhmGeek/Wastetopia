@@ -408,20 +408,44 @@ function setAdvancedSearchVariables(searchVariables){
 
     if(sort !== null){
         switch(sort) {
-    case 'D':
-        sortSelector.val('D')
-        break;
-    case 'AZ':
-        sortSelector.val('AZ')
-        break;
-    case 'ZA':
-        sortSelector.val('ZA')
-        break;
-    case 'UR':
-        sortSelector.val('UR')
-        break;
-    default:
-        sortSelector.val('D')
-}
+        case 'D':
+            sortSelector.val('D')
+            break;
+        case 'AZ':
+            sortSelector.val('AZ')
+            break;
+        case 'ZA':
+            sortSelector.val('ZA')
+            break;
+        case 'UR':
+            sortSelector.val('UR')
+            break;
+        default:
+            sortSelector.val('D')
+        }
     }
+
+
+    var distance = searchVariables.distance;
+    if(distance !== null){
+       var radiusSlider = document.getElementById('radius');
+       radiusSlider.noUiSlider.set(distance);
+    }
+
+    var baseURL = $('#baseURL').attr('href');
+    var search = searchVariables.search;
+    var lat = searchVariables.lat;
+    var lng = searchVariables.long;
+
+    window.history.replaceState('this value is required', 'again required...', baseURL + '/search/' + search + '/' + lat +'/'+ long);
+
+
+    /*$searchTerm = $postVars->search;
+        $postcode = $postVars->postcode;
+        $lat = $postVars->lat;
+        $long = $postVars->lng;
+        $quantity = $postVars->quantity;
+        $distance = $postVars->distance;
+        $filters = $postVars->filters;
+        $sort = $postVars->sort;*/
 }
