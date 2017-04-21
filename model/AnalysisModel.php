@@ -75,13 +75,13 @@ class AnalysisModel
             $sql .= "AND ("; 
             // Add the first CategoryID check
             $categoryID = $categoryIDArray[0];
-            $sql .= "`Tag`.`FK_Category_Category_ID` = :category".$categoryID;
+            $sql .= "`Tag`.`FK_Category_CategoryID` = :category".$categoryID;
             
             // Add all of the CategoryIDs to the SQL statement
             for($x = 1; $x < count($categoryIDArray); $x ++){
                 $categoryID = $categoryIDArray[$x];
                 // Add this with OR so it can match any of them
-                $sql .= "OR `Tag`.`FK_Category_Category_ID` = :category".$categoryID;
+                $sql .= "OR `Tag`.`FK_Category_CategoryID` = :category".$categoryID;
             }
             
             $sql .= ")"; // End the category section
@@ -136,13 +136,13 @@ class AnalysisModel
             $sql .= "AND ("; 
             // Add the first CategoryID check
             $categoryID = $categoryIDArray[0];
-            $sql .= "`Tag`.`FK_Category_Category_ID` = :category".$categoryID;
+            $sql .= "`Tag`.`FK_Category_CategoryID` = :category".$categoryID;
             
             // Add all of the CategoryIDs to the SQL statement
             for($x = 1; $x < count($categoryIDArray); $x ++){
                 $categoryID = $categoryIDArray[$x];
                 // Add this with OR so it can match any of them
-                $sql .= "OR `Tag`.`FK_Category_Category_ID` = :category".$categoryID;
+                $sql .= "OR `Tag`.`FK_Category_CategoryID` = :category".$categoryID;
             }
             
             $sql .= ")"; // End the category section
@@ -268,7 +268,7 @@ class AnalysisModel
         $statement = $this->db->prepare("
             SELECT `Tag`.`Name`
             FROM `Tag`
-            WHERE `Tag`.`FK_Category_Category_ID` = :categoryID;
+            WHERE `Tag`.`FK_Category_CategoryID` = :categoryID;
         ");
 
         $statement->bindValue(":categoryID", $categoryID, PDO::PARAM_INT);
