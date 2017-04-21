@@ -98,6 +98,8 @@ $(function () {
         // Extract listingID
         var listingID = $(this).prevAll('a[href="#view"]').attr("id");
 
+        console.log("Listing: "+listingID);
+        
         // Pop up to get quantity
         var card = $(this).closest('.thumbnail');
 
