@@ -347,6 +347,7 @@ html, body{
 
 #map-tab .warning {
   position: absolute;
+  z-index: 100;
 }
 
 .gm-style-iw {
