@@ -138,6 +138,8 @@ $(function () {
 
 
   function refreshPage() {
+    include = [];
+    exclude = [];
 
     sortOrder = $('#sort-options').val();
     distanceLimit = parseFloat(radiusSlider.noUiSlider.get());
