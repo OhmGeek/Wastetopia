@@ -1,3 +1,4 @@
+
 var positions = [];
 var map;
 var bounds;
@@ -22,10 +23,8 @@ function initMap() {
       origin: new google.maps.Point(0, 0),
       anchor: new google.maps.Point(15, 30)
     };
-    console.log(mapURL)
-    $.getJSON(mapURL, function(items, status){
-      console.log(items);
-      console.log(status);
+
+    $.getJSON(mapURL, function(items){
       var markers = items.map(function(item) {
         return addMarker(item)
       });
@@ -112,7 +111,7 @@ function initMap() {
 
       var contentString = '<div class="iw-container">'+
       '<div class="iw-header">'+
-      '<img class="user-image" src="flowery.jpg"/>' +
+      '<img class="user-image" src="'+ item.Picture_URL +'"/>' +
       '<div class="user-details">'+
       '<a class="user-name" id="' + item.UserID + '">'+
       item.Forename + ' ' + item.Surname  +
@@ -122,7 +121,7 @@ function initMap() {
       '</span>'+
       '</div>'+
       '</div>' +
-      '<div class="item-image" style="background-image: url(food.jpg)"></div>'+
+      '<div class="item-image" style="background-image: url('+ item.Image_URL +')"></div>'+
       '<div class="iw-body caption" id="' + item.ListingID + '">'+
       '<div class="item-name">'+ item.Name +'</div>'+
       '<div class="trans-info">'+
@@ -130,15 +129,25 @@ function initMap() {
       '<div><span>Quantity:</span>' + item.Quantity + '</div>'+
       '</div>'+
       '<div class="nav-btns">'+
-      '<a href="#view" id="'+ item.ListingID + '" class="btn btn-primary" role="button">View</a>'+
-      '<a href="#' + request + '" class="btn btn-default" role="button" id="' + item.ListingID + '">' + cancel + 'Request</a>'+
-      '<div class="extra">'+
-      '<a href="#watch" role="button" class="btn-watch lightgrey ' + watch + '" id="' + item.ListingID + '"><i class="material-icons">visibility</i></a>'+
-        '<a href="#message" role="button" class="btn-watch" id="'+ item.ListingID +'"><i class="material-icons">message</i></a>'+
-      '</div>' +
-      '</div>'+
-      '</div>'+
-      '</div>';
+      '<a href="#view" id="'+ item.ListingID + '" class="btn btn-primary" role="button">View</a>';
+
+      if (item.isRequesting){
+          contentString += '<a href="#cancel-by-listing" class="btn btn-default" role="button" id="'+ item.ListingID +'">Cancel request</a>';
+      }
+      else {
+          contentString += '<a href="#request" class="btn btn-default" role="button" id="'+ item.ListingID +'">Request</a>';
+      }
+      if (item.isWatching){
+          contentString += '<div class="extra"><a href="#watch" role="button" class="btn-watch watched" id="'+ item.ListingID +'"><i class="material-icons">visibility</i></a>'+
+                      '<a href="#message" role="button" class="btn-watch" id="'+ item.ListingID +'"><i class="material-icons">message</i></a></div>';
+      }
+      else{
+          contentString += '<div class="extra"><a href="#watch" role="button" class="btn-watch" id="'+ item.ListingID +'"><i class="material-icons">visibility</i></a>' +
+                      '<a href="#message" role="button" class="btn-watch" id="'+ item.ListingID +'"><i class="material-icons">message</i></a></div>';
+      }
+      contentString += '</div>'+
+                      '</div>'+
+                    '</div>';
       iw.addListener('domready', function() {
 
         // Reference to the DIV which receives the contents of the infowindow using jQuery

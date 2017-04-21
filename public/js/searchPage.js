@@ -362,28 +362,29 @@ function getHTML(element){
                   '</div>' +
                 '</div>' +
               '</div>' +
-              '<img src="'+ element.Image_URL +'" style="border-color: lightgrey;" />' +
+              '<div class="default-pic" style="background-image: url('+ element.Image_URL +')"></div>'
               '<div class="caption">' +
                 '<h3>'+ element.Name +'</h3>' +
                 '<div class="trans-info">' +
-                  '<div><span>Quantity: </span>'+ element.Quantity +'</div>' +
+                  '<div><span>Quantity: </span><span class="quantity">'+ element.Quantity +'</span></div>' +
                 '</div>' +
                 '<div class="nav-btns">' +
                   '<a href="#view" class="btn btn-primary view" role="button" id="'+ element.ListingID +'">View</a>';
 
                   if (element.isRequesting){
-                      cardHTML += '<a href="#cancel-by-listing" class="btn btn-default" role="button">Cancel request</a>';
+                      cardHTML += '<a href="#cancel-by-listing" class="btn btn-default" role="button" id="'+ element.ListingID +'">Cancel request</a>';
                   }
                   else {
-                      cardHTML += '<a href="#request" class="btn btn-default" role="button">Request</a>';
+                      cardHTML += '<a href="#request" class="btn btn-default" role="button" id="'+ element.ListingID +'">Request</a>';
                   }
                   if (element.isWatching){
-                      cardHTML += '<a href="#watch" role="button" class="btn-watch watched" id="'+ element.ListingID +'"><i class="material-icons">visibility</i></a>';
+                      cardHTML += '<div class="extra"><a href="#watch" role="button" class="btn-watch watched" id="'+ element.ListingID +'"><i class="material-icons">visibility</i></a>'+
+                                  '<a href="#message" role="button" class="btn-watch" id="'+ element.ListingID +'"><i class="material-icons">message</i></a></div>';
                   }
                   else{
-                      cardHTML += '<a href="#watch" role="button" class="btn-watch" id="'+ element.ListingID +'"><i class="material-icons">visibility</i></a>';
+                      cardHTML += '<div class="extra"><a href="#watch" role="button" class="btn-watch" id="'+ element.ListingID +'"><i class="material-icons">visibility</i></a>' +
+                                  '<a href="#message" role="button" class="btn-watch" id="'+ element.ListingID +'"><i class="material-icons">message</i></a></div>';
                   }
-
     cardHTML +=  '</div>'+
               '</div>'+
             '</div>'+
