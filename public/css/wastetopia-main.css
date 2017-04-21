@@ -350,6 +350,8 @@ html, body{
   position: absolute;
   z-index: 100;
   padding: 5px;
+  display: flex;
+  justify-content: center;
 }
 
 .gm-style-iw {

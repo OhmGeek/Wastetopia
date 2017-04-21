@@ -7,7 +7,7 @@ var mapURL;
 $(function () {
 
   function warningTop(){
-    var height = $('.search-header').outerHeight() + 60
+    var height = $('.search-header').outerHeight() + 70
     $('#map-tab .warning').css({'top': height})
   }
 
