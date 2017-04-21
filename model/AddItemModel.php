@@ -117,7 +117,7 @@ class AddItemModel
         $statement = $this->db->prepare("
             SELECT `Tag`.`Name`
             FROM `Tag`
-            WHERE `Tag`.`FK_Category_CategoryID` = :catID
+            WHERE `Tag`.`FK_Category_Category_ID` = :catID
             ORDER BY `Tag`.`Name`
          ");
 
@@ -418,7 +418,7 @@ class AddItemModel
         return array(
             'tagID' => $results[0]['TagID'],
             'name' => $results[0]['Name'],
-            'categoryID' => $results[0]['FK_Category_CategoryID'],
+            'categoryID' => $results[0]['FK_Category_Category_ID'],
             'description' => $results[0]['Description']
         );
     }

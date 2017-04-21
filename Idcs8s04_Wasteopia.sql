@@ -709,17 +709,17 @@ INSERT INTO `Message` (`MessageID`, `Read`, `Content`, `Time`, `FK_Conversation_
 CREATE TABLE IF NOT EXISTS `Tag` (
   `TagID` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `Name` varchar(15) NOT NULL,
-  `FK_Category_CategoryID` int(2) unsigned NOT NULL DEFAULT '0',
+  `FK_Category_Category_ID` int(2) unsigned NOT NULL DEFAULT '0',
   `Description` varchar(140) DEFAULT NULL,
   PRIMARY KEY (`TagID`),
-  KEY `index_tag_category` (`FK_Category_CategoryID`)
+  KEY `index_tag_category` (`FK_Category_Category_ID`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=37 ;
 
 --
 -- Dumping data for table `Tag`
 --
 
-INSERT INTO `Tag` (`TagID`, `Name`, `FK_Category_CategoryID`, `Description`) VALUES
+INSERT INTO `Tag` (`TagID`, `Name`, `FK_Category_Category_ID`, `Description`) VALUES
 (1, 'Nuts', 4, 'May contain nuts'),
 (2, 'Gluten', 4, 'May contain gluten'),
 (3, 'Crustaceans', 4, 'May contain crustaceans e.g. prawns, lobster, crabs or crayfish'),
@@ -927,7 +927,7 @@ ALTER TABLE `Message`
 -- Constraints for table `Tag`
 --
 ALTER TABLE `Tag`
-  ADD CONSTRAINT `constraint_tag_category` FOREIGN KEY (`FK_Category_CategoryID`) REFERENCES `Category` (`CategoryID`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `constraint_tag_category` FOREIGN KEY (`FK_Category_Category_ID`) REFERENCES `Category` (`CategoryID`) ON UPDATE CASCADE;
 
 --
 -- Constraints for table `Transaction`
