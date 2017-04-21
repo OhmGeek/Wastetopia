@@ -135,7 +135,7 @@ class EditItemModel
         $statement = $this->db->prepare("
             SELECT `Tag`.`Name`
             FROM `Tag`
-            WHERE `Tag`.`FK_Category_Category_ID` = :catID
+            WHERE `Tag`.`FK_Category_CategoryID` = :catID
             ORDER BY `Tag`.`Name`
          ");
 
@@ -448,7 +448,7 @@ class EditItemModel
         return array(
             'tagID' => $results[0]['TagID'],
             'name' => $results[0]['Name'],
-            'categoryID' => $results[0]['FK_Category_Category_ID'],
+            'categoryID' => $results[0]['FK_Category_CategoryID'],
             'description' => $results[0]['Description']
         );
     }

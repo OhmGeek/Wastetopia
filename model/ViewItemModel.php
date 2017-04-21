@@ -74,7 +74,7 @@ class ViewItemModel
 
     function getTagDetails($listingID) {
             $statement = $this->db->prepare("
-            SELECT Tag.TagID, Tag.Name, Tag.FK_Category_Category_ID, Tag.Description
+            SELECT Tag.TagID, Tag.Name, Tag.FK_Category_CategoryID, Tag.Description
             FROM Tag, ItemTag, Listing
             WHERE ItemTag.FK_Item_ItemID = Listing.FK_Item_ItemID
               AND ItemTag.FK_Tag_TagID = Tag.TagID
@@ -104,7 +104,7 @@ class ViewItemModel
             );
             //process results
             foreach($results as $tag) {
-                array_push($data[$field[$tag['FK_Category_Category_ID']]], array(
+                array_push($data[$field[$tag['FK_Category_CategoryID']]], array(
                     "name" => $tag['Name'],
                     "description" => $tag['Description']
                 ));
