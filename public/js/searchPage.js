@@ -70,6 +70,7 @@ $(function () {
     }
     filters = '<span class="label label-primary"> within ' + radius + ' radius </span>' + '<span class="label label-primary"> quantity ' + quantity + ' </span>'
     $('#radius-output').html('radius: <span>' + radius + '</span>')
+    $('#quantity-output').html('quantity: <span>' + quantity + '</span>')
     // inclusive filters from checkboxes
     $checkboxes.each( function( i, elem ) {
       // if checkbox, use value if checked
