@@ -11,8 +11,6 @@ $(function () {
     $('#map-tab .warning').css({'top': height})
   }
 
-  warningTop();
-
   $('.search-header').on('resize', function(event){
     warningTop();
   })
@@ -315,5 +313,6 @@ $(function () {
   $('#btn-map').on('shown.bs.tab', function(event){
     console.log('map part appeared')
     initMap();
+    warningTop();
   });
 });
