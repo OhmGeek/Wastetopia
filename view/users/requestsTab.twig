@@ -41,7 +41,7 @@
                                         <div><span>Quantity:</span><span class="quantity">{{ item.quantity }}</span></div>
                                     </div>
                                     <div class="nav-btns">
-                                        <a href="{{config.ROOT_BASE}}/items/view/{{item.listingID}}" class="btn btn-primary" role="button"
+                                        <a href="{{config.ROOT_BASE}}/items/view/{{item.listingID}}" class="view btn btn-primary" role="button"
                                            id="{{ item.listingID }}">View</a>
                                            {% if not item.hasRated %}
                                         <a href="#rate" class="btn btn-default" role="button"
@@ -89,7 +89,7 @@
                                         <div><span>Quantity: </span><span class="quantity">{{ item.quantity }}</span></div>
                                     </div>
                                     <div class="nav-btns">
-                                        <a href="{{config.ROOT_BASE}}/items/view/{{item.listingID}}" class="btn btn-primary" role="button"
+                                        <a href="{{config.ROOT_BASE}}/items/view/{{item.listingID}}" class="view btn btn-primary" role="button"
                                            id="{{ item.listingID }}">View</a>
                                         <a href="{{config.ROOT_BASE}}/messages/conversation/{{item.listingID}}" class="btn btn-default" role="button"
                                            id="{{ item.listingID }}">Message</a>
