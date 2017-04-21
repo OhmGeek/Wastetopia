@@ -39,7 +39,7 @@ $(function () {
 
   noUiSlider.create(quantitySlider, {
     range: {
-      'min': 0,
+      'min': 1,
       'max': 10
     },
     connect: [true, false],
