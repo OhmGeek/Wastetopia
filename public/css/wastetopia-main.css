@@ -138,6 +138,7 @@
   position: absolute;
   top: 50px;
   width: 100%;
+  padding: 5px 0;
   z-index: 101;
   background: rgba(255, 255, 255, 0.8);
 }
@@ -357,6 +358,12 @@ html, body{
 
 #grid {
     padding-top: 135px;
+}
+
+@media (min-width: 1200px) {
+  #grid {
+      padding-top: 145px;
+  }
 }
 
 #map-tab .warning {
