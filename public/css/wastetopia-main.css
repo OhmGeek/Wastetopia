@@ -139,6 +139,7 @@
   top: 60px;
   width: 100%;
   z-index: 101;
+  background: rgba(255, 255, 255, 0.5);
 }
 
 .search-options{
