@@ -362,7 +362,7 @@ function getHTML(element){
                   '</div>' +
                 '</div>' +
               '</div>' +
-              '<div class="default-pic" style="background-image: url('+ element.Image_URL +')"></div>'
+              '<div class="default-pic" style="background-image: url('+ element.Image_URL +')"></div>'+
               '<div class="caption">' +
                 '<h3>'+ element.Name +'</h3>' +
                 '<div class="trans-info">' +
