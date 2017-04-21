@@ -96,6 +96,10 @@ $(function () {
     getFilters();
   });
 
+  quantitySlider.noUiSlider.on('update', function (e) {
+    getFilters();
+  });
+
   $grid = $('.grid').isotope({
     itemSelector: '.grid-item',
     percentPosition: true,
