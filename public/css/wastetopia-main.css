@@ -341,16 +341,12 @@
   margin: 0px;
 }
 
-/*#map {
-  height: 100px;
-}*/
-
 html, body{
   height: 100vh;
 }
 
-#search-map {
-  height: 400px;
+#map .warning {
+  position: absolute;
 }
 
 .gm-style-iw {

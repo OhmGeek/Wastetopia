@@ -5,6 +5,13 @@ var maxItems = 30;
 var itemsNum;
 var mapURL;
 $(function () {
+
+  $('#map .warning').css({'top': $('.search-header').outerHeight()})
+
+  $('.search-header').on('resize', function(event){
+    $('#map .warning').css({'top': $('.search-header').outerHeight()})
+  })
+
   var radiusSlider = document.getElementById('radius');
   var radiusFormat = wNumb({ decimals: 0, postfix: 'km' })
 
