@@ -187,12 +187,12 @@
 
 .filter-category > a.collapsed > i.material-icons:before
 {
-  content:'expand_more';
+  content:'expand_less';
 }
 
 .filter-category > a > i.material-icons:before
 {
-  content:'expand_less';
+  content:'expand_more';
 }
 
 .filter-options {
