@@ -46,7 +46,7 @@
                       <div><span>Quantity:</span><span class="quantity">{{ item.quantity }}</span></div>
                     </div>
                     <div class="nav-btns">
-                      <a href="{{config.ROOT_BASE}}/items/view/{{item.listingID}}" class="btn btn-primary" role="button"
+                      <a href="{{config.ROOT_BASE}}/items/view/{{item.listingID}}" class="view btn btn-primary" role="button"
                       id="{{ item.listingID }}">View</a>
                       {% if isLoggedIn %}
                       {% if isUser %}
@@ -96,7 +96,7 @@
                           <div><span>Quantity:</span>{{ item.quantity }}</div>
                         </div>
                         <div class="nav-btns">
-                          <a href="{{config.ROOT_BASE}}/items/view/{{item.listingID}}" class="btn btn-primary" role="button"
+                          <a href="{{config.ROOT_BASE}}/items/view/{{item.listingID}}" class="view btn btn-primary" role="button"
                           id="{{ item.listingID }}">View</a>
                           <a href="#renew" class="btn btn-default" role="button"
                           id="{{ item.listingID }}">Renew</a>
