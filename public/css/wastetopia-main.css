@@ -357,12 +357,12 @@ html, body{
 }
 
 #grid {
-    padding-top: 135px;
+    padding-top: 145px;
 }
 
 @media (min-width: 1200px) {
   #grid {
-      padding-top: 145px;
+      padding-top: 155px;
   }
 }
 
