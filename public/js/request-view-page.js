@@ -15,9 +15,9 @@ $(function() {
         event.preventDefault();
 
         // Extract listingID
-        var listingID = LISTING_ID
+        var listingID = $('#main-container').data("listingID");
 
-        var itemName = ITEM_NAME
+        var itemName = $('.item-name').text().trim();
 
         $('body').append(deleteModal);
 
@@ -40,9 +40,11 @@ $(function() {
                 console.log(response);
                 if (response) {
                     // Redirect somewhere?? Listing no longer exists
+                    window.location.replace(baseURL);
 
                 } else {
                     // Show error
+                    alert("Error in deleting listing");
                 }
             });
         });
@@ -61,7 +63,7 @@ $(function() {
         console.log("Cancelling");
 
         // Extract transactionID and listingID
-        var listingID = LISTING_ID
+        var listingID = $('#main-container').data("listingID");
 
         // Send to /items/cancel-request
 
@@ -109,11 +111,11 @@ $(function() {
         console.log("Requesting");
 
         // Extract listingID
-        var listingID = LISTING_FROM_PAGE;
+        var listingID = $('#main-container').data("listingID");
 
 
-        var itemName = ITEM_NAME
-        var actualQuantity = LISTING_QUANTITY
+        var itemName = $('.item-name').text().trim();
+        var actualQuantity = 1;
 
         $('body').append(requestModal);
 
@@ -165,7 +167,7 @@ $(function() {
         event.preventDefault();
 
         // Extract listingID
-        var listingID = LISTING_ID_FROM_PAGE;
+        var listingID = $('#main-container').data("listingID");
 
         // Send to /items/request
         var url = baseURL + "/items/edit/" + listingID; // REPLACE WITH  CORRECT URL
@@ -176,8 +178,8 @@ $(function() {
     // Renew listing
     $(document).on('click', 'a[href="#renew"]', function (event) {
         event.preventDefault();
-        var listingID = LISTING_ID_FROM_PAGE;
-        var itemName = NAME_OF_ITEM;
+        var listingID = $('#main-container').data("listingID");
+        var itemName = $('.item-name').text().trim();
 
         $('body').append(renewModal);
 
@@ -243,7 +245,7 @@ $(function() {
     $(document).on('click', 'a[href="#watch"]', function (event) {
         event.preventDefault();
 
-        var listingID = LISTING_FROM_PAGE;
+        var listingID = $('#main-container').data("listingID");
         var isUser = GET_FROM_PAGE; // 1 if user is viewing their own listing
         var listing = WATCH_ICON;
 
