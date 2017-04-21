@@ -80,6 +80,8 @@ class RecommendationController {
               $addedDate = $listing["Time_Of_Creation"];
               $distance = "DON'T HAVE"; // May be able to add later
               $postCode = $listing["Post_Code"];
+              error_log("Listing: ".$listingID);
+              
               $imgURL = $this->cardDetailsModel->getDefaultImage($listingID);//$listing[""]; // Add later
               $itemName = $listing["Name"];
               $quantity = $listing["Quantity"];
