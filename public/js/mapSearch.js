@@ -1,12 +1,3 @@
-// the proper link for the search wastetopia.herokuapp.com/api/search/map/<user latitude>/<user longitude>/<search term>/<tag+ids+split+by+signs>/<tags+to+disclude>/
-
-var lat = 54.774759
-var long = -1.570329
-var searchTerm = 'b'
-
-var url = window.location.protocol + "//" + window.location.host + '/api/search/map///' + searchTerm + '////';
-
-
 var positions = [];
 var map;
 var bounds;
@@ -32,7 +23,7 @@ function initMap() {
       anchor: new google.maps.Point(15, 30)
     };
 
-    $.getJSON(url, function(items){
+    $.getJSON(mapURL, function(items){
       var markers = items.map(function(item) {
         return addMarker(item)
       });

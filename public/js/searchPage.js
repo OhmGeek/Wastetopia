@@ -33,7 +33,7 @@ $(function () {
   if(searchVariables.advancedSearch === true){
       setAdvancedSearchVariables(searchVariables);
   }
-  
+
 
 
 
@@ -140,7 +140,7 @@ $(function () {
 
 
   function refreshPage() {
-    
+
     sortOrder = $('#sort-options').val();
     distanceLimit = parseFloat(radiusSlider.noUiSlider.get());
 
@@ -173,7 +173,11 @@ $(function () {
 
     var baseURL = $('#baseURL').attr('href');
     var query = baseURL + '/api/search/page/' + lat + '/' + long + '/' + searchTerm + '/' + include.join('+') + '/' + exclude.join('+') + '/' + distanceLimit + '/' + pageNumber + '/' + sortOrder;
-
+    mapURL = mapURL = baseURL + '/api/search/map/' + lat + '/' + long + '/' + searchTerm + '/' + include.join('+') + '/' + exclude.join('+') + '/' + distanceLimit + '/' + sortOrder;
+    if ($('#map-tab').hasClass('active')) {
+      console.log('map is active')
+      initMap();
+    }
     $.ajax({
         url: query,
         success: function(result){
@@ -222,7 +226,7 @@ $(function () {
         if(scrollTop + windowHeight == docuHeight){
             infiniteScrollingEnabled = false;
             pageNumber += 1;
-            
+
 
             var baseURL = $('#baseURL').attr('href');
             var query = baseURL + '/api/search/page/' + lat + '/' + long + '/' + searchTerm + '/' + include.join('+') + '/' + exclude.join('+') + '/' + distanceLimit + '/' + pageNumber + '/' + sortOrder;
@@ -258,6 +262,8 @@ $(function () {
 
   $('#btn-map').on('shown.bs.tab', function(event){
     console.log('map part appeared')
+    var baseURL = $('#baseURL').attr('href');
+    mapURL = baseURL + '/api/search/map/' + lat + '/' + long + '/' + searchTerm + '/' + include.join('+') + '/' + exclude.join('+') + '/' + distanceLimit + '/' + sortOrder;
     initMap();
     var height = $('.search-header').outerHeight() + 70
     $('#map-tab .warning').css({'top': height})
@@ -274,7 +280,7 @@ function displayPage(result)
     json.forEach(function(element){
 
         html += getHTML(element);
-       
+
 
     });
 
@@ -359,7 +365,7 @@ function getHTML(element){
 }
 
 function setAdvancedSearchVariables(searchVariables){
-    
+
     var filters = searchVariables.filters.split('+');
 
     $('#filter-form *').filter(':input').each(function(){
