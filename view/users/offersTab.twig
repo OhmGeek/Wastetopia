@@ -13,7 +13,7 @@
             <div class="container-fluid">
                 <div class="grid">
                     {% for item in offers.completed %}
-                        <div class="grid-item col-xs-12 col-sm-6 col-md-4">
+                        <div class="grid-item col-xs-12 col-sm-6 col-md-4 col-lg-3">
                             <div class="grid-item-content">
                                 <div class="thumbnail zero-padding" id="{{ item.transactionID }}">
                                     <div class="request-status complete">
@@ -51,7 +51,7 @@
             <div class="container-fluid">
                 <div class="grid">
                     {% for item in offers.pending %}
-                        <div class="grid-item col-xs-12 col-sm-6 col-md-4">
+                        <div class="grid-item col-xs-12 col-sm-6 col-md-4 col-lg-3">
                             <div class="grid-item-content">
                                 <div class="thumbnail zero-padding" id="{{ item.transactionID }}">
                                     <div class="request-status pending">

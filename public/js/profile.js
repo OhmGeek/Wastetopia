@@ -181,8 +181,9 @@ $(function () {
               layoutMode: 'masonry'
             });
             $grid.isotope('layout');
-          });
-          $grid.isotope('layout');
+          }).done( function( instance ) {
+  $grid.isotope('layout');
+});
     });
 
 
