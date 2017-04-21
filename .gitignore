@@ -71,3 +71,4 @@ typings/
 
 *.xml
 
+config/ProductionConfig.php
