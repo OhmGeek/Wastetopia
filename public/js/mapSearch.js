@@ -23,7 +23,9 @@ function initMap() {
       anchor: new google.maps.Point(15, 30)
     };
     console.log(mapURL)
-    $.getJSON(mapURL, function(items){
+    $.getJSON(mapURL, function(items, status){
+      console.log(items);
+      console.log(status);
       var markers = items.map(function(item) {
         return addMarker(item)
       });

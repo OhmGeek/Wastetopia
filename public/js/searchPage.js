@@ -171,7 +171,7 @@ $(function () {
 
     var baseURL = $('#baseURL').attr('href');
     var query = baseURL + '/api/search/page/' + lat + '/' + long + '/' + searchTerm + '/' + include.join('+') + '/' + exclude.join('+') + '/' + distanceLimit + '/' + pageNumber + '/' + sortOrder;
-    mapURL = window.location.protocol + "//" + window.location.host + '/api/search/map/' + lat + '/' + long + '/' + searchTerm + '/' + include.join('+') + '/' + exclude.join('+') + '/' + distanceLimit + '/' + sortOrder;
+    mapURL = window.location.protocol + "//" + window.location.host + '/api/search/map/' + lat + '/' + long + '/' + searchTerm + '/' + include.join('+') + '/' + exclude.join('+') + '/' + distanceLimit + '/';
     if ($('#map-tab').hasClass('active')) {
       console.log('map is active')
       initMap();
@@ -260,7 +260,7 @@ $(function () {
 
   $('#btn-map').on('shown.bs.tab', function(event){
     console.log('map part appeared')
-    mapURL = window.location.protocol + "//" + window.location.host + '/api/search/map/' + lat + '/' + long + '/' + searchTerm + '/' + include.join('+') + '/' + exclude.join('+') + '/' + distanceLimit + '/' + sortOrder;
+    mapURL = window.location.protocol + "//" + window.location.host + '/api/search/map/' + lat + '/' + long + '/' + searchTerm + '/' + include.join('+') + '/' + exclude.join('+') + '/' + distanceLimit + '/';
     initMap();
     var height = $('.search-header').outerHeight() + 70
     $('#map-tab .warning').css({'top': height})
