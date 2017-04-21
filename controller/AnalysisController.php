@@ -34,7 +34,6 @@ class AnalysisController
         $this->twig = new Twig_Environment($loader);
     }
 
-
     /**
      * Generates the HTML for the analysis page
      * @return mixed
