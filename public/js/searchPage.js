@@ -64,9 +64,9 @@ $(function () {
 
   function getFilters(){
     var radius = radiusFormat.to(parseFloat(radiusSlider.noUiSlider.get()));
-    var quantity = parseFloat(radiusSlider.noUiSlider.get())
+    var quantity = parseFloat(quantitySlider.noUiSlider.get())
     if (quantity > 9) {
-      quantity = quantityFormat.to(parseFloat(radiusSlider.noUiSlider.get()));
+      quantity = quantityFormat.to(parseFloat(quantitySlider.noUiSlider.get()));
     }
     filters = '<span class="label label-primary"> within ' + radius + ' radius </span>' + '<span class="label label-primary"> quantity ' + quantity + ' </span>'
     $('#radius-output').html('radius: <span>' + radius + '</span>')
@@ -162,9 +162,6 @@ $(function () {
 
 
   function refreshPage() {
-    include = [];
-    exclude = [];
-
     include = [];
     exclude = [];
 
@@ -406,43 +403,20 @@ function setAdvancedSearchVariables(searchVariables){
 
     if(sort !== null){
         switch(sort) {
-        case 'D':
-            sortSelector.val('D')
-            break;
-        case 'AZ':
-            sortSelector.val('AZ')
-            break;
-        case 'ZA':
-            sortSelector.val('ZA')
-            break;
-        case 'UR':
-            sortSelector.val('UR')
-            break;
-        default:
-            sortSelector.val('D')
-        }
+    case 'D':
+        sortSelector.val('D')
+        break;
+    case 'AZ':
+        sortSelector.val('AZ')
+        break;
+    case 'ZA':
+        sortSelector.val('ZA')
+        break;
+    case 'UR':
+        sortSelector.val('UR')
+        break;
+    default:
+        sortSelector.val('D')
+}
     }
-
-    var distance = searchVariables.distance;
-    if(distance !== null){
-       var radiusSlider = document.getElementById('radius');
-       radiusSlider.noUiSlider.set(distance);
-    }
-
-    var baseURL = $('#baseURL').attr('href');
-    var search = searchVariables.search;
-    var lat = searchVariables.lat;
-    var lng = searchVariables.long;
-
-    window.history.replaceState('this value is required', 'again required...', baseURL + '/search/' + search + '/' + lat +'/'+ long);
-
-
-    /*$searchTerm = $postVars->search;
-        $postcode = $postVars->postcode;
-        $lat = $postVars->lat;
-        $long = $postVars->lng;
-        $quantity = $postVars->quantity;
-        $distance = $postVars->distance;
-        $filters = $postVars->filters;
-        $sort = $postVars->sort;*/
 }
