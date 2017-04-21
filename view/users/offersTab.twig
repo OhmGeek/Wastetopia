@@ -35,7 +35,7 @@
                                             <div><span>Quantity:</span><span class="quantity">{{ item.quantity }}</span></div>
                                         </div>
                                         <div class="nav-btns">
-                                            <a href="#view" class="btn btn-primary" role="button" id="{{ item.listingID }}">View</a>
+                                            <a href="{{config.ROOT_BASE}}/items/view/{{item.listingID}}" class="btn btn-primary" role="button" id="{{ item.listingID }}">View</a>
                                             <a href="#delete" role="button" class="btn-watch"><i
                                                         class="material-icons">delete</i></a>
                                         </div>
@@ -73,8 +73,8 @@
                                             <div><span>Quantity: </span><span class="quantity">{{ item.quantity }}</span></div>
                                         </div>
                                         <div class="nav-btns">
-                                            <a href="#view" class="btn btn-primary" role="button" id="{{ item.listingID }}">View</a>
-                                            <a href="#message" class="btn btn-default" role="button"
+                                            <a href="{{config.ROOT_BASE}}/items/view/{{item.listingID}}" class="btn btn-primary" role="button" id="{{ item.listingID }}">View</a>
+                                            <a href="{{config.ROOT_BASE}}/messages/conversation/{{item.listingID}}" class="btn btn-default" role="button"
                                                id="{{ item.listingID }}">Message</a>
                                             <div class="dropup btn-watch">
                                                 <a href="bootstrap-elements.html" data-target="#"
