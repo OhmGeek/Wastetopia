@@ -304,5 +304,7 @@ $(function () {
   $('#btn-map').on('shown.bs.tab', function(event){
     console.log('map part appeared')
     initMap();
+    var height = $('.search-header').outerHeight() + 70
+    $('#map-tab .warning').css({'top': height})
   });
 });
