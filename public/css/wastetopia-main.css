@@ -447,6 +447,12 @@ html, body{
   width: 100%;
 }
 
+@media (max-width:370px) {
+  .smaller-screens {
+    right: 10px;
+  }
+}
+
 /* item edit page */
 .some-padding{
   padding: 5px;
