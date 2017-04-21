@@ -1,10 +1,11 @@
+var grid;
 $(function () {
-  // init Isotope
-  var $grid = $('.grid').isotope({
-    itemSelector: '.grid-item',
-    percentPosition: true,
-    masonry: {
-      columnWidth: '.grid-sizer'
-    }
-  });
+  $('.grid').imagesLoaded().progress( function() {
+      grid = $('.grid').isotope({
+        itemSelector: '.grid-item',
+        percentPosition: true,
+        layoutMode: 'masonry'
+      });
+      grid.isotope('layout');
+    });
 });
