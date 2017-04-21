@@ -757,14 +757,10 @@ class ProfilePageController
     */
     function setAllPendingAsViewed(){
         $listingTransactions = $this->model->getUnseenPendingTransactions();
-	
-	 print_r("Transactions: ");
-	    print_r($listingTransactions);
+
         foreach($listingTransactions as $listingTransaction){
             $transactionID = $listingTransaction["TransactionID"];
             $listingID = $listingTransaction["ListingID"];
-		print_r("TransactionID: ".$transactionID);
-		print_r("ListingID: ".$listingID);
             $this->model->setViewed($listingID, $transactionID);
         }
         return True;
