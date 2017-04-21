@@ -34,7 +34,7 @@ $(function () {
     start: 5
   });
 
-  var quantitySlider = document.getElementById('radius');
+  var quantitySlider = document.getElementById('quantity');
   var quantityFormat = wNumb({ decimals: 0, postfix: '+' })
 
   noUiSlider.create(quantitySlider, {
