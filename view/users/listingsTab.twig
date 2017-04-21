@@ -66,7 +66,7 @@
                         <div class="extra">
                           <a href="#watch" role="button" class="btn-watch lightgrey {% if item.isWatching %}watched{% endif %}" id="{{item.listingID}}"><i
                             class="material-icons">visibility</i></a>
-                            <a href="{{{config.ROOT_BASE}}/messages/conversation/{{item.listingID}}" role="button" class="btn-watch" id="{{item.listingID}}"><i class="material-icons">message</i></a>
+                            <a href="{{config.ROOT_BASE}}/messages/conversation/{{item.listingID}}" role="button" class="btn-watch" id="{{item.listingID}}"><i class="material-icons">message</i></a>
                           </div>
 
                           {% endif %}
