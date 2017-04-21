@@ -65,7 +65,6 @@ class ProfilePageModel
     {
         $userID = $this->getUserID();
 	    
-	    print_r("User: ".$userID);
         $statement = $this->db->prepare("
             SELECT `Listing`.*, `Transaction`.*, `ListingTransaction`.`Success`, `ListingTransaction`.`Sender_Hide`, `ListingTransaction`.`Receiver_Hide`
                 FROM `Listing`
@@ -79,7 +78,6 @@ class ProfilePageModel
         $statement->execute();
 	
 	    $results = $statement->fetchAll(PDO::FETCH_ASSOC);
-	    print_r($results);
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 	
