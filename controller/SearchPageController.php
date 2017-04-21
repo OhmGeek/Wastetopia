@@ -11,21 +11,22 @@ class SearchPageController
     {
     }
 
-    function render($search)
+    function render($getVars)
     {
         $loader = new Twig_Loader_Filesystem('../view/');
         $twig = new Twig_Environment($loader);
 
-        $searchTerm = $search[0];
-        $postcode = $search[1];
-        $lat = $search[2];
-        $long = $search[3];
+        $searchTerm = $getVars[0];
+        $postcode = $getVars[1];
+        $lat = $getVars[2];
+        $long = $getVars[3];
         
         $escapedSearch = array();
         $escapedSearch['search'] = htmlspecialchars($searchTerm, ENT_QUOTES, 'UTF-8');
         $escapedSearch['postcode'] = htmlspecialchars($postcode, ENT_QUOTES, 'UTF-8');
         $escapedSearch['lat'] = htmlspecialchars((string)$lat, ENT_QUOTES, 'UTF-8');
         $escapedSearch['long'] = htmlspecialchars((string)$long, ENT_QUOTES, 'UTF-8');
+        $escapedSearch['advancedSearch'] = false;
 
 
         $currentConfig = new CurrentConfig();
@@ -39,6 +40,45 @@ class SearchPageController
                                        'searchTerm' => json_encode($escapedSearch)
                                       ));
     }
+    function renderAdvanced($postVars)
+    {
+        $loader = new Twig_Loader_Filesystem('../view/');
+        $twig = new Twig_Environment($loader);
+
+        $searchTerm = $postVars->search;
+        $postcode = $postVars->postcode;
+        $lat = $postVars->lat;
+        $long = $postVars->lng;
+        $quantity = $postVars->quantity;
+        $distance = $postVars->distance;
+        $filters = $postVars->filters;
+        $sort = $postVars->sort;
+
+        
+        $escapedSearch = array();
+        $escapedSearch['search'] = htmlspecialchars($searchTerm, ENT_QUOTES, 'UTF-8');
+        $escapedSearch['postcode'] = htmlspecialchars($postcode, ENT_QUOTES, 'UTF-8');
+        $escapedSearch['lat'] = htmlspecialchars((string)$lat, ENT_QUOTES, 'UTF-8');
+        $escapedSearch['long'] = htmlspecialchars((string)$long, ENT_QUOTES, 'UTF-8');
+        $escapedSearch['quantity'] = htmlspecialchars((string)$quantity, ENT_QUOTES, 'UTF-8');
+        $escapedSearch['distance'] = htmlspecialchars((string)$distance, ENT_QUOTES, 'UTF-8');
+        $escapedSearch['filters'] = htmlspecialchars($filters, ENT_QUOTES, 'UTF-8');
+        $escapedSearch['sortOption'] = htmlspecialchars($sort, ENT_QUOTES, 'UTF-8');
+        $escapedSearch['advancedSearch'] = true;
+
+
+        $currentConfig = new CurrentConfig();
+        $config = $currentConfig->getAll();
+
+        $filters = $this->getSearchFilters();        
+
+        $template = $twig->loadTemplate("search/search.twig");
+        return $template->render(array('config' => $config,
+                                       'filters' => $filters,
+                                       'searchTerm' => json_encode($escapedSearch)
+                                      ));
+    }
+
     function getSearchFilters()
     {
         $filters = array(array('id'=>'0', 'optionsCategory'=>'Allergens', 'type' => 'negative',

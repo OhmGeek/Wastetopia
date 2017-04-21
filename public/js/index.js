@@ -27,14 +27,17 @@ $(function(){
                 var lat = results[0].geometry.location.lat();
                 var lng = results[0].geometry.location.lng();
                 var baseURL = $('#baseURL').attr('href');
-                var searchURL = baseURL + '/search/' + search + '/' + postcode + '/' + lat + '/' + lng;
+                var searchURL = baseURL + '/search/';
+
+                + search + '/' + postcode + '/' + lat + '/' + lng
 
                 $('.main-search-form').attr("action", searchURL)
 
-                var newForm = '<form class="submit-form" action="'+ baseURL +'/search/'+ search +'/'+ postcode +'/'+ lat +'/'+ lng +'"> ' +
-                              '<input id="postcode" type="text" value="'+ postcode +'"></input> <input id="quantity" type="number" value="'+ quantity +'"></input>' +
-                              '<input id="distance" type="number" value="'+ distance +'"></input> <input id="filters" type="text" value="'+ selectedFilters.join('+') +'"></input>' +
-                              '<input id="sort" type="text" value="'+sortBy+'"></input> </form>"'
+                var newForm = '<form class="submit-form" method="POST" action="'+ baseURL +'/search/" > <input name="search" type="text" value="'+ search +'">' +
+                              '<input name="lat" type="text" value="'+ lat +'"></input> <input name="lng" type="number" value="'+ lng +'"></input>' +
+                              '<input name="postcode" type="text" value="'+ postcode +'"></input> <input name="quantity" type="number" value="'+ quantity +'"></input>' +
+                              '<input name="distance" type="number" value="'+ distance +'"></input> <input name="filters" type="text" value="'+ selectedFilters.join('+') +'"></input>' +
+                              '<input name="sort" type="text" value="'+sortBy+'"></input> </form>"'
 
 
                 $('.secondary-search-form').html(newForm)

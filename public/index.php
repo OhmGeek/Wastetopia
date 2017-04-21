@@ -105,6 +105,12 @@ $klein->respond('GET', '/search/[**:param]?', function ($request, $response) {
     return $controller->render(explode('/', $request->param));
 });
 
+$klein->respond('POST', '/search/', function ($request, $response) {
+    $controller = new SearchPageController();
+
+    return $controller->renderAdvanced($request->paramsPost());
+});
+
 
 $klein->respond("GET", "/login", function($request, $response) {
   header("Cache-Control: no-store, must-revalidate, max-age=0");

@@ -20,6 +20,18 @@ $(function () {
 
   $('.slider').css({background:'#31353D'})
 
+
+
+  var searchVariables = JSON.parse($('#searchTerm').attr("data-searchTerm"));
+  /*SET VARIABLES FROM ADVANCED SEARCHS*/
+  if(searchVariables.advancedSearch === true){
+      setAdvancedSearchVariables(searchVariables);
+  }
+  
+
+
+
+
   var filters = "";
   // filter with selects and checkboxes
   var $checkboxes = $('#filter-list input');
@@ -232,60 +244,15 @@ $(function () {
 
 
 
-
 function displayPage(result)
 {
     var json = JSON.parse(result);
 
     var html = ""
     json.forEach(function(element){
-        var cardHTML = '' +
-        '<div class="grid-item col-xs-12 col-sm-4 col-md-4 col-lg-3">' +
-            '<div class="thumbnail zero-padding" id="'+ element.ListingID +'">' +
-              '<div class="caption">' +
-                '<div class="centerAll">' +
-                  '<img src="'+ element.Picture_URL +'" class="user-image"/>' +
-                  '<div class="user-details">' +
-                    '<a class="user-name" href="#'+ element.UserID +'">' +
-                      element.Forename + ' ' + element.Surname +
-                    '</a>' +
-                    '<div class="added-date">' +
-                       element.Time_Of_Creation +
-                    '</div>' +
-                  '</div>' +
-                  '<div class="road-distance">' +
-                    '<i class="material-icons">place</i> '+ element.Post_Code +
-                  '</div>' +
-                '</div>' +
-              '</div>' +
-              '<img src="'+ element.Image_URL +'" style="border-color: lightgrey;" />' +
-              '<div class="caption">' +
-                '<h3>'+ element.Name +'</h3>' +
-                '<div class="trans-info">' +
-                  '<div><span>Quantity: </span>'+ element.Quantity +'</div>' +
-                '</div>' +
-                '<div class="nav-btns">' +
-                  '<a href="#view" class="btn btn-primary" role="button" id="'+ element.ListingID +'">View</a>';
 
-                  if (element.isRequesting){
-                      cardHTML += '<a href="#cancel-by-listing" class="btn btn-default" role="button">Cancel request</a>';
-                  }
-                  else {
-                      cardHTML += '<a href="#request" class="btn btn-default" role="button">Request</a>';
-                  }
-                  if (element.isWatching){
-                      cardHTML += '<a href="#watch" role="button" class="btn-watch watched" id="'+ element.ListingID +'"><i class="material-icons">visibility</i></a>';
-                  }
-                  else{
-                      cardHTML += '<a href="#watch" role="button" class="btn-watch" id="'+ element.ListingID +'"><i class="material-icons">visibility</i></a>';
-                  }
-
-        cardHTML += '</div>'+
-              '</div>'+
-            '</div>'+
-        '</div>';
-
-        html += cardHTML;
+        html += getHTML(element);
+       
 
     });
 
@@ -301,7 +268,26 @@ function addPage(result){
 
     var html = ""
     json.forEach(function(element){
-        var cardHTML = '' +
+
+        html += getHTML(element);
+
+    });
+    $('.grid').append(html);
+
+    return count;
+}
+
+function noResults()
+{
+    var html = '<div class="grid-item col-xs-12"><h3 style="text-align:center;">No Items Found</h3></div>'
+
+
+    $('.grid').html(html);
+}
+
+
+function getHTML(element){
+    var cardHTML = '' +
         '<div class="grid-item col-xs-12 col-sm-4 col-md-4 col-lg-3">' +
             '<div class="thumbnail zero-padding" id="'+ element.ListingID +'">' +
               '<div class="caption">' +
@@ -327,7 +313,7 @@ function addPage(result){
                   '<div><span>Quantity: </span>'+ element.Quantity +'</div>' +
                 '</div>' +
                 '<div class="nav-btns">' +
-                  '<a href="#view" class="btn btn-primary" role="button" id="'+ element.ListingID +'">View</a>';
+                  '<a href="#view" class="btn btn-primary view" role="button" id="'+ element.ListingID +'">View</a>';
 
                   if (element.isRequesting){
                       cardHTML += '<a href="#cancel-by-listing" class="btn btn-default" role="button">Cancel request</a>';
@@ -342,22 +328,44 @@ function addPage(result){
                       cardHTML += '<a href="#watch" role="button" class="btn-watch" id="'+ element.ListingID +'"><i class="material-icons">visibility</i></a>';
                   }
 
-        cardHTML += '</div>'+
+    cardHTML +=  '</div>'+
               '</div>'+
             '</div>'+
         '</div>';
 
-        html += cardHTML;
-
-    });
-    $('.grid').append(html);
-
-    return count;
+    return cardHTML;
 }
-function noResults()
-{
-    var html = '<div class="grid-item col-xs-12"><h3 style="text-align:center;">No Items Found</h3></div>'
 
+function setAdvancedSearchVariables(searchVariables){
+    
+    var filters = searchVariables.filters.split('+');
 
-    $('.grid').html(html);
+    $('#filter-form *').filter(':input').each(function(){
+
+        if($.inArray($(this).attr('id'), filters) !== -1)  {
+            $(this).prop('checked', true);
+        }
+    });
+
+    var sort = searchVariables.sortOption;
+    var sortSelector = $('#sort-options')
+
+    if(sort !== null){
+        switch(sort) {
+    case 'D':
+        sortSelector.val('D')
+        break;
+    case 'AZ':
+        sortSelector.val('AZ')
+        break;
+    case 'ZA':
+        sortSelector.val('ZA')
+        break;
+    case 'UR':
+        sortSelector.val('UR')
+        break;
+    default:
+        sortSelector.val('D')
+}
+    }
 }
