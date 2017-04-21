@@ -432,6 +432,12 @@ function setAdvancedSearchVariables(searchVariables){
        radiusSlider.noUiSlider.set(distance);
     }
 
+    var quantity = searchVariables.quantity;
+    if(distance !== null){
+       var quantitySlider = document.getElementById('quantity');
+       quantitySlider.noUiSlider.set(quantity);
+    }
+
     var baseURL = $('#baseURL').attr('href');
     var search = searchVariables.search;
     var lat = searchVariables.lat;
