@@ -378,7 +378,7 @@ html, body{
 }
 
 .gm-style-iw > div {
-  width: 300px !important;
+  max-width: 300px !important;
 }
 
 .iw-container {
