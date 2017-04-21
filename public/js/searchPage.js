@@ -10,7 +10,7 @@ var long = -1.57694200;
 $(function () {
 
   function filterHeight(){
-    var dropdownHeight = $(window).height() - $('.btn').outerHeight() - $('.navbar').height()
+    var dropdownHeight = $(window).height() - $('.btn').outerHeight() - $('.navbar').height() - 20
 		console.log(dropdownHeight)
 		$('#filter-list').css({'max-height': dropdownHeight})
   }
