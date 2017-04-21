@@ -5,6 +5,11 @@ var maxItems = 30;
 var itemsNum;
 var mapURL;
 $(function () {
+  $(window).resize(function () {
+		var dropdownHeight = $(window).height() - $('.btn').outerHeight() - $('.navbar').height()
+		console.log(dropdownHeight)
+		$('#filter-list').css({'max-height': dropdownHeight})
+	});
 
   var radiusSlider = document.getElementById('radius');
   var radiusFormat = wNumb({ decimals: 0, postfix: 'km' })
