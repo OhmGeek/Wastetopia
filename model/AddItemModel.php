@@ -339,7 +339,7 @@ class AddItemModel
             }
             error_log("ID is:");
             error_log($imageID);
-            $this->addToItemImageTable($imageID, $itemID, 0); //Link image to item
+            $this->addToItemImageTable($imageID, $itemID, $isDefault); //Link image to item
             $isDefault = 0; // first image is default, others aren't.
         }
     }
