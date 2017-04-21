@@ -60,12 +60,13 @@ $(function () {
     getFilters();
   });
 
+  $grid = $('.grid').isotope({
+    itemSelector: '.grid-item',
+    percentPosition: true,
+    layoutMode: 'masonry'
+  });
+
   $('.grid').imagesLoaded().progress( function() {
-        $grid = $('.grid').isotope({
-          itemSelector: '.grid-item',
-          percentPosition: true,
-          layoutMode: 'masonry'
-        });
         $grid.isotope('layout');
       });
 
@@ -198,7 +199,7 @@ $(function () {
       console.log(html)
 
       $('.grid').html(html);
-      
+
       $('.grid').imagesLoaded().progress( function() {
         $grid = $('.grid').isotope({
           itemSelector: '.grid-item',
