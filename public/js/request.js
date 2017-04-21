@@ -96,7 +96,7 @@ $(function () {
         console.log("Requesting");
 
         // Extract listingID
-        var listingID = $(this).prevAll('a[href="#view"]').attr("id");
+        var listingID = $(this).prevAll('.view').attr("id");
 
         console.log("Listing: "+listingID);
         
@@ -171,7 +171,7 @@ $(function () {
         var card = $(this).closest('.thumbnail');
         // Extract transactionID and listingID
         var transactionID = card.attr("id");
-        var listingID = $(this).closest(".btn-watch").prevAll('a[href="#view"]').attr("id");
+        var listingID = $(this).closest(".btn-watch").prevAll('.view').attr("id");
         // Send to /items/reject-request
 
         var itemName = card.find('.caption').find('h3').text()
@@ -350,7 +350,7 @@ $(function () {
         var card = $(this).closest('.thumbnail');
         // Extract transactionID and listingID and new quantity
         var transactionID = card.attr("id");
-        var listingID = $(this).closest(".btn-watch").prevAll('a[href="#view"]').attr("id");
+        var listingID = $(this).closest(".btn-watch").prevAll('.view').attr("id");
 
         var itemName = card.find('.caption').find('h3').text()
         var requestedQuantity = card.find('.caption').find('.trans-info .quantity').text() // This doesn't work
@@ -594,7 +594,7 @@ $(function () {
     // View listing - THIS WORKS
     $(document).on('click', 'a[href="#view"]', function (event) {
         event.preventDefault();
-        console.log("VIEW");
+ 
         var listingID = $(this).attr("id");
         // Send to /items/view/[:listingID]
 
@@ -610,7 +610,7 @@ $(function () {
         event.preventDefault();
 
         // Extract listingID
-        var listingID = $(this).prevAll('a[href="#view"]').attr("id");
+        var listingID = $(this).prevAll('.view').attr("id");
 
         // Send to /items/request
         var url = baseURL + "/items/edit/" + listingID; // REPLACE WITH  CORRECT URL
