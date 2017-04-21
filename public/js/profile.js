@@ -266,7 +266,7 @@ $(function () {
                 cache: false,
                 processData: false,
                 contentType: false,
-                success: function (res) {
+                success: function (response) {
                     if (response) {
                         reloadTab("#home", "load-home-tab", userID, "", "");
                     }

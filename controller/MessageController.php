@@ -170,7 +170,8 @@ class MessageController
         $postCode = $listing["Post_Code"];
 
         //Generate array of details
-        $output = array("isActive" => $active,
+        $output = array("listingID"=>$listingID,
+		"isActive" => $active,
         	"defaultImage" => $defaultImage,
             "itemName" => $itemName,
             "expiryDate" => $expiryDate,

@@ -20,7 +20,7 @@
       {% if isUser == 1 %}<a role="button" data-toggle="tab" href="#home"><i class="material-icons">chevron_left</i></a>{% endif %}
       ITEMS
       OFFERED
-      {% if isUser == 1 %}<a role="button" class="btn-addOffer" id="addOffer"><i class="material-icons">add_circle</i>
+      {% if isUser == 1 %}<a role="button" class="btn-addOffer" id="addOffer" href="{{config.ROOT_BASE}}/items/add"><i class="material-icons">add_circle</i>
         new item</a>{% endif %}
       </div>
       {% if isUser == 1 %}
@@ -46,11 +46,11 @@
                       <div><span>Quantity:</span><span class="quantity">{{ item.quantity }}</span></div>
                     </div>
                     <div class="nav-btns">
-                      <a href="#view" class="btn btn-primary" role="button"
+                      <a href="{{config.ROOT_BASE}}/items/view/{{item.listingID}}" class="btn btn-primary" role="button"
                       id="{{ item.listingID }}">View</a>
                       {% if isLoggedIn %}
                       {% if isUser %}
-                      <a href="#edit" class="btn btn-default" role="button"
+                      <a href="{{config.ROOT_BASE}}/items/edit/{{item.listingID}}" class="btn btn-default" role="button"
                       id="{{item.listingID}}">Edit</a>
                       {% elseif item.isRequesting %}
                       <a href="#cancel-by-listing" class="btn btn-default" role="button"
@@ -66,7 +66,7 @@
                         <div class="extra">
                           <a href="#watch" role="button" class="btn-watch lightgrey {% if item.isWatching %}watched{% endif %}" id="{{item.listingID}}"><i
                             class="material-icons">visibility</i></a>
-                            <a href="#message" role="button" class="btn-watch" id="{{item.listingID}}"><i class="material-icons">message</i></a>
+                            <a href="{{{config.ROOT_BASE}}/messages/conversation/{{item.listingID}}" role="button" class="btn-watch" id="{{item.listingID}}"><i class="material-icons">message</i></a>
                           </div>
 
                           {% endif %}
@@ -99,7 +99,7 @@
                           <div><span>Quantity:</span>{{ item.quantity }}</div>
                         </div>
                         <div class="nav-btns">
-                          <a href="#view" class="btn btn-primary" role="button"
+                          <a href="{{config.ROOT_BASE}}/items/view/{{item.listingID}}" class="btn btn-primary" role="button"
                           id="{{ item.listingID }}">View</a>
                           <a href="#renew" class="btn btn-default" role="button"
                           id="{{ item.listingID }}">Renew</a>

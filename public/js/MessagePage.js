@@ -47,6 +47,14 @@ $(function () {
         var url = window.location.protocol + "//" + window.location.host + "/messages";
         location.href = url;
     });
+	
+    $(document).on('click', '#view', function(){
+	   var listingID = $("#listing-id").html();
+	   var url = window.location.protocol + "//" + window.location.host + "/item/view/"+listingID;
+	    location.href = url;
+	    
+    });
+	
 
   //Polling for messages in the current conversation
   setInterval(function(){

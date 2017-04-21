@@ -47,8 +47,10 @@
                 {% else %}
                   <a href="#request" class="btn btn-default" role="button" id="{{item.listingID}}">Request</a>
                 {% endif %}
-
-                <a href="#watch" role="button" class="btn-watch lightgrey {% if item.isWatching %} watched {% endif %}" id="{{item.listingID}}"><i class="material-icons">visibility</i></a>
+                <div class = "extra">
+                  <a href="#watch" role="button" class="btn-watch lightgrey {% if item.isWatching %} watched {% endif %}" id="{{item.listingID}}"><i class="material-icons">visibility</i></a>
+                  <a href="#message" role="button" class="btn-watch" id="{{item.listingID}}"><i class="material-icons">message</i></a>
+                </div>
               {% endif %}
             </div>
           </div>

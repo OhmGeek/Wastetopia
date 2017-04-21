@@ -78,9 +78,15 @@ class ConversationListController
         $receiving = $this->createConversationArray($receivingResults);
 	$isEmpty = (count($receiving) == 0);
 	    
+	    
+	// Get config
+		$CurrentConfig = new CurrentConfig();
+	        $CurrentConfig->loadConfig("production");
+		$config = $CurrentConfig->getAll();
+	    
         $template = $this->twig->loadTemplate('messaging/MessagesTabsDisplay.twig');
 
-        return $template->render(array("isEmpty" => $isEmpty, "conversationList"=>$receiving, "giving" => 0));
+        return $template->render(array("config" => $config,"isEmpty" => $isEmpty, "conversationList"=>$receiving, "giving" => 0));
 		
     }
 
@@ -98,9 +104,15 @@ class ConversationListController
         $sending = $this->createConversationArray($sendingResults);
 	    $isEmpty = (count($sending) == 0);
 	    
+	    
+	  // Get config
+		$CurrentConfig = new CurrentConfig();
+	        $CurrentConfig->loadConfig("production");
+		$config = $CurrentConfig->getAll();
+	    
         $template = $this->twig->loadTemplate('messaging/MessagesTabsDisplay.twig');
 
-        return $template->render(array("isEmpty" => $isEmpty, "conversationList"=>$sending, "giving" => 1));
+        return $template->render(array("config" => $config,"isEmpty" => $isEmpty, "conversationList"=>$sending, "giving" => 1));
     }
 
 
