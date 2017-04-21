@@ -64,7 +64,7 @@ class SearchController
             $itemLoc = array('lat' => $item['Latitude'], 'long' => $item['Longitude']);
             if($this->haversineDistance($userLoc, $itemLoc) < $distance)
             {
-                $newItemInformation[] = $item;      
+                $newItemInformation[] = $item;
             }
         }
         $itemInformation = $newItemInformation;
@@ -84,7 +84,7 @@ class SearchController
             case 'AZ':
                 $sortedInformation = $this->alphabetSort($itemInformation);
                 break;
-            
+
             case 'ZA':
                 $sortedInformation = $this->reverseAlphabetSort($itemInformation);
                 break;
@@ -92,13 +92,13 @@ class SearchController
             case 'UR':
                 $sortedInformation = $this->userPopularitySort($itemInformation);
                 break;
-            
+
             default:
                 $sortedInformation = $itemInformation;
                 break;
         }
-        
-        
+
+
 
 
         $searchResults = [];
@@ -130,7 +130,7 @@ class SearchController
         $itemInformation = $this->search($lat, $long, $search, $tagsArr, $notTagsArr);
 
         $searchResults = [];
-        foreach ($sortedInformation as $item)
+        foreach ($itemInformation as $item)
         {
             $result = $this->searchModel->getCardDetails($item["ListingID"]);
             $result['isRequesting'] = $this->searchModel->isRequesting($item["ListingID"], $userID);
@@ -153,7 +153,7 @@ class SearchController
     }
 
     /*lat = Latitude
-      long = Longitude 
+      long = Longitude
       $search = Search term
       $tagsArr = array of item tags */
 
@@ -183,7 +183,7 @@ class SearchController
 
 
         $itemInformation = $this->searchModel->getSearchResults($lat, $long, $search, $tagsArr, $notTagsArr);
-               
+
         return $itemInformation;
     }
 
@@ -195,7 +195,7 @@ class SearchController
         {
             $itemLocation = array('lat' => $item['Latitude'], 'long' => $item['Longitude']);
             $distance = $this->haversineDistance($userLocation, $itemLocation);
-            $itemList[$key]['distance'] = $distance;           
+            $itemList[$key]['distance'] = $distance;
         }
 
         usort($itemList, function($a, $b)
@@ -224,7 +224,7 @@ class SearchController
 
             if($bool < 0) {return 1;}
             elseif($bool > 0) {return -1;}
-            else{return 0;} 
+            else{return 0;}
         });
 
         return $itemList;
@@ -244,14 +244,14 @@ class SearchController
         $radLong2 = $latLong2['long'] * (M_PI/180);
 
         $radius = floatval('6371e3');  //Radius of the earth in meters
-        
+
         $haversineDiffLat = $this->haversine($radLat1 - $radLat2);
         $haversineDiffLong = $this->haversine($radLong1 - $radLong2);
         $haversineLongCosLat = cos($radLat1) * cos($radLong2) * $haversineDiffLong;
         $distance = 2*$radius*asin(sqrt($haversineDiffLat+$haversineLongCosLat));
 
-        return $distance; 
-    
+        return $distance;
+
     }
     function haversine($theta)
     {
