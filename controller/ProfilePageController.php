@@ -110,7 +110,11 @@ class ProfilePageController
         $watchListTabHTML = $this->generateWatchListSection();
         $analysisTabHTML = $this->generateAnalysisTabHTML();
 
+	    $CurrentConfig = new CurrentConfig();
+            $config = $CurrentConfig->getAll();
+	    
         $output = array(
+	    "config"=>$config,
             "isUser" => $isCurrentUser,
             "userID" => $userInformation["userID"],
             "userimage" => $userInformation["userimage"],
@@ -237,7 +241,11 @@ class ProfilePageController
         // Get advice text
         $adviceText = $this->generateAdviceText();
 
+	    $CurrentConfig = new CurrentConfig();
+        $config = $CurrentConfig->getAll();
+	    
         $listingsInformation = array(
+		"config"=>$config,
             "listingsCount" => $totalAvailableListings, // Total number of listings with quantity > 0
             "emptyListingsCount" => $totalEmptyListings, // Total number of listings with quantity <= 0
             "itemsOfferedCount" => $sendingTransactionsCount, // Total of all transactions for your items (can be greater than listings count)
@@ -351,12 +359,15 @@ class ProfilePageController
             );
             array_push($pendingOffers, $item);
         }
-
+	
         $offers = array("completed" => $completedOffers, "pending" => $pendingOffers);
 
         $isCurrentUser = ($this->userID == $this->getUserID() ? 1 : 0);
-
+	
+	$CurrentConfig = new CurrentConfig();
+        $config = $CurrentConfig->getAll();
         $listingsInformation = array(
+		"config"=>$config,
             "offers" => $offers, // Transactions for your items
             "isUser" => $isCurrentUser,
         );
@@ -469,7 +480,12 @@ class ProfilePageController
         $requests = array("completed" => $completedRequests, "pending" => $pendingRequests);
 
         $isCurrentUser = ($this->userID == $this->getUserID() ? 1 : 0);
+	    
+	$CurrentConfig = new CurrentConfig();
+        $config = $CurrentConfig->getAll();
+	    
         $listingsInformation = array(
+		"config" => $config,
             "requests" => $requests, // Transactions for other user's items
             "isUser" => $isCurrentUser
         );
@@ -562,7 +578,10 @@ class ProfilePageController
             $predictionNames = $this->generatePredictionNames();
         }
 
+	    $CurrentConfig = new CurrentConfig();
+        $config = $CurrentConfig->getAll();
         $listingsInformation = array(
+		"config"=>$config,
             "userListings" => $userListings, // All your listings
             "isUser" => $isCurrentUser,
 	        "isLoggedIn" => $isLoggedIn,
@@ -620,7 +639,10 @@ class ProfilePageController
         }
         $isCurrentUser = ($this->userID == $this->getUserID() ? 1 : 0);
         $template = $this->twig->loadTemplate("/users/watchlistTab.twig");
-        return $template->render(array("watchList"=>$watchList, "isUser" => $isCurrentUser));
+	    
+	    $CurrentConfig = new CurrentConfig();
+        $config = $CurrentConfig->getAll();
+        return $template->render(array("config"=>$config, "watchList"=>$watchList, "isUser" => $isCurrentUser));
 
         //return $watchListDetails;
     }
