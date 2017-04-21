@@ -136,10 +136,16 @@
 /*This is an edited version of the sidebar made by David Miller*/
 .search-header {
   position: absolute;
-  top: 60px;
+  top: 50px;
   width: 100%;
   z-index: 101;
-  background: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.8);
+}
+
+@media(min-width:1200px) {
+  .search-header {
+    top: 60px;
+  }
 }
 
 .search-options{
