@@ -25,8 +25,9 @@ class ProductionConfig extends AbstractConfig
             'TOKEN_AFTERSALT' => 'EndSalt11!!!1',
             'COOKIE_IDENTIFIER' => 'gpwastetopiadata',
 
+
             'ROOT_JS' => '//wastetest.xyxthris.xyz/public/js',
-            'ROOT_CSS' => '//wastetopia.herokuapp.com/css',
+            'ROOT_CSS' => '//wastetest.xyxthris.xyz/public/css',
             'ROOT_IMG' => '//wastetest.xyxthris.xyz/public/img',
             'ROOT_BASE' => '//wastetest.xyxthris.xyz/public',
 

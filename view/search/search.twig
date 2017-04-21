@@ -10,114 +10,137 @@ Search
 
 {% block content %}
 <!-- Create the search results window -->
+
 <div id="searchTerm" data-searchTerm="{{searchTerm}}"></div>
-<div class="search-advance" style="padding-top:65px;">
-  <div class="btn-group zero-padding" id="filter-dropdown">
-    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Filter
-      <span class="caret"></span></button>
-      <ul id="filter-list" class="dropdown-menu" role="tablist" aria-multiselectable="true">
-        <li role="tab">
-          <div class="filter-category" id="radius-category">
-            Search Radius
-            <a role="button" data-toggle="collapse" data-parent="#filter-list" href="#radius-options" aria-expanded="true" aria-controls="radius-options"><i class="material-icons"></i></a>
-          </div>
-          <div class="filter-options collapse in" id="radius-options" role="tabpanel" aria-labelledby="dietary-category">
-            <div class="container-fluid">
-              <div class="slider shor" id="radius"></div>
-              <div id="radius-output"></div>
+<div class="search-header">
+  <div class="search-options">
+    <div class="btn-group zero-padding" id="filter-dropdown">
+      <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Filter
+        <span class="caret"></span></button>
+        <ul id="filter-list" class="dropdown-menu" role="tablist" aria-multiselectable="true">
+          <li role="tab">
+            <div class="filter-category" id="radius-category">
+              Search Radius
+              <a class="collapsed" role="button" data-toggle="collapse" data-parent="#filter-list" href="#radius-options" aria-expanded="false" aria-controls="radius-options"><i class="material-icons"></i></a>
+
             </div>
-          </div>
-        </li>
-        <form id='filter-form'>
-          {% for itemFilter in filters %}
-          <li role="tab" class="tab">
-            <div class="filter-category" id="{{itemFilter.id}}-category" data-filtertype="{{itemFilter.type}}">
-              {{itemFilter.optionsCategory}}
-              <a role="button" data-toggle="collapse" data-parent="#filter-list" href="#{{itemFilter.id}}-options" aria-expanded="true" aria-controls="{{itemFilter.id}}-options"><i class="material-icons"></i></a>
+            <div class="filter-options collapse" id="radius-options" role="tabpanel" aria-labelledby="radius-category">
+              <div class="container-fluid">
+                <div class="slider shor" id="radius"></div>
+                <div id="radius-output"></div>
+              </div>
             </div>
-            <ul class="filter-options collapse in" id="{{itemFilter.id}}-options" role="tabpanel" aria-labelledby="{{itemFilter.id}}-category">
-              {% for option in itemFilter.options %}
-              <li>
-                <div class="form-group zero-padding">
-                  <div class="checkbox">
-                    <label>
-                      <input type="checkbox" value="{{option.value}}" id="{{option.id}}"> {{option.value}}
-                    </label>
-                  </div>
-                </div>
-              </li>
-              {% endfor %}
-            </ul>
           </li>
-          {% endfor %}
-        </form>
-      </ul>
+          <form id='filter-form'>
+            {% for itemFilter in filters %}
+            <li role="tab" class="tab">
+              <div class="filter-category" id="{{itemFilter.id}}-category" data-filtertype="{{itemFilter.type}}">
+                {{itemFilter.optionsCategory}}
+                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#filter-list" href="#{{itemFilter.id}}-options" aria-expanded="false" aria-controls="{{itemFilter.id}}-options"><i class="material-icons"></i></a>
+              </div>
+              <ul class="filter-options collapse" id="{{itemFilter.id}}-options" role="tabpanel" aria-labelledby="{{itemFilter.id}}-category">
+                {% for option in itemFilter.options %}
+                <li>
+                  <div class="form-group zero-padding">
+                    <div class="checkbox">
+                      <label>
+                        <input type="checkbox" value="{{option.value}}" id="{{option.id}}"> {{option.value}}
+                      </label>
+                    </div>
+                  </div>
+                </li>
+                {% endfor %}
+              </ul>
+            </li>
+            {% endfor %}
+          </form>
+        </ul>
+      </div>
+      <div class="form-group zero-padding" id="sort-select">
+        <label for="sort-options">Sort by</label>
+        <select id="sort-options" class="form-control">
+          <option value="D">Distance</option>
+          <option value="AZ">A-Z</option>
+          <option value="ZA">Z-A</option>
+          <option value="UR">User Popularity</option>
+        </select>
+      </div>
+      <a class="search-view" role="button" data-toggle="tab" href="#map-tab" id="btn-map"><i class="material-icons">map</i></a>
+      <a class="search-view hide" role="button" data-toggle="tab" href="#grid" id="btn-grid"><i class="material-icons">view_module</i></a>
     </div>
-    <div class="form-group zero-padding" id="sort-select">
-      <label for="sort-options">Sort by</label>
-      <select id="sort-options" class="form-control">
-        <option value="D">Distance</option>
-        <option value="AZ">A-Z</option>
-        <option value="ZA">Z-A</option>
-        <option value="UR">User Popularity</option>
-      </select>
-    </div>
-    <a class="search-view" role="button" data-toggle="tab" href="#map" id="btn-map"><i class="material-icons">map</i></a>
-    <a class="search-view hide" role="button" data-toggle="tab" href="#grid" id="btn-grid"><i class="material-icons">view_module</i></a>
+    <div id="filters-picked"></div>
   </div>
-</div>
-<div id="filters-picked"></div>
-<div class="tab-content search-result">
-  <div id="grid" class="tab-pane fade in active">
-    <div class="container-fluid">
-      <div class="grid">
-        {% for item in itemList %}
-        <div class="grid-item col-xs-12 col-sm-6 col-md-4">
-          <div class="thumbnail zero-padding" id="{{item.listingID}}">
-            <div class="caption">
-              <div class="centerAll">
-                <img src="{{item.userImg}}" class="user-image"/>
-                <div class="user-details">
-                  <a class="user-name" href="#{{item.userID}}">
-                    {{item.userName}}
-                  </a>
-                  <div class="added-date">
-                    {{item.addedDate}}
+
+  <div class="tab-content search-result" style="height:100%;">
+    <div id="grid" class="tab-pane fade in active">
+      <div class="container-fluid">
+        <div class="grid">
+          <!-- need this for mosonry layout to work properly with bootstrap grid system -->
+          {% for item in itemList %}
+          <div class="grid-item col-xs-12 col-sm-6 col-md-4 col-lg-3">
+            <div class="thumbnail zero-padding" id="{{item.listingID}}">
+              <div class="caption">
+                <div class="centerAll">
+                  <img src="{{item.userImg}}" class="user-image"/>
+                  <div class="user-details">
+                    <a class="user-name" href="#{{item.userID}}">
+                      {{item.userName}}
+                    </a>
+                    <div class="added-date">
+                      {{item.addedDate}}
+                    </div>
+                  </div>
+                  <div class="road-distance">
+                    <i class="material-icons">place</i> {{item.distance}}m
+
                   </div>
                 </div>
-                <div class="road-distance">
-                  <i class="material-icons">place</i> {{item.distance}}m
+              </div>
+              <img src="{{item.imgURL}}" style="border-color: lightgrey;" />
+              <div class="caption">
+                <h3>{{item.itemName}}</h3>
+                <div class="trans-info">
+                  <div><span>Quantity: </span> {{ item.quantity }}</div>
                 </div>
-              </div>
-            </div>
-            <img src="{{item.imgURL}}" style="border-color: lightgrey;" />
-            <div class="caption">
-              <h3>{{item.itemName}}</h3>
-              <div class="trans-info">
-                <div><span>Quantity: </span> {{ item.quantity }}</div>
-              </div>
-              <div class="nav-btns">
-                <a href="#view" class="btn btn-primary" role="button" id="{{item.listingID}}">View</a>
-                {% if isRequesting %}
-                <a href="#cancel-by-listing" class="btn btn-default" role="button">Cancel request</a>
-                {% else %}
-                <a href="#request" class="btn btn-default" role="button">Request</a>
-                {% endif %}
-                <a href="#watch" role="button" class="btn-watch {% if isWatching %} watched {% endif %}" id="{{item.listingID}}"><i class="material-icons">visibility</i></a>
+                <div class="nav-btns">
+                  <a href="#view" class="btn btn-primary" role="button" id="{{item.listingID}}">View</a>
+                  {% if isRequesting %}
+                  <a href="#cancel-by-listing" class="btn btn-default" role="button">Cancel request</a>
+                  {% else %}
+                  <a href="#request" class="btn btn-default" role="button">Request</a>
+                  {% endif %}
+                  <div class="extra">
+                    <a href="#watch" role="button" class="btn-watch {% if isWatching %} watched {% endif %}" id="{{item.listingID}}"><i class="material-icons">visibility</i></a>
+                    <a href="#message" role="button" class="btn-watch" id="{{item.listingID}}"><i class="material-icons">message</i></a>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
+          {% endfor %}
         </div>
-        {% endfor %}
       </div>
     </div>
-  </div>
-  <div id="map" class="tab-pane fade">
-    <div class="container-fluid">
-      <div id="search-map"></div>
+
+    <div id="map-tab" class="tab-pane fade" style="height:100%;">
+      <div class="warning">
+        <div class="alert alert-dismissible alert-warning">
+          <button type="button" class="close" data-dismiss="alert">×</button>
+          <h4>Warning!</h4>
+          <p>The pins on the map point to estimated positions based on the items' related <strong>postcodes</strong>, for the actual location ask the users after making a request.</p>
+        </div>
+      </div>
+      <div class="container-fluid" style="height:100%;">
+        <div class="row" style="height:100%;">
+          <div class="col-sm-12 col-md-12 zero-padding" style="height:100%;">
+            <div id="map" style="height:100%;"></div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
-</div>
-{% endblock %}
+  {% endblock %}
 
-{% set jslist = ["plugins/isotope/isotope.pkgd.min.js", "plugins/noUiSlider/nouislider.min.js", "plugins/jquery-match-height/jquery.matchHeight.js", "plugins/wnumb-1.1.0/wNumb.js", "searchPage.js", "request.js"] %}
+  {% set jslist = ["plugins/imagesloaded/imagesloaded.pkgd.min.js", "plugins/isotope/isotope.pkgd.min.js", "plugins/MarkerClusterer/markerclusterer.js","plugins/noUiSlider/nouislider.min.js", "plugins/wnumb-1.1.0/wNumb.js","mapSearch.js", "searchPage.js", "search.js", "request.js"] %}
+
