@@ -128,7 +128,7 @@ class CardDetailsModel
         $results = $statement->fetchAll(PDO::FETCH_ASSOC);
 
 	error_log("Image: ");
-	error_log($results);
+	error_log(json_encode($results));
 	    
         if (count($results) == 0){
             return $this->config["ROOT_IMG"]."/PCI.png";
