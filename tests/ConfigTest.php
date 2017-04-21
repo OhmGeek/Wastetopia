@@ -1,13 +1,12 @@
 <?php
-
 /**
  * Created by PhpStorm.
  * User: ryan
  * Date: 28/02/17
  * Time: 15:50
  */
+
 namespace Wastetopia\Tests;
-require_once(__DIR__ . '/../vendor/autoload.php');
 
 use Wastetopia\Config\LocalConfig;
 use PHPUnit\Framework\TestCase;
