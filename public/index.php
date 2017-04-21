@@ -282,7 +282,7 @@ $klein->with('/items', function () use ($klein) {
 
 
     $klein->respond('POST', '/request/?', function ($request, $response) {
-        forceLogin($request->uri());
+        //forceLogin($request->uri());
         // Show a single user
         $listingID = $request->listingID;
         $quantity = $request->quantity;
@@ -291,7 +291,7 @@ $klein->with('/items', function () use ($klein) {
     });
 
     $klein->respond('POST', '/confirm-request/?', function($request, $response){
-        forceLogin($request->uri());
+        //forceLogin($request->uri());
         $listingID = $request->listingID; // Might not have this information
         $transactionID = $request->transactionID; // Can use this to get listingID
         $quantity = $request->quantity; // Assume it is given by default
@@ -300,7 +300,7 @@ $klein->with('/items', function () use ($klein) {
     });
 
     $klein->respond('POST', '/reject-request/?', function($request, $response){
-        forceLogin($request->uri());
+        //forceLogin($request->uri());
         $listingID = $request->listingID; // Might not have this information
         $transactionID = $request->transactionID; // Can use this to get listingID
         $model = new RequestModel();
@@ -308,7 +308,7 @@ $klein->with('/items', function () use ($klein) {
     });
 
     $klein->respond('POST', '/cancel-request/?', function($request, $response){
-        forceLogin($request->uri());
+        //forceLogin($request->uri());
         $transactionID = $request->transactionID; // Can use this to get listingID
         print_r($transactionID);
         $model = new RequestModel();
@@ -316,7 +316,7 @@ $klein->with('/items', function () use ($klein) {
     });
 
     $klein->respond('POST', '/cancel-request-listing/?', function($request, $response){
-        forceLogin($request->uri());
+        //forceLogin($request->uri());
         $listingID = $request->listingID;
         $model = new RequestModel();
         $transactionID = $model->getTransactionIDFromListingID($listingID);
@@ -324,7 +324,7 @@ $klein->with('/items', function () use ($klein) {
     });
 
     $klein->respond('POST', '/renew-listing/?', function($request, $response){
-        forceLogin($request->uri());
+        //forceLogin($request->uri());
         $listingID = $request->listingID;
         $newQuantity = $request->quantity;
         $newUseByDate = $request->useByDate;
@@ -333,7 +333,7 @@ $klein->with('/items', function () use ($klein) {
     });
 
     $klein->respond('POST', '/remove-listing/?', function($request, $response){
-        forceLogin($request->uri());
+        //forceLogin($request->uri());
         $listingID = $request->listingID;
         $model = new RequestModel();
         return $model->withdrawListing($listingID);
@@ -341,7 +341,7 @@ $klein->with('/items', function () use ($klein) {
 
     // Not sure whether to move this to profile page as this will be where it is used
     $klein->respond('POST', '/rate-user/?', function($request, $response){
-        forceLogin($request->uri());
+        //forceLogin($request->uri());
         $transactionID = $request->transactionID;
         $rating = $request->rating;
         $model = new PopularityModel();
