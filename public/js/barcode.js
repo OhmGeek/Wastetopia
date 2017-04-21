@@ -57,7 +57,7 @@ var scanBarcode = function() {
         console.log("Barcode");
         // use JQuery to get the barcode
         var barcode = $(htmlResponse).find("pre")[0].innerText;
-
+        $('#barcode-msg').text("Barcode: " + barcode);
         $.getJSON('https://world.openfoodfacts.org/api/v0/product/' + barcode + ".json", function (data) {
             console.log(data);
             if(data.status === 1) {
@@ -70,6 +70,9 @@ var scanBarcode = function() {
             autofill(barcodeinfo.product);
         });
 
+    })
+        .fail(function() {
+            $('#barcode-msg').text("Unknown Barcode");
     });
 };
 
