@@ -5,6 +5,7 @@ namespace Wastetopia\Controller;
 use Wastetopia\Model\SearchModel;
 use Wastetopia\Model\CardDetailsModel;
 use Wastetopia\Model\UserCookieReader;
+use Wastetopia\Config\CurrentConfig;
 
 class SearchController
 {
@@ -14,16 +15,29 @@ class SearchController
         $this->cardDetailsModel = new CardDetailsModel();
     }
 
-    public function recommendationSearch($tagsArr, $currentUserID)
+    public function recommendationSearch($tagsArr, $currentUserID = null)
     {
         $results = $this->searchModel->getReccomendationResults($tagsArr, $currentUserID);
         $ids = array_slice($results, 0, 4);
 
         $searchResults = [];
-        foreach ($ids as $item) {
+        foreach ($ids as $item)
+        {
             $result = $this->searchModel->getCardDetails($item["ListingID"]);
-            $result2 = $this->searchModel->getDefaultImage($item["ListingID"]);
-            $searchResults[] = array_merge($result, $result2);
+            $result['isRequesting'] = $this->searchModel->isRequesting($item["ListingID"], $userID);
+            $result['isWatching'] = $this->searchModel->isWatching($item["ListingID"], $userID);
+
+            $image = $this->searchModel->getDefaultImage($item["ListingID"]);
+            if(empty($image))
+            {
+                $config = new CurrentConfig();
+                $result['Image_URL'] = $config->getProperty('ROOT_IMG') . '/PCI.png';
+            }
+            else
+            {
+                $result['Image_URL'] = $image['Image_URL'];
+            }
+            $searchResults[] = $result;
         }
 
         return $searchResults;
@@ -39,7 +53,7 @@ class SearchController
         $offset = 30*intval($pageNumber);
         $limit = $offset + 30;
 
-        $distance = $distanceLimit * 1000; /*Convert Km in m*/
+        $distance = $distanceLimit * 1000.0; /*Convert Km in m*/
 
         $itemInformation = $this->search($lat, $long, $search, $tagsArr, $notTagsArr);
 
@@ -47,10 +61,10 @@ class SearchController
         $newItemInformation = array();
         $userLoc = array('lat' => $lat, 'long' => $long);
         foreach ($itemInformation as $key => $item) {
-            $itemLoc = array($item['lat'], $item['long']);
+            $itemLoc = array('lat' => $item['Latitude'], 'long' => $item['Longitude']);
             if($this->haversineDistance($userLoc, $itemLoc) < $distance)
             {
-                $newItemInformation['key'] = $item;      
+                $newItemInformation[] = $item;      
             }
         }
         $itemInformation = $newItemInformation;
@@ -91,10 +105,20 @@ class SearchController
         foreach ($sortedInformation as $item)
         {
             $result = $this->searchModel->getCardDetails($item["ListingID"]);
-            $result2 = $this->searchModel->getDefaultImage(17);
             $result['isRequesting'] = $this->searchModel->isRequesting($item["ListingID"], $userID);
             $result['isWatching'] = $this->searchModel->isWatching($item["ListingID"], $userID);
-            $searchResults[] = array_merge($result, $result2);
+
+            $image = $this->searchModel->getDefaultImage($item["ListingID"]);
+            if(empty($image))
+            {
+                $config = new CurrentConfig();
+                $result['Image_URL'] = $config->getProperty('ROOT_IMG') . '/PCI.png';
+            }
+            else
+            {
+                $result['Image_URL'] = $image['Image_URL'];
+            }
+            $searchResults[] = $result;
         }
 
         $pageResults = array_slice($searchResults, $offset, $limit);
@@ -106,11 +130,23 @@ class SearchController
         $itemInformation = $this->search($lat, $long, $search, $tagsArr, $notTagsArr);
 
         $searchResults = [];
-        foreach ($itemInformation as $item)
+        foreach ($sortedInformation as $item)
         {
             $result = $this->searchModel->getCardDetails($item["ListingID"]);
-            $result2 = $this->searchModel->getDefaultImage(17);
-            $searchResults[] = array_merge($result, $result2);
+            $result['isRequesting'] = $this->searchModel->isRequesting($item["ListingID"], $userID);
+            $result['isWatching'] = $this->searchModel->isWatching($item["ListingID"], $userID);
+
+            $image = $this->searchModel->getDefaultImage($item["ListingID"]);
+            if(empty($image))
+            {
+                $config = new CurrentConfig();
+                $result['Image_URL'] = $config->getProperty('ROOT_IMG') . '/PCI.png';
+            }
+            else
+            {
+                $result['Image_URL'] = $image['Image_URL'];
+            }
+            $searchResults[] = $result;
         }
 
         return json_encode($searchResults);

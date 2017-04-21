@@ -14,6 +14,7 @@ use Wastetopia\Controller\SearchController;
 use Wastetopia\Controller\MessageController;
 use Wastetopia\Controller\RecommendationController;
 use Wastetopia\Controller\SearchPageController;
+use Wastetopia\Controller\IndexPageController;
 use Wastetopia\Controller\RegistrationController;
 use Wastetopia\Controller\AddItemController;
 use Wastetopia\Controller\ViewItemController;
@@ -28,35 +29,11 @@ use Wastetopia\Model\RegistrationModel; // For verification
 
 
 
-/**
- * Returns True if getUserID doesn't return "" or null
- * @return bool True if user is logged in
- */
-function isUserLoggedIn(){
-    //$reader = new UserCookieReader();
-    //$userID$reader->get_user_id();
-    $userID = 6; //Hardcoded for now
-    return $userID !== ""; // Assume get_user_id() returns "" or null if not logged in?
-}
-
 
 /**
  * Function to be called at start of routing for any route where user must be logged in to access
  * @return - Nothing, either redirects user to login page and exits or just returns to function that called it
  */
-function mustBeLoggedIn(){
-    // Example of how redirection might be done
-    $CurrentConfig = new CurrentConfig();
-    $config = $CurrentConfig->getAll();
-    $baseURL = $config["ROOT_BASE"];
-    $redirectionURL = $baseURL."/login";
-    if(!($this->isUserLoggedIn())){
-        header('Location: '.$redirectionURL);
-        exit();
-    }else{
-        // DO - nothing, let program continue as normal
-    }
-}
 
 
 // check if we should use production? Otherwise, use community.
@@ -65,7 +42,14 @@ $config = new CurrentConfig();
 $config->loadConfig($mode);
 $base  = dirname($_SERVER['PHP_SELF']);
 
-
+function forceLogin($destRoute) {
+    if(!\Wastetopia\Controller\Authenticator::isAuthenticated()) {
+        //redirect to the current route
+        header("Location: " . $_ENV['ROOT_BASE'] . '/login?dest='. urlencode($_SERVER['REQUEST_URI']));
+        exit();
+    }
+    return true;
+}
 //// Update request when we have a subdirectory
 if(ltrim($base, '/')){
     $_SERVER['REQUEST_URI'] = substr($_SERVER['REQUEST_URI'], strlen($base));
@@ -74,9 +58,16 @@ if(ltrim($base, '/')){
 $klein = new Klein();
 
 $klein->respond("GET", "/?", function() {
-  return "HomePage";
+  $indexController = new IndexPageController();
+  return $indexController->renderIndexPage();
 });
 
+
+$klein->respond("GET", "/notifications/update", function($request, $response){
+    //forceLogin($request->uri());
+   $model = new NotificationModel();
+   return $model->getAll(1); // Get as JSON
+});
 
 $klein->with('/api', function () use ($klein) {
 
@@ -108,26 +99,39 @@ $klein->with('/api', function () use ($klein) {
     });
 });
 
-$klein->respond('GET', '/search/.[:search]?', function ($request, $response) {
+$klein->respond('GET', '/search/[**:param]?', function ($request, $response) {
     $controller = new SearchPageController();
-    return $controller->render($request->search);
+
+    return $controller->render(explode('/', $request->param));
+});
+
+$klein->respond('POST', '/search/', function ($request, $response) {
+    $controller = new SearchPageController();
+
+    return $controller->renderAdvanced($request->paramsPost());
 });
 
 
 $klein->respond("GET", "/login", function($request, $response) {
+  header("Cache-Control: no-store, must-revalidate, max-age=0");
+  error_log($request->dest);
   $controller = new LoginController();
-  return $controller->index($response);
+  return $controller->index($response, urldecode($request->dest));
 });
 
-
+$klein->respond("GET", "/logout", function($request, $response) {
+    header("Cache-Control: no-store, must-revalidate, max-age=0");
+    setcookie("gpwastetopiadata", null);
+    return "You have been logged out. You can now close the browser.";
+});
 
 $klein->with('/register', function() use ($klein){
-  
+
   $klein->respond("GET", "/?", function($request, $response) {
     $controller = new RegistrationController();
     return $controller->generatePage();
   });
-  
+
   $klein->respond("POST", "/add-user", function($request, $response){
       $forename = $request->forename;
       $surname = $request->surname;
@@ -135,11 +139,11 @@ $klein->with('/register', function() use ($klein){
       $password = $request->password;
       $passwordConfirm = $request->passwordConfirm;
       $pictureURL = $request->pictureURL;
-      
+
       $controller = new RegistrationController();
       return $controller->addUser($forename, $surname, $email, $password, $passwordConfirm, $pictureURL);
   });
-    
+
     $klein->respond("GET","/verify/[:verificationCode]", function($request, $response){
         $verificationCode = $request->verificationCode;
         $model = new RegistrationModel(); // Put function in controller?
@@ -153,7 +157,7 @@ $klein->with('/register', function() use ($klein){
         }
 
     });
-    
+
     // Only for testing purposes
     $klein->respond("GET", "/delete/[:firstName]/[:lastName]", function($request, $response){
        $firstName = $request->firstName;
@@ -161,35 +165,29 @@ $klein->with('/register', function() use ($klein){
         $model = new RegistrationModel();
         return $model->deleteUserByName($firstName, $lastName);
     });
-  
+
 });
 
-
-$klein->respond("GET", "/get-env", function() {
-   $envStr = "DB Host: " . $_ENV['DB_HOST'] . "\n";
-    $envStr .= "DB_NAME " . $_ENV['DB_NAME'] . "\n";
-    $envStr .= "DB_USER " . $_ENV['DB_USER'] . "\n";
-    $envStr .= "DB_PASS " . $_ENV['DB_PASS'] . "\n";
-    echo "Printing stuff now \n";
-    return $envStr;
-});
 
 
 // Used for charts - needs testing
 $klein->with("/analysis", function() use ($klein){
 
     $klein->respond('GET', '/?', function($request, $response){
+        forceLogin($request->uri());
         $controller = new AnalysisController();
         return $controller->generatePage();
     });
 
     $klein->respond('GET', '/categories', function($request, $response){
+        forceLogin($request->uri());
         $controller = new AnalysisController();
         return $controller->getCategoryDetailsJSON();
     });
 
 
     $klein->respond('GET', '/get-request-tags/[:categoryID]', function($request, $response){
+       forceLogin($request->uri());
        $categoryID = $request->categoryID;
        $categoryIDs = array();
        array_push($categoryIDs, $categoryID);
@@ -199,6 +197,7 @@ $klein->with("/analysis", function() use ($klein){
 
 
     $klein->respond('GET', '/get-sending-tags/[:categoryID]', function($request, $response){
+        forceLogin($request->uri());
         $categoryID = $request->categoryID;
         $categoryIDs = array();
         array_push($categoryIDs, $categoryID);
@@ -208,12 +207,14 @@ $klein->with("/analysis", function() use ($klein){
 
 
     $klein->respond('GET', '/get-request-names', function($request, $response){
+        forceLogin($request->uri());
         $controller = new AnalysisController();
         return $controller->getTotalNameFrequenciesReceiving();
     });
 
 
     $klein->respond('GET', '/get-sending-names', function($request, $response){
+        forceLogin($request->uri());
         $controller = new AnalysisController();
         return $controller->getTotalNameFrequenciesSending();
     });
@@ -223,94 +224,109 @@ $klein->with("/analysis", function() use ($klein){
 $klein->with("/profile", function() use ($klein) {
 
    $klein->respond('GET', '/?', function($request, $response){
+        forceLogin($request->uri());
         $controller = new ProfilePageController(1); //View own profile
         return $controller->generatePage();
     });
-    
+
     $klein->respond('GET', '/user/[:userID]', function($request, $response){
         $controller = new ProfilePageController(0, $request->userID); //View other user's profile
         return $controller->generatePage();
     });
-    
+
     $klein->respond('GET', '/update/[:userID]', function($request, $response){
+        forceLogin($request->uri());
        $controller = new ProfilePageController(0, $request->userID);
-       return $controller->generateProfileContentHTML(); 
+       return $controller->generateProfileContentHTML();
     });
-    
+
     $klein->respond('GET', '/load-home-tab/[:userID]', function($request, $response){
+        forceLogin($request->uri());
         $controller = new ProfilePageController(0, $request->userID);
-        return $controller->generateHomeSection(); 
+        return $controller->generateHomeSection();
     });
-                    
+
     $klein->respond('GET', '/load-listings-tab/[:userID]', function($request, $response){
+        forceLogin($request->uri());
         $controller = new ProfilePageController(0, $request->userID);
-        return $controller->generateListingsSection(); 
+        return $controller->generateListingsSection();
     });
-    
+
     $klein->respond('GET', '/load-offers-tab/[:userID]', function($request, $response){
+        forceLogin($request->uri());
         $controller = new ProfilePageController(0, $request->userID);
-        return $controller->generateOffersSection(); 
+        return $controller->generateOffersSection();
     });
-    
+
     $klein->respond('GET', '/load-requests-tab/[:userID]', function($request, $response){
+        forceLogin($request->uri());
         $controller = new ProfilePageController(0, $request->userID);
-        return $controller->generateRequestsSection(); 
+        return $controller->generateRequestsSection();
     });
-    
+
     $klein->respond('GET', '/load-watchlist-tab/[:userID]', function($request, $response){
+        forceLogin($request->uri());
         $controller = new ProfilePageController(0, $request->userID);
-        return $controller->generateWatchListSection(); 
+        return $controller->generateWatchListSection();
     });
-    
+
     $klein->respond('POST', '/toggle-watch-list/?', function($request, $response){
+        forceLogin($request->uri());
        $controller = new ProfilePageController(1);
        $response = $controller->toggleWatchListListing($request->listingID);
        return $response;
     });
-    
+
     $klein->respond('GET', '/recommended', function($request, $response){
+        forceLogin($request->uri());
         $controller = new RecommendationController();
         return $controller->generateRecommendedSection();
     });
-    
+
     // Needs testing
     $klein->respond('POST', '/set-pending-viewed', function($request, $response){
+        forceLogin($request->uri());
        $controller = new ProfilePageController(1);
        return $controller->setAllPendingAsViewed();
     });
-    
-    
+
+
     $klein->respond('POST', '/set-listing-transaction-hidden', function($request, $response){
+        forceLogin($request->uri());
        $giverOrReceiver = $request->giverOrReceiver;
         $transactionID = $request->transactionID;
         $value = 1;
         $controller = new ProfilePageController(1); // Own profile
         return $controller-> setListingTransactionHiddenFlag($giverOrReceiver, $transactionID, $value);
     });
-    
+
     // Needs testing
     $klein->respond('POST', '/change-password', function($request, $response){
+        forceLogin($request->uri());
         $oldPassword = $request->oldPassword;
         $newPassword = $request->newPassword;
         $controller= new ProfilePageController(1);
-        return $controller->changePassword($oldPassword, $newPassword);    
+        return $controller->changePassword($oldPassword, $newPassword);
     });
-    
+
 //    // Needs testing
 //    $klein->respond('POST', '/reset-password', function($request, $response){
 //       $controller = new ProfilePageController(1);
 //       return $controller->resetPassword();
 //    });
-    
+
     // Needs testing
     $klein->respond('POST', '/change-profile-picture', function($request, $response){
+
+        forceLogin($request->uri());
         $files = $request->files();        
         $controller = new ProfilePageController(1);
         return $controller->changeProfilePicture($files);
     });
-   
+
     //Needs testing
     $klein->respond('POST', '/change-email', function($request, $response){
+        forceLogin($request->uri());
         $oldEmail = $request->oldEmail;
         $newEmail = $request->newEmail;
         $controller = new ProfilePageController(1);
@@ -327,72 +343,80 @@ $klein->with('/items', function () use ($klein) {
         // Generic Items Page
         return "Main Item Page";
     });
-    
+
     $klein->respond('GET', '/view/[:id]', function($request, $response){
         $itemID = $request->id;
         return "Show item ".$itemID;
     });
 
-    
+
     $klein->respond('POST', '/request/?', function ($request, $response) {
+        forceLogin($request->uri());
         // Show a single user
         $listingID = $request->listingID;
         $quantity = $request->quantity;
         $model = new RequestModel();
         return $model->requestItem($listingID, $quantity);
     });
-    
+
     $klein->respond('POST', '/confirm-request/?', function($request, $response){
+        forceLogin($request->uri());
         $listingID = $request->listingID; // Might not have this information
         $transactionID = $request->transactionID; // Can use this to get listingID
         $quantity = $request->quantity; // Assume it is given by default
         $model = new RequestModel();
         return $model->confirmRequest($listingID, $transactionID, $quantity);
     });
-    
+
     $klein->respond('POST', '/reject-request/?', function($request, $response){
+        forceLogin($request->uri());
         $listingID = $request->listingID; // Might not have this information
         $transactionID = $request->transactionID; // Can use this to get listingID
         $model = new RequestModel();
         return $model->rejectRequest($listingID, $transactionID);
     });
-    
+
     $klein->respond('POST', '/cancel-request/?', function($request, $response){
+        forceLogin($request->uri());
         $transactionID = $request->transactionID; // Can use this to get listingID
         print_r($transactionID);
         $model = new RequestModel();
         return $model->withdrawRequest($transactionID);
     });
-    
+
     $klein->respond('POST', '/cancel-request-listing/?', function($request, $response){
+        forceLogin($request->uri());
         $listingID = $request->listingID;
         $model = new RequestModel();
         $transactionID = $model->getTransactionIDFromListingID($listingID);
         return $model->withdrawRequest($transactionID);
     });
-    
+
     $klein->respond('POST', '/renew-listing/?', function($request, $response){
+        forceLogin($request->uri());
         $listingID = $request->listingID;
         $newQuantity = $request->quantity;
         $newUseByDate = $request->useByDate;
         $model = new RequestModel();
         return $model->renewListing($listingID, $newQuantity, $newUseByDate);
     });
-    
+
     $klein->respond('POST', '/remove-listing/?', function($request, $response){
+        forceLogin($request->uri());
         $listingID = $request->listingID;
         $model = new RequestModel();
         return $model->withdrawListing($listingID);
     });
-    
+
     // Not sure whether to move this to profile page as this will be where it is used
     $klein->respond('POST', '/rate-user/?', function($request, $response){
+        forceLogin($request->uri());
         $transactionID = $request->transactionID;
         $rating = $request->rating;
         $model = new PopularityModel();
         return $model->rateTransaction($transactionID, $rating);
     });
-    
+
 });
 
 
@@ -402,18 +426,14 @@ $klein->with('/api', function () use ($klein) {
         $controller = new LoginController();
         $username = $request->email;
         $password = $request->password;
-        $dest = $_ENV['ROOT_BASE'];
+        $dest = $request->dest;
         return $controller->login($username, $password, $dest, $response);
-    });
-    $klein->respond('GET', '/[:id]', function ($request, $response) {
-        // Show a single user
-        $itemID = $request->id;
-        return "Show Item " . $itemID;
     });
 });
 // todo authenticate on messages. Must be logged in to view correct messages.
 $klein->with('/messages', function () use ($klein) {
     $klein->respond('GET', '/?', function ($request, $response) {
+        forceLogin($request->uri());
       // Show all conversations
       $controller = new ConversationListController();
       return $controller->generatePage();
@@ -421,6 +441,7 @@ $klein->with('/messages', function () use ($klein) {
     // these are the API based messaging tasks
     // todo: error/failure in response.
     $klein->respond('POST', '/send', function ($request, $response) {
+        forceLogin($request->uri());
         //send a message
         //we need the conversationID and the message.
         $conversationID = $request->conversationID;
@@ -432,26 +453,31 @@ $klein->with('/messages', function () use ($klein) {
         return "";
     });
     $klein->respond('POST', '/delete-conversation', function ($request, $response) {
+        forceLogin($request->uri());
       $controller = new ConversationListController();
       $conversationID = $request->conversationID;
       $controller->deleteConversation($conversationID);
       return "";
     });
     $klein->respond('GET', '/poll-sending', function ($request, $response) {
+        forceLogin($request->uri());
       $controller = new ConversationListController();
       return $controller->generateSendingTabHTML();
     });
     $klein->respond('GET', '/poll-receiving', function ($request, $response) {
+        forceLogin($request->uri());
       $controller = new ConversationListController();
       return $controller->generateReceivingTabHTML();
     });
     $klein->respond('GET', '/poll-messages/[:conversationID]', function ($request, $response) {
+        forceLogin($request->uri());
       $conversationID = $request->conversationID;
       $controller = new MessageController();
       return $controller->generateMessageDisplay($conversationID);
     });
 
     $klein->respond('GET', '/conversation/[:listingID]', function ($request, $response) {
+        forceLogin($request->uri());
         // view a specific conversation
         $listingID = $request->listingID;
         $controller = new MessageController();

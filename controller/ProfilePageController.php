@@ -14,7 +14,7 @@ use Twig_Environment;
 use Wastetopia\Controller\RegistrationController; // For email verification functions
 use Wastetopia\Controller\AnalysisController;   // For Advice Tab
 use Wastetopia\Controller\RecommendationController; // For Recommendations and Predictions tab
-
+use Wastetopia\Model\UserCookieReader;
 use Wastetopia\Model\ProfilePageModel;
 use Wastetopia\Model\CardDetailsModel;
 
@@ -60,9 +60,8 @@ class ProfilePageController
      */
     private function getUserID()
     {
-        // $reader = new UserCookieReader();
-        // return $reader->get_user_id();
-        return 6; // Usually 6
+         $reader = new UserCookieReader();
+         return $reader->get_user_id();
     }
 
     /**
@@ -70,7 +69,7 @@ class ProfilePageController
      * @return bool True if user is logged in
      */
     function isUserLoggedIn(){
-        return $this->getUserID() !== "";
+        return \Wastetopia\Controller\Authenticator::isAuthenticated();
     }
 
 	
@@ -553,10 +552,18 @@ class ProfilePageController
         $userListings = array("available" => $allAvailableListings, "outOfStock" => $allEmptyListings);
 
         $isCurrentUser = ($this->userID == $this->getUserID() ? 1 : 0);
+
+        $predictionNames = array();
+        if(!($isCurrentUser)){
+
+            $predictionNames = $this->generatePredictionNames();
+        }
+
         $listingsInformation = array(
             "userListings" => $userListings, // All your listings
             "isUser" => $isCurrentUser,
-	    "isLoggedIn" => $isLoggedIn
+	        "isLoggedIn" => $isLoggedIn,
+            "names" => $predictionNames
         );
 
         $template = $this->twig->loadTemplate("/users/listingsTab.twig");
@@ -632,7 +639,26 @@ class ProfilePageController
      */
     function generatePredictionHTML(){
         $controller = new RecommendationController();
-        return $controller->generatePredictionSection();
+        return $controller->generatePredictionSection($this->userID);
+    }
+
+
+    /**
+     * Gets the top 3 names of items the user gives away
+     * @return array
+     */
+    function generatePredictionNames(){
+        $controller = new AnalysisController();
+        $names = json_decode($controller->getTotalNameFrequenciesSending($this->userID), true);
+
+        $results = array();
+        foreach(array_keys($names) as $name){
+            array_push($results, $name);
+        }
+
+        $limit = count($results) < 3 ? count($results) : 3;
+        $results = array_slice($results, 0, $limit, true);
+        return $results;
     }
 
 
@@ -669,7 +695,7 @@ class ProfilePageController
     function generateAnalysisTabHTML(){
         // Generate the HTML for the Analysis tab but don't load?
         $controller = new AnalysisController();
-        return $controller -> generatePage();
+        return $controller -> generatePage($this->userID);
     }
 
 
@@ -736,8 +762,13 @@ class ProfilePageController
     */
      function changePassword($oldPassword, $newPassword){
         $userID = $this->getUserID(); 
+	print_r("User: ".$userID);
+	     print_r("Old: ".$oldPassword);
+	     print_r("New: ".$newPassword);
+	     
 	    // Get password hash and salt from the database
          $passwordDetails = $this->model->getPasswordDetails($userID);
+	 print_r("Details: ".$passwordDetails);
          $passwordHash = $passwordDetails["Password_Hash"];
          $passwordSalt = $passwordDetails["Salt"];
          
@@ -791,6 +822,11 @@ class ProfilePageController
         if($actualEmail !== $oldEmail){
            return $this->errorMessage("Incorrect old email");
         }
+	error_log("UserID: ".$userID);    
+	error_log("oldEmail: ".$oldEmail);
+	    error_log("newEmail: ".$newEmail);
+	    error_log("ActualEmail: ".$actualEmail);
+	    
         $registrationController = new RegistrationController();
         if(!$registrationController->checkValidEmail($newEmail)){
            return $this->errorMessage("Email is not valid");
@@ -801,12 +837,12 @@ class ProfilePageController
         }
 
         // Reset account
-        $this->model->resetAccount($userID);
+        $this->model->resetAccount($userID, $newEmail);
 
         // Log user out - NOT SURE ABOUT THIS
 
         // Send verification email
-        $registrationController->sendVerificationEmail($newEmail, $newEmail);
+        $registrationController->sendVerificationEmail($newEmail, $newEmail, 1);
 
         return $this->successMessage("New verification email sent to your specified email");
     }

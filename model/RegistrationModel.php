@@ -111,6 +111,7 @@ class RegistrationModel
      */
     function addMainUserDetails($forename, $surname, $email, $passwordHash, $salt, $pictureURL, $verificationCode)
     {
+       
         //Need to add PictureURL when we have default
         $statement = $this->db->prepare("
             INSERT INTO `User` (`Forename`, `Surname`, `Email_Address`, `Password_Hash`, `Salt`, `Verification_Code`)
@@ -147,9 +148,10 @@ class RegistrationModel
 //         if ($pictureURL == NULL) {
 //             // $pictureURL = DEFAULT_IMAGE;
 //         }
-
+        
         $salt = $this->generateSalt();
         $passwordHash = hash('sha256',$salt.$password);
+        
 
         $verificationCode = $this->generateSalt(); // New random string for verification
         
@@ -189,13 +191,14 @@ class RegistrationModel
     
     /**
      * Generates a random Salt string (in Hexadecimal) between 30 and 40 bytes in length
+     * @param $min (default 30)
+     * @param $max (default 40)
      * @return string
      */
-    function generateSalt(){
-        $salt = random_bytes(mt_rand(30, 40));
+    function generateSalt($min = 20, $max = 30){
+        $salt = random_bytes(mt_rand($min, $max));
         return bin2hex($salt);
-    }
-    
+    }	
     
     /** Changes the Active flag for user with the given verification code
     * @param $verificationCode
@@ -203,32 +206,14 @@ class RegistrationModel
     */
     function verifyUser($verificationCode){
         $statement = $this->db->prepare("
-            SELECT *
-            FROM `User`
-            WHERE `User`.`Verification_Code` = :code
-            AND `User`.`Active` = 0;
-        ");
-
-        $statement->bindValue(":code", $verificationCode, PDO::PARAM_STR);
-        $statement->execute();
-        
-        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-        
-        if(count($result) > 0){
-             $userID = $result["UserID"]; // UserID of new user
-             $statement2 = $this->db->prepare("
                 UPDATE `User`
                 SET `Active` = 1
-                WHERE `User`.`UserID` = :userID;
+                WHERE `User`.`Verification_Code` = :code;
                 
             ");
 
-            $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
-
-            $statement->execute();
-            return True;
-        }else{
-            return False;
-        }
+        $statement->bindValue(":code", $verificationCode, PDO::PARAM_STR);
+        $result = $statement->execute();
+        return $result;    
     }
 }

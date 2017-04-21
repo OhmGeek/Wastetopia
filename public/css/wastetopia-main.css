@@ -48,7 +48,7 @@
   text-transform: uppercase;
   margin-left: 5px;
   height: 30px;
-  width: 75px;
+  width: 78px;
   font-size: 12px;
   padding: 5px 10px;
   color: black;
@@ -146,6 +146,7 @@
   .search-header {
     top: 60px;
   }
+
 }
 
 .search-options{
@@ -365,6 +366,7 @@ html, body{
   display: flex;
   justify-content: center;
   font-weight: bolder;
+
 }
 
 .gm-style-iw {
@@ -756,6 +758,7 @@ a:link, a:hover, a:visited, a:active  {
   font-size: 16px;
 }
 
+
 /* charts css */
 .chart-container{
     width : 320px;
@@ -1135,6 +1138,10 @@ a:link, a:hover, a:visited, a:active  {
 
 .pending {
   background-color: orange;
+}
+
+.thumbnail img {
+  max-height: 190px;
 }
 
 /* modals design */

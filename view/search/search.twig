@@ -10,6 +10,8 @@ Search
 
 {% block content %}
 <!-- Create the search results window -->
+
+<div id="searchTerm" data-searchTerm="{{searchTerm}}"></div>
 <div class="search-header">
   <div class="search-options">
     <div class="btn-group zero-padding" id="filter-dropdown">
@@ -20,6 +22,7 @@ Search
             <div class="filter-category" id="radius-category">
               Search Radius
               <a class="collapsed" role="button" data-toggle="collapse" data-parent="#filter-list" href="#radius-options" aria-expanded="false" aria-controls="radius-options"><i class="material-icons"></i></a>
+
             </div>
             <div class="filter-options collapse" id="radius-options" role="tabpanel" aria-labelledby="radius-category">
               <div class="container-fluid">
@@ -67,6 +70,7 @@ Search
     </div>
     <div id="filters-picked"></div>
   </div>
+
   <div class="tab-content search-result" style="height:100%;">
     <div id="grid" class="tab-pane fade in active">
       <div class="container-fluid">
@@ -88,6 +92,7 @@ Search
                   </div>
                   <div class="road-distance">
                     <i class="material-icons">place</i> {{item.distance}}m
+
                   </div>
                 </div>
               </div>
@@ -116,6 +121,7 @@ Search
         </div>
       </div>
     </div>
+
     <div id="map-tab" class="tab-pane fade" style="height:100%;">
       <div class="warning">
         <div class="alert alert-dismissible alert-warning">
@@ -131,8 +137,10 @@ Search
           </div>
         </div>
       </div>
+
     </div>
   </div>
   {% endblock %}
 
-  {% set jslist = ["plugins/imagesloaded/imagesloaded.pkgd.min.js", "plugins/isotope/isotope.pkgd.min.js", "plugins/MarkerClusterer/markerclusterer.js","plugins/noUiSlider/nouislider.min.js", "plugins/wnumb-1.1.0/wNumb.js","mapSearch.js", "searchPage.js", "search.js"] %}
+  {% set jslist = ["plugins/imagesloaded/imagesloaded.pkgd.min.js", "plugins/isotope/isotope.pkgd.min.js", "plugins/MarkerClusterer/markerclusterer.js","plugins/noUiSlider/nouislider.min.js", "plugins/wnumb-1.1.0/wNumb.js","mapSearch.js", "searchPage.js", "search.js", "request.js"] %}
+

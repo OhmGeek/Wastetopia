@@ -57,10 +57,10 @@ class SearchModel
             JOIN `Item` ON `ItemImage`.`FK_Item_ItemID` = `Item`.`ItemID`
             JOIN `Listing` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
             WHERE `Listing`.`ListingID` = :listingID
-            
+            AND `ItemImage`.`Is_Default` = 1
             
         ORDER BY `Image`.`ImageID` DESC;
-        "); //AND `ItemImage`.`Is_Default` = 1
+        "); //
         $statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);
         $statement->execute(); 
         return $statement->fetchAll(PDO::FETCH_ASSOC)[0];
@@ -217,7 +217,7 @@ class SearchModel
 
 
 
-    public function getReccomendationResults($tagsArray, $currentUserID)
+    public function getReccomendationResults($tagsArray, $currentUserID = null)
     {
 
         $tagCount = count($tagsArray);
@@ -242,13 +242,15 @@ class SearchModel
             }
         }
 
-        $sql .=    ")
-                    AND NOT(`Listing`.`FK_User_UserID` = :currentUser)
-                    AND `Listing`.`Active` = 1
-                    AND `Listing`.`Quantity` > 0
-                    GROUP BY `Listing`.`ListingID`
-                    ) as `TagCount`
-                ORDER BY `TagCount`.`Count` DESC;";
+        $sql .=    ")";
+        if($currentUserID != null){
+            $sql.="AND NOT(`Listing`.`FK_User_UserID` = :currentUser)";
+        }
+        $sql.= "AND `Listing`.`Active` = 1
+                AND `Listing`.`Quantity` > 0
+                GROUP BY `Listing`.`ListingID`
+                ) as `TagCount`
+            ORDER BY `TagCount`.`Count` DESC;";
 
         $statement = $this->db->prepare($sql);
 

@@ -1,5 +1,8 @@
 $(function () {
 
+    //equal height rows
+    $('.small').matchHeight();
+    
     // Get last active tab and make it active if it's set (so user can relaod and come back to same place)
     var activeTab = localStorage.getItem('activeTab');
     console.log(activeTab);
@@ -34,7 +37,7 @@ $(function () {
 
 
     // Displays an error message in the appropriate place
-    function displaySucces(message) {
+    function displaySuccess(message) {
         var successDiv = $("<div>").addClass("alert alert-success fade in");
 
         // Add error to the div
@@ -313,6 +316,8 @@ $(function () {
 
         $("#change-modal").on("shown.bs.modal", function () {
             $(this).find('.modal-msg').text("Please enter your current password and new password.");
+            $("#old-password").attr("type", "password");
+            $("#new-password").attr("type", "password");
         }).modal('show');
 
 
@@ -327,7 +332,10 @@ $(function () {
             var url = baseURL + "/profile/change-password";
             var data = {oldPassword: oldPassword, newPassword: newPassword};
 
+            console.log(data);
+            console.log(url);
             $.post(url, data, function (response) {
+                console.log(response);
                 var json = $.parseJSON(response);
                 if (json.hasOwnProperty("error")) {
                     console.log("Error occurred");
@@ -384,7 +392,7 @@ $(function () {
             // Send to /items/renew-listing/
             $('#change-modal').modal('hide');
 
-            var url = baseURL + "/change-email";
+            var url = baseURL + "/profile/change-email";
             var data = {oldEmail: oldEmail, newEmail: newEmail};
 
 
@@ -435,7 +443,7 @@ $(function () {
         '<input type="text" class="form-control" id="old-password">' +
         '</div>' +
         '<div class="form-group zero-padding new-password">' +
-        '<label id = "label1" for="new-password">New password: </label>' +
+        '<label id = "label2" for="new-password">New password: </label>' +
         '<input type="text" class="form-control" id="new-password">' +
         '</div>' +
         '</div>' +

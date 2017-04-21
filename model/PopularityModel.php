@@ -10,6 +10,7 @@
 namespace Wastetopia\Model;
 use Wastetopia\Model\DB;
 use PDO;
+use Wastetopia\Model\UserCookieReader;
 
 /**
  * Class PopularityModel - Used when a user rates a transaction
@@ -33,9 +34,8 @@ class PopularityModel
     function getUserID()
     {
 
-//        $reader = new UserCookieReader();
-//        return $reader->get_user_id();
-        return 6; //Hardcoded for now - usually 6
+    $reader = new UserCookieReader();
+         return $reader->get_user_id();
     }
 
 
