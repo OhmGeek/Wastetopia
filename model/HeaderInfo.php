@@ -20,9 +20,7 @@ class HeaderInfo
      */
     public static function get() {
         return array(
-            "header" => array(
                 "isLoggedIn" => Authenticator::isAuthenticated()
-            )
         );
     }
 }
