@@ -129,6 +129,11 @@ class AddItemController
         return array("listingID" => $listingID);
     }
 
+    /**
+     * Add an item image to S3 and the DB
+     * @param $files (array of files to upload)
+     * @return string (JSON containing image url data)
+     */
     public function addItemImage($files) {
         // this adds an item to S3 and to the DB, returning the Id and url
         error_log(json_encode($files));

@@ -11,6 +11,12 @@ use Klein\Klein;
 use Wastetopia\Model\HeaderInfo;
 
 class LoginController {
+    /**
+     * Render the login index page
+     * @param $response (the Klein response)
+     * @param $dest (the destination to forward onto)
+     * @return bool|string (return the page or forward if they are already logged in)
+     */
     public function index($response, $dest) {
         //todo dest parameter with default value
         // this is the static index page (allowing the user to login)
@@ -37,6 +43,14 @@ class LoginController {
         return true; // we can return true otherwise, as we will forward people.
     }
 
+    /**
+     * API call for logging in
+     * @param $username (username of the user)
+     * @param $password (password of the user)
+     * @param $dest (destination to forward to)
+     * @param $response (Klein response object)
+     * @return bool|string (Error message or forwarding)
+     */
     public function login($username, $password, $dest, $response) {
         //todo dest parameter with default value
         // Post destination of the form (params are entered in index.php)
@@ -64,6 +78,10 @@ class LoginController {
         return true; // later return a page that has a link to the main site.
     }
 
+    /**
+     * Log the current user out
+     * @return string (the logout page)
+     */
     public function logout() {
         header("Cache-Control: no-store, must-revalidate, max-age=0");
         setcookie("gpwastetopiadata", null);

@@ -25,6 +25,11 @@ class EditItemController
         $this->model = new EditItemModel($listingID);
         $this->listingID = $listingID;
     }
+
+    /**
+     * Checks whether the current user owns the listing
+     * @return bool (True => they are the owner, False => they aren't the owner)
+     */
     private function isOwner() {
         $listing = new ListingModel();
         $results = $listing->getListingInfo($this->listingID);
@@ -151,6 +156,11 @@ class EditItemController
         return array("listingID" => $listingID);
     }
 
+    /**
+     * Add an item image to S3 and to the DB
+     * @param $files (the files to upload)
+     * @return string (JSON encoded file urls)
+     */
     public function addItemImage($files) {
         // this adds an item to S3 and to the DB, returning the Id and url
         error_log(json_encode($files));

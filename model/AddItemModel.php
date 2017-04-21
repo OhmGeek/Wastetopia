@@ -387,6 +387,11 @@ class AddItemModel
         return $this->getFinalListingID($locationID, $itemID, 1);
     }
 
+    /**
+     * Retrieves an ImageID from an uploaded image
+     * @param $imageURL (URL to search for)
+     * @return string (the ImageID)
+     */
     private function getImageIDFromURL($imageURL)
     {
         $statement = $this->db->prepare("
@@ -400,6 +405,11 @@ class AddItemModel
         return $statement->fetchColumn(0);
     }
 
+    /**
+     * Get the details of a tag
+     * @param $name (The Tag Name)
+     * @return array (An array containing the tag details from the DB)
+     */
     public function getTagDetails($name)
     {
         $statement = $this->db->prepare("
@@ -423,6 +433,13 @@ class AddItemModel
         );
     }
 
+    /**
+     * This fetches the Listing ID from details
+     * @param $locationID (locationID of the item to fetch)
+     * @param $itemID (itemID of the item to fetch)
+     * @param $quantity (quantity of the item to fetch)
+     * @return mixed (the ListingID)
+     */
     private function getFinalListingID($locationID, $itemID, $quantity)
     {
         $statement = $this->db->prepare("

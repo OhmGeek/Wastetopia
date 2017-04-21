@@ -14,6 +14,10 @@ use Wastetopia\Controller\Authenticator;
 class HeaderInfo
 {
 
+    /**
+     * Get the info needed for the header (in the templates)
+     * @return array
+     */
     public static function get() {
         return array(
             "header" => array(

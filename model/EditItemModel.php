@@ -12,6 +12,10 @@ use PDO;
 class EditItemModel
 {
 
+    /**
+     * EditItemModel constructor.
+     * @param $listingID
+     */
     function __construct($listingID)
     {
         $this->db = DB::getDB();
@@ -415,6 +419,11 @@ class EditItemModel
         return $this->listingID;
     }
 
+    /**
+     * Get an ImageID from the URL
+     * @param $imageURL
+     * @return string
+     */
     private function getImageIDFromURL($imageURL)
     {
         $statement = $this->db->prepare("
@@ -429,6 +438,11 @@ class EditItemModel
         return $statement->fetchColumn(0);
     }
 
+    /**
+     * Get tag details from the tag name
+     * @param $name
+     * @return array
+     */
     public function getTagDetails($name)
     {
         $statement = $this->db->prepare("
@@ -453,6 +467,10 @@ class EditItemModel
         );
     }
 
+    /**
+     * Get the itemID from the current listing
+     * @return mixed
+     */
     private function getItemIDFromListing()
     {
         $statement = $this->db->prepare("
@@ -468,6 +486,10 @@ class EditItemModel
         return $results[0]['ItemID'];
     }
 
+    /**
+     * Delete all images associated with an item
+     * @param $itemID
+     */
     private function deleteImages($itemID)
     {
         $statement = $this->db->prepare("
@@ -479,6 +501,10 @@ class EditItemModel
         error_log(json_encode($statement->errorInfo()));
     }
 
+    /**
+     * Get the LocationID associated with the current Listing
+     * @return mixed
+     */
     private function getLocationIDFromListing()
     {
         $statement = $this->db->prepare("

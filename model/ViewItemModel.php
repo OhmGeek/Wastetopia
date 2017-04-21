@@ -23,11 +23,16 @@ class ViewItemModel
 
     }
 
-    function getUserID() {
+    /**
+     * Get the current userid
+     * @return mixed
+     */
+    private function getUserID() {
         $cookieModel = new UserCookieReader();
         return $cookieModel->get_user_id();
     }
     /**
+     * Get item details about a listingID
      * @param $listingID (The ListingID to get item details for)
      * @return array (an array containing name, description, and expiry date)
      */
@@ -57,6 +62,11 @@ class ViewItemModel
         );
     }
 
+    /**
+     * Get the status of an item
+     * @param $listingID
+     * @return array
+     */
     function getItemStatus($listingID) {
         $statement = $this->db->prepare("
             SELECT Active
@@ -72,6 +82,11 @@ class ViewItemModel
         );
     }
 
+    /**
+     * Get the tags for a listing
+     * @param $listingID
+     * @return array
+     */
     function getTagDetails($listingID) {
             $statement = $this->db->prepare("
             SELECT Tag.TagID, Tag.Name, Tag.FK_Category_Category_ID, Tag.Description
@@ -116,6 +131,11 @@ class ViewItemModel
 
     }
 
+    /**
+     * Get image details for a listing
+     * @param $listingID
+     * @return array
+     */
     function getImages($listingID) {
         $statement = $this->db->prepare("
             SELECT Image.ImageID, Image_URL
@@ -143,6 +163,11 @@ class ViewItemModel
         );
     }
 
+    /**
+     * Get location for a listing
+     * @param $listingID
+     * @return array
+     */
     function getLocation($listingID) {
         $statement = $this->db->prepare("
             SELECT Name, Post_Code, Longitude, Latitude, Country
@@ -168,6 +193,11 @@ class ViewItemModel
         );
     }
 
+    /**
+     * Get barcode for a listing
+     * @param $listingID
+     * @return array
+     */
     function getBarcode($listingID) {
         $statement = $this->db->prepare("
             SELECT *
