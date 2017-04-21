@@ -30,7 +30,7 @@
                                 <div><span>Quantity: </span><span class="quantity">{{ item.quantity }}</span></div>
                             </div>
                             <div class="nav-btns">
-                                <a href="{{config.ROOT_BASE}}/items/view/{{item.listingID}}" class="btn btn-primary" role="button" id="{{ item.listingID }}">View</a>
+                                <a href="{{config.ROOT_BASE}}/items/view/{{item.listingID}}" class="view btn btn-primary" role="button" id="{{ item.listingID }}">View</a>
                                 {% if item.isRequesting %}<a href="#" class="btn btn-default" role="button" id="cancel">Cancel request</a>
                                 {% else %}<a href="#request" class="btn btn-default" role="button" id="{{item.listingID}}">Request</a> {% endif %}
                                 <div class="extra">
