@@ -364,6 +364,7 @@ html, body{
   padding: 5px;
   display: flex;
   justify-content: center;
+  font-weight: bolder;
 }
 
 .gm-style-iw {
