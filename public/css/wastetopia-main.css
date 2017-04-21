@@ -400,7 +400,7 @@ html, body{
 
 .iw-container .iw-body {
   padding: 10px;
-  height: 160px;
+  height: 140px;
   display: flex;
   flex-direction: column;
   overflow-y: hidden;
@@ -415,7 +415,7 @@ html, body{
 }
 
 .iw-container .item-image{
-  height:120px;
+  height:140px;
   width: 100%;
   background-repeat: no-repeat;
   background-position: center;
