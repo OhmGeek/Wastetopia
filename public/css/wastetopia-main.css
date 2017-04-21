@@ -672,6 +672,10 @@ a:link, a:hover, a:visited, a:active  {
   margin-bottom: 15px;
 }
 
+.thumbnail .default-pic {
+  height: 200px;
+}
+
 .trans-info {
   display: flex;
   justify-content: space-between;
