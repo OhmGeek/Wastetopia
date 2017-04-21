@@ -345,7 +345,7 @@ html, body{
   height: 100vh;
 }
 
-#map .warning {
+#map-tab .warning {
   position: absolute;
 }
 
