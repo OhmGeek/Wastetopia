@@ -8,10 +8,17 @@ var lat = 54.7754719;
 var long = -1.57694200;
 
 $(function () {
-  $(window).resize(function () {
-		var dropdownHeight = $(window).height() - $('.btn').outerHeight() - $('.navbar').height()
+
+  function filterHeight(){
+    var dropdownHeight = $(window).height() - $('.btn').outerHeight() - $('.navbar').height()
 		console.log(dropdownHeight)
 		$('#filter-list').css({'max-height': dropdownHeight})
+  }
+
+  filterHeight()
+
+  $(window).resize(function () {
+		filterHeight()
 	});
 
   var radiusSlider = document.getElementById('radius');
@@ -25,6 +32,19 @@ $(function () {
     connect: [true, false],
     step: 5,
     start: 5
+  });
+
+  var quantitySlider = document.getElementById('quantity');
+  var quantityFormat = wNumb({ decimals: 0, postfix: '+' })
+
+  noUiSlider.create(quantitySlider, {
+    range: {
+      'min': 0,
+      'max': 10
+    },
+    connect: [true, false],
+    step: 1,
+    start: 1
   });
 
   $('.slider').css({background:'#31353D'})
@@ -44,7 +64,11 @@ $(function () {
 
   function getFilters(){
     var radius = radiusFormat.to(parseFloat(radiusSlider.noUiSlider.get()));
-    filters = '<span class="label label-primary"> within ' + radius + ' radius </span>'
+    var quantity = parseFloat(radiusSlider.noUiSlider.get())
+    if (quantity > 9) {
+      quantity = quantityFormat.to(parseFloat(radiusSlider.noUiSlider.get()));
+    }
+    filters = '<span class="label label-primary"> within ' + radius + ' radius </span>' + '<span class="label label-primary"> quantity ' + quantity + ' </span>'
     $('#radius-output').html('radius: <span>' + radius + '</span>')
     // inclusive filters from checkboxes
     $checkboxes.each( function( i, elem ) {
@@ -138,6 +162,8 @@ $(function () {
 
 
   function refreshPage() {
+    include = [];
+    exclude = [];
 
     include = [];
     exclude = [];
@@ -174,7 +200,7 @@ $(function () {
 
     var baseURL = $('#baseURL').attr('href');
     var query = baseURL + '/api/search/page/' + lat + '/' + long + '/' + searchTerm + '/' + include.join('+') + '/' + exclude.join('+') + '/' + distanceLimit + '/' + pageNumber + '/' + sortOrder;
-    mapURL = mapURL = baseURL + '/api/search/map/' + lat + '/' + long + '/' + searchTerm + '/' + include.join('+') + '/' + exclude.join('+') + '/' + distanceLimit + '/' + sortOrder;
+    mapURL = window.location.protocol + "//" + window.location.host + '/api/search/map/' + lat + '/' + long + '/' + searchTerm + '/' + include.join('+') + '/' + exclude.join('+') + '//';
     if ($('#map-tab').hasClass('active')) {
       console.log('map is active')
       initMap();
@@ -263,8 +289,7 @@ $(function () {
 
   $('#btn-map').on('shown.bs.tab', function(event){
     console.log('map part appeared')
-    var baseURL = $('#baseURL').attr('href');
-    mapURL = baseURL + '/api/search/map/' + lat + '/' + long + '/' + searchTerm + '/' + include.join('+') + '/' + exclude.join('+') + '/' + distanceLimit + '/' + sortOrder;
+    mapURL = window.location.protocol + "//" + window.location.host + '/api/search/map/' + lat + '/' + long + '/' + searchTerm + '/' + include.join('+') + '/' + exclude.join('+') + '//';
     initMap();
     var height = $('.search-header').outerHeight() + 70
     $('#map-tab .warning').css({'top': height})
