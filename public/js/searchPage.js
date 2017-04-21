@@ -4,6 +4,9 @@ var maxItems = 30;
 // set the current number of items
 var itemsNum;
 var mapURL;
+var lat = 54.7754719;
+var long = -1.57694200;
+
 $(function () {
   $(window).resize(function () {
 		var dropdownHeight = $(window).height() - $('.btn').outerHeight() - $('.navbar').height()
@@ -33,9 +36,6 @@ $(function () {
   if(searchVariables.advancedSearch === true){
       setAdvancedSearchVariables(searchVariables);
   }
-
-
-
 
 
   var filters = "";
@@ -122,13 +122,11 @@ $(function () {
     /*Set Detfault Search Values*/
     var include = [];
     var exclude = [];
-    var lat = 54.7754719;
-    var long = -1.57694200;
 
     if((searchDetails.lat !== '') && (searchDetails.long !== ''))
     {
-        var lat = searchDetails.lat;
-        var long = searchDetails.long;
+        lat = searchDetails.lat;
+        long = searchDetails.long;
     }
 
     var sortOrder = ''
