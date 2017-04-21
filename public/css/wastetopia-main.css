@@ -43,29 +43,21 @@
 }
 
 .navbar .search-form .postcode input{
+  border-radius: 20px;
   border: none;
-  background: none;
   text-transform: uppercase;
   margin-left: 5px;
   height: 30px;
   width: 75px;
   font-size: 12px;
-  font-weight: bold;
-  color: white;
+  padding: 5px 10px;
+  color: black;
 }
 
 @media (max-width: 370px) {
   .navbar .search-form .search input{
     width: 100px;
   }
-}
-
-@media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
-
-}
-
-@media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
-
 }
 
 @media (min-width:1200px) {
@@ -353,8 +345,8 @@
   height: 100px;
 }*/
 
-html, body {
-  height: 100%;
+html, body{
+  height: 100vh;
 }
 
 #search-map {
@@ -363,7 +355,7 @@ html, body {
 
 .gm-style-iw {
   width: 300px !important;
-  height: 255px !important;
+  height: 300px !important;
   top: 15px !important;
   left: 0 !important;
   background-color: #fff;
@@ -373,7 +365,7 @@ html, body {
 .iw-container {
   margin-bottom: 10px;
   width: 300px;
-  height: 255px;
+  height: 300px;
 }
 
 .iw-container .iw-header {
@@ -420,7 +412,7 @@ html, body {
 }
 
 .iw-container .item-image{
-  height:100px;
+  height:120px;
   width: 100%;
   background-repeat: no-repeat;
   background-position: center;
@@ -566,6 +558,10 @@ label.checkbox-inline input[type=checkbox]:checked + .checkbox-material .check:b
 }
 
 /* profile page styles */
+#profileContentWrapper {
+    padding-top: 120px;
+}
+
 .user-profile {
   width: 100%;
   background-color: white;
@@ -575,14 +571,14 @@ label.checkbox-inline input[type=checkbox]:checked + .checkbox-material .check:b
   align-items: flex-end;
   flex-wrap: wrap;
   position: absolute;
-  top: 60px;
+  top: 50px;
   z-index: 2;
 }
 
 .user-profile .user-img {
   border-radius: 0;
-  width: 150px;
-  height: 150px;
+  width: 50px;
+  height: 50px;
   overflow: hidden;
   background-repeat: no-repeat;
   background-size: cover;
@@ -591,15 +587,42 @@ label.checkbox-inline input[type=checkbox]:checked + .checkbox-material .check:b
 }
 
 .user-profile .user-name{
-  font-size: 25px;
+  font-size: 16px;
 }
 
 .user-profile .popularity {
-  font-size: 35px;
+  font-size: 20px;
 }
 
 .user-profile .popularity i {
-  font-size: 35px;
+  font-size: 20px;
+}
+
+@media (min-width: 1200px) {
+  #profileContentWrapper {
+      padding-top: 180px;
+  }
+
+  .user-profile {
+    top: 60px;
+  }
+
+  .user-profile .user-img {
+    width: 100px;
+    height: 100px;
+  }
+
+  .user-profile .user-name {
+    font-size: 25px;
+  }
+
+  .user-profile .popularity {
+    font-size: 35px;
+  }
+
+  .user-profile .popularity i {
+    font-size: 35px;
+  }
 }
 
 a:link, a:hover, a:visited, a:active  {
@@ -649,6 +672,11 @@ a:link, a:hover, a:visited, a:active  {
   margin-bottom: 15px;
 }
 
+.thumbnail .default-pic {
+  height: 200px;
+  border: 1px solid lightgrey;
+}
+
 .trans-info {
   display: flex;
   justify-content: space-between;
@@ -691,6 +719,37 @@ a:link, a:hover, a:visited, a:active  {
 .thumbnail .trans-info .request-by{
   display: flex;
   align-items: center;
+}
+
+.top-items span {
+  margin: 2px 5px;
+  font-size: 16px;
+}
+
+/* charts css */
+.chart-container{
+    width : 320px;
+    height : auto;
+}
+
+.center-elements{
+    display: flex;
+    justify-content: center;
+}
+
+#charts form{
+    display: inline-flex;
+    justify-content: center;
+}
+
+#charts .input-group{
+    margin: 5px;
+}
+
+#name-frequencies .list-group{
+    display: block;
+    justify-content: center;
+    width: 60%;
 }
 
 /* Messaging */
