@@ -6,15 +6,6 @@ var itemsNum;
 var mapURL;
 $(function () {
 
-  function warningTop(){
-    var height = $('.search-header').outerHeight() + 70
-    $('#map-tab .warning').css({'top': height})
-  }
-
-  $('.search-header').on('resize', function(event){
-    warningTop();
-  })
-
   var radiusSlider = document.getElementById('radius');
   var radiusFormat = wNumb({ decimals: 0, postfix: 'km' })
 
@@ -313,6 +304,5 @@ $(function () {
   $('#btn-map').on('shown.bs.tab', function(event){
     console.log('map part appeared')
     initMap();
-    warningTop();
   });
 });
