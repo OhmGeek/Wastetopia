@@ -159,6 +159,9 @@ $(function () {
     // Store last active tab
     $(document).on('shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
         var tabHREF = $(e.target).attr('href');
+        
+        console.log("Showing: "+tabHREF);
+        
         // If tab shown is one of the main ones
         if (tabHREF == "#home" || tabHREF == "#listings" || tabHREF == "#offers" || tabHREF == "#requests"
             || tabHREF == "#watchList" || tabHREF == "#analysis") {
@@ -182,7 +185,7 @@ $(function () {
 
 
     // Set all pending transactions to viewed
-    $(document).on('shown.bs.tab', '#pending-transaction', function () {
+    $(document).on('shown.bs.tab', 'a[href="#pending-transaction"]', function () {
         console.log("Setting pending as viewed");
         var url = window.location.protocol + "//" + window.location.host + "/profile/set-pending-viewed";
         console.log(url);
