@@ -112,6 +112,7 @@ class CardDetailsModel
      * @return String - Image URL or empty string if no default image found
      */
     function getDefaultImage($listingID){
+	    error_log("Getting default image");
         $statement = $this->db->prepare("
             SELECT `Image`.`Image_URL` 
             FROM `Image`
@@ -126,6 +127,9 @@ class CardDetailsModel
         $statement->execute();
         $results = $statement->fetchAll(PDO::FETCH_ASSOC);
 
+	error_log("Image: ");
+	error_log($results);
+	    
         if (count($results) == 0){
             return $this->config["ROOT_IMG"]."/PCI.png";
         }
