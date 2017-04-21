@@ -8,10 +8,17 @@ var lat = 54.7754719;
 var long = -1.57694200;
 
 $(function () {
-  $(window).resize(function () {
-		var dropdownHeight = $(window).height() - $('.btn').outerHeight() - $('.navbar').height()
+
+  function filterHeight(){
+    var dropdownHeight = $(window).height() - $('.btn').outerHeight() - $('.navbar').height()
 		console.log(dropdownHeight)
 		$('#filter-list').css({'max-height': dropdownHeight})
+  }
+
+  filterHeight()
+
+  $(window).resize(function () {
+		filterHeight()
 	});
 
   var radiusSlider = document.getElementById('radius');
@@ -25,6 +32,19 @@ $(function () {
     connect: [true, false],
     step: 5,
     start: 5
+  });
+
+  var quantitySlider = document.getElementById('radius');
+  var quantityFormat = wNumb({ decimals: 0, postfix: '+' })
+
+  noUiSlider.create(quantitySlider, {
+    range: {
+      'min': 0,
+      'max': 10
+    },
+    connect: [true, false],
+    step: 1,
+    start: 1
   });
 
   $('.slider').css({background:'#31353D'})
@@ -44,7 +64,11 @@ $(function () {
 
   function getFilters(){
     var radius = radiusFormat.to(parseFloat(radiusSlider.noUiSlider.get()));
-    filters = '<span class="label label-primary"> within ' + radius + ' radius </span>'
+    var quantity = parseFloat(radiusSlider.noUiSlider.get())
+    if (quantity > 9) {
+      quantity = quantityFormat.to(parseFloat(radiusSlider.noUiSlider.get()));
+    }
+    filters = '<span class="label label-primary"> within ' + radius + ' radius </span>' + '<span class="label label-primary"> quantity ' + quantity + ' </span>'
     $('#radius-output').html('radius: <span>' + radius + '</span>')
     // inclusive filters from checkboxes
     $checkboxes.each( function( i, elem ) {

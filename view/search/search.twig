@@ -31,6 +31,19 @@ Search
               </div>
             </div>
           </li>
+          <li role="tab">
+            <div class="filter-category" id="quantity-category">
+              Search Radius
+              <a class="collapsed" role="button" data-toggle="collapse" data-parent="#filter-list" href="#quantity-options" aria-expanded="false" aria-controls="quantity-options"><i class="material-icons"></i></a>
+
+            </div>
+            <div class="filter-options collapse" id="quantity-options" role="tabpanel" aria-labelledby="quantity-category">
+              <div class="container-fluid">
+                <div class="slider shor" id="quantity"></div>
+                <div id="quantity-output"></div>
+              </div>
+            </div>
+          </li>
           <form id='filter-form'>
             {% for itemFilter in filters %}
             <li role="tab" class="tab">
@@ -143,4 +156,3 @@ Search
   {% endblock %}
 
   {% set jslist = ["plugins/imagesloaded/imagesloaded.pkgd.min.js", "plugins/isotope/isotope.pkgd.min.js", "plugins/MarkerClusterer/markerclusterer.js","plugins/noUiSlider/nouislider.min.js", "plugins/wnumb-1.1.0/wNumb.js","mapSearch.js", "searchPage.js", "search.js", "request.js"] %}
-
