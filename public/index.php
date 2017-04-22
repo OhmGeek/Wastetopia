@@ -264,7 +264,7 @@ $klein->with("/profile", function() use ($klein) {
 });
 $klein->with('/items', function () use ($klein) {
     $klein->respond('GET', '/add/?', function($request, $response) {
-        forceLogin($request->uri());
+        //forceLogin($request->uri());
         $control = new AddItemController();
         return $control->renderAddPage();
     });

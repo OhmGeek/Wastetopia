@@ -243,7 +243,7 @@ function addTag() {
 
 function addContainsTag() {
     // set the value of the category ID
-    $('#tag-catID-toadd').val('0');
+    $('#tag-catID-toadd').val('4');
     // show modal
     $('#tag-modal').modal();
 
@@ -251,14 +251,14 @@ function addContainsTag() {
 
 function addStateTag() {
     // set the value of the category ID
-    $('#tag-catID-toadd').val('0');
+    $('#tag-catID-toadd').val('2');
     // show modal
     $('#tag-modal').modal();
 }
 
 function addTypeTag() {
     // set the value of the category ID
-    $('#tag-catID-toadd').val('0');
+    $('#tag-catID-toadd').val('1');
     // show modal
     $('#tag-modal').modal();
 }
