@@ -39,7 +39,7 @@ class LoginController {
             // todo redirect to dest | website base
             $response->redirect($_ENV['ROOT_BASE'] . $dest);
         }
-        return "<html><script>window.history.back();</script></html>";
+        return "<html><body>You are being redirected<script>window.history.back();</script></body></html>";
     }
 
     /**
