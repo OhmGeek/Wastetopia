@@ -16,12 +16,12 @@ WasteTopia
       {% if isLoggedIn != 1 %}
       <p>Sharing is Caring <i class="material-icons">favorite</i></p>
       {% else %}
-      <p>{{loggedMessage}}</p>
+      <p>{{loggedMessage | raw}}</p>
       {% endif %}
       <p>
       {% if isLoggedIn != 1 %}
-        <a class="btn btn-lg">Login</a>
-        <a class="btn btn-primary btn-lg">Register now</a>
+        <a class="btn btn-lg" href="{{ config.ROOT_BASE }}/login">Login</a>
+        <a class="btn btn-primary btn-lg" href="{{ config.ROOT_BASE }}/register">Register now</a>
       {% else %}
         <a class="btn" href = "{{config.ROOT_BASE}}/profile"> View profile </a>
       {% endif %}

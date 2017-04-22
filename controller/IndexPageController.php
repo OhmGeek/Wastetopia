@@ -4,6 +4,7 @@ namespace Wastetopia\Controller;
 use Twig_Loader_Filesystem;
 use Twig_Environment;
 use Wastetopia\Config\CurrentConfig;
+use Wastetopia\Controller\Authenticator;
 use Wastetopia\Controller\SearchPageController;
 
 class IndexPageController
@@ -24,7 +25,7 @@ class IndexPageController
      * @return bool True if user is logged in
      */
     function isUserLoggedIn(){
-        return \Wastetopia\Controller\Authenticator::isAuthenticated();
+        return Authenticator::isAuthenticated();
     }
 
     /**
