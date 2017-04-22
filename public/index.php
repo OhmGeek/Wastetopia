@@ -83,7 +83,6 @@ $klein->with('/api', function () use ($klein) {
         $pageNumber = $paramArr[6];
         $order = $paramArr[7];
         $quantity = $paramArr[8];
-        var_dump($quantity);
         $response->sendHeaders('Content-Type: application/jpg');
         return $searchController->JSONSearch($lat, $long, $search, $tagsArr, $notTagsArr, $distanceLimit, $pageNumber, $order, $quantity);
     });

@@ -160,7 +160,7 @@ class SearchController
     /*Limit and Offset are implemented in the wrapper functions
       As custom sorting is needed in the search controller it cannot be done in SQL*/
 
-    private function search($lat, $long, $search, $tagsArr, $notTagsArr)
+    private function search($lat, $long, $search, $tagsArr, $notTagsArr, $quantity)
     {
 
         if(empty($lat) || empty($long))
@@ -182,7 +182,7 @@ class SearchController
         }
 
 
-        $itemInformation = $this->searchModel->getSearchResults($lat, $long, $search, $tagsArr, $notTagsArr);
+        $itemInformation = $this->searchModel->getSearchResults($lat, $long, $search, $tagsArr, $notTagsArr, $quantity);
 
         return $itemInformation;
     }
