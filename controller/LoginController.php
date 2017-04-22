@@ -62,7 +62,9 @@ class LoginController {
             // forward the person to the destination/home
             if(isset($dest) | $dest !== "") {
                 //forward to the destination uri
+                error_log("Try going through destination");
                 error_log($dest);
+                error_log(count_chars($dest));
                 $response->redirect($dest);
                 return "Forward";
             }
