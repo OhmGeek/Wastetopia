@@ -35,7 +35,6 @@ use Wastetopia\Model\RegistrationModel; // For verification
  * @return - Nothing, either redirects user to login page and exits or just returns to function that called it
  */
 
->>>>>>> refs/remotes/origin/master
 
 // check if we should use production? Otherwise, use community.
 $mode = $_ENV['MODE'];
@@ -320,7 +319,7 @@ $klein->with("/profile", function() use ($klein) {
     $klein->respond('POST', '/change-profile-picture', function($request, $response){
 
         forceLogin($request->uri());
-        $files = $request->files();        
+        $files = $request->files();
         $controller = new ProfilePageController(1);
         return $controller->changeProfilePicture($files);
     });
