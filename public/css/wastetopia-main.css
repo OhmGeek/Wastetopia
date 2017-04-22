@@ -363,8 +363,8 @@ html, body{
 /*Removed when merging Master*/
 /*<<<<<<< HEAD
 html, body{
-  height: 100vh;
-=======*/
+  height: 100vh;*/
+
 
 #grid {
     padding-top: 145px;
@@ -725,6 +725,7 @@ a:link, a:hover, a:visited, a:active  {
 .thumbnail .default-pic {
   height: 200px;
   border: 1px solid lightgrey;
+
 }
 
 .trans-info {

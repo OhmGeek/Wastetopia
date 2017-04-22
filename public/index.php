@@ -23,7 +23,6 @@ use Wastetopia\Model\PopularityModel;
 use Wastetopia\Model\NotificationModel;
 use Wastetopia\Model\RegistrationModel; // For verification
 
-
 /**
  * Function to be called at start of routing for any route where user must be logged in to access
  * @return - Nothing, either redirects user to login page and exits or just returns to function that called it
@@ -48,11 +47,11 @@ if(ltrim($base, '/')){
 }
 // Dispatch as always
 $klein = new Klein();
-
 $klein->respond("GET", "/?", function() {
   $indexController = new IndexPageController();
   return $indexController->renderIndexPage();
 });
+
 
 $klein->respond("GET", "/notifications/update", function($request, $response){
     //forceLogin($request->uri());
@@ -89,10 +88,12 @@ $klein->with('/api', function () use ($klein) {
 });
 
 $klein->respond('GET', '/search/[**:param]?', function ($request, $response) {
+
     $controller = new SearchPageController();
 
     return $controller->render(explode('/', $request->param));
 });
+
 
 $klein->respond('POST', '/search/', function ($request, $response) {
     $controller = new SearchPageController();
@@ -107,6 +108,7 @@ $klein->respond("GET", "/login", function($request, $response) {
     $controller = new LoginController();
     return $controller->index($response, urldecode($request->dest));
 });
+
 $klein->respond("GET", "/logout", function($request, $response) {
     $controller = new LoginController();
     return $controller->logout();
@@ -225,6 +227,7 @@ $klein->with("/profile", function() use ($klein) {
        forceLogin($request->uri());
        $controller = new ProfilePageController(0, $request->userID);
        return $controller->generateProfileContentHTML();
+
     });
 
     $klein->respond('GET', '/load-home-tab/[:userID]', function($request, $response){
@@ -296,6 +299,7 @@ $klein->with("/profile", function() use ($klein) {
     $klein->respond('POST', '/change-profile-picture', function($request, $response){
         /*Force login introduced by searching*/
         forceLogin($request->uri());
+
         $files = $request->files();
         $controller = new ProfilePageController(1);
         return $controller->changeProfilePicture($files);
@@ -395,11 +399,8 @@ $klein->with('/items', function () use ($klein) {
         $model = new PopularityModel();
         return $model->rateTransaction($transactionID, $rating);
     });
-
 });
 
-
-});
 $klein->with('/api', function () use ($klein) {
     $klein->respond('POST', '/verify-login', function ($request, $response) {
         $controller = new LoginController();
