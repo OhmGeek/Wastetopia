@@ -2,6 +2,7 @@
 
 namespace Wastetopia\Controller;
 
+use Wastetopia\Controller\Authenticator;
 use Wastetopia\Model\SearchModel;
 use Wastetopia\Model\CardDetailsModel;
 use Wastetopia\Model\UserCookieReader;
@@ -107,6 +108,7 @@ class SearchController
             $result = $this->searchModel->getCardDetails($item["ListingID"]);
             $result['isRequesting'] = $this->searchModel->isRequesting($item["ListingID"], $userID);
             $result['isWatching'] = $this->searchModel->isWatching($item["ListingID"], $userID);
+            $result['isLoggedIn'] = Authenticator::isAuthenticated();
 
             $image = $this->searchModel->getDefaultImage($item["ListingID"]);
             if(empty($image))
@@ -135,6 +137,7 @@ class SearchController
             $result = $this->searchModel->getCardDetails($item["ListingID"]);
             $result['isRequesting'] = $this->searchModel->isRequesting($item["ListingID"], $userID);
             $result['isWatching'] = $this->searchModel->isWatching($item["ListingID"], $userID);
+            $result['isLoggedIn'] = Authenticator::isAuthenticated();
 
             $image = $this->searchModel->getDefaultImage($item["ListingID"]);
             if(empty($image))

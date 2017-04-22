@@ -375,20 +375,22 @@ function getHTML(element){
                 '</div>' +
                 '<div class="nav-btns">' +
                   '<a href="#view" class="btn btn-primary view" role="button" id="'+ element.ListingID +'">View</a>';
-
-                  if (element.isRequesting){
-                      cardHTML += '<a href="#cancel-by-listing" class="btn btn-default" role="button" id="'+ element.ListingID +'">Cancel request</a>';
-                  }
-                  else {
-                      cardHTML += '<a href="#request" class="btn btn-default" role="button" id="'+ element.ListingID +'">Request</a>';
-                  }
-                  if (element.isWatching){
-                      cardHTML += '<div class="extra"><a href="#watch" role="button" class="btn-watch watched" id="'+ element.ListingID +'"><i class="material-icons">visibility</i></a>'+
-                                  '<a href="#message" role="button" class="btn-watch" id="'+ element.ListingID +'"><i class="material-icons">message</i></a></div>';
-                  }
-                  else{
-                      cardHTML += '<div class="extra"><a href="#watch" role="button" class="btn-watch" id="'+ element.ListingID +'"><i class="material-icons">visibility</i></a>' +
-                                  '<a href="#message" role="button" class="btn-watch" id="'+ element.ListingID +'"><i class="material-icons">message</i></a></div>';
+                  if(element.isLoggedIn)
+                  {
+                      if (element.isRequesting){
+                          cardHTML += '<a href="#cancel-by-listing" class="btn btn-default" role="button" id="'+ element.ListingID +'">Cancel request</a>';
+                      }
+                      else {
+                          cardHTML += '<a href="#request" class="btn btn-default" role="button" id="'+ element.ListingID +'">Request</a>';
+                      }
+                      if (element.isWatching){
+                          cardHTML += '<div class="extra"><a href="#watch" role="button" class="btn-watch watched" id="'+ element.ListingID +'"><i class="material-icons">visibility</i></a>'+
+                                      '<a href="#message" role="button" class="btn-watch" id="'+ element.ListingID +'"><i class="material-icons">message</i></a></div>';
+                      }
+                      else{
+                          cardHTML += '<div class="extra"><a href="#watch" role="button" class="btn-watch" id="'+ element.ListingID +'"><i class="material-icons">visibility</i></a>' +
+                                      '<a href="#message" role="button" class="btn-watch" id="'+ element.ListingID +'"><i class="material-icons">message</i></a></div>';
+                      }
                   }
     cardHTML +=  '</div>'+
               '</div>'+
