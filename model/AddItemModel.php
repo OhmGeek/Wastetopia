@@ -160,6 +160,24 @@ class AddItemModel
     }
 
     /**
+     * Adds a tag to the database
+     * @param $name (tag name)
+     * @param $description (description)
+     * @param $category (category ID)
+     * @return bool (True => Added, False => Not Added)
+     */
+    function addTag($name, $description, $category) {
+        $statement = $this->db->prepare("
+            INSERT INTO Tag (Name, FK_Category_Category_ID, Description)
+            VALUES (:name, :description, :catID)
+        ");
+        $statement->bindValue(":name", $name, PDO::PARAM_STR);
+        $statement->bindValue(":description", $description, PDO::PARAM_STR);
+        $statement->bindValue(":catID", $category, PDO::PARAM_INT);
+        return $statement->execute();
+
+    }
+    /**
      * Links a tag to an item
      * @param $itemID
      * @param $tagID
