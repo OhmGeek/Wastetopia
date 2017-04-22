@@ -115,10 +115,10 @@ $klein->respond("GET", "/logout", function($request, $response) {
 });
 $klein->with('/register', function() use ($klein){
 
-
-$klein->respond("GET", "/?", function($request, $response) {
-    $controller = new RegistrationController();
-    return $controller->generatePage();
+    $klein->respond("GET", "/?", function($request, $response) {
+        $controller = new RegistrationController();
+        return $controller->generatePage();
+    });
 });
 
 $klein->respond("POST", "/add-user", function($request, $response){
