@@ -201,6 +201,7 @@ $(function() {
         $.getJSON(url, function(json) {
             console.log("Get send json");
             console.log(json);
+            alert("Something actually worked for once!");
             var data = {
                 labels : ["Month1","Month2","Month3","Month4"],
                 datasets :[
@@ -230,6 +231,7 @@ $(function() {
 
             var ctx = document.getElementById("cvsMonthChart").getContext("2d");
             var linechart = new Chart(ctx).Line(data,option);
+            linechart.draw();
         });
     }
 });
