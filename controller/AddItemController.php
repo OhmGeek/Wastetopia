@@ -37,6 +37,13 @@ class AddItemController
         )); // todo add required details here.
     }
 
+    public function addTag($name, $categoryID, $description) {
+        if($this->model->addTag($name,$description, $categoryID)) {
+            return "{'outcome': 'success'}";
+        }
+        return "{'outcome':'error'}";
+    }
+
 
     /**
      * @return array (object containing list of tag names to display on the form)
