@@ -204,7 +204,31 @@ $(function() {
             var ctx = document.getElementById("cvsMonthChart").getContext("2d");
             var linechart = new Chart(ctx, {
                 type: 'bar',
-                data: json,
+                data: {
+                    labels : ["Month1","Month2","Month3","Month4"],
+                    datasets :[
+                        {
+                            label : "Your Contributions",
+                            fillColor :"rgba(255, 51, 204,0.75)",
+                            strokeColor :"rgba(23,12,102,0.75)",
+                            pointColor: "rgba(1,200,200,1)",
+                            pointStrokeColor : "#fff",
+                            pointHighLightFill: "#fff",
+                            pointHighLightStroke: "rgba(200,200,200,1)",
+                            data: json
+                        },
+                        {
+                            label : "# of items taken",
+                            fillColor :'rgba(0, 255, 255,0.75)',
+                            strokeColor :'rgba(23,12,102,0.75)',
+                            pointColor: 'rgba(200,2,200,1)',
+                            pointStrokeColor : '#fff',
+                            pointHighLightFill: '#fff',
+                            pointHighLightStroke: 'rgba(200,200,200,1)',
+                            data: [3,3,40,6]
+                        }
+                    ]
+                },
                 options: {}
             });
         });
@@ -217,7 +241,31 @@ $(function() {
             var ctx = document.getElementById("cvsRcvContributions").getContext("2d");
             var linechart = new Chart(ctx, {
                 type: 'bar',
-                data: json,
+                data: {
+                    labels : ["Month1","Month2","Month3","Month4"],
+                    datasets :[
+                        {
+                            label : "Your Contributions",
+                            fillColor :"rgba(255, 51, 204,0.75)",
+                            strokeColor :"rgba(23,12,102,0.75)",
+                            pointColor: "rgba(1,200,200,1)",
+                            pointStrokeColor : "#fff",
+                            pointHighLightFill: "#fff",
+                            pointHighLightStroke: "rgba(200,200,200,1)",
+                            data: json
+                        },
+                        {
+                            label : "# of items taken",
+                            fillColor :'rgba(0, 255, 255,0.75)',
+                            strokeColor :'rgba(23,12,102,0.75)',
+                            pointColor: 'rgba(200,2,200,1)',
+                            pointStrokeColor : '#fff',
+                            pointHighLightFill: '#fff',
+                            pointHighLightStroke: 'rgba(200,200,200,1)',
+                            data: [3,3,40,6]
+                        }
+                    ]
+                },
                 options: {}
             });
         });
