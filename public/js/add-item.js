@@ -224,3 +224,19 @@ function submit() {
     getLocationOfItem(serializeAndSendItem);
 
 }
+
+function addTag() {
+    var data = {
+        "name": $('#tag-name-toadd').val(),
+        "description": $('#tag-description-toadd').val(),
+        "catID": $('#tag-catID-toadd').val()
+    };
+    $.post($('base').attr('href') + "/api/tags/add", data, function(resp) {
+        if(resp.outcome == "error") {
+            alert("Error adding tag");
+        }
+        else {
+
+        }
+    }, 'json');
+}
