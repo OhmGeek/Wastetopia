@@ -2,6 +2,7 @@
 
 namespace Wastetopia\Controller;
 
+use Wastetopia\Controller\Authenticator;
 use Wastetopia\Model\SearchModel;
 use Wastetopia\Model\CardDetailsModel;
 use Wastetopia\Model\UserCookieReader;
@@ -45,7 +46,7 @@ class SearchController
 
 
     //TODO add notTags and distance limit to search fucntion
-    public function JSONSearch($lat, $long, $search, $tagsArr, $notTagsArr, $distanceLimit, $pageNumber, $order)
+    public function JSONSearch($lat, $long, $search, $tagsArr, $notTagsArr, $distanceLimit, $pageNumber, $order, $quantity)
     {
         $reader = new UserCookieReader();
         $userID = $reader->get_user_id();
@@ -55,7 +56,7 @@ class SearchController
 
         $distance = $distanceLimit * 1000.0; /*Convert Km in m*/
 
-        $itemInformation = $this->search($lat, $long, $search, $tagsArr, $notTagsArr);
+        $itemInformation = $this->search($lat, $long, $search, $tagsArr, $notTagsArr, $quantity);
 
         /*Remove items based on distance limit*/
         $newItemInformation = array();
@@ -107,6 +108,7 @@ class SearchController
             $result = $this->searchModel->getCardDetails($item["ListingID"]);
             $result['isRequesting'] = $this->searchModel->isRequesting($item["ListingID"], $userID);
             $result['isWatching'] = $this->searchModel->isWatching($item["ListingID"], $userID);
+            $result['isLoggedIn'] = Authenticator::isAuthenticated();
 
             $image = $this->searchModel->getDefaultImage($item["ListingID"]);
             if(empty($image))
@@ -125,9 +127,9 @@ class SearchController
         return json_encode($pageResults);
     }
 
-    public function MAPSearch($lat, $long, $search, $tagsArr, $notTagsArr, $distanceLimit)
+    public function MAPSearch($lat, $long, $search, $tagsArr, $notTagsArr, $distanceLimit, $quantity)
     {
-        $itemInformation = $this->search($lat, $long, $search, $tagsArr, $notTagsArr);
+        $itemInformation = $this->search($lat, $long, $search, $tagsArr, $notTagsArr, $quantity);
 
         $searchResults = [];
         foreach ($itemInformation as $item)
@@ -135,6 +137,7 @@ class SearchController
             $result = $this->searchModel->getCardDetails($item["ListingID"]);
             $result['isRequesting'] = $this->searchModel->isRequesting($item["ListingID"], $userID);
             $result['isWatching'] = $this->searchModel->isWatching($item["ListingID"], $userID);
+            $result['isLoggedIn'] = Authenticator::isAuthenticated();
 
             $image = $this->searchModel->getDefaultImage($item["ListingID"]);
             if(empty($image))
@@ -160,7 +163,7 @@ class SearchController
     /*Limit and Offset are implemented in the wrapper functions
       As custom sorting is needed in the search controller it cannot be done in SQL*/
 
-    private function search($lat, $long, $search, $tagsArr, $notTagsArr)
+    private function search($lat, $long, $search, $tagsArr, $notTagsArr, $quantity)
     {
 
         if(empty($lat) || empty($long))
@@ -182,7 +185,7 @@ class SearchController
         }
 
 
-        $itemInformation = $this->searchModel->getSearchResults($lat, $long, $search, $tagsArr, $notTagsArr);
+        $itemInformation = $this->searchModel->getSearchResults($lat, $long, $search, $tagsArr, $notTagsArr, $quantity);
 
         return $itemInformation;
     }

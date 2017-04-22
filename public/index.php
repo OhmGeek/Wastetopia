@@ -77,8 +77,9 @@ $klein->with('/api', function () use ($klein) {
         $distanceLimit = $paramArr[5];
         $pageNumber = $paramArr[6];
         $order = $paramArr[7];
+        $quantity = $paramArr[8];
         $response->sendHeaders('Content-Type: application/jpg');
-        return $searchController->JSONSearch($lat, $long, $search, $tagsArr, $notTagsArr, $distanceLimit, $pageNumber, $order);
+        return $searchController->JSONSearch($lat, $long, $search, $tagsArr, $notTagsArr, $distanceLimit, $pageNumber, $order, $quantity);
     });
     $klein->respond('GET', '/search/map/[**:param]', function ($request, $response) {
         $searchController = new SearchController();
@@ -89,8 +90,9 @@ $klein->with('/api', function () use ($klein) {
         $tagsArr = explode("+",$paramArr[3]);
         $notTagsArr = explode("+",$paramArr[4]);
         $distanceLimit = $paramArr[5];
+        $quantity = $paramArr[6];
         $response->sendHeaders('Content-Type: application/jpg');
-        return $searchController->MAPSearch($lat, $long, $search, $tagsArr, $notTagsArr, $distanceLimit);
+        return $searchController->MAPSearch($lat, $long, $search, $tagsArr, $notTagsArr, $distanceLimit, $quantity);
     });
 });
 
@@ -102,7 +104,7 @@ $klein->respond('GET', '/search/[**:param]?', function ($request, $response) {
 });
 
 
-$klein->respond('POST', '/search/', function ($request, $response) {
+$klein->respond('POST', '/search/?', function ($request, $response) {
     $controller = new SearchPageController();
 
     return $controller->renderAdvanced($request->paramsPost());

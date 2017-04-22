@@ -11,7 +11,6 @@ $(function () {
 
   function filterHeight(){
     var dropdownHeight = $(window).height() - $('.btn').outerHeight() - $('.navbar').height() - 20
-		console.log(dropdownHeight)
 		$('#filter-list').css({'max-height': dropdownHeight})
   }
 
@@ -35,7 +34,7 @@ $(function () {
   });
 
   var quantitySlider = document.getElementById('quantity');
-  var quantityFormat = wNumb({ decimals: 0, postfix: '+' })
+  var quantityFormat = wNumb({ decimals: 0, prefix: 'at least ' })
 
   noUiSlider.create(quantitySlider, {
     range: {
@@ -64,11 +63,8 @@ $(function () {
 
   function getFilters(){
     var radius = radiusFormat.to(parseFloat(radiusSlider.noUiSlider.get()));
-    var quantity = parseFloat(quantitySlider.noUiSlider.get())
-    if (quantity > 9) {
-      quantity = quantityFormat.to(parseFloat(quantitySlider.noUiSlider.get()));
-    }
-    filters = '<span class="label label-primary"> within ' + radius + ' radius </span>' + '<span class="label label-primary"> quantity ' + quantity + ' </span>'
+    var quantity = quantityFormat.to(parseFloat(quantitySlider.noUiSlider.get()));
+    filters = '<span class="label label-primary"> within ' + radius + ' radius </span>' + '<span class="label label-primary"> quantity: ' + quantity + ' </span>'
     $('#radius-output').html('radius: <span>' + radius + '</span>')
     $('#quantity-output').html('quantity: <span>' + quantity + '</span>')
     // inclusive filters from checkboxes
@@ -172,6 +168,7 @@ $(function () {
 
     sortOrder = $('#sort-options').val();
     distanceLimit = parseFloat(radiusSlider.noUiSlider.get());
+    quantity = parseFloat(quantitySlider.noUiSlider.get());
 
     $('.grid').html('<div class="grid-item col-xs-12"><h3 style="text-align:center;">Loading</h3></div>');
 
@@ -201,8 +198,11 @@ $(function () {
     });
 
     var baseURL = $('#baseURL').attr('href');
-    var query = baseURL + '/api/search/page/' + lat + '/' + long + '/' + searchTerm + '/' + include.join('+') + '/' + exclude.join('+') + '/' + distanceLimit + '/' + pageNumber + '/' + sortOrder;
-    mapURL = window.location.protocol + "//" + window.location.host + '/api/search/map/' + lat + '/' + long + '/' + searchTerm + '/' + include.join('+') + '/' + exclude.join('+') + '//';
+    var query = baseURL + '/api/search/page/' + lat + '/' + long + '/' + searchTerm + '/' + include.join('+') + '/' + exclude.join('+') + '/' + distanceLimit + '/' + pageNumber + '/' + sortOrder + '/' + quantity;
+
+    console.log(query);
+
+    mapURL = baseURL + '/api/search/map/' + lat + '/' + long + '/' + searchTerm + '/' + include.join('+') + '/' + exclude.join('+') + '/' + distanceLimit + '/' + quantity;
     if ($('#map-tab').hasClass('active')) {
       console.log('map is active')
       initMap();
@@ -210,6 +210,7 @@ $(function () {
     $.ajax({
         url: query,
         success: function(result){
+            console.log(result);
             if(result === '[]')
             {
                 noResults();
@@ -231,6 +232,10 @@ $(function () {
   });
 
   radiusSlider.noUiSlider.on('change', function(){
+    refreshPage();
+  });
+
+  quantitySlider.noUiSlider.on('change', function(){
     refreshPage();
   });
 
@@ -258,7 +263,7 @@ $(function () {
 
 
             var baseURL = $('#baseURL').attr('href');
-            var query = baseURL + '/api/search/page/' + lat + '/' + long + '/' + searchTerm + '/' + include.join('+') + '/' + exclude.join('+') + '/' + distanceLimit + '/' + pageNumber + '/' + sortOrder;
+            var query = baseURL + '/api/search/page/' + lat + '/' + long + '/' + searchTerm + '/' + include.join('+') + '/' + exclude.join('+') + '/' + distanceLimit + '/' + pageNumber + '/' + sortOrder + '/' + quantity;
 
             $.ajax({
                 url: query,
@@ -370,20 +375,22 @@ function getHTML(element){
                 '</div>' +
                 '<div class="nav-btns">' +
                   '<a href="#view" class="btn btn-primary view" role="button" id="'+ element.ListingID +'">View</a>';
-
-                  if (element.isRequesting){
-                      cardHTML += '<a href="#cancel-by-listing" class="btn btn-default" role="button" id="'+ element.ListingID +'">Cancel request</a>';
-                  }
-                  else {
-                      cardHTML += '<a href="#request" class="btn btn-default" role="button" id="'+ element.ListingID +'">Request</a>';
-                  }
-                  if (element.isWatching){
-                      cardHTML += '<div class="extra"><a href="#watch" role="button" class="btn-watch watched" id="'+ element.ListingID +'"><i class="material-icons">visibility</i></a>'+
-                                  '<a href="#message" role="button" class="btn-watch" id="'+ element.ListingID +'"><i class="material-icons">message</i></a></div>';
-                  }
-                  else{
-                      cardHTML += '<div class="extra"><a href="#watch" role="button" class="btn-watch" id="'+ element.ListingID +'"><i class="material-icons">visibility</i></a>' +
-                                  '<a href="#message" role="button" class="btn-watch" id="'+ element.ListingID +'"><i class="material-icons">message</i></a></div>';
+                  if(element.isLoggedIn)
+                  {
+                      if (element.isRequesting){
+                          cardHTML += '<a href="#cancel-by-listing" class="btn btn-default" role="button" id="'+ element.ListingID +'">Cancel request</a>';
+                      }
+                      else {
+                          cardHTML += '<a href="#request" class="btn btn-default" role="button" id="'+ element.ListingID +'">Request</a>';
+                      }
+                      if (element.isWatching){
+                          cardHTML += '<div class="extra"><a href="#watch" role="button" class="btn-watch watched" id="'+ element.ListingID +'"><i class="material-icons">visibility</i></a>'+
+                                      '<a href="#message" role="button" class="btn-watch" id="'+ element.ListingID +'"><i class="material-icons">message</i></a></div>';
+                      }
+                      else{
+                          cardHTML += '<div class="extra"><a href="#watch" role="button" class="btn-watch" id="'+ element.ListingID +'"><i class="material-icons">visibility</i></a>' +
+                                      '<a href="#message" role="button" class="btn-watch" id="'+ element.ListingID +'"><i class="material-icons">message</i></a></div>';
+                      }
                   }
     cardHTML +=  '</div>'+
               '</div>'+

@@ -87,7 +87,8 @@ class MessageModel
 
 		$statement->execute();
 
-		return $statement->fetchAll(PDO::FETCH_ASSOC);
+		$results = $statement->fetchAll(PDO::FETCH_ASSOC);
+	    return $results;
 	}
 
 
@@ -162,7 +163,8 @@ class MessageModel
 
 		$statement->execute();
 		
-		return $statement->fetchColumn();
+		$result = $statement->fetchColumn();
+	    return $result;
 	}
 
 
@@ -191,7 +193,8 @@ class MessageModel
 
         $statement->execute();
 
-        return $statement->fetchAll(PDO::FETCH_ASSOC);
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+	    return $results;
     }
 
 
@@ -219,7 +222,8 @@ class MessageModel
 
         $statement->execute();
 
-        return $statement->fetchAll(PDO::FETCH_ASSOC);
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+	    return $results;
     }
 
 }

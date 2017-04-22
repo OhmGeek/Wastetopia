@@ -87,6 +87,6 @@ class LoginController {
         $twig = new Twig_Environment($loader);
         $template = $twig->loadTemplate('users/logout.twig');
 
-        return $template->render(array());
+        return $template->render(array("config" => CurrentConfig::getAll()));
     }
 }

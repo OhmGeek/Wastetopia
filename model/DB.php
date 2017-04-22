@@ -18,7 +18,7 @@ class DB {
 	    $user = CurrentConfig::getProperty('DB_USER');
 	    $pass = CurrentConfig::getProperty('DB_PASS');
 
-        return new PDO("mysql:host=" . $host . ";dbname=" . $name,$user,$pass);
+        return new PDO('mysql:host=' . $host . ';dbname=' . $name,$user,$pass);
     }
 
 }
