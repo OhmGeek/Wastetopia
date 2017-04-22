@@ -56,7 +56,8 @@ class PopularityModel
 
         $statement->execute();
 
-        return $statement->fetchAll(PDO::FETCH_ASSOC);
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $results;
     }
 
 
@@ -82,7 +83,7 @@ class PopularityModel
 
         $statement->execute();
 
-        return true;
+        return True;
     }
 
 
