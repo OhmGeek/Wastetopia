@@ -347,7 +347,7 @@ class AnalysisModel
 
             $statement->execute();
             $errors = $statement->errorInfo();
-            return $statement->fetchColumn() . " + errors: " . $errors[0] . $errors[1] . $errors[2] . "start_date: " . $start_date . "end_date: " . $end_date;
+            return $statement->fetchColumn();
         }
         else{
             error_log("Received failed");
@@ -420,7 +420,7 @@ class AnalysisModel
 
             $statement->execute();
             $errors = $statement->errorInfo();
-            return $statement->fetchColumn() . " + errors: " . $errors[0] . $errors[1] . $errors[2] . "start_date: " . $start_date . "end_date: " . $end_date;
+            return $statement->fetchColumn();
         }
         else{
             return "Neither $year nor $month were equal to -1 and were not >= -1";

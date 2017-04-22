@@ -197,7 +197,7 @@ $(function() {
     }
 
     function monthChart() {
-        var url = "https://wastetopia.herokuapp.com" + '/analysis/get-contributions-send/';
+        var url = "https://wastetopia.herokuapp.com/analysis/get-contributions-send";
         $.getJSON(url, function(json) {
             console.log("Get send json");
             console.log(json);
