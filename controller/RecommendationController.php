@@ -4,6 +4,7 @@ use Wastetopia\Config\CurrentConfig;
 use Twig_Environment;
 use Twig_Loader_Filesystem;
 
+use Wastetopia\Controller\Authenticator;
 use Wastetopia\Model\AnalysisModel; // To analyse user's listings and requests
 use Wastetopia\Controller\SearchController;  // To search for similar itesm
 use Wastetopia\Model\UserCookieReader;
@@ -41,7 +42,7 @@ class RecommendationController {
      * @return bool True if user is logged in
      */
     function isUserLoggedIn(){
-        return \Wastetopia\Controller\Authenticator::isAuthenticated();
+        return Authenticator::isAuthenticated();
     }
 
 
@@ -79,6 +80,8 @@ class RecommendationController {
               $addedDate = $listing["Time_Of_Creation"];
               $distance = "DON'T HAVE"; // May be able to add later
               $postCode = $listing["Post_Code"];
+            
+              
               $imgURL = $this->cardDetailsModel->getDefaultImage($listingID);//$listing[""]; // Add later
               $itemName = $listing["Name"];
               $quantity = $listing["Quantity"];
@@ -123,6 +126,7 @@ class RecommendationController {
      * @return HTML
     */
     function generatePredictionSection($userID){
+        error_log("PREDICTIONS");
       $frequentTags = $this->model->getTagFrequenciesForListings($userID);
       $isUser = ($userID == $this->getUserID());
 
@@ -153,6 +157,9 @@ class RecommendationController {
               $addedDate = $listing["Time_Of_Creation"];
               $distance = "DON'T HAVE"; // May be able to add later
               $postCode = $listing["Post_Code"];
+              
+              error_log("Listing: ".$listingID);
+              
               $imgURL = $this->cardDetailsModel->getDefaultImage($listingID);//$listing[""]; // Add later
               $itemName = $listing["Name"];
               $quantity = $listing["Quantity"];

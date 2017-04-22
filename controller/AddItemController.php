@@ -10,8 +10,10 @@ namespace Wastetopia\Controller;
 
 use Twig_Loader_Filesystem;
 use Twig_Environment;
+use Wastetopia\Config\CurrentConfig;
 use Wastetopia\Model\AddItemModel;
 use Wastetopia\Model\AmazonS3;
+use Wastetopia\Model\HeaderInfo;
 
 class AddItemController
 {
@@ -29,7 +31,9 @@ class AddItemController
         $twig = new Twig_Environment($loader);
         $template = $twig->loadTemplate('items/edit_items.twig');
         return $template->render(array(
-            'tags' => $this->getListOfTagsForView()
+            'tags' => $this->getListOfTagsForView(),
+            "config" => CurrentConfig::getAll(),
+            "header" => HeaderInfo::get()
         )); // todo add required details here.
     }
 
@@ -64,7 +68,7 @@ class AddItemController
             if (is_array($details[$prop]) || is_object($details[$prop])) {
                 foreach ($details[$prop] as $t) {
                     $dietTag = $this->model->getTagDetails($t);
-                    if (isset($dietTag)) {
+                    if (isset($dietTag) && $dietTag['name'] != null) {
                         array_push($listOfTags, $dietTag);
                     }
                 }
@@ -81,6 +85,7 @@ class AddItemController
         // we are given a list of urls
         // we need just to add the filetype to the array
         $imageArray = array();
+        error_log("Get image array from user, then all the urls");
         error_log(json_encode($details['image']));
         foreach($details['images'] as $img) {
             $obj = array(
@@ -88,6 +93,7 @@ class AddItemController
                 'url' => $img,
                 'isDefault' => 0
             );
+            error_log($img);
             array_push($imageArray, $obj);
         }
         return $imageArray;
@@ -107,20 +113,27 @@ class AddItemController
             ),
             'images' => $this->getImageArray($details),
             'tags' => $this->generateTags($details),
-            'location' => $details['location']
+            'location' => $details['location'],
+            'barcode' => $details['barcode']
             );
 
         error_log('Now for the Serialized Item after changes:');
         error_log(json_encode($info));
-        $this->model->mainAddItemFunction(
+        $listingID = $this->model->mainAddItemFunction(
             $info['item'],
             $info['tags'],
             $info['images'],
             $info['barcode'],
             $info['location']
         );
+        return array("listingID" => $listingID);
     }
 
+    /**
+     * Add an item image to S3 and the DB
+     * @param $files (array of files to upload)
+     * @return string (JSON containing image url data)
+     */
     public function addItemImage($files) {
         // this adds an item to S3 and to the DB, returning the Id and url
         error_log(json_encode($files));
@@ -131,10 +144,12 @@ class AddItemController
         foreach($urls as $url) {
             $id = $this->model->addToImageTable('img', $url);
             // now let's create an object inside
+
             $image = array(
                 "id" => $id,
                 "url" => $url
             );
+            error_log("This is addItemImage: url, then files");
             error_log($id);
             error_log($url);
             array_push($uploadedImages,$image);

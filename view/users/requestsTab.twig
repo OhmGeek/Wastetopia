@@ -12,10 +12,8 @@
         <div id="completed-request" class="tab-pane fade">
             <div class="container-fluid">
                 <div class="grid">
-                    <!-- need this for mosonry layout to work properly with bootstrap grid system -->
-                    <div class="grid-sizer col-xs-12 col-sm-6 col-md-4"></div>
                     {% for item in requests.completed %}
-                        <div class="grid-item col-xs-12 col-sm-6 col-md-4">
+                        <div class="grid-item col-xs-12 col-sm-6 col-md-4 col-lg-3">
                             <div class="thumbnail zero-padding" id="{{ item.transactionID }}">
                                 <div class="request-status complete">
                                     COMPLETED ON {{ item.completedDate }}
@@ -36,14 +34,14 @@
                                         </div>
                                     </div>
                                 </div>
-                                <img src="{{ item.imgURL }}" style="border-color: lightgrey;"/>
+                                <div class="default-pic" style="background-image: url({{item.imgURL}})"></div>
                                 <div class="caption">
                                     <h3>{{ item.itemName }}</h3>
                                     <div class="trans-info">
                                         <div><span>Quantity:</span><span class="quantity">{{ item.quantity }}</span></div>
                                     </div>
                                     <div class="nav-btns">
-                                        <a href="#view" class="btn btn-primary" role="button"
+                                        <a href="{{config.ROOT_BASE}}/items/view/{{item.listingID}}" class="view btn btn-primary" role="button"
                                            id="{{ item.listingID }}">View</a>
                                            {% if not item.hasRated %}
                                         <a href="#rate" class="btn btn-default" role="button"
@@ -62,10 +60,8 @@
         <div id="pending-request" class="tab-pane fade in active">
             <div class="container-fluid">
                 <div class="grid">
-                    <!-- need this for mosonry layout to work properly with bootstrap grid system -->
-                    <div class="grid-sizer col-xs-12 col-sm-6 col-md-4"></div>
                     {% for item in requests.pending %}
-                        <div class="grid-item col-xs-12 col-sm-6 col-md-4">
+                        <div class="grid-item col-xs-12 col-sm-6 col-md-4 col-lg-3">
                             <div class="thumbnail zero-padding" id="{{ item.transactionID }}">
                                 <div class="request-status pending">
                                     PENDING SINCE {{ item.startedDate }}
@@ -86,16 +82,16 @@
                                         </div>
                                     </div>
                                 </div>
-                                <img src="{{ item.imgURL }}" style="border-color: lightgrey;"/>
+                                <div class="default-pic" style="background-image: url({{item.imgURL}})"></div>
                                 <div class="caption">
                                     <h3>{{ item.itemName }}</h3>
                                     <div class="trans-info">
                                         <div><span>Quantity: </span><span class="quantity">{{ item.quantity }}</span></div>
                                     </div>
                                     <div class="nav-btns">
-                                        <a href="#view" class="btn btn-primary" role="button"
+                                        <a href="{{config.ROOT_BASE}}/items/view/{{item.listingID}}" class="view btn btn-primary" role="button"
                                            id="{{ item.listingID }}">View</a>
-                                        <a href="#message" class="btn btn-default" role="button"
+                                        <a href="{{config.ROOT_BASE}}/messages/conversation/{{item.listingID}}" class="btn btn-default" role="button"
                                            id="{{ item.listingID }}">Message</a>
                                         <div class="dropup btn-watch">
                                             <a href="bootstrap-elements.html" data-target="#"

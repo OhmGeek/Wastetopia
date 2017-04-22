@@ -1,7 +1,7 @@
 {% extends 'header.twig' %}
 
 {% block title %}
-   {{ details.itemName }} | Wastetopia
+   {{ name }} | Wastetopia
 {% endblock %}
 
 {% block navbar %}
@@ -9,24 +9,26 @@
 {% endblock %}
 
 {% block content %}
-    <div class="grid-body" style="padding-top: 60px;">
+    <div id="main-container" class="grid-body" data-listingID="{{ listingID }}" style="padding-top: 60px;">
         <div class="container-fluid">
+            {% if not active %}
+            <div class="alert alert-info">
+                <strong>Sorry, this item is no longer active. Chances are, some students have already eaten it :/ </strong>
+            </div>
+            {% endif %}
             <div class="row">
                 <div class="col-sm-12 col-md-6 zero-padding">
+                    {% if images %}
                     <div id="myCarousel" class="carousel slide" data-ride="carousel">
                         <!-- Indicators -->
                         <ol class="carousel-indicators">
+
                             {% set counter = -1 %}
                             {% for img in images %}
                                 {% set counter = counter + 1 %}
                                 <li data-target="#myCarousel" data-slide-to="{{ counter }}" {% if counter == 0 %}
                                     class="active" {% endif %}></li>
                             {% endfor %}
-
-                            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-                            <li data-target="#myCarousel" data-slide-to="1"></li>
-                            <li data-target="#myCarousel" data-slide-to="2"></li>
-                            <li data-target="#myCarousel" data-slide-to="3"></li>
                         </ol>
                         <!-- Wrapper for slides -->
                         <div class="carousel-inner" role="listbox">
@@ -36,11 +38,26 @@
                             {% set first_item = 'active' %}
                             {% for img in images %}
                                 <div class="item {{ first_item }}">
-                                    <img src="{{ img.Image_URL }}">
+                                    <img src="{{ img.url }}">
                                 </div>
                                 {% set first_item = '' %}
                             {% endfor %}
                         </div>
+                    {% else %}
+                        <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                        <!-- Indicators -->
+                        <ol class="carousel-indicators">
+                                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                        </ol>
+                        <!-- Wrapper for slides -->
+                        <div class="carousel-inner" role="listbox">
+                                <div class="item active">
+                                    <img src="//s3.eu-west-2.amazonaws.com/wastetopia-static-store-001/placeholder-item.png" alt="No image specified">
+                                </div>
+                        </div>
+
+                    {% endif %}
+
                         <!-- Left and right controls -->
                         <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
                             <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
@@ -55,12 +72,10 @@
                 <div class="col-sm-12 col-md-6 zero-padding">
                     <div class="item-details">
                         <div class="item-name">
-                            {{ details.itemName }}
+                            {{ name }}
                         </div>
                         <div class="item-subTitle">
-                            {% for tag in tags %}
-                                <div class="tag-name">{{ tag.Name }}</div>
-                            {% endfor %}
+                            {{ description }}
                         </div>
                         <div class="item-description">
                             <div class="container-fluid">
@@ -68,67 +83,85 @@
 
                                         <!-- go through each of the category ids, getting the name, and then the type
                                         for the item !-->
-
-                                    {% for tag in tags %}
+                                        {% if classification %}
                                         <div class="col-xs-12 col-sm-6 zero-padding">
-                                            <span class="info">{{ tag.CategoryID }}</span> {{ tag.Name}}
+                                            <span class="info">Type:</span>
+                                            {% for tag in classification %}
+                                                <span class="label label-info">{{ tag.name }}</span>
+                                            {% endfor %}
                                         </div>
-                                    {% endfor %}
+                                        {% endif %}
 
-                                    <div class="col-sm-12 zero-padding">
-                                        <span class="info">Description:</span>
-                                        <br>
-                                        {% for tag in tags %}
-                                            {{ tag.Description }}.
+                                    {% if dietary %}
+                                        <div class="col-xs-12 col-sm-6 zero-padding">
+                                            <span class="info">Suitable for:</span>
+                                            {% for tag in dietary %}
+                                                <span class="label label-info">{{ tag.name }}</span>
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+
+                                    {% if state %}
+                                    <div class="col-xs-12 col-sm-6 zero-padding">
+                                        <span class="info">State:</span>
+                                        {% for tag in state %}
+                                            <span class="label label-info">{{ tag.name }}</span>
                                         {% endfor %}
                                     </div>
+                                    {% endif %}
+
+                                    <div class="col-xs-12 col-sm-6 zero-padding">
+                                        <span class="info">Expiry Date:</span>
+                                            {{ expires }}
+                                    </div>
+
+                                    <div class="col-xs-12 col-sm-6 zero-padding">
+                                        <span class="info">Location:</span>
+                                        {{ location.name }}
+                                    </div>
+
+                                    {% if contains %}
+                                    <div class="col-xs-12 col-sm-6 zero-padding">
+                                        <span class="info">May Contain:</span>
+                                        {% for tag in contains %}
+                                            <span class="label label-danger">{{ tag.name }}</span>
+                                        {% endfor %}
+                                    </div>
+                                    {% endif %}
+
+
+
                                 </div>
                             </div>
                         </div>
-                        <div class="item-nav-btn">
+                    </div>
+                </div>
+                    <div class="col-sm-12 col-md-12 zero-padding">
+                        <div class="item-nav-btn col-xs-12 col-sm-12 zero-padding">
+                            <!-- If they are logged in, and not the owner, they can request -->
+                            {% if isOwner != 1 and isLoggedIn == 1 %}
                             <button type="button" class="item-btn">
-                                <span class="glyphicon glms yphicon-send" aria-hidden="true"></span>
-                                <p class="btn-text" >Request</p>
+                                <span class="glyphicon glyphicon-send" aria-hidden="true"></span>
+                                <a class="btn-text" href="#request">Request</a>
                             </button>
+                            {% endif %}
+
+                            <!-- If they own it, they can edit it -->
+                            {% if isOwner == 1 %}
+                            <button type="button" class="item-btn">
+                                <span class="glyphicon glyphicon-send" aria-hidden="true"></span>
+                                <a class="btn-text" href="{{ config.ROOT_BASE }}/items/edit/{{ listingID }}">Edit</a>
+                            </button>
+                            {% endif %}
                         </div>
                     </div>
-                </div>
                 <div class="col-sm-12 col-md-12 zero-padding">
-                    <div id="map"></div>
-                    <script src="map.js"></script>
-
-                    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCrh2cKWRAFifeLIkznE2Iw4Oblqlmyyt0&callback=initMap">
+                    <div id="map" data-lat="{{ location.lat }}" data-long="{{ location.long }}"></div>
+                    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCq2dSqMknX1KUfTk7ZnAwhBx_q_I_rbUU&callback=initMap">
                     </script>
-                </div>
-                <!-- todo: delete this as it's pointless (messaging is better) -->
-                <div class="col-sm-12 col-md-12 zero-padding">
-                    <div class="item-FAQ">
-                        FAQ
-                        <div class="container-fluid">
-                            <div class="row">
-                                <div class="col-xs-12 col-sm-6 zero-padding">
-                                    <ul>
-                                        <li style="margin: 0 0 10px 0;">
-
-                                            <div class="faq-user-img">
-                                                <img src="food.jpg" class="faq-q"/>
-                                            </div>
-                                            <div class="tri">tri</div>
-                                            <div class="question">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla dapibus eu lorem sit amet posuere?</div>
-                                        </li>
-                                        <li>
-                                            <div class="user-sign">
-                                                <img src="flowery.jpg" class="user-image faq-a"/>
-                                                <span class="answer">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla dapibus eu lorem sit amet posuere.</span>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
     </div>
 {% endblock %}
+{% set jslist = ["map.js", "view-item.js", "request-view-page.js"] %}

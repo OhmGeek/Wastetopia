@@ -8,8 +8,9 @@
  * Date: 27/02/17
  * Time: 22:01
  */
-
-class StartTestTest extends PHPUnit_Framework_TestCase
+namespace Wastetopia\Tests;
+use PHPUnit\Framework\TestCase;
+class StartTestTest extends TestCase
 {
 
     /** @test */

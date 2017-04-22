@@ -1,0 +1,19 @@
+{% extends 'header.twig' %}
+
+{% block title %}
+    Error 403 | Wastetopia
+{% endblock %}
+
+{% block navbar %}
+    {% include 'navbar.twig' %}
+{% endblock %}
+
+{% block content %}
+    <div class="container" style="padding-top: 60px;">
+        <div class="jumbotron">
+            <h1>You are not allowed to edit this.</h1>
+            <p>It might look tasty, but you have to ask the owner before touching their food!</p>
+        </div>
+    </div>
+
+{% endblock %}

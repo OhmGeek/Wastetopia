@@ -9,12 +9,20 @@ use Wastetopia\Model\DB;
 
 class ItemModel
 {
-	function __construct()
+    /**
+     * ItemModel constructor.
+     */
+    function __construct()
 	{
 		$this->db = DB::getDB();
 	}
 
-	function getItemInfoFromItemID($item_id){
+    /**
+	 * Get Item Info from ItemID
+     * @param $itemID
+     * @return array
+     */
+    function getItemInfoFromItemID($itemID){
 		
 		$statement = $this->db->prepare("
 			SELECT *
@@ -22,24 +30,29 @@ class ItemModel
 			WHERE ItemID = :item_id;
 		");
 		
-		$statement->bindValue(":item_id", $item_id, PDO::PARAM_INT);
+		$statement->bindValue(":item_id", $itemID, PDO::PARAM_INT);
 		$statement->execute();
 		return $statement->fetchAll(PDO::FETCH_ASSOC);
 	}
-	
-	function getItemInfoFromListingID($listing_id){
+
+    /**
+	 * Get item info from the current listing
+     * @param $listingID
+     * @return array
+     */
+    function getItemInfoFromListingID($listingID){
 		$statement = $this->db->prepare("
 			SELECT * 
 			FROM Item
 			RIGHT JOIN Listing ON Item.ItemID = Listing.FK_Item_ItemID
 			WHERE Listing.ListingID = :listing_id;
 		");
-		$statement->bindValue(":listing_id", $listing_id, PDO::PARAM_INT);
+		$statement->bindValue(":listing_id", $listingID, PDO::PARAM_INT);
 		$statement->execute();
 		
 		return $statement->fetchAll(PDO::FETCH_ASSOC);
 	}
 }
 
-?>
+
 

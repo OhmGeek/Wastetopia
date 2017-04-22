@@ -2,6 +2,7 @@
 
 namespace Wastetopia\Controller;
 use Wastetopia\Model\ConversationListModel;
+use Wastetopia\Model\HeaderInfo;
 use Wastetopia\Model\MessageModel;
 use Twig_Loader_Filesystem;
 use Twig_Environment;
@@ -54,7 +55,8 @@ class ConversationListController
 		$output = array(
 		        "config" => $config,
 				"receivingList" => $receivingTabHTML,
-				"givingList" => $sendingTabHTML
+				"givingList" => $sendingTabHTML,
+                "header" => HeaderInfo::get()
 			);
 
 		//Load template and print result
@@ -76,9 +78,15 @@ class ConversationListController
         $receiving = $this->createConversationArray($receivingResults);
 	$isEmpty = (count($receiving) == 0);
 	    
+	    
+	// Get config
+		$CurrentConfig = new CurrentConfig();
+	        $CurrentConfig->loadConfig("production");
+		$config = $CurrentConfig->getAll();
+	    
         $template = $this->twig->loadTemplate('messaging/MessagesTabsDisplay.twig');
 
-        return $template->render(array("isEmpty" => $isEmpty, "conversationList"=>$receiving, "giving" => 0));
+        return $template->render(array("config" => $config,"isEmpty" => $isEmpty, "conversationList"=>$receiving, "giving" => 0));
 		
     }
 
@@ -96,9 +104,15 @@ class ConversationListController
         $sending = $this->createConversationArray($sendingResults);
 	    $isEmpty = (count($sending) == 0);
 	    
+	    
+	  // Get config
+		$CurrentConfig = new CurrentConfig();
+	        $CurrentConfig->loadConfig("production");
+		$config = $CurrentConfig->getAll();
+	    
         $template = $this->twig->loadTemplate('messaging/MessagesTabsDisplay.twig');
 
-        return $template->render(array("isEmpty" => $isEmpty, "conversationList"=>$sending, "giving" => 1));
+        return $template->render(array("config" => $config,"isEmpty" => $isEmpty, "conversationList"=>$sending, "giving" => 1));
     }
 
 

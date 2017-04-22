@@ -1,0 +1,32 @@
+--- 
+engines: 
+  csslint: 
+    enabled: true
+  duplication: 
+    config: 
+      languages: 
+        - javascript
+        - php
+    enabled: true
+  eslint: 
+    enabled: true
+  fixme: 
+    enabled: true
+  phpmd: 
+    config: 
+      file_extensions: 
+        - php
+        - inc
+    enabled: true
+exclude_paths: 
+  - public/PHPMailer_5.2.0
+  - public/css/bootstrap-material-css
+  - public/css/plugins/
+  - public/js/bootstrap-material-js
+  - public/js/plugins
+  - tests/
+ratings: 
+  paths: 
+    - "**.css"
+    - "**.php"
+    - "**.js"

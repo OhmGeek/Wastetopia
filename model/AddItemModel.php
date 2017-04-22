@@ -20,24 +20,10 @@ class AddItemModel
      */
     private function getUserID()
     {
-          return 1; //for now, return 1 for testing.
-//        $reader = new UserCookieReader();
-//        return $reader->get_user_id();
+        $reader = new UserCookieReader();
+        return $reader->get_user_id();
     }
 
-
-    /**
-     * Returns the ID of the last thing inserted in the database
-     * @return int
-     */
-    private function getLastInsertID()
-    {
-        $statement = $this->db->prepare("
-            SELECT LAST_INSERT_ID()
-         ");
-        $statement->execute();
-        return $statement->fetchColumn();
-    }
 
     /**
      * Returns the ID of the last item inserted with the given parameters
@@ -76,15 +62,15 @@ class AddItemModel
         $statement = $this->db->prepare("
             SELECT Image.ImageID
             FROM Image
-            WHERE File_Type = :fileType
-            AND Image_URL = :imageURL
+            WHERE Image_URL = :imageURL
+            ORDER BY Image.ImageID DESC;
          ");
 
-        $statement->bindValue(":fileType", $fileType, PDO::PARAM_STR);
+        //$statement->bindValue(":fileType", $fileType, PDO::PARAM_STR);
         $statement->bindValue(":imageURL", $imageURL, PDO::PARAM_STR);
         $statement->execute();
 
-        return $statement->fetchColumn();
+        return $statement->fetchAll(PDO::FETCH_ASSOC)[0]['ImageID'];
     }
 
     /**
@@ -188,6 +174,7 @@ class AddItemModel
         $statement->bindValue(":itemID", $itemID, PDO::PARAM_INT);
         $statement->bindValue(":tagID", $tagID, PDO::PARAM_INT);
         $statement->execute();
+        error_log(json_encode($statement->errorInfo()));
     }
 
 
@@ -200,14 +187,14 @@ class AddItemModel
     function addToImageTable($fileType, $imageURL)
     {
         $statement = $this->db->prepare("
-            INSERT INTO `Image` (`File_Type`, `Image_URL`)
-            VALUES (:fileType, :imageURL);
+            INSERT INTO `Image` (`Image_URL`)
+            VALUES (:imageURL);
          ");
 
-        $statement->bindValue(":fileType", $fileType, PDO::PARAM_STR);
+
         $statement->bindValue(":imageURL", $imageURL, PDO::PARAM_STR);
         $statement->execute();
-
+        error_log(json_encode($statement->errorInfo()));
         //return $this->getLastInsertID(); // Need to change to another sql query
         return $this->getLastImageID($fileType, $imageURL);
     }
@@ -231,6 +218,7 @@ class AddItemModel
         $statement->bindValue(":itemID", $itemID, PDO::PARAM_INT);
         $statement->bindValue(":isDefault", $isDefault, PDO::PARAM_INT);
         $statement->bindValue(":imageID", $imageID, PDO::PARAM_INT);
+        error_log(json_encode($statement->errorInfo()));
         $statement->execute();
     }
 
@@ -314,13 +302,18 @@ class AddItemModel
      */
     function addAllTags($itemID, $tags)
     {
-
+        error_log("Add all tags methdo");
+        error_log(json_encode($tags));
+        error_log("That was the list of tags. What is the itemID?");
+        error_log($itemID);
         foreach ($tags as $tag) {
 //            $tagName = $tag["name"];
 //            $tagCategoryId = $tag["categoryID"];
 //            $tagDescription = $tag["description"];
             //$tagID = $this->addToTagTable($tagName, $tagCategoryId, $tagDescription); //Add the tag
             $tagID = $tag["tagID"];
+            error_log("Add data with tag " . $tagID);
+
             $this->addToItemTagTable($itemID, $tagID); //Link tag to item
         }
     }
@@ -336,8 +329,17 @@ class AddItemModel
         $isDefault = 1;
         foreach ($images as $image) {
             $imageURL = $image["url"];
+            error_log("Add all images function with url:");
+            error_log($imageURL);
             $imageID = $this->getImageIDFromURL($imageURL); //Add to image table
-            $this->addToItemImageTable($imageID, $isDefault, $itemID); //Link image to item
+            error_log("The image ID for this is Image ID");
+            if(is_null($imageID) || $imageID == "") {
+                $imageID = $this->addToImageTable("img",$imageURL);
+                error_log("Null, so we fetched something...");
+            }
+            error_log("ID is:");
+            error_log($imageID);
+            $this->addToItemImageTable($imageID, $itemID, $isDefault); //Link image to item
             $isDefault = 0; // first image is default, others aren't.
         }
     }
@@ -364,14 +366,10 @@ class AddItemModel
         $itemID = $this->addToItemTable($itemName, $itemDescription, $useByDate); //Add the item
         error_log("Item ID:");
         error_log($itemID);
-        if(isset($tags) && count($tags) > 0) {
-            error_log("Add all tags");
-            $this->addAllTags($itemID, $tags); //Add the tags and link to item
-        }
-
-        if(isset($images) && count($images) > 0) {
+        error_log("Add all tags");
+        $this->addAllTags($itemID, $tags); //Add the tags and link to item
+        error_log("Add all images");
             $this->addAllImages($itemID, $images); //Add the images and link to item
-        }
         //Extract location information
         $locationName = $location["firstLineAddr"];
         $postCode = $location["secondLineAddr"];
@@ -386,8 +384,14 @@ class AddItemModel
         }
         //Add the whole listing                       quantity=1
         $this->addToListingTable($locationID, $itemID, 1);
+        return $this->getFinalListingID($locationID, $itemID, 1);
     }
 
+    /**
+     * Retrieves an ImageID from an uploaded image
+     * @param $imageURL (URL to search for)
+     * @return string (the ImageID)
+     */
     private function getImageIDFromURL($imageURL)
     {
         $statement = $this->db->prepare("
@@ -401,6 +405,11 @@ class AddItemModel
         return $statement->fetchColumn(0);
     }
 
+    /**
+     * Get the details of a tag
+     * @param $name (The Tag Name)
+     * @return array (An array containing the tag details from the DB)
+     */
     public function getTagDetails($name)
     {
         $statement = $this->db->prepare("
@@ -413,13 +422,41 @@ class AddItemModel
         $statement->execute();
         // return the ID, or nothing if none is found.
         $results = $statement->fetchAll(PDO::FETCH_ASSOC);
-
+        error_log("Get tag details model function results:");
         // now we have the results, create a tag and return it.
         error_log(json_encode($results));
         return array(
+            'tagID' => $results[0]['TagID'],
             'name' => $results[0]['Name'],
             'categoryID' => $results[0]['FK_Category_Category_ID'],
             'description' => $results[0]['Description']
         );
+    }
+
+    /**
+     * This fetches the Listing ID from details
+     * @param $locationID (locationID of the item to fetch)
+     * @param $itemID (itemID of the item to fetch)
+     * @param $quantity (quantity of the item to fetch)
+     * @return mixed (the ListingID)
+     */
+    private function getFinalListingID($locationID, $itemID, $quantity)
+    {
+        $statement = $this->db->prepare("
+            SELECT ListingID
+            FROM Listing
+            WHERE FK_Location_LocationID = :locationID
+              AND FK_Item_ItemID = :itemID
+              AND FK_User_UserID = :userID
+              AND Quantity = :quantity
+        ");
+        $statement->bindValue(":locationID", $locationID, PDO::PARAM_INT);
+        $statement->bindValue(":itemID", $itemID, PDO::PARAM_INT);
+        $statement->bindValue(":userID", $this->getUserID(), PDO::PARAM_INT);
+        $statement->bindValue(":quantity", $quantity, PDO::PARAM_INT);
+
+        $statement->execute();
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $results[0]['ListingID'];
     }
 }
