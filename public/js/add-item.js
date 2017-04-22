@@ -263,5 +263,7 @@ function addTypeTag() {
     $('#tag-modal').modal();
 }
 
-$('#btn-state-tag-add').on('click', addStateTag);
-$('#btn-allergy-tag-add').on('click', addContainsTag);
+$(document).ready(function(){
+    $('#btn-state-tag-add').on('click', addStateTag);
+    $('#btn-allergy-tag-add').on('click', addContainsTag);
+});
