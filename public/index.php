@@ -115,58 +115,58 @@ $klein->respond("GET", "/logout", function($request, $response) {
     $controller = new LoginController();
     return $controller->logout();
 });
-$klein->with('/register', function() use ($klein){
+$klein->with('/register', function() use ($klein) {
 
-    $klein->respond("GET", "/?", function($request, $response) {
+    $klein->respond("GET", "/?", function ($request, $response) {
         $controller = new RegistrationController();
         return $controller->generatePage();
     });
 
-$klein->respond("POST", "/add-user", function($request, $response){
-    $forename = $request->forename;
-    $surname = $request->surname;
-    $email = $request->email;
-    $password = $request->password;
-    $passwordConfirm = $request->passwordConfirm;
-    $pictureURL = $request->pictureURL;
+    $klein->respond("POST", "/add-user", function ($request, $response) {
+        $forename = $request->forename;
+        $surname = $request->surname;
+        $email = $request->email;
+        $password = $request->password;
+        $passwordConfirm = $request->passwordConfirm;
+        $pictureURL = $request->pictureURL;
 
-    $controller = new RegistrationController();
-    return $controller->addUser($forename, $surname, $email, $password, $passwordConfirm, $pictureURL);
+        $controller = new RegistrationController();
+        return $controller->addUser($forename, $surname, $email, $password, $passwordConfirm, $pictureURL);
+    });
+
+
+    /*ADD USER ALTERNATIVE FROM SEARCHING*/
+    /*  $klein->respond("GET", "/?", function($request, $response) {
+        $controller = new RegistrationController();
+        return $controller->generatePage();
+      });
+
+      $klein->respond("POST", "/add-user", function($request, $response){
+          $forename = $request->forename;
+          $surname = $request->surname;
+          $email = $request->email;
+          $password = $request->password;
+          $passwordConfirm = $request->passwordConfirm;
+          $pictureURL = $request->pictureURL;
+
+          $controller = new RegistrationController();
+          return $controller->addUser($forename, $surname, $email, $password, $passwordConfirm, $pictureURL);
+      });*/
+
+    $klein->respond("GET", "/verify/[:verificationCode]", function ($request, $response) {
+        $verificationCode = $request->verificationCode;
+        $model = new RegistrationModel(); // Put function in controller?
+        $result = $model->verifyUser($verificationCode);
+        if (!($result)) {
+            // Verification didn't work, what do we do now??
+            return "It didn't work";
+        } else {
+            // Verirification worked, send them to login page??
+            return "Verification successful: your account is now active";
+        }
+
+    });
 });
-
-
-/*ADD USER ALTERNATIVE FROM SEARCHING*/
-/*  $klein->respond("GET", "/?", function($request, $response) {
-    $controller = new RegistrationController();
-    return $controller->generatePage();
-  });
-
-  $klein->respond("POST", "/add-user", function($request, $response){
-      $forename = $request->forename;
-      $surname = $request->surname;
-      $email = $request->email;
-      $password = $request->password;
-      $passwordConfirm = $request->passwordConfirm;
-      $pictureURL = $request->pictureURL;
-
-      $controller = new RegistrationController();
-      return $controller->addUser($forename, $surname, $email, $password, $passwordConfirm, $pictureURL);
-  });*/
-
-$klein->respond("GET","/verify/[:verificationCode]", function($request, $response){
-    $verificationCode = $request->verificationCode;
-    $model = new RegistrationModel(); // Put function in controller?
-    $result = $model->verifyUser($verificationCode);
-    if (!($result)){
-        // Verification didn't work, what do we do now??
-        return "It didn't work";
-    }else{
-        // Verirification worked, send them to login page??
-        return "Verification successful: your account is now active";
-    }
-
-});
-
 // Only for testing purposes
 /*$klein->respond("GET", "/delete/[:firstName]/[:lastName]", function($request, $response){
    $firstName = $request->firstName;
