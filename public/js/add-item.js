@@ -262,3 +262,6 @@ function addTypeTag() {
     // show modal
     $('#tag-modal').modal();
 }
+
+$('#btn-state-tag-add').on('click', addStateTag);
+$('#btn-allergy-tag-add').on('click', addContainsTag);
