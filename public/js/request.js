@@ -50,12 +50,12 @@ $(function () {
         event.preventDefault();
         console.log("Toggle");
         var listingID = $(this).attr("id");
-        var isUser = parseInt($(this).closest('.user-stats').attr("id"));
+        //var isUser = parseInt($(this).closest('.user-stats').attr("id"));
         var listing = $(this);
 
         var data = {listingID: listingID}
         var url = baseURL + "/profile/toggle-watch-list"
-        console.log("Is user: "+isUser);
+        //console.log("Is user: "+isUser);
         console.log(data);
         $.post(url, data, function (response) {
             // Do something depending on if response is true or false?? (Currently always true)
