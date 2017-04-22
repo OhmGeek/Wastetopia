@@ -31,6 +31,12 @@
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteCond %{REQUEST_FILENAME} !-d
 
+    <FilesMatch ".(ico|pdf|flv|jpg|jpeg|png|gif|js|css|swf)$">
+        Header set Cache-Control "max-age=31449600, public"
+    </FilesMatch>
+    <FilesMatch ".php$">
+            Header set Cache-Control "max-age=0, public"
+        </FilesMatch>
 	# deal with php5-cgi first
 	<IfModule mod_fcgid.c>
 		RewriteRule ^(.*)$ index.php?/$1 [QSA,L]
