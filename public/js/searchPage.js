@@ -35,7 +35,7 @@ $(function () {
   });
 
   var quantitySlider = document.getElementById('quantity');
-  var quantityFormat = wNumb({ decimals: 0, postfix: '+' })
+  var quantityFormat = wNumb({ decimals: 0, prefix: 'at least ' })
 
   noUiSlider.create(quantitySlider, {
     range: {
@@ -64,11 +64,8 @@ $(function () {
 
   function getFilters(){
     var radius = radiusFormat.to(parseFloat(radiusSlider.noUiSlider.get()));
-    var quantity = parseFloat(quantitySlider.noUiSlider.get())
-    if (quantity > 9) {
-      quantity = quantityFormat.to(parseFloat(quantitySlider.noUiSlider.get()));
-    }
-    filters = '<span class="label label-primary"> within ' + radius + ' radius </span>' + '<span class="label label-primary"> quantity ' + quantity + ' </span>'
+    var quantity = quantityFormat.to(parseFloat(quantitySlider.noUiSlider.get()));
+    filters = '<span class="label label-primary"> within ' + radius + ' radius </span>' + '<span class="label label-primary"> quantity: ' + quantity + ' </span>'
     $('#radius-output').html('radius: <span>' + radius + '</span>')
     $('#quantity-output').html('quantity: <span>' + quantity + '</span>')
     // inclusive filters from checkboxes
