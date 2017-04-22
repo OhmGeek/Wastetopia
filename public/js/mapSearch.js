@@ -131,7 +131,7 @@ function initMap() {
       '<div><span>Quantity:</span>' + item.Quantity + '</div>'+
       '</div>'+
       '<div class="nav-btns">'+
-      '<a href=""+baseURL+"/items/view/"+item.listingID id="'+ item.ListingID + '" class="btn btn-primary" role="button">View</a>';
+      '<a href= baseURL+"/items/view/"+item.listingID id="'+ item.ListingID + '" class="btn btn-primary" role="button">View</a>';
 
       if (item.isRequesting){
           contentString += '<a href="#cancel-by-listing" class="btn btn-default" role="button" id="'+ item.ListingID +'">Cancel request</a>';
@@ -141,11 +141,11 @@ function initMap() {
       }
       if (item.isWatching){
           contentString += '<div class="extra"><a href="#watch" role="button" class="btn-watch watched" id="'+ item.ListingID +'"><i class="material-icons">visibility</i></a>'+
-                      '<a href=""+baseURL+"/messages/conversation/"+{{item.listingID}} role="button" class="btn-watch" id="'+ item.ListingID +'"><i class="material-icons">message</i></a></div>';
+                      '<a href= baseURL+"/messages/conversation/"+{{item.listingID}} role="button" class="btn-watch" id="'+ item.ListingID +'"><i class="material-icons">message</i></a></div>';
       }
       else{
           contentString += '<div class="extra"><a href="#watch" role="button" class="btn-watch" id="'+ item.ListingID +'"><i class="material-icons">visibility</i></a>' +
-                      '<a href=""+baseURL+"/messages/conversation/"+{{item.listingID}} role="button" class="btn-watch" id="'+ item.ListingID +'"><i class="material-icons">message</i></a></div>';
+                      '<a href= baseURL+"/messages/conversation/"+{{item.listingID}} role="button" class="btn-watch" id="'+ item.ListingID +'"><i class="material-icons">message</i></a></div>';
       }
       contentString += '</div>'+
                       '</div>'+
