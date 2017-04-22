@@ -210,6 +210,7 @@ $(function () {
     $.ajax({
         url: query,
         success: function(result){
+            console.log(result);
             if(result === '[]')
             {
                 noResults();
