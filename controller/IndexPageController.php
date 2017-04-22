@@ -6,6 +6,7 @@ use Twig_Environment;
 use Wastetopia\Config\CurrentConfig;
 use Wastetopia\Controller\Authenticator;
 use Wastetopia\Controller\SearchPageController;
+use Wastetopia\Model\HeaderInfo;
 
 class IndexPageController
 {
@@ -50,6 +51,7 @@ class IndexPageController
 
         // Generate HTML
         return $template->render(array('config' => $config,
+                                       'header' => HeaderInfo::get(),
                                        'isLoggedIn' => $isLoggedIn,
                                        'loggedMessage' => $loggedMessage,
                                        'filters' => $filters
