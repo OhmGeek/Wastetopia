@@ -96,6 +96,7 @@ class SearchController
 
             case 'DT':
                 $sortedInformation = $this->newFirstSort($itemInformation);
+                var_dump("expression");
                 break;
 
             default:
