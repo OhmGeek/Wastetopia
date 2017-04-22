@@ -58,7 +58,8 @@ class NotificationModel
         $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
         $statement->execute();
 
-        return $statement->fetchColumn();
+        $result = $statement->fetchColumn();
+        return $result;
     }
 
 
@@ -85,7 +86,8 @@ class NotificationModel
         $statement->bindValue(":userID2", $userID, PDO::PARAM_INT);
         $statement->execute();
 
-        return $statement->fetchColumn();
+        $result = $statement->fetchColumn();
+        return $result;
     }
     
     
