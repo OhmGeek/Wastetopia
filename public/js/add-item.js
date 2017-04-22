@@ -213,7 +213,7 @@ function serializeAndSendItem(location) {
     else {
       console.log("Not valid");
     }
-};
+}
 //todo validate all the fields
 function isValid(itemData) {
   return true;
@@ -224,3 +224,44 @@ function submit() {
     getLocationOfItem(serializeAndSendItem);
 
 }
+
+function addTag() {
+    var data = {
+        "name": $('#tag-name-toadd').val(),
+        "description": $('#tag-description-toadd').val(),
+        "catID": $('#tag-catID-toadd').val()
+    };
+    $.post($('base').attr('href') + "/api/tags/add", data, function(resp) {
+        if(resp.outcome == "error") {
+            alert("Error adding tag");
+        }
+        else {
+
+        }
+    }, 'json');
+}
+
+function () {
+    // set the value of the category ID
+    $('#tag-catID-toadd').val('4');
+    // show modal
+    $('#tag-modal').modal({backdrop: 'static'});
+
+}
+
+
+$(document).ready(function(){
+    $('#btn-state-tag-add').on('click', function () {
+        // set the value of the category ID
+        $('#tag-catID-toadd').val('2');
+        // show modal
+        $('#tag-modal').modal({backdrop: 'static'});
+    });
+    $('#btn-allergy-tag-add').on('click', function () {
+        // set the value of the category ID
+        $('#tag-catID-toadd').val('4');
+        // show modal
+        $('#tag-modal').modal({backdrop: 'static'});
+
+    });
+});

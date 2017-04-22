@@ -99,8 +99,9 @@
                     </div>
                   </div>
                   <div class="form-group col-xs-6 col-md-4">
-                    <label class="control-label" for="other-req">other</label>
-                    <input type="text" class="form-control" id="other-req" name="otherreq">
+                    {#<label class="control-label" for="other-req">other</label>#}
+                    <input type="button" onclick="addTypeTag()" value="Add Type Tag">
+                    <input type="hidden" class="form-control" id="other-req" name="otherreq">
                   </div>
                   <div class="form-group col-xs-12 col-md-6">
                     <label class="control-label" for="state">State</label>
@@ -116,8 +117,10 @@
                         {% endfor %}
                     </select>
                     <div class="form-group">
-                      <label class="control-label" for="other-state">other</label>
-                      <input type="text" class="form-control" id="other-state" name="otherstate">
+                      <input type="button" id="btn-state-tag-add" value="Add State Tag">
+                      {#<label class="control-label" for="other-state">other</label>#}
+                      {#Remove and update JS#}
+                      <input type="hidden" class="form-control" id="other-state" name="otherstate">
                     </div>
                   </div>
                   <div class="form-group col-xs-12 col-md-6">
@@ -128,8 +131,10 @@
                       {% endfor %}
                     </select>
                     <div class="form-group">
-                      <label class="control-label" for="other-content">other</label>
-                      <input type="text" class="form-control" id="other-content" name="othercontent">
+                      <input type="button" id="btn-allergy-tag-add" value="Add Allergy Tag">
+                      {#<label class="control-label" for="other-content">other</label>#}
+                    {#This needs to be removed, but not for now.#}
+                      <input type="hidden" class="form-control" id="other-content" name="othercontent">
                     </div>
                   </div>
                   <div class="form-group col-xs-12">
@@ -148,6 +153,28 @@
               </div>
             </div>
           </div>
+          <div class="modal fade" id="tag-modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title">Add Tag</h4>
+                </div>
+                <div class="modal-body">
+
+                  <label for="tag-name-toadd">Tag Name</label><input type="text" id="tag-name-toadd"/>
+                  <label for="tag-description-toadd">Tag Description</label><input type="text" id="tag-description-toadd"/>
+                  <input type="hidden" id="#tag-catID-toadd">
+                </div>
+                <div class="modal-footer">
+                  <button id="#btn-cancel-tag" type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                  <button id="#btn-add-tag" type="button" class="btn btn-primary">
+                    Add
+                  </button>
+                </div>
+              </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+          </div><!-- /.modal -->
           <div class="col-xs-12 col-sm-6 zero-padding">
             <div id="item-map-section"></div>
             <script

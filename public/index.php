@@ -314,7 +314,7 @@ $klein->with("/profile", function() use ($klein) {
 });
 $klein->with('/items', function () use ($klein) {
     $klein->respond('GET', '/add/?', function($request, $response) {
-        forceLogin($request->uri());
+        //forceLogin($request->uri());
         $control = new AddItemController();
         return $control->renderAddPage();
     });
@@ -524,6 +524,14 @@ $klein->respond('POST', '/api/barcode/get', function($request, $response) {
     curl_close($curl);
     error_log($text);
     return $text;
+});
+
+$klein->respond('POST', '/api/tags/add', function ($request, $response, $service, $app) {
+    // todo validate each field server side (and return false if not with an error message
+    // Take in a JSON of things needed to add items
+    // make a post request to add this item, and return whether it was successful or not (TODO return success from DB).
+    $control = new AddItemController();
+    return $control->addTag($request->name, $request->catID, $request->description);
 });
 
 
