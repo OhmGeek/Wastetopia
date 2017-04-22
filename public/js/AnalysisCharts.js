@@ -22,6 +22,7 @@ $(function() {
         // Create sending chart and add buttons
         createTagsChart(categoryID, 0); // Create first sending chart
         createChartButtons("sendingOption", "sendingRadioButtons"); // Create the radio buttons for the chart
+        // month Chart!
         monthChart();
     });
 
