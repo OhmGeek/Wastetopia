@@ -55,6 +55,7 @@ if(ltrim($base, '/')){
 $klein = new Klein();
 
 $klein->respond("GET", "/?", function() {
+  header("Cache-Control: no-store, must-revalidate, max-age=0");
   $indexController = new IndexPageController();
   return $indexController->renderIndexPage();
 });
@@ -97,7 +98,7 @@ $klein->with('/api', function () use ($klein) {
 });
 
 $klein->respond('GET', '/search/[**:param]?', function ($request, $response) {
-
+    header("Cache-Control: no-store, must-revalidate, max-age=0");
     $controller = new SearchPageController();
 
     return $controller->render(explode('/', $request->param));
@@ -105,6 +106,7 @@ $klein->respond('GET', '/search/[**:param]?', function ($request, $response) {
 
 
 $klein->respond('POST', '/search/?', function ($request, $response) {
+    header("Cache-Control: no-store, must-revalidate, max-age=0");
     $controller = new SearchPageController();
 
     return $controller->renderAdvanced($request->paramsPost());
