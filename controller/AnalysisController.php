@@ -11,7 +11,6 @@ use Twig_Environment;
 use Twig_Loader_Filesystem;
 use Wastetopia\Model\AnalysisModel;
 use Wastetopia\Config\CurrentConfig;
-use Wastetopia\Model\HeaderInfo;
 
 
 /**
@@ -75,8 +74,7 @@ class AnalysisController
         $output = array(
             "config" => $config,
             "sendingNames"=>$sendingNames,
-            "receivingNames"=>$receivingNames,
-            "header" => HeaderInfo::get()
+            "receivingNames"=>$receivingNames
         );
 
         //Load template and print result

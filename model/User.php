@@ -6,13 +6,7 @@ use PDO;
 
 class User {
 
-    /**
-     * Verify login details
-     * @param $username
-     * @param $password
-     * @return bool (True => Valid, False => not valid)
-     */
-    public static function verifyCredentials($username, $password) {
+    public static function verify_credentials($username, $password) {
         $db = DB::getDB();
 
         $statement = $db->prepare("SELECT Password_Hash, Salt
@@ -38,13 +32,7 @@ class User {
         error_log("User not verified");
         return false;
     }
-
-    /**
-     * Get ID from username
-     * @param $username
-     * @return mixed (user id)
-     */
-    public static function getIDFromUsername($username) {
+    public static function get_id_from_username($username) {
         $db = DB::getDB();
 
         $statement = $db->prepare("SELECT UserID

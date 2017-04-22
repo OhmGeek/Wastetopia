@@ -33,10 +33,7 @@
     "twig/twig": "1.27.*",
     "klein/klein": "^2.1",
     "aws/aws-sdk-php": "3.24.7",
-    "phpmailer/phpmailer": "^5.2",
-    "evert/phpdoc-md": "0.2.0",
-    "phpdocumentor/reflection-docblock": "2.0.4",
-    "phpdocumentor/phpdocumentor": "v2.9.0"
+    "phpmailer/phpmailer": "^5.2"
   },
   "autoload": {
     "psr-4": {
@@ -45,8 +42,5 @@
       "Wastetopia\\Tests\\": "tests/",
       "Wastetopia\\Config\\": "config/"
     }
-  },
-  "require-dev": {
-    "phpunit/phpunit": "^6.1"
   }
 }

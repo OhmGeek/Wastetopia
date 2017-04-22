@@ -1,16 +1,10 @@
 $(function(){
 
-  // Update when first loaded
-  updateNotifications();
-  
   // Updates notification icons on the Navigation bar
   function updateNotifications(){
-    console.log("Getting notifications");
-    
       // Get notifications in JSON format
       var url = window.location.protocol + "//" + window.location.host + "/" + 'notifications/update';
       $.getJSON(url, function(response){
-        console.log(response);
           // Extract data
           var requestNotifications = response["requestNotifications"];
           var messageNotifications = response["messageNotifications"];

@@ -4,7 +4,6 @@ namespace Wastetopia\Controller;
 use Twig_Loader_Filesystem;
 use Twig_Environment;
 use Wastetopia\Config\CurrentConfig;
-use Wastetopia\Model\HeaderInfo;
 use Wastetopia\Model\MessageModel;
 use Wastetopia\Model\CardDetailsModel;
 use Wastetopia\Model\ConversationListModel;
@@ -62,7 +61,7 @@ class MessageController
     /**
      * Generates (and prints) HTML for messaging page with initial conversation loaded
      * @param $conversationID
-	 * @return string
+	 * @return HTML
      */
     function generatePage($conversationID)
     {
@@ -91,9 +90,7 @@ class MessageController
             "senderImage"=>$senderImage,
             "conversationID" =>$conversationID,  //Needed so page can poll for new messages with the ID
             "messages"=>$messageDisplayHTML,
-            "listingPanel"=>$listingPanel,
-			"header" => HeaderInfo::get()
-		);
+            "listingPanel"=>$listingPanel);
 
         //Load template and print result
         $template = $this->twig->loadTemplate('/messaging/MessagePage.twig');
@@ -170,8 +167,7 @@ class MessageController
         $postCode = $listing["Post_Code"];
 
         //Generate array of details
-        $output = array("listingID"=>$listingID,
-		"isActive" => $active,
+        $output = array("isActive" => $active,
         	"defaultImage" => $defaultImage,
             "itemName" => $itemName,
             "expiryDate" => $expiryDate,

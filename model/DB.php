@@ -6,11 +6,9 @@ use PDO;
 use Wastetopia\Config\CurrentConfig;
 
 class DB {
+    private static function initDefaultDB() {
 
-    /**
-     * Get a new database object
-     * @return PDO (PDO object)
-     */
+	}
     public static function getDB()
 	{
 	    $host = CurrentConfig::getProperty('DB_HOST');

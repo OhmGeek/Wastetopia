@@ -1,4 +1,4 @@
-<div id = "profileContentWrapper" class="page-height">
+<div id = "profileContentWrapper" class="page-height" style="padding-top:180px;">
     <div class="user-profile jumbotron">
         <div class="user-img" style="background-image: url({{ userimage }});"></div>
         <div class="user-details">
@@ -14,8 +14,9 @@
                 <a href="#" class="btn btn-default" style="margin-bottom:0;" role="button">Report</a>
             {% else %}
                 <div class = "dropdown btn-watch">
-                    <a data-target="#"
-                       class="dropdown-toggle" data-toggle="dropdown"><i class="material-icons">more_vert</i>
+                    <a href="bootstrap-elements.html" data-target="#"
+                       class="dropdown-toggle" data-toggle="dropdown">
+                        Options <i class="material-icons">more_vert</i>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-right">
                         <li><a href="#upload-picture" id = "upload-picture">Change Picture</a></li>

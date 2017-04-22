@@ -5,6 +5,40 @@ Profile | Wastetopia
 {% endblock %}
 
 {% block navbar %}
+<style>
+body {
+  height: 100vh;
+}
+
+/*Needs moving to CSS file*/
+.chart-container{
+    width : 320px;
+    height : auto;
+
+}
+
+.center-elements{
+    display: flex;
+    justify-content: center;
+}
+
+#charts form{
+    display: inline-flex;
+    justify-content: center;
+}
+
+#charts .input-group{
+    margin: 5px;
+}
+
+#name-frequencies .list-group{
+    display: block;
+    justify-content: center;
+    width: 60%;
+}
+
+</style>
+
 {% include 'navbar.twig' %}
 {% endblock %}
 
@@ -13,7 +47,7 @@ Profile | Wastetopia
 {%  endblock %}
 
 
-{%  set jslist = ["plugins/charts/Chart.bundle.js","plugins/imagesloaded/imagesloaded.pkgd.min.js","plugins/isotope/isotope.pkgd.min.js",
+{%  set jslist = ["plugins/charts/Chart.bundle.js","plugins/isotope/isotope.pkgd.min.js",
                     "plugins/jquery-match-height/jquery.matchHeight.js","plugins/moments/moment-with-locales.min.js",
                     "plugins/bootstrap-material-datetimepicker-gh-pages/bootstrap-material-datetimepicker.js",
                     "profile.js", "request.js", "AnalysisCharts.js"] %}

@@ -64,7 +64,6 @@ class ProfilePageModel
     function getUserReceivingListings()
     {
         $userID = $this->getUserID();
-	    
         $statement = $this->db->prepare("
             SELECT `Listing`.*, `Transaction`.*, `ListingTransaction`.`Success`, `ListingTransaction`.`Sender_Hide`, `ListingTransaction`.`Receiver_Hide`
                 FROM `Listing`
@@ -76,8 +75,6 @@ class ProfilePageModel
         ");
         $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
         $statement->execute();
-	
-	    $results = $statement->fetchAll(PDO::FETCH_ASSOC);
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 	
@@ -90,10 +87,10 @@ class ProfilePageModel
     function getUnseenPendingTransactions(){
 	$userID = $this->getUserID();
         $statement = $this->db->prepare("
-            SELECT `Transaction`.`TransactionID`, `Listing`.`ListingID`
+            SELECT `Transaction`.`TransactionID, `Listing`.`ListingID`
 	    FROM `ListingTransaction`
 	    JOIN `Listing` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
-	    JOIN `Transaction` ON `Transaction`.`TransactionID` = `ListingTransaction`.`FK_Transaction_TransactionID`
+	    JOIN `Transaction` ON `Transaction`.`TransactionID` = ListingTransaction`.`FK_Transaction_TransactionID`
 	    WHERE `ListingTransaction`.`Success` = 0
 	    AND `ListingTransaction`.`Viewed` = 0
 	    AND `Listing`.`FK_User_UserID` = :userID
@@ -101,7 +98,7 @@ class ProfilePageModel
         ");
         $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
         $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_ASSOC);    
+        return $statement->fetchColumn();    
     }
 	
 	

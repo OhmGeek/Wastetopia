@@ -14,9 +14,6 @@ class AmazonS3
 {
     const LENGTH = 20;
 
-    /**
-     * AmazonS3 constructor.
-     */
     public function __construct()
     {
         $this->bucket = $_ENV['AWS_BUCKET'];
@@ -28,11 +25,6 @@ class AmazonS3
         ));
     }
 
-    /**
-     * Generate a random string
-     * @param $length (length of string)
-     * @return string (string itself)
-     */
     private function randomString($length) {
         $output = "";
         $chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -42,11 +34,6 @@ class AmazonS3
         return $output;
     }
 
-    /**
-     * Upload an array of files to AWS
-     * @param $files (files to upload)
-     * @return array (array of URLs)
-     */
     public function upload($files) {
         // this uploads a specified image
         // keeps the extension, but randomises the filename to avoid collisions

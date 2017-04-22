@@ -11,11 +11,9 @@ use Wastetopia\Config\CurrentConfig;
 use Twig_Loader_Filesystem;
 use Twig_Environment;
 
-use Wastetopia\Controller\Authenticator;
 use Wastetopia\Controller\RegistrationController; // For email verification functions
 use Wastetopia\Controller\AnalysisController;   // For Advice Tab
 use Wastetopia\Controller\RecommendationController; // For Recommendations and Predictions tab
-use Wastetopia\Model\HeaderInfo;
 use Wastetopia\Model\UserCookieReader;
 use Wastetopia\Model\ProfilePageModel;
 use Wastetopia\Model\CardDetailsModel;
@@ -71,13 +69,13 @@ class ProfilePageController
      * @return bool True if user is logged in
      */
     function isUserLoggedIn(){
-        return Authenticator::isAuthenticated();
+        return \Wastetopia\Controller\Authenticator::isAuthenticated();
     }
 
 	
     /**
      * Generates HTML for the whole page
-     * @return string
+     * @return HTML
      */
     function generatePage(){
         $profileContentHTML = $this->generateProfileContentHTML();
@@ -86,7 +84,6 @@ class ProfilePageController
         $config = $CurrentConfig->getAll();
         $output =  array(
             "config" => $config,
-            "header" => HeaderInfo::get(),
             "profileContent" => $profileContentHTML
         );
         $template = $this->twig->loadTemplate("/users/profile.twig");
@@ -96,7 +93,7 @@ class ProfilePageController
 
     /**
      * Generates the main HTML part of the page (only the body)
-     * @return string
+     * @return HTML
      */
     function generateProfileContentHTML()
     {
@@ -110,11 +107,7 @@ class ProfilePageController
         $watchListTabHTML = $this->generateWatchListSection();
         $analysisTabHTML = $this->generateAnalysisTabHTML();
 
-	    $CurrentConfig = new CurrentConfig();
-            $config = $CurrentConfig->getAll();
-	    
         $output = array(
-	    "config"=>$config,
             "isUser" => $isCurrentUser,
             "userID" => $userInformation["userID"],
             "userimage" => $userInformation["userimage"],
@@ -155,7 +148,7 @@ class ProfilePageController
 
     /**
      * Generates HTML for Home tab
-     * @return string
+     * @return HTML
      */
     function generateHomeSection()
     {
@@ -241,11 +234,7 @@ class ProfilePageController
         // Get advice text
         $adviceText = $this->generateAdviceText();
 
-	    $CurrentConfig = new CurrentConfig();
-        $config = $CurrentConfig->getAll();
-	    
         $listingsInformation = array(
-		"config"=>$config,
             "listingsCount" => $totalAvailableListings, // Total number of listings with quantity > 0
             "emptyListingsCount" => $totalEmptyListings, // Total number of listings with quantity <= 0
             "itemsOfferedCount" => $sendingTransactionsCount, // Total of all transactions for your items (can be greater than listings count)
@@ -359,15 +348,12 @@ class ProfilePageController
             );
             array_push($pendingOffers, $item);
         }
-	
+
         $offers = array("completed" => $completedOffers, "pending" => $pendingOffers);
 
         $isCurrentUser = ($this->userID == $this->getUserID() ? 1 : 0);
-	
-	$CurrentConfig = new CurrentConfig();
-        $config = $CurrentConfig->getAll();
+
         $listingsInformation = array(
-		"config"=>$config,
             "offers" => $offers, // Transactions for your items
             "isUser" => $isCurrentUser,
         );
@@ -480,12 +466,7 @@ class ProfilePageController
         $requests = array("completed" => $completedRequests, "pending" => $pendingRequests);
 
         $isCurrentUser = ($this->userID == $this->getUserID() ? 1 : 0);
-	    
-	$CurrentConfig = new CurrentConfig();
-        $config = $CurrentConfig->getAll();
-	    
         $listingsInformation = array(
-		"config" => $config,
             "requests" => $requests, // Transactions for other user's items
             "isUser" => $isCurrentUser
         );
@@ -578,10 +559,7 @@ class ProfilePageController
             $predictionNames = $this->generatePredictionNames();
         }
 
-	    $CurrentConfig = new CurrentConfig();
-        $config = $CurrentConfig->getAll();
         $listingsInformation = array(
-		"config"=>$config,
             "userListings" => $userListings, // All your listings
             "isUser" => $isCurrentUser,
 	        "isLoggedIn" => $isLoggedIn,
@@ -639,10 +617,7 @@ class ProfilePageController
         }
         $isCurrentUser = ($this->userID == $this->getUserID() ? 1 : 0);
         $template = $this->twig->loadTemplate("/users/watchlistTab.twig");
-	    
-	    $CurrentConfig = new CurrentConfig();
-        $config = $CurrentConfig->getAll();
-        return $template->render(array("config"=>$config, "watchList"=>$watchList, "isUser" => $isCurrentUser));
+        return $template->render(array("watchList"=>$watchList, "isUser" => $isCurrentUser));
 
         //return $watchListDetails;
     }
@@ -757,7 +732,6 @@ class ProfilePageController
     */
     function setAllPendingAsViewed(){
         $listingTransactions = $this->model->getUnseenPendingTransactions();
-
         foreach($listingTransactions as $listingTransaction){
             $transactionID = $listingTransaction["TransactionID"];
             $listingID = $listingTransaction["ListingID"];

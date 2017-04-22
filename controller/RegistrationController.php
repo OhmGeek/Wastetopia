@@ -39,10 +39,7 @@ class RegistrationController
         $CurrentConfig = new CurrentConfig();
         $config = $CurrentConfig->getAll();
 
-        return $template->render(array(
-            "config" => $config,
-            "header" => HeaderInfo::get()
-        )); // Need to pass config stuff
+        return $template->render(array("config" => $config)); // Need to pass config stuff
     }
 
 

@@ -5,23 +5,14 @@ class Token {
     private static $before_salt = "Dr.Pr0jectWA5t0Pia";
     private static $after_salt = "EndSalt11!!!1";
 
-    /**
-     * @param $userID
-     * @return string
-     */
-    public static function generateToken($userID) {
-        $tokenData = self::$before_salt. date("Y-m-d") . gethostname() . $userID . self::$after_salt;
-        $token = hash("sha256", $tokenData);
+    public static function generate_token($user_id) {
+        $token_data = self::$before_salt. date("Y-m-d") . gethostname() . $user_id . self::$after_salt;
+        $token = hash("sha256", $token_data);
         return $token;
     }
 
-    /**
-     * @param $authToken
-     * @param $userID
-     * @return bool
-     */
-    public static function verifyToken($authToken, $userID) {
-        $expectedToken = self::generateToken($userID);
-	    return ($expectedToken == $authToken);
+    public static function verify_token($auth_token, $user_id) {
+        $expected_token = self::generate_token($user_id);
+	    return ($expected_token == $auth_token);
     }
 }
