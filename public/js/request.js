@@ -49,7 +49,7 @@ $(function () {
     $(document).on('click', 'a[href="#watch"]', function (event) {
         event.preventDefault();
         console.log("Toggle");
-        var listingID = $(this).closest('.thumbnail').attr("id");
+        var listingID = $(this).attr("id");
         var isUser = parseInt($(this).closest('.user-stats').attr("id"));
         var listing = $(this);
 
