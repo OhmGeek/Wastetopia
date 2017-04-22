@@ -203,6 +203,7 @@ $(function() {
             console.log(json);
             alert("Something actually worked for once!");
             var data = {
+                type: "line",
                 labels : ["Month1","Month2","Month3","Month4"],
                 datasets :[
                     {
@@ -230,7 +231,7 @@ $(function() {
             var option  = {};
 
             var ctx = document.getElementById("cvsMonthChart").getContext("2d");
-            var linechart = new Chart(ctx).Line(data,option);
+            var linechart = new Chart(ctx, option);
             linechart.draw();
         });
     }
