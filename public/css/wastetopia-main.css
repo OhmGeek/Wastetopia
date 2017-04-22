@@ -251,6 +251,7 @@
 #radius-options, #quantity-output {
   height: auto;
   padding: 10px;
+  width: 120px;
 }
 
 #radius-output span, #quantity-output span{
