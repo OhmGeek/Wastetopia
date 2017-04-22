@@ -68,7 +68,7 @@ class LoginController {
             error_log("Not set. Direct them");
             $response->redirect($_ENV['ROOT_BASE']);
             return "Normal";
-            }
+        }
 
 
             // incorrect details
