@@ -22,6 +22,7 @@ $(function() {
         // Create sending chart and add buttons
         createTagsChart(categoryID, 0); // Create first sending chart
         createChartButtons("sendingOption", "sendingRadioButtons"); // Create the radio buttons for the chart
+        monthChart();
     });
 
     // Remove charts when not on this page
@@ -192,5 +193,12 @@ $(function() {
             chart.update(); // Redraw with new data
         });
 
+    }
+
+    function monthChart() {
+        var url = baseURL + '/analysis/get-contributions-send/';
+        $.getJSON(url, function(json) {
+            console.log(json);
+        });
     }
 });

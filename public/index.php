@@ -217,6 +217,14 @@ $klein->with("/analysis", function() use ($klein){
         $controller = new AnalysisController();
         return $controller->getTotalNameFrequenciesSending();
     });
+    $klein->respond('GET', '/get-contributions-receive', function($request, $response) {
+        $controller = new AnalysisController();
+        return $controller->get4MonthReceiveArray();
+    });
+    $klein->respond('GET', '/get-contributions-send', function($request, $response) {
+        $controller = new AnalysisController();
+        return $controller->get4MonthSendArray();
+    });
 });
 $klein->with("/profile", function() use ($klein) {
     $klein->respond('GET', '/?', function($request, $response){
