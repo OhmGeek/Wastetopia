@@ -237,6 +237,7 @@ $(function() {
     function receiveContributionsChart() {
         var url = "https://wastetopia.herokuapp.com/analysis/get-contributions-receive";
         $.getJSON(url, function(json) {
+            console.log(json);
             var option  = {};
             var ctx = document.getElementById("cvsRcvContributions").getContext("2d");
             var linechart = new Chart(ctx, {
