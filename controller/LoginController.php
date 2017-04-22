@@ -65,8 +65,7 @@ class LoginController {
                 return "Forward";
             }
             error_log("Not set. Direct them");
-            $response->redirect($_ENV['ROOT_BASE']);
-            return "Normal";
+            return "<html><script>window.history.back();</script></html>";
         }
 
 
