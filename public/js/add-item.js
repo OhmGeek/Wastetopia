@@ -253,7 +253,7 @@ function addStateTag() {
     // set the value of the category ID
     $('#tag-catID-toadd').val('2');
     // show modal
-    $('#tag-modal').modal();
+    $('#tag-modal').modal('show');
 }
 
 function addTypeTag() {
