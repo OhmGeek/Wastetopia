@@ -9,36 +9,6 @@ Login
 {% endblock %}
 
 {% block content %}
-<<<<<<< HEAD
-
-<div class="page-padding">
-  <div class="container-fluid">
-    <div class="jumbotron">
-      <div class="log-div">
-        <h1>{{title}}</h1>
-        <div>{{intro}}</div>
-        <form method="post" action="{{ config.ROOT_BASE }}/api/verify-login">
-          <div class="form-group col-md-12">
-            <label for="email" class="control-label">Email</label>
-            <input type="email" class="form-control" id="email" placeholder="user@example.com" name="email">
-          </div>
-          <div class="form-group col-md-12">
-            <label for="password" class="control-label">password</label>
-            <input type="password" class="form-control" id="password" placeholder="Password" name="password">
-          </div>
-          <input type="hidden" name="dest" value="{{ dest }}">
-          <div class="btn-log">
-            <button type="submit" class="btn btn-primary">Login</button>
-          </div>
-        </form>
-        <div>Not a member yet? <a href="{{ config.ROOT_BASE }}/register" class="btn btn-default btn-link">Register Now</a></div>
-      </div>
-    </div>
-  </div>
-</div>
-</div>
-{% endblock %}
-=======
     <div class="page-padding">
         <div class="container-fluid">
             <div class="jumbotron">
@@ -66,4 +36,3 @@ Login
     </div>
 
 {% endblock %}
->>>>>>> origin/master
