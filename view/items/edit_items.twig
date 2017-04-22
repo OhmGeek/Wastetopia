@@ -99,8 +99,9 @@
                     </div>
                   </div>
                   <div class="form-group col-xs-6 col-md-4">
-                    <label class="control-label" for="other-req">other</label>
-                    <input type="text" class="form-control" id="other-req" name="otherreq">
+                    {#<label class="control-label" for="other-req">other</label>#}
+                    <input type="button" onclick="addTypeTag()" value="Add Type Tag">
+                    <input type="hidden" class="form-control" id="other-req" name="otherreq">
                   </div>
                   <div class="form-group col-xs-12 col-md-6">
                     <label class="control-label" for="state">State</label>
@@ -116,8 +117,10 @@
                         {% endfor %}
                     </select>
                     <div class="form-group">
-                      <label class="control-label" for="other-state">other</label>
-                      <input type="text" class="form-control" id="other-state" name="otherstate">
+                      <input type="button" onclick="addStateTag()" value="Add State Tag">
+                      {#<label class="control-label" for="other-state">other</label>#}
+                      {#Remove and update JS#}
+                      <input type="hidden" class="form-control" id="other-state" name="otherstate">
                     </div>
                   </div>
                   <div class="form-group col-xs-12 col-md-6">
@@ -128,8 +131,10 @@
                       {% endfor %}
                     </select>
                     <div class="form-group">
-                      <label class="control-label" for="other-content">other</label>
-                      <input type="text" class="form-control" id="other-content" name="othercontent">
+                      <input type="button" onclick="addContainsTag()" value="Add Allergy Tag">
+                      {#<label class="control-label" for="other-content">other</label>#}
+                    {#This needs to be removed, but not for now.#}
+                      <input type="hidden" class="form-control" id="other-content" name="othercontent">
                     </div>
                   </div>
                   <div class="form-group col-xs-12">

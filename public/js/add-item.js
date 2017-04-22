@@ -240,3 +240,25 @@ function addTag() {
         }
     }, 'json');
 }
+
+function addContainsTag() {
+    // set the value of the category ID
+    $('#tag-catID-toadd').val('0');
+    // show modal
+    $('#tag-modal').modal();
+
+}
+
+function addStateTag() {
+    // set the value of the category ID
+    $('#tag-catID-toadd').val('0');
+    // show modal
+    $('#tag-modal').modal();
+}
+
+function addTypeTag() {
+    // set the value of the category ID
+    $('#tag-catID-toadd').val('0');
+    // show modal
+    $('#tag-modal').modal();
+}
