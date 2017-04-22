@@ -131,7 +131,7 @@ function initMap() {
       '<div><span>Quantity:</span>' + item.Quantity + '</div>'+
       '</div>'+
       '<div class="nav-btns">'+
-      '<a href= "'+baseURL+'/items/view/'+item.ListingID+'" id="'+ item.ListingID + '" class="btn btn-primary" role="button">View</a>';
+      '<a href= "'+baseURL+'/items/view/'+item.ListingID+'" id="'+ item.ListingID + '" class="view btn btn-primary" role="button">View</a>';
 
       if (item.isRequesting){
           contentString += '<a href="#cancel-by-listing" class="btn btn-default" role="button" id="'+ item.ListingID +'">Cancel request</a>';
