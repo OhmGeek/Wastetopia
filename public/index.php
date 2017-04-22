@@ -28,6 +28,7 @@ use Wastetopia\Model\RegistrationModel; // For verification
  * Function to be called at start of routing for any route where user must be logged in to access
  * @return - Nothing, either redirects user to login page and exits or just returns to function that called it
  */
+
 // check if we should use production? Otherwise, use community.
 $mode = $_ENV['MODE'];
 $config = new CurrentConfig();
@@ -295,7 +296,7 @@ $klein->with("/profile", function() use ($klein) {
     $klein->respond('POST', '/change-profile-picture', function($request, $response){
         /*Force login introduced by searching*/
         forceLogin($request->uri());
-        $files = $request->files();        
+        $files = $request->files();
         $controller = new ProfilePageController(1);
         return $controller->changeProfilePicture($files);
     });
