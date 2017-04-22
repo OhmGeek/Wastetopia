@@ -63,19 +63,16 @@ class LoginController {
                 //forward to the destination uri
                 error_log($dest);
                 $response->redirect($dest);
+                return "Forward";
             }
-            //forward home
-            else {
-                error_log("Not set. Direct them");
-                $response->redirect(CurrentConfig::getProperty("ROOT_BASE"));
+            error_log("Not set. Direct them");
+            $response->redirect($_ENV['ROOT_BASE']);
+            return "Normal";
             }
-        }
-        else {
+
+
             // incorrect details
             return "INCORRECT DETAILS";
-
-        }
-        return true; // later return a page that has a link to the main site.
     }
 
     /**

@@ -65,7 +65,7 @@ class IndexPageController
     		"Designed by a bunch of old Eat-onions",
     		"Are you bready to find some food?",
     		"This site isn't rubbish, it's here to prevent rubbish!",
-    		"/usr/bin/make food <br> make: *** No rule to make target 'food'. Stop."
+    		"/usr/bin/make food <br>" . " make: *** No rule to make target 'food'. Stop."
     	);
     	$rand_keys = array_rand($messages, 1);
     	return $messages[$rand_keys[0]];
