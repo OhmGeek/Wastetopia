@@ -119,7 +119,6 @@ $klein->with('/register', function() use ($klein){
         $controller = new RegistrationController();
         return $controller->generatePage();
     });
-});
 
 $klein->respond("POST", "/add-user", function($request, $response){
     $forename = $request->forename;
