@@ -1104,7 +1104,8 @@ a:link, a:hover, a:visited, a:active  {
 
 .btn {
   padding: 10px 15px;
-  max-width: 130px !important;
+  max-width: 130px;
+  display:list-item;
 }
 
 .caption .nav-btns .extra a {
