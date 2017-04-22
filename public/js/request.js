@@ -48,13 +48,15 @@ $(function () {
     // Toggle listings in the watch list
     $(document).on('click', 'a[href="#watch"]', function (event) {
         event.preventDefault();
-        console.log("toggle");
+        console.log("Toggle");
         var listingID = $(this).closest('.thumbnail').attr("id");
         var isUser = parseInt($(this).closest('.user-stats').attr("id"));
         var listing = $(this);
 
         var data = {listingID: listingID}
         var url = baseURL + "/profile/toggle-watch-list"
+        console.log("Is user: "+isUser);
+        console.log(data);
         $.post(url, data, function (response) {
             // Do something depending on if response is true or false?? (Currently always true)
             console.log("DONE");
