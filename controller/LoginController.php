@@ -60,11 +60,11 @@ class LoginController {
             // login success
             error_log($dest);
             // forward the person to the destination/home
-            if(isset($dest) | $dest !== "") {
+            if(isset($dest) || $dest !== "" || $dest !== " ") {
                 //forward to the destination uri
                 error_log("Try going through destination");
                 error_log($dest);
-                error_log(count_chars($dest));
+                error_log(json_encode(count_chars($dest)));
                 $response->redirect($dest);
                 return "Forward";
             }
