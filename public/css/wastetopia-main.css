@@ -105,13 +105,13 @@
 }
 
 /* login page */
-.log-div, #register-form {
+.log-div, #register-form, .register-form {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.log-div > div {
+.log-div > div, #register-form > div {
   text-align: center;
 }
 
