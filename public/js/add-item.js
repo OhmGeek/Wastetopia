@@ -213,7 +213,7 @@ function serializeAndSendItem(location) {
     else {
       console.log("Not valid");
     }
-};
+}
 //todo validate all the fields
 function isValid(itemData) {
   return true;
@@ -241,7 +241,7 @@ function addTag() {
     }, 'json');
 }
 
-function addContainsTag() {
+function () {
     // set the value of the category ID
     $('#tag-catID-toadd').val('4');
     // show modal
@@ -249,21 +249,19 @@ function addContainsTag() {
 
 }
 
-function addStateTag() {
-    // set the value of the category ID
-    $('#tag-catID-toadd').val('2');
-    // show modal
-    $('#tag-modal').modal({backdrop: 'static'});
-}
-
-function addTypeTag() {
-    // set the value of the category ID
-    $('#tag-catID-toadd').val('1');
-    // show modal
-    $('#tag-modal').modal({backdrop: 'static'});
-}
 
 $(document).ready(function(){
-    $('#btn-state-tag-add').on('click', addStateTag);
-    $('#btn-allergy-tag-add').on('click', addContainsTag);
+    $('#btn-state-tag-add').on('click', function () {
+        // set the value of the category ID
+        $('#tag-catID-toadd').val('2');
+        // show modal
+        $('#tag-modal').modal({backdrop: 'static'});
+    });
+    $('#btn-allergy-tag-add').on('click', function () {
+        // set the value of the category ID
+        $('#tag-catID-toadd').val('4');
+        // show modal
+        $('#tag-modal').modal({backdrop: 'static'});
+
+    });
 });
