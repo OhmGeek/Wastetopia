@@ -10,12 +10,12 @@
 
 {% block content %}
     <div class="page-padding">
-        <div class="container-fluid" method="post" action="{{ config.ROOT_BASE }}/api/verify-login">
+        <div class="container-fluid">
             <div class="jumbotron">
                 <div class="log-div">
                     <h1>{{ title }}</h1>
                     <div>{{ intro }}</div>
-                    <form>
+                    <form method="post" action="{{ config.ROOT_BASE }}/api/verify-login">
                         <div class="form-group col-md-12">
                             <label for="email" class="control-label">Email</label>
                             <input required type="email" class="form-control" id="email" placeholder="user@example.com" name="email">
