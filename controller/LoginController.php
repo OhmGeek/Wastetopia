@@ -60,7 +60,7 @@ class LoginController {
             // login success
             error_log($dest);
             // forward the person to the destination/home
-            if(isset($dest) || $dest !== "" || $dest !== " ") {
+            if(isset($dest) || trim($dest) !== "") {
                 //forward to the destination uri
                 error_log("Try going through destination");
                 error_log($dest);
