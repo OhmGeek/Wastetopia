@@ -3,6 +3,7 @@
 //TODO: Fix issue with not being able to find PHPMailerAutoload.php
 namespace Wastetopia\Controller;
 
+use Wastetopia\Model\HeaderInfo;
 use Wastetopia\Model\RegistrationModel;
 use Twig_Loader_Filesystem;
 use Twig_Environment;

@@ -59,7 +59,7 @@ class LoginController {
         if($outcome['status'] === 'verified') {
             // login success
             // forward the person to the destination/home
-            if(isset($dest)) {
+            if(isset($dest) | $dest == "") {
                 //forward to the destination uri
                 error_log($dest);
                 $response->redirect($dest);
