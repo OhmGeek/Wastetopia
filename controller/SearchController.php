@@ -45,7 +45,7 @@ class SearchController
 
 
     //TODO add notTags and distance limit to search fucntion
-    public function JSONSearch($lat, $long, $search, $tagsArr, $notTagsArr, $distanceLimit, $pageNumber, $order)
+    public function JSONSearch($lat, $long, $search, $tagsArr, $notTagsArr, $distanceLimit, $pageNumber, $order, $quantity)
     {
         $reader = new UserCookieReader();
         $userID = $reader->get_user_id();
@@ -55,7 +55,7 @@ class SearchController
 
         $distance = $distanceLimit * 1000.0; /*Convert Km in m*/
 
-        $itemInformation = $this->search($lat, $long, $search, $tagsArr, $notTagsArr);
+        $itemInformation = $this->search($lat, $long, $search, $tagsArr, $notTagsArr, $quantity);
 
         /*Remove items based on distance limit*/
         $newItemInformation = array();
@@ -125,9 +125,9 @@ class SearchController
         return json_encode($pageResults);
     }
 
-    public function MAPSearch($lat, $long, $search, $tagsArr, $notTagsArr, $distanceLimit)
+    public function MAPSearch($lat, $long, $search, $tagsArr, $notTagsArr, $distanceLimit, $quantity)
     {
-        $itemInformation = $this->search($lat, $long, $search, $tagsArr, $notTagsArr);
+        $itemInformation = $this->search($lat, $long, $search, $tagsArr, $notTagsArr, $quantity);
 
         $searchResults = [];
         foreach ($itemInformation as $item)

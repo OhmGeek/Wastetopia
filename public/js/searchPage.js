@@ -11,7 +11,6 @@ $(function () {
 
   function filterHeight(){
     var dropdownHeight = $(window).height() - $('.btn').outerHeight() - $('.navbar').height() - 20
-		console.log(dropdownHeight)
 		$('#filter-list').css({'max-height': dropdownHeight})
   }
 
@@ -169,6 +168,7 @@ $(function () {
 
     sortOrder = $('#sort-options').val();
     distanceLimit = parseFloat(radiusSlider.noUiSlider.get());
+    quantity = parseFloat(quantitySlider.noUiSlider.get());
 
     $('.grid').html('<div class="grid-item col-xs-12"><h3 style="text-align:center;">Loading</h3></div>');
 
@@ -198,8 +198,8 @@ $(function () {
     });
 
     var baseURL = $('#baseURL').attr('href');
-    var query = baseURL + '/api/search/page/' + lat + '/' + long + '/' + searchTerm + '/' + include.join('+') + '/' + exclude.join('+') + '/' + distanceLimit + '/' + pageNumber + '/' + sortOrder;
-    mapURL = window.location.protocol + "//" + window.location.host + '/api/search/map/' + lat + '/' + long + '/' + searchTerm + '/' + include.join('+') + '/' + exclude.join('+') + '//';
+    var query = baseURL + '/api/search/page/' + lat + '/' + long + '/' + searchTerm + '/' + include.join('+') + '/' + exclude.join('+') + '/' + distanceLimit + '/' + pageNumber + '/' + sortOrder + '/' + quantity;
+    mapURL = baseURL + '/api/search/map/' + lat + '/' + long + '/' + searchTerm + '/' + include.join('+') + '/' + exclude.join('+') + '/' + distanceLimit + '/' + quantity;
     if ($('#map-tab').hasClass('active')) {
       console.log('map is active')
       initMap();
@@ -207,6 +207,7 @@ $(function () {
     $.ajax({
         url: query,
         success: function(result){
+            console.log(result);
             if(result === '[]')
             {
                 noResults();
@@ -228,6 +229,10 @@ $(function () {
   });
 
   radiusSlider.noUiSlider.on('change', function(){
+    refreshPage();
+  });
+
+  quantitySlider.noUiSlider.on('change', function(){
     refreshPage();
   });
 
@@ -255,7 +260,7 @@ $(function () {
 
 
             var baseURL = $('#baseURL').attr('href');
-            var query = baseURL + '/api/search/page/' + lat + '/' + long + '/' + searchTerm + '/' + include.join('+') + '/' + exclude.join('+') + '/' + distanceLimit + '/' + pageNumber + '/' + sortOrder;
+            var query = baseURL + '/api/search/page/' + lat + '/' + long + '/' + searchTerm + '/' + include.join('+') + '/' + exclude.join('+') + '/' + distanceLimit + '/' + pageNumber + '/' + sortOrder + '/' + quantity;
 
             $.ajax({
                 url: query,

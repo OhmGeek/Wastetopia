@@ -103,14 +103,14 @@ class SearchModel
       and returns results only within this area
       At the equator the width is roughly 77km, at London, 56km
       and at the UK Arctic Research Station, 30km*/
-    function getSearchResults($userLat, $userLong, $search, $tagsArray, $notTagsArray, $distanceLimit = 0.76)
+    function getSearchResults($userLat, $userLong, $search, $tagsArray, $notTagsArray,  $quantity = 1, $distanceLimit = 0.76)
     {
 
         $sql = "SELECT `Listing`.`ListingID`, `Location`.`Latitude`, `Location`.`Longitude`, `Item`.`Name`
             FROM `Listing`
             JOIN `Item` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
             JOIN `Location` ON `Listing`.`FK_Location_LocationID` = `Location`.`LocationID`
-            WHERE `Listing`.`Quantity` > 0
+            WHERE `Listing`.`Quantity` >= :quantity
             AND `Listing`.`Active` = 1
             ";
         if (($userLat !== false) && ($userLong !== false))
@@ -184,6 +184,9 @@ class SearchModel
 
         $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
         $statement = $this->db->prepare($sql);
+
+        $statement->bindValue(":quantity", $quantity, PDO::PARAM_INT);
+
         if ($tagsArray !== false)
         {
             foreach ($tagsArray as $key => $tag)
