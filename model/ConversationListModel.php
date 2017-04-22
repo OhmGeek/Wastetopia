@@ -58,7 +58,8 @@ class ConversationListModel
 
 		$statement->execute();
 
-		return $statement->fetchAll(PDO::FETCH_ASSOC);
+		$results = $statement->fetchAll(PDO::FETCH_ASSOC);
+	    return $results;
 	}
 
 
@@ -90,7 +91,8 @@ class ConversationListModel
 		
 		$statement->execute();
 		
-		return $statement->fetchAll(PDO::FETCH_ASSOC);
+		$results = $statement->fetchAll(PDO::FETCH_ASSOC);
+	    return $results;
 	}
 
 
