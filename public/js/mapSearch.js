@@ -128,7 +128,7 @@ function initMap() {
       '<div class="item-name">'+ item.Name +'</div>'+
       '<div class="trans-info">'+
       '<div class="added-date">Added on '+ item.Time_Of_Creation +'</div>'+
-      '<div><span>Quantity:</span>' + item.Quantity + '</div>'+
+      '<div><span>Quantity:</span><span class="quantity">' + item.Quantity + '</span></div>'+
       '</div>'+
       '<div class="nav-btns">'+
       '<a href= "'+baseURL+'/items/view/'+item.ListingID+'" id="'+ item.ListingID + '" class="view btn btn-primary" role="button">View</a>';
