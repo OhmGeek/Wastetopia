@@ -1,3 +1,5 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
+
 <div id="analysis" class="tab-pane fade">
     <div class="header">
         <div class="title">
@@ -90,18 +92,58 @@
                         </div>
                     </div>
                 </div>
+				<div id="secondCharts" height="300px" class = "row">
+                    <div id = "request-chart" class = "col-xs-6">
+                        <div class="center-elements"> <h3>Items send in the last 4 months </h3></div>
+                        <canvas id = "sendItems"></canvas>
+                    </div>
+
+                    <!--Start of analysis HTML-->
+                    <div id = "sending-chart" class = "col-xs-6">
+                        <div class="center-elements"> <h3>Items recieved in the last 4 months </h3> </div>
+                        <canvas id = "receiveItems"></canvas>
+                    </div>
+                </div>
+				
                 <!--End of analysis HTML-->
 
             </div>
         </div>
     </div>
 </div>
-
-
-
-
-
-
+<script>
+$(function() {
+	var data = {
+		labels : ["Month1","Month2","Month3","Month4"],
+		datasets :[
+			{
+				label : "Your Contributions",
+				fillColor :"rgba(255, 51, 204,0.75)",
+				strokeColor :"rgba(23,12,102,0.75)",
+				pointColor: "rgba(1,200,200,1)",
+				pointStrokeColor : "#fff",
+				pointHighLightFill: "#fff",
+				pointHighLightStroke: "rgba(200,200,200,1)",
+				data: [23,34,13,1]
+			},
+			{
+				label : "# of items taken",
+				fillColor :'rgba(0, 255, 255,0.75)',
+				strokeColor :'rgba(23,12,102,0.75)',
+				pointColor: 'rgba(200,2,200,1)',
+				pointStrokeColor : '#fff',
+				pointHighLightFill: '#fff',
+				pointHighLightStroke: 'rgba(200,200,200,1)',
+				data: [3,3,40,6]
+			}
+		]
+	};
+	var option  = {};
+	
+	var ctx = document.getElementById("sendItems").getContext("2d");
+	var linechart = new Chart(ctx).Line(data,option);
+});
+</script>
 
 
 
