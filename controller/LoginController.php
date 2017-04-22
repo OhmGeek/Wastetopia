@@ -52,11 +52,13 @@ class LoginController {
      */
     public function login($username, $password, $dest, $response) {
         //todo dest parameter with default value
+        error_log("Enter Error checker");
         // Post destination of the form (params are entered in index.php)
         $outcome = TokenManager::login($username, $password);
         $outcome = json_decode($outcome,true);
         if($outcome['status'] === 'verified') {
             // login success
+            error_log($dest);
             // forward the person to the destination/home
             if(isset($dest) | $dest == "") {
                 //forward to the destination uri
