@@ -89,33 +89,6 @@
 
 /* registration page */
 
-#register-form{
-  width: 100%;
-  margin-left: 0;
-  padding: 100px 30px;
-  background-color: white;
-  top: 0;
-  bottom:0;
-  position:fixed;
-  overflow-y:auto;
-  overflow-x:hidden;
-}
-
-@media(min-width:768px) {
-  #register-form{
-    width: 50%;
-    margin-left: 25%;
-  }
-}
-
-#submit {
-  margin: 20px -20px;
-}
-
-.terms {
-  margin: 0px -15px;
-}
-
 .form-group.there-error .form-control {
   -webkit-box-shadow: none;
   box-shadow: none;
@@ -132,13 +105,13 @@
 }
 
 /* login page */
-.log-div {
+.log-div, #register-form, .register-form {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.log-div > div {
+.log-div > div, #register-form > div {
   text-align: center;
 }
 
@@ -1131,6 +1104,8 @@ a:link, a:hover, a:visited, a:active  {
 
 .btn {
   padding: 10px 15px;
+  max-width: 130px;
+  white-space: normal !important;
 }
 
 .caption .nav-btns .extra a {

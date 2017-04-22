@@ -52,7 +52,8 @@ class ProfilePageModel
         ");
         $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
         $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_ASSOC);
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+	return $results;
     }
 
 
@@ -78,7 +79,7 @@ class ProfilePageModel
         $statement->execute();
 	
 	    $results = $statement->fetchAll(PDO::FETCH_ASSOC);
-        return $statement->fetchAll(PDO::FETCH_ASSOC);
+	    return $results;
     }
 	
    
@@ -101,7 +102,8 @@ class ProfilePageModel
         ");
         $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
         $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_ASSOC);    
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC);    
+	    return $results;
     }
 	
 	
@@ -122,7 +124,8 @@ class ProfilePageModel
         ");
         $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
         $statement->execute();
-        return $statement->fetchColumn();    
+        $result = $statement->fetchColumn();
+	    return $result;
     }
 	
 	
@@ -144,7 +147,8 @@ class ProfilePageModel
         ");
         $statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);
         $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_ASSOC);
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+	    return $results;
     }
 
 
