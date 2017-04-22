@@ -48,7 +48,7 @@
   text-transform: uppercase;
   margin-left: 5px;
   height: 30px;
-  width: 75px;
+  width: 78px;
   font-size: 12px;
   padding: 5px 10px;
   color: black;
@@ -136,9 +136,18 @@
 /*This is an edited version of the sidebar made by David Miller*/
 .search-header {
   position: absolute;
-  top: 60px;
+  top: 50px;
   width: 100%;
-  z-index: 100;
+  padding: 5px 0;
+  z-index: 101;
+  background: rgba(255, 255, 255, 0.8);
+}
+
+@media(min-width:1200px) {
+  .search-header {
+    top: 60px;
+  }
+
 }
 
 .search-options{
@@ -161,6 +170,8 @@
 #filter-list {
   padding: 0;
   width: 200px;
+  z-index: 102;
+  overflow: auto;
 }
 
 #filter-list > li {
@@ -221,7 +232,7 @@
   align-items: center;
 }
 
-#sort-select label, #radius-output  {
+#sort-select label, #radius-output, #quantity-output  {
   font-size: 14px;
   font-weight: 500;
   text-transform: uppercase;
@@ -237,12 +248,16 @@
   margin: 0;
 }
 
-#radius-options {
+#radius-options, #quantity-options {
   height: auto;
   padding: 10px;
 }
 
-#radius-output span{
+#quantity-output {
+  width: 120px;
+}
+
+#radius-output span, #quantity-output span{
   color: grey;
   text-transform: lowercase;
 }
@@ -341,31 +356,56 @@
   margin: 0px;
 }
 
-/*#map {
-  height: 100px;
-}*/
-
 html, body{
   height: 100vh;
 }
 
-#search-map {
-  height: 400px;
+/*Removed when merging Master*/
+/*<<<<<<< HEAD
+html, body{
+  height: 100vh;*/
+
+
+#grid {
+    padding-top: 145px;
+}
+
+@media (min-width: 1200px) {
+  #grid {
+      padding-top: 155px;
+  }
+}
+
+#map-tab .warning {
+  position: absolute;
+  width: 100%;
+  z-index: 100;
+  padding: 5px;
+  display: flex;
+  justify-content: center;
+  font-weight: bolder;
+
 }
 
 .gm-style-iw {
   width: 300px !important;
-  height: 255px !important;
+  min-width: 300px !important;
+  height: 310px !important;
   top: 15px !important;
   left: 0 !important;
   background-color: #fff;
   box-shadow: 0 1px 3px black;
 }
 
+.gm-style-iw > div {
+  max-width: 300px !important;
+}
+
 .iw-container {
   margin-bottom: 10px;
   width: 300px;
-  height: 255px;
+  min-width: 300px;
+  height: 310px;
 }
 
 .iw-container .iw-header {
@@ -400,6 +440,9 @@ html, body{
 
 .iw-container .iw-body {
   padding: 10px;
+  height: 140px;
+  display: flex;
+  flex-direction: column;
   overflow-y: hidden;
   overflow-x: hidden;
 }
@@ -412,7 +455,7 @@ html, body{
 }
 
 .iw-container .item-image{
-  height:100px;
+  height:140px;
   width: 100%;
   background-repeat: no-repeat;
   background-position: center;
@@ -420,7 +463,14 @@ html, body{
 }
 
 .iw-body .nav-btns {
+  margin-top: auto;
   width: 100%;
+}
+
+@media (max-width:370px) {
+  .smaller-screens {
+    right: 10px !important;
+  }
 }
 
 /* item edit page */
@@ -674,6 +724,8 @@ a:link, a:hover, a:visited, a:active  {
 
 .thumbnail .default-pic {
   height: 200px;
+  border: 1px solid lightgrey;
+
 }
 
 .trans-info {
@@ -1104,6 +1156,10 @@ a:link, a:hover, a:visited, a:active  {
 
 .pending {
   background-color: orange;
+}
+
+.thumbnail img {
+  max-height: 190px;
 }
 
 /* modals design */

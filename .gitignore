@@ -68,5 +68,8 @@ typings/
 .env
 
 # Reports from the testing framework
+
 *.xml
+
+ProductionConfig.php
 

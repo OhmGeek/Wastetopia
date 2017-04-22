@@ -45,10 +45,11 @@ class SearchModel
         ");
         $statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);
         $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_ASSOC);
+        return $statement->fetchAll(PDO::FETCH_ASSOC)[0];
     }
     
-    function getDefaultImage($listingID){
+    function getDefaultImage($listingID)
+    {
         $statement = $this->db->prepare("
             SELECT `Image`.`Image_URL` 
             FROM `Image`
@@ -56,12 +57,45 @@ class SearchModel
             JOIN `Item` ON `ItemImage`.`FK_Item_ItemID` = `Item`.`ItemID`
             JOIN `Listing` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
             WHERE `Listing`.`ListingID` = :listingID
-            AND `ItemImage`.`Is_Default` = 1;
+            AND `ItemImage`.`Is_Default` = 1
+            
+        ORDER BY `Image`.`ImageID` DESC;
+        "); //
+        $statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);
+        $statement->execute(); 
+        return $statement->fetchAll(PDO::FETCH_ASSOC)[0];
+    }
+
+    function isRequesting($listingID, $userID){
+        $statement = $this->db->prepare("
+            SELECT COUNT(*) AS `Count`
+        FROM `ListingTransaction`
+        JOIN `Transaction` ON `Transaction`.`TransactionID` = `ListingTransaction`.`FK_Transaction_TransactionID`
+        JOIN `Listing` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
+        WHERE `ListingTransaction`.`FK_Listing_ListingID` = :listingID
+        AND `Transaction`.`FK_User_UserID` = :userID
+        AND `ListingTransaction`.`Success` = 0;
         ");
+        $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
         $statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);
         $statement->execute();
-        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
-        return $results[0];
+    
+        return $statement->fetchColumn() > 0;
+        
+    }
+  
+    function isWatching($listingID, $userID){
+    $statement = $this->db->prepare("
+            SELECT COUNT(*) AS `Count`
+        FROM `Watch`
+        WHERE `FK_User_UserID` = :userID
+        AND `FK_Listing_ListingID` = :listingID;
+        ");
+        $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
+        $statement->bindValue(":listingID", $listingID, PDO::PARAM_INT);
+        $statement->execute();
+    
+        return $statement->fetchColumn() > 0;    
     }
 
     /*Distance searches will return listings only within 0.76 degrees of search location
@@ -69,14 +103,15 @@ class SearchModel
       and returns results only within this area
       At the equator the width is roughly 77km, at London, 56km
       and at the UK Arctic Research Station, 30km*/
-    function getSearchResults($userLat, $userLong, $search, $tagsArray, $distanceLimit = 0.76)
+    function getSearchResults($userLat, $userLong, $search, $tagsArray, $notTagsArray, $distanceLimit = 0.76)
     {
 
-        $sql = "SELECT `Listing`.`ListingID`, `Location`.`Latitude`, `Location`.`Longitude`
+        $sql = "SELECT `Listing`.`ListingID`, `Location`.`Latitude`, `Location`.`Longitude`, `Item`.`Name`
             FROM `Listing`
             JOIN `Item` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
             JOIN `Location` ON `Listing`.`FK_Location_LocationID` = `Location`.`LocationID`
             WHERE `Listing`.`Quantity` > 0
+            AND `Listing`.`Active` = 1
             ";
         if (($userLat !== false) && ($userLong !== false))
         {
@@ -118,7 +153,34 @@ class SearchModel
                      GROUP BY `Listing`.`ListingID`
                          ) as `TagCount`
                      WHERE `TagCount`.`Count` = :tagCount)";
-        }                
+        } 
+        if ($notTagsArray !== false)
+        {
+            $notTagCount = count($notTagsArray);
+
+            $sql .= "AND `Listing`.`ListingID` IN (SELECT `Listing`.`ListingID`
+                                                   FROM `Listing`
+                                                   JOIN `Item` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
+                                                   JOIN `ItemTag` ON `Item`.`ItemID` = `ItemTag`.`FK_Item_ItemID`
+                                                   WHERE `ItemTag`.`FK_Tag_TagID` NOT IN (";
+
+            foreach ($notTagsArray as $key => $tag) 
+            {
+                if ($key == ($notTagCount-1))
+                {
+                    $sql .= ":notTag".$key;
+                }
+                else
+                {
+                    $sql .= ":notTag".$key.",";
+                }
+                
+            } 
+
+            $sql .= "));";
+        }
+
+                      
 
         $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
         $statement = $this->db->prepare($sql);
@@ -129,6 +191,13 @@ class SearchModel
                 $statement->bindValue(":tag".$key, $tag, PDO::PARAM_INT);
             }
             $statement->bindValue(":tagCount", strval($tagCount), PDO::PARAM_STR);
+        }
+        if ($notTagsArray !== false)
+        {
+            foreach ($notTagsArray as $key => $tag)
+            {
+                $statement->bindValue(":notTag".$key, $tag, PDO::PARAM_INT);
+            }
         }
         if (($userLat !== false) && ($userLong !== false))
         {
@@ -183,7 +252,6 @@ class SearchModel
                 ) as `TagCount`
             ORDER BY `TagCount`.`Count` DESC;";
 
-        $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
         $statement = $this->db->prepare($sql);
 
         foreach ($tagsArray as $key => $tag)
@@ -196,6 +264,9 @@ class SearchModel
 
         return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
+
+
+
 
 
 
