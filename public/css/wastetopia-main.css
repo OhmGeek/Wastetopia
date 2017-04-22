@@ -67,7 +67,7 @@
 }
 
 /* Main page */
-.main-search-form {
+.main-search-form, .log-div, .register-form{
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -105,11 +105,6 @@
 }
 
 /* login page */
-.log-div, #register-form, .register-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
 
 .log-div > div, #register-form > h1 {
   text-align: center;
