@@ -39,8 +39,7 @@ class LoginController {
             // todo redirect to dest | website base
             $response->redirect($_ENV['ROOT_BASE'] . $dest);
         }
-        //todo return a 'click here to return to the main site page'
-        return true; // we can return true otherwise, as we will forward people.
+        return "<html><script>window.history.back();</script></html>";
     }
 
     /**
