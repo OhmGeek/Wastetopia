@@ -203,7 +203,7 @@ $(function() {
             var option  = {};
             var ctx = document.getElementById("cvsMonthChart").getContext("2d");
             var linechart = new Chart(ctx, {
-                type: 'line',
+                type: 'bar',
                 data: json,
                 options: {}
             });
@@ -216,7 +216,7 @@ $(function() {
             var option  = {};
             var ctx = document.getElementById("cvsRcvContributions").getContext("2d");
             var linechart = new Chart(ctx, {
-                type: 'line',
+                type: 'bar',
                 data: json,
                 options: {}
             });
