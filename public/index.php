@@ -20,6 +20,7 @@ use Wastetopia\Controller\AddItemController;
 use Wastetopia\Controller\SearchController;
 use Wastetopia\Controller\LoginController;
 
+use Wastetopia\Model\HeaderInfo;
 use Wastetopia\Model\RequestModel;
 use Wastetopia\Model\PopularityModel;
 use Wastetopia\Model\NotificationModel;
@@ -35,6 +36,9 @@ $mode = $_ENV['MODE'];
 $config = new CurrentConfig();
 $config->loadConfig($mode);
 $base  = dirname($_SERVER['PHP_SELF']);
+
+
+
 function forceLogin($destRoute) {
     if(!\Wastetopia\Controller\Authenticator::isAuthenticated()) {
         //redirect to the current route
@@ -49,6 +53,12 @@ if(ltrim($base, '/')){
 }
 // Dispatch as always
 $klein = new Klein();
+$klein->respond("GET", "/", function() {
+    // this sets the destination
+    if(strpos($_SERVER['REQUEST_URI'],"login") !== false) {
+        HeaderInfo::setLoginDest($_ENV['ROOT_BASE'] . '/login?dest=' . urlencode($_SERVER['REQUEST_URI']));
+    }
+});
 $klein->respond("GET", "/?", function() {
   $indexController = new IndexPageController();
   return $indexController->renderIndexPage();
