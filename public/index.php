@@ -1,8 +1,10 @@
 <?php
+
 require_once '../vendor/autoload.php';
+
+
 use Klein\Klein;
 use Wastetopia\Config\CurrentConfig;
-
 
 use Wastetopia\Controller\ConversationListController;
 use Wastetopia\Controller\RecommendationController;
@@ -174,8 +176,6 @@ $klein->respond("GET","/verify/[:verificationCode]", function($request, $respons
     return $model->deleteUserByName($firstName, $lastName);
 });*/
 
-
-});
 // Used for charts - needs testing
 $klein->with("/analysis", function() use ($klein){
     $klein->respond('GET', '/?', function($request, $response){
