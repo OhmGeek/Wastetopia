@@ -199,6 +199,9 @@ $(function () {
 
     var baseURL = $('#baseURL').attr('href');
     var query = baseURL + '/api/search/page/' + lat + '/' + long + '/' + searchTerm + '/' + include.join('+') + '/' + exclude.join('+') + '/' + distanceLimit + '/' + pageNumber + '/' + sortOrder + '/' + quantity;
+
+    console.log(query);
+
     mapURL = baseURL + '/api/search/map/' + lat + '/' + long + '/' + searchTerm + '/' + include.join('+') + '/' + exclude.join('+') + '/' + distanceLimit + '/' + quantity;
     if ($('#map-tab').hasClass('active')) {
       console.log('map is active')
@@ -207,7 +210,6 @@ $(function () {
     $.ajax({
         url: query,
         success: function(result){
-            console.log(result);
             if(result === '[]')
             {
                 noResults();
