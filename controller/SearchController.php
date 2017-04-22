@@ -94,6 +94,10 @@ class SearchController
                 $sortedInformation = $this->userPopularitySort($itemInformation);
                 break;
 
+            case 'DT':
+                $sortedInformation = $this->newFirstSort($itemInformation);
+                break;
+
             default:
                 $sortedInformation = $itemInformation;
                 break;
@@ -233,6 +237,19 @@ class SearchController
         return $itemList;
     }
     function userPopularitySort($itemList){
+        return $itemList;
+    }
+    function newFirstSort($itemList){
+        usort($itemList, function($a, $b)
+        {
+            $aDT = new DateTime($a['Time_Of_Creation']);
+            $bDT = new DateTime($b['Time_Of_Creation']);
+
+            if($aDT < $bDT) {return 1;}
+            elseif($aDT > $bDT) {return -1;}
+            else{return 0;}
+        });
+
         return $itemList;
     }
 
