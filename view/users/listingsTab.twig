@@ -48,6 +48,7 @@
                     <div class="nav-btns">
                       <a href="{{config.ROOT_BASE}}/items/view/{{item.listingID}}" class="view btn btn-primary" role="button"
                       id="{{ item.listingID }}">View</a>
+                      
                       {% if isLoggedIn %}
                       {% if isUser %}
                       <a href="{{config.ROOT_BASE}}/items/edit/{{item.listingID}}" class="btn btn-default" role="button"
@@ -58,7 +59,7 @@
                       {% else %}
                       <a href="#request" class="btn btn-default" role="button"
                       id="{{item.listingID}}">Request</a>
-                      {% endif %}
+                      {% endif %}                      
                       {% if isUser == 1 %}
                       <a href="#remove" role="button" class="btn-watch" id="{{item.listingID}}"><i
                         class="material-icons">delete</i></a>

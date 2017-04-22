@@ -39,8 +39,7 @@ class LoginController {
             // todo redirect to dest | website base
             $response->redirect($_ENV['ROOT_BASE'] . $dest);
         }
-        //todo return a 'click here to return to the main site page'
-        return true; // we can return true otherwise, as we will forward people.
+        return "<html><body>You are being redirected<script>window.history.back();</script></body></html>";
     }
 
     /**
@@ -53,21 +52,23 @@ class LoginController {
      */
     public function login($username, $password, $dest, $response) {
         //todo dest parameter with default value
+        error_log("Enter Error checker");
         // Post destination of the form (params are entered in index.php)
         $outcome = TokenManager::login($username, $password);
         $outcome = json_decode($outcome,true);
         if($outcome['status'] === 'verified') {
             // login success
+            error_log($dest);
             // forward the person to the destination/home
-            if(isset($dest) | $dest == "") {
+            if(isset($dest) || trim($dest) !== "") {
                 //forward to the destination uri
+                error_log("Try going through destination");
                 error_log($dest);
-                $response->redirect($dest);
-                return "Forward";
+                error_log(json_encode(count_chars($dest)));
+                //$response->redirect($dest);
             }
             error_log("Not set. Direct them");
-            $response->redirect($_ENV['ROOT_BASE']);
-            return "Normal";
+            return "<html><script>window.history.back();</script></html>";
         }
 
 

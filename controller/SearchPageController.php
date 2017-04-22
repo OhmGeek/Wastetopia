@@ -5,6 +5,8 @@ use Twig_Loader_Filesystem;
 use Twig_Environment;
 use Wastetopia\Config\CurrentConfig;
 
+use Wastetopia\Model\HeaderInfo;
+
 class SearchPageController
 {
     function __construct()
@@ -36,6 +38,7 @@ class SearchPageController
 
         $template = $twig->loadTemplate("search/search.twig");
         return $template->render(array('config' => $config,
+                                       "header" => HeaderInfo::get(),
                                        'filters' => $filters,
                                        'searchTerm' => json_encode($escapedSearch)
                                       ));
