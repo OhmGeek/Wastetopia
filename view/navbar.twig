@@ -8,7 +8,7 @@
 			</button>
 			<a class="navbar-brand hidden-xs" href="{{ config.ROOT_BASE }}">Wastetopia</a>
 			<a class="navbar-brand visible-xs" href="{{ config.ROOT_BASE }}">WT</a>
-			<form class="search-form navbar-left">
+			<form class="search-form navbar-left" onsubmit="return searchSubmit(event)">
 				<div class="search-group">
 					<div class="search">
 						<input type="text" placeholder="Search" id="searchBox">

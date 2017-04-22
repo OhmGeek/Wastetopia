@@ -2,26 +2,32 @@
 require_once '../vendor/autoload.php';
 use Klein\Klein;
 use Wastetopia\Config\CurrentConfig;
+
+
 use Wastetopia\Controller\ConversationListController;
-use Wastetopia\Controller\EditItemController;
-use Wastetopia\Controller\LoginController;
-use Wastetopia\Controller\ProfilePageController;
-use Wastetopia\Controller\SearchController;
-use Wastetopia\Controller\MessageController;
 use Wastetopia\Controller\RecommendationController;
+use Wastetopia\Controller\RegistrationController;
+use Wastetopia\Controller\ProfilePageController;
+use Wastetopia\Controller\SearchPageController;
+use Wastetopia\Controller\IndexPageController;
+use Wastetopia\Controller\ViewItemController;
+use Wastetopia\Controller\AnalysisController;
+use Wastetopia\Controller\EditItemController;
+use Wastetopia\Controller\MessageController;
+use Wastetopia\Controller\AddItemController;
+use Wastetopia\Controller\SearchController;
+use Wastetopia\Controller\LoginController;
+
 use Wastetopia\Model\RequestModel;
 use Wastetopia\Model\PopularityModel;
-use Wastetopia\Controller\SearchPageController;
-use Wastetopia\Controller\RegistrationController;
-use Wastetopia\Model\RegistrationModel; // For verification
-use Wastetopia\Controller\AddItemController;
-use Wastetopia\Controller\ViewItemController;
 use Wastetopia\Model\NotificationModel;
-use Wastetopia\Controller\AnalysisController;
+use Wastetopia\Model\RegistrationModel; // For verification
+
 /**
  * Function to be called at start of routing for any route where user must be logged in to access
  * @return - Nothing, either redirects user to login page and exits or just returns to function that called it
  */
+
 // check if we should use production? Otherwise, use community.
 $mode = $_ENV['MODE'];
 $config = new CurrentConfig();
@@ -42,8 +48,11 @@ if(ltrim($base, '/')){
 // Dispatch as always
 $klein = new Klein();
 $klein->respond("GET", "/?", function() {
-    return "HomePage";
+  $indexController = new IndexPageController();
+  return $indexController->renderIndexPage();
 });
+
+
 $klein->respond("GET", "/notifications/update", function($request, $response){
     //forceLogin($request->uri());
     $model = new NotificationModel();
@@ -60,8 +69,9 @@ $klein->with('/api', function () use ($klein) {
         $notTagsArr = explode("+",$paramArr[4]);
         $distanceLimit = $paramArr[5];
         $pageNumber = $paramArr[6];
+        $order = $paramArr[7];
         $response->sendHeaders('Content-Type: application/jpg');
-        return $searchController->JSONSearch($lat, $long, $search, $tagsArr, $notTagsArr, $distanceLimit, $pageNumber);
+        return $searchController->JSONSearch($lat, $long, $search, $tagsArr, $notTagsArr, $distanceLimit, $pageNumber, $order);
     });
     $klein->respond('GET', '/search/map/[**:param]', function ($request, $response) {
         $searchController = new SearchController();
@@ -76,59 +86,94 @@ $klein->with('/api', function () use ($klein) {
         return $searchController->MAPSearch($lat, $long, $search, $tagsArr, $notTagsArr, $distanceLimit);
     });
 });
-$klein->respond('GET', '/search/[:search]?', function ($request, $response) {
+
+$klein->respond('GET', '/search/[**:param]?', function ($request, $response) {
+
     $controller = new SearchPageController();
-    return $controller->render($request->search);
+
+    return $controller->render(explode('/', $request->param));
 });
+
+
+$klein->respond('POST', '/search/', function ($request, $response) {
+    $controller = new SearchPageController();
+
+    return $controller->renderAdvanced($request->paramsPost());
+});
+
+
 $klein->respond("GET", "/login", function($request, $response) {
     header("Cache-Control: no-store, must-revalidate, max-age=0");
     error_log($request->dest);
     $controller = new LoginController();
     return $controller->index($response, urldecode($request->dest));
 });
+
 $klein->respond("GET", "/logout", function($request, $response) {
     $controller = new LoginController();
     return $controller->logout();
 });
 $klein->with('/register', function() use ($klein){
 
-    $klein->respond("GET", "/?", function($request, $response) {
-        $controller = new RegistrationController();
-        return $controller->generatePage();
-    });
 
-    $klein->respond("POST", "/add-user", function($request, $response){
-        $forename = $request->forename;
-        $surname = $request->surname;
-        $email = $request->email;
-        $password = $request->password;
-        $passwordConfirm = $request->passwordConfirm;
-        $pictureURL = $request->pictureURL;
+$klein->respond("GET", "/?", function($request, $response) {
+    $controller = new RegistrationController();
+    return $controller->generatePage();
+});
 
-        $controller = new RegistrationController();
-        return $controller->addUser($forename, $surname, $email, $password, $passwordConfirm, $pictureURL);
-    });
+$klein->respond("POST", "/add-user", function($request, $response){
+    $forename = $request->forename;
+    $surname = $request->surname;
+    $email = $request->email;
+    $password = $request->password;
+    $passwordConfirm = $request->passwordConfirm;
+    $pictureURL = $request->pictureURL;
 
-    $klein->respond("GET","/verify/[:verificationCode]", function($request, $response){
-        $verificationCode = $request->verificationCode;
-        $model = new RegistrationModel(); // Put function in controller?
-        $result = $model->verifyUser($verificationCode);
-        if (!($result)){
-            // Verification didn't work, what do we do now??
-            return "It didn't work";
-        }else{
-            // Verirification worked, send them to login page??
-            return "Verification successful: your account is now active";
-        }
-    });
+    $controller = new RegistrationController();
+    return $controller->addUser($forename, $surname, $email, $password, $passwordConfirm, $pictureURL);
+});
 
-//     // Only for testing purposes
-//     $klein->respond("GET", "/delete/[:firstName]/[:lastName]", function($request, $response){
-//         $firstName = $request->firstName;
-//         $lastName = $request->lastName;
-//         $model = new RegistrationModel();
-//         return $model->deleteUserByName($firstName, $lastName);
-//     });
+
+/*ADD USER ALTERNATIVE FROM SEARCHING*/
+/*  $klein->respond("GET", "/?", function($request, $response) {
+    $controller = new RegistrationController();
+    return $controller->generatePage();
+  });
+
+  $klein->respond("POST", "/add-user", function($request, $response){
+      $forename = $request->forename;
+      $surname = $request->surname;
+      $email = $request->email;
+      $password = $request->password;
+      $passwordConfirm = $request->passwordConfirm;
+      $pictureURL = $request->pictureURL;
+
+      $controller = new RegistrationController();
+      return $controller->addUser($forename, $surname, $email, $password, $passwordConfirm, $pictureURL);
+  });*/
+
+$klein->respond("GET","/verify/[:verificationCode]", function($request, $response){
+    $verificationCode = $request->verificationCode;
+    $model = new RegistrationModel(); // Put function in controller?
+    $result = $model->verifyUser($verificationCode);
+    if (!($result)){
+        // Verification didn't work, what do we do now??
+        return "It didn't work";
+    }else{
+        // Verirification worked, send them to login page??
+        return "Verification successful: your account is now active";
+    }
+
+});
+
+// Only for testing purposes
+/*$klein->respond("GET", "/delete/[:firstName]/[:lastName]", function($request, $response){
+   $firstName = $request->firstName;
+    $lastName = $request->lastName;
+    $model = new RegistrationModel();
+    return $model->deleteUserByName($firstName, $lastName);
+});*/
+
 
 });
 // Used for charts - needs testing
@@ -178,8 +223,11 @@ $klein->with("/profile", function() use ($klein) {
     });
 
     $klein->respond('GET', '/update/[:userID]', function($request, $response){
-        $controller = new ProfilePageController(0, $request->userID);
-        return $controller->generateProfileContentHTML();
+        /*Force login introduced by searching branch*/
+       forceLogin($request->uri());
+       $controller = new ProfilePageController(0, $request->userID);
+       return $controller->generateProfileContentHTML();
+
     });
 
     $klein->respond('GET', '/load-home-tab/[:userID]', function($request, $response){
@@ -249,6 +297,9 @@ $klein->with("/profile", function() use ($klein) {
 
     // Needs testing
     $klein->respond('POST', '/change-profile-picture', function($request, $response){
+        /*Force login introduced by searching*/
+        forceLogin($request->uri());
+
         $files = $request->files();
         $controller = new ProfilePageController(1);
         return $controller->changeProfilePicture($files);
@@ -268,6 +319,7 @@ $klein->with('/items', function () use ($klein) {
         $control = new AddItemController();
         return $control->renderAddPage();
     });
+
     $klein->respond('GET', '/edit/[:id]', function($request, $response) {
         forceLogin($request->uri());
         $control = new EditItemController($request->id);
@@ -347,8 +399,8 @@ $klein->with('/items', function () use ($klein) {
         $model = new PopularityModel();
         return $model->rateTransaction($transactionID, $rating);
     });
-
 });
+
 $klein->with('/api', function () use ($klein) {
     $klein->respond('POST', '/verify-login', function ($request, $response) {
         $controller = new LoginController();
