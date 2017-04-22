@@ -15,16 +15,16 @@
         <!-- Bootstrap JavaScript -->
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
         <!-- Bootstrap Material Design -->
-        <link href="{{config.ROOT_CSS}}/bootstrap-material-css/bootstrap-material-design.min.css" rel="stylesheet">
-        <link href="{{config.ROOT_CSS}}/bootstrap-material-css/ripples.min.css" rel="stylesheet">
+        <link href="{{config.ROOT_BASE}}/css/bootstrap-material-css/bootstrap-material-design.min.css" rel="stylesheet">
+        <link href="{{config.ROOT_BASE}}/css/bootstrap-material-css/ripples.min.css" rel="stylesheet">
         <!-- Google Maps API -->
         <!-- <script src="http://maps.google.com/maps/api/js?key=AIzaSyCrh2cKWRAFifeLIkznE2Iw4Oblqlmyyt0"></script> -->
         <!-- Wastetopia Custom CSS -->
-        <link rel="stylesheet" href="{{config.ROOT_CSS}}/wastetopia-main.css"/>
+        <link rel="stylesheet" href="{{config.ROOT_BASE}}/css/wastetopia-main.css"/>
         <!-- Wastetopia Custom JS -->
-        <script src="{{config.ROOT_JS}}/search.js"></script>
+        <script src="{{config.ROOT_BASE}}/js/search.js"></script>
         {% for cssfile in csslist %}
-            <link rel="stylesheet" href="{{config.ROOT_CSS}}/{{cssfile}}"></link>
+            <link rel="stylesheet" href="{{config.ROOT_BASE}}/css/{{cssfile}}"></link>
         {% endfor %}
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	</head>
@@ -34,8 +34,8 @@
 	    {% block content %}
 	    {% endblock %}
 
-        <script src="{{config.ROOT_JS}}/bootstrap-material-js/ripples.min.js"></script>
-        <script src="{{config.ROOT_JS}}/bootstrap-material-js/material.js"></script>
+        <script src="{{config.ROOT_BASE}}/js/bootstrap-material-js/ripples.min.js"></script>
+        <script src="{{config.ROOT_BASE}}/js/bootstrap-material-js/material.js"></script>
         <script>
           $(function () {
             $.material.init();
@@ -43,14 +43,14 @@
         </script>
 
 		<script async defer	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCrh2cKWRAFifeLIkznE2Iw4Oblqlmyyt0"></script>
-        <script src = "{{config.ROOT_JS}}/search.js"></script>
+        <script src = "{{config.ROOT_BASE}}/js/search.js"></script>
 
 	<!--Handles notification alerts on navbar-->
-	<script src = "{{config.ROOT_JS}}/notifications.js"></script>
+	<script src = "{{config.ROOT_BASE}}/js/notifications.js"></script>
 	
         <!-- Wastopia Custom JS-->
         {% for jsfile in jslist %}
-            <script src="{{config.ROOT_JS}}/{{jsfile}}"></script>
+            <script src="{{config.ROOT_BASE}}/js/{{jsfile}}"></script>
         {% endfor %}
 	</body>
 </html>
