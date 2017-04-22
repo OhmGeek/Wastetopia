@@ -170,7 +170,8 @@ class AnalysisModel
         
         $statement->execute();
 
-        return $statement->fetchAll(PDO::FETCH_ASSOC);
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+	    return $results;
     }
     
 
@@ -273,7 +274,8 @@ class AnalysisModel
 
         $statement->bindValue(":categoryID", $categoryID, PDO::PARAM_INT);
         $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_ASSOC);
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+	    return $results;
     }
 
 
