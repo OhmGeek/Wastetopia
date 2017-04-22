@@ -35,6 +35,7 @@ use Wastetopia\Model\RegistrationModel; // For verification
  * @return - Nothing, either redirects user to login page and exits or just returns to function that called it
  */
 
+>>>>>>> refs/remotes/origin/master
 
 // check if we should use production? Otherwise, use community.
 $mode = $_ENV['MODE'];
