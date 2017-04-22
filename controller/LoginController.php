@@ -66,7 +66,6 @@ class LoginController {
                 error_log($dest);
                 error_log(json_encode(count_chars($dest)));
                 $response->redirect($dest);
-                return "Forward";
             }
             error_log("Not set. Direct them");
             return "<html><script>window.history.back();</script></html>";
