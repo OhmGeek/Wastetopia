@@ -248,9 +248,12 @@
   margin: 0;
 }
 
-#radius-options, #quantity-output {
+#radius-options, #quantity-options {
   height: auto;
   padding: 10px;
+}
+
+#quantity-output {
   width: 120px;
 }
 
