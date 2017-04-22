@@ -23,7 +23,8 @@ $(function() {
         createTagsChart(categoryID, 0); // Create first sending chart
         createChartButtons("sendingOption", "sendingRadioButtons"); // Create the radio buttons for the chart
         // month Chart!
-        monthChart();
+        sendContributionsChart();
+        receiveContributionsChart();
     });
 
     // Remove charts when not on this page
@@ -196,41 +197,24 @@ $(function() {
 
     }
 
-    function monthChart() {
+    function sendContributionsChart() {
         var url = "https://wastetopia.herokuapp.com/analysis/get-contributions-send";
         $.getJSON(url, function(json) {
-            console.log("Get send json");
-            console.log(json);
-            alert("Something actually worked for once!");
-            var data = {
-                type: "line",
-                labels : ["Month1","Month2","Month3","Month4"],
-                datasets :[
-                    {
-                        label : "Your Contributions",
-                        fillColor :"rgba(255, 51, 204,0.75)",
-                        strokeColor :"rgba(23,12,102,0.75)",
-                        pointColor: "rgba(1,200,200,1)",
-                        pointStrokeColor : "#fff",
-                        pointHighLightFill: "#fff",
-                        pointHighLightStroke: "rgba(200,200,200,1)",
-                        data: [23,34,13,1]
-                    },
-                    {
-                        label : "# of items taken",
-                        fillColor :'rgba(0, 255, 255,0.75)',
-                        strokeColor :'rgba(23,12,102,0.75)',
-                        pointColor: 'rgba(200,2,200,1)',
-                        pointStrokeColor : '#fff',
-                        pointHighLightFill: '#fff',
-                        pointHighLightStroke: 'rgba(200,200,200,1)',
-                        data: json
-                    }
-                ]
-            };
             var option  = {};
-
             var ctx = document.getElementById("cvsMonthChart").getContext("2d");
+            var linechart = new Chart(ctx, {
+                type: 'line',
+                data: json,
+                options: {}
+            });
+        });
+    }
+
+    function receiveContributionsChart() {
+        var url = "https://wastetopia.herokuapp.com/analysis/get-contributions-receive";
+        $.getJSON(url, function(json) {
+            var option  = {};
+            var ctx = document.getElementById("cvsRcvContributions").getContext("2d");
             var linechart = new Chart(ctx, {
                 type: 'line',
                 data: json,
