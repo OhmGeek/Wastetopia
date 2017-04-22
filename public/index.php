@@ -55,8 +55,9 @@ if(ltrim($base, '/')){
 $klein = new Klein();
 $klein->respond("GET", "/", function() {
     // this sets the destination
-    HeaderInfo::setLoginDest($_ENV['ROOT_BASE'] . '/login?dest='. urlencode($_SERVER['REQUEST_URI']));
-
+    if(strpos($_SERVER['REQUEST_URI'],"login") !== false) {
+        HeaderInfo::setLoginDest($_ENV['ROOT_BASE'] . '/login?dest=' . urlencode($_SERVER['REQUEST_URI']));
+    }
 });
 $klein->respond("GET", "/?", function() {
   $indexController = new IndexPageController();
