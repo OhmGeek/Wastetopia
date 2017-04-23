@@ -44,7 +44,7 @@ $(function(){
 
     function showUploadedItem(url, id) {
       var $item = '<div class="col-xs-6 col-sm-2 zero-padding">'+
-                    '<div class="row-action-primary checkbox img-checkbox">'+
+                    '<div class="checkbox img-checkbox">'+
                       '<label><input type="checkbox"></label>'+
                     '</div>'+
                     '<div data-mh="my-group" class="upload-pic">'+
@@ -218,12 +218,13 @@ $(function(){
         return true;
     }
     function submit() {
-       // console.log( "Handler for .submit() called." );
+        console.log( "Handler for .submit() called." );
 
         getLocationOfItem(serializeAndSendItem);
 
     }
     $( "#main-form" ).submit(function( event ) {
+        alert( "Handler for .submit() called." );
         event.preventDefault();
         submit();
         return false;

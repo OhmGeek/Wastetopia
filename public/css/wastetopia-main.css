@@ -546,6 +546,7 @@ html, body{
 .item-address-section {
   background-color: white;
   padding: 10px;
+  height: 100%;
   margin: 0;
 }
 
@@ -579,6 +580,7 @@ html, body{
   left: 11px;
   padding: 0;
   margin: 0;
+  z-index: 200;
 }
 
 .form-control, .form-group .form-control {
