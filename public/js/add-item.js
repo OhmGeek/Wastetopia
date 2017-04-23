@@ -208,7 +208,8 @@ $(function(){
         else {
             console.log("Not valid");
         }
-    };
+    }
+
 //todo validate all the fields
     function isValid(itemData) {
         return true;
@@ -219,4 +220,4 @@ $(function(){
         getLocationOfItem(serializeAndSendItem);
 
     }
-})
+});
