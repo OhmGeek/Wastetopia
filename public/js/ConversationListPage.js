@@ -30,7 +30,7 @@ $(document).on('click', '#deleteBtn', function(){
   var listingID = $(this).closest('thumbnail').attr('id');
   console.log(listingID)
   var data = {listingID: listingID}
-  $.get(url, data, function(response){
+  $.post(url, data, function(response){
       loadUsers();
   });
 });
