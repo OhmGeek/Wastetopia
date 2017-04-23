@@ -544,7 +544,7 @@ html, body{
 }
 
 .item-address-section {
-  height: 400px;
+  background-color: white;
   padding: 10px;
   margin: 0;
 }
@@ -564,6 +564,7 @@ html, body{
 
 .upload-pic {
   padding: 5px;
+  height: 100px;
 }
 
 .gridTitle{
