@@ -4,9 +4,6 @@
 // JS file to deal with requestModel stuff on view-item page
 $(function() {
 
-    //equal height rows
-    $('.small').matchHeight();
-
     var baseURL = window.location.protocol + "//" + window.location.host;
 
 
@@ -246,8 +243,7 @@ $(function() {
         event.preventDefault();
 
         var listingID = $('#main-container').data("listingID");
-        var isUser = GET_FROM_PAGE; // 1 if user is viewing their own listing
-        var listing = WATCH_ICON;
+        var listing = $(this);
 
         var data = {listingID: listingID};
         var url = baseURL + "/profile/toggle-watch-list"

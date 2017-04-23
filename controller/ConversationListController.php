@@ -23,6 +23,8 @@ class ConversationListController
 		
 	    //Create ConversationModel instance
         $this->model = new ConversationListModel();
+	    
+	    $this->MessageModel = new MessageModel();
 
         // Create MessageModel instance
 	$this->messageModel = new MessageModel();
@@ -168,7 +170,7 @@ class ConversationListController
      */
     function deleteConversation($listingID)
     {
-	    $conversationIDs = $this->model->getConversationIDFromListing($listingID);
+	    $conversationIDs = $this->MessageModel->getConversationIDFromListing($listingID);
 	    $conversationID = $conversationIDs[0];	
 	    $this->model->deleteConversation($conversationID);
     }

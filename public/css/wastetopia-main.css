@@ -960,7 +960,7 @@ a:link, a:hover, a:visited, a:active  {
   font-weight: bolder;
 }
 
-#message-location, .user-stats, #item-view .view-wrapper  {
+#message-location, .user-stats, #main-container .view-wrapper  {
   overflow-y: auto;
   height: 100%;
 }

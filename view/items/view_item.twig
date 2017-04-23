@@ -16,14 +16,19 @@
     </div>
     <div class="nav-btns">
       {% if isOwner != 1 and isLoggedIn == 1 %}
-      <a href="#request" class="btn btn-primary" role="button">Request</a>
+        {% if isRequesting != 1  %}
+          <a href="#request" class="btn btn-primary" role="button">Request</a>
+        {% else %}
+          <a href="#cancel-by-listing" class="btn btn-primary" role="button">Cancel Request</a>
+        {% endif %}
       {% endif %}
       <div class="dropdown btn-watch">
         <a data-target="#"class="dropdown-toggle" data-toggle="dropdown"><i class="material-icons">more_vert</i></a>
         <ul class="dropdown-menu dropdown-menu-right">
           {% if isOwner == 1 %}
           <li><a href="{{ config.ROOT_BASE }}/items/edit/{{ listingID }}" id="{{listingID}}">Edit Item</a></li>
-          <li><a href="#deleteItem" id="{{listingID}}">Delete Item</a></li>
+          <li><a href="#renew" id="{{listingID}}">Renew Item</a></li>
+          <li><a href="#remove" id="{{listingID}}">Delete Item</a></li>
           {% else %}
           <li><a href="{{config.ROOT_BASE}}/messages/conversation/{{listingID}}" role="button" class="btn-watch" id="{{listingID}}"><i class="material-icons">message</i> Send a message</a></li>
           <li><a href="#watch" role="button" class="btn-watch lightgrey {% if isWatched == 1 %}watched{% endif %}" id ="{{listingID}}"><i
@@ -33,27 +38,14 @@
         </div>
       </div>
     </div>
-    {% if not active %}
-    <div class="alert alert-info">
-      <strong>Sorry, this item is no longer active. Chances are, some students have already eaten it :/ </strong>
-    </div>
-    {% endif %}
-    <div class="item-imgs col-sm-12 col-md-6">
-      <div class="img-grid">
-        {% set first_item = 'is-expanded' %}
-        {% for img in images %}
-        <div class="img-grid-item {{ first_item }}">
-          <div class="img-grid-item-content">
-            <div class="item-img" style="background:url({{ img.url }})"></div>
-          </div>
-        </div>
-        {% set first_item = '' %}
-        {% endfor %}
-      </div>
-    </div>
     <div class="view-wrapper">
       <div class="panel panel-default">
         <div class="panel-body">
+          {% if not active %}
+          <div class="alert alert-info">
+            <strong>Sorry, this item is no longer active. Chances are, some students have already eaten it :/ </strong>
+          </div>
+          {% endif %}
           <div class="item-details col-md-12">
             <div class="item-description">
               <div class="container-fluid">
@@ -108,6 +100,19 @@
               </div>
             </div>
           </div>
+          <div class="item-imgs col-sm-12 col-md-6">
+            <div class="img-grid">
+              {% set first_item = 'is-expanded' %}
+              {% for img in images %}
+              <div class="img-grid-item {{ first_item }}">
+                <div class="img-grid-item-content">
+                  <div class="item-img" style="background:url({{ img.url }})"></div>
+                </div>
+              </div>
+              {% set first_item = '' %}
+              {% endfor %}
+            </div>
+          </div>
           <div class="item-user col-sm-12 col-md-6">
             <div class="item-wrapper">
               <div>
@@ -132,4 +137,4 @@
     </div>
   </div>
   {% endblock %}
-  {% set jslist = ["view-item.js", "request-view-page.js"] %}
+  {% set jslist = ["plugins/isotope/isotope.pkgd.min.js", "view-item.js", "request-view-page.js"] %}

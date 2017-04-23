@@ -50,7 +50,7 @@ $(function () {
 	
     $(document).on('click', '#view', function(){
 	   var listingID = $("#listing-id").html();
-	   var url = window.location.protocol + "//" + window.location.host + "/item/view/"+listingID;
+	   var url = window.location.protocol + "//" + window.location.host + "/items/view/"+listingID;
 	    location.href = url;
 	    
     });
