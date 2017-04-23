@@ -93,34 +93,34 @@ class SearchPageController
         $filters = array();
         
 
-            $newThingy = array('id'=> '1', 'optionsCategory' => 'Food Group', 'type' => 'positive', 'options' => array());
-                foreach($tags['1'] as $item)
-                {
-                    $newThingy['options'][] = array('value' => $item['Name'], 'id' => $item['TagID']); 
-                }
-            
-            $filters[] = $newThingy;
+        $newThingy = array('id'=> '1', 'optionsCategory' => 'Food Group', 'type' => 'positive', 'options' => array());
+        foreach($tags['1'] as $item)
+        {
+            $newThingy['options'][] = array('value' => $item['Name'], 'id' => $item['TagID']); 
+        } 
+        $filters[] = $newThingy;
+        
         $newThingy = array('id'=> '2', 'optionsCategory' => 'State', 'type' => 'positive', 'options' => array());
-                foreach($tags['2'] as $item)
-                {
-                    $newThingy['options'][] = array('value' => $item['Name'], 'id' => $item['TagID']); 
-                }
-            
-            $filters[] = $newThingy;
+        foreach($tags['2'] as $item)
+        {
+            $newThingy['options'][] = array('value' => $item['Name'], 'id' => $item['TagID']); 
+        }
+        $filters[] = $newThingy;
+        
+        
         $newThingy = array('id'=> '3', 'optionsCategory' => 'Dietary Requirements', 'type' => 'positive', 'options' => array());
-                foreach($tags['3'] as $item)
-                {
-                    $newThingy['options'][] = array('value' => $item['Name'], 'id' => $item['TagID']); 
-                }
-            
-            $filters[] = $newThingy;
-         $newThingy = array('id'=> '4', 'optionsCategory' => 'Allergens', 'type' => 'negative', 'options' => array());
-                foreach($tags['4'] as $item)
-                {
-                    $newThingy['options'][] = array('value' => $item['Name'] . ' Free', 'id' => $item['TagID']); 
-                }
-            
-            $filters[] = $newThingy;
+        foreach($tags['3'] as $item)
+        {
+             $newThingy['options'][] = array('value' => $item['Name'], 'id' => $item['TagID']); 
+        }
+        $filters[] = $newThingy;
+        
+        $newThingy = array('id'=> '4', 'optionsCategory' => 'Allergens', 'type' => 'negative', 'options' => array());
+        foreach($tags['4'] as $item)
+        {
+             $newThingy['options'][] = array('value' => $item['Name'] . ' Free', 'id' => $item['TagID']); 
+        }
+        $filters[] = $newThingy;
      
 
         
