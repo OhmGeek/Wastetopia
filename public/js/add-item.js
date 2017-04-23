@@ -81,73 +81,74 @@ function imageUpload() {
 $('#form-image').change(function() {
   imageUpload();
 });
+});
 
 function getImagesFromDOM() {
-  var imageList = [];
-  $('.upload-pic img').each(function(index, elem) {
-    imageList.push(elem.src); //todo check this - we want to get the href of the image tag
-  });
-  return imageList;
+    var imageList = [];
+    $('.upload-pic img').each(function(index, elem) {
+        imageList.push(elem.src); //todo check this - we want to get the href of the image tag
+    });
+    return imageList;
 }
 
 function getSelectedDietaryReqs() {
-  var requirementsList = [];
-  // todo use filter to get this working nicely.
-  $('#dietary-requirements option:selected').each(function(index, elem) {
-    // if the selected checkbox is actually selected, add the item
-    // to the requirements list. Otherwise, move to the next one.
-    if(elem.text) {
-      requirementsList.push(elem.text); //get the text (or the contents of the tag).
-    }
-  });
+    var requirementsList = [];
+    // todo use filter to get this working nicely.
+    $('#dietary-requirements option:selected').each(function(index, elem) {
+        // if the selected checkbox is actually selected, add the item
+        // to the requirements list. Otherwise, move to the next one.
+        if(elem.text) {
+            requirementsList.push(elem.text); //get the text (or the contents of the tag).
+        }
+    });
 
-  return requirementsList;
+    return requirementsList;
 }
 
 function getMayContainsDetails() {
-  var mayContain = [];
-  $('.may-contains-select option:selected').each(function(index, elem) {
-    if(elem.text) {
-      mayContain.push(elem.text);
-    }
-  });
-  return mayContain;
+    var mayContain = [];
+    $('.may-contains-select option:selected').each(function(index, elem) {
+        if(elem.text) {
+            mayContain.push(elem.text);
+        }
+    });
+    return mayContain;
 }
 
 
 function getLocationOfItem(callbackToSubmit) {
-  // todo use Google Maps/Ben's API
-  // var location = {
-  //     "state": Alabama,
-  //     "firstLineAddr": 23 Frances,
-  //     "secondLineAddr": Postcode
-  // }
-  //must include google api link
-  //can just use the postcode and country then make a request to google api to get the longitude, latitude
-  //(need this for map search :p) and city < can make this as one of the option no need to use the api
-  var geocoder = new google.maps.Geocoder();
-  var latlng = geocoder.geocode({
-    componentRestrictions: {
-      country: "UK",
-      postalCode: $('#inputLocation2').val()
-    }
-  },
-  function(results, status) {
-    if (status === google.maps.GeocoderStatus.OK) {
-      console.log(results[0].geometry.location);
-        // return a location object
-        var latlng = results[0].geometry.location;
-        var locationFinal = {
-            'firstLineAddr': $('#inputLocation1').val(),
-            'secondLineAddr': $('#inputLocation2').val(),
-            'lat': latlng.lat(),
-            'long': latlng.lng()
-        };
-      return callbackToSubmit(locationFinal);
-    } else {
-      alert("geocode of " + $('#inputLocation2').val() + " failed:" + status);
-    }
-  });
+    // todo use Google Maps/Ben's API
+    // var location = {
+    //     "state": Alabama,
+    //     "firstLineAddr": 23 Frances,
+    //     "secondLineAddr": Postcode
+    // }
+    //must include google api link
+    //can just use the postcode and country then make a request to google api to get the longitude, latitude
+    //(need this for map search :p) and city < can make this as one of the option no need to use the api
+    var geocoder = new google.maps.Geocoder();
+    var latlng = geocoder.geocode({
+            componentRestrictions: {
+                country: "UK",
+                postalCode: $('#inputLocation2').val()
+            }
+        },
+        function(results, status) {
+            if (status === google.maps.GeocoderStatus.OK) {
+                console.log(results[0].geometry.location);
+                // return a location object
+                var latlng = results[0].geometry.location;
+                var locationFinal = {
+                    'firstLineAddr': $('#inputLocation1').val(),
+                    'secondLineAddr': $('#inputLocation2').val(),
+                    'lat': latlng.lat(),
+                    'long': latlng.lng()
+                };
+                return callbackToSubmit(locationFinal);
+            } else {
+                alert("geocode of " + $('#inputLocation2').val() + " failed:" + status);
+            }
+        });
 }
 
 
@@ -166,9 +167,9 @@ function getStateDetails() {
     return state;
 }
 function serializeAndSendItem(location) {
-  //todo: process expiry date (need more research into this). Think it's just .val, but not fully sure.
-  // todo: process item type properly.
-  // todo: check errors in images/date/location
+    //todo: process expiry date (need more research into this). Think it's just .val, but not fully sure.
+    // todo: process item type properly.
+    // todo: check errors in images/date/location
     var mode = $('.grid-body').data('mode');
     var listingID = $('.grid-body').data('listingid');
     console.log(mode);
@@ -180,19 +181,19 @@ function serializeAndSendItem(location) {
         url = $('base').attr('href') + "/api/items/additem";
     }
 
-  console.log("Start serializing and sending item");
-  var itemData = {
-    "name": $('#name').val(),
-    "images": getImagesFromDOM(),
-    "classification": [$("#type option:selected").text()], //get the text of the selected option
-    "dietary": getSelectedDietaryReqs(), //dietary requirement
-    "contains": getMayContainsDetails(), //allergy tags
-    "state": getStateDetails(),
-    "expires": $('#date').val(),
-    "description": $('#description').val(),
-    "location": location,
-     "quantity": $('#quantity').val()
-  };
+    console.log("Start serializing and sending item");
+    var itemData = {
+        "name": $('#name').val(),
+        "images": getImagesFromDOM(),
+        "classification": [$("#type option:selected").text()], //get the text of the selected option
+        "dietary": getSelectedDietaryReqs(), //dietary requirement
+        "contains": getMayContainsDetails(), //allergy tags
+        "state": getStateDetails(),
+        "expires": $('#date').val(),
+        "description": $('#description').val(),
+        "location": location,
+        "quantity": $('#quantity').val()
+    };
 
     console.log(itemData);
     if(isValid(itemData)) {
@@ -206,12 +207,12 @@ function serializeAndSendItem(location) {
         }, 'json');
     }
     else {
-      console.log("Not valid");
+        console.log("Not valid");
     }
 };
 //todo validate all the fields
 function isValid(itemData) {
-  return true;
+    return true;
 }
 function submit() {
     console.log( "Handler for .submit() called." );
@@ -219,10 +220,3 @@ function submit() {
     getLocationOfItem(serializeAndSendItem);
 
 }
-
-
-    $('#main-form').on('submit', function(event) {
-        event.preventDefault();
-        submit();
-    });
-});
