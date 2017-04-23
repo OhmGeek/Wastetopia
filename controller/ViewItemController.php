@@ -11,6 +11,7 @@ namespace Wastetopia\Controller;
 
 use Twig_Environment;
 use Twig_Loader_Filesystem;
+use Wastetopia\Config\CurrentConfig;
 use Wastetopia\Model\HeaderInfo;
 use Wastetopia\Model\ListingModel;
 use Wastetopia\Model\UserCookieReader;
@@ -40,7 +41,8 @@ class ViewItemController
         $template = $twig->loadTemplate('items/view_item.twig');
 
         // add in the header info (whether the user is logged in or not)
-        $details = array_merge($details, array("header" => HeaderInfo::get()));
+        $details = array_merge($details, array("header" => HeaderInfo::get()))
+            $details = array_merge($details, array("config" => CurrentConfig::getAll()));
         return $template->render($details);
     }
 
