@@ -39,11 +39,11 @@
     </div>
     {% endif %}
     <div class="item-imgs col-sm-12 col-md-6">
-      <div class="grid">
+      <div class="img-grid">
         {% set first_item = 'is-expanded' %}
         {% for img in images %}
-        <div class="grid-item {{ first_item }}">
-          <div class="grid-item-content">
+        <div class="img-grid-item {{ first_item }}">
+          <div class="img-grid-item-content">
             <div class="item-img" style="background:url({{ img.url }})"></div>
           </div>
         </div>
@@ -115,12 +115,12 @@
                   This item was offered by
                 </div>
                 <div class="user">
-                  <div class="user-image item-img" style="background:url({{user.image}})"></div>
+                  <div class="user-image item-img" style="background:url({{ user.image }})"></div>
                   <div class="user-name">
                     {{user.name}}
                   </div>
                   <div class="popularity white">
-                    <i class="material-icons white">grade</i> {{user.popularity}}
+                    <i class="material-icons white">grade</i> {{ user.popularity }}
                   </div>
                 </div>
               </div>

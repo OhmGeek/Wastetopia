@@ -376,7 +376,7 @@ function getHTML(element){
                   '<div><span>Quantity: </span><span class="quantity">'+ element.Quantity +'</span></div>' +
                 '</div>' +
                 '<div class="nav-btns">' +
-                  '<a href="'+baseURL+'/items/view/'+item.ListingID+'" class="btn btn-primary view" role="button" id="'+ element.ListingID +'">View</a>';
+                  '<a href="'+baseURL+'/items/view/'+element.ListingID+'" class="btn btn-primary view" role="button" id="'+ element.ListingID +'">View</a>';
                   if(element.isLoggedIn)
                   {
                       if (element.isRequesting){
