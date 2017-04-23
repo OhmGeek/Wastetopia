@@ -27,7 +27,7 @@ $(document).ready(function(){
 $(document).on('click', '#deleteBtn', function(){
   var url = window.location.protocol + "//" + window.location.host + "/" + 'messages/delete-conversation';
 
-  var listingID = $(this).closest('thumbnail').attr('id');
+  var listingID = $(this).closest('.thumbnail').attr('id');
   console.log(listingID)
   var data = {listingID: listingID}
   $.post(url, data, function(response){
