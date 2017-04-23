@@ -12,7 +12,9 @@ Login
     <div class="page-padding">
         <div class="container-fluid">
             <div class="jumbotron">
-                <div {% if displayVerificationAlert != 1 %} style="display: none;" {% endif %} class = "alert alert-success"><strong>Verification successful:</strong> Your account is now active!</div>
+                {% if displayVerificationAlert %}
+                    <div class = "alert alert-success"><strong>Verification successful:</strong> Your account is now active!</div>
+                {% endif %}
                 <div class="log-div">
                     <h1>{{ title }}</h1>
                     <div>{{ intro }}</div>
