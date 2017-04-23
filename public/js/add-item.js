@@ -41,14 +41,14 @@ var $grid;
 
 
     function showUploadedItem(url, id) {
-        var $item = $('<div class="grid-item col-xs-4 col-sm-2 zero-padding">'+
-            '<div class="row-action-primary checkbox img-checkbox">'+
-            '<label><input type="checkbox"></label>'+
-            '</div>'+
-            '<div data-mh="my-group" class="upload-pic">'+
-            '<img src="'+ url +'" data-imgid="' + id + '"</div>'+
-            //'</div>'+
-            '</div>');
+      var $item = '<div class="grid-item col-xs-4 col-sm-2 zero-padding">'+
+                    '<div class="row-action-primary checkbox img-checkbox">'+
+                      '<label><input type="checkbox"></label>'+
+                    '</div>'+
+                    '<div data-mh="my-group" class="upload-pic">'+
+                      '<img src="'+ url +'" data-imgid="' + id + '"/>'+
+                    '</div>'+
+                  '</div>'+
 
         // prepend items to grid
         $grid.prepend( $item )
