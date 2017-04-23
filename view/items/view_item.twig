@@ -48,7 +48,7 @@
             <strong>Sorry, this item is no longer active. Chances are, some students have already eaten it :/ </strong>
           </div>
           {% endif %}
-          {% if isLoggedIn != 1 %}
+          {% if header.isLoggedIn != 1 %}
           <div class="alert alert-danger">
             <strong>To request this item, you must be a registered user. <a class="alert-link" href="{{ config.ROOT_BASE }}/register">REGISTER NOW</a></strong>
           </div>

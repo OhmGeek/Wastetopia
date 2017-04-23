@@ -84,9 +84,9 @@ Search
     <div id="filters-picked"></div>
   </div>
 
-  <div class="tab-content user-stats search-result" style="height:100%;" id="{{ isLoggedIn }}">
+  <div class="tab-content user-stats search-result" style="height:100%;" id="{{ header.isLoggedIn }}">
     <div id="grid" class="tab-pane fade in active">
-    {% if isLoggedIn != 1 %}
+    {% if header.isLoggedIn != 1 %}
     <div class="alert alert-danger">
       <strong>To request this item, you must be a registered user. <a class="alert-link" href="{{ config.ROOT_BASE }}/register">REGISTER NOW</a></strong>
     </div>
@@ -146,7 +146,7 @@ Search
           <h4>Warning!</h4>
           <p>The pins on the map point to estimated positions based on the items' related <strong>postcodes</strong>, for the actual location ask the users after making a request.</p>
         </div>
-        {% if isLoggedIn != 1 %}
+        {% if header.isLoggedIn != 1 %}
         <div class="alert alert-danger">
           <strong>To request this item, you must be a registered user. <a class="alert-link" href="{{ config.ROOT_BASE }}/register">REGISTER NOW</a></strong>
         </div>
