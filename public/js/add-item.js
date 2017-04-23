@@ -219,4 +219,9 @@ function submit() {
     getLocationOfItem(serializeAndSendItem);
 
 }
-})
+
+
+    $('#main-form').on('submit', function() {
+        submit();
+    });
+});
