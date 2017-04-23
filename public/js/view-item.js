@@ -6,7 +6,7 @@
 $(document).ready(function() {
   function setPadding(){
     var height = $('.item-header').height() + 50
-    $('#item-view').css({'padding-top': height})
+    $('#main-container').css({'padding-top': height})
   }
 
   setPadding()
@@ -15,16 +15,16 @@ $(document).ready(function() {
     setPadding();
   })
 
-  $grid = $('.grid').isotope({
-    itemSelector: '.grid-item',
+  $grid = $('.img-grid').isotope({
+    itemSelector: '.img-grid-item',
     masonry: {
       columnWidth: 80
     }
   });
 
-  $grid.on( 'click', '.grid-item-content', function() {
-    $( this ).parent('.grid-item').toggleClass('is-expanded');
-    $(this).parent('.grid-item').siblings().removeClass('is-expanded')
+  $grid.on( 'click', '.img-grid-item-content', function() {
+    $( this ).parent('.img-grid-item').toggleClass('is-expanded');
+    $(this).parent('.img-grid-item').siblings().removeClass('is-expanded')
     $grid.isotope('layout');
   });
 
