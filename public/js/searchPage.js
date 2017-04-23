@@ -387,11 +387,11 @@ function getHTML(element){
                       }
                       if (element.isWatching){
                           cardHTML += '<div class="extra"><a href="#watch" role="button" class="btn-watch watched" id="'+ element.ListingID +'"><i class="material-icons">visibility</i></a>'+
-                                      '<a href="'+baseURL+'/messages/conversation/'+item.ListingID+'" role="button" class="btn-watch" id="'+ element.ListingID +'"><i class="material-icons">message</i></a></div>';
+                                      '<a href="'+baseURL+'/messages/conversation/'+element.ListingID+'" role="button" class="btn-watch" id="'+ element.ListingID +'"><i class="material-icons">message</i></a></div>';
                       }
                       else{
                           cardHTML += '<div class="extra"><a href="#watch" role="button" class="btn-watch" id="'+ element.ListingID +'"><i class="material-icons">visibility</i></a>' +
-                                      '<a href="'+baseURL+'/messages/conversation/'+item.ListingID+'" role="button" class="btn-watch" id="'+ element.ListingID +'"><i class="material-icons">message</i></a></div>';
+                                      '<a href="'+baseURL+'/messages/conversation/'+element.ListingID+'" role="button" class="btn-watch" id="'+ element.ListingID +'"><i class="material-icons">message</i></a></div>';
                       }
                   }
     cardHTML +=  '</div>'+
