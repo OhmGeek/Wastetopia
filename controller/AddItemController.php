@@ -53,11 +53,11 @@ class AddItemController
 
     public function getListOfFiltersForView() {
         return array(
-            'type' => $this->model->getAllTagOptions(1),
-            'classification' => $this->model->getAllTagOptions(5),
-            'dietary' => $this->model->getAllTagOptions(3),
-            'contains' => $this->model->getAllTagOptions(4),
-            'state' => $this->model->getAllTagOptions(2)
+            '1' => $this->model->getAllTagOptions(1),
+            '5' => $this->model->getAllTagOptions(5),
+            '3' => $this->model->getAllTagOptions(3),
+            '4' => $this->model->getAllTagOptions(4),
+            '2' => $this->model->getAllTagOptions(2)
         );
     }
     // this code below flattens the selected tags into one list
