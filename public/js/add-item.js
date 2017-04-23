@@ -218,13 +218,12 @@ $(function(){
         return true;
     }
     function submit() {
-        console.log( "Handler for .submit() called." );
+       // console.log( "Handler for .submit() called." );
 
         getLocationOfItem(serializeAndSendItem);
 
     }
     $( "#main-form" ).submit(function( event ) {
-        alert( "Handler for .submit() called." );
         event.preventDefault();
         submit();
         return false;
