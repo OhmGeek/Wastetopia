@@ -146,7 +146,7 @@ $(function () {
                     button.attr("href", "#cancel-by-listing");
 
                     // Add 1 to Requests Made tab counter
-                    var requestsMadeCounter = $('a[href="#offers"] .count');
+                    var requestsMadeCounter = $('a[href="#requests"] .count');
                     if (!(requestsMadeCounter == null)) {
                         requestsMadeCounter.html(parseInt(requestsMadeCounter.html()) + 1);
                     }

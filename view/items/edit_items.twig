@@ -59,12 +59,17 @@
             <div class="item-details-section">
               <div class="container-fluid">
                 <div class="row">
-                  <div class="form-group col-md-8">
+                  <div class="form-group col-md-6">
                     <label class="control-label" for="name">Name</label>
                     <input type="text" class="form-control" name="itemname" id="name"
                     {% if mode=='edit' %}value="{{ item.name }}" {% endif %} required>
                   </div>
-                  <div class="form-group col-md-4">
+                  <div class="form-group col-md-3">
+                    <label class="control-label" for="quantity">Quantity</label>
+                    <input type="text" class="form-control" name="itemquantity" id="quantity"
+                    {% if mode=='edit' %}value="{{ item.quantity }}" {% endif %} required>
+                  </div>
+                  <div class="form-group col-md-3">
                     <label class="control-label" for="type">Type</label>
                     <select id="type" name="itemType" class="form-control">
                         {% for tag in tags.type %}
@@ -79,7 +84,7 @@
                     </select>
                   </div>
                   <div class="form-group col-xs-6 col-md-8">
-                    <label class="control-label" for="type">Type</label>
+                    <label class="control-label" for="type">Dietry Requirments</label>
                     <div>
                       <div class="checkbox">
 
@@ -98,10 +103,6 @@
                       </div>
                     </div>
                   </div>
-                  <div class="form-group col-xs-6 col-md-4">
-                    <label class="control-label" for="other-req">other</label>
-                    <input type="text" class="form-control" id="other-req" name="otherreq">
-                  </div>
                   <div class="form-group col-xs-12 col-md-6">
                     <label class="control-label" for="state">State</label>
                     <select id="state" name="state" class="js-example-basic-multiple form-control" multiple="multiple" style="width: 100%;">
@@ -115,10 +116,6 @@
                           <option {% if selected %} selected {% endif %}>{{ tag }}</option>
                         {% endfor %}
                     </select>
-                    <div class="form-group">
-                      <label class="control-label" for="other-state">other</label>
-                      <input type="text" class="form-control" id="other-state" name="otherstate">
-                    </div>
                   </div>
                   <div class="form-group col-xs-12 col-md-6">
                     <label class="control-label" for="content">May contain</label>
@@ -127,10 +124,6 @@
                       <option class="may-contains-option">{{ tag }}</option>
                       {% endfor %}
                     </select>
-                    <div class="form-group">
-                      <label class="control-label" for="other-content">other</label>
-                      <input type="text" class="form-control" id="other-content" name="othercontent">
-                    </div>
                   </div>
                   <div class="form-group col-xs-12">
                     <label class="control-label" for="date">Expiry date</label>
@@ -148,13 +141,7 @@
               </div>
             </div>
           </div>
-          <div class="col-xs-12 col-sm-6 zero-padding">
-            <div id="item-map-section"></div>
-            <script
-            src="//maps.googleapis.com/maps/api/js?key=AIzaSyCq2dSqMknX1KUfTk7ZnAwhBx_q_I_rbUU&callback=initMap">
-            </script>
-          </div>
-          <div class="col-xs-12 col-sm-6 zero-padding">
+          <div class="col-xs-12 zero-padding">
             <div class="item-address-section">
               <div class="form-group">
                 <label for="inputLocation" class="col-md-2 control-label">Address</label>
@@ -177,15 +164,13 @@
                 </div>
               </div>
             </div>
-
           </div>
         </fieldset>
       </form>
     </div>
   </div>
 </div>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMWP9iC-OW_pO7U9VmkAbZf7uqJAJ4GQE">
-  </script>
+
 {% endblock %}
 
 {% set jslist = ["plugins/isotope/isotope.pkgd.min.js","plugins/moments/moment-with-locales.min.js","plugins/jquery-match-height/jquery.matchHeight.js",

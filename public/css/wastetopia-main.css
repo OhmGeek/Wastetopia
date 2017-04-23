@@ -386,9 +386,15 @@ white {
   width: 100%;
   padding: 0 10px;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   background: white;
+}
+
+@media (min-width:1200px){
+  .item-header {
+    top: 60px;
+  }
 }
 
 .item-details .item-description{
@@ -537,13 +543,8 @@ html, body{
   margin: 0;
 }
 
-#item-map-section {
-  height: 400px;
-}
-
 .item-address-section {
   height: 400px;
-  background-color: #445878;
   padding: 10px;
   margin: 0;
 }
@@ -578,6 +579,10 @@ html, body{
   left: 11px;
   padding: 0;
   margin: 0;
+}
+
+.form-control, .form-group .form-control {
+  background-color: white !important;
 }
 
 .checkbox .checkbox-material .check,
