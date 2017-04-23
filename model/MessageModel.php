@@ -177,18 +177,29 @@ class MessageModel
     {
         $currentUser = $this->getUserID();
 
-        $statement = $this->db->prepare("
-                                SELECT UserID, Forename, Surname, Item.Name
-								FROM Conversation, User, Listing, Item
-								WHERE Listing.ListingID = Conversation.FK_Listing_ListingID
-								AND ((Conversation.FK_User_ReceiverID = User.UserID AND Listing.FK_User_UserID = :userID)
-								  OR (Conversation.FK_User_ReceiverID = :userID2 AND Listing.FK_User_UserID = User.UserID))
-								AND Listing.FK_Item_ItemID = Item.ItemID
-								AND Conversation.ConversationID = :conversationID;
-							");
+	$isReceiverOfItem = $this->checkIfReceiver($conversationID);
+	
+	    if($isReceiverOfItem){
+		    $statement = $this->db->prepare("
+		    		SELECT UserID, Forename, Surname, Item.Name
+					FROM Conversation
+					JOIN Listing ON User.UserID = Conversation.FK_Listing_Listing_ID
+					JOIN User ON User.UserID = Listing.FK_User_UserID
+					JOIn Item ON Item.ItemID = Listing.FK_Item_ItemID
+					WHERE Conversation.ConversationID = :conversationID;
+		    ");
+	    }else{
+		$statement = $this->db->prepare("
+		SELECT UserID, Forename, Surname, Item.Name
+			FROM Conversation
+			JOIN User ON User.UserID = Conversation.FK_User_ReceiverID
+			JOIN Listing ON User.UserID = Conversation.FK_Listing_Listing_ID
+			JOIn Item ON Item.ItemID = Listing.FK_Item_ItemID
+			WHERE Conversation.ConversationID = :conversationID;
+		");    
+	    }
+        
 
-        $statement->bindValue(':userID', $currentUser, PDO::PARAM_INT);
-        $statement->bindValue(':userID2', $currentUser, PDO::PARAM_INT);
         $statement->bindValue(':conversationID', $conversationID, PDO::PARAM_INT);
 
         $statement->execute();
