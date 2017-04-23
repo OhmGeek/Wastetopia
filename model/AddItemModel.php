@@ -471,6 +471,6 @@ class AddItemModel
 
         $statement->bindValue(':catID',$categoryID,PDO::PARAM_INT);
         $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_COLUMN);
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 }
