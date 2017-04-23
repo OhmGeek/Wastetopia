@@ -92,10 +92,12 @@ $(function () {
   getFilters();
 
   radiusSlider.noUiSlider.on('update', function (e) {
+    e.stopPropagation()
     getFilters();
   });
 
   quantitySlider.noUiSlider.on('update', function (e) {
+    e.stopPropagation()
     getFilters();
   });
 
@@ -118,6 +120,7 @@ $(function () {
 
 
   $checkboxes.change( function(e) {
+    e.stopPropagation()
     getFilters();
   });
 
