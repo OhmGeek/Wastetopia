@@ -458,7 +458,7 @@ $klein->with('/api', function () use ($klein) {
 // todo authenticate on messages. Must be logged in to view correct messages.
 $klein->with('/messages', function () use ($klein) {
     $klein->respond('GET', '/?', function ($request, $response) {
-        forceLogin($request->uri());
+        //forceLogin($request->uri());
         // Show all conversations
         $controller = new ConversationListController();
         return $controller->generatePage();
@@ -466,7 +466,7 @@ $klein->with('/messages', function () use ($klein) {
     // these are the API based messaging tasks
     // todo: error/failure in response.
     $klein->respond('POST', '/send', function ($request, $response) {
-        forceLogin($request->uri());
+        //forceLogin($request->uri());
         //send a message
         //we need the conversationID and the message.
         $conversationID = $request->conversationID;
@@ -478,30 +478,30 @@ $klein->with('/messages', function () use ($klein) {
         return "";
     });
     $klein->respond('POST', '/delete-conversation', function ($request, $response) {
-        forceLogin($request->uri());
+        //forceLogin($request->uri());
         $controller = new ConversationListController();
-        $conversationID = $request->conversationID;
-        $controller->deleteConversation($conversationID);
+        $listingID = $request->listingID;
+        $controller->deleteConversation($listingID);
         return "";
     });
     $klein->respond('GET', '/poll-sending', function ($request, $response) {
-        forceLogin($request->uri());
+        //forceLogin($request->uri());
         $controller = new ConversationListController();
         return $controller->generateSendingTabHTML();
     });
     $klein->respond('GET', '/poll-receiving', function ($request, $response) {
-        forceLogin($request->uri());
+        //forceLogin($request->uri());
         $controller = new ConversationListController();
         return $controller->generateReceivingTabHTML();
     });
     $klein->respond('GET', '/poll-messages/[:conversationID]', function ($request, $response) {
-        forceLogin($request->uri());
+        //forceLogin($request->uri());
         $conversationID = $request->conversationID;
         $controller = new MessageController();
         return $controller->generateMessageDisplay($conversationID);
     });
     $klein->respond('GET', '/conversation/[:listingID]', function ($request, $response) {
-        forceLogin($request->uri());
+        //forceLogin($request->uri());
         // view a specific conversation
         $listingID = $request->listingID;
         $controller = new MessageController();
