@@ -88,7 +88,7 @@ class SearchPageController
     {
         
         $itemController = new AddItemController();
-        $tags = $itemController->getListOfFiltersView();
+        $tags = $itemController->getListOfFiltersForView();
         
         $filters = array();
         
