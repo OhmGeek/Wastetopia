@@ -128,8 +128,8 @@ $(function () {
       $('#filter-dropdown > button').removeClass('white')
     }
   });
-  
-  $('#filter-dropdown').on('click', function(e) {
+
+  $('#filter-dropdown button').on('click', function(e) {
     $('.btn-group').removeClass('dontClose');
   })
 
