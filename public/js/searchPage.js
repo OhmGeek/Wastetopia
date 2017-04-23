@@ -127,6 +127,7 @@ $(function () {
     } else {
       $('#filter-dropdown > button').removeClass('white')
     }
+    $(this).removeClass('dontClose');
   });
 
   /*RESET SEARCH BOX VALUES*/
