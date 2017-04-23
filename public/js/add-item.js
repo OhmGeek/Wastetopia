@@ -191,7 +191,7 @@ function serializeAndSendItem(location) {
     "expires": $('#date').val(),
     "description": $('#description').val(),
     "location": location,
-     "quantity": $('#itemQuantity').val()
+     "quantity": $('#quantity').val()
   };
 
     console.log(itemData);
