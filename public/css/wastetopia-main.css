@@ -391,6 +391,12 @@ white {
   background: white;
 }
 
+@media (min-width:1200px){
+  .item-header {
+    top: 60px;
+  }
+}
+
 .item-details .item-description{
   color: black;
   font-size: 14px;
