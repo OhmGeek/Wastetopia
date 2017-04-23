@@ -28,7 +28,11 @@ $(document).on('click', '#deleteBtn', function(){
   var url = window.location.protocol + "//" + window.location.host + "/" + 'messages/delete-conversation';
 
   var listingID = $(this).closest('.thumbnail').attr('id');
+  
+  console.log($(this));
+  console.log($(this).closeset('.thumbnail'));
   console.log(listingID)
+  
   var data = {listingID: listingID}
   $.post(url, data, function(response){
       loadUsers();
