@@ -27,7 +27,7 @@ class LoginController {
         // if logged in, don't bother
         if(!Authenticator::isAuthenticated()) {
             return $template->render(array(
-                "title" => "Login",
+                "title" => "Log in",
                 "intro" => "Please login to access Wastetopia",
                 "dest" => $dest,
                 "config" => CurrentConfig::getAll(),

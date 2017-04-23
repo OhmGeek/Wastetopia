@@ -41,8 +41,8 @@ class ViewItemController
         $template = $twig->loadTemplate('items/view_item.twig');
 
         // add in the header info (whether the user is logged in or not)
-        $details = array_merge($details, array("header" => HeaderInfo::get()))
-            $details = array_merge($details, array("config" => CurrentConfig::getAll()));
+        $details = array_merge($details, array("header" => HeaderInfo::get()));
+        $details = array_merge($details, array("config" => CurrentConfig::getAll()));
         return $template->render($details);
     }
 
