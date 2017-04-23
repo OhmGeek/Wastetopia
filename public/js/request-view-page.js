@@ -243,8 +243,7 @@ $(function() {
         event.preventDefault();
 
         var listingID = $('#main-container').data("listingID");
-        var isUser = GET_FROM_PAGE; // 1 if user is viewing their own listing
-        var listing = WATCH_ICON;
+        var listing = $(this);
 
         var data = {listingID: listingID};
         var url = baseURL + "/profile/toggle-watch-list"

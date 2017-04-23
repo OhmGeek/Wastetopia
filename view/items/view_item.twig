@@ -16,14 +16,19 @@
     </div>
     <div class="nav-btns">
       {% if isOwner != 1 and isLoggedIn == 1 %}
-      <a href="#request" class="btn btn-primary" role="button">Request</a>
+        {% if isRequesting != 1  %}
+          <a href="#request" class="btn btn-primary" role="button">Request</a>
+        {% else %}
+          <a href="#cancel-by-listing" class="btn btn-primary" role="button">Cancel Request</a>
+        {% endif %}
       {% endif %}
       <div class="dropdown btn-watch">
         <a data-target="#"class="dropdown-toggle" data-toggle="dropdown"><i class="material-icons">more_vert</i></a>
         <ul class="dropdown-menu dropdown-menu-right">
           {% if isOwner == 1 %}
           <li><a href="{{ config.ROOT_BASE }}/items/edit/{{ listingID }}" id="{{listingID}}">Edit Item</a></li>
-          <li><a href="#deleteItem" id="{{listingID}}">Delete Item</a></li>
+          <li><a href="#renew" id="{{listingID}}">Renew Item</a></li>
+          <li><a href="#remove" id="{{listingID}}">Delete Item</a></li>
           {% else %}
           <li><a href="{{config.ROOT_BASE}}/messages/conversation/{{listingID}}" role="button" class="btn-watch" id="{{listingID}}"><i class="material-icons">message</i> Send a message</a></li>
           <li><a href="#watch" role="button" class="btn-watch lightgrey {% if isWatched == 1 %}watched{% endif %}" id ="{{listingID}}"><i
