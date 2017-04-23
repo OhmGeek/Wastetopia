@@ -48,6 +48,30 @@ class SearchModel
         return $statement->fetchAll(PDO::FETCH_ASSOC)[0];
     }
     
+	//returns the list of items given but ordered by user popularity descending
+	function PopularitySort($item_information){
+		$listing_ids = "";
+		$statement = $this->db->prepare("
+        SELECT `Listing`.`ListingID`, `Listing`.`Quantity`, `Listing`.`Time_Of_Creation`,
+                `Item`.`ItemID`, `Item`.`Name`, `Item`.`Description`, 
+                `Location`.`Post_Code`, `Location`.`Latitude`, `Location`.`Longitude`,
+                `User`.`UserID`, `User`.`Forename`, `User`.`Surname`, `User`.`Picture_URL`
+        FROM `Listing`
+        JOIN `User` ON `Listing`.`FK_User_UserID` = `User`.`UserID`
+        JOIN `Location` ON `Listing`.`FK_Location_LocationID` = `Location`.`LocationID`
+        JOIN `Item` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
+        WHERE `Listing`.`ListingID` IN (:listing_ids)
+		ORDER BY Mean_Rating_Percent DESC;
+        ");
+		foreach($item_information as $distinct_item){
+			$listing_ids = $listing_ids . $distinct_item["ListingID"] . ",";
+		}
+		$item_ids = substr($item_ids,0,-1);
+        $statement->bindValue(":listing_ids", $listing_ids, PDO::PARAM_STR);
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_ASSOC)[0];
+	}
+	
     function getDefaultImage($listingID)
     {
         $statement = $this->db->prepare("
