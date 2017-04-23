@@ -218,14 +218,14 @@ $(function() {
                             data: json
                         },
                         {
-                            label : "# of items taken",
+                            label : "# of items contributed",
                             fillColor :'rgba(0, 255, 255,0.75)',
                             strokeColor :'rgba(23,12,102,0.75)',
                             pointColor: 'rgba(200,2,200,1)',
                             pointStrokeColor : '#fff',
                             pointHighLightFill: '#fff',
                             pointHighLightStroke: 'rgba(200,200,200,1)',
-                            data: [3,3,40,6]
+                            data: [0,0,0,0]
                         }
                     ]
                 },
@@ -246,7 +246,7 @@ $(function() {
                     labels : ["Month1","Month2","Month3","Month4"],
                     datasets :[
                         {
-                            label : "Your Contributions",
+                            label : "Number of items you've consumed",
                             fillColor :"rgba(255, 51, 204,0.75)",
                             strokeColor :"rgba(23,12,102,0.75)",
                             pointColor: "rgba(1,200,200,1)",
@@ -263,7 +263,7 @@ $(function() {
                             pointStrokeColor : '#fff',
                             pointHighLightFill: '#fff',
                             pointHighLightStroke: 'rgba(200,200,200,1)',
-                            data: [3,3,40,6]
+                            data: [0,0,0,0]
                         }
                     ]
                 },
