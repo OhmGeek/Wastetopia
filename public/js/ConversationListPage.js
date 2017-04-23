@@ -30,7 +30,7 @@ $(document).on('click', '#deleteBtn', function(){
   var listingID = $(this).closest('.thumbnail').attr('id');
   
   console.log($(this));
-  console.log($(this).closeset('.thumbnail'));
+  console.log($(this).closest('.thumbnail'));
   console.log(listingID)
   
   var data = {listingID: listingID}
