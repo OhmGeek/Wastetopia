@@ -132,20 +132,22 @@ function initMap() {
       '</div>'+
       '<div class="nav-btns">'+
       '<a href= "'+baseURL+'/items/view/'+item.ListingID+'" id="'+ item.ListingID + '" class="view btn btn-primary" role="button">View</a>';
-
-      if (item.isRequesting){
-          contentString += '<a href="#cancel-by-listing" class="btn btn-default" role="button" id="'+ item.ListingID +'">Cancel request</a>';
-      }
-      else {
-          contentString += '<a href="#request" class="btn btn-default" role="button" id="'+ item.ListingID +'">Request</a>';
-      }
-      if (item.isWatching){
-          contentString += '<div class="extra"><a href="#watch" role="button" class="btn-watch watched" id="'+ item.ListingID +'"><i class="material-icons">visibility</i></a>'+
-                      '<a href= "'+baseURL+'/messages/conversation/'+item.ListingID+'"  role="button" class="btn-watch" id="'+ item.ListingID +'"><i class="material-icons">message</i></a></div>';
-      }
-      else{
-          contentString += '<div class="extra"><a href="#watch" role="button" class="btn-watch" id="'+ item.ListingID +'"><i class="material-icons">visibility</i></a>' +
-                      '<a href= "'+baseURL+'/messages/conversation/'+item.ListingID+'" role="button" class="btn-watch" id="'+ item.ListingID +'"><i class="material-icons">message</i></a></div>';
+      if(item.isLoggedIn)
+      {
+        if (item.isRequesting){
+            contentString += '<a href="#cancel-by-listing" class="btn btn-default" role="button" id="'+ item.ListingID +'">Cancel request</a>';
+        }
+        else {
+            contentString += '<a href="#request" class="btn btn-default" role="button" id="'+ item.ListingID +'">Request</a>';
+        }
+        if (item.isWatching){
+            contentString += '<div class="extra"><a href="#watch" role="button" class="btn-watch watched" id="'+ item.ListingID +'"><i class="material-icons">visibility</i></a>'+
+                        '<a href= "'+baseURL+'/messages/conversation/'+item.ListingID+'"  role="button" class="btn-watch" id="'+ item.ListingID +'"><i class="material-icons">message</i></a></div>';
+        }
+        else{
+            contentString += '<div class="extra"><a href="#watch" role="button" class="btn-watch" id="'+ item.ListingID +'"><i class="material-icons">visibility</i></a>' +
+                        '<a href= "'+baseURL+'/messages/conversation/'+item.ListingID+'" role="button" class="btn-watch" id="'+ item.ListingID +'"><i class="material-icons">message</i></a></div>';
+        }
       }
       contentString += '</div>'+
                       '</div>'+

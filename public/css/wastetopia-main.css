@@ -442,7 +442,7 @@ html, body{
 .gm-style-iw {
   width: 300px !important;
   min-width: 300px !important;
-  height: 310px !important;
+  height: 320px !important;
   top: 15px !important;
   left: 0 !important;
   background-color: #fff;
@@ -457,7 +457,7 @@ html, body{
   margin-bottom: 10px;
   width: 300px;
   min-width: 300px;
-  height: 310px;
+  height: 320px;
 }
 
 .iw-container .iw-header {
@@ -492,7 +492,7 @@ html, body{
 
 .iw-container .iw-body {
   padding: 10px;
-  height: 140px;
+  height: 150px;
   display: flex;
   flex-direction: column;
   overflow-y: hidden;
