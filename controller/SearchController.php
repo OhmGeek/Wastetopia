@@ -237,7 +237,7 @@ class SearchController
         return $itemList;
     }
     function userPopularitySort($itemList){
-        return $itemList;
+        return $this->searchModel->PopularitySort($itemList);
     }
     function newFirstSort($itemList){
         usort($itemList, function($a, $b)
