@@ -1,11 +1,15 @@
+var $grid;
+$(function(){
 // init Isotope
-var $grid = $('.grid').isotope({
+$grid = $('.grid').isotope({
   itemSelector: '.grid-item',
   percentPosition: true,
-  masonry: {
-    columnWidth: '.grid-sizer'
-  }
+  layoutMode: 'masonry'
 });
+
+$('.grid').imagesLoaded().progress( function() {
+      $grid.isotope('layout');
+    });
 
 //equal height rows
 $('.upload-pic').matchHeight();
@@ -35,6 +39,7 @@ $('#deleteBtn').on( 'click', function() {
     }
   });
 });
+})
 
 function showUploadedItem(url, id) {
   var $item = $('<div class="grid-item col-xs-4 col-sm-2 zero-padding">'+
