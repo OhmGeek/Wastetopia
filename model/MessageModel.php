@@ -175,26 +175,28 @@ class MessageModel
      */
     function getConversationDetails($conversationID)
     {
+	    //error_log("Getting conversation user details");
         $currentUser = $this->getUserID();
 
 	$isReceiverOfItem = $this->checkIfReceiver($conversationID);
+	    //error_log("Is receiver: ".$isReceiverOfItem);
 	
 	    if($isReceiverOfItem){
-		    $statement = $this->db->prepare("
-		    		SELECT UserID, Forename, Surname, Item.Name
+		    $statement = $this->db->prepare("		    		
+			SELECT UserID, Forename, Surname, Item.Name
 					FROM Conversation
-					JOIN Listing ON User.UserID = Conversation.FK_Listing_Listing_ID
+					JOIN Listing ON Listing.ListingID = Conversation.FK_Listing_ListingID
 					JOIN User ON User.UserID = Listing.FK_User_UserID
 					JOIn Item ON Item.ItemID = Listing.FK_Item_ItemID
 					WHERE Conversation.ConversationID = :conversationID;
 		    ");
 	    }else{
 		$statement = $this->db->prepare("
-		SELECT UserID, Forename, Surname, Item.Name
+		SELECT User.UserID, User.Forename, User.Surname, Item.Name
 			FROM Conversation
 			JOIN User ON User.UserID = Conversation.FK_User_ReceiverID
-			JOIN Listing ON User.UserID = Conversation.FK_Listing_Listing_ID
-			JOIn Item ON Item.ItemID = Listing.FK_Item_ItemID
+			JOIN Listing ON Listing.ListingID = Conversation.FK_Listing_ListingID
+			JOIN Item ON ItemID = Listing.FK_Item_ItemID
 			WHERE Conversation.ConversationID = :conversationID;
 		");    
 	    }
@@ -205,6 +207,7 @@ class MessageModel
         $statement->execute();
 
         $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+	    error_log("Results: ".json_encode($results));
 	    return $results;
     }
 
