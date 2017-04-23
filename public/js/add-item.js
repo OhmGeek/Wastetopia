@@ -67,6 +67,7 @@ $(function(){
         // $grid.prepend( $item )
         // // add and lay out newly prepended items
         //     .isotope( 'prepended', $item );
+        $('input:checkbox').bootstrapToggle();
         var currentImgs = $item + $('#img-rows').html();
         $('#img-rows').html(currentImgs)
     }
