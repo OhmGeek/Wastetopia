@@ -170,6 +170,7 @@ $klein->with('/register', function() use ($klein) {
             // Verification didn't work, what do we do now??
             return "It didn't work";
         } else {
+            header("Cache-Control: no-store, must-revalidate, max-age=0");
             // Verirification worked, send them to login page??
             //return "Verification successful: your account is now active";
             $controller = new LoginController();
