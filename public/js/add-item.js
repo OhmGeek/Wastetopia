@@ -40,7 +40,7 @@ $grid = $('.grid').isotope({
 
 
     function showUploadedItem(url, id) {
-      var $item = '<div class="grid-item col-xs-6 col-md-4 zero-padding">'+
+      var $item = $('<div class="grid-item col-xs-6 col-md-4 zero-padding">'+
                     '<div class="img-checkbox">'+
                       '<div class="checkbox">'+
                         '<label><input type="checkbox"></label>'+
@@ -49,7 +49,7 @@ $grid = $('.grid').isotope({
                     '<div data-mh="my-group" class="upload-pic">'+
                       '<img src="'+ url +'" data-imgid="' + id + '"/>'+
                     '</div>'+
-                  '</div>';
+                  '</div>');
 
         // prepend items to grid
         $grid.prepend( $item )
