@@ -25,6 +25,7 @@ $(document).ready(function(){
 
 // Delete a conversation
 $(document).on('click', '#deleteBtn', function(){
+  console.log("DELETING");
   var url = window.location.protocol + "//" + window.location.host + "/" + 'messages/delete-conversation';
 
   var listingID = $(this).closest('.thumbnail').attr('id');
