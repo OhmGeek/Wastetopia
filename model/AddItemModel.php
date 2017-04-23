@@ -358,6 +358,9 @@ class AddItemModel
         //Extract item information
         $itemName = $item["itemName"];
         error_log(json_encode($item));
+        if(!isset($item['quantity']) || $item['quantity'] <= 0) {
+            $item['quantity'] = 1;
+        }
         $itemDescription = $item["itemDescription"];
         $useByDate = $item["useByDate"];
         if(!isset($useByDate)) {

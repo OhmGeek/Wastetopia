@@ -390,6 +390,9 @@ class EditItemModel
     {
         //Extract item information
         $itemName = $item["itemName"];
+        if(!isset($item['quantity']) || $item['quantity'] <= 0) {
+            $item['quantity'] = 1;
+        }
         error_log(json_encode($item));
         $itemDescription = $item["itemDescription"];
         $useByDate = $item["useByDate"];
@@ -415,6 +418,7 @@ class EditItemModel
             $this->addToBarcodeTable($itemID, $barcodeNumber, $barcodeType); //Add barcode and link to item
         }
         //Add the whole listing                       quantity=1
+
         $this->addToListingTable($locationID, $itemID, $item['quantity']);
         return $this->listingID;
     }
