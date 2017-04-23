@@ -170,8 +170,12 @@ class ConversationListController
      */
     function deleteConversation($listingID)
     {
+	    error_log("Deleting: ".$listingID);
+	    
 	    $conversationIDs = $this->MessageModel->getConversationIDFromListing($listingID);
 	    $conversationID = $conversationIDs[0];	
+	    
+	    error_log("Conversation: ".$conversationID);
 	    $this->model->deleteConversation($conversationID);
     }
 	
