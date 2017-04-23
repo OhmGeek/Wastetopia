@@ -69,7 +69,7 @@ class ViewItemModel
      */
     function getItemStatus($listingID) {
         $statement = $this->db->prepare("
-            SELECT Active
+            SELECT Active, Quantity
             FROM Listing
             WHERE ListingID = :listingID 
         ");
@@ -78,7 +78,8 @@ class ViewItemModel
         $statement->execute();
         $results = $statement->fetchAll(PDO::FETCH_ASSOC);
         return array(
-            "active" => $results[0]["Active"]
+            "active" => $results[0]["Active"],
+            "quantity" => $results[0]["Quantity"]
         );
     }
 
