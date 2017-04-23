@@ -43,7 +43,7 @@ $(function(){
 
 
     function showUploadedItem(url, id) {
-      var $item = '<div class="col-xs-6 col-sm-2 zero-padding">'+
+      var $item = '<div class="col-xs-6 col-sm-4 zero-padding">'+
                     '<div class="img-checkbox">'+
                       '<div class="checkbox">'+
                         '<label><input type="checkbox"></label>'+
