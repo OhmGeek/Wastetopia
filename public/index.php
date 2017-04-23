@@ -171,7 +171,9 @@ $klein->with('/register', function() use ($klein) {
             return "It didn't work";
         } else {
             // Verirification worked, send them to login page??
-            return "Verification successful: your account is now active";
+            //return "Verification successful: your account is now active";
+            $controller = new LoginController();
+            return $controller->index($response, "/", 1); // Add verification alert to login page
         }
 
     });
