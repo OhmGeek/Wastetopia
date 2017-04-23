@@ -5,6 +5,8 @@ use Twig_Loader_Filesystem;
 use Twig_Environment;
 use Wastetopia\Config\CurrentConfig;
 
+use Wastetopia\Controller\AddItemController;
+
 use Wastetopia\Model\HeaderInfo;
 
 class SearchPageController
@@ -84,7 +86,45 @@ class SearchPageController
 
     function getSearchFilters()
     {
-        $filters = array(array('id'=>'0', 'optionsCategory'=>'Allergens', 'type' => 'negative',
+        
+        $itemController = new AddItemController();
+        $tags = $itemController->getListOfFiltersView();
+        
+        $filters = array();
+        
+
+            $newThingy = array('id'=> '1', 'optionsCategory' => 'Food Group', 'type' => 'positive', 'options' => array());
+                foreach($tags['1'] as $item)
+                {
+                    $newThingy['options'][] = array('value' => $item['Name'], 'id' => $item['TagID']); 
+                }
+            
+            $filters[] = $newThingy;
+        $newThingy = array('id'=> '2', 'optionsCategory' => 'State', 'type' => 'positive', 'options' => array());
+                foreach($tags['2'] as $item)
+                {
+                    $newThingy['options'][] = array('value' => $item['Name'], 'id' => $item['TagID']); 
+                }
+            
+            $filters[] = $newThingy;
+        $newThingy = array('id'=> '3', 'optionsCategory' => 'Dietary Requirements', 'type' => 'positive', 'options' => array());
+                foreach($tags['3'] as $item)
+                {
+                    $newThingy['options'][] = array('value' => $item['Name'], 'id' => $item['TagID']); 
+                }
+            
+            $filters[] = $newThingy;
+         $newThingy = array('id'=> '4', 'optionsCategory' => 'Allergens', 'type' => 'negative', 'options' => array());
+                foreach($tags['4'] as $item)
+                {
+                    $newThingy['options'][] = array('value' => $item['Name'] . ' Free', 'id' => $item['TagID']); 
+                }
+            
+            $filters[] = $newThingy;
+     
+
+        
+   /*     $filters = array(array('id'=>'0', 'optionsCategory'=>'Allergens', 'type' => 'negative',
                                'options' => array(array('value' => 'Nut Free', 'id' => '1'),
                                                   array('value' => 'Gluten Free', 'id' => '2'),
                                                   array('value' => 'Crustacean Free', 'id' => '3'),
@@ -120,6 +160,7 @@ class SearchPageController
                                                   array('value'=>'Halal', 'id'=>'25'),
                                                   array('value'=>'Vegetarian', 'id'=>'26'),
                                                   array('value'=>'Vegan', 'id'=>'27'))));
+                                                  */
         return $filters;
     }
 }
