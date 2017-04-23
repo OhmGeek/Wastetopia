@@ -37,11 +37,12 @@ class ViewItemController
             // 1. popularity, 2. name, 3. ID
         $cdModel = new CardDetailsModel();
         $details = $cdModel->getUserDetails($userID);
-
+        $img = $cdModel->getUserImage($userID);
         return array(
             "name" => $details['Forename'] . " " . $details['Surname'],
             "id" => $userID,
-            "popularity" => $details['Mean_Rating_Percent']
+            "popularity" => $details['Mean_Rating_Percent'],
+            "image" => $img
         );
     }
     /**
