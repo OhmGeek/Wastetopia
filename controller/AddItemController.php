@@ -41,7 +41,7 @@ class AddItemController
     /**
      * @return array (object containing list of tag names to display on the form)
      */
-    private function getListOfTagsForView() {
+    public function getListOfTagsForView() {
         return array(
             'type' => $this->model->getAllTagOptions(1),
             'classification' => $this->model->getAllTagOptions(5),
