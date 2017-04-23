@@ -831,11 +831,13 @@ a:link, a:hover, a:visited, a:active  {
 .center-elements{
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
 }
 
 #charts form{
     display: inline-flex;
     justify-content: center;
+    flex-wrap: wrap;
 }
 
 #charts .input-group{
