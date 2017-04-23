@@ -203,7 +203,7 @@ $(function() {
             var option  = {};
             var ctx = document.getElementById("cvsMonthChart").getContext("2d");
             var linechart = new Chart(ctx, {
-                type: 'horizontalBar',
+                type: 'bar',
                 data: {
                     labels : ["Month1","Month2","Month3","Month4"],
                     datasets :[
@@ -241,7 +241,7 @@ $(function() {
             var option  = {};
             var ctx = document.getElementById("cvsRcvContributions").getContext("2d");
             var linechart = new Chart(ctx, {
-                type: 'horizontalBar',
+                type: 'bar',
                 data: {
                     labels : ["Month1","Month2","Month3","Month4"],
                     datasets :[
