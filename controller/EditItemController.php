@@ -136,7 +136,7 @@ class EditItemController
                 'itemName' => $details['name'],
                 'itemDescription' => $details['description'],
                 'useByDate' => $details['expires'],
-                'quantity' => 1
+                'quantity' => $details['quantity']
             ),
             'images' => $this->getImageArray($details),
             'tags' => $this->generateTags($details),
