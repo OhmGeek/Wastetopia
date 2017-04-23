@@ -33,27 +33,14 @@
         </div>
       </div>
     </div>
-    {% if not active %}
-    <div class="alert alert-info">
-      <strong>Sorry, this item is no longer active. Chances are, some students have already eaten it :/ </strong>
-    </div>
-    {% endif %}
-    <div class="item-imgs col-sm-12 col-md-6">
-      <div class="img-grid">
-        {% set first_item = 'is-expanded' %}
-        {% for img in images %}
-        <div class="img-grid-item {{ first_item }}">
-          <div class="img-grid-item-content">
-            <div class="item-img" style="background:url({{ img.url }})"></div>
-          </div>
-        </div>
-        {% set first_item = '' %}
-        {% endfor %}
-      </div>
-    </div>
     <div class="view-wrapper">
       <div class="panel panel-default">
         <div class="panel-body">
+          {% if not active %}
+          <div class="alert alert-info">
+            <strong>Sorry, this item is no longer active. Chances are, some students have already eaten it :/ </strong>
+          </div>
+          {% endif %}
           <div class="item-details col-md-12">
             <div class="item-description">
               <div class="container-fluid">
@@ -106,6 +93,19 @@
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+          <div class="item-imgs col-sm-12 col-md-6">
+            <div class="img-grid">
+              {% set first_item = 'is-expanded' %}
+              {% for img in images %}
+              <div class="img-grid-item {{ first_item }}">
+                <div class="img-grid-item-content">
+                  <div class="item-img" style="background:url({{ img.url }})"></div>
+                </div>
+              </div>
+              {% set first_item = '' %}
+              {% endfor %}
             </div>
           </div>
           <div class="item-user col-sm-12 col-md-6">

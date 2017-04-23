@@ -4,9 +4,6 @@
 // JS file to deal with requestModel stuff on view-item page
 $(function() {
 
-    //equal height rows
-    $('.small').matchHeight();
-
     var baseURL = window.location.protocol + "//" + window.location.host;
 
 
