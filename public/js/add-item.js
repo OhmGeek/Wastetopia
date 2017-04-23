@@ -56,8 +56,8 @@ $(function(){
         // $grid.prepend( $item )
         // // add and lay out newly prepended items
         //     .isotope( 'prepended', $item );
-        var currentImgs = $item + $('.row').html();
-        $('.row').html(currentImgs)
+        var currentImgs = $item + $('#img-rows').html();
+        $('#img-rows').html(currentImgs)
     }
 
     function imageUpload() {
