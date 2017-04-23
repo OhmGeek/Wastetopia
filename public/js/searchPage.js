@@ -112,6 +112,9 @@ $(function () {
   $('#filter-list').on('click', '.filter-category a', function(e){
     $(this).closest('.btn-group').addClass('dontClose');
   })
+  $('#filter-list').on('click', ':input', function(e){
+    $(this).closest('.btn-group').addClass('dontClose');
+  })
 
 
   $checkboxes.change( function(e) {
