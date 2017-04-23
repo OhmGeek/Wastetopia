@@ -60,7 +60,7 @@ class SearchModel
         WHERE `Listing`.`ListingID` IN (:listing_ids)
 		ORDER BY Mean_Rating_Percent DESC;
         ");
-		foreach($item_information["ListingID"] as $distinct_item){
+		foreach($item_information[0] as $distinct_item){
 			$listing_ids = $listing_ids . $distinct_item . ",";
 		}
 		$listing_ids = substr($listing_ids,0,-1);
