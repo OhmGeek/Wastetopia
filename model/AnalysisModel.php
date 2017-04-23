@@ -60,7 +60,7 @@ class AnalysisModel
                 JOIN `Item` ON `Item`.`ItemID` = `ItemTag`.`FK_Item_ItemID`
                 JOIN `Listing` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
                 JOIN `User` ON `UserID` = `Listing`.`FK_User_UserID`
-                JOIN (SELECT `Item`.`ItemID`, `Item`.`Name`, `ListingTransaction`.`Quantity` AS `Transactions_Quantity`
+                LEFT JOIN (SELECT `Item`.`ItemID`, `Item`.`Name`, `ListingTransaction`.`Quantity` AS `Transactions_Quantity`
                                         FROM `ListingTransaction`
                                         JOIN `Listing` ON `Listing`.`ListingID` = `ListingTransaction`.`FK_Listing_ListingID`
                                         JOIN `User` ON `User`.`UserID` = `Listing`.`FK_User_UserID`
