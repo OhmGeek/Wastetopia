@@ -1,0 +1,185 @@
+{% extends 'header.twig' %}
+
+{% block title %}
+{% if mode == 'edit' %}Edit{% else %}Add{% endif %}Items | Wastetopia
+{% endblock %}
+
+{% block navbar %}
+{% include 'navbar.twig' %}
+{% endblock %}
+
+{% block content %}
+<div id="main-container" data-mode = "{{ mode }}" class="grid-body" data-listingid="{{ listingID }}" style="padding-top: 60px;">
+  <div class="container-fluid">
+    <div class="row">
+      <form id="barcode-scanner" enctype="multipart/form-data">
+        <label for="barcode-upload">Scan Barcode:</label>
+        <input id="barcode-upload" type="file">
+        <button type="button" id="scan-barcode">Scan</button>
+      </form>
+      <div id="barcode-msg"></div>
+    </div>
+    <div class="row">
+      <form id="form-image" enctype="multipart/form-data" method="post" action="{{ config.ROOT_BASE }}/api/items/add">
+        <legend></legend>
+        <legend></legend>
+        <fieldset>
+          <div class="col-sm-12 zero-padding">
+            <div class="item-imgs-section">
+              <div class="gridTitle">
+                Upload item images here
+              </div>
+              <div class="container-fluid">
+                <div class="grid row" id="img-rows">
+                  <div class="grid-sizer col-xs-6 col-md-4"></div>
+                  <div class="grid-item col-xs-6 col-md-4 zero-padding">
+                    <div class="form-group zero-padding">
+                      <!-- this is the add button -->
+                      <div data-mh="my-group" class="upload-pic">
+                        <div class="img-box">
+                          <i class="material-icons">add</i>
+                        </div>
+                      </div>
+                      <input type="file" id="upload" multiple="">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="options">
+                <button type="button" id="deleteBtn" class="btn-delete">
+                  <i class="material-icons">delete</i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+      <form id="main-form" method="post" action="javascript:submit()">
+        <fieldset>
+          <div class="col-sm-12 zero-padding">
+            <div class="item-details-section">
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="form-group col-md-6">
+                    <label class="control-label" for="name">Name</label>
+                    <input type="text" class="form-control" name="itemname" id="name"
+                    {% if mode=='edit' %}value="{{ item.name }}" {% endif %} required>
+                  </div>
+                  <div class="form-group col-md-3">
+                    <label class="control-label" for="quantity">Quantity</label>
+                    <input type="text" class="form-control" name="itemquantity" id="quantity"
+                    {% if mode=='edit' %}value="{{ item.quantity }}" {% endif %} required>
+                  </div>
+                  <div class="form-group col-md-3">
+                    <label class="control-label" for="type">Type</label>
+                    <select id="type" name="itemType" class="form-control">
+                        {% for tag in tags.type %}
+                            {% set selected = 0 %}
+                            {% for tagCompare in item.type %}
+                                {% if tagCompare.name == tag %}
+                                    {% set selected = 1 %}
+                                {% endif %}
+                            {% endfor %}
+                              <option {% if selected %} selected {% endif %}>{{ tag }}</option>
+                        {% endfor %}
+                    </select>
+                  </div>
+                  <div class="form-group col-xs-12 col-md-6">
+                    <label class="control-label" for="type">Dietary Requirements</label>
+                    <div>
+                      <select class="js-example-basic-multiple form-control" multiple="multiple" id="dietary-requirements">
+
+                          {% for tag in tags.dietary %}
+                              {% set selected = 0 %}
+                              {% for tagCompare in item.dietary %}
+                                  {% if tagCompare.name == tag %}
+                                      {% set selected = 1 %}
+                                  {% endif %}
+                              {% endfor %}
+
+                            <option {% if selected %} selected {% endif %}>{{ tag }}</option>
+                          {% endfor %}
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group col-xs-12 col-md-6">
+                    <label class="control-label" for="state">State</label>
+                    <select id="state" name="state" class="js-example-basic-multiple form-control" multiple="multiple" style="width: 100%;">
+                        {% for tag in tags.state %}
+                            {% set selected = 0 %}
+                            {% for tagCompare in item.state %}
+                                {% if tagCompare.name == tag %}
+                                    {% set selected = 1 %}
+                                {% endif %}
+                            {% endfor %}
+                          <option {% if selected %} selected {% endif %}>{{ tag }}</option>
+                        {% endfor %}
+                    </select>
+                  </div>
+                  <div class="form-group col-xs-12 col-md-6">
+                    <label class="control-label" for="content">May contain</label>
+                    <select id="content" name="content" class="js-example-basic-multiple form-control may-contains-select" multiple="multiple" style="width: 100%;">
+                      {% for tag in tags.contains %}
+                        {% set selected = 0 %}
+                        {% for tagCompare in item.contains %}
+                          {% if tagCompare.name == tag %}
+                            {% set selected = 1 %}
+                          {% endif %}
+                        {% endfor %}
+                        <option {% if selected %} selected {% endif %}>{{ tag }}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                  <div class="form-group col-xs-12">
+                    <label class="control-label" for="date">Expiry date</label>
+                    <input type="text" class="form-control" id="date" name="expirydate"
+                           value="{{ item.expires }}" >
+                  </div>
+                  <div class="form-group col-xs-12">
+                    <label for="description" class="control-label">Enter Description :</label>
+                    <div>
+                      <textarea class="form-control" rows="3" id="description" name="description">{% if mode=='edit' %}{{ item.description }}{% endif %}</textarea>
+                      <span class="help-block">Max 500 character.</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-12 zero-padding">
+            <div class="item-address-section">
+              <div class="form-group">
+                <label for="inputLocation" class="col-md-2 control-label">Address</label>
+
+                <div class="col-md-10">
+                  <input type="text" class="form-control" id="inputLocation1" placeholder="Location : eg.4 The Sidings"
+                         {% if mode=='edit' %}value="{{ item.location.name }}" {% endif %} required>
+                  <input type="text" class="form-control" id="inputLocation2" placeholder="PostCode : eg.dh1 1hs"
+                         {% if mode=='edit' %}value="{{ item.location.postcode }}" {% endif %} required>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 zero-padding">
+            <div class="item-btns-section">
+              <div class="form-group zero-padding">
+                <div class="btns">
+                  <button type="button" class="btn btn-default" onclick="window.history.back()">Cancel</button>
+                  <button id="#submit-item" type="submit" class="btn btn-primary">{% if mode=='edit' %}Update{% else %}Add{% endif %}</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% set jslist = ["plugins/imagesloaded/imagesloaded.pkgd.min.js", "plugins/isotope/isotope.pkgd.min.js","plugins/moments/moment-with-locales.min.js","plugins/jquery-match-height/jquery.matchHeight.js",
+"plugins/select2-4.0.3/select2.min.js","plugins/bootstrap-material-datetimepicker-gh-pages/bootstrap-material-datetimepicker.js",
+"plugins/image-upload/jquery.upload.js","add-item.js", "barcode.js", "edit-item.js"] %}
+
+{% set csslist = ["plugins/select2-4.0.3/select2.min.css","plugins/bootstrap-material-datetimepicker-gh-pages/bootstrap-material-datetimepicker.css"] %}
