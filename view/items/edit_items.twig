@@ -119,7 +119,13 @@
                     <label class="control-label" for="content">May contain</label>
                     <select id="content" name="content" class="js-example-basic-multiple form-control may-contains-select" multiple="multiple" style="width: 100%;">
                       {% for tag in tags.contains %}
-                      <option class="may-contains-option">{{ tag }}</option>
+                        {% set selected = 0 %}
+                        {% for tagCompare in item.contains %}
+                          {% if tagCompare.name == tag %}
+                            {% set selected = 1 %}
+                          {% endif %}
+                        {% endfor %}
+                        <option {% if selected %} selected {% endif %}>{{ tag }}</option>
                       {% endfor %}
                     </select>
                   </div>
