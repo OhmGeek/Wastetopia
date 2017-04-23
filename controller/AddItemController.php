@@ -8,8 +8,8 @@
 
 namespace Wastetopia\Controller;
 
-use Twig_Loader_Filesystem;
 use Twig_Environment;
+use Twig_Loader_Filesystem;
 use Wastetopia\Config\CurrentConfig;
 use Wastetopia\Model\AddItemModel;
 use Wastetopia\Model\AmazonS3;
@@ -61,7 +61,6 @@ class AddItemController
         );
     }
     // this code below flattens the selected tags into one list
-
     /**
      * @param $details (the item object as serialized by JavaScript)
      * @return array (list of tags)

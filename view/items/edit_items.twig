@@ -73,29 +73,29 @@
                         {% for tag in tags.type %}
                             {% set selected = 0 %}
                             {% for tagCompare in item.type %}
-                                {% if tagCompare.name == tag %}
+                                {% if tagCompare.name == tag.name %}
                                     {% set selected = 1 %}
                                 {% endif %}
                             {% endfor %}
-                              <option {% if selected %} selected {% endif %}>{{ tag }}</option>
+                              <option {% if selected %} selected {% endif %}>{{ tag.name }}</option>
                         {% endfor %}
                     </select>
                   </div>
                   <div class="form-group col-xs-6 col-md-8">
-                    <label class="control-label" for="type">Dietary Requirments</label>
+                    <label class="control-label" for="type">Dietary Requirements</label>
                     <div>
                       <div class="checkbox">
 
                           {% for tag in tags.dietary %}
                               {% set selected = 0 %}
                               {% for tagCompare in item.dietary %}
-                                  {% if tagCompare.name == tag %}
+                                  {% if tagCompare.name == tag.name %}
                                       {% set selected = 1 %}
                                   {% endif %}
                               {% endfor %}
 
                             <label class="col-xs-12 col-md-3">
-                              <input class="dietary-req" type="checkbox" {% if selected %} checked{% endif %}> {{ tag }}
+                              <input class="dietary-req" type="checkbox" {% if selected %} checked{% endif %}> {{ tag.name }}
                             </label>
                           {% endfor %}
                       </div>
@@ -107,11 +107,11 @@
                         {% for tag in tags.state %}
                             {% set selected = 0 %}
                             {% for tagCompare in item.state %}
-                                {% if tagCompare.name == tag %}
+                                {% if tagCompare.name == tag.name %}
                                     {% set selected = 1 %}
                                 {% endif %}
                             {% endfor %}
-                          <option {% if selected %} selected {% endif %}>{{ tag }}</option>
+                          <option {% if selected %} selected {% endif %}>{{ tag.name }}</option>
                         {% endfor %}
                     </select>
                   </div>
@@ -119,7 +119,7 @@
                     <label class="control-label" for="content">May contain</label>
                     <select id="content" name="content" class="js-example-basic-multiple form-control may-contains-select" multiple="multiple" style="width: 100%;">
                       {% for tag in tags.contains %}
-                      <option class="may-contains-option">{{ tag }}</option>
+                      <option class="may-contains-option">{{ tag.name }}</option>
                       {% endfor %}
                     </select>
                   </div>
