@@ -175,13 +175,14 @@ class MessageModel
      */
     function getConversationDetails($conversationID)
     {
-	    //error_log("Getting conversation user details");
+	 error_log("Getting conversation user details");
         $currentUser = $this->getUserID();
 
 	$isReceiverOfItem = $this->checkIfReceiver($conversationID);
-	    //error_log("Is receiver: ".$isReceiverOfItem);
+	  error_log("Is receiver: ".$isReceiverOfItem);
 	
 	    if($isReceiverOfItem){
+		    error_log("First query");
 		    $statement = $this->db->prepare("		    		
 			SELECT UserID, Forename, Surname, Item.Name
 					FROM Conversation
@@ -191,6 +192,7 @@ class MessageModel
 					WHERE Conversation.ConversationID = :conversationID;
 		    ");
 	    }else{
+		    error_log("Second query");
 		$statement = $this->db->prepare("
 		SELECT User.UserID, User.Forename, User.Surname, Item.Name
 			FROM Conversation
