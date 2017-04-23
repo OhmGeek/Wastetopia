@@ -92,12 +92,12 @@ $(function () {
   getFilters();
 
   radiusSlider.noUiSlider.on('update', function (e) {
-    e.stopPropagation()
+    $(this).closest('.btn-group').addClass('dontClose');
     getFilters();
   });
 
   quantitySlider.noUiSlider.on('update', function (e) {
-    e.stopPropagation()
+    $(this).closest('.btn-group').addClass('dontClose');
     getFilters();
   });
 
@@ -116,7 +116,7 @@ $(function () {
   })
 
   $checkboxes.change( function(e) {
-    e.stopPropagation()
+    $(this).closest('.btn-group').addClass('dontClose');
     getFilters();
   });
 
