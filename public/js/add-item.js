@@ -1,4 +1,5 @@
 var $grid;
+$(function(){
 // init Isotope
     // $grid = $('.grid').isotope({
     //     itemSelector: '.grid-item',
@@ -49,7 +50,7 @@ var $grid;
                     '<div data-mh="my-group" class="upload-pic">'+
                       '<img src="'+ url +'" data-imgid="' + id + '"/>'+
                     '</div>'+
-                  '</div>'+
+                  '</div>';
 
         // prepend items to grid
         // $grid.prepend( $item )
@@ -222,3 +223,10 @@ var $grid;
         getLocationOfItem(serializeAndSendItem);
 
     }
+    $( "#main-form" ).submit(function( event ) {
+        alert( "Handler for .submit() called." );
+        event.preventDefault();
+        submit();
+        return false;
+    });
+});
