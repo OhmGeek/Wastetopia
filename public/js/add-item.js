@@ -1,15 +1,13 @@
 var $grid;
 $(function(){
 // init Isotope
-    $grid = $('.grid').isotope({
-        itemSelector: '.grid-item',
-        percentPosition: true,
-        layoutMode: 'masonry'
-    });
-
-    $('.grid').imagesLoaded().progress( function() {
-        $grid.isotope('layout');
-    });
+$grid = $('.grid').isotope({
+  itemSelector: '.grid-item',
+  percentPosition: true,
+  masonry: {
+    columnWidth: '.grid-sizer'
+  }
+});
 
 //equal height rows
     $('.upload-pic').matchHeight();
@@ -42,7 +40,7 @@ $(function(){
 
 
     function showUploadedItem(url, id) {
-      var $item = '<div class="grid-item col-xs-6 col-sm-4 zero-padding">'+
+      var $item = '<div class="grid-item col-xs-6 col-md-4 zero-padding">'+
                     '<div class="img-checkbox">'+
                       '<div class="checkbox">'+
                         '<label><input type="checkbox"></label>'+
@@ -57,9 +55,6 @@ $(function(){
         $grid.prepend( $item )
         // add and lay out newly prepended items
             .isotope( 'prepended', $item );
-            $('.grid').imagesLoaded().progress( function() {
-                $grid.isotope('layout');
-            });
         // var currentImgs = $item + $('#img-rows').html();
         // $('#img-rows').html(currentImgs)
         $.material.init();
