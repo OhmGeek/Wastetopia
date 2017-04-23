@@ -39,7 +39,7 @@ $('#deleteBtn').on( 'click', function() {
     }
   });
 });
-})
+
 
 function showUploadedItem(url, id) {
   var $item = $('<div class="grid-item col-xs-4 col-sm-2 zero-padding">'+
@@ -230,3 +230,4 @@ function submit() {
     getLocationOfItem(serializeAndSendItem);
 
 }
+})
