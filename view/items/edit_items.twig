@@ -73,11 +73,11 @@
                         {% for tag in tags.type %}
                             {% set selected = 0 %}
                             {% for tagCompare in item.type %}
-                                {% if tagCompare.name == tag.name %}
+                                {% if tagCompare.name == tag %}
                                     {% set selected = 1 %}
                                 {% endif %}
                             {% endfor %}
-                              <option {% if selected %} selected {% endif %}>{{ tag.name }}</option>
+                              <option {% if selected %} selected {% endif %}>{{ tag }}</option>
                         {% endfor %}
                     </select>
                   </div>
@@ -89,13 +89,13 @@
                           {% for tag in tags.dietary %}
                               {% set selected = 0 %}
                               {% for tagCompare in item.dietary %}
-                                  {% if tagCompare.name == tag.name %}
+                                  {% if tagCompare.name == tag %}
                                       {% set selected = 1 %}
                                   {% endif %}
                               {% endfor %}
 
                             <label class="col-xs-12 col-md-3">
-                              <input class="dietary-req" type="checkbox" {% if selected %} checked{% endif %}> {{ tag.name }}
+                              <input class="dietary-req" type="checkbox" {% if selected %} checked{% endif %}> {{ tag }}
                             </label>
                           {% endfor %}
                       </div>
