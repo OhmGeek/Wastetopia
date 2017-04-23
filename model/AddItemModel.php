@@ -466,7 +466,6 @@ class AddItemModel
             SELECT `Tag`.`Name`, `Tag`.`TagID`
             FROM `Tag`
             WHERE `Tag`.`FK_Category_Category_ID` = :catID
-            ORDER BY `Tag`.`Name`
          ");
 
         $statement->bindValue(':catID',$categoryID,PDO::PARAM_INT);
