@@ -386,7 +386,7 @@ white {
   width: 100%;
   padding: 0 10px;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   background: white;
 }
