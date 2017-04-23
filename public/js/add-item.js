@@ -1,14 +1,14 @@
 var $grid;
 // init Isotope
-    $grid = $('.grid').isotope({
-        itemSelector: '.grid-item',
-        percentPosition: true,
-        layoutMode: 'masonry'
-    });
-
-    $('.grid').imagesLoaded().progress( function() {
-        $grid.isotope('layout');
-    });
+    // $grid = $('.grid').isotope({
+    //     itemSelector: '.grid-item',
+    //     percentPosition: true,
+    //     layoutMode: 'masonry'
+    // });
+    //
+    // $('.grid').imagesLoaded().progress( function() {
+    //     $grid.isotope('layout');
+    // });
 
 //equal height rows
     $('.upload-pic').matchHeight();
@@ -22,9 +22,10 @@ var $grid;
 // Remove an element from the layout in the grid
     function remove(elem) {
         // remove clicked element (in a very skitchy way right now)
-        $grid.isotope( 'remove', $(elem).closest('.grid-item'))
-        // layout remaining item elements
-            .isotope('layout');
+        // $grid.isotope( 'remove', $(elem).closest('.grid-item'))
+        // // layout remaining item elements
+        //     .isotope('layout');
+        $(elem).remove();
     };
 
 // Remove selected images
@@ -41,7 +42,7 @@ var $grid;
 
 
     function showUploadedItem(url, id) {
-      var $item = '<div class="grid-item col-xs-4 col-sm-2 zero-padding">'+
+      var $item = '<div class="col-xs-6 col-sm-2 zero-padding">'+
                     '<div class="row-action-primary checkbox img-checkbox">'+
                       '<label><input type="checkbox"></label>'+
                     '</div>'+
@@ -51,9 +52,11 @@ var $grid;
                   '</div>'+
 
         // prepend items to grid
-        $grid.prepend( $item )
-        // add and lay out newly prepended items
-            .isotope( 'prepended', $item );
+        // $grid.prepend( $item )
+        // // add and lay out newly prepended items
+        //     .isotope( 'prepended', $item );
+        var currentImgs = $item + $('.row').html();
+        $('.row').html(currentImgs)
     }
 
     function imageUpload() {
