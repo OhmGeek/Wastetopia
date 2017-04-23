@@ -198,6 +198,7 @@ function serializeAndSendItem(location) {
     if(isValid(itemData)) {
         // submit using AJAX
         var jsonData = {'item': JSON.stringify(itemData)};
+        console.log(jsonData);
         $.post(url, jsonData, function(resp) {
             console.log("Sent AJAX");
             var listingID = resp.listingID;
