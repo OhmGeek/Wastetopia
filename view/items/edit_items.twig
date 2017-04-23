@@ -84,7 +84,7 @@
                   <div class="form-group col-xs-6 col-md-8">
                     <label class="control-label" for="type">Dietary Requirements</label>
                     <div>
-                      <div class="checkbox">
+                      <select class="checkbox" id="dietary-requirements">
 
                           {% for tag in tags.dietary %}
                               {% set selected = 0 %}
@@ -94,11 +94,9 @@
                                   {% endif %}
                               {% endfor %}
 
-                            <label class="col-xs-12 col-md-3">
-                              <input class="dietary-req" type="checkbox" {% if selected %} checked{% endif %}> {{ tag }}
-                            </label>
+                            <option {% if selected %} selected {% endif %}>{{ tag }}</option>
                           {% endfor %}
-                      </div>
+                      </select>
                     </div>
                   </div>
                   <div class="form-group col-xs-12 col-md-6">

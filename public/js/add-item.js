@@ -93,20 +93,13 @@ function getImagesFromDOM() {
 function getSelectedDietaryReqs() {
   var requirementsList = [];
   // todo use filter to get this working nicely.
-  $('.dietary-req input:checked').each(function(index, elem) {
+  $('#dietary-requirements option:selected').each(function(index, elem) {
     // if the selected checkbox is actually selected, add the item
     // to the requirements list. Otherwise, move to the next one.
     if(elem.text) {
       requirementsList.push(elem.text); //get the text (or the contents of the tag).
     }
   });
-
-  // check if the user has any other requirements that need fulfilling.
-  var otherRequirements = $('#other-req').val();
-
-  if(otherRequirements) {
-    requirementsList.push(otherRequirements);
-  }
 
   return requirementsList;
 }
@@ -118,11 +111,6 @@ function getMayContainsDetails() {
       mayContain.push(elem.text);
     }
   });
-  var otherMayContains = $('#other-content').val();
-
-  if(otherMayContains) {
-    mayContain.push(otherMayContains);
-  }
   return mayContain;
 }
 
