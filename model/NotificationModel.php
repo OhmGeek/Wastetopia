@@ -71,7 +71,7 @@ class NotificationModel
     {
         $userID = $this->getUserID();
 
-        error_log("UserID: ".$userID);
+        //error_log("UserID: ".$userID);
         
         $statement = $this->db->prepare("
             SELECT COUNT(*) AS `Count`
@@ -91,7 +91,7 @@ class NotificationModel
         
         $result = $statement->fetchColumn();
         
-        error_log("Count: ".$result);
+        //error_log("Count: ".$result);
         return $result;
     }
     
