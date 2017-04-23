@@ -71,6 +71,8 @@ class NotificationModel
     {
         $userID = $this->getUserID();
 
+        error_log("UserID: ".$userID);
+        
         $statement = $this->db->prepare("
             SELECT COUNT(*) AS `Count`
             FROM `Message`
@@ -81,12 +83,15 @@ class NotificationModel
                     AND `Message`.`Giver_Or_Receiver`= 1))      
             AND `Message`.`Read` = 0;   
         ");
-
+        
         $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
         $statement->bindValue(":userID2", $userID, PDO::PARAM_INT);
         $statement->execute();
 
+        
         $result = $statement->fetchColumn();
+        
+        error_log("Count: ".$result);
         return $result;
     }
     
