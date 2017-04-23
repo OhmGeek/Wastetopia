@@ -196,10 +196,8 @@ class RequestModel
 		   $conversationModel = new ConversationListModel();
 		   $conversationModel->createConversation($listing_id);
 		   $conversationIDs = $this->messageModel->getConversationIDFromListing($listing_id);
-			print_r("Array conversations: ".$conversationIDs);
 		   $conversationID = $conversationIDs[0];
 			$conversationID = $conversationID["ConversationID"];
-			print_r("ConversationID: ".$conversationID);
 	           $messageController = new MessageController();
 		   $messageController->sendMessage($conversationID, "I am interested in your requesting your item!");		
 		}
