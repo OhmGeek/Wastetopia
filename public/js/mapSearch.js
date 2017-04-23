@@ -111,7 +111,7 @@ function initMap() {
         cancel = "Cancel "
       }
 
-      var contentString = '<div class="iw-container">'+
+      var contentString = '<div class="iw-container thumbnail">'+
       '<div class="iw-header">'+
       '<img class="user-image" src="'+ item.Picture_URL +'"/>' +
       '<div class="user-details">'+
