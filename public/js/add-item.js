@@ -221,7 +221,8 @@ function submit() {
 }
 
 
-    $('#main-form').on('submit', function() {
+    $('#main-form').on('submit', function(event) {
+        event.preventDefault();
         submit();
     });
 });
