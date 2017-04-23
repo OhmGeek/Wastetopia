@@ -15,9 +15,10 @@ class LoginController {
      * Render the login index page
      * @param $response (the Klein response)
      * @param $dest (the destination to forward onto)
+     * @param $verificationAlert (defaults to 0, set to 1 if user is verifying account)
      * @return bool|string (return the page or forward if they are already logged in)
      */
-    public function index($response, $dest) {
+    public function index($response, $dest, $verificationAlert = 0) {
         //todo dest parameter with default value
         // this is the static index page (allowing the user to login)
         $loader  = new Twig_Loader_Filesystem(__DIR__.'/../view/');
@@ -31,7 +32,8 @@ class LoginController {
                 "intro" => "Please login to access Wastetopia",
                 "dest" => $dest,
                 "config" => CurrentConfig::getAll(),
-                "header" => HeaderInfo::get()
+                "header" => HeaderInfo::get(),
+		"displayVerificationAlert" => $verificationAlert
             ));
         }
         else {
