@@ -127,8 +127,11 @@ $(function () {
     } else {
       $('#filter-dropdown > button').removeClass('white')
     }
-    $(this).removeClass('dontClose');
   });
+  
+  $('#filter-dropdown').on('click', function(e) {
+    $('.btn-group').removeClass('dontClose');
+  })
 
   /*RESET SEARCH BOX VALUES*/
 
