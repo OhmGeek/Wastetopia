@@ -75,13 +75,14 @@ class NotificationModel
         
         $statement = $this->db->prepare("
             SELECT COUNT(*) AS `Count`
-            FROM `Message`
-            JOIN `Conversation` ON `Conversation`.`ConversationID` = `Message`.`FK_Conversation_ConversationID`
-            WHERE ((`Conversation`.`FK_User_ReceiverID` = :userID       
-                AND `Message`.`Giver_Or_Receiver` = 0)            
-                OR (NOT(`Conversation`.`FK_User_ReceiverID` = :userID2) 
-                    AND `Message`.`Giver_Or_Receiver`= 1))      
-            AND `Message`.`Read` = 0;   
+                FROM `Message`
+                JOIN `Conversation` ON `Conversation`.`ConversationID` = `Message`.`FK_Conversation_ConversationID`
+                JOIN `Listing` ON `Listing`.`ListingID` = `Conversation`.`FK_Listing_ListingID`
+                JOIN `User` ON `User`.`UserID` = `Listing`.`FK_User_UserID`
+                WHERE ((`Conversation`.`FK_User_ReceiverID` = :userID    
+                AND `Message`.`Giver_Or_Receiver` = 0)  OR  (`User`.`UserID` = :userID2
+                AND `Message`.`Giver_Or_Receiver`= 1))   
+                AND `Message`.`Read` = 0;  
         ");
         
         $statement->bindValue(":userID", $userID, PDO::PARAM_INT);
