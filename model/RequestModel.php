@@ -8,7 +8,8 @@ use Wastetopia\Model\DB;
 use Wastetopia\Model\ItemModel;
 use Wastetopia\Model\ListingModel;
 use Wastetopia\Model\UserCookieReader;
-
+use Wastetopia\Model\MessageModel;
+use Wastetopia\Controller\MessageController;
 
 
 class RequestModel
@@ -18,6 +19,7 @@ class RequestModel
 		$this->db = DB::getDB();
 		$this->item_model = new ItemModel();
 		$this->listing_model = new ListingModel();
+		$this->messageModel = new MessageModel();
 	}
 
     /**
@@ -187,6 +189,17 @@ class RequestModel
 		$statement2->bindValue(":quantity", $quantity, PDO::PARAM_INT);
 		$statement2->execute();
 		
+		// Create conversation and send first message
+		$conversationIDs = $this->messageModel->getConversationIDFromListing($listingID);
+		if (count($conversationIDs) == 0){
+		   // Create the conversation
+		   $conversationModel = new ConversationListModel();
+		   $conversationModel->createConversation($listing_id);
+		   $conversationIDs = $this->messageModel->getConversationIDFromListing($listing_id);
+		   $conversationID = $conversationIDs[0];
+	           $messageController = new MessageController();
+		   $messageController->sendMessage($conversationID, "I am interested in your requesting your item!");		
+		}
 		
 		return True;
 	}
