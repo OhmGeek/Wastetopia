@@ -383,8 +383,8 @@ class AddItemModel
             $this->addToBarcodeTable($itemID, $barcodeNumber, $barcodeType); //Add barcode and link to item
         }
         //Add the whole listing                       quantity=1
-        $this->addToListingTable($locationID, $itemID, 1);
-        return $this->getFinalListingID($locationID, $itemID, 1);
+        $this->addToListingTable($locationID, $itemID, $item['quantity']);
+        return $this->getFinalListingID($locationID, $itemID,  $item['quantity']);
     }
 
     /**
