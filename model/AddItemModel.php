@@ -459,4 +459,18 @@ class AddItemModel
         $results = $statement->fetchAll(PDO::FETCH_ASSOC);
         return $results[0]['ListingID'];
     }
+
+    public function getAllTagOptionsFilter($categoryID)
+    {
+        $statement = $this->db->prepare("
+            SELECT `Tag`.`Name`, `Tag`.`TagID`
+            FROM `Tag`
+            WHERE `Tag`.`FK_Category_Category_ID` = :catID
+            ORDER BY `Tag`.`Name`
+         ");
+
+        $statement->bindValue(':catID',$categoryID,PDO::PARAM_INT);
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_COLUMN);
+    }
 }
