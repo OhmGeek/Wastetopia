@@ -51,7 +51,7 @@
           </div>
         </fieldset>
       </form>
-      <form id="main-form" method="post">
+      <form id="main-form" method="post" action="javascript:submit()">
         <fieldset>
           <div class="col-sm-12 zero-padding">
             <div class="item-details-section">
@@ -162,7 +162,7 @@
               <div class="form-group zero-padding">
                 <div class="btns">
                   <button type="button" class="btn btn-default" onclick="window.history.back()">Cancel</button>
-                  <button id="#submit-item" type="submit" class="btn btn-primary" onclick="submit()">{% if mode=='edit' %}Update{% else %}Add{% endif %}</button>
+                  <button id="#submit-item" type="submit" class="btn btn-primary">{% if mode=='edit' %}Update{% else %}Add{% endif %}</button>
                 </div>
               </div>
             </div>
