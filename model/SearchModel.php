@@ -66,7 +66,7 @@ class SearchModel
 		foreach($item_information as $distinct_item){
 			$listing_ids = $listing_ids . $distinct_item["ListingID"] . ",";
 		}
-		$item_ids = substr($item_ids,0,-1);
+		$listing_ids = substr($listing_ids,0,-1);
         $statement->bindValue(":listing_ids", $listing_ids, PDO::PARAM_STR);
         $statement->execute();
         return $statement->fetchAll(PDO::FETCH_ASSOC)[0];
