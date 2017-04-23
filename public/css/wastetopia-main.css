@@ -848,6 +848,11 @@ a:link, a:hover, a:visited, a:active  {
     width: 60%;
 }
 
+#requestRadioButtons {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 /* Messaging */
 /* Conversation page */
 .coversation-frame{
