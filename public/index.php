@@ -458,7 +458,7 @@ $klein->with('/api', function () use ($klein) {
 // todo authenticate on messages. Must be logged in to view correct messages.
 $klein->with('/messages', function () use ($klein) {
     $klein->respond('GET', '/?', function ($request, $response) {
-        //forceLogin($request->uri());
+        forceLogin($request->uri());
         // Show all conversations
         $controller = new ConversationListController();
         return $controller->generatePage();
