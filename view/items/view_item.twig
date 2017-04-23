@@ -22,6 +22,7 @@
           <a href="#cancel-by-listing" class="btn btn-primary" role="button">Cancel Request</a>
         {% endif %}
       {% endif %}
+      {% if isLoggedIn == 1 %}
       <div class="dropdown btn-watch">
         <a data-target="#"class="dropdown-toggle" data-toggle="dropdown"><i class="material-icons">more_vert</i></a>
         <ul class="dropdown-menu dropdown-menu-right">
@@ -36,6 +37,7 @@
             {% endif %}
           </ul>
         </div>
+        {% endif %}
       </div>
     </div>
     <div class="view-wrapper">
@@ -44,6 +46,11 @@
           {% if not active %}
           <div class="alert alert-info">
             <strong>Sorry, this item is no longer active. Chances are, some students have already eaten it :/ </strong>
+          </div>
+          {% endif %}
+          {% if isLoggedIn != 1 %}
+          <div class="alert alert-danger">
+            <strong>To request this item, you must be a registered user. <a class="alert-link" href="{{ config.ROOT_BASE }}/register">REGISTER NOW</a></strong>
           </div>
           {% endif %}
           <div class="item-details col-md-12">
@@ -75,7 +82,7 @@
                   </div>
                   {% endif %}
                   <div class="col-xs-12 col-sm-6 zero-padding">
-                    <span class="info">Quantity: </span>{{ quantity}}
+                    <span class="info">Quantity: </span>{{itemQuantity}}
                   </div>
                   <div class="col-xs-12 col-sm-6 zero-padding">
                     <span class="info">Expiry date: </span>{{ expires }}

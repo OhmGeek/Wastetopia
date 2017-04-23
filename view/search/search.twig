@@ -76,7 +76,6 @@ Search
           <option value="AZ">A-Z</option>
           <option value="ZA">Z-A</option>
           <option value="UR">User Popularity</option>
-          <option value="DT">Newest First</option>
         </select>
       </div>
       <a class="search-view" role="button" data-toggle="tab" href="#map-tab" id="btn-map"><i class="material-icons">map</i></a>
@@ -87,9 +86,13 @@ Search
 
   <div class="tab-content user-stats search-result" style="height:100%;" id="{{ isLoggedIn }}">
     <div id="grid" class="tab-pane fade in active">
+    {% if isLoggedIn != 1 %}
+    <div class="alert alert-danger">
+      <strong>To request this item, you must be a registered user. <a class="alert-link" href="{{ config.ROOT_BASE }}/register">REGISTER NOW</a></strong>
+    </div>
+    {% endif %}
       <div class="container-fluid">
         <div class="grid">
-          <!-- need this for mosonry layout to work properly with bootstrap grid system -->
           {% for item in itemList %}
           <div class="grid-item col-xs-12 col-sm-6 col-md-4 col-lg-3">
             <div class="thumbnail zero-padding" id="{{item.listingID}}">
@@ -143,6 +146,11 @@ Search
           <h4>Warning!</h4>
           <p>The pins on the map point to estimated positions based on the items' related <strong>postcodes</strong>, for the actual location ask the users after making a request.</p>
         </div>
+        {% if isLoggedIn != 1 %}
+        <div class="alert alert-danger">
+          <strong>To request this item, you must be a registered user. <a class="alert-link" href="{{ config.ROOT_BASE }}/register">REGISTER NOW</a></strong>
+        </div>
+        {% endif %}
       </div>
       <div class="container-fluid" style="height:100%;">
         <div class="row" style="height:100%;">
