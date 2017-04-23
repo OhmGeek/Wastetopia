@@ -1,5 +1,4 @@
 var $grid;
-$(function(){
 // init Isotope
     $grid = $('.grid').isotope({
         itemSelector: '.grid-item',
@@ -220,10 +219,3 @@ $(function(){
         getLocationOfItem(serializeAndSendItem);
 
     }
-    $( "#main-form" ).submit(function( event ) {
-        alert( "Handler for .submit() called." );
-        event.preventDefault();
-        submit();
-        return false;
-    });
-});
