@@ -44,15 +44,6 @@ $(function(){
 
     function showUploadedItem(url, id) {
       var $item = '<div class="col-xs-6 col-sm-4 zero-padding">'+
-                        '<div class="container">'+
-                  '<div class="form-group">'+
-                  '<div class="checkbox">'+
-                  '<label>'+
-                  '<input type="checkbox"> Notifications'+
-                  '</label>'+
-                  '</div>'+
-                  '</div>'+
-                  '</div>'+
                     '<div class="img-checkbox">'+
                       '<div class="checkbox">'+
                         '<label><input type="checkbox"></label>'+
