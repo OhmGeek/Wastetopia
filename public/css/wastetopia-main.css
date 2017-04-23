@@ -537,13 +537,8 @@ html, body{
   margin: 0;
 }
 
-#item-map-section {
-  height: 400px;
-}
-
 .item-address-section {
   height: 400px;
-  background-color: #445878;
   padding: 10px;
   margin: 0;
 }
@@ -578,6 +573,10 @@ html, body{
   left: 11px;
   padding: 0;
   margin: 0;
+}
+
+.form-control, .form-group .form-control {
+  background-color: white !important;
 }
 
 .checkbox .checkbox-material .check,
