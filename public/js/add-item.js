@@ -224,5 +224,6 @@ $(function(){
         alert( "Handler for .submit() called." );
         event.preventDefault();
         submit();
+        return false;
     });
 });
