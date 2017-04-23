@@ -92,10 +92,12 @@ $(function () {
   getFilters();
 
   radiusSlider.noUiSlider.on('update', function (e) {
+    $(this).closest('.btn-group').addClass('dontClose');
     getFilters();
   });
 
   quantitySlider.noUiSlider.on('update', function (e) {
+    $(this).closest('.btn-group').addClass('dontClose');
     getFilters();
   });
 
@@ -112,12 +114,9 @@ $(function () {
   $('#filter-list').on('click', '.filter-category a', function(e){
     $(this).closest('.btn-group').addClass('dontClose');
   })
-  $('#filter-list').on('click', ':input', function(e){
-    $(this).closest('.btn-group').addClass('dontClose');
-  })
-
 
   $checkboxes.change( function(e) {
+    $(this).closest('.btn-group').addClass('dontClose');
     getFilters();
   });
 
@@ -128,7 +127,6 @@ $(function () {
     } else {
       $('#filter-dropdown > button').removeClass('white')
     }
-    $(this).removeClass('dontClose');
   });
 
   /*RESET SEARCH BOX VALUES*/

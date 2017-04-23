@@ -190,13 +190,14 @@ class RequestModel
 		$statement2->execute();
 		
 		// Create conversation and send first message
-		$conversationIDs = $this->messageModel->getConversationIDFromListing($listingID);
+		$conversationIDs = $this->messageModel->getConversationIDFromListing($listing_id);
 		if (count($conversationIDs) == 0){
 		   // Create the conversation
 		   $conversationModel = new ConversationListModel();
 		   $conversationModel->createConversation($listing_id);
 		   $conversationIDs = $this->messageModel->getConversationIDFromListing($listing_id);
 		   $conversationID = $conversationIDs[0];
+			$conversationID = $conversationID["ConversationID"];
 	           $messageController = new MessageController();
 		   $messageController->sendMessage($conversationID, "I am interested in your requesting your item!");		
 		}

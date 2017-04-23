@@ -52,10 +52,7 @@ class SearchModel
 	function PopularitySort($item_information){
 		$listing_ids = "";
 		$statement = $this->db->prepare("
-        SELECT `Listing`.`ListingID`, `Listing`.`Quantity`, `Listing`.`Time_Of_Creation`,
-                `Item`.`ItemID`, `Item`.`Name`, `Item`.`Description`, 
-                `Location`.`Post_Code`, `Location`.`Latitude`, `Location`.`Longitude`,
-                `User`.`UserID`, `User`.`Forename`, `User`.`Surname`, `User`.`Picture_URL`
+        SELECT `Listing`.`ListingID`
         FROM `Listing`
         JOIN `User` ON `Listing`.`FK_User_UserID` = `User`.`UserID`
         JOIN `Location` ON `Listing`.`FK_Location_LocationID` = `Location`.`LocationID`
@@ -69,7 +66,7 @@ class SearchModel
 		$listing_ids = substr($listing_ids,0,-1);
         $statement->bindValue(":listing_ids", $listing_ids, PDO::PARAM_STR);
         $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_ASSOC)[0];
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
 	}
 	
     function getDefaultImage($listingID)
