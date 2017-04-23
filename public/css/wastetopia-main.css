@@ -260,75 +260,141 @@
 }
 
 /* item page */
-.item-page-content {
-  padding-top: 60px;
-}
-
-.carousel-inner .item{
-  height: 350px;
-  background-color: #1C1D21;
-  padding-top: 50px;
-}
-
-.carousel-inner .item img {
-  width: 250px;
-  height: 225px;
-  margin: auto;
-  overflow: hidden;
-  border: 2px solid #D6D6DE;
-}
 
 .item-details{
-  background-color: white;
-  padding: 10px 20px 20px 20px;
+
 }
 
-@media(min-width:768px) {
-  .item-details{
-    background-color: white;
-    height: 350px;
-    padding-top: 10px;
-    padding-left: 20px;
+.item-wrapper {
+  padding: 10px;
+  background: #009688;
+  color: white;
+}
+
+white {
+  color: white;
+}
+
+.item-imgs {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+}
+
+.item-user .item-wrapper{
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  padding: 10px;
+}
+
+.btn-offers {
+  display: flex;
+  align-items: center;
+}
+
+@media (min-width: 750px) {
+  .item-imgs {
+    height: 220px;
+  }
+  .item-user {
+    height: 220px;
   }
 }
 
-.item-details .item-name{
-  font-size: 35px;
-  font-weight: 900;
-  width: 100%;
-  padding-right: 80px;
+.item-user .user {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.item-details .item-subTitle{
+.item-user .phrase {
+  padding-bottom: 10px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.item-user .user .user-image {
+  height: 100px;
+  width: 100px;
+}
+
+.grid {
+  width: 400px;
+  max-width: 400px;
+}
+
+.grid-item,
+.grid-item-content {
+  width: 80px;
+  height: 80px;
+}
+
+/* item-content is visible, and transitions size */
+.grid-item-content {
+  width: 80px;
+  height: 80px;
+  padding: 5px;
+  border-color: hsla(0, 0%, 0%, 0.7);
+  -webkit-transition: width 0.4s, height 0.4s;
+     -moz-transition: width 0.4s, height 0.4s;
+       -o-transition: width 0.4s, height 0.4s;
+          transition: width 0.4s, height 0.4s;
+}
+
+.grid-item:hover .grid-item-content {
+  cursor: pointer;
+}
+
+/* both item and item content change size */
+.grid-item.is-expanded,
+.grid-item.is-expanded .grid-item-content {
+  width: 240px;
+  height: 200px;
+}
+
+.grid-item.is-expanded {
+  z-index: 2;
+}
+
+.item-img {
+  border: 1px solid lightgrey;
+  height: 100%;
+  width: 100%;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+}
+
+.item-details{
+  font-size: 35px;
+  width: 100%;
+}
+
+.item-subTitle{
   font-size: 12px;
   color: #7C8499;
   font-weight: 800;
+  padding: 5px 0;
 }
 
-.item-details .item-nav-btn{
+.item-header {
   position: absolute;
-  top: 10px;
-  right: 0;
-}
-
-.item-details .item-btn{
-  border: 0;
-  font-size: 20px;
-  text-align: center;
-  padding: 5px;
-  width: 60px;
-  height: 60px;
-  color: #709D9E;
-  font-weight: bold;
-  background-color: transparent;
+  top: 50px;
+  width: 100%;
+  padding: 0 10px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  background: white;
 }
 
 .item-details .item-description{
-  padding: 25px 0 0 0;
   color: black;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 25px;
-  display: block;
 }
 
 .item-details .item-description .info{
@@ -341,6 +407,7 @@
   margin: 0px;
 }
 
+/* search page */
 html, body{
   height: 100vh;
 }
@@ -811,7 +878,6 @@ a:link, a:hover, a:visited, a:active  {
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
-
 }
 
 .item-pic{
@@ -894,7 +960,7 @@ a:link, a:hover, a:visited, a:active  {
   font-weight: bolder;
 }
 
-#message-location, .user-stats {
+#message-location, .user-stats, #item-view .view-wrapper  {
   overflow-y: auto;
   height: 100%;
 }
@@ -1085,7 +1151,7 @@ a:link, a:hover, a:visited, a:active  {
   color: lightgrey;
 }
 
-.caption .nav-btns {
+.caption .nav-btns, .nav-btns {
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -1098,7 +1164,6 @@ a:link, a:hover, a:visited, a:active  {
 
 .btn {
   padding: 10px 15px;
-  max-width: 130px;
   white-space: normal !important;
 }
 

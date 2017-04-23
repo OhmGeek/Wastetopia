@@ -1,8 +1,34 @@
 /**
  * Created by ryan on 16/04/17.
  */
+ var $grid;
 
 $(document).ready(function() {
+  function setPadding(){
+    var height = $('.item-header').height() + 50
+    $('#item-view').css({'padding-top': height})
+  }
+
+  setPadding()
+
+  $(window).on('resize', function(){
+    setPadding();
+  })
+
+  $grid = $('.grid').isotope({
+    itemSelector: '.grid-item',
+    masonry: {
+      columnWidth: 80
+    }
+  });
+
+  $grid.on( 'click', '.grid-item-content', function() {
+    $( this ).parent('.grid-item').toggleClass('is-expanded');
+    $(this).parent('.grid-item').siblings().removeClass('is-expanded')
+    $grid.isotope('layout');
+  });
+
+
     // first we need to make a request to the API to get the item images.
 
    var barcodeStr = $('#barcode-details-ajax').attr("barcode");
