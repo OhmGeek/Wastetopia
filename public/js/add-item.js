@@ -1,15 +1,15 @@
 var $grid;
 $(function(){
 // init Isotope
-    // $grid = $('.grid').isotope({
-    //     itemSelector: '.grid-item',
-    //     percentPosition: true,
-    //     layoutMode: 'masonry'
-    // });
-    //
-    // $('.grid').imagesLoaded().progress( function() {
-    //     $grid.isotope('layout');
-    // });
+    $grid = $('.grid').isotope({
+        itemSelector: '.grid-item',
+        percentPosition: true,
+        layoutMode: 'masonry'
+    });
+
+    $('.grid').imagesLoaded().progress( function() {
+        $grid.isotope('layout');
+    });
 
 //equal height rows
     $('.upload-pic').matchHeight();
@@ -23,10 +23,9 @@ $(function(){
 // Remove an element from the layout in the grid
     function remove(elem) {
         // remove clicked element (in a very skitchy way right now)
-        // $grid.isotope( 'remove', $(elem).closest('.grid-item'))
-        // // layout remaining item elements
-        //     .isotope('layout');
-        $(elem).remove();
+        $grid.isotope( 'remove', $(elem).closest('.grid-item'))
+        // layout remaining item elements
+            .isotope('layout');
     };
 
 // Remove selected images
@@ -43,7 +42,7 @@ $(function(){
 
 
     function showUploadedItem(url, id) {
-      var $item = '<div class="col-xs-6 col-sm-4 zero-padding">'+
+      var $item = '<div class="grid-item col-xs-6 col-sm-4 zero-padding">'+
                     '<div class="img-checkbox">'+
                       '<div class="checkbox">'+
                         '<label><input type="checkbox"></label>'+
@@ -55,11 +54,11 @@ $(function(){
                   '</div>';
 
         // prepend items to grid
-        // $grid.prepend( $item )
-        // // add and lay out newly prepended items
-        //     .isotope( 'prepended', $item );
-        var currentImgs = $item + $('#img-rows').html();
-        $('#img-rows').html(currentImgs)
+        $grid.prepend( $item )
+        // add and lay out newly prepended items
+            .isotope( 'prepended', $item );
+        // var currentImgs = $item + $('#img-rows').html();
+        // $('#img-rows').html(currentImgs)
         $.material.init();
     }
 
