@@ -52,8 +52,9 @@ class RecommendationController {
     */
     function generateRecommendedSection(){
       // Most frequent tags in items user requests
-      $frequentTags = $this->model->getTagFrequenciesForTransactions();
-
+      $frequentTags = $this->model->getTagFrequenciesForTransactions(); 
+        $isUser = ($userID == $this->getUserID());
+        
       // Deal with if there are not enough tags    
       if(count($frequentTags) < 5){
           $recommendationList = array(); // Empty array
@@ -108,11 +109,13 @@ class RecommendationController {
       $currentConfig = new CurrentConfig();
       $config = $currentConfig->getAll();
 
-
+    $isLoggedIn = $this->isUserLoggedIn();
       $output = array(
             "config" => $config,
             "section" => "recommendation", 
-            "recommendationList" => $recommendationList
+            "recommendationList" => $recommendationList,
+          "isUser" => $isUser,
+          "isLoggedIn" => $isLoggedIn
       );
         
         $template = $this->twig->loadTemplate('/items/recommendations.twig');
@@ -158,7 +161,7 @@ class RecommendationController {
               $distance = "DON'T HAVE"; // May be able to add later
               $postCode = $listing["Post_Code"];
               
-              error_log("Listing: ".$listingID);
+              //error_log("Listing: ".$listingID);
               
               $imgURL = $this->cardDetailsModel->getDefaultImage($listingID);//$listing[""]; // Add later
               $itemName = $listing["Name"];
