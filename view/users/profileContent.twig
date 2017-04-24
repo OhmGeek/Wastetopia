@@ -9,12 +9,12 @@
                 <i class="material-icons">grade</i> {{ userscore }}
             </div>
         </div>
-        <div>
+        <div class="btn-nav">
             {% if isUser == 1 %}
                 <a href="{{config.ROOT_BASE}}/items/add" class="btn btn-primary" style="margin-bottom:0;" role="button">Add Item</a>
-                <div class = "dropdown btn-watch">
+                <div class="dropdown btn-watch">
                     <a data-target="#"
-                       class="dropdown-toggle" data-toggle="dropdown">OPTIONS <i class="material-icons">more_vert</i>
+                       class="dropdown-toggle btn btn-default" data-toggle="dropdown">OPTIONS <i class="material-icons">more_vert</i>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-right">
                         <li><a href="#upload-picture" id = "upload-picture">Change Picture</a></li>
