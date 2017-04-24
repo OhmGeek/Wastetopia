@@ -52,7 +52,10 @@ class SearchModel
 	function PopularitySort($item_information){
 		$listing_ids = "";
 		$statement = $this->db->prepare("
-        SELECT `Listing`.`ListingID`
+        SELECT `Listing`.`ListingID`, `Listing`.`Quantity`, `Listing`.`Time_Of_Creation`,
+                `Item`.`ItemID`, `Item`.`Name`, `Item`.`Description`, 
+                `Location`.`Post_Code`, `Location`.`Latitude`, `Location`.`Longitude`,
+                `User`.`UserID`, `User`.`Forename`, `User`.`Surname`, `User`.`Picture_URL`
         FROM `Listing`
         JOIN `User` ON `Listing`.`FK_User_UserID` = `User`.`UserID`
         JOIN `Location` ON `Listing`.`FK_Location_LocationID` = `Location`.`LocationID`
