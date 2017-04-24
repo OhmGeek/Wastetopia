@@ -56,7 +56,7 @@ class SearchController
 
         $distance = $distanceLimit * 1000.0; /*Convert Km in m*/
 
-        $itemInformation = $this->search($lat, $long, $search, $tagsArr, $notTagsArr, $quantity);
+        $itemInformation = $this->search($lat, $long, $search, $tagsArr, $notTagsArr, $quantity, $userID);
 
         /*Remove items based on distance limit*/
         $newItemInformation = array();
@@ -167,7 +167,7 @@ class SearchController
     /*Limit and Offset are implemented in the wrapper functions
       As custom sorting is needed in the search controller it cannot be done in SQL*/
 
-    private function search($lat, $long, $search, $tagsArr, $notTagsArr, $quantity)
+    private function search($lat, $long, $search, $tagsArr, $notTagsArr, $quantity, $user_id = -1)
     {
         if(empty($lat) || empty($long))
         {
@@ -187,10 +187,21 @@ class SearchController
             $notTagsArr = false;
         }
 
-
         $itemInformation = $this->searchModel->getSearchResults($lat, $long, $search, $tagsArr, $notTagsArr, $quantity);
-
-        return $itemInformation;
+		$finalItemInformation = [];
+		if($user_id != -1){
+			foreach($itemInformation as $item){
+				if($item["FK_User_UserID"] != $user_id){
+					array_push($finalItemInformation,$item);
+				}
+			}
+		}
+		else{
+			return itemInformation;
+		}
+		
+		
+        return $finalItemInformation;
     }
 
     function distanceSort($itemList, $latitude, $longitude){
