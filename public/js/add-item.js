@@ -1,4 +1,5 @@
 var $grid;
+var showUploadedItem;
 $(function(){
 // init Isotope
 $grid = $('.grid').isotope({
@@ -39,7 +40,7 @@ $grid = $('.grid').isotope({
     });
 
 
-    function showUploadedItem(url, id) {
+    showUploadedItem = function(url, id) {
       var $item = $('<div class="grid-item col-xs-6 col-md-4 zero-padding">'+
                     '<div class="img-checkbox">'+
                       '<div class="checkbox">'+
