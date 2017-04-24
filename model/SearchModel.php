@@ -143,8 +143,22 @@ class SearchModel
         }
         if ($search !== false)
         {
-            $sql .= "AND `Item`.`Name` LIKE :search
-            ";
+            $searchArr = explode(" ", $search);
+            
+            $searchCount = count($searchArr);
+            foreach ($searchArr as $key => $value) {
+                if($key === 0)
+                {
+                    $sql .= "AND (`Item`.`Name` LIKE :search".$key;
+                }
+                else{
+                    $sql .= "OR `Item`.`Name` LIKE :search".$key;
+                }
+            }
+            $sql.= ")"
+
+            
+
         }
         if ($tagsArray !== false)
         {
@@ -231,7 +245,10 @@ class SearchModel
         } 
         if ($search !== false)
         {
-            $statement->bindValue(":search", strval('%'.$search.'%'), PDO::PARAM_STR);
+            foreach ($searchArr as $key => $value)
+            {
+                $statement->bindValue(":search".$key, strval('%'.$value.'%'), PDO::PARAM_STR);
+            }          
         }
         
         $statement->execute();
