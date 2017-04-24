@@ -258,6 +258,7 @@ $(function () {
 
   var infiniteScrollingEnabled = true;
   $(window).scroll(function(){
+	 
 
     if(infiniteScrollingEnabled){
         var scrollTop = $(window).scrollTop();
@@ -265,7 +266,8 @@ $(function () {
         var docuHeight = $(document).height();
 
         if(scrollTop + windowHeight == docuHeight){
-            infiniteScrollingEnabled = false;
+		console.log("request");
+            //infiniteScrollingEnabled = false;
             pageNumber += 1;
 
 
