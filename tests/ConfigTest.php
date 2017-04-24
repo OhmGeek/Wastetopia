@@ -16,9 +16,9 @@ class ConfigTest extends TestCase
 {
 
     /** @test */
-    public function testProduction()
+    public function testLocal()
     {
-        $config = (new ProductionConfig())->getConfiguration();
+        $config = (new LocalConfig())->getConfiguration();
 
         $this->assertEquals(isset($config['ROOT_BASE']),true);
         $this->assertEquals(isset($config['EMAIL_ADDRESS']),true);
