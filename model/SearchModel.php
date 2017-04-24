@@ -152,7 +152,7 @@ class SearchModel
                     $sql .= "AND (`Item`.`Name` LIKE :search".$key;
                 }
                 else{
-                    $sql .= "OR `Item`.`Name` LIKE :search".$key;
+                    $sql .= " OR `Item`.`Name` LIKE :search".$key;
                 }
             }
             $sql.= ")";
