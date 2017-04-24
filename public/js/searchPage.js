@@ -129,7 +129,7 @@ $(function () {
     }
   });
 
-  $('#filter-dropdown button').on('click', function(e) {
+  $('#filter-dropdown #filter-btn').on('click', function(e) {
     $('.btn-group').removeClass('dontClose');
   })
 
