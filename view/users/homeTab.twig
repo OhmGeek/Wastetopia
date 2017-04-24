@@ -45,6 +45,21 @@
                     </div>
                 </div>
             </a>
+            <div class = "col-xs-12 recommendation-section">
+                {#{{ adviceHTML | raw }}#}
+                <a class="col-xs-12" role="button" data-toggle="tab" href="#analysis">
+                    <div class="tile">
+                        <div class="stat">
+                            <h4 class="zero-padding"><strong>Advice: </strong></h4>
+                            <p>{{ adviceText }}</p>
+                            <p>Click the arrow to see more in depth analysis</p>
+                        </div>
+                        <div class="icon">
+                            <i class="material-icons">chevron_right</i>
+                        </div>
+                    </div>
+                </a>
+            </div>
             {#<div class="col-sm-6 col-xs-12">#}
                 {#<div class="tile">#}
                     {#<!-- add graph here, you can refer to the profile folder it contains a template of examples -->#}
@@ -62,21 +77,6 @@
                 {{predictionHTML | raw}}
             </div>
 
-            <div class = "col-xs-12 recommendation-section">
-                {#{{ adviceHTML | raw }}#}
-                <a class="col-xs-12" role="button" data-toggle="tab" href="#analysis">
-                    <div class="tile">
-                        <div class="stat">
-                            <h4 class="zero-padding"><strong>Advice: </strong></h4>
-                            <p>{{ adviceText }}</p>
-                            <p>Click the arrow to see more in depth analysis</p>
-                        </div>
-                        <div class="icon">
-                            <i class="material-icons">chevron_right</i>
-                        </div>
-                    </div>
-                </a>
-            </div>
         </div>
     </div>
 </div>
