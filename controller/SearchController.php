@@ -56,7 +56,7 @@ class SearchController
 
         $distance = $distanceLimit * 1000.0; /*Convert Km in m*/
 
-        $itemInformation = $this->search($lat, $long, $search, $tagsArr, $notTagsArr, $quantity, $userID);
+        $itemInformation = $this->search($lat, $long, $search, $tagsArr, $notTagsArr, $quantity);
 
         /*Remove items based on distance limit*/
         $newItemInformation = array();
