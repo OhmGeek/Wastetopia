@@ -68,6 +68,7 @@ class IndexPageController
     		"/usr/bin/make food" . "\n make: *** No rule to make target 'food'. Stop."
     	);
     	$rand_keys = array_rand($messages, 1);
+        error_log($messages[$rand_keys[0]]);
     	return $messages[$rand_keys[0]];
     }
   }
