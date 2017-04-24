@@ -120,7 +120,9 @@ class AnalysisModel
     {
 
         $userID = $this->getUserID();
-        
+	error_log("GETTING TAG FREQUENCIES FOR TRANSACTIONS");
+        error_log("User: ".$userID);
+
         $sql = "SELECT `Tag`.`Name`,  `Tag`.`TagID`, SUM(COALESCE(`ListingTransaction`.`Quantity`), 0) as `Count`
                 FROM `Tag` 
                 JOIN `ItemTag` ON `ItemTag`. `FK_Tag_TagID` = `Tag`.`TagID`
@@ -171,6 +173,7 @@ class AnalysisModel
         $statement->execute();
 
         $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+	    error_log("Results: ".json_encode($results));
 	    return $results;
     }
     
