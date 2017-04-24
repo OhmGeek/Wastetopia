@@ -265,8 +265,12 @@ $(function () {
         var windowHeight = $('.tab-content').height();
         var docuHeight = $(document).height();
 
-        if(scrollTop + windowHeight >= docuHeight - 10){
+        if(scrollTop + windowHeight >= docuHeight){
 		console.log(infiniteScrollingEnabled);
+        console.log('scrollTop' + scrollTop)
+        console.log('windowHeight' + windowHeight)
+        console.log('docuHeight' + docuHeight)
+
             infiniteScrollingEnabled = false;
             pageNumber += 1;
 
