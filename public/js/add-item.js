@@ -81,7 +81,7 @@ $grid = $('.grid').isotope({
 
     }
 
-    $('#form-image').change(function() {
+    $('#form-image #upload').change(function() {
         imageUpload();
     });
 
