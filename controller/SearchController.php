@@ -239,10 +239,7 @@ class SearchController
     function userPopularitySort($itemList){
 		usort($itemList, function($a, $b)
         {
-            $bool = $a['Mean_Rating_Percent'] - $b['Mean_Rating_Percent'];
-            if($bool < 0) {return 1;}
-            elseif($bool > 0) {return -1;}
-            else{return 0;}
+            return $a['Mean_Rating_Percent'] - $b['Mean_Rating_Percent']; 
         });
 
         return $itemList;
