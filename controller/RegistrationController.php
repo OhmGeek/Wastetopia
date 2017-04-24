@@ -29,6 +29,12 @@ class RegistrationController
         $this->twig = new Twig_Environment($loader);
     }
 
+	
+	function generateVerificationPage(){
+		$template = $this->twig->loadTemplate("verificationPage.twig");
+		return $template->render(array("header"=>HeaderInfo::get()));
+	}
+	
     /**
      * Generates the HTML for the Registration page
      * @return HTML
