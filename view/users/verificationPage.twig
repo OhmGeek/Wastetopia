@@ -1,0 +1,21 @@
+{% extends 'header.twig' %}
+
+{% block title %}
+Verify | Wastetopia
+{% endblock %}
+
+{% block navbar %}
+{% include 'navbar.twig' %}
+{% endblock %}
+
+{% block content %}
+<h3> Verification successful: your account is now active! </h3>
+{%  endblock %}
+
+
+{%  set jslist = ["plugins/charts/Chart.bundle.js","plugins/imagesloaded/imagesloaded.pkgd.min.js","plugins/isotope/isotope.pkgd.min.js",
+                    "plugins/jquery-match-height/jquery.matchHeight.js","plugins/moments/moment-with-locales.min.js",
+                    "plugins/bootstrap-material-datetimepicker-gh-pages/bootstrap-material-datetimepicker.js",
+                    "profile.js", "request.js", "AnalysisCharts.js"] %}
+
+{%  set csslist = ["plugins/bootstrap-material-datetimepicker-gh-pages/bootstrap-material-datetimepicker.css"] %}
