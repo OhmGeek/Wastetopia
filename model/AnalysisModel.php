@@ -123,7 +123,7 @@ class AnalysisModel
 	error_log("GETTING TAG FREQUENCIES FOR TRANSACTIONS");
         error_log("User: ".$userID);
 
-        $sql = "SELECT `Tag`.`Name`,  `Tag`.`TagID`, SUM(COALESCE(`ListingTransaction`.`Quantity`), 0) as `Count`
+        $sql = "SELECT `Tag`.`Name`,  `Tag`.`TagID`, SUM(COALESCE(`ListingTransaction`.`Quantity`, 0)) as `Count`
                 FROM `Tag` 
                 JOIN `ItemTag` ON `ItemTag`. `FK_Tag_TagID` = `Tag`.`TagID`
                 JOIN `Item` ON `Item`.`ItemID` = `ItemTag`.`FK_Item_ItemID`
