@@ -94,6 +94,8 @@ class AnalysisController
     {
         $frequencies =  $this->model->getTagFrequenciesForListings(null, $categoryIDArray);
 
+        error_log("Frequencies: ".json_encode($frequencies));
+        
         // Assuming this function will only be used for graphs with one categoryID!!
         $categoryID = $categoryIDArray[0];
         $tagNames = $this->model->getTagNamesFromCategory($categoryID);
