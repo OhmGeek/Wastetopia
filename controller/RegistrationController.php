@@ -31,7 +31,7 @@ class RegistrationController
 
 	
 	function generateVerificationPage(){
-		$template = $this->twig->loadTemplate("verificationPage.twig");
+		$template = $this->twig->loadTemplate("users/verificationPage.twig");
 		return $template->render(array("header"=>HeaderInfo::get()));
 	}
 	
