@@ -261,12 +261,12 @@ $(function () {
     console.log('i am scrolling')
 
     if(infiniteScrollingEnabled){
-        var scrollTop = $('.tab-content').scrollTop();
+        var scrollTop = $(window).scrollTop();
         var windowHeight = $('.tab-content').height();
         var docuHeight = $(document).height();
 
         if(scrollTop + windowHeight >= docuHeight){
-		console.log(infiniteScrollingEnabled);
+		        console.log(infiniteScrollingEnabled);
         console.log('scrollTop' + scrollTop)
         console.log('windowHeight' + windowHeight)
         console.log('docuHeight' + docuHeight)
