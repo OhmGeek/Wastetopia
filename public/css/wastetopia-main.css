@@ -661,7 +661,7 @@ label.checkbox-inline input[type=checkbox]:checked + .checkbox-material .check:b
 
 /* profile page styles */
 #profileContentWrapper {
-    padding-top: 140px;
+    padding-top: 150px;
 }
 
 .user-profile {
