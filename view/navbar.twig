@@ -24,8 +24,8 @@
 		</div>
 		<div class="navbar-collapse collapse navbar-responsive-collapse">
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="{{ config.ROOT_BASE }}/messages"><i class="material-icons">message</i>{% if header.isLoggedIn == 1 %}<span class="badge" id="messageNotifications"></span>{% endif %}</a></li>
-				<li><a href="{{config.ROOT_BASE}}/profile"><i class="material-icons">person</i>{% if header.isLoggedIn == 1 %} <span class="badge" id="requestNotifications"></span> {% endif %}</a></li>
+				<li><a href="{{ config.ROOT_BASE }}/messages"><i class="material-icons">message</i>{% if header.isLoggedIn == 1 %}<span class="badge" id="messageNotifications"></span>{% endif %} <span class="visible-xs">Messages</span></a></li>
+				<li><a href="{{config.ROOT_BASE}}/profile"><i class="material-icons">person</i>{% if header.isLoggedIn == 1 %} <span class="badge" id="requestNotifications"></span> {% endif %} <span class="visible-xs">Profile</span><</a></li>
 			  {% if header.isLoggedIn == 1 %}
 				<li><a href="{{config.ROOT_BASE}}/logout">Log out</a></li>
 				{% else %}
