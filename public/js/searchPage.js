@@ -257,15 +257,15 @@ $(function () {
 // TODO add the ajax request
 
   var infiniteScrollingEnabled = true;
-  $(window).scroll(function(){
-	 
+  $('.tab-content').scroll(function(){
+    console.log('i am scrolling')
 
     if(infiniteScrollingEnabled){
-        var scrollTop = $(window).scrollTop();
-        var windowHeight = $(window).height();
+        var scrollTop = $('.tab-content').scrollTop();
+        var windowHeight = $('.tab-content').height();
         var docuHeight = $(document).height();
 
-        if(scrollTop + windowHeight >= docuHeight-10){
+        if(scrollTop + windowHeight >= docuHeight - 10){
 		console.log("request");
             //infiniteScrollingEnabled = false;
             pageNumber += 1;
