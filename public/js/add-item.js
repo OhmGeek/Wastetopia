@@ -225,7 +225,6 @@ $grid = $('.grid').isotope({
 
     }
     $( "#main-form" ).submit(function( event ) {
-        alert( "Handler for .submit() called." );
         event.preventDefault();
         submit();
         return false;
