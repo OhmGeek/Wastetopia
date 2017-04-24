@@ -33,7 +33,7 @@ $(function(){
 
                 $('.main-search-form').attr("action", searchURL)
 
-                var newForm = '<form class="submit-form" method="POST" action="'+ baseURL +'/search/" > <input name="search" type="text" value="'+ search +'">' +
+                var newForm = '<form class="submit-form hidden" method="POST" action="'+ baseURL +'/search/" > <input name="search" type="text" value="'+ search +'">' +
                               '<input name="lat" type="text" value="'+ lat +'"></input> <input name="lng" type="number" value="'+ lng +'"></input>' +
                               '<input name="postcode" type="text" value="'+ postcode +'"></input> <input name="quantity" type="number" value="'+ quantity +'"></input>' +
                               '<input name="distance" type="number" value="'+ distance +'"></input> <input name="filters" type="text" value="'+ selectedFilters.join('+') +'"></input>' +
