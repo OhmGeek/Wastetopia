@@ -215,7 +215,8 @@ class SearchModel
             $sql .= "));";
         }
 
-        error_log($sql);              
+        error_log($sql);    
+        error_log($search);          
 
         $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
         $statement = $this->db->prepare($sql);
