@@ -247,6 +247,17 @@ class SearchController
         return $itemList;
     }
     function userPopularitySort($itemList){
+		usort($itemList, function($a, $b)
+        {
+            $bool = strcasecmp($a['Mean_Rating_Percent'] - $b['Mean_Rating_Percent']);
+
+            if($bool < 0) {return 1;}
+            elseif($bool > 0) {return -1;}
+            else{return 0;}
+        });
+
+        return $itemList;
+
         return $this->searchModel->PopularitySort($itemList);
     }
     function newFirstSort($itemList){
