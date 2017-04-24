@@ -266,8 +266,8 @@ $(function () {
         var docuHeight = $(document).height();
 
         if(scrollTop + windowHeight >= docuHeight - 10){
-		console.log("request");
-            //infiniteScrollingEnabled = false;
+		console.log(infiniteScrollingEnabled);
+            infiniteScrollingEnabled = false;
             pageNumber += 1;
 
 
