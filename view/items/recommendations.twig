@@ -7,7 +7,6 @@
     <h3>{{section}}  <small> - THIS SHOULDN'T SHOW</small></h3>
   {% endif %}
 </div>
-<div class="container-fluid">
     {% if recommendationList|length < 4 %}
       <h4> Not enough data to generate this section </h4>
     {% else %}
@@ -57,4 +56,3 @@
       {% endfor %}
   </div>
     {% endif %}
-</div>
