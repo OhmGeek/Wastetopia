@@ -165,7 +165,7 @@ class EditItemModel
     {
         $statement = $this->db->prepare("
             UPDATE Item
-            SET Name = :name, Description = :description, Use_By = STR_TO_DATE(:useByDate, '%e %M, %Y')
+            SET Name = :name, Description = :description, Use_By = :useByDate
             WHERE ItemID = :itemID
          ");
         error_log("Name:");
@@ -277,7 +277,7 @@ class EditItemModel
      */
     function addToLocationTable($name, $postCode, $long, $lat)
     {
-        $statement = $this->db->prepare("           
+        $statement = $this->db->prepare("
             UPDATE Location
             SET Name = :name, Post_Code = :postCode, Longitude = :long, Latitude = :lat
             WHERE LocationID = :locationID
@@ -397,7 +397,7 @@ class EditItemModel
         $itemDescription = $item["itemDescription"];
         $useByDate = $item["useByDate"];
         if(!isset($useByDate)) {
-            $useByDate = "1st January, 1970";
+            $useByDate = "1971-01-01";
         }
         $itemID = $this->addToItemTable($itemName, $itemDescription, $useByDate); //Add the item
         error_log("Item ID:");

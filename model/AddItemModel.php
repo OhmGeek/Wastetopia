@@ -143,7 +143,7 @@ class AddItemModel
     {
         $statement = $this->db->prepare("
             INSERT INTO Item (Name, Description, Use_By)
-            VALUES ( :name, :description, STR_TO_DATE(:useByDate, '%e %M, %Y'));
+            VALUES ( :name, :description, :useByDate);
          ");
         error_log("Name:");
         error_log($name);
@@ -364,7 +364,7 @@ class AddItemModel
         $itemDescription = $item["itemDescription"];
         $useByDate = $item["useByDate"];
         if(!isset($useByDate)) {
-            $useByDate = "1st January, 1970";
+            $useByDate = "1971-01-01";
         }
         $itemID = $this->addToItemTable($itemName, $itemDescription, $useByDate); //Add the item
         error_log("Item ID:");

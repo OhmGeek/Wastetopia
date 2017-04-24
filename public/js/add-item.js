@@ -17,7 +17,7 @@ $grid = $('.grid').isotope({
     $(".js-example-basic-multiple").select2();
 
 //fancy datetime picker
-    $('#date').bootstrapMaterialDatePicker({ format : 'D MMMM, YYYY', weekStart : 0, time: false });
+    $('#date').bootstrapMaterialDatePicker({ format : 'YYYY-MM-DD', weekStart : 0, time: false });
 
 // Remove an element from the layout in the grid
     function remove(elem) {
@@ -225,6 +225,7 @@ $grid = $('.grid').isotope({
 
     }
     $( "#main-form" ).submit(function( event ) {
+        alert( "Handler for .submit() called." );
         event.preventDefault();
         submit();
         return false;
