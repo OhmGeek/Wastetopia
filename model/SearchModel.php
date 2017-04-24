@@ -215,7 +215,7 @@ class SearchModel
             $sql .= "));";
         }
 
-                      
+        error_log($sql);              
 
         $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
         $statement = $this->db->prepare($sql);
@@ -250,6 +250,7 @@ class SearchModel
                 $statement->bindValue(":search".$key, strval('%'.$value.'%'), PDO::PARAM_STR);
             }          
         }
+
         
         $statement->execute();
 
