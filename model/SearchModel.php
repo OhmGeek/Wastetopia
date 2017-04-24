@@ -130,10 +130,11 @@ class SearchModel
     function getSearchResults($userLat, $userLong, $search, $tagsArray, $notTagsArray,  $quantity = 1, $distanceLimit = 0.76)
     {
 
-        $sql = "SELECT `Listing`.`ListingID`, `Location`.`Latitude`, `Location`.`Longitude`, `Item`.`Name`, `Listing`.`Time_Of_Creation`
+        $sql = "SELECT `Listing`.`ListingID`, `Location`.`Latitude`, `Location`.`Longitude`, `Item`.`Name`, `Listing`.`Time_Of_Creation`, User.Mean_Rating_Percent
             FROM `Listing`
             JOIN `Item` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
             JOIN `Location` ON `Listing`.`FK_Location_LocationID` = `Location`.`LocationID`
+			JOIN User ON User.UserID = Listing.FK_User_UserID
             WHERE `Listing`.`Quantity` >= :quantity
             AND `Listing`.`Active` = 1
             ";
