@@ -155,7 +155,7 @@ class SearchModel
                     $sql .= "OR `Item`.`Name` LIKE :search".$key;
                 }
             }
-            $sql.= ")"
+            $sql.= ")";
 
             
 
