@@ -188,20 +188,21 @@ class SearchController
         }
 
         $itemInformation = $this->searchModel->getSearchResults($lat, $long, $search, $tagsArr, $notTagsArr, $quantity);
-		$finalItemInformation = [];
+		$finalItemInformation = array();
 		if($user_id != -1){
 			foreach($itemInformation as $item){
 				if($item["FK_User_UserID"] != $user_id){
-					array_push($finalItemInformation,$item);
+					$finalItemInformation[] = $item;
 				}
 			}
+			return $finalItemInformation;
 		}
 		else{
 			return itemInformation;
 		}
 		
 		
-        return $finalItemInformation;
+        
     }
 
     function distanceSort($itemList, $latitude, $longitude){
