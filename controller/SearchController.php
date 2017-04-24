@@ -127,7 +127,8 @@ class SearchController
             $searchResults[] = $result;
         }
 
-        $pageResults = array_slice($searchResults, $offset, $limit);
+        //$pageResults = array_slice($searchResults, $offset, $limit);
+	$pageResults = $searchResults;
         return json_encode($pageResults);
     }
 
