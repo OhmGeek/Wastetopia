@@ -167,7 +167,7 @@ class SearchController
     /*Limit and Offset are implemented in the wrapper functions
       As custom sorting is needed in the search controller it cannot be done in SQL*/
 
-    private function search($lat, $long, $search, $tagsArr, $notTagsArr, $quantity, $user_id = -1)
+    private function search($lat, $long, $search, $tagsArr, $notTagsArr, $quantity)
     {
         if(empty($lat) || empty($long))
         {
@@ -188,19 +188,8 @@ class SearchController
         }
 
         $itemInformation = $this->searchModel->getSearchResults($lat, $long, $search, $tagsArr, $notTagsArr, $quantity);
-		$finalItemInformation = array();
-		if($user_id != -1){
-			foreach($itemInformation as $item){
-				if($item["FK_User_UserID"] != $user_id){
-					$finalItemInformation[] = $item;
-				}
-			}
-			return $finalItemInformation;
-		}
-		else{
-			return itemInformation;
-		}
 		
+		return $itemInformation;
 		
         
     }
@@ -250,16 +239,13 @@ class SearchController
     function userPopularitySort($itemList){
 		usort($itemList, function($a, $b)
         {
-            $bool = strcasecmp($a['Mean_Rating_Percent'] - $b['Mean_Rating_Percent']);
-
+            $bool = $a['Mean_Rating_Percent'] - $b['Mean_Rating_Percent'];
             if($bool < 0) {return 1;}
             elseif($bool > 0) {return -1;}
             else{return 0;}
         });
 
         return $itemList;
-
-        return $this->searchModel->PopularitySort($itemList);
     }
     function newFirstSort($itemList){
         usort($itemList, function($a, $b)
