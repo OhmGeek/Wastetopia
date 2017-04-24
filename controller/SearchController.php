@@ -169,7 +169,6 @@ class SearchController
 
     private function search($lat, $long, $search, $tagsArr, $notTagsArr, $quantity)
     {
-
         if(empty($lat) || empty($long))
         {
             $lat = false;

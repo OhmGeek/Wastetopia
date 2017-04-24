@@ -57,11 +57,11 @@ class SearchModel
         JOIN `User` ON `Listing`.`FK_User_UserID` = `User`.`UserID`
         JOIN `Location` ON `Listing`.`FK_Location_LocationID` = `Location`.`LocationID`
         JOIN `Item` ON `Listing`.`FK_Item_ItemID` = `Item`.`ItemID`
-        WHERE `Listing`.`ListingID` IN (:listing_ids)
+        WHERE `Listing`.`ListingID` IN ( :listing_ids )
 		ORDER BY Mean_Rating_Percent DESC;
         ");
-		foreach($item_information[0] as $distinct_item){
-			$listing_ids = $listing_ids . $distinct_item . ",";
+		foreach($item_information as $distinct_item){
+			$listing_ids = $listing_ids . $distinct_item["ListingID"] . ",";
 		}
 		$listing_ids = substr($listing_ids,0,-1);
         $statement->bindValue(":listing_ids", $listing_ids, PDO::PARAM_STR);
