@@ -187,11 +187,11 @@ class SearchController
             $notTagsArr = false;
         }
 
+
         $itemInformation = $this->searchModel->getSearchResults($lat, $long, $search, $tagsArr, $notTagsArr, $quantity);
 		
 		return $itemInformation;
-		
-        
+
     }
 
     function distanceSort($itemList, $latitude, $longitude){
@@ -246,6 +246,7 @@ class SearchController
         });
 
         return $itemList;
+
     }
     function newFirstSort($itemList){
         usort($itemList, function($a, $b)
